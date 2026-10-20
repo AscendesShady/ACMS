@@ -15,6 +15,10 @@ roads traced from a background image. The AI Mode tool network_tools.network_fro
   centre lines' length.
 - Both give a `Graph`, and `build` turns it into a Network: junctions within MERGE_M merged into one,
   the roads between them with their shapes, boundary ends where roads leave the area.
+- Walking and cycling (the map only): a road way's sidewalk=* tags give its road footpaths, its cycleway=* tags
+  cycle lanes; `add_walking` then adds what OSM maps on its own: footway=sidewalk ways as their road's footpath,
+  highway=crossing nodes and footway=crossing ways as zebras, footbridges over a road as overbridges, and the
+  other footways, paths and steps as paths between the road nodes they reach.
 """
 
 from __future__ import annotations
@@ -27,12 +31,13 @@ import time
 import urllib.parse
 import urllib.request
 from collections import Counter, defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from math import floor, hypot
 from pathlib import Path
 
+from .geometry import distance_to_segment, nearest_along, polyline_length, segment_hit
 from .map_tiles import USER_AGENT
-from .models import LANE_WIDTH_M, Network
+from .models import LANE_WIDTH_M, ZEBRA_CLEAR_M, Network
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 # Tried in turn when one is busy (a timeout, a 5xx): public Overpass servers listed on the OSM wiki.
@@ -60,6 +65,15 @@ LEVELS = {"main": tuple(name for name in CLASSES if not name.startswith(("unclas
 # engine leaves), blinker (flashing amber: priority rules apply), ramp_meter, level_crossing, lane (lane
 # control), bus_priority, tram_priority and on_demand (dark or green until called), no.
 JUNCTION_SIGNALS = ("signal", "traffic_lights", "yes", "junction")
+# Walking: OSM highway=* ways walked (not driven), crossing=* values that mark a crossing pedestrians have right of way
+# on (traffic_signals: a signalised one, taken as a zebra while there are no pedestrian signals), and how near a
+# feature must be to the road or node it belongs to
+WALK_CLASSES = ("footway", "path", "pedestrian", "steps")
+ZEBRA_TAGS = ("zebra", "marked", "uncontrolled", "traffic_signals")
+SIDEWALK_M = 15.0  # a footway=sidewalk way this near a road is that road's footpath, on its side
+CROSSING_M = 8.0  # a crossing node this near a road is on it
+PATH_SNAP_M = 15.0  # a footway passing this near a road node joins the walking network there
+CYCLE_TAGS = ("lane", "track", "opposite_lane", "opposite_track")
 # Junctions nearer than this become one: a dual carriageway's crossing is mapped as 2-4 nodes 12-19 m apart (Dhanmondi:
 # three signals with their own plans, and four give-way nodes in a loop), with 2-3 cars of room between them, which
 # gridlocked the network. At 12 m, a quarter of a peak demand jammed (130 vehicles stuck); at 20 m it held, none
@@ -85,6 +99,14 @@ class Street:
     bridge: bool = False
     kind: str = "urban"  # the road type label
     ring: bool = False  # part of a roundabout's ring: the ring becomes one junction
+    footpaths: tuple = ()  # "left", "right" along it, start to end (OSM sidewalk=*)
+    cycle: bool = False  # it has cycle lanes (OSM cycleway=*)
+
+
+def _turned(street: Street) -> Street:
+    """The street the other way: from its end to its start, its footpaths' sides swapped."""
+    return replace(street, start=street.end, end=street.start, points=street.points[::-1],
+                   footpaths=tuple(sorted({"left": "right", "right": "left"}[side] for side in street.footpaths)))
 
 
 @dataclass
@@ -96,14 +118,19 @@ class Graph:
     skipped: dict = field(default_factory=dict)  # other signals, by kind: they don't signalise a junction
     rings: list = field(default_factory=list)  # sets of keys, each one roundabout
     lanes_note: str = ""
+    crossings: list = field(default_factory=list)  # (x, y) of zebra crossing nodes (ZEBRA_TAGS)
+    footways: list = field(default_factory=list)  # (points, kind): "sidewalk", "crossing", "bridge" or "path"
+    walking_skipped: dict = field(default_factory=dict)  # crossings not taken, by their crossing=* value
 
 
 # --- OpenStreetMap ---------------------------------------------------------------------------------
 
 def overpass_query(south: float, west: float, north: float, east: float, classes: tuple) -> str:
     """Every drivable way of these classes in the box, with all their nodes (tags included)."""
-    return (f'[out:json][timeout:{OVERPASS_TIMEOUT_S - 5}];way["highway"~"^({"|".join(classes)})$"]["area"!="yes"]'
-            f'["access"!~"^(no|private)$"]({south:.6f},{west:.6f},{north:.6f},{east:.6f});(._;>;);out body;')
+    box = f"({south:.6f},{west:.6f},{north:.6f},{east:.6f})"
+    return (f'[out:json][timeout:{OVERPASS_TIMEOUT_S - 5}];(way["highway"~"^({"|".join(classes)})$"]["area"!="yes"]'
+            f'["access"!~"^(no|private)$"]{box};way["highway"~"^({"|".join(WALK_CLASSES)})$"]'
+            f'["access"!~"^(no|private)$"]{box};node["highway"="crossing"]{box};);(._;>;);out body;')
 
 
 def post(url: str, data: bytes) -> bytes:
@@ -182,8 +209,16 @@ def _attributes(tags: dict) -> tuple[dict, bool]:
         total = 0
     if total > 0:  # a one-way road's carriageway is two lanes per direction wide in the editor
         lanes = max(1, (total + 1) // 2) if one_way else max(1, total // 2)
+    sides = {"both": ("left", "right"), "separate": ("left", "right"), "left": ("left",), "right": ("right",)}
+    footpaths = set(sides.get(str(tags.get("sidewalk", "")).lower(), ()))
+    for side in ("left", "right", "both"):  # sidewalk:left=yes / separate, sidewalk:both=...
+        if str(tags.get(f"sidewalk:{side}", "")).lower() in ("yes", "separate"):
+            footpaths |= set(sides[side])
+    cycle = any(str(tags.get(key, "")).lower() in CYCLE_TAGS
+                for key in ("cycleway", "cycleway:both", "cycleway:left", "cycleway:right"))
     return {"lanes": min(lanes, 6), "speed_kmh": _speed(tags.get("maxspeed")) or speed, "one_way": one_way,
-            "bridge": tags.get("bridge") not in (None, "no"), "kind": kind, "ring": ring}, tags.get("oneway") == "-1"
+            "bridge": tags.get("bridge") not in (None, "no"), "kind": kind, "ring": ring,
+            "footpaths": tuple(sorted(footpaths)), "cycle": cycle}, tags.get("oneway") == "-1"
 
 
 def _liang_barsky(a, b, rect) -> tuple[float, float] | None:
@@ -249,14 +284,37 @@ def osm_graph(document: dict, to_scene, rect) -> Graph:
                 graph.skipped[kind] = graph.skipped.get(kind, 0) + 1
         if tags.get("highway") == "mini_roundabout":
             graph.rings.append({osm_id})
+        if tags.get("highway") == "crossing":
+            kind = str(tags.get("crossing", "") or tags.get("crossing_ref", "")).strip().lower()
+            if kind in ZEBRA_TAGS or tags.get("crossing_ref") == "zebra":
+                graph.crossings.append(graph.positions[osm_id])
+            else:
+                graph.walking_skipped[kind or "untagged"] = graph.walking_skipped.get(kind or "untagged", 0) + 1
+    left, top, right, bottom = rect
+    for way in document["elements"]:  # footways, paths and steps inside the area (walking, not driving)
+        tags = way.get("tags", {}) if way.get("type") == "way" else {}
+        if tags.get("highway") not in WALK_CLASSES:
+            continue
+        points = [graph.positions[ref] for ref in way.get("nodes", []) if ref in nodes]
+        if len(points) < 2 or not any(left <= x <= right and top <= y <= bottom for x, y in points):
+            continue
+        footway = tags.get("footway")
+        kind = "sidewalk" if footway == "sidewalk" else "crossing" if footway == "crossing" else \
+            "bridge" if tags.get("bridge") not in (None, "no") else "path"
+        if kind == "crossing" and str(tags.get("crossing", "marked")).lower() not in ZEBRA_TAGS:
+            graph.walking_skipped[str(tags.get("crossing"))] = graph.walking_skipped.get(str(tags.get("crossing")), 0) + 1
+            continue
+        graph.footways.append((points, kind))
     pieces = []
     for way in ways:
         refs = [ref for ref in way.get("nodes", []) if ref in nodes]
         if len(refs) < 2:
             continue
         attributes, backwards = _attributes(way["tags"])
-        if backwards:
+        if backwards:  # its sides are the way's own: turned with it
             refs.reverse()
+            attributes["footpaths"] = tuple(sorted({"left": "right", "right": "left"}[side]
+                                                   for side in attributes["footpaths"]))
         if attributes["ring"]:
             graph.rings.append(set(refs))
         for piece in _clip([(ref, graph.positions[ref]) for ref in refs], rect, graph, way["id"]):
@@ -485,10 +543,8 @@ def _halves(street: Street, key) -> tuple[Street, Street]:
         if walked + step >= half and step > 0:
             t = (half - walked) / step
             middle = (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
-            first = Street(street.start, key, points[:index + 1] + [middle], street.lanes, street.speed_kmh,
-                           street.one_way, street.bridge, street.kind)
-            second = Street(key, street.end, [middle] + points[index + 1:], street.lanes, street.speed_kmh,
-                            street.one_way, street.bridge, street.kind)
+            first = replace(street, end=key, points=points[:index + 1] + [middle], ring=False)
+            second = replace(street, start=key, points=[middle] + points[index + 1:], ring=False)
             return first, second
         walked += step
     raise ValueError("A road with no length.")
@@ -551,7 +607,7 @@ def build(template: Network, graph: Graph) -> Network:
             continue  # squeezed into its junction
         if len(clean) < 2 or _length(clean) < 1.0:
             continue
-        kept.append(Street(start, end, clean, street.lanes, street.speed_kmh, street.one_way, street.bridge, street.kind))
+        kept.append(replace(street, start=start, end=end, points=clean, ring=False))
     streets = _join_bends(kept, border | rings, graph.signals, position)
     fresh = Network(horizontal_corridors=template.horizontal_corridors, vertical_corridors=template.vertical_corridors,
                     default_spacing=template.default_spacing, driving_side=template.driving_side,
@@ -581,10 +637,12 @@ def build(template: Network, graph: Graph) -> Network:
     def dress(road, street, forward=True):
         road.lanes_per_direction, road.speed_limit_kmh, road.road_type = street.lanes, float(street.speed_kmh), street.kind
         road.overpass = street.bridge
+        road.footpaths = sorted(street.footpaths)  # along the street, which the road runs along
         if street.one_way:
             road.direction = "one-way"
             if not forward:
-                fresh.reverse_road(road.id)
+                fresh.reverse_road(road.id)  # (its footpaths' sides turned with it)
+        road.cycle_lanes = list(road.arrival_ends()) if street.cycle else []
 
     def order(street):  # the edge's roads last, in order along each side, so their ends are numbered 1, 2, 3...
         if street.start not in border and street.end not in border:
@@ -599,8 +657,7 @@ def build(template: Network, graph: Graph) -> Network:
         extra += 1
         inbound = False  # a one-way street whose traffic comes in from the edge
         if street.start in border and street.end not in border:  # turned so the edge is at its end
-            street, inbound = Street(street.end, street.start, street.points[::-1], street.lanes, street.speed_kmh,
-                                     street.one_way, street.bridge, street.kind), True
+            street, inbound = _turned(street), True
         if street.end in border and street.start in border or street.start == street.end:
             todo.extend(_halves(street, ("cut", extra)))  # through the area without a junction, or a loop
             position[("cut", extra)] = todo[-1].points[0]
@@ -653,24 +710,118 @@ def _join_bends(streets: list, keep: set, signals: list, position: dict) -> list
             if len(two) != 2 or key in keep or two[0] is two[1]:
                 continue
             first, second = two
-            if (first.lanes, first.speed_kmh, first.one_way, first.bridge, first.kind) != \
-                    (second.lanes, second.speed_kmh, second.one_way, second.bridge, second.kind):
+            if (first.lanes, first.speed_kmh, first.one_way, first.bridge, first.kind, first.cycle) != \
+                    (second.lanes, second.speed_kmh, second.one_way, second.bridge, second.kind, second.cycle):
                 continue
             if first.end != key:
                 if first.one_way:
                     continue
-                first = Street(first.end, first.start, first.points[::-1], first.lanes, first.speed_kmh, False,
-                               first.bridge, first.kind)
+                first = _turned(first)
             if second.start != key:
                 if second.one_way:
                     continue
-                second = Street(second.end, second.start, second.points[::-1], second.lanes, second.speed_kmh, False,
-                                second.bridge, second.kind)
+                second = _turned(second)
+            if first.footpaths != second.footpaths:
+                continue  # footpaths on different sides: two roads
             if first.start == second.end:
                 continue  # it would close a loop on itself
             streets = [street for street in streets if street is not two[0] and street is not two[1]]
-            streets.append(Street(first.start, second.end, first.points + second.points[1:], first.lanes,
-                                  first.speed_kmh, first.one_way, first.bridge, first.kind))
+            streets.append(replace(first, end=second.end, points=first.points + second.points[1:]))
             break
         else:
             return streets
+
+
+# --- Walking and cycling from the map ------------------------------------------------------------------
+
+def _nearest_road(network: Network, x: float, y: float, within: float):
+    """The road whose centre line passes nearest (x, y), within `within` metres, and how far along it; or None."""
+    best = None
+    for road in network.all_roads():
+        points = network.road_points(road)
+        gap = min(distance_to_segment((x, y), a, b) for a, b in zip(points, points[1:]))
+        if gap <= within and (best is None or gap < best[0]):
+            best = (gap, road, nearest_along(points, (x, y)))
+    return best[1:] if best else None
+
+
+def add_walking(network: Network, graph: Graph, footpaths: str = "tagged") -> dict:
+    """The map's walking network onto a network built from it (`build`), and what came in and what didn't.
+    `footpaths`: "tagged" (as the roads' sidewalk=* tags say, and footway=sidewalk ways beside them), "all" (every
+    road both sides) or "none". Zebra crossings (nodes, and footway=crossing ways where they cut a road) and footbridges
+    over a road (overbridges) on the road they belong to, with footpaths both sides (a crossing joins them); one too
+    near a junction for a crossing of its own isn't, as walkers cross a junction's arms in gaps anyway. Other footways,
+    paths and steps: paths between the road nodes they come within PATH_SNAP_M of."""
+    if footpaths not in ("tagged", "all", "none"):
+        raise ValueError("footpaths must be 'tagged', 'all' or 'none'.")
+    roads = list(network.all_roads())
+    for road in roads:
+        if footpaths == "all":
+            road.footpaths = ["left", "right"]
+        elif footpaths == "none":
+            road.footpaths = []
+    found = Counter()
+    if footpaths == "tagged":
+        for points, kind in graph.footways:  # a sidewalk mapped as a way of its own: its road's footpath
+            if kind != "sidewalk":
+                continue
+            x, y = points[len(points) // 2]
+            near = _nearest_road(network, x, y, SIDEWALK_M)
+            if near is None:
+                found["sidewalks_beside_no_road"] += 1
+                continue
+            road, along = near
+            line = network.road_points(road)
+            (ax, ay), (bx, by) = line[0], line[-1]
+            side = "right" if (bx - ax) * (y - ay) - (by - ay) * (x - ax) > 0 else "left"  # positive: the (-uy, ux) side
+            if side not in road.footpaths:
+                road.footpaths = sorted({*road.footpaths, side})
+                found["sidewalks"] += 1
+    places = [(x, y, "zebra") for x, y in graph.crossings]
+    for points, kind in graph.footways:  # a crossing way, or a footbridge, where it cuts a road
+        if kind not in ("crossing", "bridge"):
+            continue
+        for road in roads:
+            line = network.road_points(road)
+            for (a, b) in zip(points, points[1:]):
+                for (c, d) in zip(line, line[1:]):
+                    hit = segment_hit(*a, *b, *c, *d)
+                    if hit:
+                        places.append((a[0] + hit[0] * (b[0] - a[0]), a[1] + hit[0] * (b[1] - a[1]),
+                                       "zebra" if kind == "crossing" else "overbridge"))
+    for x, y, kind in places:
+        near = _nearest_road(network, x, y, CROSSING_M)
+        if near is None:
+            found["crossings_off_the_roads"] += 1
+            continue
+        road, along = near
+        if not ZEBRA_CLEAR_M <= along <= network.road_geometry_length(road) - ZEBRA_CLEAR_M:
+            found["crossings_at_junctions"] += 1  # crossed there in gaps
+            continue
+        before = list(road.footpaths)
+        road.footpaths = ["left", "right"]
+        try:
+            network.add_crossing(road.id, along, kind)
+            found[f"{kind}s"] += 1
+        except ValueError:
+            road.footpaths = before
+            found["crossings_too_close_together"] += 1
+    nodes = list(network.all_nodes())
+    for points, kind in graph.footways:  # paths, between the road nodes they reach
+        if kind != "path":
+            continue
+        reached = []
+        for index, (x, y) in enumerate(points):
+            node = min(nodes, key=lambda node: hypot(node.x - x, node.y - y), default=None)
+            if node is not None and hypot(node.x - x, node.y - y) <= PATH_SNAP_M and \
+                    (not reached or reached[-1][1] != node.id):
+                reached.append((index, node.id))
+        joined = False
+        for (i, a), (j, b) in zip(reached, reached[1:]):
+            if a != b and polyline_length(points[i:j + 1]) >= 1.0:
+                network.add_walkway(a, b, [list(point) for point in points[i + 1:j]])
+                found["paths"] += 1
+                joined = True
+        if not joined:
+            found["paths_not_joined"] += 1  # they reach fewer than two road nodes
+    return dict(found)

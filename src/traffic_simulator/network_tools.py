@@ -22,15 +22,17 @@ import json
 import random
 import re
 import time
-from collections import Counter, defaultdict
+from collections import defaultdict
 from copy import deepcopy
 from math import ceil, cos, exp, hypot, isfinite, log, radians, sin, sqrt
 from pathlib import Path
 
 from . import background_network
 from .daily_profile import ARRIVAL_PATTERNS
-from .geometry import distance_to_segment
+from .design_checks import analyse_network, network_indices, roads_at, route_lengths, tightest
+from .geometry import distance_to_segment, polyline_length
 from .institutions import KINDS, WALK, catchment, door, footprint_problem, hourly_people, links, place, shares
+from .models import CROSSING_KINDS, MAX_WALK_DEMAND
 from .metro import METRO, METRO_WALK_M, WALK_KMH, door as metro_door, places as metro_places, ride as metro_ride
 from .interchanges import (build_diamond, build_slip_road, build_trumpet, curve_speed_kmh, fit_slip_roads, guess_stem,
                            pair_legs)
@@ -39,7 +41,7 @@ from .map_tiles import Frame, mercator
 from .models import BUS_STOP_DIRECTIONS, MAX_BOARDING_PER_H, SIGNAL_METHODS, Network, Road
 from .network_generator import generate_network
 from .roundabouts import MAX_ENTRY_LANES, design_roundabout
-from .simulation import Graph
+from .lane_graph import Graph
 from . import scenario, stats
 from .stats import geh
 from .vehicle import VEHICLE_CLASSES
@@ -120,6 +122,7 @@ _SCENARIO = {"type": "object", "properties": {
 _CONDITIONS = {key: _SCENARIO["properties"][key] for key in ("incidents", "weather", "meters", "lateral")}
 _MEASURE_FROM = {"measure_from_min": {"type": "number", "description": "Warm-up left out of the figures: measure from "
                                       "this minute (default 0; analyse_run's MSER-5 warm-up suggests one)."}}
+FOOTPATH_SIDES = {"both": ("left", "right"), "left": ("left",), "right": ("right",), "none": ()}  # update_roads
 
 TOOLS = [
     # Read: run straight away.
@@ -736,7 +739,8 @@ TOOLS = [
                     "moves the road's to-junction along it (that junction's other roads stretch too). "
                     "pocket_junction (an end its traffic arrives at) sets a turn pocket on that approach: "
                     "pocket_lanes 1-2 (0 removes it), pocket_length_m 15-150, pocket_side 'kerb' (kerb turns) or "
-                    "'offside' (offside turns, U-turns).",
+                    "'offside' (offside turns, U-turns). footpaths 'both', 'left', 'right' (from -> to) or 'none'; "
+                    "cycle_lanes 'both' (a bikes-only lane each way) or 'none'.",
      "parameters": _object({"roads": _IDS, "lanes_per_direction": {"type": "integer"},
                             "add_lanes": {"type": "integer", "description": "Lanes to add each way (negative: remove)."},
                             "speed_limit_kmh": {"type": "number"},
@@ -745,7 +749,37 @@ TOOLS = [
                             "road_type": {"type": "string", "description": "A label only: changes no behaviour."},
                             "length_m": {"type": "number"}, "pocket_junction": {"type": "string"},
                             "pocket_lanes": {"type": "integer"}, "pocket_length_m": {"type": "number"},
-                            "pocket_side": {"type": "string", "enum": ["kerb", "offside"]}}, ("roads",))},
+                            "pocket_side": {"type": "string", "enum": ["kerb", "offside"]},
+                            "footpaths": {"type": "string", "enum": list(FOOTPATH_SIDES)},
+                            "cycle_lanes": {"type": "string", "enum": ["both", "none"]}}, ("roads",))},
+    {"name": "add_crossing", "edits": True,
+     "description": "Put a pedestrian crossing across a road with footpaths on both sides, at_m from its from-junction "
+                    "(the middle if not given), at least 20 m from either junction: kind 'zebra' (walkers have right of "
+                    "way: traffic stops for them) or 'overbridge' (over the traffic, stairs to climb). Without one, "
+                    "walkers cross a junction's arm in a gap in its traffic.",
+     "parameters": _object({"road": {"type": "string"}, "at_m": {"type": "number"},
+                            "kind": {"type": "string", "enum": list(CROSSING_KINDS)}}, ("road",))},
+    {"name": "add_path", "edits": True,
+     "description": "Add a footpath of its own (through a park, a square), off the roads: from one junction or boundary "
+                    "end to another, through bends [[x, y], ...] in metres. Walkers use it with the roads' footpaths.",
+     "parameters": _object({"start": {"type": "string"}, "end": {"type": "string"},
+                            "bends": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}}},
+                           ("start", "end"))},
+    {"name": "set_pedestrian_demand", "edits": True,
+     "description": "Set people walking an hour between boundary ends (pairs like '1W->1E') or between spawn "
+                    "points ('S1->S2'; add_spawn_points); 0 removes a pair. They walk the footpaths and paths in a run; "
+                    "institutions' walkers come on top.",
+     "parameters": _object({"pairs": _IDS, "people_per_hour": {"type": "number"}}, ("pairs", "people_per_hour"))},
+    {"name": "add_spawn_points", "edits": True,
+     "description": "Place pedestrian spawn points S1, S2... at points [[x, y], ...] metres, anywhere near the "
+                    "network: walkers go straight from one to its nearest footpath and from the footpath nearest their "
+                    "destination straight to it. Then set_pedestrian_demand between them ('S1->S2').",
+     "parameters": _object({"points": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}}},
+                           ("points",))},
+    {"name": "pedestrian_summary", "edits": False,
+     "description": "The network for pedestrians: roads with footpaths (both sides, one, none) and cycle lanes, paths, "
+                    "crossings, the pedestrian demand, and the pairs no footpath or path joins (nobody can walk them).",
+     "parameters": _object({})},
     {"name": "add_junction", "edits": True,
      "description": "Add an off-grid junction (named N1, N2, ...) at (x, y) metres: x grows east, y grows SOUTH "
                     "(down the screen). Connect it with add_road.",
@@ -844,8 +878,11 @@ TOOLS = [
                     "residential streets, the default). Image: the pixels of road_colour ('#rrggbb'; ask the "
                     "user if you don't know it) within colour_tolerance (default 40), traced to centre lines at "
                     "resolution_m metres a pixel (default 2); lanes from their width. Roads leaving the area "
-                    "become boundary ends. Institutions still on clear ground stay.",
+                    "become boundary ends. Institutions still on clear ground stay. Walking (the map): footpaths "
+                    "'tagged' (as OSM's sidewalk tags and sidewalk ways say; the default), 'all' (every road both "
+                    "sides) or 'none'; zebra crossings, footbridges (overbridges), paths and cycle lanes as mapped.",
      "parameters": _object({"road_classes": {"type": "string", "enum": ["main", "all"]},
+                            "footpaths": {"type": "string", "enum": ["tagged", "all", "none"]},
                             "width_m": {"type": "number"}, "height_m": {"type": "number"},
                             "road_colour": {"type": "string"}, "colour_tolerance": {"type": "number"},
                             "resolution_m": {"type": "number"}})},
@@ -883,7 +920,8 @@ RUN_TOOLS = {"run_simulation", "run_experiment", "read_results", "compare_runs",
              "assign_routes", "optimise_signals", "build_scenario", "institution_mode_split"}  # runs: the window
 SCENARIO_TOOLS = {"set_signal_timing", "set_junction_control", "update_roads", "add_junction", "add_road",
                   "add_boundary_end", "move_junctions", "delete_objects", "build_interchange", "add_slip_road",
-                  "set_end_flows", "add_bus_stop", "update_bus_stop", "update_institution"}  # what an experiment's scenario may change
+                  "set_end_flows", "add_bus_stop", "update_bus_stop", "update_institution",
+                  "add_crossing", "set_pedestrian_demand"}  # what an experiment's scenario may change (a zebra: what if)
 TYPE_TOOLS = {"list_vehicle_types", "create_vehicle_types", "update_vehicle_type"}  # Mode Behavior's types: the window
 UI_TOOLS = {"get_selection", "show_on_map", "read_traffic", "note_plan", "find_tools", *OD_TOOLS, *TYPE_TOOLS, *RUN_TOOLS}  # need the window
 
@@ -945,6 +983,11 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
                   "regress", "emissions_report", "resilience", "junction_los", "diagnose_signal", "critical_links",
                   "network_indices", "design_audit", "accessibility_report", "cluster_conditions", "assign_routes",
                   "parameter_sensitivity")),
+    "pedestrians": (r"pedestri|walk|footpath|sidewalk|pavement|zebra|crossing|overbridge|footbridge|cycle lane|"
+                    r"bike lane|cyclist|\bpath",
+                    ("pedestrian_summary", "add_crossing", "add_path", "set_pedestrian_demand", "add_spawn_points",
+                     "update_roads",
+                     "delete_objects")),
     "transit": (r"\bbus(?:es)?\b|bus stop|\bstops?\b|transit|passenger|vehicle type|truck|lorry|bike|bicycle|taxi|van\b|fleet|headway|tram",
                 ("add_bus_stop", "update_bus_stop", "list_vehicle_types", "create_vehicle_types",
                  "update_vehicle_type")),
@@ -1179,10 +1222,6 @@ def _bool(value) -> bool:
     return value.strip().lower() in ("true", "yes", "1") if isinstance(value, str) else bool(value)
 
 
-def _tightest(road: Road) -> float:
-    return max((abs(kappa) for kappa in road.curvature), default=0.0)
-
-
 def _road_info(network: Network, road: Road) -> dict:
     info = {"id": road.id, "from": road.from_node, "to": road.to_node, "length_m": round(road.length_m, 1),
             "lanes_per_direction": road.lanes_per_direction, "direction": road.direction,
@@ -1195,10 +1234,18 @@ def _road_info(network: Network, road: Road) -> dict:
         info["single_lane"] = True
     if road.pockets:
         info["turn_pockets"] = road.pockets
+    if road.cycle_lanes:
+        info["cycle_lanes_to"] = road.cycle_lanes  # bikes only, for the traffic arriving at these ends
+    if road.footpaths:
+        info["footpaths"] = road.footpaths  # its sides, from from_node to to_node
+    crossings = [{"id": c.id, "kind": c.kind, "at_m": round(c.distance_m)} for c in network.pedestrian_crossings.values()
+                 if c.road == road.id]
+    if crossings:
+        info["pedestrian_crossings"] = crossings
     if road.id in network.approach_roads:
         info["boundary_road"] = True
-    if _tightest(road):
-        info["tightest_radius_m"] = round(1 / _tightest(road), 1)
+    if tightest(road):
+        info["tightest_radius_m"] = round(1 / tightest(road), 1)
     return info
 
 
@@ -1218,10 +1265,6 @@ def _limited(rows: list[dict], what: str) -> dict:
     if len(rows) > LIST_LIMIT:
         result["note"] = f"Showing {LIST_LIMIT} of {len(rows)}; filter to see the rest."
     return result
-
-
-def _roads_at(network: Network, node_id: str) -> list[Road]:
-    return [road for road in network.all_roads() if node_id in (road.from_node, road.to_node)]
 
 
 def edge_crossings(network: Network, start: str, target: str | None, x: float = 0.0, y: float = 0.0) -> list:
@@ -1281,7 +1324,7 @@ def network_summary(network: Network) -> dict:
     points = [(node.x, node.y) for node in network.all_nodes()]
     ends = []
     for end in network.approach_nodes.values():
-        road = next(iter(_roads_at(network, end.id)), None)
+        road = next(iter(roads_at(network, end.id)), None)
         traffic = "in and out" if road is None or road.direction == "two-way" else \
             "in" if road.from_node == end.id else "out"
         ends.append({"id": end.id, "traffic": traffic, "supply_vph": end.supply_vph, "demand_vph": end.demand_vph})
@@ -1317,7 +1360,7 @@ def list_roads(network: Network, node: str = "", direction: str = "") -> dict:
 
 def list_junctions(network: Network, control: str = "") -> dict:
     rows = [{"id": node.id, "x": round(node.x, 1), "y": round(node.y, 1), "control": node.control,
-             "roads": len(_roads_at(network, node.id))}
+             "roads": len(roads_at(network, node.id))}
             for node in network.nodes.values() if not control or node.control == control]
     found = _limited(rows, "junctions")
     if control:  # filtered: how many in all, so "0 uncontrolled" isn't read as "0 junctions" (llama3.2 3B)
@@ -1335,8 +1378,8 @@ def describe(network: Network, id: str) -> dict:  # noqa: A002 - the model's arg
         road = network.road(id)
         info = _road_info(network, road)
         info["curved"] = bool(road.shape)
-        if _tightest(road):
-            info["safe_curve_speed_kmh"] = curve_speed_kmh(1 / _tightest(road))
+        if tightest(road):
+            info["safe_curve_speed_kmh"] = curve_speed_kmh(1 / tightest(road))
         crossed = sorted({road_id for *_, road_id in
                           network.crossings(network.road_points(road), {road.from_node, road.to_node})})
         if crossed:
@@ -1345,7 +1388,7 @@ def describe(network: Network, id: str) -> dict:  # noqa: A002 - the model's arg
                                                   else "roads marked overpass pass over.")
         return info
     node = network.nodes[id]
-    roads = _roads_at(network, id)
+    roads = roads_at(network, id)
     info = {"id": id, "kind": "junction", "x": round(node.x, 1), "y": round(node.y, 1), "control": node.control,
             "grid_position": "off the grid" if node.row is None else network.node_label(node),
             "roads": [{"id": road.id, "to": road.to_node if road.from_node == id else road.from_node,
@@ -1365,68 +1408,6 @@ def describe(network: Network, id: str) -> dict:  # noqa: A002 - the model's arg
                                            "saturation by SCATS and SCOOT, the stop weight by TRANSYT and SCOOT). "
                                            "read_traffic's signal_plans give the plan a run is using."}
     return info
-
-
-def analyse_network(network: Network) -> dict:
-    findings: dict = {}
-    try:
-        network.validate()
-        findings["valid"] = True
-    except ValueError as exc:
-        findings["valid"] = str(exc)
-    ahead: dict[str, set[str]] = {}
-    back: dict[str, set[str]] = {}
-    joined: dict[str, set[str]] = {}
-    for road in network.all_roads():
-        pairs = [(road.from_node, road.to_node)]
-        if road.direction == "two-way":
-            pairs.append((road.to_node, road.from_node))
-        for a, b in pairs:
-            ahead.setdefault(a, set()).add(b)
-            back.setdefault(b, set()).add(a)
-        joined.setdefault(road.from_node, set()).add(road.to_node)
-        joined.setdefault(road.to_node, set()).add(road.from_node)
-
-    def spread(starts, links) -> set[str]:
-        seen, todo = set(starts), list(starts)
-        while todo:
-            for nxt in links.get(todo.pop(), ()):
-                if nxt not in seen:
-                    seen.add(nxt)
-                    todo.append(nxt)
-        return seen
-
-    every = [node.id for node in network.all_nodes()]
-    parts, left = 0, set(every)
-    while left:
-        parts += 1
-        left -= spread([next(iter(left))], joined)
-    findings["separate_parts"] = parts
-    entries = [end for end in network.approach_nodes if ahead.get(end)]
-    exits = [end for end in network.approach_nodes if back.get(end)]
-    if entries and exits:
-        reached, leaving = spread(entries, ahead), spread(exits, back)
-        findings["junctions_traffic_cannot_reach"] = sorted(j for j in network.nodes if j not in reached)
-        findings["junctions_traffic_cannot_leave"] = sorted(j for j in network.nodes if j not in leaving)
-    else:
-        findings["note"] = "No boundary ends carry traffic both in and out, so reachability wasn't checked."
-    findings["dead_end_junctions"] = sorted(j for j in network.nodes if len(_roads_at(network, j)) == 1)
-    findings["unconnected_junctions"] = sorted(j for j in network.nodes if not _roads_at(network, j))
-    findings["roads_under_15_m"] = sorted(road.id for road in network.all_roads() if road.length_m < 15)
-    findings["curves_posted_too_fast"] = [
-        {"road": road.id, "speed_limit_kmh": road.speed_limit_kmh,
-         "safe_curve_speed_kmh": curve_speed_kmh(1 / _tightest(road))}
-        for road in network.all_roads()
-        if _tightest(road) and road.speed_limit_kmh > curve_speed_kmh(1 / _tightest(road))]
-    crowded = []
-    for node in network.nodes.values():
-        if node.control == "roundabout":
-            radius = design_roundabout(network, node.id).inscribed_diameter_m / 2
-            crowded += [{"roundabout": node.id, "road": road.id, "radius_m": round(radius, 1),
-                         "road_length_m": round(road.length_m, 1)}
-                        for road in _roads_at(network, node.id) if road.length_m <= radius * 1.5]
-    findings["roundabouts_crowding_their_roads"] = crowded
-    return findings
 
 
 def read_source(network: Network, path: str = "", start_line: int = 1, end_line: int = 0, find: str = "") -> dict:
@@ -1486,8 +1467,12 @@ def set_junction_control(network: Network, junctions, control: str) -> dict:
 
 def update_roads(network: Network, roads, lanes_per_direction=None, speed_limit_kmh=None, direction=None,
                  lane_changing=None, road_type=None, length_m=None, add_lanes=None, pocket_junction=None,
-                 pocket_lanes=None, pocket_length_m=None, pocket_side=None) -> dict:
+                 pocket_lanes=None, pocket_length_m=None, pocket_side=None, footpaths=None, cycle_lanes=None) -> dict:
     ids = _ids(roads)
+    if footpaths is not None and footpaths not in FOOTPATH_SIDES:
+        raise ValueError(f"footpaths must be {', '.join(map(repr, FOOTPATH_SIDES))}.")
+    if cycle_lanes not in (None, "both", "none"):
+        raise ValueError("cycle_lanes must be 'both' or 'none'.")
     for road_id in ids:
         network.road(road_id)  # KeyError for an unknown road, before anything changes
     if add_lanes is not None and lanes_per_direction is not None:
@@ -1521,6 +1506,11 @@ def update_roads(network: Network, roads, lanes_per_direction=None, speed_limit_
         if direction:
             road.direction = "two-way" if direction == "two-way" else "one-way"
             road.pockets = {end: pocket for end, pocket in road.pockets.items() if end in road.arrival_ends()}
+        if footpaths is not None:
+            road.footpaths = list(FOOTPATH_SIDES[footpaths])
+        if cycle_lanes is not None:
+            road.cycle_lanes = list(road.arrival_ends()) if cycle_lanes == "both" else []
+        road.cycle_lanes = [end for end in road.cycle_lanes if end in road.arrival_ends()]
         road.single_lane = road.single_lane and road.direction == "one-way" and road.lanes_per_direction == 1
         if pocket_junction:  # Network.validate (run_tool) checks where it is and that it fits
             pocket = dict(road.pockets.get(str(pocket_junction), {"lanes": 1, "length_m": 50.0, "side": "kerb"}))
@@ -1575,12 +1565,17 @@ def delete_objects(network: Network, ids) -> dict:
     roads = {**network.roads, **network.approach_roads}
     nodes = {**network.nodes, **network.approach_nodes}
     unknown = [item for item in ids if item not in roads and item not in nodes and item not in network.bus_stops
-               and item not in network.institutions]
+               and item not in network.institutions and item not in network.walkways
+               and item not in network.pedestrian_crossings and item not in network.spawn_points]
     if unknown:  # run_tool tries a road named from its other end, else says "Unknown id" with the nearest
         raise KeyError(unknown[0])
     for stop_id in ids:  # bus stops and institutions first, then roads; a node then takes whatever roads it still has
         network.bus_stops.pop(stop_id, None)
         network.institutions.pop(stop_id, None)
+        network.walkways.pop(stop_id, None)
+        network.pedestrian_crossings.pop(stop_id, None)
+        if stop_id in network.spawn_points:
+            network.delete_spawn_point(stop_id)
     for road_id in ids:
         if road_id in network.roads or road_id in network.approach_roads:
             network.delete_road(road_id)
@@ -1846,10 +1841,11 @@ def _background_graph(network: Network, road_classes="all", width_m=1200.0, heig
 
 
 def network_from_background(network: Network, road_classes="all", width_m=1200.0, height_m=1200.0, road_colour=None,
-                            colour_tolerance=40.0, resolution_m=2.0) -> dict:
+                            colour_tolerance=40.0, resolution_m=2.0, footpaths="tagged") -> dict:
     graph, source = _background_graph(network, road_classes, width_m, height_m, road_colour, colour_tolerance,
                                       resolution_m)
     fresh = background_network.build(network, graph)
+    walking = background_network.add_walking(fresh, graph, str(footpaths))  # what the map has for walkers
     kept = {key: item for key, item in network.institutions.items()
             if footprint_problem(fresh, item.x, item.y, item.area_m2) is None}
     dropped = sorted(set(network.institutions) - set(kept))
@@ -1861,6 +1857,10 @@ def network_from_background(network: Network, road_classes="all", width_m=1200.0
               "boundary_ends": sorted(network.approach_nodes)[:60]}
     if graph.lanes_note:
         result["lanes"] = graph.lanes_note
+    roads = list(network.all_roads())
+    result["pedestrians"] = {"roads_with_footpaths": sum(bool(road.footpaths) for road in roads),
+                             "roads_with_cycle_lanes": sum(bool(road.cycle_lanes) for road in roads), **walking,
+                             **({"crossings_not_taken": graph.walking_skipped} if graph.walking_skipped else {})}
     if graph.skipped:  # a pedestrian crossing's signal, a flashing one...: its junction gives way instead
         result["signals_not_junction_signals"] = dict(sorted(graph.skipped.items()))
         result["signals_note"] = ("Signals of these kinds don't signalise a junction, so the junctions near them "
@@ -1883,7 +1883,7 @@ def prepare(network: Network, name: str, args) -> None:
         args["seed"] = random.randrange(1_000_000)
     if name == "network_from_background":
         try:
-            _background_graph(network, **args)
+            _background_graph(network, **{key: value for key, value in args.items() if key != "footpaths"})
         except (ValueError, TypeError):
             pass
     if name == "place_map" and args.get("place"):
@@ -1891,28 +1891,6 @@ def prepare(network: Network, name: str, args) -> None:
             _places(args["place"])
         except ValueError:
             pass
-
-
-def _route_lengths(network: Network, sources) -> dict:
-    """Metres of the shortest route from each source to every node it can reach, one-way roads kept."""
-    ahead = defaultdict(list)
-    for road in network.all_roads():
-        ahead[road.from_node].append((road.to_node, road.length_m))
-        if road.direction == "two-way":
-            ahead[road.to_node].append((road.from_node, road.length_m))
-    found = {}
-    for source in sources:
-        best, todo = {source: 0.0}, [(0.0, source)]
-        while todo:
-            metres, here = heapq.heappop(todo)
-            if metres > best.get(here, float("inf")):
-                continue
-            for there, step in ahead[here]:
-                if metres + step < best.get(there, float("inf")):
-                    best[there] = metres + step
-                    heapq.heappush(todo, (metres + step, there))
-        found[source] = best
-    return found
 
 
 SATURATION_RANGE = (0.1, 1.2)
@@ -2082,7 +2060,7 @@ def demand_plan(network: Network, pairs: list, args: dict, values: dict | None =
     by_d = wanted if any(wanted.values()) else dict.fromkeys(destinations, 1.0)
     leave = {o: total * by_o[o] / sum(by_o.values()) for o in origins}
     arrive = {d: total * by_d[d] / sum(by_d.values()) for d in destinations}
-    routes = _route_lengths(network, origins)
+    routes = route_lengths(network, origins)
     km = {(o, d): routes[o][d] / 1000 for o, d in pairs if d in routes[o]}
     fitted = args.get("mean_trip_km") or None  # 0 km is no trip: a small model's filler (llama3.2), not a length
     if fitted is not None:  # Hyman's method: the decay whose balanced matrix has this mean trip length
@@ -2281,6 +2259,75 @@ def _passengers_problem(boarding_per_h, alighting_percent) -> str | None:
     if alighting_percent is not None and not 0 <= float(alighting_percent) <= 100:
         return "alighting_percent must be 0 to 100."
     return None
+
+
+def add_crossing(network: Network, road, at_m=None, kind="zebra") -> dict:
+    road = network.road(str(road))  # KeyError for an unknown road
+    at = network.road_geometry_length(road) / 2 if at_m is None else float(at_m)
+    crossing = network.add_crossing(road.id, at, str(kind))  # refused (ValueError) with its reason
+    return {"crossing": crossing.id, "kind": crossing.kind, "road": road.id, "at_m": round(at, 1)}
+
+
+def add_path(network: Network, start, end, bends=None) -> dict:
+    way = network.add_walkway(str(start), str(end), _parsed_json(bends) if isinstance(bends, str) else (bends or []))
+    return {"path": way.id, "from": way.start, "to": way.end,
+            "length_m": round(polyline_length(network.walkway_points(way)), 1)}
+
+
+def set_pedestrian_demand(network: Network, pairs, people_per_hour) -> dict:
+    people = float(people_per_hour)
+    if not 0 <= people <= MAX_WALK_DEMAND:
+        raise ValueError(f"people_per_hour must be 0 to {MAX_WALK_DEMAND:,}.")
+    keys = []
+    for pair in _ids(pairs):
+        ends = [end.strip() for end in re.split(r"->|=>|>>| to |-", str(pair)) if end.strip()]
+        among = next((places for places in (network.approach_nodes, network.spawn_points)
+                      if len(ends) == 2 and all(end in places for end in ends)), None)
+        if among is None or ends[0] == ends[1]:
+            raise ValueError(f"{pair!r}: a pair is two different boundary ends, as '1W->1E' (the ends: "
+                             f"{', '.join(sorted(network.approach_nodes))}), or two different spawn points, as "
+                             f"'S1->S2' (the points: {', '.join(sorted(network.spawn_points)) or 'none yet'}).")
+        keys.append((f"{ends[0]}->{ends[1]}", network.walk_demand if among is network.approach_nodes
+                     else network.spawn_demand))
+    for key, demand in keys:
+        if people:
+            demand[key] = people
+        else:
+            demand.pop(key, None)
+    return {"pedestrians_per_hour": {key: people for key, _ in keys}}
+
+
+def add_spawn_points(network: Network, points) -> dict:
+    points = _parsed_json(points) if isinstance(points, str) else points
+    if not isinstance(points, list) or not points or not all(isinstance(p, (list, tuple)) and len(p) == 2
+                                                             for p in points):
+        raise ValueError("points must be a list of [x, y] in metres.")
+    placed = [network.add_spawn_point(float(x), float(y)).id for x, y in points]
+    return {"spawn_points": placed}
+
+
+def pedestrian_summary(network: Network) -> dict:
+    from .walking import WalkGraph  # noqa: PLC0415 - walking builds on the network's own modules
+
+    roads = list(network.all_roads())
+    graph = WalkGraph(network)
+    return {"roads_with_footpaths_both_sides": sum(len(road.footpaths) == 2 for road in roads),
+            "roads_with_a_footpath_one_side": sum(len(road.footpaths) == 1 for road in roads),
+            "roads_without_footpaths": sum(not road.footpaths for road in roads),
+            "footpath_km": round(sum(len(road.footpaths) * network.road_geometry_length(road) for road in roads) / 1000, 2),
+            "roads_with_cycle_lanes": sorted(road.id for road in roads if road.cycle_lanes),
+            "paths": [{"id": way.id, "from": way.start, "to": way.end,
+                       "length_m": round(polyline_length(network.walkway_points(way)))}
+                      for way in network.walkways.values()],
+            "crossings": [{"id": c.id, "kind": c.kind, "road": c.road, "at_m": round(c.distance_m)}
+                          for c in network.pedestrian_crossings.values()],
+            "pedestrians_per_hour": dict(network.walk_demand),
+            "spawn_points": {key: [round(p.x), round(p.y)] for key, p in network.spawn_points.items()},
+            "spawn_pedestrians_per_hour": dict(network.spawn_demand),
+            "pairs_nobody_can_walk": [pair for pair in network.walk_demand if graph.route(*pair.split("->")) is None]
+            + [pair for pair in network.spawn_demand if graph.route(*(
+                (network.spawn_points[end].x, network.spawn_points[end].y) for end in pair.split("->"))) is None],
+            "without_a_crossing": "walkers cross a junction's arm in a gap in its traffic (HCM 2000 Eq 18-17)"}
 
 
 def add_bus_stop(network: Network, road, direction="both", dwell_s=None, boarding_per_h=None,
@@ -2722,77 +2769,6 @@ def mode_plan(network: Network, pairs: list, args: dict, modes: list, values: di
     return plan, info
 
 
-def network_indices(network: Network) -> dict:
-    """Graph indices of the road network (Rodrigue, The Geography of Transport Systems, p613–639): v vertices
-    (junctions and ends), e edges (roads), p components; cyclomatic μ = e − v + p, α = μ / (2v − 5), β = e / v,
-    γ = e / (3(v − 2)) (planar forms); the diameter in links; degrees; the detour index (route km over
-    straight-line km between boundary ends, one-way roads kept); Shimbel accessibility (the sum of shortest km
-    from a junction to every other)."""
-    nodes = {node.id: node for node in network.all_nodes()}
-    roads = list(network.all_roads())
-    v, e = len(nodes), len(roads)
-    parent = {node: node for node in nodes}
-
-    def root(node):
-        while parent[node] != node:
-            parent[node] = parent[parent[node]]
-            node = parent[node]
-        return node
-
-    around = defaultdict(list)
-    for road in roads:
-        parent[root(road.from_node)] = root(road.to_node)
-        around[road.from_node].append((road.to_node, road.length_m))
-        around[road.to_node].append((road.from_node, road.length_m))
-    components = len({root(node) for node in nodes})
-    mu = e - v + components
-
-    def hops(source):
-        """Links to the junction farthest from source (breadth first)."""
-        seen, frontier, depth = {source}, [source], -1
-        while frontier:
-            depth += 1
-            nearer = []
-            for here in frontier:
-                for there, _ in around[here]:
-                    if there not in seen:
-                        seen.add(there)
-                        nearer.append(there)
-            frontier = nearer
-        return depth
-
-    def metres(source):
-        best, todo = {source: 0.0}, [(0.0, source)]
-        while todo:
-            spent, here = heapq.heappop(todo)
-            if spent > best[here]:
-                continue
-            for there, step in around[here]:
-                if spent + step < best.get(there, float("inf")):
-                    best[there] = spent + step
-                    heapq.heappush(todo, (spent + step, there))
-        return best
-
-    junctions = list(network.nodes)
-    shimbel = {node: sum(metres(node).get(other, 0.0) for other in junctions) / 1000 for node in junctions}
-    ends = list(network.approach_nodes)
-    routed = _route_lengths(network, ends)
-    detours = [routed[o][d] / hypot(nodes[o].x - nodes[d].x, nodes[o].y - nodes[d].y)
-               for o in ends for d in ends if o != d and d in routed[o] and hypot(nodes[o].x - nodes[d].x, nodes[o].y - nodes[d].y)]
-    ranked = sorted(shimbel, key=shimbel.get)
-    return {"vertices": v, "edges": e, "components": components, "cyclomatic": mu,
-            "alpha": round(mu / (2 * v - 5), 3) if v > 2 else None, "beta": round(e / v, 3) if v else None,
-            "gamma": round(e / (3 * (v - 2)), 3) if v > 2 else None,
-            "diameter_links": max((hops(node) for node in nodes), default=0),
-            "degrees": dict(sorted(Counter(len(around[node]) for node in junctions).items())),
-            "detour_index": round(sum(detours) / len(detours), 3) if detours else None,
-            "most_accessible": {node: round(shimbel[node], 1) for node in ranked[:5]},
-            "least_accessible": {node: round(shimbel[node], 1) for node in ranked[-5:][::-1]},
-            "notes": ["alpha: share of the most circuits a planar graph could have (0 a tree, 1 complete); beta: roads a "
-                      "node; gamma: share of the most roads possible. Shimbel: km to every other junction (lower is "
-                      "more accessible)."]}
-
-
 def _area_closure(network: Network, flows: dict, ahead: dict, area: dict) -> dict:
     """critical_links' area closure: the roads touching the circle closed together; extra veh-h and veh/h cut off."""
     try:
@@ -3010,6 +2986,7 @@ def critical_links_plan(network: Network, flows: dict, limit: int = 10, area: di
 
 _FUNCTIONS = {function.__name__: function for function in (
     set_signal_timing, place_map, add_bus_stop, update_bus_stop, update_institution,
+    add_crossing, add_path, set_pedestrian_demand, pedestrian_summary, add_spawn_points,
     network_summary, list_roads, list_junctions, describe, analyse_network, read_source, list_institutions,
     set_junction_control, update_roads, add_junction, add_road, add_boundary_end, move_junctions,
     delete_objects, build_interchange, add_slip_road, set_end_flows, deploy_institutions, network_from_background, generate_grid,
@@ -3323,7 +3300,8 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
         changes = [f"{label} {getattr(old, key)} → {getattr(new, key)}"
                    for key, label in (("lanes_per_direction", "lanes/direction"), ("speed_limit_kmh", "speed"),
                                       ("direction", "direction"), ("lane_changing", "lane changing"),
-                                      ("road_type", "type"), ("overpass", "overpass"), ("pockets", "turn pockets"))
+                                      ("road_type", "type"), ("overpass", "overpass"), ("pockets", "turn pockets"),
+                                      ("cycle_lanes", "cycle lanes to"), ("footpaths", "footpaths"))
                    if getattr(old, key) != getattr(new, key)]
         if (old.from_node, old.to_node) == (new.to_node, new.from_node):
             changes.append(f"now runs {new.from_node} → {new.to_node}")
@@ -3348,6 +3326,23 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
     lines += [f"Placed institution {key} ({item.kind}) at ({item.x:.0f}, {item.y:.0f}) m, its circle "
               f"{item.radius_m:.0f} m" for key, item in after.institutions.items() if key not in before.institutions]
     lines += [f"Deleted institution {key}" for key in before.institutions if key not in after.institutions]
+    lines += [f"Added path {key} ({way.start} to {way.end})" for key, way in after.walkways.items()
+              if key not in before.walkways]
+    lines += [f"Deleted path {key}" for key in before.walkways if key not in after.walkways]
+    lines += [f"Added spawn point {key} at ({p.x:.0f}, {p.y:.0f}) m" for key, p in after.spawn_points.items()
+              if key not in before.spawn_points]
+    lines += [f"Deleted spawn point {key}" for key in before.spawn_points if key not in after.spawn_points]
+    for pair in sorted(set(before.spawn_demand) | set(after.spawn_demand)):
+        old, new = before.spawn_demand.get(pair), after.spawn_demand.get(pair)
+        if old != new:
+            lines.append(f"Pedestrians {pair}: {old or 0:g} → {new or 0:g} an hour")
+    lines += [f"Added {c.kind} {key} on {c.road}, {c.distance_m:.0f} m along" for key, c in after.pedestrian_crossings.items()
+              if key not in before.pedestrian_crossings]
+    lines += [f"Deleted crossing {key}" for key in before.pedestrian_crossings if key not in after.pedestrian_crossings]
+    for pair in sorted(set(before.walk_demand) | set(after.walk_demand)):
+        old, new = before.walk_demand.get(pair), after.walk_demand.get(pair)
+        if old != new:
+            lines.append(f"Pedestrians {pair}: {old or 0:g} → {new or 0:g} an hour")
     if before.route_choice != after.route_choice:
         choice = after.route_choice
         lines.append("Route choice off: every vehicle takes the fastest route" if not choice else
@@ -3514,6 +3509,19 @@ def describe_call(name: str, args: dict) -> str:
         return f"Put the map of {where} under the network"
     if name == "add_bus_stop":
         return f"Add a bus stop on {a.get('road')} ({a.get('direction', 'both')})"
+    if name == "add_crossing":
+        return f"Add a {a.get('kind', 'zebra')} crossing on {a.get('road')}" + \
+            (f", {a['at_m']:g} m along" if isinstance(a.get("at_m"), (int, float)) else "")
+    if name == "add_path":
+        return f"Add a path from {a.get('start')} to {a.get('end')}"
+    if name == "set_pedestrian_demand":
+        people = f"{a['people_per_hour']:g} " if isinstance(a.get("people_per_hour"), (int, float)) else ""
+        return f"Set {people}pedestrians an hour on {', '.join(map(str, a.get('pairs') or [])) or 'pairs'}"
+    if name == "pedestrian_summary":
+        return "Read the network for pedestrians"
+    if name == "add_spawn_points":
+        return f"Place {len(a.get('points') or [])} pedestrian spawn points" if a.get("points") else \
+            "Place pedestrian spawn points"
     if name == "update_bus_stop":
         return f"Change bus stop {a.get('stop')}"
     if name == "update_institution":

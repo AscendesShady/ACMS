@@ -26,7 +26,7 @@ from PySide6.QtWidgets import QTabWidget, QTextBrowser, QVBoxLayout, QWidget
 from . import assistant, theme
 from .daily_profile import HOURS
 from .models import Network
-from .network_tools import analyse_network
+from .design_checks import analyse_network
 
 INTERCHANGES = {"TR": "trumpet", "DI": "diamond", "SP": "SPUI"}  # node ID prefixes from interchanges.py
 FINDINGS = {  # analyse_network key -> how the summary names it

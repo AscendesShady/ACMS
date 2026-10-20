@@ -1,5 +1,8 @@
 # od_matrix.py: demand (Qt)
 
+The grid and editors over the cells; the cells' type and rules (`ODCell`, the split arithmetic, the demand
+tools' argument checks and read-out, a run's pair demand) are demand.py's (demand.md).
+
 - `ODMatrix`: rows are origins and columns destinations (boundary ends that can take
   traffic in or out; one-way ends only one way).
   - The **Demand** drop-down at the top of the Demand Generator tab (`ODCellPanel.demand` →
@@ -15,7 +18,9 @@
     with it (the headers through their own style sheet, as the app's sets 10 pt); the scrollbars count
     pixels.
   - Cells stay blank until they have a value; a filled cell shows it over a bus/car/bike bar.
-  - The diagonal is subdued and unselectable.
+  - The diagonal is drawn shut and unselectable (`_paint_blocked`: `theme.BLOCKED_CELL` hatched with
+    `BLOCKED_HATCH`); the metro's, the pedestrians' and the spawn points' grids draw every cell that can't be typed
+    in the same way (`_BlockedDelegate`: their diagonals, and a metro pair no ride joins).
   - Ctrl+click selects several cells, and arrow keys or Tab move between them.
   - Keyboard entry, spreadsheet style (`ODCellPanel.eventFilter`): a digit typed on the matrix starts
     that cell's flow in the Flow box; Enter or double-click on a cell opens its flow. In the Flow box
@@ -34,9 +39,18 @@
     and one handle between each pair of neighbours. The shares always sum to 100 %. There is one
     % box per type, four to a row. Typing a type's share moves the handle after it, so the next
     type absorbs the difference.
+  - **Drop-offs** (`ODCellPanel._show_drops`): clicking a type's zone in the Modes bar (away from the handles,
+    `ModeSplitSlider.type_clicked`) shows that type's drop-offs under the % boxes; clicking it again puts them away.
+    `DropSlider` is the pair's fastest route from its entry to its exit (`ODCellPanel.router`, the window's
+    `_route_along`: metres and each junction at its share of them), in the type's colour, the junctions ticked and
+    named. Click the track to add a point (10 %, or what is left; within 8 px of a junction it snaps to it), drag it,
+    double-click or right-click to remove it; the selected point's % is typed in **Ends here** (at most what the
+    others leave). The hint says what % reach the exit. Each edit is one undo step (`_edited("drops")`); one pair at
+    a time (several selected, or no route: a line says so). A point is a share of the trip's length, so it holds on
+    whichever route a vehicle takes. Copy to row/column leaves drop-offs out (each pair's route differs).
   - **Timetabled types** (a headway in Mode Behavior, e.g. a bus every 10 min): `ODMatrix.split_of`
     fixes each one's share at its vehicles over the pair's trips (60 ÷ headway per hour against the
-    hourly flow, else × 24 against the daily trips; `mode_behavior.fixed_split`). The other types share
+    hourly flow, else × 24 against the daily trips; `demand.split_of`, `demand.fixed_split`). The other types share
     the rest in their stored proportions, so changing the flow moves only them. The stored split keeps
     those proportions and the fixed share is worked out whenever it is read (matrix bars, tooltips,
     summary, assistant), so small flows typed on the way lose nothing. The fixed type's % box is
@@ -93,14 +107,19 @@
   matrix now holds (`_lead_with_what_was_kept`: `total_now`, `kept_after_check`; the made total as
   `total_before_check`, as qwen3.5 had reported it as kept) and, under half kept, `to_hold_more`: the busiest junctions
   that only give way and what might let more hold (signalising them, or main roads only).
-- `ODCell(flow, daily, profile, pattern, split, quarters)`: the data for one pair. `split` is one percent
+- `ODCell(flow, daily, profile, pattern, split, quarters, drops)`: the data for one pair (drops: demand.md). `split` is one percent
   per vehicle type, in Mode Behavior's order; `quarters` the hourly demand's four 15-minute shares of the hour
   (() even; a Run passes them as `PairDemand.quarters`). AI Mode's set_od_demand takes `peak_hour_factor` or
   `quarters` (four 15-minute counts or shares) for hourly demand, refused for daily; its result and
   read_od_matrix give each hourly pair's `peak_hour_factor` and `quarters`. Saved with the project (network_io) and in the undo
   history.
+- `SpawnMatrix` (Demand → **Pedestrian spawn points**, `spawn_box`): `MetroMatrix`'s grid over the spawn points
+  (S1, S2... in number order), any two different, each cell `Network.spawn_demand`'s people an hour; the panel's
+  **Place Spawn Points** (`place_spawn_button`, checkable) places more on the map (main.md), with one hint on how.
+- `PedestrianMatrix` (Demand → **Pedestrians (per hour)**, `walk_hint`): `MetroMatrix`'s grid over the boundary ends (`_places`), any two different (`_joined`), each cell `Network.walk_demand`'s people an hour (0 to `MAX_WALK_DEMAND` 100,000); a pair no footpath or path joins is noted when a run starts (walking.md).
 - `MetroMatrix` (Demand → **Metro passengers (per hour)**, in the main area in place of the grid): the metro's own OD
   matrix, stations M1, M2... as rows (from) and columns (to), each cell `Network.metro_demand`'s passengers an hour.
   A number typed sets it (an undo step), 0 or blank clears it, anything else (or past 100,000) is refused and the cell
-  put back; the diagonal and pairs on different lines (no transfers: no ride) can't be typed in. Apart from the roads'
+  put back; the diagonal and pairs no ride joins (`metro.ride`: one line, or one change at an interchange) can't be
+  typed in; a station's header names its line, or lines at an interchange. Apart from the roads'
   demand: road pairs never ride the metro (metro.md). The panel shows one line on how (`metro_hint`).

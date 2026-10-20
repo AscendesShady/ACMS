@@ -1,9 +1,9 @@
 """AI Mode tab: System 1's fast typed answers and System 2's chat about the app.
 
 Both take their keys only from this PC's environment variables (JEV_API_KEY for
-System 1; GROK_API_KEY, GEMINI_API_KEY for System 2): the app scans for them, for laya.exe
-(LAYA_EXE) and for a running Ollama, when it starts (Rescan PC looks again) and offers just
-what it found. System 1 (Jev, or Laya started here) answers the signal agent's TRUE/FALSE
+System 1; GROK_API_KEY, GEMINI_API_KEY for System 2): the app scans for them and for a running
+Ollama when it starts (Rescan PC looks again) and offers just what it found. System 1 (Jev, or
+one of Ollama's decision models, as Laya) answers the signal agent's TRUE/FALSE
 questions, else System 2's started model does. System 2 chats through assistant.py:
 pick Grok, Gemini or a local Ollama model and it warms up on the app's documents; the prompt box
 stays locked (the prompt gate) until the model is ready. Replies stream in, and the
@@ -33,9 +33,8 @@ from PySide6.QtWidgets import (QComboBox, QFormLayout, QHBoxLayout, QLabel, QLin
 
 from traffic_simulator import assistant, network_tools, theme
 from traffic_simulator.assistant import AssistantError, Cancelled, ToolsUnsupported, ollama_models  # noqa: F401
-from traffic_simulator.properties_panel import OpenPageTabs, hint_label, icon_button, set_glyph, styled_button
+from traffic_simulator.widgets import OpenPageTabs, hint_label, icon_button, set_glyph, styled_button
 
-SYSTEM_1 = {"jev": "JEV (JEV_API_KEY)", "laya": "Laya (local)"}  # what System 1 can use, when found
 PROVIDERS = {"grok": "Grok (xAI)", "gemini": "Gemini (Google)", "local": "Local (Ollama)"}
 WINDOWS_ENVIRONMENTS = (  # (root, path) as winreg names: user first, then system-wide
     ("HKEY_CURRENT_USER", "Environment"),
@@ -134,6 +133,11 @@ def _plain(html_text: str) -> str:
     return re.sub(r"<[^>]+>", "", html_text.replace("<br>", "\n")).strip()
 
 
+def _system_one(choice: str) -> tuple[str, str]:
+    """(provider, model) of a System 1 choice: "jev", else an Ollama decision model's name."""
+    return ("jev", assistant.SYSTEM_ONE_MODEL) if choice == "jev" else ("local", choice)
+
+
 class _Relay(QObject):
     """Carries a background request's events back to the UI thread."""
 
@@ -141,7 +145,6 @@ class _Relay(QObject):
     text = Signal(int, int, str, str)  # session, turn, speaker, streamed text
     tool = Signal(int, int, object)  # session, turn, _ToolRequest: answer it, then set its done event
     listed = Signal(int, str, object, object)  # session, provider, its chat models, error
-    system_1 = Signal(str, object, object)  # System 1 choice, Laya's health, error
 
 
 class AIModePanel(QWidget):
@@ -156,13 +159,13 @@ class AIModePanel(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self._found: dict[str, str] = {}  # keys found in the environment by the last scan
-        self._laya_exe = ""  # laya.exe found by the last scan
-        self._system_1 = ""  # System 1's choice, kept apart from the widget for the agent's thread
+        self._system_1 = ""  # System 1's choice ("jev" or an Ollama model), apart from the widget for the agent's thread
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         self.systems = systems = OpenPageTabs()  # System 1's page no taller than it needs
         page = QWidget()
         form = QFormLayout(page)
+        form.setContentsMargins(0, 8, 0, 0)  # the sidebar's column, as the other pages
         self.system_1_status = hint_label()  # what the scan found on this PC
         form.addRow(self.system_1_status)
         self.system_1 = QComboBox()
@@ -170,13 +173,14 @@ class AIModePanel(QWidget):
         self.system_1.setToolTip("Detected System 1 options")
         self.system_1.activated.connect(self._choose_system_1)
         form.addRow("Use", self.system_1)
-        self.system_1_state = hint_label()  # what the chosen one is doing (Laya starting, ready, failed)
+        self.system_1_state = hint_label()  # what answers for the chosen one
         form.addRow(self.system_1_state)
         form.addRow(hint_label("System 1 answers the signal agent's TRUE/FALSE questions in one pass, with no "
                                "text generated; while it is Off, System 2's started model answers them."))
         systems.addTab(page, "System 1")
         page = QWidget()
         form = QFormLayout(page)
+        form.setContentsMargins(0, 8, 0, 0)  # the sidebar's column, as the other pages
         self.found_status = hint_label()  # what the scan found on this PC
         form.addRow(self.found_status)
         self._build_chat(form)
@@ -274,7 +278,6 @@ class AIModePanel(QWidget):
         self._relay.text.connect(self._streamed)
         self._relay.tool.connect(self._tool_requested)
         self._relay.listed.connect(self._listed)
-        self._relay.system_1.connect(self._system_1_started)
         self._busy_text, self._busy_since = None, 0.0
         self._busy_timer = QTimer(self, interval=1000)  # the seconds count, so a slow model shows it's alive
         self._busy_timer.timeout.connect(self._show_busy)
@@ -989,27 +992,26 @@ class AIModePanel(QWidget):
     def rescan(self) -> None:
         """Scan this PC's environment variables for the keys, and Ollama for its models; offer
         System 2 only what was found. Keeps the chosen option if it is still there."""
-        found = scan_keys(["JEV_API_KEY", "LAYA_EXE", *assistant.KEY_NAMES.values()])
+        found = scan_keys(["JEV_API_KEY", *assistant.KEY_NAMES.values()])
         self._found = found
-        self._laya_exe = assistant.laya_exe(found.get("LAYA_EXE", ""))
-        laya = "laya.exe" if self._laya_exe else "a running Laya" if assistant.laya_health() else ""
-        here = {"jev": "JEV_API_KEY" in found, "laya": bool(laya)}
+        deciders = ollama_models(capability="decision") or []  # Ollama's decision models (Laya)
+        here = [*(["jev"] if "JEV_API_KEY" in found else []), *deciders]
         chosen = self.system_1.currentData() or ""
         self.system_1.clear()
         self.system_1.addItem("Off", "")
-        for name, label in SYSTEM_1.items():
-            if here[name]:
-                self.system_1.addItem(label, name)
+        for name in here:
+            self.system_1.addItem("JEV (JEV_API_KEY)" if name == "jev" else f"{name} (Ollama)", name)
         self.system_1.setCurrentIndex(max(0, self.system_1.findData(chosen)))
-        if chosen and not here[chosen]:
-            self._choose_system_1()  # its key or laya.exe has gone: back to Off
-        missing_1 = [what for name, what in (("jev", "JEV_API_KEY"), ("laya", "LAYA_EXE (laya.exe's path)"))
-                     if not here[name]]
+        if chosen and chosen not in here:
+            self._choose_system_1()  # its key or model has gone: back to Off
+        have = [*(["JEV_API_KEY"] if "jev" in here else []),
+                *([f"Ollama ({len(deciders)} decision model{'' if len(deciders) == 1 else 's'})"] if deciders else [])]
+        missing_1 = [what for what, there in (("JEV_API_KEY", "jev" in here),
+                                              ("an Ollama decision model (Laya)", deciders)) if not there]
         self.system_1_status.setText(
-            "Found on this PC: " + (", ".join([*(["JEV_API_KEY"] if here["jev"] else []), *([laya] if laya else [])])
-                                    or "nothing yet")
-            + "." + (f" Not found: {', '.join(missing_1)}. Save it as an environment variable (see "
-                     "README), then Rescan PC." if missing_1 else ""))
+            "Found on this PC: " + (", ".join(have) or "nothing yet") + "."
+            + (f" Not found: {', '.join(missing_1)}. Save the key as an environment variable (see README) or "
+               "pull the model, then Rescan PC." if missing_1 else ""))
 
         models, chosen = ollama_models(), self.local_models.currentText()
         self.local_models.clear()
@@ -1057,39 +1059,15 @@ class AIModePanel(QWidget):
     # --- System 1 ----------------------------------------------------------------------
 
     def _choose_system_1(self) -> None:
-        """A pick in System 1's Use. Laya starts here, off the UI thread (it loads its model); Jev
-        needs nothing until it's asked. Any other pick ends a Laya this app started (its GPU memory)."""
+        """A pick in System 1's Use: nothing to start (Ollama loads its model on the first question)."""
         self._system_1 = choice = self.system_1.currentData() or ""
-        if choice != "laya":
-            assistant.stop_laya()
-            self.system_1_state.setText("Jev answers through TypeSafe's API." if choice == "jev" else "")
-            return
-        self.system_1_state.setText("Starting Laya…")
-        exe, relay = self._laya_exe, self._relay
-
-        def target() -> None:
-            try:
-                relay.system_1.emit(choice, assistant.start_laya(exe), None)
-            except AssistantError as exc:
-                relay.system_1.emit(choice, None, str(exc))
-            except Exception as exc:  # noqa: BLE001 - say so rather than stay on "Starting"
-                relay.system_1.emit(choice, None, f"Unexpected error: {exc!r}")
-
-        threading.Thread(target=target, daemon=True).start()
-
-    def _system_1_started(self, choice: str, health, error: str | None) -> None:
-        if choice != self._system_1:
-            assistant.stop_laya()  # picked something else while it started
-            return
-        families = ", ".join(health.get("families") or []) if health else ""
-        self.system_1_state.setText(f"Laya couldn't start: {error}" if error else
-                                    f"Laya is ready on {health.get('device', 'this PC')}"
-                                    + (f" ({families})." if families else "."))
+        self.system_1_state.setText("Jev answers through TypeSafe's API." if choice == "jev" else
+                                    f"{choice} answers through Ollama." if choice else "")
 
     def agent_options(self) -> list[dict]:
         """Who a batch run can put in charge of TSP or DEVL, as found by the last scan: the two baselines (Never
         preempt, general traffic, first; Always preempt: each with a `rule` and no system), System 1's
-        (Jev, Laya) and System 2's (every Ollama model; Grok and Gemini whenever their keys are on this PC, each
+        (Jev, Ollama's decision models) and System 2's (every Ollama model; Grok and Gemini whenever their keys are on this PC, each
         with the model last started in System 2, else the provider's usual one). Each: label, system, provider,
         model and name (for the run's file name)."""
         options = [{"label": "Never preempt (baseline)", "system": "", "provider": "", "model": "", "name": "never",
@@ -1097,9 +1075,9 @@ class AIModePanel(QWidget):
                    {"label": "Always preempt (baseline)", "system": "", "provider": "", "model": "", "name": "always",
                     "rule": True}]
         for index in range(1, self.system_1.count()):
-            provider = self.system_1.itemData(index)
-            options.append({"label": f"System 1: {assistant.PROVIDER_NAMES[provider]}", "system": "1",
-                            "provider": provider, "model": assistant.SYSTEM_ONE_MODEL, "name": provider})
+            provider, model = _system_one(self.system_1.itemData(index))
+            options.append({"label": f"System 1: {'Jev' if provider == 'jev' else model}", "system": "1",
+                            "provider": provider, "model": model, "name": "jev" if provider == "jev" else model})
         models = [("local", self.local_models.itemText(index)) for index in range(self.local_models.count())]
         for provider in ("grok", "gemini"):
             if assistant.KEY_NAMES[provider] in self._found:
@@ -1110,17 +1088,15 @@ class AIModePanel(QWidget):
                             "name": model})
         return options
 
-    def start_laya(self) -> dict:
-        """Laya's health, starting the laya.exe found by the last scan if none answers (any thread)."""
-        return assistant.start_laya(self._laya_exe)
-
     def key_for(self, provider: str) -> str:
         """The key this PC holds for a provider (jev, grok, gemini); "" for local ones."""
         name = "JEV_API_KEY" if provider == "jev" else assistant.KEY_NAMES.get(provider, "")
         return self.keys().get(name, "") if name else ""
 
-    def system_one_for_agents(self) -> tuple[str, str] | None:
-        """(provider, key) of the System 1 chosen under Use, for features wanting a fast typed answer
+    def system_one_for_agents(self) -> tuple[str, str, str] | None:
+        """(provider, key, model) of the System 1 chosen under Use, for features wanting a fast typed answer
         (the signal agent); None while it is Off. Safe from any thread."""
-        choice = self._system_1
-        return (choice, self.keys().get("JEV_API_KEY", "") if choice == "jev" else "") if choice else None
+        if not self._system_1:
+            return None
+        provider, model = _system_one(self._system_1)
+        return provider, self.key_for(provider), model

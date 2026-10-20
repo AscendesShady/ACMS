@@ -26,7 +26,8 @@ def test_keys_come_from_the_environment():
 
 class _Tags(BaseHTTPRequestHandler):
     def do_GET(self):
-        body = json.dumps({"models": [{"name": "phi3:3.8b"}, {"name": "llama3:latest"}]}).encode()
+        body = json.dumps({"models": [{"name": "phi3:3.8b"}, {"name": "llama3:latest", "capabilities": ["completion"]},
+                                      {"name": "laya:421m-english-bf16", "capabilities": ["decision"]}]}).encode()
         self.send_response(200 if self.path == "/api/tags" else 404)
         self.end_headers()
         self.wfile.write(body)
@@ -42,7 +43,8 @@ def test_ollama_models_are_listed_from_its_host():
     try:
         for host in (f"127.0.0.1:{port}", f"http://localhost:{port}", f"0.0.0.0:{port}"):
             os.environ["OLLAMA_HOST"] = host
-            assert ollama_models() == ["llama3:latest", "phi3:3.8b"], host
+            assert ollama_models() == ["llama3:latest", "phi3:3.8b"], host  # chat models only
+            assert ollama_models(capability="decision") == ["laya:421m-english-bf16"], host
         server.shutdown()
         server.server_close()
         assert ollama_models(timeout_s=0.5) is None  # nothing listening: not running
@@ -56,7 +58,8 @@ def test_ollama_models_are_listed_from_its_host():
 class _Providers(BaseHTTPRequestHandler):
     """Streams like xAI (/xai, server-sent events), Gemini (/gemini, server-sent events) and
     Ollama (/api, one JSON per line). With tools offered and no tool result yet, each asks for
-    the describe tool; otherwise it answers "hi <provider>" in two pieces."""
+    the describe tool; otherwise it answers "hi <provider>" in two pieces. System 1 (Jev's /jev/systemone,
+    Ollama's /v1/systemone): each noul is P(yes) 0.8 when the state mentions a bus, else 0.1."""
     seen = []  # (path, headers, body); headers match case-insensitively
 
     def _stream(self, events, sse=True):
@@ -71,7 +74,8 @@ class _Providers(BaseHTTPRequestHandler):
     def do_GET(self):
         _Providers.seen.append((self.path, self.headers, None))
         body = {"data": [{"id": "grok-4.3"}, {"id": "grok-imagine-image"}]} if self.path == "/xai/models" else \
-            {"models": [{"name": "llama3:latest"}]} if self.path == "/api/tags" else {
+            {"models": [{"name": "llama3:latest"}, {"name": "laya:421m-english-bf16", "capabilities": ["decision"]}]} \
+            if self.path == "/api/tags" else {
             "models": [{"name": "models/gemini-2.5-flash", "supportedGenerationMethods": ["generateContent"]},
                        {"name": "models/gemini-2.5-flash-preview-tts", "supportedGenerationMethods": ["generateContent"]},
                        {"name": "models/embedding-001", "supportedGenerationMethods": ["embedContent"]}]}
@@ -91,6 +95,15 @@ class _Providers(BaseHTTPRequestHandler):
             self.send_response(401)
             self.end_headers()
             self.wfile.write(json.dumps({"error": {"message": "Incorrect API key"}}).encode())
+            return
+        if self.path.endswith("/systemone"):
+            yes = 0.8 if "bus" in json.dumps(body["state"]) else 0.1
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps({
+                "model": "jev-1.13.0" if self.path.startswith("/jev/") else body["model"],
+                "answers": {name: {"type": "noul", "noul": yes} for name in body["questions"]},
+                "usage": {"input_tokens": 12, "output_tokens": 0}}).encode())
             return
         if self.path.startswith("/xai/"):
             wants_tool = body.get("tools") and body["messages"][-1]["role"] != "tool"
@@ -142,17 +155,18 @@ def _serve_providers():
     server = HTTPServer(("127.0.0.1", 0), _Providers)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     base = f"http://127.0.0.1:{server.server_address[1]}"
-    saved = assistant.XAI_URL, assistant.GEMINI_URL, os.environ.get("OLLAMA_HOST")
-    assistant.XAI_URL, assistant.GEMINI_URL, os.environ["OLLAMA_HOST"] = f"{base}/xai", f"{base}/gemini", base
+    saved = assistant.XAI_URL, assistant.GEMINI_URL, assistant.JEV_URL, os.environ.get("OLLAMA_HOST")
+    assistant.XAI_URL, assistant.GEMINI_URL, assistant.JEV_URL = f"{base}/xai", f"{base}/gemini", f"{base}/jev"
+    os.environ["OLLAMA_HOST"] = base
 
     def restore():
         server.shutdown()
         server.server_close()
-        assistant.XAI_URL, assistant.GEMINI_URL = saved[:2]
-        if saved[2] is None:
+        assistant.XAI_URL, assistant.GEMINI_URL, assistant.JEV_URL = saved[:3]
+        if saved[3] is None:
             os.environ.pop("OLLAMA_HOST", None)
         else:
-            os.environ["OLLAMA_HOST"] = saved[2]
+            os.environ["OLLAMA_HOST"] = saved[3]
     return restore
 
 
@@ -680,140 +694,59 @@ def test_a_reply_that_stalls_fails_at_the_stall_limit_not_the_start_one():
     assert len(got) == 1 and time.monotonic() - started < 5  # not LOCAL_TIMEOUT_S (600 s)
 
 
-class _SystemOne(BaseHTTPRequestHandler):
-    """Answers like Laya (/health, /v1/systemone) and Jev (/jev/systemone): each noul is P(yes) 0.8
-    when the state mentions a bus, else 0.1; the key "bad" is refused."""
-    seen = []  # (path, headers, body)
-
-    def _reply(self, code, body):
-        self.send_response(code)
-        self.end_headers()
-        self.wfile.write(json.dumps(body).encode())
-
-    def do_GET(self):
-        self._reply(200, {"status": "ok", "device": "cuda:0", "families": ["english"]} if self.path == "/health"
-                    else {"error": "not found"})
-
-    def do_POST(self):
-        body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
-        _SystemOne.seen.append((self.path, self.headers, body))
-        if self.headers.get("Authorization") == "Bearer bad":
-            return self._reply(401, {"error": {"code": "authentication_error", "message": "Invalid API key."}})
-        yes = 0.8 if "bus" in json.dumps(body["state"]) else 0.1
-        self._reply(200, {"model": "jev-1.13.0", "answers": {name: {"type": "noul", "noul": yes}
-                                                             for name in body["questions"]},
-                          "usage": {"input_tokens": 12, "output_tokens": 0}})
-
-    def log_message(self, *args):
-        pass
-
-
-def _serve_system_one():
-    """Point Jev and Laya at a fake System One server; returns a function that undoes it."""
-    server = HTTPServer(("127.0.0.1", 0), _SystemOne)
-    threading.Thread(target=server.serve_forever, daemon=True).start()
-    base = f"http://127.0.0.1:{server.server_address[1]}"
-    saved = assistant.JEV_URL, os.environ.get("LAYA_HOST")
-    assistant.JEV_URL, os.environ["LAYA_HOST"] = f"{base}/jev", base
-
-    def restore():
-        server.shutdown()
-        server.server_close()
-        assistant.JEV_URL = saved[0]
-        if saved[1] is None:
-            os.environ.pop("LAYA_HOST", None)
-        else:
-            os.environ["LAYA_HOST"] = saved[1]
-    return restore
-
-
-def test_system_one_asks_jev_and_laya_through_one_api():
-    restore = _serve_system_one()
+def test_system_one_asks_jev_and_ollama_through_one_api():
+    restore = _serve_providers()
     try:
-        assert assistant.laya_health()["device"] == "cuda:0"
         questions = {"switch": {"type": "noul", "instructions": "Should the phase change?"}}
         reply = assistant.system_one("jev", {"queue": 17}, questions, "k")
-        path, headers, body = _SystemOne.seen[-1]
+        path, headers, body = _Providers.seen[-1]
         assert path == "/jev/systemone" and headers["Authorization"] == "Bearer k"
         assert body == {"model": "jev-latest", "state": {"queue": 17}, "questions": questions}
         assert reply["answers"]["switch"]["noul"] == 0.1
         assert assistant.USAGE[-1]["provider"] == "jev" and assistant.USAGE[-1]["input_tokens"] == 12
-        assert assistant.system_one_true("laya", "Is a bus waiting on 1W?")  # a yes/no as one noul
-        assert not assistant.system_one_true("laya", "Is the queue on 1W empty?")
-        path, headers, body = _SystemOne.seen[-1]
-        assert path == "/v1/systemone" and "Authorization" not in headers  # one this app didn't start: no key
+        assert assistant.system_one_true("local", "Is a bus waiting on 1W?", model="laya:421m-english-bf16")  # a yes/no as one noul
+        assert not assistant.system_one_true("local", "Is the queue on 1W empty?", "k", "laya:421m-english-bf16")
+        path, headers, body = _Providers.seen[-1]
+        assert path == "/v1/systemone" and "Authorization" not in headers  # Ollama: never a key
+        assert body["model"] == "laya:421m-english-bf16" and assistant.USAGE[-1]["model"] == "laya:421m-english-bf16"
         assert body["state"] == "Is the queue on 1W empty?" and body["questions"]["answer"]["type"] == "noul"
-        assert assistant.start_laya("") == assistant.laya_health()  # one answers already: nothing started
         try:
             assistant.system_one("jev", "x", questions, "bad")
         except assistant.AssistantError as exc:
-            assert "401" in str(exc) and "Invalid API key" in str(exc)
+            assert "401" in str(exc) and "Incorrect API key" in str(exc)
         else:
             raise AssertionError("a rejected key must raise AssistantError")
     finally:
         restore()
 
 
-def test_laya_that_cannot_start_says_why():
-    import socket
-    import sys
-
-    with socket.socket() as spare:  # a port nothing listens on
-        spare.bind(("127.0.0.1", 0))
-        port = spare.getsockname()[1]
-    before = os.environ.get("LAYA_HOST")
-    os.environ["LAYA_HOST"] = f"127.0.0.1:{port}"
-    try:
-        assert assistant.laya_health(timeout_s=0.5) is None
-        for exe, words in (("", ["Save its path as LAYA_EXE"]),  # not found
-                           # a program that exits at once: what it printed (python can't find "serve") is said
-                           (sys.executable, ["laya.exe stopped", "can't open file"])):
-            try:
-                assistant.start_laya(exe, timeout_s=20)
-            except assistant.AssistantError as exc:
-                assert all(word in str(exc) for word in words), str(exc)
-            else:
-                raise AssertionError("a Laya that can't start must raise AssistantError")
-            assert assistant._laya_process is None and assistant._laya_key == ""  # nothing left running
-    finally:
-        if before is None:
-            os.environ.pop("LAYA_HOST", None)
-        else:
-            os.environ["LAYA_HOST"] = before
-
-
 def test_system_1_answers_the_signal_agent():
-    """The real panel: Laya is offered when one answers, picking it shows it ready, and the signal
-    agent's questions then go to System 1 instead of System 2."""
-    import time
-
+    """The real panel: Ollama's decision models are offered in System 1 (and not in System 2), picking one says
+    so, and the signal agent's questions then go to System 1 instead of System 2."""
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     from PySide6.QtWidgets import QApplication
 
     from traffic_simulator.main import MainWindow
 
-    restore = _serve_system_one()
-    app = QApplication.instance() or QApplication([])
+    restore = _serve_providers()
+    app = QApplication.instance() or QApplication([])  # noqa: F841
     window = MainWindow()
     panel = window.ai_mode
     try:
         panel.rescan()
         offered = [panel.system_1.itemData(i) for i in range(panel.system_1.count())]
-        assert offered[0] == "" and "laya" in offered and "LAYA_EXE (laya.exe's path)" not in panel.system_1_status.text()
+        assert offered[0] == "" and "laya:421m-english-bf16" in offered and "decision model (Laya)" not in panel.system_1_status.text()
+        assert [panel.local_models.itemText(i) for i in range(panel.local_models.count())] == ["llama3:latest"]
         try:
             window._ask_agent("Is a bus waiting?")
         except RuntimeError as exc:  # System 1 Off and no System 2 model started
             assert "every answer is FALSE" in str(exc)
-        panel.system_1.setCurrentIndex(panel.system_1.findData("laya"))
+        panel.system_1.setCurrentIndex(panel.system_1.findData("laya:421m-english-bf16"))
         panel.system_1.activated.emit(panel.system_1.currentIndex())
-        start = time.time()
-        while "ready" not in panel.system_1_state.text() and time.time() - start < 10:
-            app.processEvents()
-            time.sleep(0.01)
-        assert panel.system_1_state.text() == "Laya is ready on cuda:0 (english)."
-        assert panel.system_one_for_agents() == ("laya", "")
+        assert panel.system_1_state.text() == "laya:421m-english-bf16 answers through Ollama."
+        assert panel.system_one_for_agents() == ("local", "", "laya:421m-english-bf16")
         assert window._ask_agent("Is a bus waiting?") == "TRUE" and window._ask_agent("Is it empty?") == "FALSE"
-        assert any(line.startswith("System 1: Laya (local) · Laya is ready") for line in window._summary_inputs()["ai"])
+        assert any(line.startswith("System 1: laya:421m-english-bf16 (Ollama) · laya:421m-english-bf16 answers") for line in window._summary_inputs()["ai"])
         panel.system_1.setCurrentIndex(0)
         panel.system_1.activated.emit(0)
         assert panel.system_one_for_agents() is None and panel.system_1_state.text() == ""
@@ -825,7 +758,7 @@ def test_system_1_answers_the_signal_agent():
 def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
     """The window's batch with TSP ticked, paced at 60x and never pausing: every seed × agent, each run's workbook
     named by seed and model with its TSP sheets and its telemetry feed beside it, and the batch's comparing each
-    agent with No LLM (fake Laya says TRUE to buses; fake Ollama calls decide_tsp(activate=true))."""
+    agent with No LLM (fake Jev says TRUE to buses; fake Ollama calls decide_tsp(activate=true))."""
     import json
     import time
     from pathlib import Path
@@ -836,21 +769,22 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
     from test_results import read_xlsx
     from traffic_simulator.main import MainWindow
 
-    restore_1, restore_2 = _serve_system_one(), _serve_providers()
+    restore = _serve_providers()
     app = QApplication.instance() or QApplication([])  # noqa: F841
     window = MainWindow()
     try:
-        saved_key = os.environ.get("GROK_API_KEY")
-        os.environ["GROK_API_KEY"] = "k"  # a key on this PC: Grok is offered, started in System 2 or not
+        saved_keys = {name: os.environ.get(name) for name in ("GROK_API_KEY", "JEV_API_KEY")}
+        os.environ.update(GROK_API_KEY="k", JEV_API_KEY="k")  # keys on this PC: Grok and Jev are offered
         try:
             window.ai_mode.rescan()
         finally:
-            if saved_key is None:
-                os.environ.pop("GROK_API_KEY")
-            else:
-                os.environ["GROK_API_KEY"] = saved_key
+            for name, saved_key in saved_keys.items():
+                if saved_key is None:
+                    os.environ.pop(name)
+                else:
+                    os.environ[name] = saved_key
         labels = [option["label"] for option in window.ai_mode.agent_options()]
-        assert labels[:2] == ["Never preempt (baseline)", "Always preempt (baseline)"] and "System 1: Laya" in labels and "System 2: llama3:latest" in labels
+        assert labels[:2] == ["Never preempt (baseline)", "Always preempt (baseline)"] and "System 1: Jev" in labels and "System 1: laya:421m-english-bf16" in labels and "System 2: llama3:latest" in labels
         assert "System 2: grok-4" in labels  # the provider's usual model, none started
         window._od_command("set_od_demand", {"pairs": ["1W->1E", "1E->1W"], "demand": "hourly", "value": 300,
                                              "mode_split": [{"mode": "Bus", "percent": 40}, {"mode": "Car", "percent": 60}]})
@@ -863,11 +797,11 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
                 assert words in str(exc)
             else:
                 raise AssertionError("a batch with no model, or one not found, must be refused before it runs")
-        chosen = ["Never preempt (baseline)", "Always preempt (baseline)", "System 1: Laya", "System 2: llama3:latest"]
+        chosen = ["Never preempt (baseline)", "Always preempt (baseline)", "System 1: Jev", "System 2: llama3:latest"]
         started = time.monotonic()  # the models only: the baseline always runs, first
         done = window.run_batch([1, 2], 3, 1, agents=chosen[2:], deadline_s=5, speed=60, at_once=4, test_tsp=True)
         took = time.monotonic() - started
-        # 3 s a run at 60x, side by side; Laya's two and llama's two one after another: about 6 s, not 18
+        # 3 s a run at 60x, side by side; Jev's two and llama's two one after another: about 6 s, not 18
         assert 2 * 3 * 0.9 <= took < 6 * 3 * 0.8, took
         assert done["runs"] == done["of"] == 8 and tsp.module.tsp_agent.system == "1"  # its choice untouched
 
@@ -881,7 +815,7 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
         assert all(run.get("pace_achieved") is None for (agent, _), run in together.items() if "baseline" in agent)
         assert all(0 < pace <= 61 for pace in paces)  # recorded, never above the pace asked
         assert ("note" in done) == any(pace < 0.9 * 60 for pace in paces)  # and falling behind is said
-        alone = runs_of(window.run_batch([1, 2], 3, 1, agents=["System 1: Laya"], deadline_s=5, speed=60,
+        alone = runs_of(window.run_batch([1, 2], 3, 1, agents=["System 1: Jev"], deadline_s=5, speed=60,
                                          at_once=1, test_tsp=True)["file"])
         for seed in (1.0, 2.0):  # each run its own state: side by side as alone, to the vehicle
             side, own = together[("Never preempt (baseline)", seed)], alone[("Never preempt (baseline)", seed)]
@@ -889,26 +823,26 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
                                                          "tsp_requests", "tsp_greens_cut")), seed
         sheets = read_xlsx(done["file"])
         assert list(sheets)[:5] == ["Read me", "Headline", "Comparison", "Agents", "Runs"]
-        headline = [row for row in sheets["Headline"][1:] if row[0] == "System 1: Laya"]
+        headline = [row for row in sheets["Headline"][1:] if row[0] == "System 1: Jev"]
         assert {"Passenger throughput increase", "Passenger delay reduction",
                 "Vehicle wait time reduction (per trip)"} <= {row[1] for row in headline}
         agents = {row[0]: row for row in sheets["Agents"][1:]}
-        assert set(agents) == set(chosen) and agents["System 1: Laya"][1:4] == ["System 1", "laya", "jev-latest"]
+        assert set(agents) == set(chosen) and agents["System 1: Jev"][1:4] == ["System 1", "jev", "jev-latest"]
         names = sorted(path.name for path in Path(done["folder"]).glob("*.xlsx"))
-        assert len(names) == 8 and any(" seed 1 laya" in name for name in names)
+        assert len(names) == 8 and any(" seed 1 jev" in name for name in names)
         assert any(" seed 2 llama3-latest" in name for name in names) and any(" seed 2 never" in name for name in names)
         # Seed 2's runs: seed 1's go first, while each model is cold, and at 60x most of their answers miss the deadline
-        laya = read_xlsx(next(Path(done["folder"]).glob("* seed 2 laya.xlsx")))
-        figures = {row[0]: row[1] for row in laya["TSP"][1:] if len(row) > 1 and row[0]}
+        jev = read_xlsx(next(Path(done["folder"]).glob("* seed 2 jev.xlsx")))
+        figures = {row[0]: row[1] for row in jev["TSP"][1:] if len(row) > 1 and row[0]}
         assert figures["Bus requests"] > 0 and figures["Priority given (TRUE)"] > 0 and figures["Model"] == "jev-1.13.0"
-        run = {row[0]: row[1] for row in laya["Run"][1:]}
+        run = {row[0]: row[1] for row in jev["Run"][1:]}
         assert run["Decision deadline (simulated s)"] == 5 and run["Pace (simulated s a real s)"] == 60
-        decided = [row for row in laya["Agent decisions"][1:] if str(row[7]).startswith("TRUE")]
-        read = laya["Agent decisions"][0].index("Telemetry read")
-        assert decided and json.loads(decided[0][read])["schema"] == "acms-tsp-telemetry/1"  # what Laya read
-        out = laya["Agent decisions"][0].index("Outcome")
-        assert {row[out] for row in laya["Agent decisions"][1:] if len(row) > out} <= set(tsp.module.OUTCOMES)
-        feed = [json.loads(line) for line in next(Path(done["folder"]).glob("* seed 2 laya telemetry.jsonl"))
+        decided = [row for row in jev["Agent decisions"][1:] if str(row[7]).startswith("TRUE")]
+        read = jev["Agent decisions"][0].index("Telemetry read")
+        assert decided and json.loads(decided[0][read])["schema"] == "acms-tsp-telemetry/1"  # what Jev read
+        out = jev["Agent decisions"][0].index("Outcome")
+        assert {row[out] for row in jev["Agent decisions"][1:] if len(row) > out} <= set(tsp.module.OUTCOMES)
+        feed = [json.loads(line) for line in next(Path(done["folder"]).glob("* seed 2 jev telemetry.jsonl"))
                 .read_text(encoding="utf-8").splitlines()]
         kinds = {message["type"] for message in feed}
         assert {"tsp_request", "tsp_decision"} <= kinds <= {"tsp_request", "tsp_decision", "tsp_withdrawn", "tsp_late_answer"}
@@ -925,7 +859,7 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
         assert {row[0]: row[1] for row in plain["TSP"][1:] if len(row) > 1 and row[0]}["Priority given (TRUE)"] == 0  # Never preempt
         always = read_xlsx(next(Path(done["folder"]).glob("* seed 1 always.xlsx")))
         assert {row[0]: row[1] for row in always["TSP"][1:] if len(row) > 1 and row[0]}["Priority given (TRUE)"] > 0
-        for name in ("laya", "llama3-latest", "never", "always"):  # replayed from its feed, no model asked: the run again, exactly
+        for name in ("jev", "llama3-latest", "never", "always"):  # replayed from its feed, no model asked: the run again, exactly
             book = next(Path(done["folder"]).glob(f"* seed 1 {name}.xlsx"))
             replayed = window.replay_run(book)
             assert replayed["same"] and f"{name}-replay.xlsx" in replayed["file"], replayed
@@ -945,8 +879,7 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
             raise AssertionError("a run with no telemetry feed can't be replayed")
     finally:
         window.close()
-        restore_1()
-        restore_2()
+        restore()
 
 
 def test_the_guard_takes_only_a_decision():
@@ -982,14 +915,14 @@ def test_the_guard_takes_only_a_decision():
         # System 1: TRUE when every fact is yes; a probability missing or out of 0-1 is the plan, rejected
         for p_yes, answer, guard in ((0.8, True, "accepted"), (0.2, False, "accepted"), (1.7, False, "rejected"),
                                      ("yes", False, "rejected"), (None, False, "rejected")):
-            assistant.system_one = lambda *args, p_yes=p_yes: {"answers": {
+            assistant.system_one = lambda *args, p_yes=p_yes, **kwargs: {"answers": {
                 "exit_clear": {"noul": p_yes}, "more_on_bus": {"noul": 0.7}}, "usage": {}}
-            found = window._ask_agent(question, {"system": "1", "provider": "laya", "model": "laya"})
+            found = window._ask_agent(question, {"system": "1", "provider": "local", "model": "laya:421m-english-bf16"})
             assert found["answer"] is answer and found["guard"].startswith(guard), (p_yes, found)
         assert found["guard"] == "rejected: P(yes) for exit_clear was None"
-        assistant.system_one = lambda *args: {"answers": {"exit_clear": {"noul": 0.8},
+        assistant.system_one = lambda *args, **kwargs: {"answers": {"exit_clear": {"noul": 0.8},
                                                           "more_on_bus": {"noul": 0.3}}, "usage": {}}
-        found = window._ask_agent(question, {"system": "1", "provider": "laya", "model": "laya"})
+        found = window._ask_agent(question, {"system": "1", "provider": "local", "model": "laya:421m-english-bf16"})
         assert found["answer"] is False and found["p_yes"] == 0.3  # the lowest decides
         assert found["reason"] == "exit_clear 0.80, more_on_bus 0.30"
     finally:

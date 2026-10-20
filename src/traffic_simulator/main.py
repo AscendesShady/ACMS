@@ -18,9 +18,10 @@ from datetime import datetime
 from pathlib import Path
 from copy import deepcopy
 from dataclasses import asdict, replace
+from itertools import accumulate
 from types import SimpleNamespace
 
-from PySide6.QtCore import QBuffer, QEventLoop, QIODevice, QPoint, QRectF, QSize, QStandardPaths, Qt, QTimer
+from PySide6.QtCore import QBuffer, QEvent, QEventLoop, QIODevice, QPoint, QRectF, QSize, QStandardPaths, Qt, QTimer
 from PySide6.QtGui import QAction, QFontDatabase, QGuiApplication, QImage, QKeySequence, QPainter, QShortcut
 from PySide6.QtWidgets import (
     QApplication,
@@ -65,9 +66,11 @@ from traffic_simulator.clock import STEP_MS, SimulationClock, clock_text
 from traffic_simulator import (accessibility, analysis, assistant, design_checks, experiments, network_tools, results,
                                scenario, stats, weaving)
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
-from traffic_simulator.simulation import DT, Graph, PairDemand, Runner, Simulation, path_size_logit
+from traffic_simulator.lane_graph import Graph, path_size_logit
+from traffic_simulator.simulation import DT, PairDemand, Runner, Simulation
 from traffic_simulator.metro import METRO, loads as metro_loads, places as metro_places
-from traffic_simulator.geometry import point_along
+from traffic_simulator.geometry import nearest_along, point_along
+from traffic_simulator.walking import footpath_join
 from traffic_simulator.history import History
 from traffic_simulator.institutions import hourly_people, place, run_demand
 from traffic_simulator.institutions import shares as institution_shares
@@ -79,19 +82,23 @@ from traffic_simulator.interchanges import (
     pair_legs,
     roads_left_at_hub,
 )
-from traffic_simulator.mode_behavior import ModeBehaviorPanel, VehicleMode, VehicleModes
-from traffic_simulator.models import METRO_SERVICE, Network, institution_problem, route_choice_problem
+from traffic_simulator.mode_behavior import ModeBehaviorPanel, VehicleModes
+from traffic_simulator.models import (METRO_MIN_SPACING_M, METRO_SERVICE, MetroCrossing, Network, institution_problem,
+                                      route_choice_problem)
 from traffic_simulator.network_generator import generate_network
 from traffic_simulator.network_io import MAX_SEED, load_network, save_network, saved_conversation, saved_project
 from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
 from traffic_simulator.network_tools import build_edge, delete_objects, edge_crossings
 from traffic_simulator.daily_profile import DailyProfile, quarter_shares
-from traffic_simulator.od_matrix import MetroMatrix, ModeSplitDialog, ODCell, ODCellPanel, ODMatrix
-from traffic_simulator.properties_panel import (ICON_FONTS, ChoiceButtons, Collapsible, OpenPageTabs, PropertiesPanel,
-                                                align_form_labels, describe_group, glyph_icon, hint_label,
-                                                icon_button, styled_button, TIMING_METHODS)
+from traffic_simulator.demand import ODCell, pair_demand
+from traffic_simulator.od_matrix import (MetroMatrix, ModeSplitDialog, ODCellPanel, ODMatrix, PedestrianMatrix,
+                                        SpawnMatrix)
+from traffic_simulator.properties_panel import PropertiesPanel, describe_group, TIMING_METHODS
 from traffic_simulator.summary import SummaryPanel
 from traffic_simulator.theme import STATUS, apply_theme, float_glass
+from traffic_simulator.vehicle import VehicleMode
+from traffic_simulator.widgets import (ICON_FONTS, ChoiceButtons, Collapsible, OpenPageTabs, align_form_labels,
+                                       glyph_icon, hint_label, icon_button, styled_button)
 from traffic_simulator.xlsx import read_xlsx
 
 
@@ -163,7 +170,7 @@ def ask_interchange(parent: QWidget, kind: str, network: Network, nodes: list[st
     return {"legs": legs.value(), "replace": existing.value(), "freeway_lanes": lanes.value()}
 
 
-# Sidebar tab icons: glyphs from Windows' own icon font (see properties_panel.ICON_FONTS).
+# Sidebar tab icons: glyphs from Windows' own icon font (see widgets.ICON_FONTS).
 # Without either font, tabs show their names.
 TAB_ICONS = {"Create Network": "\ue800", "Edit Network": "\ue70f", "Mode Behavior": "\ue804",
              "Demand Generator": "\ue80a", "AI Mode": "\ue99a", "View Summary": "\ue9d2",
@@ -209,6 +216,7 @@ def _rounded(value, digits: int = 3):
     if isinstance(value, (list, tuple)):
         return [_rounded(item, digits) for item in value]
     return value
+
 
 
 class MainWindow(QMainWindow):
@@ -293,7 +301,7 @@ class MainWindow(QMainWindow):
         root = QWidget()
         root.setObjectName("appShell")
         layout = QHBoxLayout(root)
-        layout.setContentsMargins(12, 8, 12, 8)
+        layout.setContentsMargins(12, 0, 12, 8)  # the menu bar's own padding is the gap above
         layout.setSpacing(12)
         sidebar = QFrame()
         side_layout = QVBoxLayout(sidebar)
@@ -313,9 +321,9 @@ class MainWindow(QMainWindow):
         self.page_title = QLabel()  # the open tab's name: the tabs themselves are icons
         self.page_title.setProperty("role", "pageTitle")
         title_row = QHBoxLayout()
-        title_row.addWidget(title)
-        title_row.addSpacing(8)
-        title_row.addWidget(self.page_title)
+        title_row.setSpacing(10)
+        title_row.addWidget(title, 0, Qt.AlignmentFlag.AlignTop)  # tops aligned: the page title is lowered to
+        title_row.addWidget(self.page_title, 0, Qt.AlignmentFlag.AlignTop)  # the brand's baseline once styled
         title_row.addStretch(1)
         side_layout.addLayout(title_row)
         side_layout.addWidget(hint_label("Build and refine networks. Distances in metres."))
@@ -461,8 +469,27 @@ class MainWindow(QMainWindow):
         metro_row.addWidget(self.metro_summary, 1)
         metro_layout.addWidget(metro_box)
         self.edit_tabs = OpenPageTabs()
+        walk_page = QWidget()  # Edit Network → Pedestrian: crossings over the roads' footpaths
+        walk_layout = QVBoxLayout(walk_page)
+        walk_layout.setContentsMargins(0, 0, 0, 0)
+        crossings_box = QGroupBox("Crossings")
+        crossings_layout = QVBoxLayout(crossings_box)
+        crossing_buttons = QHBoxLayout()
+        self.zebra_button = styled_button("Add Zebra", tooltip="Click a road: zebra crossing")
+        self.overbridge_button = styled_button("Add Overbridge", tooltip="Click a road: footbridge")
+        for button in (self.zebra_button, self.overbridge_button):
+            button.setCheckable(True)
+            crossing_buttons.addWidget(button)
+        crossings_layout.addLayout(crossing_buttons)
+        crossings_layout.addWidget(hint_label(
+            "Click a road with footpaths on both sides to place one there, clear of its junctions. Walkers have "
+            "right of way on a zebra, so traffic stops for them; an overbridge takes them over the traffic, stairs "
+            "to climb. At a junction they wait for a gap. Click a crossing to select it; Delete removes it."))
+        walk_layout.addWidget(crossings_box)
+        walk_layout.addStretch(1)
         self.edit_tabs.addTab(roads_page, "Roads")
         self.edit_tabs.addTab(metro_page, "Metro")
+        self.edit_tabs.addTab(walk_page, "Pedestrian")
         edit_layout.addWidget(self.edit_tabs)
         self.metro_line: str | None = None  # the line a deployment is extending
         self.mode_hint = hint_label()  # next-step banner, shown only while a tool is active
@@ -486,6 +513,7 @@ class MainWindow(QMainWindow):
         self.od_panel.checker = self._check_demand  # a degree of saturation, checked in a run
         self.od_panel.calibrator = lambda flows, args: network_tools.calibration_plan(self.network, flows, args)
         self.od_panel.equilibrator = self._equilibrate_demand
+        self.od_panel.router = self._route_along  # drop-offs are placed along a pair's fastest route
         self.od_panel.chooser = lambda pairs, args, values, current=None: network_tools.mode_plan(  # choose_modes
             self.network, pairs, args, self.vehicle_modes.modes, values,
             self._run_test(str(args["from_run"]))["kpis"]["observed"]["trips"] if args.get("from_run") else None,
@@ -498,6 +526,7 @@ class MainWindow(QMainWindow):
         self.tabs.setDocumentMode(True)  # the tab row spans the sidebar...
         bar = self.tabs.tabBar()
         bar.setExpanding(True)  # ...and the tabs share it (document mode had turned this off)
+        bar.setDrawBase(False)  # no base line: it ran into the tiles and broke at the selected one
         self.tabs.addTab(create_tab, "Create Network")
         self.edit_tab = edit_tab
         self.tabs.addTab(edit_tab, "Edit Network")
@@ -539,7 +568,7 @@ class MainWindow(QMainWindow):
                 self.tabs.setTabIcon(index, glyph_icon(TAB_ICONS[name], icon_font))
                 self.tabs.setTabText(index, "")
         if icon_font:
-            bar.setObjectName("iconTabs")  # theme.py: slim icon-only tabs
+            bar.setObjectName("iconTabs")  # icon-only tiles, each icon centred (_centre_tab_icons)
         self.tabs.currentChanged.connect(self._name_open_tab)
         self._name_open_tab(self.tabs.currentIndex())
         side_layout.addWidget(self.tabs)
@@ -553,6 +582,10 @@ class MainWindow(QMainWindow):
         self.workspace.addWidget(self.od_matrix)
         self.metro_matrix = MetroMatrix()  # Demand Generator → Metro: the metro's own OD matrix
         self.workspace.addWidget(self.metro_matrix)
+        self.walk_matrix = PedestrianMatrix()  # Demand Generator → Pedestrians: people walking between ends
+        self.workspace.addWidget(self.walk_matrix)
+        self.spawn_matrix = SpawnMatrix()  # Demand Generator → Pedestrian spawn points: between the points placed
+        self.workspace.addWidget(self.spawn_matrix)
         layout.addWidget(self.workspace, 1)
         self.setCentralWidget(root)
         # Wide enough for the tab row and the widest page, plus the sidebar's margins and scrollbar. Measured
@@ -563,10 +596,16 @@ class MainWindow(QMainWindow):
         side_width = max(bar.sizeHint().width(), pages) + margins.left() + margins.right() +             side_scroll.verticalScrollBar().sizeHint().width() + 4
         side_scroll.setMinimumWidth(side_width)
         side_scroll.setMaximumWidth(side_width)
+        self._tab_side = 10  # the tiles' side padding as theme.py sets it (QTabBar::tab), until centred
+        bar.installEventFilter(self)  # only now: centring pads the tiles, and the width above reads the row's hint
         # One label column per tab, so every section's fields start on the same line.
         for page in (create_tab, edit_tab, self.od_panel, *(self.ai_mode.systems.widget(i)
                                                             for i in range(self.ai_mode.systems.count()))):
             align_form_labels(page)
+        # The page title sits on the brand's baseline: lowered by the difference in their styled fonts' ascents.
+        for label in (title, self.page_title):
+            label.ensurePolished()
+        self.page_title.setContentsMargins(0, max(title.fontMetrics().ascent() - self.page_title.fontMetrics().ascent(), 0), 0, 0)
         self.statusBar().showMessage(self._network_summary())
         # Always in view, whatever the tab: which model System 2 is using and what it's doing.
         self.ai_status = QLabel()
@@ -1947,7 +1986,7 @@ class MainWindow(QMainWindow):
         dispatches = []
         if devl:
             ends = sorted(self.network.approach_nodes)
-            graph = Simulation(self.network, [], []).graph
+            graph = Graph(self.network)
             pairs = [(a, b) for a in ends for b in ends if a != b and graph.route(a, b)]
             if not pairs:
                 raise ValueError("No two boundary ends are joined: emergency vehicles have nowhere to go.")
@@ -2425,8 +2464,8 @@ class MainWindow(QMainWindow):
         if not isinstance(question, dict):
             fast = self.ai_mode.system_one_for_agents()
             if fast is not None:
-                provider, key = fast
-                return "TRUE" if assistant.system_one_true(provider, question, key) else "FALSE"
+                provider, key, model = fast
+                return "TRUE" if assistant.system_one_true(provider, question, key, model) else "FALSE"
             connection = self.ai_mode.model_for_agents()
             if connection is None:
                 raise RuntimeError("Nothing is chosen in AI Mode (System 1 or a started System 2 model), "
@@ -2437,12 +2476,12 @@ class MainWindow(QMainWindow):
         choice = choice or question.get("choice")  # a batch's agent, else the model picked in the extension
         system = choice["system"] if choice else question.get("system")  # TSP's question has both forms
         if system == "1":
-            fast = (choice["provider"], self.ai_mode.key_for(choice["provider"])) if choice else \
+            fast = (choice["provider"], self.ai_mode.key_for(choice["provider"]), choice["model"]) if choice else \
                 self.ai_mode.system_one_for_agents()
             if fast is None:
                 raise RuntimeError("AI Mode's System 1 is Off, so every answer is FALSE (the plan).")
-            provider, key = fast
-            reply = assistant.system_one(provider, question["state"], question["questions"], key)
+            provider, key, model = fast
+            reply = assistant.system_one(provider, question["state"], question["questions"], key, model=model)
             usage = reply.get("usage") or {}
             found = {"provider": provider, "system": "1", "model": reply.get("model") or provider,
                      "input_tokens": usage.get("input_tokens"), "output_tokens": usage.get("output_tokens")}
@@ -2491,7 +2530,7 @@ class MainWindow(QMainWindow):
         try:
             if choice["system"] == "1":
                 assistant.system_one(provider, "warm-up", {"ready": {"type": "noul", "instructions": "Is this a test?"}},
-                                     key)
+                                     key, model=choice["model"])
             else:
                 assistant.chat(provider, choice["model"], [{"role": "user", "content": "Reply with one word: OK."}], key)
         except assistant.AssistantError:
@@ -2592,7 +2631,7 @@ class MainWindow(QMainWindow):
         if system:
             fast, connection = self.ai_mode.system_one_for_agents(), self.ai_mode.model_for_agents()
             option = next((option for option in self.ai_mode.agent_options() if option["system"] == system and (
-                (system == "1" and fast and option["provider"] == fast[0]) or
+                (system == "1" and fast and option["model"] == fast[2]) or
                 (system == "2" and connection and option["model"] == connection[1]))), None)
             settings.update(agents=[option["label"]] if option else [],
                             servers={option["label"]: option["provider"]} if option else {})
@@ -2609,7 +2648,7 @@ class MainWindow(QMainWindow):
             return picked["name"], ""
         if tsp.module.tsp_agent.system == "1":
             fast = self.ai_mode.system_one_for_agents()
-            return (fast[0], "") if fast else (
+            return (fast[2] if fast[0] == "local" else fast[0], "") if fast else (
                 "no-llm", "TSP asks System 1, but AI Mode's System 1 is Off: every bus request falls back to the plan.")
         connection = self.ai_mode.model_for_agents()
         return (connection[1], "") if connection else (
@@ -2627,7 +2666,7 @@ class MainWindow(QMainWindow):
         compared with it seed by seed. Each run keeps in step with the wall clock at
         `speed`, never pausing: its own agent answers in the background, and a request not answered within
         `deadline_s` simulated seconds falls back to the plan. Up to `at_once` runs go side by side, but never two
-        on one model server (a provider: Ollama, Laya, Jev...), so no run's answers wait behind another's; each
+        on one model server (a provider: Ollama, Jev...), so no run's answers wait behind another's; each
         records the pace it achieved. Without TSP the runs are plain, one at a time as fast as the CPU allows.
         `test_devl` (Batch Run's Test DEVL): each run dispatches the Dispatch Emergency Vehicle tab's fleet at its
         start and its workbook gets an Emergency vehicles sheet (each trip, and how long each Dynamic Emergency
@@ -2764,9 +2803,6 @@ class MainWindow(QMainWindow):
                     "file": str(path or "")}
 
         def work(progress, cancelled):
-            if any("laya" in option["servers"] for option in chosen):
-                progress("starting Laya")
-                self.ai_mode.start_laya()
             models = {part["label"]: part for option in chosen for part in (option["tsp"], option["devl"]) if part}
             for part in models.values():  # loaded before the clock runs: a deployed model would be
                 if part["system"] and not cancelled():
@@ -2861,7 +2897,7 @@ class MainWindow(QMainWindow):
     def _route_check(self, no: str = "No"):
         """can_go(origin, destination): ValueError ("<no> route from ... to ...") unless a route joins them on the
         network as it is, no run needed."""
-        graph = Simulation(self.network, [], []).graph  # ponytail: a lane graph just to check routes
+        graph = Graph(self.network)
 
         def can_go(origin: str, destination: str) -> None:
             if origin == destination or not graph.route(origin, destination):
@@ -3123,6 +3159,8 @@ class MainWindow(QMainWindow):
                     what.append(f"split {list(a.split)} → {list(b.split)} %")
                 if a.profile != b.profile:
                     what.append("daily curve reshaped")
+                if a.drops != b.drops:
+                    what.append("drop-offs changed")
             if what:
                 lines.append(f"Demand {pair[0]}->{pair[1]}: " + ", ".join(what))
         old_types, new_types = {m.name: asdict(m) for m in before[2][0]}, {m.name: asdict(m) for m in after[2][0]}
@@ -3244,14 +3282,9 @@ class MainWindow(QMainWindow):
         trips (institutions.run_demand: catchment to door and back; its notes in `_institution_notes`)."""
         matrix = self.od_matrix
         matrix.set_ends(*self._od_ends())
-        daily = matrix.mode == "daily"
-        institutions, self._institution_notes = run_demand(self.network, self.vehicle_modes.modes, daily)
-        return [PairDemand(origin, destination, None if daily else cell.flow, cell.daily if daily else None,
-                           cell.profile.shares() if daily else [], cell.pattern, matrix.split_of(cell),
-                           quarters=() if daily else cell.quarters)
-                for (origin, destination), cell in matrix.cells.items()
-                if origin in matrix.origins and destination in matrix.destinations
-                and (cell.daily if daily else cell.flow)] + institutions
+        institutions, self._institution_notes = run_demand(self.network, self.vehicle_modes.modes, matrix.mode == "daily")
+        return pair_demand(matrix.cells, matrix.origins, matrix.destinations, matrix.mode,
+                           matrix.vehicle_modes.vehicles_per_hour()) + institutions
 
     def _show_clock_state(self, running: bool) -> None:
         self.pause_action.setVisible(running)
@@ -3261,6 +3294,25 @@ class MainWindow(QMainWindow):
         self.page_title.setText(self.tab_names[current] if current >= 0 else "")
         if self.activity.on:
             self.activity.log("tab", self.page_title.text())
+
+    def eventFilter(self, watched, event) -> bool:  # type intentionally inherited from Qt
+        """The icon tab row resized (the sidebar's scroll bar came or went): its icons centred again."""
+        if event.type() == QEvent.Type.Resize and watched is self.tabs.tabBar():
+            self._centre_tab_icons()
+        return super().eventFilter(watched, event)
+
+    def _centre_tab_icons(self) -> None:
+        """The tiles share the row edge to edge (expanding); a tab's icon sits at the start of its text, so equal
+        side padding filling each tile centres it. Each padding pixel widens every tile's hint by 2, so the padding
+        that fills the row is read off the row's own hint, never past its width (the sidebar never grows from it).
+        Only icon tabs: without an icon font the tabs show names."""
+        bar = self.tabs.tabBar()
+        if bar.objectName() != "iconTabs" or not bar.count():
+            return
+        side = max(self._tab_side + (bar.width() - bar.sizeHint().width()) // (2 * bar.count()), 4)
+        if side != self._tab_side:
+            self._tab_side = side
+            bar.setStyleSheet(f"QTabBar::tab {{ padding: 6px {side}px; }}")
 
     def _build_menu(self) -> None:
         file_menu = self.menuBar().addMenu("&File")
@@ -3312,8 +3364,21 @@ class MainWindow(QMainWindow):
         self.scene.redrawn.connect(lambda: self.workspace.currentWidget() is self.metro_matrix
                                    and self.metro_matrix.show_network(self.network))
         self.metro_matrix.changed.connect(self._commit)
+        self.scene.redrawn.connect(lambda: self.workspace.currentWidget() is self.walk_matrix
+                                   and self.walk_matrix.show_network(self.network))
+        self.walk_matrix.changed.connect(self._commit)
+        self.scene.redrawn.connect(lambda: self.workspace.currentWidget() is self.spawn_matrix
+                                   and self.spawn_matrix.show_network(self.network))
+        self.spawn_matrix.changed.connect(self._commit)
+        self.od_panel.place_spawn_button.toggled.connect(self._placing_spawn_points)
+        self.scene.spawn_clicked.connect(self.spawn_clicked)
+        self.view.right_clicked.connect(lambda: self.od_panel.place_spawn_button.setChecked(False))  # finishes
         self.scene.metro_clicked.connect(self.metro_clicked)
+        self.scene.metro_aiming.connect(self._metro_ghost)
         self.view.right_clicked.connect(lambda: self.metro_button.setChecked(False))  # ends a deployment
+        self.properties.footpath_preview.connect(self.scene.preview_footpaths)
+        for button in (self.zebra_button, self.overbridge_button):
+            button.toggled.connect(lambda checked, button=button: self._crossing_tool(button, checked))
         self.edit_tabs.currentChanged.connect(lambda: self._end_modes_except(None))
         self.edge_kind.changed.connect(self._refresh_mode)
         self.tabs.currentChanged.connect(self.tab_changed)
@@ -3384,6 +3449,10 @@ class MainWindow(QMainWindow):
                 hint = f"From {self.edge_start}: click empty space where the boundary end goes."
             else:
                 hint = f"From {self.edge_start}: click the junction to connect to."
+        elif self.zebra_button.isChecked() or self.overbridge_button.isChecked():
+            cursor = cross
+            what = "zebra crossing" if self.zebra_button.isChecked() else "overbridge"
+            hint = f"Click a road with footpaths on both sides for a {what} there. Esc finishes."
         elif self.metro_button.isChecked():
             cursor = cross
             if self.metro_line in self.network.metro_lines:
@@ -3407,7 +3476,7 @@ class MainWindow(QMainWindow):
 
     def select(self, kind: str, identifier: str) -> None:
         try:
-            selected = self.network.road(identifier) if kind == "road" else                 self.network.bus_stops[identifier] if kind == "bus_stop" else                 self.network.institutions[identifier] if kind == "institution" else self.network.node(identifier)
+            selected = self.network.road(identifier) if kind == "road" else                 self.network.bus_stops[identifier] if kind == "bus_stop" else                 self.network.institutions[identifier] if kind == "institution" else                 self.network.walkways[identifier] if kind == "walkway" else                 self.network.pedestrian_crossings[identifier] if kind == "crossing" else                 self.network.spawn_points[identifier] if kind == "spawn" else self.network.node(identifier)
         except KeyError:
             kind, selected = "", None
         self.multi_nodes, self.group = [], []
@@ -3415,7 +3484,20 @@ class MainWindow(QMainWindow):
             self.activity.log("select", kind.replace("_", " "), identifier)
         self.scene.set_selection(kind, identifier)
         building = kind == "institution"  # shown in Demand Generator → Institutions, not the Edit tab
-        self.properties.show_object("" if building else kind, None if building else selected)
+        if kind == "walkway":  # a path has nothing to edit: it is redrawn, or deleted
+            self.properties.show_object("", None)
+            self.statusBar().showMessage(f"Path {identifier} ({selected.start} to {selected.end}) selected: Delete "
+                                         "removes it.")
+        elif kind == "spawn":  # placed again, or deleted
+            self.properties.show_object("", None)
+            self.statusBar().showMessage(f"Spawn point {identifier} selected: Delete removes it and the walking to and "
+                                         "from it.")
+        elif kind == "crossing":  # as a path: placed again, or deleted
+            self.properties.show_object("", None)
+            self.statusBar().showMessage(f"{selected.kind.capitalize()} {identifier} on {selected.road}, "
+                                         f"{selected.distance_m:.0f} m along it, selected: Delete removes it.")
+        else:
+            self.properties.show_object("" if building else kind, None if building else selected)
         self.institution_panel.show_selected(self.network, selected if building else None)
 
     def _select_nodes(self, group: list[str]) -> None:
@@ -3489,6 +3571,9 @@ class MainWindow(QMainWindow):
 
     def canvas_clicked(self, kind: str, identifier: str, x: float = 0.0, y: float = 0.0,
                        additive: bool = False) -> None:
+        if self.zebra_button.isChecked() or self.overbridge_button.isChecked():
+            self._place_crossing(kind, identifier, x, y)
+            return
         if self.add_node_button.isChecked():
             if kind == "node":
                 self._show_hint(f"{identifier} is already there. Click empty space for the new node.")
@@ -3510,7 +3595,7 @@ class MainWindow(QMainWindow):
             if kind == "institution":  # its circle of influence and loads, in Demand Generator → Institutions
                 self.od_panel.demand.setCurrentIndex(self.od_panel.demand.findData("institutions"))
                 self.tabs.setCurrentWidget(self.demand_tab)
-            elif kind:
+            elif kind and kind != "spawn":  # (a spawn point: the Demand Generator's, wherever it is clicked)
                 self.tabs.setCurrentWidget(self.edit_tab)  # its editor shows the selection
             return
         to_end = self.edge_kind.value() == "end"
@@ -3565,6 +3650,9 @@ class MainWindow(QMainWindow):
             return
         if self.scene.placing is not None:
             self.institution_panel.end_placing()
+            return
+        if self.od_panel.place_spawn_button.isChecked():
+            self.od_panel.place_spawn_button.setChecked(False)
             return
         if self.tabs.currentWidget() is self.demand_tab and self.od_matrix.selected_pairs():
             self.od_matrix.clear_selection()  # the OD Pair editor goes with it
@@ -3621,12 +3709,30 @@ class MainWindow(QMainWindow):
             self.properties.delete_bus_stop()
         elif kind == "institution":
             self._delete_institution(identifier)
+        elif kind == "spawn":
+            self.network.delete_spawn_point(identifier)
+            self.select("", "")
+            self.statusBar().showMessage(f"{self._network_summary()} • Deleted spawn point {identifier}. Ctrl+Z brings it "
+                                         "back.")
+            self._commit()
+        elif kind == "crossing":
+            del self.network.pedestrian_crossings[identifier]
+            self.select("", "")
+            self.statusBar().showMessage(f"{self._network_summary()} • Deleted crossing {identifier}. Ctrl+Z brings it "
+                                         "back.")
+            self._commit()
+        elif kind == "walkway":
+            del self.network.walkways[identifier]
+            self.select("", "")
+            self.statusBar().showMessage(f"{self._network_summary()} • Deleted path {identifier}. Ctrl+Z brings it back.")
+            self._commit()
         elif kind:
             self.properties.delete_node()
 
     def _end_modes_except(self, keep: QPushButton | None) -> None:
         """Add Node, Add Edge, Drag to Adjust and metro deployment all capture canvas clicks: one at a time."""
-        for button in (self.add_node_button, self.add_edge_button, self.properties.drag_button, self.metro_button):
+        for button in (self.add_node_button, self.add_edge_button, self.properties.drag_button, self.metro_button,
+                       self.zebra_button, self.overbridge_button):
             if button is not keep:
                 button.setChecked(False)
 
@@ -3637,6 +3743,7 @@ class MainWindow(QMainWindow):
             self.background_panel.end_tool()
         if self.tabs.currentWidget() is not self.demand_tab:
             self.institution_panel.end_placing()
+            self.od_panel.place_spawn_button.setChecked(False)
             self.od_matrix.clear_selection()  # the OD Pair editor shows again only when a cell is clicked
         self.grid_toggles[0].setVisible(self.tabs.currentWidget() is self.demand_tab)  # the grid is the Demand tab's
         self.view.set_corner(self.fit_button.parentWidget())  # the map's corner controls, re-placed
@@ -3648,10 +3755,14 @@ class MainWindow(QMainWindow):
         toggles follow."""
         for toggle in self.grid_toggles:
             toggle.setChecked(on)
-        metro = on and self.od_panel.demand.currentData() == "metro"
-        if metro:
-            self.metro_matrix.show_network(self.network)
-        self.workspace.setCurrentWidget(self.metro_matrix if metro else self.od_matrix if on else self.view)
+        kind = self.od_panel.demand.currentData() if on else ""
+        if kind == "spawn" and self.od_panel.place_spawn_button.isChecked():
+            kind = ""  # placing spawn points: the map
+        own = {"metro": self.metro_matrix, "walk": self.walk_matrix,
+               "spawn": self.spawn_matrix}.get(kind)  # the metro's, the walkers' or the spawn points' grid
+        if own is not None:
+            own.show_network(self.network)
+        self.workspace.setCurrentWidget(own or (self.od_matrix if on else self.view))
         self._refresh_grid()
 
     def _refresh_grid(self) -> None:
@@ -3726,25 +3837,95 @@ class MainWindow(QMainWindow):
         self.scene.rebuild()
         self._refresh_mode()
 
-    def metro_clicked(self, x: float, y: float) -> None:
+    def _crossing_tool(self, button, checked: bool) -> None:
+        """Add Zebra or Add Overbridge on (each road clicked gets one) or off."""
+        if checked:
+            self._end_modes_except(button)
+        self._refresh_mode()
+
+    def _place_crossing(self, kind: str, identifier: str, x: float, y: float) -> None:
+        """A crossing where a road was clicked (Network.add_crossing: refused with its reason, changing nothing):
+        one undo step, the tool still on for the next."""
+        if kind != "road":
+            self._show_hint("Click a road: a crossing goes across one, between its footpaths.")
+            return
+        road = self.network.road(identifier)
+        at = nearest_along(self.network.road_points(road), (x, y))
+        try:
+            crossing = self.network.add_crossing(road.id, at, "zebra" if self.zebra_button.isChecked() else "overbridge")
+        except ValueError as exc:
+            self._show_hint(str(exc))
+            return
+        self.statusBar().showMessage(f"{self._network_summary()} • Added {crossing.kind} {crossing.id} on {road.id}")
+        self._commit()
+        self.select("crossing", crossing.id)
+
+    def metro_clicked(self, x: float, y: float, dx: float = 0.0, dy: float = 0.0) -> None:
         """A stop where the map was clicked while deploying: the first waits for the second, which makes the
-        line; then each joins the line's last stop. Refused (too near the last stop) says why and changes nothing.
+        line; then each joins the line's last stop, aimed along (dx, dy) when the click was dragged (the track runs
+        through the stop that way; (0, 0): a plain click). Refused (too near the last stop, an aim that can't be met)
+        says why and changes nothing.
         Nothing is an undo step until the line is accepted (toggle_metro)."""
         if self.metro_line is not None and self.metro_line not in self.network.metro_lines:
             self.metro_line = None  # undone while deploying: start a new line
-        try:
-            if self.metro_line is not None:
-                self.network.add_metro_stop(self.metro_line, x, y)
-            elif self.scene.metro_pending is None:
-                self.scene.metro_pending = (x, y)
-            else:
-                self.metro_line = self.network.add_metro_line(self.scene.metro_pending, (x, y)).id
-                self.scene.metro_pending = None
-        except ValueError as exc:
-            self._show_hint(f"{exc} Click elsewhere, or right-click to finish.")
-            return
+        merge = False
+        while True:
+            try:
+                if self.metro_line is not None:
+                    self.network.add_metro_stop(self.metro_line, x, y, merge, (dx, dy) if dx or dy else None)
+                elif self.scene.metro_pending is None:
+                    self.scene.metro_pending = (x, y)
+                else:
+                    self.metro_line = self.network.add_metro_line(self.scene.metro_pending, (x, y), merge).id
+                    self.scene.metro_pending = None
+                break
+            except MetroCrossing as crossing:  # it crosses another line: an interchange there, or not this line
+                choice = self._merge_or_discard(crossing.line_id)
+                if choice == "merge":
+                    merge = True
+                    continue
+                if choice == "discard":
+                    if self.metro_line is not None:
+                        self.network.delete_metro_line(self.metro_line)
+                    self.metro_line, self.scene.metro_pending = None, None
+                    self.scene.rebuild()
+                    self._refresh_mode()
+                    self._show_hint("Line discarded. Click to start another, or right-click to finish.")
+                return
+            except ValueError as exc:
+                self._show_hint(f"{exc} Click elsewhere, or right-click to finish.")
+                return
         self.scene.rebuild()
         self._refresh_mode()
+
+    def _merge_or_discard(self, line_id: str) -> str | None:
+        """A leg crossing line `line_id`: "merge" (an interchange station at the crossing, on both lines), "discard"
+        (the line being drawn goes) or None (Cancel: not this stop)."""
+        box = QMessageBox(QMessageBox.Icon.Question, "Lines Cross",
+                          f"This leg crosses line {line_id}. Merge them at an interchange station where they cross "
+                          "(riders can change lines there), or discard the line you are drawing?", parent=self)
+        merge = box.addButton("Merge", QMessageBox.ButtonRole.AcceptRole)
+        discard = box.addButton("Discard Line", QMessageBox.ButtonRole.DestructiveRole)
+        box.addButton(QMessageBox.StandardButton.Cancel)
+        box.exec()
+        return {merge: "merge", discard: "discard"}.get(box.clickedButton())
+
+    def _metro_ghost(self, x: float, y: float, dx: float = 0.0, dy: float = 0.0) -> None:
+        """While deploying, the leg a click at (x, y) would add (Network.metro_leg: curved, drawn in if too sharp),
+        before it is placed: amber if it crosses another line, red if refused."""
+        points, state = [], "ok"
+        if self.metro_line in self.network.metro_lines:
+            start = self.network.metro_track(self.metro_line)[-1]
+            try:
+                leg, crossing = self.network.metro_leg(self.metro_line, x, y, (dx, dy) if dx or dy else None)
+                points, state = [start, *leg], "crossing" if crossing else "ok"
+            except ValueError:
+                points, state = [start, (x, y)], "refused"
+        elif self.scene.metro_pending is not None:
+            px, py = self.scene.metro_pending
+            points = [(px, py), (x, y)]
+            state = "ok" if math.hypot(x - px, y - py) >= METRO_MIN_SPACING_M else "refused"
+        self.scene.show_metro_ghost(points, state, (x, y, dx, dy) if dx or dy else None)
 
     def _accept_metro_line(self, summary: str) -> dict | None:
         """The finished line: accepted with its service (headway, speed, carriages a train and passengers a carriage,
@@ -3923,13 +4104,41 @@ class MainWindow(QMainWindow):
         """The Demand drop-down: Institutions shows the map to place buildings on; hourly or daily, the grid."""
         if kind != "institutions":
             self.institution_panel.end_placing()
+        if kind == "spawn" and not self.network.spawn_points:  # none yet: straight to placing them
+            self.od_panel.place_spawn_button.setChecked(True)
         if self.tabs.currentWidget() is self.demand_tab:
-            self.show_grid(kind != "institutions")
+            self.show_grid(kind != "institutions" and not self.od_panel.place_spawn_button.isChecked())
+
+    def _placing_spawn_points(self, on: bool) -> None:
+        """Place Spawn Points: on, every left click on the map is a spawn point (the map shows); off (a right-click,
+        Esc, another tab or demand), their grid shows."""
+        self.scene.spawn_placing = on
+        self.view.set_tool_cursor(Qt.CursorShape.CrossCursor if on else Qt.CursorShape.ArrowCursor)
+        if self.tabs.currentWidget() is self.demand_tab and self.od_panel.demand.currentData() == "spawn":
+            self.show_grid(not on)
+        self._show_hint(f"Click the map for spawn point S{len(self.network.spawn_points) + 1}; right-click finishes."
+                        if on else None)
+
+    def spawn_clicked(self, x: float, y: float) -> None:
+        """A spawn point where the map was clicked (one undo step; placing goes on). The hint says how far its nearest
+        footpath is, where its walkers will join the network."""
+        try:
+            point = self.network.add_spawn_point(x, y)
+        except ValueError as exc:
+            self._show_hint(str(exc))
+            return
+        self.statusBar().showMessage(f"{self._network_summary()} • Added spawn point {point.id}")
+        self._commit()
+        self.scene.rebuild()  # it shows at once, joined to its footpath
+        joins = footpath_join(self.network, x, y)
+        far = f" Its nearest footpath is {math.hypot(joins[0] - x, joins[1] - y):.0f} m away." if joins else \
+            " No footpath yet: give roads footpaths (Edit Network) so its walkers have somewhere to walk."
+        self._show_hint(f"{point.id} placed.{far} Click for the next, right-click to finish.")
 
     def _cell_clicked(self, *_) -> None:
         """A grid cell clicked from another tab (the Input Grid toggle): its editor is the Demand
         Generator's, so that tab opens, on the grid's hourly or daily demand."""
-        if self.od_panel.demand.currentData() in ("institutions", "metro"):
+        if self.od_panel.demand.currentData() in ("institutions", "metro", "walk", "spawn"):
             self.od_panel.demand.setCurrentIndex(self.od_panel.demand.findData(self.od_matrix.mode))
         if self.tabs.currentWidget() is not self.demand_tab:
             selection = [(index.row(), index.column()) for index in self.od_matrix.table.selectedIndexes()]
@@ -4068,8 +4277,11 @@ class MainWindow(QMainWindow):
                                   else Qt.CursorShape.ArrowCursor)
 
     def _show_pointer(self, x: float, y: float) -> None:
-        """The mouse's latitude and longitude, while the map shows; Measure's line follows it."""
+        """The mouse's latitude and longitude, while the map shows; Measure's line follows it, as does a metro
+        deployment's next leg."""
         self.background_panel.hover(x, y)
+        if self.scene.metro_deploying and self.scene._metro_press is None:  # (an aim drag draws its own)
+            self._metro_ghost(x, y)
         background = self.network.background
         if background.kind == "map":
             lat, lon = map_frame(background).to_wgs84(x, y)
@@ -4278,11 +4490,27 @@ class MainWindow(QMainWindow):
 
     # --- Projects: the network, demand, vehicle types and run settings in one file (network_io) -------
 
+    def _route_along(self, origin: str, destination: str) -> tuple[float, list] | None:
+        """The fastest route's metres from `origin` to `destination` and the junctions on it, each at its share of
+        that length (ODCellPanel.router); None without a route."""
+        # ponytail: a new Graph each call (a pair picked, an edit); cache it per network change if it lags
+        route = Graph(self.network).route(origin, destination)
+        if not route:
+            return None
+        ends = list(accumulate(link.length for link in route))
+        seen, junctions = {origin, destination}, []
+        for end, link in zip(ends[:-1], route):  # a two-phase signal's detour passes its junction twice: once
+            if link.end not in seen:
+                seen.add(link.end)
+                junctions.append((end / ends[-1], link.end))
+        return ends[-1], junctions
+
     def _project(self) -> dict:
         """The project's parts beyond the network, as plain data for network_io."""
         pairs = [{"origin": origin, "destination": destination, "flow": cell.flow, "daily": cell.daily,
                   "pattern": cell.pattern, "split": list(cell.split),
                   **({"quarters": list(cell.quarters)} if cell.quarters else {}),
+                  **({"drops": [list(point) for point in cell.drops]} if cell.drops else {}),
                   "profile": {"kind": cell.profile.kind, "points": [list(point) for point in cell.profile.points],
                               "coefficients": list(cell.profile.coefficients)}}
                  for (origin, destination), cell in self.od_matrix.cells.items()
@@ -4364,7 +4592,9 @@ class MainWindow(QMainWindow):
                                        list(shape.get("coefficients", []))) if shape else DailyProfile()
                 cells[(pair["origin"], pair["destination"])] = ODCell(pair.get("flow"), pair.get("daily"), profile,
                                                                       pair.get("pattern", "Random"), tuple(pair["split"]),
-                                                                      quarter_shares(pair.get("quarters") or [1] * 4))
+                                                                      quarter_shares(pair.get("quarters") or [1] * 4),
+                                                                      tuple(sorted((kind, float(at), share) for kind, at, share
+                                                                                   in pair.get("drops", []))))
             conversation = saved_conversation(path)  # read and checked here too, not after the network is in
             if conversation and not all(isinstance(conversation.get(key, []), list) for key in ("messages", "transcript")):
                 raise ValueError("Conversation: its messages and transcript must be lists.")

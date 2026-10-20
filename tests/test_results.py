@@ -508,6 +508,34 @@ def test_everything_is_exported_for_analysis():
         assert geo["acms_coordinates"].startswith("WGS84") and abs(lat - 23.75) < 0.05 and abs(lon - 90.37) < 0.05
 
 
+def test_pedestrians_walks_and_crossings_go_into_the_workbook():
+    network = generate_network(2, 1)
+    for road in network.all_roads():
+        road.footpaths = ["left", "right"]
+    road = network.roads["1,2-1,1"]
+    network.add_crossing(road.id, network.road_geometry_length(road) / 2, "zebra")
+    network.walk_demand = {"2W->1E": 300.0}
+    simulation = Simulation(network, [PairDemand("1N", "1S", 700, None, [], "Random", (0, 100, 0))], MODES, seed=5)
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(network, MODES, folder=Path(folder) / "run walking")
+        while simulation.time < 1200:
+            simulation.step()
+            if simulation.time % results.SAMPLE_S < DT / 2:
+                recorder.sample(simulation.frame())
+        k = recorder.kpis()
+        assert k["walk_trips"] == simulation.walk_arrived - sum(  # each walk once: all but any still in a frame
+            1 for walk in simulation.frame().walk_exits if walk[0] not in recorder._walks_seen)
+        assert 3 < k["mean_walk_speed_kmh"] < 6 and k["mean_walk_s"] > 600  # about 1 km at about 5 km/h
+        zebra = next(row for row in k["crossings"] if row["crossing"] == "X1")
+        assert zebra["kind"] == "zebra" and zebra["walkers"] and zebra["vehicles_held_s"] > 0
+        path = recorder.finish(Path(folder))
+        sheets = read_xlsx(path)
+        assert sheets["Walks"][0] == results.WALK_COLUMNS and len(sheets["Walks"]) == k["walk_trips"] + 1
+        assert sheets["Crossings"][0] == results.CROSSING_COLUMNS and any(row[0] == "X1" for row in sheets["Crossings"])
+        summary = {row[0]: row[1] for row in sheets["Summary"][1:]}
+        assert summary["Walks completed"] == k["walk_trips"] and summary["Mean walk time"] == k["mean_walk_s"]
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

@@ -145,7 +145,7 @@
   agreed with it (`agent_agrees_estimate`, an experiment measure). `perturbed(message, change)` gives the
   telemetry with one fact changed (no_passengers, exit_full, no_cross_queues, arrives_on_green, no_estimate) for
   AI Mode's decision_sensitivity. Each request (`key_of`: "junction/phase/check-in time") is asked once (`question_for`):
-  - System 1 (AI Mode's System 1: Jev or Laya): an encoder reads words well but neither compares numbers nor
+  - System 1 (AI Mode's System 1: Jev or Laya in Ollama): an encoder reads words well but neither compares numbers nor
     weighs factors in one yes/no (tried on Laya, see sources.md), so its state is the telemetry's facts in
     words (`facts`: `exit_lane` clear or full, `more_people_on` bus or cross streets, the bus's passengers
     against the people queued on the other approaches), each read with one noul (`SYSTEM_1_QUESTIONS`:
@@ -200,11 +200,11 @@
   tests run under `__main__`.
 - **Agent choice** (src/traffic_simulator/agent_choice.py, `AgentChoice`: the rows TSP's and DEVL's panels share):
   **Decided by**, radio buttons, System 1, System 2 or Multiple (`ChoiceButtons`). With System 1 or 2, **Model**, a
-  dropdown of that system's models from AI Mode's `agent_options()` (System 1: Jev, Laya; System 2: every Ollama
+  dropdown of that system's models from AI Mode's `agent_options()` (System 1: Jev and Ollama's decision models, as Laya; System 2: every Ollama chat
   model, Grok and Gemini when their keys are on the PC), listed afresh as it opens, the first at first: it answers
   live runs (the question's `choice`, which `MainWindow._ask_agent` uses before AI Mode's own) and a batch's. None
   listed: AI Mode's own choice (System 1's Use, System 2's started model; the window finds it, `_agent_plan`).
-  **Multiple** is for Batch Run: **Models**, a dropdown of ticks (`CheckList`, properties_panel.py: a combo box of
+  **Multiple** is for Batch Run: **Models**, a dropdown of ticks (`CheckList`, widgets.py: a combo box of
   checkable items that stays open while ticking and shows what is ticked; a plain list popup, not Fusion's menu-like one, so a long list shows 10 rows and scrolls by its bar or the wheel; a click toggles its row once, on release, the popup never seeing it) listing the same, but for the baselines
   (Never and Always preempt, which always run); **Decide within**, a slider of 1–280 s (30 s at first: each answer's deadline in
   simulated seconds; missed, the extension's fallback); **Pace**, radio buttons 1×, 2×, 5×, 10× (simulated seconds a

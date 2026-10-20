@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from math import cos, hypot, radians, sin, sqrt, tan
+from functools import lru_cache
+from math import atan2, cos, hypot, radians, sin, sqrt, tan
 
 from PySide6.QtCore import QPoint, QPointF, QRectF, Qt, Signal
 from PySide6.QtGui import (
-    QBrush, QColor, QFont, QFontDatabase, QGuiApplication, QMouseEvent, QPainter, QPainterPath, QPen, QPolygonF, QSurfaceFormat,
+    QBrush, QColor, QFont, QFontDatabase, QGuiApplication, QImage, QMouseEvent, QPainter, QPainterPath, QPainterPathStroker,
+    QPen, QPolygonF, QSurfaceFormat,
     QTransform, QWheelEvent,
 )
 from PySide6.QtOpenGLWidgets import QOpenGLWidget
@@ -26,15 +28,18 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from . import asset_mesh, building_assets, gpu, vehicle_assets
+from . import asset_mesh, building_assets, gpu, metro_assets, vehicle_assets
 from .geometry import nearest_along, offset_polyline, point_along, polyline_length, sub_polyline
 from .institutions import KINDS, Placement, links
-from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, LANE_WIDTH_M, POCKET_TAPER_M, BusStop,
-                     Institution, Network, Node, Road, bay_depth, stop_line_inset)
-from .properties_panel import ICON_FONTS
+from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, CYCLE_LANE_M, FOOTPATH_M, LANE_WIDTH_M,
+                     POCKET_TAPER_M, BusStop, Institution, Network, Node, Road, bay_depth, stop_line_inset)
+from .widgets import ICON_FONTS
 from .roundabouts import design_roundabout
 from .signal_timing import ADAPTIVE, STOP_LINE_LOOP_M, UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M
-from .theme import ACCENT_EDGE, BUILDING_PAINTS, METRO_LINE, METRO_STOP, SHADOW, STATUS, TEXT, VEHICLE_INKS, VEHICLE_PAINTS
+from .walking import footpath_join
+from .theme import (ACCENT_EDGE, BUILDING_PAINTS, CYCLE_LANE, DANGER, FOOTPATH, FOOTPATH_SHADE, FOOTPATH_MORTAR,
+                    PAVING_SELECTED, WALKER, METRO_INKS, METRO_LINE, METRO_STOP, SHADOW, STATUS, TEXT,
+                    VEHICLE_INKS, VEHICLE_PAINTS)
 
 
 # Everything physical is drawn to scale in metres. Only labels and selection
@@ -54,8 +59,10 @@ BUS_STOP_PAINT = QColor("#f7cf28")  # bay markings and the stop's flag
 DETECTOR_COLOR = QColor("#8fdcf5")  # loop detectors' outlines
 BUILDING_COLOR = QColor("#8a7a66")  # an institution's roof
 BUS_STOP_NUDGE_M, BUS_STOP_SHIFT_NUDGE_M = 0.5, 5.0  # an arrow key's step, and with Shift
+METRO_AIM_PX = 6  # a drag this long, deploying metro, aims the stop instead of placing it plainly
+METRO_HANDLE_M = 60.0  # an aimed stop's handle each way on the map (half a platform)
 VEHICLE_Z = 8  # the vehicle layer: above roads and signals, below labels and end markers
-METRO_Z = 7.5  # metro track and stops: above roads and signals, below the vehicles
+METRO_Z = 7.5  # flat metro markers; the overhead structures use VEHICLE_Z + 1
 METRO_STOP_RADIUS_M = 12.0  # a stop's marker on the map
 RIGHT_CLICK_PX = 4  # a right press and release moving less than this is a click, not a pan
 # Item data key: the item is in the still layer, what rebuild() draws under the vehicles (but the
@@ -97,6 +104,150 @@ def _path(points: Points) -> QPainterPath:
     for point in points[1:]:
         path.lineTo(QPointF(*point))
     return path
+
+
+@lru_cache(maxsize=1)
+def brick_brush():
+    """A 0.4 m repeat of 0.2 by 0.1 m herringbone bricks; decorative, with no geometry changes."""
+    tile = QImage(64, 64, QImage.Format.Format_ARGB32_Premultiplied)
+    tile.fill(QColor(FOOTPATH))
+    painter = QPainter(tile)
+    painter.setPen(QPen(QColor(FOOTPATH_MORTAR), 1.4))
+    for x in range(-3, 7):
+        for y in range(-3, 7):
+            phase = (x - y) % 4
+            if phase not in (0, 2):
+                continue
+            painter.setBrush(QColor(FOOTPATH if (x + y) % 4 == 0 else FOOTPATH_SHADE))
+            painter.drawRect(QRectF(x * 16, (y if phase == 0 else y - 1) * 16,
+                                   32 if phase == 0 else 16, 16 if phase == 0 else 32))
+    painter.end()
+    brush = QBrush(tile)
+    brush.setTransform(QTransform.fromScale(.4 / 64, .4 / 64))
+    return brush
+
+
+class PavingItem(QGraphicsPathItem):
+    """Brick tint at overview scales; joints appear only when a brick is at least four pixels long."""
+
+    def __init__(self, path, selected=False):
+        super().__init__(path)
+        self.selected = selected
+        self.setPen(Qt.PenStyle.NoPen)
+        self.setBrush(QColor(PAVING_SELECTED if selected else FOOTPATH))
+
+    def paint(self, painter, option, widget=None):
+        painter.setPen(self.pen())
+        pixels = QStyleOptionGraphicsItem.levelOfDetailFromTransform(painter.worldTransform())
+        painter.setBrush(brick_brush() if pixels >= 20 and not self.selected else self.brush())
+        painter.drawPath(self.path())
+
+
+class MetroItem(QGraphicsItem):
+    """One static line: flat schematic in 2D, metre-height viaduct/stations and parked preview in 2.5D."""
+
+    def __init__(self, owner, stops, cars=5, track=None):
+        super().__init__()
+        self.owner, self.stops = owner, stops
+        self.track = _path(track or stops)  # the line's track, curves included (default: stop to stop)
+        self.faces = metro_assets.line_mesh(stops, cars, track)
+        lift = projection_lift()
+        projected = [QPointF(x, y) + lift * z for face in self.faces for x, y, z in face.vertices]
+        flat = QPolygonF([QPointF(*p) for p in track or stops]).boundingRect().adjusted(
+            -METRO_STOP_RADIUS_M, -METRO_STOP_RADIUS_M, METRO_STOP_RADIUS_M, METRO_STOP_RADIUS_M)
+        self.bounds = flat.united(QPolygonF(projected).boundingRect()).adjusted(-2, -2, 2, 2)
+        # Project and sort once. Camera yaw/elevation are fixed; zoom and pan do not change face order.
+        camera = (-lift.x(), -lift.y(), 1.)
+        visible = []
+        for face in self.faces:
+            n = asset_mesh.normal(face.vertices)
+            if sum(a * b for a, b in zip(n, camera)) <= 1e-9:
+                continue
+            depth = sum(sum(a * b for a, b in zip(p, camera)) for p in face.vertices) / len(face.vertices)
+            shade = .68 + .32 * max(0., (-.6 * n[0] - .8 * n[1] + n[2]) / sqrt(2))
+            colour = QColor(METRO_INKS[face.ink])
+            colour = QColor.fromRgbF(colour.redF() * shade, colour.greenF() * shade, colour.blueF() * shade)
+            polygon = QPolygonF([QPointF(x, y) + lift * z for x, y, z in face.vertices])
+            # Glazing is coplanar: its tiny sorting bias keeps the supporting facade behind it.
+            visible.append((depth + (.002 if face.ink == 3 else 0.), colour, polygon))
+        self.projected_faces = sorted(visible, key=lambda f: f[0])
+
+    def boundingRect(self):
+        return self.bounds
+
+    def paint(self, painter, option, widget=None):
+        t = painter.worldTransform()
+        if not self.owner.isometric or abs(t.m12()) + abs(t.m21()) < 1e-9:
+            painter.setPen(_screen_pen(QColor(METRO_LINE), 4))
+            painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.drawPath(self.track)
+            painter.setPen(_screen_pen(QColor(METRO_LINE), 3))
+            painter.setBrush(QColor(METRO_STOP))
+            for x, y in self.stops:
+                painter.drawEllipse(QPointF(x, y), METRO_STOP_RADIUS_M, METRO_STOP_RADIUS_M)
+            return
+        painter.setPen(Qt.PenStyle.NoPen)
+        for _, colour, polygon in self.projected_faces:
+            painter.setBrush(colour)
+            painter.drawPolygon(polygon)
+
+
+class OverbridgeItem(QGraphicsPolygonItem):
+    """Keep the 2D crossing footprint; the 2.5D deck stands at the assumed stair-climb height."""
+
+    def __init__(self, owner, outline, x, y, ux, uy, half, selected):
+        super().__init__(outline)
+        self.owner, self.origin, self.heading, self.half = owner, (x, y), (ux, uy), half
+        self.selected = selected
+        self.faces = metro_assets.placed(asset_mesh.footbridge_mesh(half), x, y, ux, uy)
+        lift = projection_lift()
+        self.polygons = []
+        camera = (-lift.x(), -lift.y(), 1.)
+        for face in self.faces:
+            n = asset_mesh.normal(face.vertices)
+            if sum(a * b for a, b in zip(n, camera)) <= 1e-9:
+                continue
+            depth = sum(sum(a * b for a, b in zip(p, camera)) for p in face.vertices) / len(face.vertices)
+            shade = .68 + .32 * max(0., (-.6 * n[0] - .8 * n[1] + n[2]) / sqrt(2))
+            colour = QColor(FOOTPATH if face.ink < 0 else VEHICLE_INKS[face.ink])
+            colour = QColor.fromRgbF(colour.redF() * shade, colour.greenF() * shade, colour.blueF() * shade)
+            polygon = QPolygonF([QPointF(a, b) + lift * z for a, b, z in face.vertices])
+            self.polygons.append((depth, colour, polygon))
+        self.polygons.sort(key=lambda p: p[0])
+        self.extrusion = QPainterPath()
+        for _, _, polygon in self.polygons:
+            part = QPainterPath()
+            part.addPolygon(polygon)
+            self.extrusion = self.extrusion.united(part)
+        self.bounds = super().boundingRect().united(self.extrusion.boundingRect()).adjusted(-2, -2, 2, 2)
+
+    def boundingRect(self):
+        return self.bounds
+
+    def shape(self):
+        return self.extrusion if self.owner.isometric else super().shape()
+
+    def height_at(self, x, y):
+        ox, oy = self.origin
+        ux, uy = self.heading
+        along, across = (x - ox) * ux + (y - oy) * uy, -(x - ox) * uy + (y - oy) * ux
+        if abs(along) > .6 or abs(across) >= self.half:
+            return 0.
+        # Display-only ramp at each kerb. Frames have XY poses, not a simulated stair trajectory.
+        return asset_mesh.FOOTBRIDGE_DECK_M * min(1., (self.half - abs(across)) / FOOTPATH_M)
+
+    def paint(self, painter, option, widget=None):
+        t = painter.worldTransform()
+        if not self.owner.isometric or abs(t.m12()) + abs(t.m21()) < 1e-9:
+            super().paint(painter, option, widget)
+            return
+        painter.setPen(_screen_pen(SELECTED_COLOR, 1) if self.selected else Qt.PenStyle.NoPen)
+        for _, colour, polygon in self.polygons:
+            painter.setBrush(colour)
+            painter.drawPolygon(polygon)
+        if self.owner.frame is not None:
+            self.owner.vehicle_layer._paint_walkers(painter, self.owner.frame, self.owner.frame_alpha,
+                                                    projection_lift(), self)
 
 
 class BuildingItem(QGraphicsItem):
@@ -187,7 +338,11 @@ class NetworkGraphicsScene(QGraphicsScene):
     redrawn = Signal()  # after every rebuild(), which clears the scene: extensions draw again
     placement_changed = Signal()  # the building being placed moved, was set down or its circle changed
     placed = Signal()  # the second click: `placing` is where it goes and how far its circle reaches
-    metro_clicked = Signal(float, float)  # a left click while deploying metro (metro_deploying): a stop goes there
+    # A left click while deploying metro (metro_deploying): a stop goes there (x, y), aimed along (dx, dy) when it was
+    # dragged (the pen tool's way: the track runs through the stop that way), else (0, 0); and the aim as it is dragged
+    metro_clicked = Signal(float, float, float, float)
+    metro_aiming = Signal(float, float, float, float)
+    spawn_clicked = Signal(float, float)  # a left click while placing spawn points (spawn_placing): one goes there
     still_cached_changed = Signal(bool)  # a run started (the still layer is cached) or ended
 
     def __init__(self, network: Network | None = None) -> None:
@@ -209,6 +364,9 @@ class NetworkGraphicsScene(QGraphicsScene):
         self.isometric = False  # display only; neither this nor the camera enters the network or published frame
         self.buildings_visible = True
         self._building_items: list[QGraphicsItem] = []
+        self._metro_items: list[MetroItem] = []
+        self._metro_labels: list[QGraphicsTextItem] = []
+        self._overbridges: list[OverbridgeItem] = []
         self.gpu = gpu.VehicleRenderer()  # draws them on the GPU when the view is OpenGL (kept across rebuilds)
         self.signal_lamps: dict[tuple[str, str], tuple[QGraphicsEllipseItem, QColor]] = {}
         self._signal_states: dict | None = None
@@ -218,10 +376,14 @@ class NetworkGraphicsScene(QGraphicsScene):
         self._tool_held = False
         self.group: set[tuple[str, str]] = set()  # a selection box's objects
         self.box_select = True  # dragging over empty map draws a selection box (off while a tool is on)
+        self._footpath_preview: list = []  # the road panel's footpath choice, highlighted before Apply
         self.metro_deploying = False  # Edit Network → Metro's Start deployment: each left click places a stop
+        self._metro_press: QPointF | None = None  # deploying: where the left button went down (a drag aims it)
+        self.spawn_placing = False  # Demand Generator → Pedestrian spawn points: each left click places one
         self.metro_pending: tuple[float, float] | None = None  # a deployment's first stop, until the second makes the line
         self._box: tuple[QPointF, bool] | None = None  # where the press was, additive?
         self._band: QGraphicsRectItem | None = None
+        self._metro_ghost: QGraphicsPathItem | None = None  # deploying: the leg the next click would add
         self.network_rect = QRectF()
         # An institution being placed (institutions.Placement), drawn over everything: it takes the map's
         # left clicks, mouse moves and (once set down) the wheel. None: not placing.
@@ -273,6 +435,24 @@ class NetworkGraphicsScene(QGraphicsScene):
                 item.setPos(QPointF(x, y) + lift * height)
         self.invalidate(self.sceneRect(), QGraphicsScene.SceneLayer.AllLayers)
 
+    def project_metro(self):
+        """Raise scenery above traffic only in 2.5D; overhead items cannot join the background cache."""
+        if self._metro_ghost is not None:
+            self._metro_ghost.setPos(projection_lift() * metro_assets.TRACK_M if self.isometric else QPointF())
+        for item in self._metro_items:
+            item.setZValue(VEHICLE_Z + 1 if self.isometric else METRO_Z)
+            item.setData(STILL, not self.isometric)
+            item.setFlag(QGraphicsItem.GraphicsItemFlag.ItemHasNoContents, self.still_cached and not self.isometric)
+            item.setCacheMode(QGraphicsItem.CacheMode.DeviceCoordinateCache if self.isometric
+                              else QGraphicsItem.CacheMode.NoCache)
+            item.update()
+        lift = projection_lift() if self.isometric else QPointF()
+        for label in self._metro_labels:
+            x, y, height, preview = label.data(2)
+            label.setPos(QPointF(x, y) + lift * height)
+            label.setVisible(not self.hidden and (self.isometric or not preview))
+        self.invalidate(self.sceneRect(), QGraphicsScene.SceneLayer.AllLayers)
+
     def set_placing(self, area_m2: float | None) -> None:
         """Start placing a building this big, or resize the one being placed; None stops."""
         if area_m2 is None:
@@ -306,8 +486,12 @@ class NetworkGraphicsScene(QGraphicsScene):
             self.placement_changed.emit()
             event.accept()
             return
-        if self.metro_deploying:  # deploying metro: every click is a stop (the window adds it)
-            self.metro_clicked.emit(pos.x(), pos.y())
+        if self.metro_deploying:  # deploying metro: every click is a stop (the window adds it on release)
+            self._metro_press = pos
+            event.accept()
+            return
+        if self.spawn_placing:  # placing pedestrian spawn points: every click is one (the window adds it)
+            self.spawn_clicked.emit(pos.x(), pos.y())
             event.accept()
             return
         if self.background_tool is not None and self.background_tool.press(pos.x(), pos.y()):
@@ -334,7 +518,23 @@ class NetworkGraphicsScene(QGraphicsScene):
         """Metres along the stop's road nearest the point."""
         return nearest_along(self.network.road_points(self.network.road(stop.road)), (pos.x(), pos.y()))  # type: ignore[union-attr]
 
+    def _metro_aim(self, event: QGraphicsSceneMouseEvent) -> tuple[float, float]:
+        """The direction dragged from the stop pressed (a unit vector; Shift: to the nearest 15 degrees), or (0, 0)
+        for a drag under METRO_AIM_PX: a plain click."""
+        moved = event.screenPos() - event.buttonDownScreenPos(Qt.MouseButton.LeftButton)
+        if hypot(moved.x(), moved.y()) < METRO_AIM_PX:
+            return 0.0, 0.0
+        dx, dy = event.scenePos().x() - self._metro_press.x(), event.scenePos().y() - self._metro_press.y()
+        angle = atan2(dy, dx)
+        if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
+            angle = round(angle / radians(15)) * radians(15)
+        return cos(angle), sin(angle)
+
     def mouseMoveEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        if self._metro_press is not None:  # aiming the stop pressed: its leg follows the aim
+            self.metro_aiming.emit(self._metro_press.x(), self._metro_press.y(), *self._metro_aim(event))
+            event.accept()
+            return
         if self.placing is not None:  # the footprint follows the mouse until it is set down
             self.placing.move(self.network, event.scenePos().x(), event.scenePos().y())
             self.update()
@@ -384,6 +584,12 @@ class NetworkGraphicsScene(QGraphicsScene):
         event.accept()
 
     def mouseReleaseEvent(self, event: QGraphicsSceneMouseEvent) -> None:
+        if self._metro_press is not None and event.button() == Qt.MouseButton.LeftButton:
+            press, aim = self._metro_press, self._metro_aim(event)
+            self._metro_press = None
+            self.metro_clicked.emit(press.x(), press.y(), *aim)
+            event.accept()
+            return
         if self._box is not None and event.button() == Qt.MouseButton.LeftButton:
             (start, additive), self._box = self._box, None
             if self._band is None:  # it didn't move: a click on empty map
@@ -416,7 +622,11 @@ class NetworkGraphicsScene(QGraphicsScene):
 
     def rebuild(self) -> None:
         self.clear()
+        self._metro_ghost = None
+        self._footpath_preview = []
         self._building_items = []
+        self._metro_items, self._metro_labels = [], []
+        self._overbridges = []
         self.signal_lamps = {}
         if self.network is None:
             return
@@ -437,6 +647,9 @@ class NetworkGraphicsScene(QGraphicsScene):
         self._zone = None
         for item in self.network.institutions.values():
             self._draw_institution(item)
+        self._draw_walkways()
+        self._draw_crossings()
+        self._draw_spawn_points()
         self._draw_metro()
         bounds = self.itemsBoundingRect()
         margin = max(80.0, min(max(bounds.width(), bounds.height()) * 0.05, 500.0))
@@ -481,6 +694,8 @@ class NetworkGraphicsScene(QGraphicsScene):
         self.cache_still(frame is not None)
         self.show_signals(frame.signals if frame else None)
         self.vehicle_layer.update()
+        for bridge in self._overbridges:
+            bridge.update()
 
     def cache_still(self, on: bool) -> None:
         """During a run the still layer is drawn once with the background (drawBackground) and the view
@@ -585,6 +800,20 @@ class NetworkGraphicsScene(QGraphicsScene):
             self.addItem(marking)
         for end, pocket in road.pockets.items():
             self._draw_pocket(road, points, end, pocket, lift)
+        for side in road.footpaths:  # paving beside the carriageway (and any cycle lane): walking.py's own line
+            stroker = QPainterPathStroker()
+            stroker.setWidth(FOOTPATH_M)
+            stroker.setCapStyle(Qt.PenCapStyle.FlatCap)
+            stroker.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+            paving = PavingItem(stroker.createStroke(_path(self.network.footpath_line(road, side))))
+            paving.setZValue(1 + lift)
+            self.addItem(paving)
+        for end in road.cycle_lanes:  # a green strip beyond the kerb lane (the lane graph's own line)
+            strip = QGraphicsPathItem(_path(self.network.cycle_lane_line(road, end)))  # type: ignore[union-attr]
+            strip.setPen(QPen(QColor(CYCLE_LANE), CYCLE_LANE_M, Qt.PenStyle.SolidLine, Qt.PenCapStyle.FlatCap,
+                              Qt.PenJoinStyle.RoundJoin))
+            strip.setZValue(1 + lift)
+            self.addItem(strip)
 
         # Stop lines cross only the lanes arriving at each junction end. Traffic
         # travelling along the road (u) keeps to -n on the left, so arrivals at
@@ -665,7 +894,7 @@ class NetworkGraphicsScene(QGraphicsScene):
             marking.setZValue(2 + lift)
             self.addItem(marking)
         kerb = pocket["side"] == "kerb"
-        for k in range(extra):  # lane k's centre (simulation.Graph._add_links's offsets in the pocket)
+        for k in range(extra):  # lane k's centre (lane_graph.Graph._add_links's offsets in the pocket)
             index = k if kerb else count + k
             x, y = at(stop - 6.0, half + extra - 0.5 - index)
             _, _, ux, uy = point_along(line, stop - 6.0)
@@ -742,31 +971,163 @@ class NetworkGraphicsScene(QGraphicsScene):
             self.addItem(tick)
 
     def _draw_metro(self) -> None:
-        """Each metro line's track, straight stop to stop, and its stops: a platform marker ringed in the track's
-        colour and labelled; a deployment's pending first stop too. Above the roads, below the vehicles."""
-        network, line_colour = self.network, QColor(METRO_LINE)
+        """The same saved stop coordinates drive the flat markers and display-only overhead structures."""
+        network = self.network
         for line in network.metro_lines.values():
             stops = [network.metro_stops[stop_id] for stop_id in line.stops]
-            track = QGraphicsPathItem(_path([(stop.x, stop.y) for stop in stops]))
-            track.setPen(_screen_pen(line_colour, 4))
-            track.setToolTip(f"Metro {line.id}: {len(stops)} stops, {network.metro_length_m(line.id) / 1000:.2f} km")
-            track.setZValue(METRO_Z)
-            self.addItem(track)
+            item = MetroItem(self, [(stop.x, stop.y) for stop in stops], line.cars_per_train, network.metro_track(line.id))
+            item.setToolTip("Overhead metro (assumed heights)")
+            self.addItem(item)
+            self._metro_items.append(item)
             for stop in stops:
-                self._draw_metro_stop(stop.x, stop.y, stop.id, f"{stop.id} (metro {line.id})")
+                self._metro_label(stop.id, stop.x, stop.y - METRO_STOP_RADIUS_M, metro_assets.CANOPY_M)
+            first = stops[0]
+            self._metro_label(f"{line.id} train preview", first.x, first.y, metro_assets.TRAIN_BASE_M + metro_assets.TRAIN_HEIGHT_M,
+                              preview=True)
         if self.metro_pending is not None:
-            self._draw_metro_stop(*self.metro_pending, "", "First stop: click the next")
+            item = MetroItem(self, [self.metro_pending])
+            item.setToolTip("First stop: choose next")
+            self.addItem(item)
+            self._metro_items.append(item)
+        self.project_metro()
 
-    def _draw_metro_stop(self, x: float, y: float, name: str, tooltip: str) -> None:
-        marker = QGraphicsEllipseItem(x - METRO_STOP_RADIUS_M, y - METRO_STOP_RADIUS_M,
-                                      2 * METRO_STOP_RADIUS_M, 2 * METRO_STOP_RADIUS_M)
-        marker.setBrush(QColor(METRO_STOP))
-        marker.setPen(_screen_pen(QColor(METRO_LINE), 3))
-        marker.setToolTip(tooltip)
-        marker.setZValue(METRO_Z + 0.1)
-        self.addItem(marker)
-        if name:
-            self._add_label(name, x, y - METRO_STOP_RADIUS_M, 0, -1, pixels=11)
+    def _draw_spawn_points(self) -> None:
+        """Each pedestrian spawn point: a disc in the walkers' colour with its name, and a dashed line to where its
+        walkers join the footpaths, the nearest place on any footpath or path (walking.WalkGraph.attach's way);
+        clickable as ("spawn", id), outlined when selected."""
+        for point in self.network.spawn_points.values():  # type: ignore[union-attr]
+            near = footpath_join(self.network, point.x, point.y)  # type: ignore[arg-type]
+            if near is not None:
+                link = QGraphicsPathItem(_path([(point.x, point.y), near]))
+                pen = _screen_pen(QColor(WALKER), 1.5)
+                pen.setStyle(Qt.PenStyle.DashLine)
+                link.setPen(pen)
+                link.setZValue(VEHICLE_Z + 1)
+                self.addItem(link)
+            selected = self.selection == ("spawn", point.id)
+            disc = QGraphicsEllipseItem(QRectF(-7.0, -7.0, 14.0, 14.0))  # 14 pixels at any zoom: a pin, not a footprint
+            disc.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIgnoresTransformations)
+            disc.setPos(point.x, point.y)
+            disc.setBrush(QColor(WALKER))
+            disc.setPen(_screen_pen(QColor(ACCENT_EDGE) if selected else QColor(ROAD_COLOR), 2.5 if selected else 1.5))
+            disc.setZValue(VEHICLE_Z + 2)
+            disc.setData(0, ("spawn", point.id))
+            disc.setToolTip(f"Spawn point {point.id}")
+            self.addItem(disc)
+            label = self._add_label(point.id, point.x, point.y, 0, -1, pixels=11)
+            label.setTransform(QTransform.fromTranslate(0, -6), True)  # a pixel gap from the screen-sized pin
+
+    def _draw_crossings(self) -> None:
+        """Each pedestrian crossing across its road: a zebra's white stripes on the carriageway, an overbridge's
+        deck above the traffic (from footpath to footpath); clickable as ("crossing", id), outlined when selected."""
+        for crossing in self.network.pedestrian_crossings.values():  # type: ignore[union-attr]
+            road = self.network.road(crossing.road)  # type: ignore[union-attr]
+            x, y, ux, uy = point_along(self.network.road_points(road), crossing.distance_m)  # type: ignore[union-attr]
+            nx, ny = -uy, ux
+            selected = self.selection == ("crossing", crossing.id)
+            zebra = crossing.kind == "zebra"
+            half = road.width_m / 2 + (0.0 if zebra else FOOTPATH_M + CYCLE_LANE_M * bool(road.cycle_lanes))
+            along = 1.5  # half its width along the road (simulation.ZEBRA_HALF_M)
+            outline = QPolygonF([QPointF(x + nx * a * half + ux * b * along, y + ny * a * half + uy * b * along)
+                                 for a, b in ((-1, -1), (1, -1), (1, 1), (-1, 1))])
+            if zebra:
+                stripes = QPainterPath()
+                offset = -half + 0.25
+                while offset < half:
+                    stripes.moveTo(x + nx * offset - ux * along, y + ny * offset - uy * along)
+                    stripes.lineTo(x + nx * offset + ux * along, y + ny * offset + uy * along)
+                    offset += 1.0
+                marks = QGraphicsPathItem(stripes)
+                marks.setPen(QPen(QColor("#f5f5f5"), 0.5, Qt.PenStyle.SolidLine, Qt.PenCapStyle.FlatCap))
+                marks.setZValue(2.5)
+                self.addItem(marks)
+            item = QGraphicsPolygonItem(outline) if zebra else OverbridgeItem(self, outline, x, y, ux, uy, half, selected)
+            if not zebra:
+                self._overbridges.append(item)
+            item.setBrush(Qt.BrushStyle.NoBrush if zebra else QColor(FOOTPATH))
+            item.setPen(_screen_pen(QColor("#f7d91e"), 2) if selected else
+                        (QPen(Qt.PenStyle.NoPen) if zebra else _screen_pen(QColor(ROAD_COLOR), 1.5)))
+            item.setZValue(2.6 if zebra else VEHICLE_Z + 1)  # a bridge over the traffic
+            item.setData(0, ("crossing", crossing.id))
+            item.setToolTip("Zebra crossing" if zebra else "Pedestrian overbridge")
+            self.addItem(item)
+
+    def _draw_walkways(self) -> None:
+        """Each path (Network.walkways) as paving its width wide, under the roads it meets (clickable: selected,
+        Delete removes it), and the one being drawn, dashed."""
+        for way in self.network.walkways.values():  # type: ignore[union-attr]
+            selected = self.selection == ("walkway", way.id)
+            stroker = QPainterPathStroker()  # its outline filled: only the paving takes a click, not what it bends round
+            stroker.setWidth(FOOTPATH_M)
+            stroker.setCapStyle(Qt.PenCapStyle.RoundCap)
+            stroker.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+            line = self.network.walkway_points(way)  # type: ignore[union-attr]
+            item = PavingItem(stroker.createStroke(_path(line)), selected)
+            item.setZValue(0.9)
+            item.setData(0, ("walkway", way.id))
+            item.setToolTip(f"Path {way.id}")
+            self.addItem(item)
+
+    def preview_footpaths(self, road_id: str, sides: tuple) -> None:
+        """Highlight where the footpaths chosen for a road would go (the road panel's choice, before Apply): each
+        side's paving outlined in the selection colour, a side that would go dashed; nothing for an unknown road."""
+        for item in self._footpath_preview:
+            if item.scene() is self:
+                self.removeItem(item)
+        self._footpath_preview = []
+        try:
+            road = self.network.road(road_id)  # type: ignore[union-attr]
+        except KeyError:
+            return
+        for side in ("left", "right"):
+            if side not in sides and side not in road.footpaths:
+                continue
+            stroker = QPainterPathStroker()
+            stroker.setWidth(FOOTPATH_M)
+            stroker.setCapStyle(Qt.PenCapStyle.FlatCap)
+            item = QGraphicsPathItem(stroker.createStroke(_path(self.network.footpath_line(road, side))))  # type: ignore[union-attr]
+            colour = QColor(ACCENT_EDGE)
+            pen = _screen_pen(colour, 2)
+            if side not in sides:  # there now, gone on Apply
+                pen.setStyle(Qt.PenStyle.DashLine)
+            else:
+                colour.setAlpha(110)
+                item.setBrush(colour)
+            item.setPen(pen)
+            item.setZValue(21)
+            self.addItem(item)
+            self._footpath_preview.append(item)
+
+    def show_metro_ghost(self, points: list, state: str = "ok", handle: tuple | None = None) -> None:
+        """While deploying a line: the leg the next click would add and its stop, dashed, before it is placed (amber:
+        it crosses another line; red: refused); [] hides it. `handle`, (x, y, dx, dy): a stop being aimed, drawn as
+        the pen tool draws a smooth point's handles, the same length both ways."""
+        if self._metro_ghost is None:
+            self._metro_ghost = QGraphicsPathItem()
+            self._metro_ghost.setZValue(21)
+            self.addItem(self._metro_ghost)
+        path = _path(points) if points else QPainterPath()
+        if points:
+            path.addEllipse(QPointF(*points[-1]), METRO_STOP_RADIUS_M, METRO_STOP_RADIUS_M)
+        if handle is not None:
+            x, y, dx, dy = handle
+            reach = METRO_HANDLE_M
+            path.moveTo(x - dx * reach, y - dy * reach)
+            path.lineTo(x + dx * reach, y + dy * reach)
+            for sign in (-1, 1):
+                path.addEllipse(QPointF(x + sign * dx * reach, y + sign * dy * reach), 4.0, 4.0)
+        pen = _screen_pen(QColor({"ok": METRO_LINE, "crossing": STATUS["waiting"], "refused": DANGER}[state]), 3)
+        pen.setStyle(Qt.PenStyle.DashLine)
+        self._metro_ghost.setPen(pen)
+        self._metro_ghost.setPath(path)
+        self._metro_ghost.setData(3, state)
+        self._metro_ghost.setPos(projection_lift() * metro_assets.TRACK_M
+                                if self.isometric else QPointF())
+
+    def _metro_label(self, name, x, y, height, preview=False):
+        label = self._add_label(name, x, y, 0, -1, pixels=11)
+        label.setData(2, (x, y, height, preview))
+        self._metro_labels.append(label)
 
     def nudge_bus_stop(self, dx: float, dy: float, metres: float) -> bool:
         """Move the selected bus stop `metres` along its road the way its road runs nearest the
@@ -1074,14 +1435,15 @@ class VehicleLayer(QGraphicsItem):
 
     def paint(self, painter: QPainter, option, widget=None) -> None:  # type intentionally inherited from Qt
         frame = self._scene.frame
-        if frame is None or not frame.vehicles:
+        if frame is None or not (frame.vehicles or frame.walkers):
             return
         alpha = self._scene.frame_alpha
         transform = painter.worldTransform()
         # Legacy scene.render exports remain top-down; an isometric view supplies the yaw/elevation transform.
         isometric = self._scene.isometric and abs(transform.m12()) + abs(transform.m21()) > 1e-9
         lift = projection_lift() if isometric else None
-        if self._scene.gpu.draw(painter, frame, alpha, self.OUTLINE, lift):
+        if not frame.vehicles or self._scene.gpu.draw(painter, frame, alpha, self.OUTLINE, lift):
+            self._paint_walkers(painter, frame, alpha, lift)
             return
         groups: dict[str, list] = defaultdict(list)
         for vehicle in frame.vehicles:
@@ -1137,6 +1499,46 @@ class VehicleLayer(QGraphicsItem):
                                                        roof[following], roof[index]]))
                     painter.setBrush(base_colour)
                     painter.drawPolygon(roof)
+        self._paint_walkers(painter, frame, alpha, lift)
+
+    def _paint_walkers(self, painter: QPainter, frame, alpha: float, lift=None, bridge=None) -> None:
+        """Interpolate the same world poses: 2D markers, metre-scaled people in 2.5D."""
+        if not frame.walkers:
+            return
+        if lift is not None:
+            poses = []
+            for x1, y1, ux1, uy1, (x0, y0, ux0, uy0) in frame.walkers:
+                x, y = x0 + (x1 - x0) * alpha, y0 + (y1 - y0) * alpha
+                height = bridge.height_at(x, y) if bridge else max(
+                    (item.height_at(x, y) for item in self._scene._overbridges), default=0.)
+                if (height > 0) != (bridge is not None):
+                    continue
+                ux, uy = ux0 + (ux1 - ux0) * alpha, uy0 + (uy1 - uy0) * alpha
+                size = hypot(ux, uy) or 1.
+                poses.append((x, y, ux / size, uy / size, height))
+            for x, y, ux, uy, height in sorted(poses, key=lambda p: p[0] + p[1] + p[4]):
+                anchor = QPointF(x, y) + lift * height
+                faces = []
+                camera = (-lift.x(), -lift.y(), 1.)
+                for face in asset_mesh.pedestrian_mesh():
+                    points = [(ux * p[0] - uy * p[1], uy * p[0] + ux * p[1], p[2]) for p in face.vertices]
+                    n = asset_mesh.normal(points)
+                    if sum(a * b for a, b in zip(n, camera)) <= 1e-9:
+                        continue
+                    depth = sum(sum(a * b for a, b in zip(p, camera)) for p in points) / len(points)
+                    faces.append((depth, face.ink, points))
+                painter.setPen(Qt.PenStyle.NoPen)
+                for _, ink, points in sorted(faces):
+                    painter.setBrush(QColor(WALKER if ink < 0 else VEHICLE_INKS[ink]))
+                    painter.drawPolygon(QPolygonF([anchor + QPointF(a, b) + lift * z for a, b, z in points]))
+            return
+        points = [QPointF(x0 + (x1 - x0) * alpha, y0 + (y1 - y0) * alpha)
+                  for x1, y1, _ux, _uy, (x0, y0, _px, _py) in frame.walkers]
+        pixels = QStyleOptionGraphicsItem.levelOfDetailFromTransform(painter.worldTransform())
+        pen = QPen(QColor(WALKER), 3 if pixels * 0.6 < 3 else 0.6, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap)
+        pen.setCosmetic(pixels * 0.6 < 3)
+        painter.setPen(pen)
+        painter.drawPoints(points)
 
     @staticmethod
     def _paint_mesh(painter, skin, colour, x, y, ux, uy, length, width, lift, detail=True):
@@ -1235,6 +1637,7 @@ class NetworkView(QGraphicsView):
         scale = self.projection_scale()
         self.isometric = self.scene().isometric = on
         self.scene().project_building_labels()
+        self.scene().project_metro()
         anchor = self.transformationAnchor()
         self.setTransformationAnchor(QGraphicsView.ViewportAnchor.NoAnchor)
         try:

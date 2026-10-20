@@ -28,7 +28,6 @@ from __future__ import annotations
 import random as _random
 from dataclasses import dataclass, field
 from math import sqrt
-from typing import TYPE_CHECKING
 
 from .models import LANE_WIDTH_M
 
@@ -67,8 +66,49 @@ VEHICLE_CLASSES = {
 EMERGENCY_MODE = dict(name="Emergency", colour="#ff3b3b", headway_min=0, tau_s=1.0, sigma=0.5, desired_max_kmh=1e4,
                       startup_delay_s=0.9, **VEHICLE_CLASSES["emergency"])
 
-if TYPE_CHECKING:  # the type only: this module and simulation.py stay free of Qt
-    from .mode_behavior import VehicleMode
+
+@dataclass
+class VehicleMode:
+    name: str
+    colour: str  # keeps its colour whatever else is added or deleted
+    headway_min: int = 0  # minutes between vehicles on a timetable, e.g. a bus; 0: no timetable
+    timetabled: bool = False  # may it have a headway at all (a bus may; a car or bike never)
+    # What each vehicle of this type is made with (create_vehicle). Not editable in the tab yet; the
+    # defaults are SUMO's for vClass passenger (sumo.dlr.de/docs/Vehicle_Type_Parameter_Defaults and
+    # Definition_of_Vehicles...), overridden with SUMO's for bus and bicycle by mode_behavior.VehicleModes.
+    length_m: float = 5.0
+    width_m: float = 1.8
+    max_speed_kmh: float = 200.0  # its technical top speed
+    desired_max_kmh: float = 1e4  # the fastest it wants to go (a bicycle's is 20 km/h); none for a car
+    accel: float = 2.6  # m/s²
+    decel: float = 4.5  # comfortable braking, m/s²
+    # The hardest it can brake, m/s² (SUMO's emergencyDecel), no less than decel. None (a project saved before it):
+    # its vehicle class's (VEHICLE_CLASSES), or decel if that is harder.
+    emergency_decel: float | None = None
+    min_gap_m: float = 2.5  # standstill gap to the vehicle ahead
+    tau_s: float = 1.0  # driver's reaction time / desired time headway
+    sigma: float = 0.5  # driver imperfection (Krauss dawdling), 0-1
+    speed_dev: float = 0.1  # each vehicle's speed factor is drawn from normc(1, speed_dev, 0.2, 2)
+    startup_delay_s: float = 0.9  # SUMO's startupDelay, calibrated (signal_timing.py): the wait before moving off after a stop
+    occupancy: float = 1.0  # people a vehicle carries, for passenger throughput (results.py): an assumption
+    # Passenger car units: the road space one vehicle takes against a car (UK DMRB TA 79/99: bus 2, pedal cycle
+    # 0.2). Kept with the project; no calculation uses it yet.
+    pcu: float = 1.0
+    # What it is, whatever it's called (a vehicle.VEHICLE_CLASSES kind): a "bus" calls at bus stops and gets transit
+    # priority. Kept through renames; a type without one (a project saved before it) named Bus is a bus.
+    vehicle_class: str = ""
+    # In a lateral run (Simulation lateral), may it pass others within its lane, filtering (if narrow_enough). None (a
+    # project saved before it): yes for a motorcycle, moped or bicycle (FILTERING_CLASSES), else no.
+    filters: bool | None = None
+    random_colour: bool = False  # display paint varies per vehicle; categorical colour stays with the type
+
+    def __post_init__(self) -> None:
+        if not self.vehicle_class:
+            self.vehicle_class = "bus" if self.name.strip().lower() == "bus" else "passenger"
+        if self.filters is None:
+            self.filters = self.vehicle_class in FILTERING_CLASSES
+        if self.emergency_decel is None:
+            self.emergency_decel = max(VEHICLE_CLASSES.get(self.vehicle_class, {}).get("emergency_decel", 9.0), self.decel)
 
 
 @dataclass(slots=True, eq=False)
@@ -110,6 +150,8 @@ class Vehicle:
     ahead: list = field(default_factory=list)  # its route's roundabouts, signals and slip roads (Graph.landmarks)
     emergency: bool = False  # dispatched as an emergency vehicle (Simulation.dispatch): it keeps to the kerbside lane
     route_m: list = field(default_factory=list)  # metres from its route's start to each leg's end
+    cycles: bool = False  # a bicycle: it rides a road's cycle lane where there is one (Link.cycle), cars never do
+    drop_s: float | None = None  # its trip ends part way along its last link's lane, this far along (a drop-off)
     dwell_end: float | None = None  # in a bay: when it has stood at the stop long enough
     load: float | None = None  # a bus's passengers, once it has called at a stop with passengers (None: its type's occupancy)
     waiting_s: float = 0.0  # standing still

@@ -67,7 +67,7 @@ from shiboken6 import isValid
 
 from .clock import SimulationClock
 from .network_scene import NetworkGraphicsScene
-from .properties_panel import hint_label
+from .widgets import hint_label
 from .theme import STATUS
 
 EXTENSIONS_DIR = Path(__file__).resolve().parents[2] / "extensions"
@@ -209,7 +209,7 @@ class ExtensionsPanel(QWidget):
         "Seeds: 1-10; Duration: 30 min". For a run's record (the results workbook)."""
         from PySide6.QtWidgets import QAbstractSpinBox, QCheckBox as Box, QComboBox, QFormLayout, QLineEdit  # noqa: PLC0415
 
-        from .properties_panel import ChoiceButtons  # noqa: PLC0415
+        from .widgets import ChoiceButtons  # noqa: PLC0415
 
         def shown_value(w):
             if hasattr(w, "summary"):  # a dropdown of ticks: what is ticked
@@ -404,7 +404,7 @@ class ExtensionsPanel(QWidget):
         docstring's first paragraph) and each setting by label with its value and, for a choice, what it can be."""
         from PySide6.QtWidgets import QAbstractSlider, QAbstractSpinBox, QComboBox, QLineEdit  # noqa: PLC0415
 
-        from .properties_panel import ChoiceButtons  # noqa: PLC0415
+        from .widgets import ChoiceButtons  # noqa: PLC0415
 
         found = []
         for extension in self.extensions:
@@ -435,7 +435,7 @@ class ExtensionsPanel(QWidget):
         from PySide6.QtWidgets import QAbstractSlider, QAbstractSpinBox, QComboBox, QFormLayout, QLineEdit  # noqa: PLC0415
 
         fields = {label.lower(): widget for label, widget in self.fields(extension).items()}
-        from .properties_panel import ChoiceButtons  # noqa: PLC0415
+        from .widgets import ChoiceButtons  # noqa: PLC0415
 
         for key, value in (settings or {}).items():
             widget = fields.get(str(key).strip().lower())

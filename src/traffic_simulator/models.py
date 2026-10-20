@@ -8,11 +8,11 @@ from __future__ import annotations
 
 import re
 from dataclasses import asdict, dataclass, field, fields
-from math import floor, hypot, isfinite, sqrt
+from math import floor, hypot, isfinite, radians, sqrt
 from typing import Any
 
-from .geometry import (curvature_at, distance_to_segment, polyline_length, polyline_meets_box, segment_hit,
-                       sub_polyline)
+from .geometry import (curvature_at, distance_to_segment, nearest_along, offset_polyline, polyline_length,
+                       polyline_meets_box, segment_hit, sub_polyline, rail_leg)
 
 
 LANE_WIDTH_M = 3.5
@@ -21,6 +21,12 @@ LANE_WIDTH_M = 3.5
 BAY_ENTRY_M, BAY_STOP_M, BAY_EXIT_M = 15.0, 15.0, 10.0
 BAY_LENGTH_M = BAY_ENTRY_M + BAY_STOP_M + BAY_EXIT_M
 BAY_WIDTH_M = 3.0
+CYCLE_LANE_M = 1.5  # a cycle lane's width (Road.cycle_lanes): an assumption, a common desirable minimum
+FOOTPATH_M = 2.0  # a footpath's width (Road.footpaths): an assumption, room for two people to pass
+MAX_WALK_DEMAND = 100_000  # people an hour between two boundary ends (Network.walk_demand)
+CROSSING_KINDS = ("zebra", "overbridge")  # Edit Network → Pedestrian (Network.pedestrian_crossings)
+ZEBRA_CLEAR_M = 20.0  # a crossing keeps this far from either end of its road: off the junction (an assumption)
+CROSSING_APART_M = 10.0  # and this far from another crossing on the road (an assumption)
 # A turn pocket (Road.pockets): 1 or 2 short lanes for the turns on one side, opening this far back from the stop
 # line; the carriageway widens on its traffic's kerb side over POCKET_TAPER_M before it.
 POCKET_SIDES = ("kerb", "offside")
@@ -37,6 +43,12 @@ BUILDING_HEIGHTS_M = {"Residential": 9.0, "School": 7.2, "Hospital": 18.0, "Offi
 # Metro rail (Edit Network → Metro): stops placed on the map, each line's track running stop to stop. Two stops of a
 # line closer than this would have overlapping platforms (a six-car metro train is about 140 m): the app's floor.
 METRO_MIN_SPACING_M = 150.0
+METRO_MIN_RADIUS_M = 300.0  # the tightest curve a line's track takes: a desirable minimum for urban metro (assumption)
+METRO_MAX_TURN_DEG = 89.0  # the most a leg turns from a station: trains don't take right-angle or acute bends
+METRO_PLATFORM_M = 120.0  # a station's platform, on straight track: a 5-carriage train and room (an assumption)
+# A curve's transitions (clothoids), each: L = v^3 / (R C) at 80 km/h, R 300 m and C 0.6 m/s^3 of lateral jerk (an
+# assumption; the references hold no rail alignment standard)
+METRO_TRANSITION_M = 60.0
 MAX_METRO_DEMAND = 100_000.0  # passengers an hour between two stations
 MAX_BUILDING_HEIGHT_M = 300.0  # visual height in metres; no traffic or demand calculation uses it
 
@@ -118,6 +130,12 @@ class Road:
     # back from the stop line, "side": "kerb" (for kerb turns) or "offside" (offside turns and U-turns)}. Relative to
     # the driving side, so a change of side keeps each pocket serving the same turns.
     pockets: dict = field(default_factory=dict)
+    # Cycle lanes, bikes only, beyond the kerb lane of the traffic arriving at these ends (node ids), the whole road
+    # long (Network.cycle_lane_line).
+    cycle_lanes: list = field(default_factory=list)  # node ids (a bare list: number_problem skips it)
+    # Footpaths along it, on its "left" and/or "right" as seen from from_node to to_node (Network.footpath_line):
+    # walked by pedestrians (walking.py). reverse_road swaps the sides.
+    footpaths: list = field(default_factory=list)
 
     def arrival_ends(self) -> tuple[str, ...]:
         """The nodes its traffic arrives at: a one-way road's to_node, a two-way road's both ends."""
@@ -153,6 +171,38 @@ class BusStop:
 
 
 @dataclass(slots=True)
+class Walkway:
+    """A path of its own for pedestrians, off the roads (from OpenStreetMap's footways, or the assistant's add_path:
+    through a park, a square): from one road node (a junction or a boundary end) to another through its bends, walked as the
+    footpaths beside roads are (walking.py)."""
+    id: str  # P1, P2... in the order drawn
+    start: str
+    end: str
+    bends: list = field(default_factory=list)  # [x, y] points between its ends, in metres
+
+
+@dataclass(slots=True)
+class SpawnPoint:
+    """Where pedestrians appear and go (Demand Generator → Pedestrian spawn points): a point anywhere near the
+    network; a walker walks straight from it to the nearest footpath, and from the footpath nearest its destination
+    straight to that (walking.WalkGraph). Its own OD matrix: Network.spawn_demand."""
+    id: str  # S1, S2... in the order placed
+    x: float
+    y: float
+
+
+@dataclass(slots=True)
+class Crossing:
+    """A place to cross a road on foot, `distance_m` from its from_node, joining its two footpaths (Edit Network →
+    Pedestrian): a "zebra" (pedestrians have right of way: traffic stops for anyone on it) or an "overbridge" (over
+    the traffic: no conflict, but its stairs to climb)."""
+    id: str  # X1, X2... in the order placed
+    road: str
+    distance_m: float
+    kind: str = "zebra"
+
+
+@dataclass(slots=True)
 class MetroStop:
     """A metro station: a point on the map (metres), apart from the roads (the line runs underground or raised)."""
     id: str  # M1, M2... in the order placed: the metro's own network and OD matrix are labelled by them
@@ -162,10 +212,12 @@ class MetroStop:
 
 @dataclass(slots=True)
 class MetroLine:
-    """A metro line: its stops in order, the track running straight from each to the next, and its service (set
-    when it is accepted; the defaults are assumptions, METRO_SERVICE)."""
+    """A metro line: its stops in order, its track through them (each leg curving from its station at
+    METRO_MIN_RADIUS_M at the least, with transitions, its stations on straight track: geometry.rail_leg) and its service (set when it is accepted;
+    the defaults are assumptions, METRO_SERVICE)."""
     id: str  # ML1, ML2... in the order deployed
-    stops: list[str] = field(default_factory=list)
+    stops: list[str] = field(default_factory=list)  # a stop on two lines is an interchange: riders change there
+    track: list = field(default_factory=list)  # [x, y] points through its stops; [] (older files): stop to stop
     headway_min: float = 5.0  # minutes between trains each way
     speed_kmh: float = 35.0  # commercial speed, stops' dwell included
     cars_per_train: int = 5  # carriages a train (HCM 2000 Eq 27-28's N_c)
@@ -181,6 +233,15 @@ class MetroLine:
 # The service a line gets unless set (Edit Network → Metro's Accept dialog): assumptions, each with its range.
 METRO_SERVICE = {"headway_min": (5.0, 1.0, 60.0), "speed_kmh": (35.0, 10.0, 120.0), "cars_per_train": (5, 1, 12),
                  "car_capacity": (200, 20, 400), "fare_cents": (100.0, 0.0, 5000.0)}
+
+
+class MetroCrossing(ValueError):
+    """A metro leg crosses another line: merge them at an interchange there (add_metro_stop(merge=True)), or not."""
+
+    def __init__(self, line_id: str) -> None:
+        super().__init__(f"This leg crosses line {line_id}: merge them at an interchange station there, or discard "
+                         "this line.")
+        self.line_id = line_id
 
 
 def metro_line_problem(line: MetroLine) -> str | None:
@@ -322,6 +383,13 @@ class Network:
     # The metro's own OD matrix (Demand Generator → Metro): passengers an hour, "M1->M2": people. Apart from the roads'
     # demand; institutions add their metro riders on top (metro.md).
     metro_demand: dict[str, float] = field(default_factory=dict)
+    walkways: dict[str, Walkway] = field(default_factory=dict)  # paths of their own (the map's, the assistant's)
+    pedestrian_crossings: dict[str, Crossing] = field(default_factory=dict)  # Edit Network → Pedestrian
+    # Pedestrians an hour between boundary ends (Demand Generator → Pedestrians), "1W->1E": people. Institutions add
+    # their walkers on top (institutions.walk_demand).
+    walk_demand: dict[str, float] = field(default_factory=dict)
+    spawn_points: dict[str, SpawnPoint] = field(default_factory=dict)  # Demand Generator → Pedestrian spawn points
+    spawn_demand: dict[str, float] = field(default_factory=dict)  # people an hour between them, "S1->S2": people
     # Each interchange (its nodes are named "DI1.1", "DI1.2", ...): [x, y, ux, uy], where it was built
     # and the freeway's direction there. A change of driving side mirrors it across the freeway's normal.
     interchanges: dict[str, list[float]] = field(default_factory=dict)
@@ -334,7 +402,7 @@ class Network:
     default_lanes_per_direction: int = 2
     default_lane_changing: bool = True
     default_signal_method: str = "webster"  # what new signalised junctions are timed by (SIGNAL_METHODS)
-    # Route choice (simulation.Graph.route_shares): {} = every vehicle the fastest route; else
+    # Route choice (lane_graph.Graph.route_shares): {} = every vehicle the fastest route; else
     # {"theta_per_min": θ, "routes": k, "link_times_s": {link id ("road>" / "road<"): seconds}} (assign_routes)
     route_choice: dict = field(default_factory=dict)
 
@@ -366,6 +434,123 @@ class Network:
         """The road's centre line from from_node to to_node, through any curve points."""
         start, end = self.node(road.from_node), self.node(road.to_node)
         return [(start.x, start.y), *((x, y) for x, y in road.shape), (end.x, end.y)]
+
+    def kerb_side(self, road: Road, end: str) -> str:
+        """Which side of the road ("left" or "right", from from_node to to_node) the kerb of the traffic arriving at
+        `end` is on, for the driving side."""
+        return "left" if (self.driving_side == "left") == (end == road.to_node) else "right"
+
+    def beside_line(self, road: Road, side: str, metres: float) -> list[tuple[float, float]]:
+        """A line `metres` beyond the carriageway's edge on its `side` ("left" or "right", from from_node to
+        to_node), the road's whole length; where a turn pocket widens the road on that side, it moves out with the
+        kerb along the pocket's taper. Cycle lanes and footpaths run along these lines."""
+        line = self.road_points(road)
+        sign = 1.0 if side == "right" else -1.0  # geometry.offset_polyline: positive is the (-uy, ux) side
+        base = offset_polyline(line, sign * (road.width_m / 2 + metres))
+        for end, pocket in road.pockets.items():
+            if end not in (road.from_node, road.to_node) or self.kerb_side(road, end) != side:
+                continue
+            moved = offset_polyline(line, sign * (road.width_m / 2 + metres + pocket["lanes"] * LANE_WIDTH_M))
+            total, length = polyline_length(base), pocket["length_m"]
+            if end == road.to_node:
+                base = sub_polyline(base, 0.0, total - length - POCKET_TAPER_M) + \
+                    sub_polyline(moved, polyline_length(moved) - length, polyline_length(moved))
+            else:
+                base = sub_polyline(moved, 0.0, length) + sub_polyline(base, length + POCKET_TAPER_M, total)
+        return base
+
+    def cycle_lane_line(self, road: Road, end: str) -> list[tuple[float, float]]:
+        """The centre line of the cycle lane arriving at `end` (Road.cycle_lanes), the way its traffic runs: just
+        beyond the kerb lane (beside_line). The lane graph's cycle lanes and the map's are both this line."""
+        line = self.beside_line(road, self.kerb_side(road, end), CYCLE_LANE_M / 2)
+        return line if end == road.to_node else line[::-1]
+
+    def footpath_line(self, road: Road, side: str) -> list[tuple[float, float]]:
+        """The centre line of the road's footpath on `side`, from from_node to to_node: beyond the carriageway and
+        any cycle lane on that side."""
+        cycle = any(self.kerb_side(road, end) == side for end in road.cycle_lanes)
+        return self.beside_line(road, side, CYCLE_LANE_M * cycle + FOOTPATH_M / 2)
+
+    def walkway_points(self, walkway: Walkway) -> list[tuple[float, float]]:
+        """A path's line: its start node, its bends, its end node."""
+        a, b = self.node(walkway.start), self.node(walkway.end)
+        return [(a.x, a.y), *((x, y) for x, y in walkway.bends), (b.x, b.y)]
+
+    def add_walkway(self, start: str, end: str, bends=()) -> Walkway:
+        """A path P1, P2... from node `start` to node `end` (junctions or boundary ends) through `bends`. Refused
+        (ValueError), changing nothing: an unknown node, the same node twice, or a bend off the map's numbers."""
+        for node_id in (start, end):
+            self.node(node_id)  # KeyError for an unknown ID
+        bends = [[float(x), float(y)] for x, y in bends]
+        if start == end or not all(finite(v) for point in bends for v in point):
+            raise ValueError("A path runs from one node to another, through bends on the map.")
+        number = 1
+        while f"P{number}" in self.walkways:
+            number += 1
+        walkway = Walkway(f"P{number}", start, end, bends)
+        self.walkways[walkway.id] = walkway
+        return walkway
+
+    def crossing_problem(self, crossing: Crossing) -> str | None:
+        """Why a crossing can't be where it is, or None: a kind of CROSSING_KINDS, on a known road with footpaths on
+        both sides, at least ZEBRA_CLEAR_M from either end, CROSSING_APART_M from another crossing and clear of the
+        road's bus bays."""
+        if crossing.kind not in CROSSING_KINDS:
+            return f"Crossing {crossing.id} must be a {' or an '.join(CROSSING_KINDS)}."
+        try:
+            road = self.road(crossing.road)
+        except KeyError:
+            return f"Crossing {crossing.id} is on a road that isn't there."
+        if sorted(road.footpaths) != ["left", "right"]:
+            return f"A crossing joins the footpaths on both sides of {road.id}: give it both first."
+        length = self.road_geometry_length(road)
+        if not finite(crossing.distance_m) or not ZEBRA_CLEAR_M <= crossing.distance_m <= length - ZEBRA_CLEAR_M:
+            return (f"A crossing goes at least {ZEBRA_CLEAR_M:g} m from the junctions at either end of {road.id} "
+                    f"({ZEBRA_CLEAR_M:g} to {max(length - ZEBRA_CLEAR_M, 0):.0f} m along it).")
+        for other in self.pedestrian_crossings.values():
+            if other.id != crossing.id and other.road == road.id \
+                    and abs(other.distance_m - crossing.distance_m) < CROSSING_APART_M:
+                return f"Too near crossing {other.id}: crossings on a road are {CROSSING_APART_M:g} m apart at least."
+        for stop in self.bus_stops.values():
+            if stop.road == road.id and abs(self.bus_stop_distance(stop) - crossing.distance_m) < BAY_LENGTH_M / 2 + 2:
+                return f"Bus stop {stop.id}'s bay is there: place the crossing clear of it."
+        return None
+
+    def add_crossing(self, road_id: str, distance_m: float, kind: str = "zebra") -> Crossing:
+        """A crossing X1, X2... on the road (crossing_problem first: a refusal, ValueError, changes nothing)."""
+        number = 1
+        while f"X{number}" in self.pedestrian_crossings:
+            number += 1
+        crossing = Crossing(f"X{number}", road_id, float(distance_m), kind)
+        problem = self.crossing_problem(crossing)
+        if problem:
+            raise ValueError(problem)
+        self.pedestrian_crossings[crossing.id] = crossing
+        return crossing
+
+    def add_spawn_point(self, x: float, y: float) -> SpawnPoint:
+        """A spawn point S1, S2... at (x, y); refused (ValueError), changing nothing, off the map's numbers."""
+        if not (finite(x) and finite(y)):
+            raise ValueError("A spawn point needs a place on the map.")
+        number = 1
+        while f"S{number}" in self.spawn_points:
+            number += 1
+        point = SpawnPoint(f"S{number}", float(x), float(y))
+        self.spawn_points[point.id] = point
+        return point
+
+    def delete_spawn_point(self, point_id: str) -> None:
+        """Remove a spawn point and the people walking to or from it."""
+        del self.spawn_points[point_id]
+        self.spawn_demand = {pair: people for pair, people in self.spawn_demand.items()
+                             if point_id not in pair.split("->")}
+
+    def _prune_walking(self) -> None:
+        """Paths and pedestrian demand whose nodes or ends are gone go with them."""
+        known = set(self.nodes) | set(self.approach_nodes)
+        self.walkways = {key: way for key, way in self.walkways.items() if {way.start, way.end} <= known}
+        self.walk_demand = {pair: people for pair, people in self.walk_demand.items()
+                            if set(pair.split("->")) <= set(self.approach_nodes)}
 
     def curvature_at(self, road: Road, distance: float, offset: float = 0.0) -> float:
         """Signed curvature (1/m) `distance` metres along the road, `offset` metres to
@@ -422,11 +607,12 @@ class Network:
         road.from_node, road.to_node = (new if road.from_node == old else road.from_node,
                                         new if road.to_node == old else road.to_node)
         road.pockets = {new if end == old else end: pocket for end, pocket in road.pockets.items()}
+        road.cycle_lanes = [new if end == old else end for end in road.cycle_lanes]
         roads = self.roads if road.id in self.roads else self.approach_roads
         new_id = f"{road.from_node}-{road.to_node}"
         if new_id != road.id and new_id not in self.roads and new_id not in self.approach_roads:
             del roads[road.id]
-            for stop in self.bus_stops.values():
+            for stop in [*self.bus_stops.values(), *self.pedestrian_crossings.values()]:
                 if stop.road == road.id:
                     stop.road = new_id
             road.id = new_id
@@ -436,11 +622,15 @@ class Network:
         """Swap a road's ends. A curve's points run the other way, so its curvature
         list is reversed and changes sign."""
         road = self.road(road_id)
+        for crossing in self.pedestrian_crossings.values():  # where it was, measured from the other end
+            if crossing.road == road_id:
+                crossing.distance_m = self.road_geometry_length(road) - crossing.distance_m
         for stop in self.bus_stops.values():  # measured from the other end now, serving the same traffic
             if stop.road == road_id:
                 stop.distance_m = self.road_geometry_length(road) - stop.distance_m
                 stop.direction = {"forward": "backward", "backward": "forward"}.get(stop.direction, stop.direction)
         road.from_node, road.to_node = road.to_node, road.from_node
+        road.footpaths = sorted({"left": "right", "right": "left"}[side] for side in road.footpaths)
         road.shape = road.shape[::-1]
         road.curvature = [-kappa for kappa in reversed(road.curvature)]
 
@@ -612,6 +802,8 @@ class Network:
         settings = {key: getattr(road, key) for key in ("lanes_per_direction", "lane_changing",
                                                         "speed_limit_kmh", "direction", "road_type", "overpass", "single_lane")}
         pockets = road.pockets  # each stays at its end, on the part that reaches it
+        # A cycle lane runs on along both parts: to its end on the part reaching it, to the cut on the other
+        cycles, (start, finish) = list(road.cycle_lanes), (road.from_node, road.to_node)
         if road_id in self.approach_roads:
             if road.from_node in self.approach_nodes:  # end -> inner: the boundary road ends at the cut
                 inner = self.add_road(node_id, road.to_node)
@@ -632,8 +824,13 @@ class Network:
             for key, value in settings.items():
                 setattr(part, key, value)
             part.pockets = {end: dict(pocket) for end, pocket in pockets.items() if end in (part.from_node, part.to_node)}
+        for part in parts:
+            part.footpaths = list(road.footpaths)  # the same sides: both parts run the road's way
+        parts[0].cycle_lanes = [start if end == start else node_id for end in cycles]
+        parts[1].cycle_lanes = [finish if end == finish else node_id for end in cycles]
+        for part in parts:
             part.length_m = self.road_geometry_length(part)
-        for stop in self.bus_stops.values():  # a bus stop stays where it was, on the part it is on
+        for stop in [*self.bus_stops.values(), *self.pedestrian_crossings.values()]:  # where it was, on its part
             if stop.road == road_id:
                 first = stop.distance_m <= parts[0].length_m
                 stop.road = parts[0 if first else 1].id
@@ -701,6 +898,7 @@ class Network:
             self.delete_road(road.id)
         self.nodes.pop(node_id, None)
         self.approach_nodes.pop(node_id, None)
+        self._prune_walking()
 
     def delete_road(self, road_id: str) -> None:
         """Remove a road with its bus stops; an approach road takes its exterior end with it."""
@@ -711,6 +909,9 @@ class Network:
                 self.approach_nodes.pop(node_id, None)
         for stop_id in [stop.id for stop in self.bus_stops.values() if stop.road == road_id]:
             del self.bus_stops[stop_id]
+        self.pedestrian_crossings = {key: crossing for key, crossing in self.pedestrian_crossings.items()
+                                     if crossing.road != road_id}
+        self._prune_walking()
 
     def objects_in_box(self, left: float, top: float, right: float, bottom: float,
                        crossing: bool) -> list[tuple[str, str]]:
@@ -798,9 +999,9 @@ class Network:
         self.bus_stops[stop.id] = stop
         return stop
 
-    def add_metro_line(self, first: tuple[float, float], second: tuple[float, float]) -> MetroLine:
+    def add_metro_line(self, first: tuple[float, float], second: tuple[float, float], merge: bool = False) -> MetroLine:
         """A metro line from its first two stops, named ML1, ML2... in the order deployed, the track joining them.
-        Checked first, as add_metro_stop: a refusal (ValueError) changes nothing."""
+        Checked as add_metro_stop: a refusal (ValueError, MetroCrossing) changes nothing."""
         self._metro_stop_problem(None, *first)
         self._metro_stop_problem(first, *second)
         number = 1
@@ -808,22 +1009,86 @@ class Network:
             number += 1
         line = MetroLine(f"ML{number}")
         self.metro_lines[line.id] = line
-        for x, y in (first, second):
-            self.add_metro_stop(line.id, x, y)
+        try:
+            for index, (x, y) in enumerate((first, second)):
+                self.add_metro_stop(line.id, x, y, merge and index == 1)
+        except ValueError:
+            self.delete_metro_line(line.id)
+            raise
         return line
 
-    def add_metro_stop(self, line_id: str, x: float, y: float) -> MetroStop:
-        """A stop at (x, y) at the end of the line, named M1, M2...; the track joins it to the line's last stop.
-        Refused, changing nothing, off the map's numbers or nearer the line's last stop than METRO_MIN_SPACING_M."""
+    def metro_track(self, line_id: str) -> list:
+        """The line's track: its saved points, or (an older file) straight from stop to stop."""
         line = self.metro_lines[line_id]
-        last = self.metro_stops[line.stops[-1]] if line.stops else None
-        self._metro_stop_problem((last.x, last.y) if last else None, x, y)
+        return [tuple(point) for point in line.track] or [(self.metro_stops[stop_id].x, self.metro_stops[stop_id].y)
+                                                          for stop_id in line.stops]
+
+    def metro_leg(self, line_id: str, x: float, y: float, heading: tuple | None = None) -> tuple[list, tuple | None]:
+        """The track a stop clicked at (x, y) would add to the line (geometry.rail_leg: on from the last stop's
+        platform, through transitions and a curve, straight into this one's; drawn in if the turn is too sharp; aimed
+        through (x, y) along `heading` when given; its last point is where the stop goes) and the first crossing of
+        another line on it, (line id, x, y, the leg's points before it), or None. ValueError, changing nothing: off the
+        map's numbers, an aim that can't be met, under METRO_MIN_SPACING_M from the last stop, or crossing its own
+        track."""
+        line = self.metro_lines[line_id]
+        if not line.stops:
+            self._metro_stop_problem(None, x, y)
+            return [(float(x), float(y))], None
+        self._metro_stop_problem(None, x, y)
+        track = self.metro_track(line_id)
+        leg = rail_leg(track, x, y, METRO_MIN_RADIUS_M, radians(METRO_MAX_TURN_DEG), METRO_PLATFORM_M,
+                       METRO_TRANSITION_M, heading)
+        self._metro_stop_problem(track[-1], *leg[-1])
+        way = [track[-1], *leg]
+        if any(segment_hit(*a, *b, *c, *d) for a, b in zip(way, way[1:]) for c, d in zip(track, track[1:])):
+            raise ValueError("A line can't cross itself: place the stop where the track stays clear of its own.")
+        for index, (a, b) in enumerate(zip(way, way[1:])):  # the first crossing along the leg
+            hits = [(hit[0], other.id) for other in self.metro_lines.values() if other.id != line_id
+                    for c, d in zip(self.metro_track(other.id), self.metro_track(other.id)[1:])
+                    if (hit := segment_hit(*a, *b, *c, *d))]
+            if hits:
+                t, other_id = min(hits)
+                return leg, (other_id, a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1]), leg[:index])
+        return leg, None
+
+    def add_metro_stop(self, line_id: str, x: float, y: float, merge: bool = False,
+                       heading: tuple | None = None) -> MetroStop:
+        """A stop at the end of the line, named M1, M2..., where its leg from the last stop ends (metro_leg: at
+        (x, y), or drawn in from a turn too sharp). A leg crossing another line raises MetroCrossing; with `merge`
+        it ends at the crossing instead, in a stop on both lines (an interchange, in the other line's order), at
+        least METRO_MIN_SPACING_M from the other line's stops. Refused, changing nothing, as metro_leg."""
+        line = self.metro_lines[line_id]
+        leg, crossing = self.metro_leg(line_id, x, y, heading)
+        other = None
+        if crossing is not None:
+            if not merge:
+                raise MetroCrossing(crossing[0])
+            other_id, cx, cy, before = crossing
+            other = self.metro_lines[other_id]
+            if line.stops:
+                last = self.metro_stops[line.stops[-1]]
+                self._metro_stop_problem((last.x, last.y), cx, cy)
+            near = [stop_id for stop_id in other.stops
+                    if hypot(self.metro_stops[stop_id].x - cx, self.metro_stops[stop_id].y - cy) < METRO_MIN_SPACING_M]
+            if near:
+                raise ValueError(f"Too near {near[0]} for an interchange: lines must cross at least "
+                                 f"{METRO_MIN_SPACING_M:g} m from {other_id}'s stations.")
+            leg = [*before, (cx, cy)]
+        track = self.metro_track(line_id) if line.stops else []
         number = 1
         while f"M{number}" in self.metro_stops:
             number += 1
+        x, y = leg[-1]
         stop = MetroStop(f"M{number}", float(x), float(y))
         self.metro_stops[stop.id] = stop
         line.stops.append(stop.id)
+        line.track = [[float(px), float(py)] for px, py in [*track, *leg]]
+        if other is not None:  # into the other line's order, by where it is along its track
+            along = self.metro_track(other.id)
+            place = {stop_id: nearest_along(along, (self.metro_stops[stop_id].x, self.metro_stops[stop_id].y))
+                     for stop_id in other.stops}
+            at = nearest_along(along, (x, y))
+            other.stops.insert(sum(metres < at for metres in place.values()), stop.id)
         return stop
 
     @staticmethod
@@ -835,17 +1100,21 @@ class Network:
                              "apart (their platforms would overlap).")
 
     def delete_metro_line(self, line_id: str) -> None:
-        """Remove the line and its stops (a stop is on one line only), and the metro demand to or from them."""
+        """Remove the line and its stops, interchanges too (off the other line, unless that would leave it under two
+        stops), and the metro demand to or from the stops gone."""
         gone = set(self.metro_lines.pop(line_id).stops)
+        for other in self.metro_lines.values():
+            if len([stop_id for stop_id in other.stops if stop_id not in gone]) >= 2:
+                other.stops = [stop_id for stop_id in other.stops if stop_id not in gone]
+        gone -= {stop_id for other in self.metro_lines.values() for stop_id in other.stops}
         for stop_id in gone:
             del self.metro_stops[stop_id]
         self.metro_demand = {pair: people for pair, people in self.metro_demand.items()
                              if not set(pair.split("->")) & gone}
 
     def metro_length_m(self, line_id: str) -> float:
-        """The line's track length, stop to stop."""
-        points = [self.metro_stops[stop_id] for stop_id in self.metro_lines[line_id].stops]
-        return sum(hypot(b.x - a.x, b.y - a.y) for a, b in zip(points, points[1:]))
+        """The line's track length, curves included."""
+        return polyline_length(self.metro_track(line_id))
 
     def move_bus_stop(self, stop_id: str, distance_m: float) -> None:
         """Slide a bus stop along its road: its middle `distance_m` from the from_node, kept clear
@@ -973,12 +1242,43 @@ class Network:
         for key, line in self.metro_lines.items():
             if key != line.id or not isinstance(line.stops, list) or len(line.stops) < 2:
                 raise ValueError(f"Metro line {line.id} needs its own ID and two stops or more.")
-            if any(stop_id not in self.metro_stops for stop_id in line.stops):
-                raise ValueError(f"Metro line {line.id} has a stop that isn't on the map.")
+            if any(stop_id not in self.metro_stops for stop_id in line.stops) or len(set(line.stops)) < len(line.stops):
+                raise ValueError(f"Metro line {line.id} has a stop that isn't on the map, or one twice.")
+            if not isinstance(line.track, list) or (line.track and (len(line.track) < 2 or not all(
+                    isinstance(point, (list, tuple)) and len(point) == 2 and all(
+                        isinstance(v, (int, float)) and not isinstance(v, bool) and isfinite(v) for v in point)
+                    for point in line.track))):
+                raise ValueError(f"Metro line {line.id}'s track needs two points or more, each [x, y] in metres.")
             if (problem := metro_line_problem(line)) is not None:
                 raise ValueError(problem)
-        if len(on_lines) != len(set(on_lines)) or set(on_lines) != set(self.metro_stops):
-            raise ValueError("Each metro stop is on exactly one line.")
+        if set(on_lines) != set(self.metro_stops):
+            raise ValueError("Each metro stop is on a line (on two or more: an interchange).")
+        for key, way in self.walkways.items():
+            if key != way.id or way.start == way.end or not {way.start, way.end} <= combined_nodes.keys() \
+                    or not isinstance(way.bends, list) or not all(
+                        isinstance(point, (list, tuple)) and len(point) == 2 and all(finite(v) for v in point)
+                        for point in way.bends):
+                raise ValueError(f"Path {way.id} needs its own ID and two different nodes, its bends [x, y] metres.")
+        for key, crossing in self.pedestrian_crossings.items():
+            if key != crossing.id:
+                raise ValueError(f"Crossing dictionary key does not match ID {crossing.id!r}.")
+            if (problem := self.crossing_problem(crossing)) is not None:
+                raise ValueError(problem)
+        for key, point in self.spawn_points.items():
+            if key != point.id or not (finite(point.x) and finite(point.y)):
+                raise ValueError(f"Spawn point {point.id} needs its own ID and a place on the map in metres.")
+        for pair, people in self.spawn_demand.items():
+            ends = pair.split("->") if isinstance(pair, str) else []
+            if len(ends) != 2 or ends[0] == ends[1] or not all(end in self.spawn_points for end in ends):
+                raise ValueError(f"Spawn demand {pair!r} needs two different spawn points, as \"S1->S2\".")
+            if not finite(people) or not 0 <= people <= MAX_WALK_DEMAND:
+                raise ValueError(f"Spawn demand {pair} must be 0 to {MAX_WALK_DEMAND:,} people an hour.")
+        for pair, people in self.walk_demand.items():
+            ends = pair.split("->") if isinstance(pair, str) else []
+            if len(ends) != 2 or ends[0] == ends[1] or not all(end in self.approach_nodes for end in ends):
+                raise ValueError(f"Pedestrian demand {pair!r} needs two different boundary ends, as \"1W->1E\".")
+            if not finite(people) or not 0 <= people <= MAX_WALK_DEMAND:
+                raise ValueError(f"Pedestrian demand {pair} must be 0 to {MAX_WALK_DEMAND:,} people an hour.")
         for pair, people in self.metro_demand.items():
             ends = pair.split("->") if isinstance(pair, str) else []
             if len(ends) != 2 or ends[0] == ends[1] or not all(end in self.metro_stops for end in ends):
@@ -987,6 +1287,13 @@ class Network:
                     or not 0 <= people <= MAX_METRO_DEMAND:
                 raise ValueError(f"Metro demand {pair} must be 0 to {MAX_METRO_DEMAND:,.0f} passengers an hour.")
         for road in self.all_roads():
+            if not isinstance(road.footpaths, list) or len(set(road.footpaths)) < len(road.footpaths) \
+                    or not set(road.footpaths) <= {"left", "right"}:
+                raise ValueError(f"Road {road.id}: footpaths go on its left and/or right, once each.")
+            if not isinstance(road.cycle_lanes, list) or len(set(road.cycle_lanes)) < len(road.cycle_lanes) \
+                    or not set(road.cycle_lanes) <= set(road.arrival_ends()):
+                raise ValueError(f"Road {road.id}: a cycle lane goes on the traffic arriving at one of its ends "
+                                 f"({', '.join(road.arrival_ends())}), once each.")
             if (problem := self.pocket_problem(road)) is not None:
                 raise ValueError(problem)
 
@@ -1053,5 +1360,8 @@ class Network:
                 "institutions": [asdict(item) for item in self.institutions.values()],
                 "metro_stops": [asdict(item) for item in self.metro_stops.values()],
                 "metro_lines": [asdict(item) for item in self.metro_lines.values()],
+                "walkways": [asdict(item) for item in self.walkways.values()],
+                "spawn_points": [asdict(item) for item in self.spawn_points.values()],
+                "crossings": [asdict(item) for item in self.pedestrian_crossings.values()],
             }
         )

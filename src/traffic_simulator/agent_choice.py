@@ -1,7 +1,7 @@
 """Who decides an extension's TRUE/FALSE questions (TSP, DEVL): form rows shared by their panels (Qt).
 
 Decided by: System 1, System 2 or Multiple. With System 1 or 2, **Model** picks which of that system's models
-answers (AI Mode's agent_options: System 1's Jev or Laya; System 2's Ollama models, Grok and Gemini), live runs and
+answers (AI Mode's agent_options: System 1's Jev or Ollama's decision models (Laya); System 2's Ollama models, Grok and Gemini), live runs and
 a batch's alike; none listed: AI Mode's own choice. Multiple is for Batch Run: **Models** (a dropdown of ticks), each
 tested against the baselines (Never, Always preempt), and the batch's **Decide within** (each answer's deadline, simulated s), **Pace**
 (simulated seconds a real second), **Runs at once** and **Times each** (shown under Multiple, used by any batch). A
@@ -13,7 +13,7 @@ from __future__ import annotations
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QComboBox, QFormLayout, QHBoxLayout, QLabel, QSlider, QSpinBox
 
-from .properties_panel import CheckList, ChoiceButtons
+from .widgets import CheckList, ChoiceButtons
 
 SYSTEMS = (("System 1", "1"), ("System 2", "2"), ("Multiple", "multiple"))
 DEADLINE_S = (1, 280, 30)  # Decide within: least, most, at first (simulated s)

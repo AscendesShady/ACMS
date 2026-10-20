@@ -3,6 +3,8 @@ lane changing, road geometry and spawning from the OD matrix.
 Run with `python tests/test_simulation.py` (or the test monitor)."""
 
 import hashlib
+import subprocess
+import sys
 import os
 import random
 import tempfile
@@ -489,6 +491,155 @@ def test_a_mirror_image_on_the_other_side_performs_alike():
     # other ones (junction delay in route costs steers each side round its dearer turns, so neither side now clears
     # clearly more than the other).
     assert mirrored_turns == turns and run_side("right", False, 4, 0)[1] != turns
+
+
+def test_a_share_of_trips_ends_part_way_along_the_route():
+    # Drop-offs (ODCell.drops): 30 % of the cars end a quarter of the way, 20 % three quarters; the rest reach 1E
+    def trips(drops):
+        simulation = Simulation(generate_network(3, 1), [PairDemand("1W", "1E", 900, None, [], "Random", (0, 100, 0),
+                                                                    drops=drops)], MODES, seed=3)
+        departures, ended = [], []
+        while simulation.time < 900:
+            before = {vehicle.id: (vehicle, vehicle.s) for vehicle in simulation.vehicles}
+            simulation.step()
+            departures += [(v.id, v.depart_s) for v in simulation.vehicles if v.id not in before]
+            now = {vehicle.id for vehicle in simulation.vehicles}
+            ended += [(vehicle, s) for key, (vehicle, s) in before.items() if key not in now]
+        return simulation, departures, ended
+
+    plain, departures, ended = trips(())
+    whole = max(sum(link.length for link in vehicle.route) for vehicle, _ in ended)
+    dropped, departed, ended = trips(((1, 0.25, 30), (1, 0.75, 20)))
+    assert departed == departures and dropped.spawned == plain.spawned  # its own draws: the others are as they were
+    early = [(vehicle, s) for vehicle, s in ended if sum(link.length for link in vehicle.route) < whole - 1
+             or vehicle.drop_s is not None]
+    assert 0.38 < len(early) / len(ended) < 0.62, len(early) / len(ended)
+    assert all(s <= vehicle.drop_s for vehicle, s in early if vehicle.drop_s is not None)  # none past its point
+    assert {len(vehicle.route) for vehicle, _ in early} == {1, 2}  # a quarter: the first link; three quarters: the second
+    assert dropped.arrived == len(ended)  # counted as arrived
+
+
+def test_bikes_keep_to_a_cycle_lane_and_cars_never_use_one():
+    # A cycle lane (Road.cycle_lanes) is bikes only: on its road every bike rides it and no car does; bikes turn out
+    # of it into roads without one and into it from them; nothing jams or collides
+    network = generate_network(3, 2)
+    for index, road in enumerate(network.all_roads()):
+        if index % 2 == 0:
+            road.cycle_lanes = list(road.arrival_ends())
+    network.validate()
+    demand = [PairDemand("1W", "1E", 900, None, [], "Random", (0, 70, 30)),
+              PairDemand("1W", "1S", 400, None, [], "Random", (0, 70, 30)),
+              PairDemand("2N", "1W", 400, None, [], "Random", (0, 70, 30))]
+    from traffic_simulator.mode_behavior import VehicleModes
+
+    simulation = Simulation(network, demand, VehicleModes().modes, seed=2)  # Bike is of the bicycle class
+    seen, moves = set(), set()
+    while simulation.time < 600:
+        simulation.step()
+        for vehicle in simulation.vehicles:
+            segment = vehicle.segment
+            if isinstance(segment, Lane):
+                if segment.link.cycle is not None:
+                    assert (segment.index < 0) == vehicle.cycles, (vehicle.id, segment.name)
+                seen.add((vehicle.cycles, segment.index < 0))
+            elif isinstance(segment, Turn) and vehicle.cycles:
+                moves.add((segment.lane_in.index < 0, segment.lane_out.index < 0))
+    assert seen == {(False, False), (True, False), (True, True)}  # cars only on car lanes; bikes on both
+    assert {(True, False), (False, True)} <= moves  # out of a cycle lane into a road without, and into one
+    assert simulation.teleports == 0 and simulation.collisions == 0 and simulation.arrived > 100
+    cycle = next(link.cycle for link in simulation.graph.links.values() if link.cycle is not None)
+    assert all(lane is not cycle for link in simulation.graph.links.values() for lane in link.lanes)  # never offered
+
+
+def test_pedestrians_walk_their_way_at_their_own_speed_and_leave_the_traffic_as_it_was():
+    # SUMO's NonInteracting model: each walker along its shortest walk at its own speed all the way; its own draws,
+    # so the vehicles of the same run are exactly as without them
+    from traffic_simulator.geometry import polyline_length
+    from traffic_simulator.metro import WALK_KMH
+
+    def run(people):
+        network = generate_network(3, 2)
+        for road in network.all_roads():
+            road.footpaths = ["left", "right"]
+        network.walk_demand = {"1W->1E": people} if people else {}
+        simulation = Simulation(network, [pair("1W", "1E", 600, "Random", (0, 100, 0))], MODES, seed=4)
+        poses, walked = [], {}
+        while simulation.time < 900:
+            simulation.step()
+            poses.append(tuple((v.id, v.pose) for v in simulation.vehicles))
+            for walker in simulation.walkers:
+                walked.setdefault(walker.id, (walker, simulation.time))
+        return simulation, poses, walked
+
+    plain, poses, _ = run(0)
+    walking, walking_poses, walked = run(1200)
+    assert walking_poses == poses  # not a vehicle moved differently
+    assert 250 < walking.walk_spawned < 350 and walking.walk_arrived and not walking.walk_unreachable  # ~1200 an hour
+    speeds = [walker.speed for walker, _ in walked.values()]
+    assert abs(sum(speeds) / len(speeds) - WALK_KMH / 3.6) < 0.05 and max(speeds) - min(speeds) > 0.2  # each its own
+    walker = next(iter(walked.values()))[0]
+    assert abs(polyline_length(walker.points) - walker.length) < 1e-9
+    frame = walking.frame()
+    assert len(frame.walkers) == len(walking.walkers) and len(frame.walkers[0]) == 5
+
+
+def test_traffic_stops_for_walkers_on_a_zebra_and_walkers_wait_for_gaps_and_cars_that_cant_stop():
+    # A zebra gives walkers right of way (HCM 2000 p18-13): no vehicle passes its stop line while one is on it, and a
+    # walker steps off only when no vehicle is too near to stop; at a junction's arm, only in a gap of
+    # tc = L / Sp + ts (Eq 18-17); an overbridge holds no one up
+    from traffic_simulator.mode_behavior import VehicleModes
+    from traffic_simulator.simulation import Walker
+    from traffic_simulator.walking import Crossed
+
+    def run(kind):
+        network = generate_network(2, 1)
+        for road in network.all_roads():
+            road.footpaths = ["left", "right"]
+        road = network.roads["1,2-1,1"]
+        if kind:
+            network.add_crossing(road.id, network.road_geometry_length(road) / 2, kind)
+        network.walk_demand = {"2W->1E": 300.0}
+        simulation = Simulation(network, [pair("1N", "1S", 700, "Random", (0, 100, 0))], VehicleModes().modes, seed=5)
+        passed, waited = 0, []
+        while simulation.time < 900:
+            before = {v.id: (v.segment, v.s) for v in simulation.vehicles}
+            held = {crossing for crossing, count in simulation._on_zebra.items() if count}
+            simulation.step()
+            for vehicle in simulation.vehicles:
+                was = before.get(vehicle.id)
+                if was and was[0] is vehicle.segment and isinstance(vehicle.segment, Lane):
+                    passed += sum(was[1] < at < vehicle.s for at, crossing in  # over its stop line
+                                  simulation._zebra_stops.get(vehicle.segment.link.id, ()) if crossing in held)
+            waited += [walker.waited_s for walker in simulation.walkers]
+        return simulation, passed, waited
+
+    zebra, passed, zebra_waits = run("zebra")
+    assert passed == 0 and zebra.collisions == 0 and zebra.walk_arrived  # nobody drove over someone on it
+    gaps, _, gap_waits = run(None)
+    assert gaps.walk_arrived and max(gap_waits) > max(zebra_waits)  # without right of way, the waits are longer
+    bridge, _, bridge_waits = run("overbridge")
+    assert not bridge._zebra_stops and bridge.walk_arrived
+    # At a zebra's kerb, alone on the road with one car: the walker waits for it only when it couldn't stop
+    for link in zebra.graph.links.values():
+        for lane in link.lanes:
+            lane.vehicles.clear()
+        for turn in link.all_turns():
+            turn.vehicles.clear()
+    link = zebra.graph.links["1,2-1,1>"]
+    at = zebra._along_link(link, link.length / 2)
+    walker = Walker("w", [(0.0, 0.0), (20.0, 0.0)], 20.0, 1.4, 0.0,
+                    [Crossed(0.0, 14.0, "zebra", "1,2-1,1", link.length / 2, 14.0, "X1")])
+    on_zebra = walker.crossings[0]
+    assert zebra._may_cross(walker, on_zebra)  # nothing coming
+    car = create_vehicle(VehicleModes().modes[1], "car", [link], 0.0, "1N", "1S")
+    car.segment, car.s, car.speed = link.lanes[0], at - link.cut_start - 6.0, 13.0
+    link.lanes[0].vehicles.append(car)
+    assert not zebra._may_cross(walker, on_zebra)  # 6 m short at 47 km/h: it couldn't stop
+    car.s = at - link.cut_start - 80.0
+    assert zebra._may_cross(walker, on_zebra)  # far enough to stop comfortably: the walker goes, the car will stop
+    assert not zebra._may_cross(walker, on_zebra._replace(kind="gap"))  # 80 m at 13 m/s: under 14 / 1.4 + 3 s
+    car.speed = 0.0
+    assert zebra._may_cross(walker, on_zebra._replace(kind="gap"))  # standing short of it: no threat
 
 
 def test_a_vehicle_stuck_for_the_teleport_time_jumps_on_along_its_route():
@@ -1388,6 +1539,26 @@ def test_a_car_follows_a_motorcycle_it_overlaps_and_passes_one_clear_of_it():
             assert car.s > moto.s - moto.length_m and _clear(car.lat_m, car.width_m, moto)  # beside it
         else:
             assert not _clear(car.lat_m, car.width_m, moto) and moto.s - moto.length_m - car.s >= car.min_gap - 0.5
+
+
+def test_the_lane_graph_needs_no_simulation():
+    """Routes and turns come from lane_graph.Graph alone: it, the assistant's tools, the design audits and the
+    analyses load without the physics, and nothing builds a Simulation only to read its graph."""
+    for module in ("lane_graph", "network_tools", "design_checks", "analysis"):
+        loaded = subprocess.run([sys.executable, "-c", f"import sys, traffic_simulator.{module}; print(sorted(sys.modules))"],
+                                capture_output=True, text=True, timeout=60, check=True).stdout
+        assert "traffic_simulator.simulation" not in loaded, module
+    root = Path(__file__).resolve().parents[1]
+    built = [path.name for folder in ("src", "extensions", "tools") for path in (root / folder).rglob("*.py")
+             if "Simulation(self.network, [], []).graph" in path.read_text(encoding="utf-8")]
+    assert not built, built
+    network = generate_network(2, 2, 200.0)
+    assert Simulation(network, [], []).graph.route("1W", "2E") is not None  # the same routes either way
+    ends = [(a, b) for a in network.approach_nodes for b in network.approach_nodes if a != b]
+    from traffic_simulator.lane_graph import Graph
+    alone, run = Graph(network), Simulation(network, [], []).graph
+    assert all([link.id for link in alone.route(*pair) or []] == [link.id for link in run.route(*pair) or []]
+               for pair in ends)
 
 
 if __name__ == "__main__":

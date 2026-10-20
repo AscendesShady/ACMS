@@ -17,8 +17,15 @@
 - **Vehicle assets:** `VEHICLE_PAINTS` holds twelve body paints (its first eight are the categorical type
   palette); `VEHICLE_INKS` holds glass, trim, lamps, red/blue markings and white equipment. They are non-text
   map details. The Colour chooser uses labelled choices; type identity never relies on random paint alone.
-- **Metro:** `METRO_LINE` (the track, a fuchsia that stands apart from roads and the map's paints) and `METRO_STOP`
-  (a stop's platform marker, ringed in the track colour). Non-text map details.
+- **Metro:** `METRO_LINE` is the track/livery fuchsia; `METRO_STOP` is the flat station marker's pale fill.
+  `METRO_INKS` supplies concrete, livery, rails, glazing, train body, canopy, undercarriage and a muted yellow
+  tactile platform edge. These are non-text scenery materials.
+- **Pedestrian paving:** `FOOTPATH` is warm reddish-brown brick; `FOOTPATH_SHADE` and `FOOTPATH_MORTAR` provide
+  a second brick tone and quiet joints. `PAVING_SELECTED` preserves the yellow selected-path fill. The detailed
+  herringbone pattern uses metre dimensions and fades to the base tint at overview zoom. `WALKER` is yellow.
+- **Shut cells:** `BLOCKED_CELL` hatched with `BLOCKED_HATCH`: an OD grid's cell that takes no value (its
+  diagonal; a metro pair no ride joins), non-text.
+- **Cycle lane:** `CYCLE_LANE`, the green of painted cycle lanes, a non-text surface beside the carriageway.
 - **Building materials:** `BUILDING_PAINTS` gives each institution kind a wall and roof paint; glazing,
   signage and trim reuse vehicle material ink tokens. These are non-text scenery materials, under a fixed
   matte light. Contact shadows reuse `SHADOW` with translucency.
@@ -31,7 +38,8 @@
   primary buttons use the same one-pixel border width when focused. Icon and mini buttons retain their existing
   hit areas and accessible labels. A collapsible section's title remains semibold and left-aligned, with a
   divider, hover feedback and keyboard outline.
-- **Navigation and data:** sidebar icon tabs keep their order, accessible names and equal slim widths;
+- **Navigation and data:** sidebar icon tabs keep their order, accessible names and equal widths, filling
+  the row with each icon centred and no base line under them (layout_conventions.md);
   selection uses a blue surface and light border. Text tabs share the same style. Tables, lists, menus and the
   status bar use the same semantic tokens. Inputs preserve text selection and focus visibility.
 - **Click feedback:** `ClickFlash`, installed only once per application by `apply_theme`, keeps buttons

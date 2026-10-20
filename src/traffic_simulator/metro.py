@@ -5,9 +5,10 @@ The metro is apart from the roads: its stations are points of their own, its dem
 institution draws on it, as it draws on the roads: its circle of influence takes in the stations inside it, as it takes
 in the junctions (`places`).
 
-- `ride(network, board, alight)`: on one line (no transfers) between two different stations: the track between them
-  (straight stop to stop) at the line's commercial speed, half the headway's wait (random arrival, as network_tools
-  prices a timetabled bus), the fare. None between stations on different lines.
+- `ride(network, board, alight)`: between two different stations, on a line they share, or with one change at an
+  interchange (a station on both lines): the track between them (curves included) at each line's commercial speed,
+  half each headway's wait (random arrival, as network_tools prices a timetabled bus), the dearer fare (one ticket
+  through: an assumption); the quickest. None with no such ride.
 - `door(network, x, y)`: the station a building uses, the nearest within `METRO_WALK_M` (800 m, an assumption: about
   ten minutes' walk at `WALK_KMH`), straight-line; `places(network, item)`: that door and the stations on its line
   inside the building's circle (its catchment, as junctions are), but the door.
@@ -21,6 +22,7 @@ from __future__ import annotations
 
 from math import hypot
 
+from .geometry import nearest_along
 from .models import Network
 
 METRO = "Metro"  # the mode's name in an institution's mode choice (a vehicle type of the same name takes precedence)
@@ -30,33 +32,41 @@ WALK_KMH = 5.0  # an assumed walking speed: to and from a station, and an instit
 
 
 def _along(network: Network, line) -> dict[str, float]:
-    """Each station's metres along its line."""
-    along, metres = {}, 0.0
-    for index, stop_id in enumerate(line.stops):
-        if index:
-            a, b = network.metro_stops[line.stops[index - 1]], network.metro_stops[stop_id]
-            metres += hypot(b.x - a.x, b.y - a.y)
-        along[stop_id] = metres
-    return along
+    """Each station's metres along its line's track."""
+    track = network.metro_track(line.id)
+    return {stop_id: nearest_along(track, (network.metro_stops[stop_id].x, network.metro_stops[stop_id].y))
+            for stop_id in line.stops}
 
 
-def line_of(network: Network, stop_id: str):
-    """The line a station is on (each station is on one)."""
-    return next(line for line in network.metro_lines.values() if stop_id in line.stops)
+def lines_of(network: Network, stop_id: str) -> list:
+    """The lines a station is on (two or more: an interchange)."""
+    return [line for line in network.metro_lines.values() if stop_id in line.stops]
+
+
+def _leg(network: Network, line, board: str, alight: str) -> dict:
+    along = _along(network, line)
+    km = abs(along[alight] - along[board]) / 1000
+    return {"line": line.id, "board": board, "alight": alight, "km": km, "ivt_min": km / line.speed_kmh * 60,
+            "wait_min": line.headway_min / 2, "cost": line.fare_cents}
 
 
 def ride(network: Network, board: str, alight: str) -> dict | None:
-    """The ride from `board` to `alight`: {"line", "km", "ivt_min", "wait_min", "cost"}; None if they are the same
-    station or on different lines (no transfers)."""
+    """The quickest ride from `board` to `alight`, on one line or with one change at an interchange: {"line" (the
+    first), "legs" (each {"line", "board", "alight", "km", ...}), "km", "ivt_min", "wait_min", "cost"}; None if they
+    are the same station or no such ride joins them."""
     if board == alight:
         return None
-    line = line_of(network, board)
-    if alight not in line.stops:
+    trips = [[_leg(network, line, board, alight)] for line in lines_of(network, board) if alight in line.stops]
+    if not trips:  # one change: board's line to an interchange, then a line from there to alight
+        trips = [[_leg(network, first, board, change), _leg(network, second, change, alight)]
+                 for first in lines_of(network, board) for change in first.stops if change not in (board, alight)
+                 for second in lines_of(network, change) if second is not first and alight in second.stops]
+    if not trips:
         return None
-    along = _along(network, line)
-    km = abs(along[alight] - along[board]) / 1000
-    return {"line": line.id, "km": km, "ivt_min": km / line.speed_kmh * 60, "wait_min": line.headway_min / 2,
-            "cost": line.fare_cents}
+    legs = min(trips, key=lambda legs: sum(leg["ivt_min"] + leg["wait_min"] for leg in legs))
+    return {"line": legs[0]["line"], "legs": legs, "km": sum(leg["km"] for leg in legs),
+            "ivt_min": sum(leg["ivt_min"] for leg in legs), "wait_min": sum(leg["wait_min"] for leg in legs),
+            "cost": max(leg["cost"] for leg in legs)}
 
 
 def door(network: Network, x: float, y: float) -> tuple[str, float] | None:
@@ -73,7 +83,7 @@ def places(network: Network, item) -> tuple[str | None, list[str]]:
         return None, []
     entrance = found[0]
     inside = []
-    for stop_id in line_of(network, entrance).stops:
+    for stop_id in dict.fromkeys(stop_id for line in lines_of(network, entrance) for stop_id in line.stops):
         stop = network.metro_stops[stop_id]
         metres = hypot(stop.x - item.x, stop.y - item.y)
         if stop_id != entrance and metres <= item.radius_m:
@@ -99,17 +109,18 @@ def loads(network: Network, flows: list[tuple[str, str, float]]) -> dict:
         if trip is None:
             unserved += people
             continue
-        found = lines[trip["line"]]
-        stops = network.metro_lines[trip["line"]].stops
-        a, b = stops.index(board), stops.index(alight)
-        step = 1 if b > a else -1
-        for i in range(a, b, step):  # each segment it rides, in its direction
-            key = (stops[i], stops[i + step])
-            found["segments"][key] = found["segments"].get(key, 0.0) + people
-        for stop_id, kind in ((board, "boarding"), (alight, "alighting")):
-            found["stops"].setdefault(stop_id, {"boarding": 0.0, "alighting": 0.0})[kind] += people
-        found["riders"] += people
-        found["passenger_km"] += people * trip["km"]
+        for leg in trip["legs"]:  # each line it rides: a change boards the second at the interchange
+            found = lines[leg["line"]]
+            stops = network.metro_lines[leg["line"]].stops
+            a, b = stops.index(leg["board"]), stops.index(leg["alight"])
+            step = 1 if b > a else -1
+            for i in range(a, b, step):  # each segment it rides, in its direction
+                key = (stops[i], stops[i + step])
+                found["segments"][key] = found["segments"].get(key, 0.0) + people
+            for stop_id, kind in ((leg["board"], "boarding"), (leg["alight"], "alighting")):
+                found["stops"].setdefault(stop_id, {"boarding": 0.0, "alighting": 0.0})[kind] += people
+            found["riders"] += people
+            found["passenger_km"] += people * leg["km"]
     report = []
     for line_id, found in lines.items():
         line = network.metro_lines[line_id]

@@ -43,6 +43,15 @@
   the network, closing, its physics failing, after one last sample, the part-sample, so a run stopped before
   its first 5 s still has one) and clears the folder, or nothing if it simulated nothing. Its `error` (why the
   run ended early or what is missing from it) is the Run sheet's **Incomplete** row.
+- **Pedestrians** (a run with walkers: walking.md): `sample` takes each finished walk once from `Frame.walk_exits`
+  (walker, origin, destination, set off, arrived, metres, waited at kerbs; one that set off in the warm-up left out)
+  into `walks.csv` (`WALK_COLUMNS`) and the totals (`walk_trips`, `walk_s`, `walk_m`, `walk_wait_s`), and each
+  crossing's running figures from `Frame.crossings` (walkers over it, their kerb waits, the vehicle-seconds a zebra
+  held the front vehicles at its stop line; the whole run, warm-up included). `kpis` adds `walk_trips`,
+  `walkers_per_h`, `mean_walk_s`, `mean_walk_speed_kmh`, `mean_walk_wait_s` and `crossings` (`_walk_figures`) when
+  there were any; the workbook then adds Summary rows (Walks completed, Walkers per hour, Mean walk time, Mean walking
+  speed, Mean wait at kerbs per walk) and the **Walks** and **Crossings** sheets (`CROSSING_COLUMNS`) after Trips. A
+  run without walkers has none of these: its workbook is as it was.
 - **Warm-up** (`RunRecorder(measure_from_s=)`, 0 by default: everything counts): when the first sample past it
   comes, `_measure_from_here` starts every figure again from zero there (totals, roads, links, trips, queues;
   `kpis()` then divides by the measured hours, throughput by the arrivals since), and trips that got on the road
@@ -51,7 +60,7 @@
   say **Measured from**; analyse_run's MSER-5 warm-up suggests a value (experiments.md).
 - **`workbook(folder, path)`**, named by when the run started, its seed and the AI model that decided TSP
   (`file_name(started, recovered, seed, model)`: `ACMS results 2026-09-30 14-05-33 seed 42 laya.xlsx`; the
-  model is Jev's or Laya's provider, System 2's model id, `never` or `always` for a batch's baselines, `no-llm` when TSP had nobody to ask, `no-ai` without
+  model is `jev` for Jev, else the Ollama or System 2 model id, `never` or `always` for a batch's baselines, `no-llm` when TSP had nobody to ask, `no-ai` without
   TSP; given to `RunRecorder(seed=, model=)` and kept in `meta.json`), made to hand to an independent analyst:
   **Read me** (the run's start, the seed, the AI model, how to
   repeat it, what each sheet holds, every figure's definition, the assumptions), **Summary** (each KPI, its
@@ -86,7 +95,7 @@
   written to a `.part` file and moved into place. **`xlsx.read_xlsx(path)`** reads such a workbook back (each
   sheet's rows, numbers as floats): a replay reads a run's seed and simulated time with it, and the tests read
   workbooks with it.
-- **Occupancy**: `mode_behavior.VehicleMode.occupancy`, people a vehicle carries: Bus 20, Car 1.5, Bike 1, a
+- **Occupancy**: `vehicle.VehicleMode.occupancy`, people a vehicle carries: Bus 20, Car 1.5, Bike 1, a
   new type 1 (assumptions, not editable in the tab yet, stated on the page and in the workbook). A bus calling
   at stops with passengers carries its simulated load instead (from its occupancy at its first stop), which
   the Frame hands the recorder.
@@ -112,7 +121,7 @@
     timing method, ends, roads, road and lane length, one-way share, mean block length, junction and road density,
     road length by type, speed limit and lanes each way, curves (tightest radius, roads posted faster than their
     curve allows), roundabout diameters, interchanges, overpasses, bus stops, institutions, route choice, and the
-    graph indices (`network_tools.network_indices`).
+    graph indices (`design_checks.network_indices`).
   - **Road network** and **Junctions** also carry each road's width, tightest curve radius and safe curve speed
     (`road_record`), bus stops and shape (WKT, scene metres), and each junction's roads meeting, roundabout
     diameter and interchange.

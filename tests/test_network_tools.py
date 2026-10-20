@@ -1,5 +1,8 @@
 """The assistant's network tools. Run with `python tests/test_network_tools.py` (or the test monitor)."""
 
+import json
+from copy import deepcopy
+
 from traffic_simulator import network_tools as tools
 from traffic_simulator.network_generator import generate_network
 
@@ -41,6 +44,8 @@ def test_the_assistant_can_do_only_what_its_tools_say():
         "deploy_institutions", "update_institution", "network_from_background", "place_map",  # buildings; the background
         "place_institution", "institution_mode_split",  # one building with its catchment; its logit mode split
         "add_bus_stop", "update_bus_stop",
+        "add_crossing", "add_path", "set_pedestrian_demand",  # pedestrians: a crossing, a path, people walking
+        "add_spawn_points",  # pedestrian spawn points, with their own OD matrix
         "create_vehicle_types", "update_vehicle_type",  # vehicle types made as SUMO classes
         "run_simulation", "run_experiment", "set_extension",  # tests: they write result workbooks, so they ask too
         "schedule_emergency", "start_batch", "replay_run",  # the extensions' own actions: a schedule, a batch, a replay
@@ -683,6 +688,66 @@ def test_update_roads_sets_and_removes_a_turn_pocket():
     assert network.roads["1,2-2,2"].pockets == before
     run(network, "update_roads", roads=["1,2-2,2"], pocket_junction="2,2", pocket_lanes=0)
     assert network.roads["1,2-2,2"].pockets == {}
+
+
+def test_the_assistant_sets_footpaths_crossings_paths_and_people_walking():
+    network = generate_network(2, 1)
+    every = [road.id for road in network.all_roads()]
+    before = deepcopy(network)
+    for args in ({"road": "1,2-1,1"},  # no footpaths yet: nothing to cross between
+                 {"road": "1,2-1,1", "at_m": 3, "kind": "zebra"}):
+        try:
+            tools.run_tool(network, "add_crossing", args)
+        except tools.ToolError as exc:
+            assert "footpaths on both sides" in str(exc) or "at least 20 m" in str(exc), str(exc)
+        else:
+            raise AssertionError(args)
+    assert network == before  # refused: nothing changed
+    changed = tools.run_tool(network, "update_roads", {"roads": every, "footpaths": "both", "cycle_lanes": "both"})
+    assert any("footpaths" in line and "cycle lanes to" in line for line in changed["changed"])
+    assert all(road.footpaths == ["left", "right"] and set(road.cycle_lanes) == set(road.arrival_ends())
+               for road in network.all_roads())
+    zebra = tools.run_tool(network, "add_crossing", {"road": "1,2-1,1"})  # the middle, a zebra
+    assert zebra["crossing"] == "X1" and zebra["at_m"] == 250.0 and "Added zebra X1" in zebra["changed"][0]
+    path = tools.run_tool(network, "add_path", {"start": "1,1", "end": "1,2", "bends": [[80, 250]]})
+    assert path["path"] == "P1" and network.walkways["P1"].bends == [[80.0, 250.0]]
+    walking = tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["2W->1E", "1N-1S"], "people_per_hour": 300})
+    assert network.walk_demand == {"2W->1E": 300.0, "1N->1S": 300.0} and len(walking["changed"]) == 2
+    try:
+        tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["2W->9X"], "people_per_hour": 10})
+    except tools.ToolError as exc:
+        assert "boundary ends" in str(exc)
+    else:
+        raise AssertionError("an unknown end")
+    summary = tools.run_tool(network, "pedestrian_summary", {})
+    assert summary["crossings"] == [{"id": "X1", "kind": "zebra", "road": "1,2-1,1", "at_m": 250}]
+    assert summary["roads_with_footpaths_both_sides"] == len(every) and not summary["pairs_nobody_can_walk"]
+    assert "pedestrian_crossings" in json.dumps(tools.run_tool(network, "describe", {"id": "1,2-1,1"}))  # its info
+    tools.run_tool(network, "delete_objects", {"ids": ["X1", "P1"]})
+    assert not network.pedestrian_crossings and not network.walkways
+    offered = {spec["name"] for spec in tools.tools_for("add a zebra crossing for the school's walkers")}
+    assert {"add_crossing", "pedestrian_summary", "set_pedestrian_demand"} <= offered
+    assert "add_crossing" not in {spec["name"] for spec in tools.tools_for("hi")}
+
+
+def test_the_assistant_places_spawn_points_and_walking_between_them():
+    network = generate_network(3, 3)
+    tools.run_tool(network, "update_roads", {"roads": [road.id for road in network.all_roads()], "footpaths": "both"})
+    placed = tools.run_tool(network, "add_spawn_points", {"points": [[140, 1060], [850, 180]]})
+    assert placed["spawn_points"] == ["S1", "S2"] and "Added spawn point S1" in placed["changed"][0]
+    tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["S1->S2", "1W->3E"], "people_per_hour": 200})
+    assert network.spawn_demand == {"S1->S2": 200.0} and network.walk_demand == {"1W->3E": 200.0}
+    try:
+        tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["S1->1W"], "people_per_hour": 10})  # mixed
+    except tools.ToolError as exc:
+        assert "spawn points" in str(exc)
+    else:
+        raise AssertionError("a spawn point and a boundary end mixed")
+    summary = tools.run_tool(network, "pedestrian_summary", {})
+    assert summary["spawn_points"] == {"S1": [140, 1060], "S2": [850, 180]} and not summary["pairs_nobody_can_walk"]
+    tools.run_tool(network, "delete_objects", {"ids": ["S1"]})
+    assert list(network.spawn_points) == ["S2"] and not network.spawn_demand
+    assert "add_spawn_points" in {spec["name"] for spec in tools.tools_for("put pedestrian spawn points near the park")}
 
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
 `conflicts` and aren't checked). Krauss with τ ≥ `DT` (the Mode Behavior range) leaves none. In a lateral run
 (below) the same-lane check is `_side_by_side_collisions`: a pair counts only if it overlaps sideways too.
 
-- **Lane graph** (`Graph`, built once per Run):
+- **Lane graph** (`Graph`, built once per Run; lane_graph.py, which simulation.py imports, see lane_graph.md):
   - `Link`: one road in one travel direction. Its `Lane`s (0 = kerbside) are the road's centre line
     offset to the driving side, cut back at each junction to the stop line (signalised, the same
     `stop_line_inset` as the map), the give-way line (roundabout, ICD/2 + 0.5 m) or the junction's
@@ -39,6 +39,39 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     whole link, so a position on it matches the others' (lane changes map position by length, as between any
     two lanes), but `Lane.start` is where the pocket opens: nothing is inserted on it and no lane change into
     it is made short of it. Leaving links' turns lead into whole lanes only. a path through a junction from an arriving lane to a leaving lane. Classed kerb-side,
+  - Cycle lanes (`Road.cycle_lanes`; SUMO's lane permissions, a lane allowing bicycles only,
+    `references/reverse_engineering/network/edges.md`): `Link.cycle`, a `Lane` of index -1 along
+    `Network.cycle_lane_line`, cut back as the others, and `Link.bike_turns`, (lane index, next link) -> `Turn` for
+    each move into or out of one: out of a cycle lane every way its road's traffic may go (permitted), into the next
+    road's cycle lane, else its kerbside whole lane; into a cycle lane from each lane of a road without one, permitted
+    as that lane's own turn. Neither is among `Link.lanes` or `Link.turns`, so nothing that picks, scores or changes a
+    car's lane offers them; `Link.all_turns()` (both) is what the conflicts (`_add_conflicts`), `_turns_into`, the
+    ring checks and the crossing report scan, so cars and bikes give way to each other at junctions as any two
+    movements do. A bicycle-class type's vehicle (`Vehicle.cycles`) enters a road with a cycle lane in it
+    (`_insert`), takes `bike_turns` first (`_next_turn`), and never changes lane or moves sideways in it
+    (`_change_lanes`, `_sidestep`: one file, down its middle). Cars and bikes don't meet between junctions; a bus
+    pulling into a bay crosses the cycle lane unseen, and loop detectors and signal flows leave cycle lanes out.
+  - Pedestrians (walking.md; SUMO's NonInteracting model): `Simulation.walk_demand` (`walkers=` given, else
+    `walking.walk_pairs` of its network, daily if any pair is) on their own "walkers" and "walk speeds" streams and
+    heap (`walk_departures`), so a run's vehicles are exactly as without them. `_walk` each step (after the
+    vehicles' poses): each minute's departures, Poisson, as `_count_arrivals` draws a pair's; those due set off on
+    `WalkGraph.route` (with its `start` / `finish` place), a pair with none noted once in `walk_unreachable`; every
+    `Walker` moved on at its own speed (`WALK_KMH` × a speed factor, `WALK_SPEED_DEV`), gone at its walk's end
+    (`walk_spawned`, `walk_arrived`). `Frame.walkers`: each one's (x, y, ux, uy, pose a step before).
+    Crossings (walking.md): a walker reaching the kerb of the next road on its walk (`Walker.crossings`) steps off
+    only when `_may_cross`: an overbridge always (then slower, `Crossed.slow`); a zebra unless a vehicle is on it or
+    couldn't stop for it (`brake_gap` at its comfortable deceleration after its reaction time and a step, less the
+    stripes' half width `ZEBRA_HALF_M` 1.5 m); a gap when every vehicle coming is at least tc = L / Sp + ts away
+    (HCM 2000 Eq 18-17, the walker's own speed, ts `START_UP_S` 3 s). Vehicles both ways on the road's lanes, cycle
+    lanes and the turns into them count; one standing short of the crossing doesn't. Waiting, it stands at the kerb
+    (`waited_s`). A zebra with anyone on it (`_on_zebra`) is a stop line for both directions `ZEBRA_HALF_M` before it
+    (`_zebra_stops`, in `_lane_leader` as a ramp meter's red). Vehicles don't see walkers at gaps (they don't yield;
+    no collision is checked between walkers and vehicles).
+    For the results: each finished walk kept `EXITS_KEPT_S` in `Frame.walk_exits` (walker id, origin, destination,
+    set off s, arrived s, metres, waited s), and `crossing_stats` in `Frame.crossings`: for each zebra or overbridge
+    by id, and each junction arm crossed in gaps as "gap <road> at <junction>", its kind, walkers over it, the seconds
+    they waited at its kerb (`Walker.kerb_s`) and, a zebra, the vehicle-seconds each lane's first vehicle short of it
+    stood at its stop line while someone was on it. `Frame.records` (read_traffic) gives `pedestrians_walking`.
     straight, offside (across oncoming traffic) or U-turn (back along its road) by the angle between
     them (`_kind`); a ramp leaving or joining a road within 35° (a slip road's tangential taper) is a kerb
     turn when its first or last 10 m bend to the kerb side, otherwise straight. A cubic Bézier, with its speed capped by low-speed turning friction (`JUNCTION_TURN_FRICTION` 0.35, AASHTO; √(127·f·R)), not below `JUNCTION_TURN_MIN_KMH` (kerb 30, offside 35, U-turn and straight 25 km/h: the path is schematic, tighter than a car steers, so the floors stand in for a real curb radius and bring turning flows to the HCM's 85-95 % of straight-on), and the turning saturation flows were measured at that; a give-way movement at an uncontrolled junction at most `GIVE_WAY_KMH` 17, drivers slowing to look (a U-turn
@@ -152,6 +185,12 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     reported and spawn nothing. A detour stands in for each missing offside turn, costed with its
     out-and-back links, which go into the route (and into the flows Webster times the signals by);
     U-turns are used only there. Vehicles still take a route with no detour when it's faster.
+  - Drop-offs (`PairDemand.drops`, demand.md): `_dropped` draws, on its own "drops" stream (so the other draws, and
+    runs without drop-offs, stay as they were), whether a new vehicle's trip ends part way: each of its type's points
+    takes its % of the trips, at that share of the length of whichever route it drew. Its route is cut at the link
+    holding the point and `Vehicle.drop_s` set to how far along that link's lanes (None: the point is at the link's
+    end, as at a destination); `_move` takes it off there (`_arrive`: counted in `arrived`, its trip times kept), at
+    speed, as at a destination.
   - Landmarks (`Graph.landmarks`): each vehicle is given, with its route, the roundabouts, signalised
     junctions and slip roads (a `ramp` entered from a road that isn't one) it will meet, in order. Every
     frame says the next one still ahead and how far it is to where its lanes end there (stop or give-way
@@ -243,7 +282,7 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     its path offset out by half a lane plus half the bay along `bay_depth`. `stop_s` is where a bus's
     front stops (1 m short of the stopping length's end). A lane shorter than the bay gets none. The
     kerbside lane is the first whole one (past a kerb pocket's lanes, which validation keeps clear of bays).
-  - Which vehicles: types whose `vehicle_class` (mode_behavior.VehicleMode) is a bus (`BUS_TYPES`),
+  - Which vehicles: types whose `vehicle_class` (vehicle.VehicleMode) is a bus (`BUS_TYPES`),
     whatever they are called; a type without one (an older project) named Bus is one. Each is given, at
     spawn, every bay on its route in order (`Vehicle.stops`).
   - Getting there: `reach` treats the next stop's link as ending for every lane but the kerbside one at

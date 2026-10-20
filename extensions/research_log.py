@@ -49,7 +49,7 @@ from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QHBoxLayout, QLineEdit, QListWidget, QListWidgetItem,
                                QSplitter, QTextBrowser, QVBoxLayout, QWidget)
 
-from traffic_simulator.properties_panel import hint_label, icon_button
+from traffic_simulator.widgets import hint_label, icon_button
 
 NAME = "Research Log"
 ORDER = 5

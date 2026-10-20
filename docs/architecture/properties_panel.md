@@ -8,6 +8,13 @@
     boundary end): a list (None, Kerb or Offside, 1 or 2 lanes; tooltip "Turn pocket") and its length,
     15–150 m ("Pocket length"). Applied with the other fields (`_pocket_fields`); a pocket at an end the
     traffic no longer arrives at (made one-way) goes, and `Network.validate` refuses one that doesn't fit.
+  - Cycle lane: one tick a direction, "To <end>" for each end its traffic arrives at (boundary ends too; tooltip
+    "Bikes-only lane this way"), applied with the other fields (`_cycle_fields`); one for traffic that no longer
+    arrives (made one-way) goes.
+  - Footpath: one list (`footpath_choice`, `FOOTPATH_CHOICES`): None, Both sides, or one side named by the compass
+    side it faces ("North side only", taken from the road's ends; tooltip "Footpaths beside this road"). Choosing
+    highlights where it would go on the map (`footpath_preview` → the scene's `preview_footpaths`) before Apply;
+    applied with the other fields; reversing the road keeps the paving where it is.
   - Apply is enabled only while a field differs from the road; Enter also applies.
   - Changes are validated as a whole and reverted with a message if invalid: the whole network is put back
     (the same object, as `call_tool` does), with no undo step and the saved state as it was.
@@ -38,9 +45,5 @@
 
 Every node or road can also use **Drag to Adjust** and **Delete**.
 
-Shared widgets: `styled_button`, `icon_button` (one glyph, its name as the tooltip; square, property `glyph`), `glyph_icon`,
-`Collapsible` (a section under a title that opens and closes it, a chevron showing which),
-`hint_label`, `ChoiceButtons` (radio options), `OpenPageTabs` (tabs as tall as the open page: QTabWidget sizes
-itself for its tallest page, hidden ones too, in its size hints and in its height for a width when pages
-wrap text; it swaps that page for the open one in all three. The sidebar and AI Mode's System 1 / System
-2 use it, so the sidebar scrolls only when the open page needs it).
+The panel builds on the shared widgets (widgets.md); it still re-exports them for drop-in extensions that import
+them from here.

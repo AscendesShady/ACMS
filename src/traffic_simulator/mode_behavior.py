@@ -12,18 +12,18 @@ pair fixed by its timetable (fixed_split); the others share the rest. Behaviour 
 from __future__ import annotations
 
 from copy import deepcopy
-from dataclasses import dataclass
 from itertools import count
-from math import floor
 import re
 
 from PySide6.QtCore import QEvent, QObject, QTimer, Signal
 from PySide6.QtWidgets import (QComboBox, QDoubleSpinBox, QFormLayout, QGridLayout, QGroupBox, QLabel, QLineEdit, QMessageBox,
                                QSpinBox, QVBoxLayout, QWidget)
 
-from .properties_panel import hint_label, styled_button
+from .demand import fixed_split, redistribute, whole_percent  # noqa: F401 - offered here too, as before
+from .widgets import hint_label, styled_button
 from .simulation import DT
 from .theme import VEHICLE_PAINTS
+from .vehicle import FILTERING_CLASSES, VEHICLE_CLASSES, VehicleMode
 
 # The dataviz reference palette's categorical slots (dark-surface steps), in fixed order. Checked
 # on the app's greys: every check passes; magenta and green sit under 3:1 against the grey, so a
@@ -33,91 +33,6 @@ MAX_MODES = len(PALETTE)  # past eight, colours stop being told apart reliably
 MAX_HEADWAY_MIN = 120
 PCU_RANGE = (0.1, 10.0)
 OCCUPANCY_RANGE = (0.01, 500.0)
-
-
-@dataclass
-class VehicleMode:
-    name: str
-    colour: str  # keeps its colour whatever else is added or deleted
-    headway_min: int = 0  # minutes between vehicles on a timetable, e.g. a bus; 0: no timetable
-    timetabled: bool = False  # may it have a headway at all (a bus may; a car or bike never)
-    # What each vehicle of this type is made with (vehicle.py). Not editable in the tab yet; the
-    # defaults are SUMO's for vClass passenger (sumo.dlr.de/docs/Vehicle_Type_Parameter_Defaults and
-    # Definition_of_Vehicles...), overridden below with SUMO's for bus and bicycle.
-    length_m: float = 5.0
-    width_m: float = 1.8
-    max_speed_kmh: float = 200.0  # its technical top speed
-    desired_max_kmh: float = 1e4  # the fastest it wants to go (a bicycle's is 20 km/h); none for a car
-    accel: float = 2.6  # m/s²
-    decel: float = 4.5  # comfortable braking, m/s²
-    # The hardest it can brake, m/s² (SUMO's emergencyDecel), no less than decel. None (a project saved before it):
-    # its vehicle class's (vehicle.VEHICLE_CLASSES), or decel if that is harder.
-    emergency_decel: float | None = None
-    min_gap_m: float = 2.5  # standstill gap to the vehicle ahead
-    tau_s: float = 1.0  # driver's reaction time / desired time headway
-    sigma: float = 0.5  # driver imperfection (Krauss dawdling), 0-1
-    speed_dev: float = 0.1  # each vehicle's speed factor is drawn from normc(1, speed_dev, 0.2, 2)
-    startup_delay_s: float = 0.9  # SUMO's startupDelay, calibrated (signal_timing.py): the wait before moving off after a stop
-    occupancy: float = 1.0  # people a vehicle carries, for passenger throughput (results.py): an assumption
-    # Passenger car units: the road space one vehicle takes against a car (UK DMRB TA 79/99: bus 2, pedal cycle
-    # 0.2). Kept with the project; no calculation uses it yet.
-    pcu: float = 1.0
-    # What it is, whatever it's called (a vehicle.VEHICLE_CLASSES kind): a "bus" calls at bus stops and gets transit
-    # priority. Kept through renames; a type without one (a project saved before it) named Bus is a bus.
-    vehicle_class: str = ""
-    # In a lateral run (Simulation lateral), may it pass others within its lane, filtering (if narrow_enough). None (a
-    # project saved before it): yes for a motorcycle, moped or bicycle (vehicle.FILTERING_CLASSES), else no.
-    filters: bool | None = None
-    random_colour: bool = False  # display paint varies per vehicle; categorical colour stays with the type
-
-    def __post_init__(self) -> None:
-        if not self.vehicle_class:
-            self.vehicle_class = "bus" if self.name.strip().lower() == "bus" else "passenger"
-        if self.filters is None:
-            from .vehicle import FILTERING_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
-            self.filters = self.vehicle_class in FILTERING_CLASSES
-        if self.emergency_decel is None:
-            from .vehicle import VEHICLE_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
-            self.emergency_decel = max(VEHICLE_CLASSES.get(self.vehicle_class, {}).get("emergency_decel", 9.0), self.decel)
-
-
-def whole_percent(weights, total: int = 100) -> list[int]:
-    """Whole numbers in proportion to `weights` that add up to `total`; the largest remainders
-    get the leftover points. All-zero weights give everything to the first."""
-    weights = list(weights)
-    if not weights:
-        return []
-    if sum(weights) <= 0:
-        return [total, *([0] * (len(weights) - 1))]
-    exact = [weight * total / sum(weights) for weight in weights]
-    shares = [floor(value) for value in exact]
-    for i in sorted(range(len(weights)), key=lambda i: exact[i] - shares[i], reverse=True)[:total - sum(shares)]:
-        shares[i] += 1
-    return shares
-
-
-def redistribute(split: tuple[int, ...], index: int) -> tuple[int, ...]:
-    """`split` without mode `index`: its share goes to the others in proportion to theirs, in
-    whole percent that still add up to 100 (largest remainders get the leftover points)."""
-    return tuple(whole_percent(share for i, share in enumerate(split) if i != index))
-
-
-def fixed_split(split: tuple[int, ...], vehicles: dict[int, float], trips: int | None) -> tuple[int, ...]:
-    """`split` with each timetabled type's share fixed at its `vehicles` (index -> vehicles in
-    the same period as `trips`) over the pair's `trips`; the other types share the rest in
-    proportion to their current shares. Unchanged while there are no trips or no timetables;
-    timetabled vehicles beyond the trips take all of them."""
-    if not vehicles or not trips or trips <= 0:
-        return tuple(split)
-    timed = sorted(vehicles)
-    free = [i for i in range(len(split)) if i not in vehicles]
-    timed_total = 100 if not free else min(100, round(sum(vehicles.values()) * 100 / trips))
-    result = [0] * len(split)
-    for i, share in zip(timed, whole_percent([vehicles[i] for i in timed], timed_total)):
-        result[i] = share
-    for i, share in zip(free, whole_percent([split[i] for i in free], 100 - timed_total)):
-        result[i] = share
-    return tuple(result)
 
 
 class VehicleModes(QObject):
@@ -166,8 +81,6 @@ class VehicleModes(QObject):
         name, kind, and optionally headway_min and occupancy. All are checked first, so a refusal
         (ValueError, saying why) adds none. A motorcycle, moped or bicycle filters (VehicleMode.filters). Returns the new
         types' indexes."""
-        from .vehicle import FILTERING_CLASSES, VEHICLE_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
-
         if not isinstance(specs, list) or not specs or not all(isinstance(spec, dict) for spec in specs):
             raise ValueError("Give the types as a list, e.g. [{\"name\": \"Tram\", \"kind\": \"tram\"}].")
         if len(self.modes) + len(specs) > MAX_MODES:
@@ -214,8 +127,6 @@ class VehicleModes(QObject):
     def update(self, name: str, changes: dict, check_only: bool = False) -> int:
         """Change a type by name: new_name, timetabled, headway_min, vehicle_class (what it is: its size and speeds
         stay), filters (lateral runs: passes others within its lane) or FIGURES. All checked first (ValueError, saying why, changes nothing). Returns its index."""
-        from .vehicle import VEHICLE_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
-
         index = next((i for i, mode in enumerate(self.modes) if mode.name.lower() == str(name).strip().lower()), None)
         if index is None:
             raise ValueError(f"No vehicle type called {name}; there are {', '.join(self.names())}.")

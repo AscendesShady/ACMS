@@ -7,7 +7,7 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
   kinematic change and clearance intervals on the level: amber Y = t + v/2a (t = 1 s perception-reaction,
   a = 3.05 m/s², v its fastest approach's speed limit), all-red R = (W + L)/v (W its width stop line to far
   stop line, L = 6.1 m); amber held to 3–6 s and all-red to 1–6 s (MUTCD), to 0.1 s. A 50 km/h, two-lane grid
-  junction gets 3.3 + 2.0 s, a 120 km/h six-lane one 6.0 (6.5 capped) + 2.1 s. `simulation.Signal` runs them and
+  junction gets 3.3 + 2.0 s, a 120 km/h six-lane one 6.0 (6.5 capped) + 2.1 s. `lane_graph.Signal` runs them and
   every method below takes the junction's amber + all-red (`span`; `AMBER_S` + `ALL_RED_S`, 3 + 2 s, only
   where no junction is given) for its lost time and phase starts.
 - **Shared:** `webster(ratios, span)` (C0 between `MIN_CYCLE_S` 30 s and 120 s; its greens fill that cycle with `fit_greens`, so a phase
@@ -16,7 +16,7 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
   HCM's critical v/c; generate_demand sizes demand by it); `KERB_TURN_PER_LANE_VPH` (1,770) and
   `OFFSIDE_TURN_PER_LANE_VPH` (1,860), `UTURN_PER_LANE_VPH` (1,550, at the 25 km/h U-turn floor), turning lanes' saturation flows measured on the simulated drivers (86-90 %
   of straight-on with the per-kind turn floors, within the HCM's 85-95 %; 76-78 % at a 25 km/h floor)
-  (the flow ratios that use them are simulation.Graph's); `fit_greens(shares, cycle)` (greens that fill a cycle exactly,
+  (the flow ratios that use them are lane_graph.Graph's); `fit_greens(shares, cycle)` (greens that fill a cycle exactly,
   effective green in proportion to the shares, none below 7 s); `phase_starts`, `green_mask` (the
   effective green, the start-up lost time after the green starts to the amber used); `disperse` (Robertson's platoon
   dispersion: q′(i + t) = F·q(i) + (1 − F)·q′(i + t − 1), t = 0.8 × cruise time, F = 1/(1 + 0.35·t),

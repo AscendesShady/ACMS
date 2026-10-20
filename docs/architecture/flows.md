@@ -3,7 +3,7 @@
 1. **Start:** `run.py` → `main()`.
    - It generates the default grid from `config/defaults.json`, builds the window and applies the theme.
    - The first undo snapshot is taken.
-   - The AI panel scans for keys, laya.exe (`LAYA_EXE`) and Ollama models.
+   - The AI panel scans for keys and Ollama models (chat for System 2, decision for System 1).
 2. **Edit a road:** click a road → `scene.clicked` → `MainWindow.canvas_clicked` → `select` →
    `PropertiesPanel.show_object`.
    - Apply → `network.set_road_length` / field updates / `reverse_road` → `validate()`.

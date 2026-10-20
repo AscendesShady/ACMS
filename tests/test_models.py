@@ -292,6 +292,57 @@ def test_turn_pockets_are_saved_and_older_files_open_without_them():
     assert all(road.pockets == {} for road in load_network(path).all_roads())
 
 
+def test_cycle_lanes_are_validated_kept_through_splits_and_saved():
+    import json
+    import tempfile
+    from copy import deepcopy
+    from pathlib import Path
+
+    from traffic_simulator.geometry import distance_to_segment
+    from traffic_simulator.models import CYCLE_LANE_M, LANE_WIDTH_M
+    from traffic_simulator.network_io import load_network, save_network
+
+    network = generate_network(3, 4)
+    road = network.roads["1,2-2,2"]
+    road.cycle_lanes = ["2,2", "1,2"]
+    network.validate()
+    line = network.cycle_lane_line(road, "2,2")  # beyond the kerb lane of the traffic arriving at 2,2
+    centre = network.road_points(road)
+    assert abs(distance_to_segment(line[len(line) // 2], centre[0], centre[-1])
+               - (road.lanes_each_way * LANE_WIDTH_M + CYCLE_LANE_M / 2)) < 1e-6
+    for bad in (["9,9"], ["2,2", "2,2"]):
+        trial = deepcopy(network)
+        trial.roads["1,2-2,2"].cycle_lanes = bad
+        try:
+            trial.validate()
+        except ValueError as exc:
+            assert "cycle lane" in str(exc)
+        else:
+            raise AssertionError(bad)
+    trial = deepcopy(network)
+    trial.roads["1,2-2,2"].direction = "one-way"  # its traffic no longer arrives at 1,2
+    try:
+        trial.validate()
+    except ValueError as exc:
+        assert "cycle lane" in str(exc)
+    else:
+        raise AssertionError("a cycle lane for traffic that doesn't come")
+    first, second = network.split_road("1,2-2,2", network.add_node(200, 500).id)  # both parts keep both ways
+    middle = network.roads[first].from_node if network.roads[first].from_node not in ("1,2", "2,2") \
+        else network.roads[first].to_node
+    assert sorted(network.roads[first].cycle_lanes + network.roads[second].cycle_lanes) == \
+        sorted(["1,2", "2,2", middle, middle])
+    network.validate()
+    path = Path(tempfile.mkdtemp()) / "cycle.json"
+    save_network(network, path)
+    assert load_network(path).roads[first].cycle_lanes == network.roads[first].cycle_lanes
+    document = json.loads(path.read_text(encoding="utf-8"))
+    for record in document["roads"] + document["approach_roads"]:
+        record.pop("cycle_lanes", None)  # a file from before cycle lanes
+    path.write_text(json.dumps(document), encoding="utf-8")
+    assert all(road.cycle_lanes == [] for road in load_network(path).all_roads())
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

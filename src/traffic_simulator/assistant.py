@@ -1,6 +1,6 @@
 """System 2 assistant: chat about this app and the open network with Grok, Gemini or a local
 Ollama model. Also System 1's back end: typed yes/no, choice and score answers from Jev
-(TypeSafe's API) or a local Laya (laya.exe), in one encoder pass with no text generated.
+(TypeSafe's API) or a decision model in Ollama (Laya), in one encoder pass with no text generated.
 
 Warming up gives the model README.md and ARCHITECTURE.md as its system prompt and asks it
 to confirm it has read them. After that it answers questions, streaming its reply, and may
@@ -17,16 +17,11 @@ Conversation messages are provider-neutral dicts:
 
 from __future__ import annotations
 
-import atexit
 import http.client
 import json
 import os
 import re
-import secrets
-import shutil
 import socket
-import subprocess
-import tempfile
 import threading
 import time
 import urllib.error
@@ -41,15 +36,14 @@ DOCS = ("README.md", "ARCHITECTURE.md")
 XAI_URL = "https://api.x.ai/v1"
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta"
 KEY_NAMES = {"grok": "GROK_API_KEY", "gemini": "GEMINI_API_KEY"}
-PROVIDER_NAMES = {"grok": "Grok", "gemini": "Gemini", "local": "Ollama", "jev": "Jev", "laya": "Laya"}
+PROVIDER_NAMES = {"grok": "Grok", "gemini": "Gemini", "local": "Ollama", "jev": "Jev"}
 JEV_URL = "https://api.typesafe.ai/v1"  # TypeSafe's System One API, which serves Jev
-SYSTEM_ONE_MODEL = "jev-latest"  # Jev's alias; Laya answers to it too
+SYSTEM_ONE_MODEL = "jev-latest"  # Jev's alias
 # A free-text yes/no question goes in as the state of one noul (P(yes)). On Laya this got 5 of 6
 # general and 5 of 8 traffic cases right (splitting off the last sentence as the instructions did no
 # better; the question as both leans to yes). Prose with distances and seconds is its weak spot: a
 # structured state with a specific noul did far better, so new callers should use system_one directly.
 YES_NO = "Is the answer to the question in `state` yes?"
-LAYA_LOG = Path(tempfile.gettempdir()) / f"acms-laya-{os.getpid()}.log"  # what the laya.exe this app started printed
 # Model lists change often, so they're fetched; the default is the first listed model
 # matching the earliest of these, else the first listed.
 PREFERRED = {"grok": ("grok-4",), "gemini": ("gemini-flash-latest", "gemini-2.5-flash")}
@@ -133,7 +127,12 @@ TOOLS_NOTE = (
     "trips, not residents, are what changed."
     "\n- The metro is the user's own network: they draw its lines (Edit Network > Metro) and fill its OD matrix "
     "(Demand Generator > Metro); you read its loads (metro_report) and buildings' metro shares (institution_mode_split) "
-    "but can't draw lines or turn road trips into metro trips."
+    "but can't draw lines or turn road trips into metro trips. Lines curve (300 m at least, turns under 90 deg) and "
+    "riders change once at an interchange where two lines were merged; the service, not the OD matrix, is the schedule."
+    "\n- Pedestrians walk footpaths (update_roads footpaths), paths (add_path) and crossings (add_crossing: a zebra, "
+    "where traffic stops for them, or an overbridge); at a junction's arm they wait for a gap. People walking come "
+    "from set_pedestrian_demand and buildings' Walk share; pedestrian_summary says who can't walk anywhere, and a "
+    "run's results give walk times, kerb waits and each crossing's figures. Cycle lanes: update_roads cycle_lanes."
     "\n- Things the app doesn't have (a harbour, an airport, a stadium, a university, weather on the "
     "open network, deaths): say so in one line. Don't put something else in their place, and don't call a tool "
     "that doesn't exist. When a number is past a tool's limit, tell the user the limit and do what fits only once "
@@ -208,11 +207,6 @@ def _local_url(variable: str, port: int, path: str) -> str:
 def ollama_url(path: str) -> str:
     """URL on the local Ollama server (OLLAMA_HOST, default 127.0.0.1:11434)."""
     return _local_url("OLLAMA_HOST", 11434, path)
-
-
-def laya_url(path: str) -> str:
-    """URL on the local Laya server (LAYA_HOST, default 127.0.0.1:8080, laya.exe's own default)."""
-    return _local_url("LAYA_HOST", 8080, path)
 
 
 # --- HTTP ---------------------------------------------------------------------------------
@@ -356,11 +350,13 @@ def ollama_loaded(timeout_s: float = 1.0) -> list[dict] | None:
         return None
 
 
-def ollama_models(timeout_s: float = 1.0) -> list[str] | None:
-    """Models pulled into the local Ollama server; None when it isn't running."""
+def ollama_models(timeout_s: float = 1.0, capability: str = "completion") -> list[str] | None:
+    """Models pulled into the local Ollama server that have `capability` ("completion": chat, System 2's;
+    "decision": System 1's, as Laya); None when it isn't running. An Ollama that doesn't say counts as chat."""
     try:
         reply = _call(ollama_url("/api/tags"), timeout_s=timeout_s, local=True)
-        return sorted(model["name"] for model in reply.get("models", []))
+        return sorted(model["name"] for model in reply.get("models", [])
+                      if capability in (model.get("capabilities") or ["completion"]))
     except (AssistantError, KeyError, TypeError):
         return None
 
@@ -990,117 +986,33 @@ def _ended(messages: list[dict], why: str, on_text=None, start: int = 0) -> list
     return messages
 
 
-# --- System 1: Jev and Laya ----------------------------------------------------------------
+# --- System 1: Jev and Ollama's decision models ---------------------------------------------
 # One API (POST /v1/systemone): a state plus typed questions (noul: P(yes); choice: one of the
 # criteria; score: a level), answered in one encoder pass, no text generated. Jev is TypeSafe's
-# hosted model; Laya is the same API served by laya.exe on this PC (tens of ms on a GPU).
-
-_laya_process: subprocess.Popen | None = None  # the laya.exe this app started, if any
-_laya_key = ""  # the key it was started with: it listens on every interface, so it needs one
+# hosted model; Ollama serves the same API for its decision models (Laya) on this PC.
 
 
-def laya_exe(path: str = "") -> str:
-    """laya.exe: `path` (LAYA_EXE) if that file exists, else `laya` on PATH; "" if neither."""
-    return path if path and Path(path).is_file() else shutil.which("laya") or ""
-
-
-def laya_health(timeout_s: float = 1.0) -> dict | None:
-    """What the Laya server on LAYA_HOST says about itself (device, families); None if none answers."""
-    try:
-        reply = _call(laya_url("/health"), timeout_s=timeout_s, local=True)
-    except AssistantError:
-        return None
-    return reply if isinstance(reply, dict) and reply.get("status") == "ok" else None
-
-
-def _cuda_folders() -> list[str]:
-    """Folders holding the CUDA 12 runtime that laya.exe's GPU build links to (cudart64_12.dll,
-    cublas64_12.dll): Ollama's own copy, or the CUDA toolkit's."""
-    ollama = shutil.which("ollama")
-    root = Path(ollama).parent if ollama else Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "Ollama"
-    folders = [root / "lib" / "ollama" / "cuda_v12", Path(os.environ.get("CUDA_PATH", "")) / "bin"]
-    return [str(folder) for folder in folders if (folder / "cudart64_12.dll").is_file()]
-
-
-def start_laya(exe: str, timeout_s: float = 60) -> dict:
-    """The health of the Laya on LAYA_HOST, first starting `exe serve` there (with the GGUFs in its
-    folder) if none answers. One the app starts gets a fresh key and ends with the app (stop_laya)."""
-    global _laya_process, _laya_key
-    health = laya_health()
-    if health:
-        return health
-    stop_laya()
-    if not exe:
-        raise AssistantError("laya.exe wasn't found. Save its path as LAYA_EXE (see README), then Rescan PC.")
-    key = secrets.token_urlsafe(24)
-    environment = {**os.environ, "LAYA_API_KEY": key, "TYPESAFE_API_KEY": key,
-                   "PATH": os.pathsep.join([*_cuda_folders(), os.environ.get("PATH", "")])}
-    port = urlsplit(laya_url("")).port
-    try:
-        with open(LAYA_LOG, "w", encoding="utf-8") as log:
-            _laya_process = subprocess.Popen(
-                [exe, "serve", "--models-dir", str(Path(exe).parent), "--port", str(port)], env=environment,
-                stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
-                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
-    except OSError as exc:
-        raise AssistantError(f"Couldn't run {exe}: {exc}") from exc
-    _laya_key = key
-    deadline = time.monotonic() + timeout_s
-    while _laya_process.poll() is None and time.monotonic() < deadline:
-        health = laya_health(0.5)
-        if health:
-            return health
-        time.sleep(0.2)
-    code = _laya_process.poll()
-    stop_laya()
-    if code is not None and code & 0xFFFFFFFF == 0xC0000135:  # Windows: a DLL it links to is missing
-        raise AssistantError("laya.exe needs the CUDA 12 runtime (cudart64_12.dll, cublas64_12.dll): install "
-                             "Ollama or the CUDA toolkit, or put them beside laya.exe.")
-    try:
-        said = " ".join(LAYA_LOG.read_text(encoding="utf-8", errors="replace").split()[-40:])
-    except OSError:
-        said = ""
-    raise AssistantError(("laya.exe stopped" if code is not None else f"Laya wasn't ready within {timeout_s:g} s")
-                         + (f": …{said}" if said else "."))
-
-
-def stop_laya() -> None:
-    """End the laya.exe this app started (none started: nothing to do)."""
-    global _laya_process, _laya_key
-    if _laya_process is not None and _laya_process.poll() is None:
-        _laya_process.terminate()
-        try:
-            _laya_process.wait(5)  # its port is free again
-        except subprocess.TimeoutExpired:
-            pass
-    _laya_process, _laya_key = None, ""
-
-
-atexit.register(stop_laya)
-# ponytail: a hard kill of the app leaves its laya.exe running, holding the port with a key nobody
-# knows (requests get 401 until it is ended); give it a Windows job object if that ever bites.
-
-
-def system_one(provider: str, state, questions: dict, key: str = "", timeout_s: float = 30) -> dict:
-    """One System 1 request to Jev (`key`: JEV_API_KEY) or Laya: `state` (text or an object) and
-    `questions` {name: {"type": "noul" | "choice" | "score", "instructions", "criteria"}}; the
-    reply's "answers" hold each question's probabilities. Recorded in USAGE like a chat."""
-    local = provider == "laya"
-    key = _laya_key if local else key
+def system_one(provider: str, state, questions: dict, key: str = "", timeout_s: float = 30,
+               model: str = SYSTEM_ONE_MODEL) -> dict:
+    """One System 1 request to Jev (`key`: JEV_API_KEY) or Ollama ("local", `model` one of its decision
+    models): `state` (text or an object) and `questions` {name: {"type": "noul" | "choice" | "score",
+    "instructions", "criteria"}}; the reply's "answers" hold each question's probabilities. Recorded in
+    USAGE like a chat."""
+    local = provider == "local"
     started = time.monotonic()
-    reply = _call(laya_url("/v1/systemone") if local else f"{JEV_URL}/systemone",
-                  {"model": SYSTEM_ONE_MODEL, "state": state, "questions": questions},
-                  {"Authorization": f"Bearer {key}"} if key else None, timeout_s, local)
+    reply = _call(ollama_url("/v1/systemone") if local else f"{JEV_URL}/systemone",
+                  {"model": model, "state": state, "questions": questions},
+                  {"Authorization": f"Bearer {key}"} if key and not local else None, timeout_s, local)
     if not isinstance(reply.get("answers"), dict):
         raise AssistantError(f"{PROVIDER_NAMES[provider]} sent no answers.")
     total, usage = time.monotonic() - started, reply.get("usage") or {}
-    _record({"provider": provider, "model": reply.get("model", SYSTEM_ONE_MODEL), "at": time.time(),
+    _record({"provider": provider, "model": reply.get("model", model), "at": time.time(),
              "first_s": total, "total_s": total, "input_tokens": usage.get("input_tokens"),
              "output_tokens": usage.get("output_tokens"), "cached_tokens": None})
     return reply
 
 
-def system_one_true(provider: str, question: str, key: str = "") -> bool:
+def system_one_true(provider: str, question: str, key: str = "", model: str = SYSTEM_ONE_MODEL) -> bool:
     """A free-text yes/no question as one noul: TRUE when System 1 puts yes at 50 % or more."""
-    reply = system_one(provider, question, {"answer": {"type": "noul", "instructions": YES_NO}}, key)
+    reply = system_one(provider, question, {"answer": {"type": "noul", "instructions": YES_NO}}, key, model=model)
     return float(reply["answers"]["answer"]["noul"]) >= 0.5

@@ -2,6 +2,9 @@
 critical_links' area closure) and the assistant's structured errors (network_tools.explain_error).
 Run with `python tests/test_design_checks.py` (or the test monitor)."""
 
+import os
+import subprocess
+import sys
 from math import exp
 
 from traffic_simulator import accessibility, design_checks, network_tools
@@ -118,6 +121,20 @@ def test_refusals_come_back_as_data_with_a_fix():
     assert network_tools.explain_error("duration_min must be 1 to 240.")["error_type"] == "bad_argument"
     other = network_tools.explain_error("Something odd.")
     assert other == {"error": "Something odd.", "error_type": "refused", "suggested_fix": other["suggested_fix"]}
+
+
+def test_network_analyses_need_no_assistant_tools():
+    """analyse_network and network_indices live here: the workbook and View Summary load them without network_tools,
+    and the assistant's tools of the same names answer exactly what these do."""
+    for module in ("design_checks", "results", "summary"):
+        loaded = subprocess.run([sys.executable, "-c", f"import sys, traffic_simulator.{module}; print(sorted(sys.modules))"],
+                                capture_output=True, text=True, timeout=60, check=True,
+                                env={**os.environ, "QT_QPA_PLATFORM": "offscreen"}).stdout
+        assert "traffic_simulator.network_tools" not in loaded, module
+    network = generate_network(2, 2, 200.0)
+    assert network_tools.run_tool(network, "analyse_network", {}) == design_checks.analyse_network(network)
+    assert network_tools.run_tool(network, "network_indices", {}) == design_checks.network_indices(network)
+    assert design_checks.analyse_network(network)["valid"] is True and design_checks.network_indices(network)["components"] == 1
 
 
 if __name__ == "__main__":

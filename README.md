@@ -49,6 +49,13 @@ The editor also starts with `.venv\Scripts\acms.exe` or
 - **Show Buildings:** the city icon beside 3D View hides/shows placed institutions, their labels and selected
   catchments. It changes visibility only: institutions and their demand remain. Placement previews still show
   while you add a building. Buildings start visible; this display choice lasts for the session.
+- **Overhead metro:** 3D View raises metro lines onto viaducts with piers and station platforms/canopies.
+  Stations match the current 120 m platform minimum, with pitched canopies, beams and yellow platform edges.
+  Train previews have sloped cab noses and a thin livery band, with cab windscreens at the train ends.
+  Decks, rails and platforms follow the saved curved track continuously; pier spacing uses world metres.
+  Display assumptions: 8 m underside clearance, 9 m tracks, 14 m station canopies and 3.4 m tall train bodies.
+  A labelled parked train preview shows each line's carriage count; trains do not move in the simulation.
+  The 2D track (with its curves), station markers and passenger calculations stay unchanged. Show Buildings keeps metro visible.
 - **Building heights:** 3D View extrudes the existing metre-scaled footprints into structures with facades and
   roofs. In **Demand Generator → Institutions**, set **Height** when placing or selecting a building.
   Height includes the roof, is saved and undoable, and can be edited during a run. Old files use labelled
@@ -56,12 +63,39 @@ The editor also starts with `.venv\Scripts\acms.exe` or
   available. Height changes leave 2D footprints, catchments and traffic demand unchanged.
 - **Roads:** select a road to set its lanes, speed and direction, and a **turn pocket** at each junction it arrives
   at (kerb or offside, 1–2 lanes, 15–150 m): turners move into it, and a full pocket holds up the lane behind.
+  Tick **Cycle lane** for a direction to give its traffic a green bikes-only lane beside the kerb: every bike rides
+  it and no car enters it.
+- **Pedestrians:** select a road and choose its **Footpath**: None, Both sides or one side; the map highlights
+  where it will go before you Apply. Paving uses warm reddish-brown brick: a metre-scaled herringbone pattern
+  at detail zoom, a quiet solid colour at overview zoom. Saved pedestrian paths use the same finish.
+  **Demand Generator → Pedestrian spawn points**: click anywhere near the network for spawn points, right-click,
+  then type people walking an hour between them; walkers go straight to the nearest footpath and walk the shortest
+  way. Or type people walking an hour between boundary ends in
+  **Demand Generator → Pedestrians**; buildings' Walk share walks too. In a run they're yellow dots on their
+  cheapest walk at about 5 km/h. In **Edit Network → Pedestrian**, **Add Zebra** or **Add Overbridge** and click a
+  road with footpaths on both sides. Traffic stops for walkers on a zebra; at a junction's arm they wait for a gap
+  in the traffic; an overbridge takes them over it, stairs to climb. A run's workbook then has walk times, kerb
+  waits, a Walks sheet and a Crossings sheet; the assistant can add footpaths, crossings, paths and walkers too.
+  A network built from OpenStreetMap brings its sidewalks, zebras, footbridges, footways and cycle lanes with it.
+  In **3D View**, walkers are simple 1.75 m models and overbridges have an assumed 6 m deck, parapets and stairs.
+  Walkers in a bridge corridor are lifted for display; simulation positions and walking times stay unchanged.
   **Slip roads** (Ctrl+click two roads that meet, then **Add Slip Road**) curve smoothly out of and back into their roads, sized so they
   are quicker than the junction they bypass.
 - **Background:** once you've drawn the roads over a map or plan, **Hide Background** (the eye beside Lock in
   Create → Background) hides it to show the roads alone; press it again to bring it back. It changes nothing saved.
 - **Demand:** an OD pair's hourly flow can take a **PHF** (peak-hour factor, 0.25–1): the hour's busiest
   quarter runs at the flow ÷ PHF. The assistant can also set four 15-minute counts.
+- **Drop-offs:** not every trip runs entry to exit. Click a vehicle type's zone in the pair's **Modes** bar: a
+  slider shows the pair's route, its junctions marked. Click it to add a point where trips end (it snaps to a
+  junction nearby), drag it, type its **Ends here** %, right-click to remove it; the rest reach the exit. In a run
+  those vehicles leave the road there.
+- **Metro:** in **Edit Network → Metro**, Start deployment and click stop after stop. Trains don't take sharp
+  bends: each leg curves from its stop at 300 m or more and turns less than 90°; a dashed preview follows the
+  mouse, pulled in like a rubber band when you ask for too sharp a turn (amber where it would cross another line,
+  red where it can't go). A line can't cross itself; crossing another line asks **Merge** (one station on both
+  lines, where riders change) or **Discard Line**. Right-click to finish and set its service: that is its
+  schedule. Passengers typed in **Demand Generator → Metro** only load the lines (riders served, over capacity);
+  they never change the schedule.
 - **Run, Pause, Play, Stop:** every run writes its workbook to Documents\ACMS results when it ends, however it
   ends: Stop, a new Run, a network edit, closing the window or a failure. A run that didn't finish normally says
   **Incomplete** on its Run sheet. A crash is recovered at the next start.
@@ -103,10 +137,8 @@ Or: Windows search → *Edit environment variables for your account* → **New�
 name exactly as above and your key as the value. On macOS/Linux, `export` them in your shell
 profile.
 
-System 1 uses Jev (TypeSafe's hosted decision model) with **`JEV_API_KEY`**, or Laya on this PC: save
-the path of `laya.exe` (with its `.gguf` beside it) as **`LAYA_EXE`**, e.g.
-`setx LAYA_EXE "F:\huggingface_models\laya.exe"`. Its GPU build needs the CUDA 12 runtime, which
-Ollama already ships; the app lends it Ollama's copy.
+System 1 uses Jev (TypeSafe's hosted decision model) with **`JEV_API_KEY`**, or a decision model
+pulled into Ollama on this PC, such as Laya (`laya:421m-english-bf16`, `laya:421m-typed-decisions-bf16`).
 
 For local models, install [Ollama](https://ollama.com) and pull a model that can use tools,
 e.g. `ollama pull llama3.1` (set `OLLAMA_HOST` if Ollama isn't on `127.0.0.1:11434`). A local model's context
@@ -120,11 +152,11 @@ When the program starts, it scans the PC's environment variables and Ollama auto
 
 - **Chat with**: Off, Grok (xAI), Gemini (Google) and/or Local (Ollama).
 - **API model** (Grok, Gemini): the chat models your key can use, listed by the provider.
-- **Local model** (Local): the models pulled into Ollama.
+- **Local model** (Local): the chat models pulled into Ollama (decision models, as Laya, are System 1's).
 - **Start**: nothing is read or sent until you press it. It connects the model you picked;
   once connected, it reads **Restart**.
-- **System 1 → Use**: Off, JEV when `JEV_API_KEY` is found, Laya (local) when `laya.exe` is. Picking
-  Laya starts it (a few seconds; it ends with the app, or when you pick another).
+- **System 1 → Use**: Off, JEV when `JEV_API_KEY` is found, and each of Ollama's decision models
+  (Laya). Ollama loads the model on its first question.
 
 Saved a key or started Ollama while the program was open? Press **Rescan PC** (the magnifier beside Start on System 2). Keys are
 never shown, typed in or saved with your networks, so the app can be copied to another PC;

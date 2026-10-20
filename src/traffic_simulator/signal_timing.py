@@ -45,7 +45,7 @@ SPAN_S = AMBER_S + ALL_RED_S  # after each green
 REACTION_S, DESIGN_DECEL, CLEARING_LENGTH_M = 1.0, 3.05, 6.1
 AMBER_RANGE_S, ALL_RED_RANGE_S = (3.0, 6.0), (1.0, 6.0)
 # Calibrated to the simulated drivers (SUMO's default passenger car, with its startupDelay set to
-# 0.9 s: mode_behavior.py) by the HCM's field method at a signal with a standing queue (4 seeds, an
+# 0.9 s: vehicle.VehicleMode) by the HCM's field method at a signal with a standing queue (4 seeds, an
 # hour each, headways from the 5th queued vehicle on): saturation headway 1.744 s, i.e. 2,064 veh/h
 # per lane; start-up lost time 1.82 s (the first four vehicles' excess over it); 2.37 s of the 3.3 s
 # amber used, re-measured 2026-10-18 with SUMO's amber rule (stop if it can brake in time, no reaction distance:
@@ -55,7 +55,7 @@ AMBER_RANGE_S, ALL_RED_RANGE_S = (3.0, 6.0), (1.0, 6.0)
 SATURATION_PER_LANE_VPH = 2060.0
 # Turning on a protected green, measured on the same drivers (a standing queue of one turn at a 4-phase signal, 3
 # seeds of 30 min, headways from the 5th vehicle on): they slow for the curve, at low-speed turning friction with a
-# floor per kind (simulation.JUNCTION_TURN_FRICTION, JUNCTION_TURN_MIN_KMH), to 0.87 and 0.91 of straight-on (HCM
+# floor per kind (lane_graph.JUNCTION_TURN_FRICTION, JUNCTION_TURN_MIN_KMH), to 0.87 and 0.91 of straight-on (HCM
 # 2000 f_RT 0.85, f_LT 0.95 protected; RR67 0.87-0.91). Re-measured 2026-10-13: at open-road friction and a 15 km/h
 # floor they were 1160 and 1100, 53-56 % (audit M4).
 KERB_TURN_PER_LANE_VPH = 1770.0

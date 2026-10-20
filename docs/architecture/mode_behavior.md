@@ -1,7 +1,7 @@
 # mode_behavior.py: vehicle types
 
 - `VehicleModes` (one per window, `MainWindow.vehicle_modes`) holds the vehicle types in order,
-  each a `VehicleMode(name, colour, headway_min, timetabled, …, occupancy, pcu)`. It starts as Bus, Car, Bike, with default split 10/85/5
+  each a `VehicleMode(name, colour, headway_min, timetabled, …, occupancy, pcu)` (vehicle.py, no Qt). It starts as Bus, Car, Bike, with default split 10/85/5
   and PCU 2, 1 and 0.2 (UK DMRB TA 79/99). Only a `timetabled` type may have a headway: Bus is, Car and Bike
   never are (`set_headway` and `update` refuse one). `update`'s figures keep to `FIGURES`' ranges; τ (`tau_s`) is
   at least the simulation step `DT` (0.5 s), since a driver reacting faster than a step collides (`WHY` says so
@@ -24,7 +24,7 @@
   - `add` (up to 8), `rename` (unique, not empty), `delete` (at least one stays) and `set_headway`
     (0–120 min; 0 = no timetable), `set_pcu` (0.1–10) and `set_occupancy` (0.01–500 people) emit `changed`. `vehicles_per_hour()` lists the timetabled types.
   - The OD matrix follows every change: a new type gets 0 % in every pair, and a deleted type's
-    share goes to the others in proportion (`redistribute`, whole percent adding to 100). The
+    share goes to the others in proportion (`demand.redistribute`, whole percent adding to 100). The
     Demand Generator rebuilds its slider and % boxes.
   - Each change is one undo step: the snapshot holds the types too.
 - Colours come from the dataviz palette's 8 categorical slots, in fixed order. A type keeps its

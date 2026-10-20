@@ -189,6 +189,54 @@ def run_demand(network: Network, modes: list, daily: bool) -> tuple[list, list[s
     each pair's flow in the design hour, the hour when all institutions together make the most vehicle trips."""
     from .simulation import PairDemand  # noqa: PLC0415 - the simulation's type
 
+    made, notes = _vehicle_rows(network, modes)
+    if not made:
+        return [], notes
+    hour = _busiest(made)
+    demand = [PairDemand(o, d, None, sum(v), [x / sum(v) for x in v], "Poisson", tuple(split), timetabled=False)
+              if daily else PairDemand(o, d, v[hour], None, [], "Poisson", tuple(split), timetabled=False)
+              for o, d, v, split in made if daily or v[hour]]
+    if not daily:
+        notes.append(f"Institutions' trips are taken at {hour:02d}:00-{hour + 1:02d}:00, their busiest hour together.")
+    return demand, notes
+
+
+def _busiest(rows: list) -> int:
+    """The hour the most go in these (origin, destination, per hour, ...) rows together: the design hour."""
+    return max(range(HOURS), key=lambda h: sum(row[2][h] for row in rows))
+
+
+def walk_demand(network: Network, modes: list, daily: bool) -> list:
+    """Every institution's walkers for a Run (walking.WalkDemand): its Walk share of the people arriving, from each
+    catchment junction or end (an equal share) to its door and on to the building, and of those leaving, back; daily,
+    over the building's day; hourly, in the same design hour as its vehicle trips (else its own busiest)."""
+    from .walking import WalkDemand  # noqa: PLC0415 - walking builds on this module
+
+    rows = []
+    for item in network.institutions.values():
+        walk = shares(item).get(WALK, 0.0) / 100
+        entrance, origins = door(network, item), catchment(network, item)
+        if not walk or entrance is None or not origins:
+            continue
+        arrive, leave = hourly_people(item)
+        here = (item.x, item.y)
+        for profile, ends in ((arrive, [(o, entrance, None, here) for o in origins]),
+                              (leave, [(entrance, d, here, None) for d in origins])):
+            people = [v * walk / len(origins) for v in profile]
+            if sum(people):
+                rows += [(o, d, people, start, finish) for o, d, start, finish in ends]
+    if not rows:
+        return []
+    made = _vehicle_rows(network, modes)[0]
+    hour = _busiest(made or rows)
+    return [WalkDemand(o, d, None, sum(p), [x / sum(p) for x in p], start, finish) if daily
+            else WalkDemand(o, d, p[hour], start=start, finish=finish)
+            for o, d, p, start, finish in rows if daily or p[hour]]
+
+
+def _vehicle_rows(network: Network, modes: list) -> tuple[list, list[str]]:
+    """Each institution's vehicle trips as (origin, destination, vehicles each hour, split) rows, and notes on what
+    couldn't be (run_demand)."""
     made, notes = [], []
     for item in network.institutions.values():
         per_person, _, unknown = vehicle_split(item, modes)
@@ -209,15 +257,7 @@ def run_demand(network: Network, modes: list, daily: bool) -> tuple[list, list[s
                 vehicles = [v * per_person / len(origins) for v in profile]
                 if sum(vehicles):
                     made += [(origin, destination, vehicles, split) for origin, destination in pairs]
-    if not made:
-        return [], notes
-    hour = max(range(HOURS), key=lambda h: sum(row[2][h] for row in made))
-    demand = [PairDemand(o, d, None, sum(v), [x / sum(v) for x in v], "Poisson", tuple(split), timetabled=False)
-              if daily else PairDemand(o, d, v[hour], None, [], "Poisson", tuple(split), timetabled=False)
-              for o, d, v, split in made if daily or v[hour]]
-    if not daily:
-        notes.append(f"Institutions' trips are taken at {hour:02d}:00-{hour + 1:02d}:00, their busiest hour together.")
-    return demand, notes
+    return made, notes
 
 
 def place(network: Network, kind: str, x: float, y: float, area_m2: float, radius_m: float,

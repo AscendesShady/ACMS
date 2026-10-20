@@ -20,7 +20,9 @@ import re
 from math import ceil, isfinite
 
 from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, quarter_shares
-from .models import METRO_SERVICE, Background, BusStop, Institution, MetroLine, MetroStop, Network, Node, Road
+from .demand import drops_problem
+from .models import (METRO_SERVICE, Background, BusStop, Crossing, Institution, MetroLine, MetroStop, Network, Node,
+                     Road, SpawnPoint, Walkway)
 from .vehicle import VEHICLE_CLASSES
 
 PROJECT_FORMAT = {"app": "ACMS project", "version": 2}
@@ -36,7 +38,8 @@ def save_network(network: Network, path: str | Path, conversation: dict | None =
     network.validate()
     document = {"network": network.configuration(), **network.as_records(), "background": asdict(network.background),
                 "interchanges": network.interchanges, "route_choice": network.route_choice,
-                "metro_demand": network.metro_demand}
+                "metro_demand": network.metro_demand, "walk_demand": network.walk_demand,
+                "spawn_demand": network.spawn_demand}
     if project is not None:
         problem = project_problem(project)
         if problem:
@@ -142,6 +145,9 @@ def project_problem(project: dict) -> str | None:
             if not (isinstance(split, list) and all(isinstance(v, int) and v >= 0 for v in split) and sum(split) == 100
                     and (count is None or len(split) == count)):
                 return f"Demand {name}: its split needs one whole percent a vehicle type, adding up to 100."
+            problem = drops_problem(pair.get("drops", []), count)
+            if problem:
+                return f"Demand {name}: {problem}."
             problem = _profile_problem(pair.get("profile", {"kind": "points", "points": [[0, 1], [24, 1]]}))
             if problem:
                 return f"Demand {name}: {problem}."
@@ -229,6 +235,8 @@ def load_network(path: str | Path) -> Network:
                                 for name, axis in interchanges.items()}
         network.route_choice = document.get("route_choice") or {}  # older files have none: fastest routes
         network.metro_demand = dict(document.get("metro_demand") or {})  # older files have none
+        network.walk_demand = dict(document.get("walk_demand") or {})  # older files have none
+        network.spawn_demand = dict(document.get("spawn_demand") or {})
         if isinstance(document.get("background"), dict):  # older files have none: the default
             network.background = Background(**document["background"])
         for record in _require_list(document, "bus_stops"):  # older files have none
@@ -241,6 +249,21 @@ def load_network(path: str | Path) -> Network:
             if item.id in network.institutions:
                 raise ValueError(f"Duplicate institution ID: {item.id}")
             network.institutions[item.id] = item
+        for record in _require_list(document, "spawn_points"):  # older files have none
+            point = SpawnPoint(**record)
+            if point.id in network.spawn_points:
+                raise ValueError(f"Duplicate spawn point ID: {point.id}")
+            network.spawn_points[point.id] = point
+        for record in _require_list(document, "walkways"):  # older files have none
+            way = Walkway(**record)
+            if way.id in network.walkways:
+                raise ValueError(f"Duplicate path ID: {way.id}")
+            network.walkways[way.id] = way
+        for record in _require_list(document, "crossings"):  # older files have none
+            crossing = Crossing(**record)
+            if crossing.id in network.pedestrian_crossings:
+                raise ValueError(f"Duplicate crossing ID: {crossing.id}")
+            network.pedestrian_crossings[crossing.id] = crossing
         for record in _require_list(document, "metro_stops"):  # older files have none
             stop = MetroStop(**record)
             if stop.id in network.metro_stops:

@@ -21,15 +21,23 @@
   Exhibit 24-5 calls infeasible (one movement needing 1 lane change and the other 2 or more) is flagged as such.
 Not checked: acceleration and deceleration lane lengths (Tables 10-4 and 10-6 aren't readable in the copy used),
 grades (the network has none), access near junctions (a building's door is a junction here).
+
+The network's shape, for the assistant's tools of the same names, View Summary and the run workbook (none of them
+needing network_tools): `analyse_network` (connectivity, reachability from the ends, dead ends, short roads, curves
+posted too fast, crowded roundabouts) and `network_indices` (graph indices, Rodrigue p613-639).
 """
 
 from __future__ import annotations
 
+import heapq
+from collections import Counter, defaultdict
 from math import atan2, cos, degrees, hypot, pi, radians, sin, sqrt
 
 from . import weaving
 from .geometry import polyline_meets_box
-from .models import LANE_WIDTH_M, Network
+from .interchanges import curve_speed_kmh
+from .models import LANE_WIDTH_M, Network, Road
+from .roundabouts import design_roundabout
 
 REACTION_S, DECELERATION = 2.5, 3.4  # Green Book §3.2.2: brake reaction time, deceleration rate
 GAPS_S = {"car": (7.5, 0.5), "single-unit truck": (9.5, 0.7), "combination truck": (11.5, 0.7)}  # Table 9-6: t_g, per lane
@@ -100,7 +108,7 @@ def _inside(px: float, py: float, triangle: list) -> bool:
 
 def audit(network: Network, modes: list) -> dict:
     """Every check in the module's docstring; each finding with the object, what the rule asks and what is there."""
-    from .simulation import Graph  # noqa: PLC0415 - the lane graph only for the turns
+    from .lane_graph import Graph  # noqa: PLC0415 - the lane graph only for the turns
 
     boxes = _boxes(network)
     findings: dict = {"sight_on_curves": [], "intersection_sight": [], "turning_paths": [], "skew": [],
@@ -127,7 +135,7 @@ def audit(network: Network, modes: list) -> dict:
     heaviest = max((design_vehicle(mode) for mode in modes), key=lambda pair: pair[1], default=DESIGN_RADII[0])
     truck = heaviest[0] in ("single-unit truck", "semitrailer")
     for node_id, node in network.nodes.items():
-        roads = [road for road in network.all_roads() if node_id in (road.from_node, road.to_node)]
+        roads = roads_at(network, node_id)
         if len(roads) < 2:
             continue
         bearings = sorted((_bearing(network, road, node_id), road) for road in roads)
@@ -210,3 +218,166 @@ def audit(network: Network, modes: list) -> dict:
             "not_checked": "speed-change lane lengths, grades, access within 50 m of junctions (doors are junctions here)",
             "rules": "AASHTO Green Book 2018 (Eqs 3-2, 3-37, 9-1; Tables 2-5b, 9-6; §9.5.2, §10.9.5.9); Towards Safer "
                      "Roads in Developing Countries (TRL 1991) Ch 7 checklist B12; HCM 2000 Ch 24 (weaving)."}
+
+
+def tightest(road: Road) -> float:
+    return max((abs(kappa) for kappa in road.curvature), default=0.0)
+
+
+def roads_at(network: Network, node_id: str) -> list[Road]:
+    return [road for road in network.all_roads() if node_id in (road.from_node, road.to_node)]
+
+
+def analyse_network(network: Network) -> dict:
+    findings: dict = {}
+    try:
+        network.validate()
+        findings["valid"] = True
+    except ValueError as exc:
+        findings["valid"] = str(exc)
+    ahead: dict[str, set[str]] = {}
+    back: dict[str, set[str]] = {}
+    joined: dict[str, set[str]] = {}
+    for road in network.all_roads():
+        pairs = [(road.from_node, road.to_node)]
+        if road.direction == "two-way":
+            pairs.append((road.to_node, road.from_node))
+        for a, b in pairs:
+            ahead.setdefault(a, set()).add(b)
+            back.setdefault(b, set()).add(a)
+        joined.setdefault(road.from_node, set()).add(road.to_node)
+        joined.setdefault(road.to_node, set()).add(road.from_node)
+
+    def spread(starts, links) -> set[str]:
+        seen, todo = set(starts), list(starts)
+        while todo:
+            for nxt in links.get(todo.pop(), ()):
+                if nxt not in seen:
+                    seen.add(nxt)
+                    todo.append(nxt)
+        return seen
+
+    every = [node.id for node in network.all_nodes()]
+    parts, left = 0, set(every)
+    while left:
+        parts += 1
+        left -= spread([next(iter(left))], joined)
+    findings["separate_parts"] = parts
+    entries = [end for end in network.approach_nodes if ahead.get(end)]
+    exits = [end for end in network.approach_nodes if back.get(end)]
+    if entries and exits:
+        reached, leaving = spread(entries, ahead), spread(exits, back)
+        findings["junctions_traffic_cannot_reach"] = sorted(j for j in network.nodes if j not in reached)
+        findings["junctions_traffic_cannot_leave"] = sorted(j for j in network.nodes if j not in leaving)
+    else:
+        findings["note"] = "No boundary ends carry traffic both in and out, so reachability wasn't checked."
+    findings["dead_end_junctions"] = sorted(j for j in network.nodes if len(roads_at(network, j)) == 1)
+    findings["unconnected_junctions"] = sorted(j for j in network.nodes if not roads_at(network, j))
+    findings["roads_under_15_m"] = sorted(road.id for road in network.all_roads() if road.length_m < 15)
+    findings["curves_posted_too_fast"] = [
+        {"road": road.id, "speed_limit_kmh": road.speed_limit_kmh,
+         "safe_curve_speed_kmh": curve_speed_kmh(1 / tightest(road))}
+        for road in network.all_roads()
+        if tightest(road) and road.speed_limit_kmh > curve_speed_kmh(1 / tightest(road))]
+    crowded = []
+    for node in network.nodes.values():
+        if node.control == "roundabout":
+            radius = design_roundabout(network, node.id).inscribed_diameter_m / 2
+            crowded += [{"roundabout": node.id, "road": road.id, "radius_m": round(radius, 1),
+                         "road_length_m": round(road.length_m, 1)}
+                        for road in roads_at(network, node.id) if road.length_m <= radius * 1.5]
+    findings["roundabouts_crowding_their_roads"] = crowded
+    return findings
+
+
+def route_lengths(network: Network, sources) -> dict:
+    """Metres of the shortest route from each source to every node it can reach, one-way roads kept."""
+    ahead = defaultdict(list)
+    for road in network.all_roads():
+        ahead[road.from_node].append((road.to_node, road.length_m))
+        if road.direction == "two-way":
+            ahead[road.to_node].append((road.from_node, road.length_m))
+    found = {}
+    for source in sources:
+        best, todo = {source: 0.0}, [(0.0, source)]
+        while todo:
+            metres, here = heapq.heappop(todo)
+            if metres > best.get(here, float("inf")):
+                continue
+            for there, step in ahead[here]:
+                if metres + step < best.get(there, float("inf")):
+                    best[there] = metres + step
+                    heapq.heappush(todo, (metres + step, there))
+        found[source] = best
+    return found
+
+
+def network_indices(network: Network) -> dict:
+    """Graph indices of the road network (Rodrigue, The Geography of Transport Systems, p613–639): v vertices
+    (junctions and ends), e edges (roads), p components; cyclomatic μ = e − v + p, α = μ / (2v − 5), β = e / v,
+    γ = e / (3(v − 2)) (planar forms); the diameter in links; degrees; the detour index (route km over
+    straight-line km between boundary ends, one-way roads kept); Shimbel accessibility (the sum of shortest km
+    from a junction to every other)."""
+    nodes = {node.id: node for node in network.all_nodes()}
+    roads = list(network.all_roads())
+    v, e = len(nodes), len(roads)
+    parent = {node: node for node in nodes}
+
+    def root(node):
+        while parent[node] != node:
+            parent[node] = parent[parent[node]]
+            node = parent[node]
+        return node
+
+    around = defaultdict(list)
+    for road in roads:
+        parent[root(road.from_node)] = root(road.to_node)
+        around[road.from_node].append((road.to_node, road.length_m))
+        around[road.to_node].append((road.from_node, road.length_m))
+    components = len({root(node) for node in nodes})
+    mu = e - v + components
+
+    def hops(source):
+        """Links to the junction farthest from source (breadth first)."""
+        seen, frontier, depth = {source}, [source], -1
+        while frontier:
+            depth += 1
+            nearer = []
+            for here in frontier:
+                for there, _ in around[here]:
+                    if there not in seen:
+                        seen.add(there)
+                        nearer.append(there)
+            frontier = nearer
+        return depth
+
+    def metres(source):
+        best, todo = {source: 0.0}, [(0.0, source)]
+        while todo:
+            spent, here = heapq.heappop(todo)
+            if spent > best[here]:
+                continue
+            for there, step in around[here]:
+                if spent + step < best.get(there, float("inf")):
+                    best[there] = spent + step
+                    heapq.heappush(todo, (spent + step, there))
+        return best
+
+    junctions = list(network.nodes)
+    shimbel = {node: sum(metres(node).get(other, 0.0) for other in junctions) / 1000 for node in junctions}
+    ends = list(network.approach_nodes)
+    routed = route_lengths(network, ends)
+    detours = [routed[o][d] / hypot(nodes[o].x - nodes[d].x, nodes[o].y - nodes[d].y)
+               for o in ends for d in ends if o != d and d in routed[o] and hypot(nodes[o].x - nodes[d].x, nodes[o].y - nodes[d].y)]
+    ranked = sorted(shimbel, key=shimbel.get)
+    return {"vertices": v, "edges": e, "components": components, "cyclomatic": mu,
+            "alpha": round(mu / (2 * v - 5), 3) if v > 2 else None, "beta": round(e / v, 3) if v else None,
+            "gamma": round(e / (3 * (v - 2)), 3) if v > 2 else None,
+            "diameter_links": max((hops(node) for node in nodes), default=0),
+            "degrees": dict(sorted(Counter(len(around[node]) for node in junctions).items())),
+            "detour_index": round(sum(detours) / len(detours), 3) if detours else None,
+            "most_accessible": {node: round(shimbel[node], 1) for node in ranked[:5]},
+            "least_accessible": {node: round(shimbel[node], 1) for node in ranked[-5:][::-1]},
+            "notes": ["alpha: share of the most circuits a planar graph could have (0 a tree, 1 complete); beta: roads a "
+                      "node; gamma: share of the most roads possible. Shimbel: km to every other junction (lower is "
+                      "more accessible)."]}

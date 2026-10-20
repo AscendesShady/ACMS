@@ -6,7 +6,7 @@
   σ), and draws its speed factor with the run's random numbers (`speed_factor`: SUMO's default
   normc(1, speedDev, 0.2, 2), a normal draw about 1 drawn again until within [0.2, 2]; speedDev 0.1,
   so about 95 % drive at 80–120 % of the limit; no rng: exactly 1).
-- The types carry SUMO's vClass defaults (`VehicleMode` in mode_behavior.py; SUMO's *Vehicle Type
+- The types carry SUMO's vClass defaults (`VehicleMode`, defined here in vehicle.py; SUMO's *Vehicle Type
   Parameter Defaults* and vType definitions): passenger car 5 m × 1.8 m, 200 km/h, 2.6 m/s² up,
   4.5 m/s² down; bus 12 m × 2.5 m, 85 km/h, 1.2 and 4 m/s²; bicycle 1.6 m × 0.65 m, 50 km/h with a
   desired top speed of 20 km/h, 1.2 and 3 m/s², 0.5 m standstill gap (2.5 m for the others); for all,

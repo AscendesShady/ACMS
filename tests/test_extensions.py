@@ -19,7 +19,7 @@ from traffic_simulator.extensions import EXTENSIONS_DIR, ExtensionsPanel  # noqa
 from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.network_scene import NetworkGraphicsScene  # noqa: E402
-from traffic_simulator.properties_panel import ChoiceButtons  # noqa: E402
+from traffic_simulator.widgets import ChoiceButtons  # noqa: E402
 from traffic_simulator.simulation import PairDemand, Simulation, Turn  # noqa: E402
 from traffic_simulator.mode_behavior import VehicleModes  # noqa: E402
 
@@ -217,7 +217,7 @@ def test_batch_run_takes_seeds_like_pages_and_a_duration():
 
 
 def test_a_long_list_of_models_scrolls_and_every_one_can_be_ticked():
-    from traffic_simulator.properties_panel import CheckList
+    from traffic_simulator.widgets import CheckList
 
     models = CheckList()
     labels = [f"System 2: model {i}" for i in range(15)]

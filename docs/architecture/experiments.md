@@ -120,12 +120,11 @@
   last one; skipped while the file is open in Excel), its Read me saying "Runs finished: n of N". Each run's own
   workbook is saved as it ends, as before.
   With TSP ticked up to `at_once` go side by side on worker threads, but never two on one model server (a
-  provider: Ollama, Laya, Jev, Grok, Gemini; a baseline is none), so no run's questions wait behind another's;
+  provider: Ollama (its chat and decision models alike), Jev, Grok, Gemini; a baseline is none), so no run's questions wait behind another's;
   a run that raises stops the others and is the batch's error. Each records the pace it achieved
   (`pace_achieved`, simulated over wall seconds while it stepped; under 90 % of the pace asked, the batch says
   so: fewer at once or a slower pace). Plain batches go one at a time, as fast as the CPU allows (side by side
-  they'd only share one process's CPU). Laya is started first
-  if asked for, and each agent's model warmed up with one throwaway request, `_warm_up`, so its loading isn't
+  they'd only share one process's CPU). Each agent's model warmed up with one throwaway request, `_warm_up`, so its loading isn't
   charged to its first run), each through `_one_run` paced at the batch's `speed` (1–60, the panel's 1×, 2×, 5×, 10×) when a model answers in
   it (a baseline and its emergency fleet depend on the seed alone: as fast as the CPU allows, about 25 s a
   simulated hour for ~400 vehicles)

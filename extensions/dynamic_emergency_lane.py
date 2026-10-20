@@ -36,7 +36,7 @@ from PySide6.QtWidgets import QFormLayout, QGraphicsEllipseItem, QGraphicsRectIt
 from traffic_simulator.agent_choice import AgentChoice
 from traffic_simulator.models import stop_line_inset
 from traffic_simulator.network_scene import SIGNAL_SIZE
-from traffic_simulator.properties_panel import hint_label
+from traffic_simulator.widgets import hint_label
 
 NAME = "Dynamic Emergency Vehicle Lane (DEVL)"
 ORDER = 3

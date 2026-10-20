@@ -56,7 +56,7 @@ out float v_visible;
 flat out int v_skin;
 vec3 expand_vertex(vec4 p, vec2 h) {
     float axle = skin>5.5 && skin<6.5 ? 0.55 : skin>6.5 && skin<7.5 ? 0.61 : skin>0.5 && skin<3.5 ? 0.63 : 0.68;
-    float radius = skin>5.5 && skin<6.5 ? 0.48 : skin>6.5 && skin<7.5 ? 0.33 : 0.18;
+    float radius = skin>5.5 && skin<6.5 ? 0.48 : skin>6.5 && skin<7.5 ? 0.33 : skin>3.5 && skin<4.5 ? 0.21 : 0.18;
     float fit = min(1.0,half_size.x*(1.0-axle)/(radius*2.0*half_size.y));
     return vec3(p.x*h.x + p.w*2.0*half_size.y*fit, p.y*h.y, p.z*2.0*half_size.y);
 }

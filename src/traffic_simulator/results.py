@@ -25,7 +25,7 @@ Every minute the rows are appended to the folder's CSV files and the running tot
 (`totals.json`), so an interruption loses at most a minute; `workbook(folder, path)` turns a folder
 into the .xlsx (Summary, Per minute, Roads, By type, Trips, and the sheets the run's extensions
 reported, `add_sheets`), named by when it started, its seed and the AI model that decided (`file_name`),
-and `recover` does that for folders a crash left behind. Passengers are vehicles × each type's `occupancy` (mode_behavior.VehicleMode),
+and `recover` does that for folders a crash left behind. Passengers are vehicles × each type's `occupancy` (vehicle.VehicleMode),
 an assumption the workbook states. Sample-based, apart from trip times: a road crossed between two samples isn't
 counted as entered. `measure_from_s` (a warm-up, default 0): the figures and trips count only after it (trips that
 entered the road in it are left out); the per-minute rows and spawned and arrived totals cover the whole run.
@@ -65,6 +65,10 @@ MINUTE_COLUMNS = ["Time (s)", "Clock", "Vehicles on the road", "Spawned (total)"
                   "Arrived this minute", "Throughput (veh/h)", "People carried this minute", "People (per hour)",
                   "Mean speed (km/h)", "Queued now (veh)", "Most queued this minute (veh)", "Delay (veh·h)",
                   "Distance (veh·km)"]
+WALK_COLUMNS = ["Walker", "Origin", "Destination", "Set off (s)", "Arrived (s)", "Walk time (s)", "Distance (m)",
+                "Waited at kerbs (s)"]
+CROSSING_COLUMNS = ["Crossing", "Kind", "Walkers over it", "Mean wait at its kerb (s)",
+                    "Vehicles held at its stop line (veh·s)"]
 TRIP_COLUMNS = ["Vehicle", "Type", "Origin", "Destination", "Departed (s)", "Arrived (s)", "Trip time (s)",
                 "Distance (m)", "Delay (s)", "Wait (s)", "People", "Delay vs own free speed (s)",
                 "Requested departure (s)", "System travel time (s)"]
@@ -143,6 +147,8 @@ class RunRecorder:
                        "arrived_before": 0}
         self._minute = self._fresh_minute()
         self._trips: list[list] = []  # waiting to be appended
+        self._walks: list[list] = []  # pedestrians' walks (WALK_COLUMNS), likewise
+        self._walks_seen: set[str] = set()
         # For the statistics (observed()): every trip, vehicles first seen per (origin, minute), and each road's
         # queue (metres a lane, rounded) at every sample it had one
         self.trip_log: list[tuple] = []  # (origin, destination, type, trip s, delay vs own free speed s, arrived s)
@@ -281,6 +287,20 @@ class RunRecorder:
                 by["wait_s"] = by.get("wait_s", 0.0) + waited
                 by["people_delay_s"] = by.get("people_delay_s", 0.0) + lost * people
                 by["free_delay_s"] = by.get("free_delay_s", 0.0) + own
+            for walk in getattr(frame, "walk_exits", ()):  # each pedestrian's walk once (Frame.walk_exits)
+                if walk[0] in self._walks_seen:
+                    continue
+                self._walks_seen.add(walk[0])
+                walker_id, origin, destination, departed, arrived, metres, waited = walk
+                if departed < totals["measure_from_s"]:
+                    continue  # set off in the warm-up: not measured
+                self._walks.append([walker_id, origin, destination, round(departed, 1), round(arrived, 1),
+                                    round(arrived - departed, 1), round(metres, 1), round(waited, 1)])
+                for key, value in (("walk_trips", 1), ("walk_s", arrived - departed), ("walk_m", metres),
+                                   ("walk_wait_s", waited)):
+                    totals[key] = totals.get(key, 0) + value
+            if getattr(frame, "crossings", None):  # each crossing's figures so far (the run's, warm-up included)
+                totals["crossings"] = {key: dict(figures) for key, figures in frame.crossings.items()}
             # Generated but not yet on the road (vehicles are conserved: spawned = waiting + on the road + arrived)
             waiting = max(frame.spawned - frame.arrived - len(frame.vehicles), 0)
             totals["entry_wait_s"] += waiting * dt
@@ -328,6 +348,11 @@ class RunRecorder:
             csv.writer(file).writerow(row)
         with open(self.folder / "trips.csv", "a", newline="", encoding="utf-8") as file:
             csv.writer(file).writerows(self._trips)
+        if self._walks:  # a run with pedestrians: walks.csv beside trips.csv
+            new = not (self.folder / "walks.csv").exists()
+            with open(self.folder / "walks.csv", "a", newline="", encoding="utf-8") as file:
+                csv.writer(file).writerows(([WALK_COLUMNS] if new else []) + self._walks)
+            self._walks = []
         span = max(now - self._minute_start, 1e-9)  # a whole minute, or the part one at the end
         rows = [[round(now, 1), clock(now), road, entered, round(entered * 3600 / span),
                  round(metres / seconds * 3.6, 1) if seconds else None, queued, round(late / 3600, 3)]
@@ -490,7 +515,25 @@ def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
                            if by["trips"] else None}
                     for kind, by in sorted(totals["by_type"].items())},
         "occupancy": occupancy,
+        **_walk_figures(totals, per_hour),
     }
+
+
+def _walk_figures(totals: dict, per_hour) -> dict:
+    """Pedestrians' figures, when there were any: walks completed (after the warm-up), their mean time, speed and wait
+    at kerbs, and each crossing's walkers, mean kerb wait and the vehicles its zebra held (the whole run)."""
+    walks = totals.get("walk_trips", 0)
+    if not walks and not totals.get("crossings"):
+        return {}
+    return {"walk_trips": walks, "walkers_per_h": round(per_hour(walks)),
+            "mean_walk_s": round(totals.get("walk_s", 0.0) / walks, 1) if walks else None,
+            "mean_walk_speed_kmh": round(totals.get("walk_m", 0.0) / totals["walk_s"] * 3.6, 2)
+            if totals.get("walk_s") else None,
+            "mean_walk_wait_s": round(totals.get("walk_wait_s", 0.0) / walks, 1) if walks else None,
+            "crossings": [{"crossing": key, "kind": figures["kind"], "walkers": figures["walkers"],
+                           "mean_wait_s": round(figures["waited_s"] / figures["walkers"], 1) if figures["walkers"]
+                           else None, "vehicles_held_s": round(figures["held_s"], 1)}
+                          for key, figures in sorted(totals.get("crossings", {}).items())]}
 
 
 def _csv(path: Path) -> list[list]:
@@ -584,6 +627,18 @@ def workbook(folder: Path, path: str | Path) -> Path:
                ["Sampled every", meta["sample_s"], "s", "trip times are exact, not sampled"],
                ["Occupancy assumed", ", ".join(f"{kind} {people:g}" for kind, people in meta["occupancy"].items()),
                 "people a vehicle", "an assumption (Mode Behavior's vehicle types)"]]
+    if "walk_trips" in figures:  # a run with pedestrians
+        summary += [["Walks completed", figures["walk_trips"], "people", "pedestrians who reached the end of their walk"],
+                    ["Walkers per hour", figures["walkers_per_h"], "people/h", ""],
+                    ["Mean walk time", figures["mean_walk_s"], "s", "set off to arrived, waits at kerbs included"],
+                    ["Mean walking speed", figures["mean_walk_speed_kmh"], "km/h", "distance ÷ walk time"],
+                    ["Mean wait at kerbs per walk", figures["mean_walk_wait_s"], "s",
+                     "for gaps at junctions (HCM 2000 Eq 18-17) and for vehicles that couldn't stop at zebras"]]
+    walking = [("Walks", _csv(folder / "walks.csv") or [WALK_COLUMNS])] if "walk_trips" in figures else []
+    if figures.get("crossings"):
+        walking.append(("Crossings", [CROSSING_COLUMNS] + [
+            [row["crossing"], row["kind"], row["walkers"], row["mean_wait_s"], row["vehicles_held_s"]]
+            for row in figures["crossings"]]))
     road_rows = [["Road", "From", "To", "Length (m)", "Lanes per direction", "Speed limit (km/h)", "Entered (veh)",
                   "Flow (veh/h)", "Mean speed (km/h)", "Density (veh/km)", "Most queued (veh)", "Mean queued (veh)",
                   "Longest queue a lane (m)", "Delay (veh·h)"]]
@@ -610,7 +665,7 @@ def workbook(folder: Path, path: str | Path) -> Path:
                              ("Roads", road_rows), ("Road conditions", conditions),
                              ("Roads by minute", _csv(folder / "roads_minutes.csv") or [ROAD_MINUTE_COLUMNS]),
                              ("By type", type_rows), ("Trips", _csv(folder / "trips.csv") or [TRIP_COLUMNS]),
-                             *reported, *network])
+                             *walking, *reported, *network])
     if meta.get("geometry"):
         write_geojson(path.with_suffix(".geojson"), meta.get("name", ""), roads, meta["geometry"], meta["nodes"],
                       meta.get("georef"), {row["road"]: row for row in figures["roads"]}, conditions)
@@ -858,7 +913,7 @@ def city_sheet(network) -> list[list]:
     Transport Systems), its roundabouts, curves, bus stops and buildings, and its route choice."""
     from statistics import median  # noqa: PLC0415
 
-    from .network_tools import network_indices  # noqa: PLC0415 - network_tools imports nothing from here
+    from .design_checks import network_indices  # noqa: PLC0415 - results stays light to import
     from .roundabouts import design_roundabout  # noqa: PLC0415
 
     rows = [["Figure", "Value", "Unit", "How"]]

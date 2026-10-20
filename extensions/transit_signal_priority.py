@@ -46,7 +46,7 @@ from PySide6.QtGui import QColor, QPen
 from PySide6.QtWidgets import QFormLayout, QGraphicsEllipseItem, QSpinBox, QWidget
 
 from traffic_simulator.agent_choice import AgentChoice
-from traffic_simulator.properties_panel import hint_label
+from traffic_simulator.widgets import hint_label
 from traffic_simulator.stats import percentile
 from traffic_simulator.theme import SECONDARY_TEXT, STATUS
 from traffic_simulator.transit_signal_priority import ApproachCfg, NodeCfg, PhaseCfg, TSPController, eff_min

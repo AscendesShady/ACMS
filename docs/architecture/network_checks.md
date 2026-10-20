@@ -38,6 +38,19 @@ Each finding names the object, what the rule asks and what is there; every rule 
   grades (the network has none), access within 50 m of a junction (checklist items 11 and 37; here a building's
   door is a junction).
 
+## design_checks.py: the network's shape (tools `analyse_network`, `network_indices`)
+
+- `analyse_network(network)`: whether it validates; its separate parts; junctions traffic from the boundary ends
+  can't reach or can't leave (one-way roads kept); dead-end and unconnected junctions; roads under 15 m; curves
+  posted faster than their tightest bend allows (`interchanges.curve_speed_kmh`); roundabouts whose radius crowds a
+  road at most 1.5 radii long. View Summary's **Design check** shows it.
+- `network_indices(network)`: graph indices (Rodrigue, *The Geography of Transport Systems*): vertices, edges,
+  components, cyclomatic μ, α, β, γ, the diameter in links, degrees, the detour index between boundary ends and
+  Shimbel accessibility. A run's workbook carries them.
+- Helpers the assistant's tools share: `roads_at` (a junction's roads), `tightest` (a road's sharpest curvature),
+  `route_lengths` (shortest metres from each source, one-way roads kept). View Summary and the workbook read these
+  without loading network_tools; the tools of the same names call them.
+
 ## accessibility.py (tool `accessibility_report`)
 
 Levine, From Mobility to Accessibility (Eq 3.1, Appendix A); Rodrigue, The Geography of Transport Systems. Times

@@ -17,3 +17,9 @@
   coplanar glazing/markings after their support surfaces. The GPU uses a depth buffer for vehicle self-occlusion
   and occlusion between instances. Global building/traffic layering remains managed by the Qt scene.
 - These are render meshes, never collision hulls, route geometry or a source of driving behaviour.
+- Bus tyres stay within physical half-width and protrude beyond a recessed lower skirt. The passenger body
+  starts above the tyre crown; skirt sections leave open spaces at both axles. `wheel_fit` includes those
+  openings when fitting unusually short custom buses, identically in raster expansion and the GPU shader.
+- `pedestrian_mesh` is a display-only 1.75 m person, with separate legs, arms, torso and head in metre coordinates.
+  Clothing reuses WALKER/vehicle ink tokens. `footbridge_mesh` supplies a 6 m high deck with supports, parapets
+  and illustrative stairs. These heights are assumptions; neither changes the walking model or its climb cost.

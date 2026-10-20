@@ -6,20 +6,21 @@ the 24 hours by a curve the user shapes; see daily_profile.py).
 
 A Run spawns vehicles from the values shown (hourly or daily); a project file saves them
 (main.MainWindow._project, network_io).
+
+The cells' type and rules (ODCell, the split arithmetic, the demand tools' checks and read-out) are
+demand.py's; this module shows and edits them.
 """
 
 from __future__ import annotations
 
-import json
-import re
 from collections import defaultdict
 from copy import deepcopy
-from dataclasses import dataclass, field, replace
+from dataclasses import replace
 from itertools import accumulate
 from math import sqrt
 
 from PySide6.QtCore import QEvent, QPoint, QPointF, QRectF, Qt, QTime, Signal
-from PySide6.QtGui import QColor, QFont, QKeySequence, QPainter, QPainterPath, QPen, QShortcut
+from PySide6.QtGui import QBrush, QColor, QFont, QKeySequence, QPainter, QPainterPath, QPen, QShortcut
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QApplication,
@@ -48,38 +49,28 @@ from PySide6.QtWidgets import (
 )
 
 from . import theme
-from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, MIN_GAP_H, DailyProfile, phf_of, phf_quarters, quarter_shares
+from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, MIN_GAP_H, DailyProfile, phf_of, phf_quarters
 from .institutions import KINDS, catchment, door, hourly_people, hourly_trips, shares
-from .mode_behavior import VehicleModes, fixed_split, redistribute, whole_percent
-from .models import (BUILDING_HEIGHTS_M, MAX_AREA_M2, MAX_BUILDING_HEIGHT_M, MAX_METRO_DEMAND, Institution, Network,
-                     institution_problem)
+from .demand import (UNITS, ODCell, drops_after, curve_record, demand_now, demand_plan, lead_with_what_was_kept, pairs_from,
+                     profile_from, quarters_record, read_od, redistribute, split_of, whole_percent)
+from .metro import lines_of, ride
+from .mode_behavior import VehicleModes
+from .models import (BUILDING_HEIGHTS_M, MAX_AREA_M2, MAX_BUILDING_HEIGHT_M, MAX_METRO_DEMAND, MAX_WALK_DEMAND,
+                     Institution, Network, institution_problem)
 from .building_assets import height as building_height
-from .properties_panel import hint_label, icon_button, styled_button
+from .widgets import hint_label, icon_button, styled_button
 
 # Categorical slots 1-3 of the dataviz reference palette (its dark-surface steps), in
 # fixed order. Validated on the grid grey: all checks pass, worst adjacent colour-blind
 # dE 9.4. On the lighter panel grey bus/car dip under 3:1, so the slider always labels them.
-DEFAULT_SPLIT = (10, 85, 5)  # the three starting vehicle types' shares (bus, car, bike)
 TEXT = QColor(theme.TEXT)
-SUBDUED = QColor("#2a2e33")  # diagonal cells, a shade darker than the grid: no trip there
 SELECTED_FILL, SELECTED_EDGE = QColor(theme.BANNER), QColor(theme.ACCENT_EDGE)
 HANDLE_EDGE = QColor("#9ca3af")
 GRID = QColor("#454b53")  # curve editor grid lines
 BARS = QColor(37, 99, 235, 110)  # hourly share bars: the accent, subdued
-UNITS = {"hourly": "veh/h", "daily": "veh/day"}
 CELL_PX = (56, 40)  # a grid cell's width and height at 100 %
 ZOOM_RANGE, FIT_MAX = (0.25, 4.0), 2.0  # Fit Grid stops at 200 % so a small grid doesn't balloon
 PAN_BUTTONS = (Qt.MouseButton.MiddleButton, Qt.MouseButton.RightButton)  # as on the map
-
-
-@dataclass
-class ODCell:
-    flow: int | None = None  # hourly demand, veh/h; None until entered
-    daily: int | None = None  # daily demand, trips per day; None until entered
-    profile: DailyProfile = field(default_factory=DailyProfile)  # how the day's trips spread
-    pattern: str = "Random"
-    split: tuple[int, ...] = DEFAULT_SPLIT  # percent per vehicle type, in Mode Behavior's order; sums to 100
-    quarters: tuple[float, ...] = ()  # hourly demand: each 15 minutes' share of the hour (its PHF); () even
 
 
 def _mode_text(names: list[str], split: tuple[int, ...]) -> str:
@@ -90,12 +81,13 @@ class ModeSplitSlider(QWidget):
     """Handles cut 0-100 % into one zone per vehicle type (Mode Behavior's list, in its colours),
     so the shares always sum to 100: one handle between each pair of neighbouring types.
 
-    Drag a handle (or click the track to move the nearest one). With the slider focused,
-    Left/Right move the active handle 1 % (Page Up/Down 10 %) and Space moves to the next
-    handle. set_share() takes a typed percentage for one type.
+    Drag a handle; click a type's zone (away from the handles) to pick it (type_clicked: its
+    drop-offs). With the slider focused, Left/Right move the active handle 1 % (Page Up/Down
+    10 %) and Space moves to the next handle. set_share() takes a typed percentage for one type.
     """
 
     changed = Signal()  # the user moved a handle; set_split() stays quiet
+    type_clicked = Signal(int)  # a type's zone was clicked: its index
     MARGIN, TRACK_TOP, TRACK_HEIGHT, HANDLE_RADIUS = 10, 8, 12, 8
 
     def __init__(self, vehicle_modes: VehicleModes) -> None:
@@ -107,7 +99,7 @@ class ModeSplitSlider(QWidget):
         self._tie: list[int] = []  # handles pressed where they overlap: the first move picks one
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setMinimumHeight(30)
-        self.setToolTip("Split trips between types")
+        self.setToolTip("Drag splits; click type: drop-offs")
 
     @staticmethod
     def _cuts(split) -> list[int]:
@@ -201,10 +193,16 @@ class ModeSplitSlider(QWidget):
                                        2 * self.HANDLE_RADIUS, 2 * self.HANDLE_RADIUS))
 
     def mousePressEvent(self, event) -> None:  # type intentionally inherited from Qt
+        x = event.position().x()
+        if all(abs(self._x(cut) - x) > self.HANDLE_RADIUS + 2 for cut in self.cuts):  # on a zone: that type
+            bounds = [0, *self.cuts, 100]
+            value = (x - self.MARGIN) / max(1, self.width() - 2 * self.MARGIN) * 100
+            self.type_clicked.emit(next((i for i, end in enumerate(bounds[1:]) if value <= end), len(bounds) - 2))
+            return
         free = self._free_handles()
         if not free:
             return
-        value = self._value(event.position().x())
+        value = self._value(x)
         nearest = min(abs(value - self.cuts[i]) for i in free)
         closest = [i for i in free if abs(value - self.cuts[i]) == nearest]
         stacked = [i for i in free if self.cuts[i] == self.cuts[closest[0]]]
@@ -383,6 +381,147 @@ class CurveEditor(QWidget):
             self.changed.emit()
 
 
+class DropSlider(QWidget):
+    """One vehicle type's drop-offs along an OD pair's trip: the track is its fastest route from the entry to the
+    exit, the junctions on the way ticked. Click the track to add a point (near a junction it snaps to it), drag
+    one, double-click or right-click to remove it. Each point ends its % of the type's trips there; a point is
+    a share of the trip's length, so it holds on any route the vehicles take."""
+
+    changed = Signal()  # an edit finished: a point added, dragged or removed
+    picked = Signal()  # the selected point changed
+    MARGIN, TRACK_Y, RADIUS, SNAP_PX, MIN_GAP, NEW_SHARE = 16, 24, 6, 8, 0.01, 10
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.length = 0.0  # metres, entry to exit
+        self.junctions: list[tuple[float, str]] = []  # (share of the length, node id) on the way
+        self.ends = ("", "")
+        self.colour = QColor(HANDLE_EDGE)
+        self.points: list[list] = []  # [share of the length, %], in order along the trip
+        self.selected: int | None = None
+        self._drag = self._moved = False
+        self.setMinimumHeight(58)
+
+    def set_route(self, length: float, junctions: list, ends: tuple[str, str], colour: str) -> None:
+        self.length, self.junctions, self.ends, self.colour = length, list(junctions), ends, QColor(colour)
+        self.update()
+
+    def set_points(self, points) -> None:
+        self.points = sorted([at, share] for at, share in points)
+        if self.selected is not None and self.selected >= len(self.points):
+            self.selected = None
+        self.update()
+
+    def left_over(self) -> int:
+        """The % of the type's trips no point takes: they reach the exit."""
+        return 100 - sum(share for _, share in self.points)
+
+    def _x(self, at: float) -> float:
+        return self.MARGIN + (self.width() - 2 * self.MARGIN) * at
+
+    def _at(self, x: float) -> float:
+        """The share of the trip under x, kept off the ends; within SNAP_PX of a junction, that junction."""
+        at = min(max((x - self.MARGIN) / max(1, self.width() - 2 * self.MARGIN), self.MIN_GAP), 1 - self.MIN_GAP)
+        near = min(self.junctions, key=lambda junction: abs(self._x(junction[0]) - x), default=None)
+        return near[0] if near and abs(self._x(near[0]) - x) <= self.SNAP_PX else at
+
+    def _point_at(self, position: QPointF) -> int | None:
+        for index, (at, _) in enumerate(self.points):
+            if abs(self._x(at) - position.x()) <= self.RADIUS + 3 and abs(self.TRACK_Y - position.y()) <= 14:
+                return index
+        return None
+
+    def paintEvent(self, event) -> None:  # type intentionally inherited from Qt
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        font = QFont(self.font())
+        font.setPointSizeF(8)
+        painter.setFont(font)
+        left, right, y = self._x(0), self._x(1), self.TRACK_Y
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(self.colour)
+        painter.drawRoundedRect(QRectF(left, y - 3, right - left, 6), 3, 3)
+        painter.setPen(QColor(theme.SECONDARY_TEXT))
+        for at, name in [(0.0, self.ends[0]), *self.junctions, (1.0, self.ends[1])]:
+            x = self._x(at)
+            painter.drawLine(QPointF(x, y + 5), QPointF(x, y + 10))
+            painter.drawText(QRectF(x - 30, y + 11, 60, 14), Qt.AlignmentFlag.AlignCenter, name)
+        for index, (at, share) in enumerate(self.points):
+            x = self._x(at)
+            painter.setPen(QPen(SELECTED_EDGE, 2))
+            painter.setBrush(SELECTED_EDGE if index == self.selected else QColor("#ffffff"))
+            painter.drawEllipse(QPointF(x, y), self.RADIUS, self.RADIUS)
+            painter.setPen(TEXT)
+            painter.drawText(QRectF(x - 30, y - 22, 60, 14), Qt.AlignmentFlag.AlignCenter, f"{share} %")
+
+    def mousePressEvent(self, event) -> None:  # type intentionally inherited from Qt
+        index = self._point_at(event.position())
+        if event.button() == Qt.MouseButton.RightButton:
+            self._remove(index)
+            return
+        if event.button() != Qt.MouseButton.LeftButton:
+            return
+        if index is None:  # a new point here, if some trips are left and it isn't on top of another
+            at = self._at(event.position().x())
+            if self.left_over() <= 0 or any(abs(at - other) < self.MIN_GAP for other, _ in self.points):
+                return
+            point = [at, min(self.NEW_SHARE, self.left_over())]
+            self.points.append(point)
+            self.points.sort()
+            index = self.points.index(point)
+            self.changed.emit()
+        self.selected, self._drag, self._moved = index, True, False
+        self.picked.emit()
+        self.update()
+
+    def mouseMoveEvent(self, event) -> None:  # type intentionally inherited from Qt
+        if not self._drag or self.selected is None:
+            return
+        point = self.points[self.selected]
+        at = self._at(event.position().x())
+        if at == point[0] or any(abs(at - other[0]) < self.MIN_GAP for other in self.points if other is not point):
+            return
+        point[0], self._moved = at, True
+        self.points.sort()
+        self.selected = self.points.index(point)
+        self.update()
+
+    def mouseReleaseEvent(self, event) -> None:  # type intentionally inherited from Qt
+        if self._drag:
+            self._drag = False
+            if self._moved:
+                self.changed.emit()
+
+    def mouseDoubleClickEvent(self, event) -> None:  # type intentionally inherited from Qt
+        self._remove(self._point_at(event.position()))
+
+    def _remove(self, index: int | None) -> None:
+        if index is not None:
+            del self.points[index]
+            self.selected, self._drag = None, False
+            self.picked.emit()
+            self.update()
+            self.changed.emit()
+
+
+def _paint_blocked(painter: QPainter, rect) -> None:
+    """A cell that takes no value (theme.BLOCKED_CELL hatched with BLOCKED_HATCH): it reads as shut."""
+    painter.fillRect(rect, QColor(theme.BLOCKED_CELL))
+    painter.fillRect(rect, QBrush(QColor(theme.BLOCKED_HATCH), Qt.BrushStyle.BDiagPattern))
+
+
+class _BlockedDelegate(QStyledItemDelegate):
+    """MetroMatrix's cells: as Qt paints them, but one that can't be typed in (no Qt.ItemIsEditable) blocked."""
+
+    def paint(self, painter: QPainter, option, index) -> None:
+        if index.flags() & Qt.ItemFlag.ItemIsEditable:
+            super().paint(painter, option, index)
+            return
+        painter.save()
+        _paint_blocked(painter, option.rect)
+        painter.restore()
+
+
 class _CellDelegate(QStyledItemDelegate):
     """Paints a cell: blank until it has a flow, then the value over a thin mode bar."""
 
@@ -394,8 +533,8 @@ class _CellDelegate(QStyledItemDelegate):
         rect = option.rect
         pair = self.matrix.pair_at(index.row(), index.column())
         painter.save()
-        if pair is None:
-            painter.fillRect(rect, SUBDUED)
+        if pair is None:  # the diagonal: no trip from an end to itself
+            _paint_blocked(painter, rect)
             painter.restore()
             return
         selected = bool(option.state & QStyle.StateFlag.State_Selected)
@@ -447,30 +586,54 @@ class _CellDelegate(QStyledItemDelegate):
 class MetroMatrix(QWidget):
     """Demand Generator → Metro: the metro's own OD matrix, passengers an hour between its stations (M1, M2...),
     rows from, columns to (Network.metro_demand, apart from the roads' demand). A number typed in a cell sets it, 0 or
-    blank clears it, anything else is refused and the cell put back; the diagonal and pairs on different lines (no
-    transfers: no ride between them) can't be typed in. `changed` after each edit (an undo step)."""
+    blank clears it, anything else is refused and the cell put back; the diagonal and pairs no ride joins (metro.ride:
+    one line, or one change at an interchange) can't be typed in. `changed` after each edit (an undo step)."""
 
     changed = Signal()
+
+    TITLE = "Metro passengers an hour, station to station"
+    EMPTY = "No metro stations yet: deploy a line in Edit Network > Metro."
+    LIMIT = MAX_METRO_DEMAND
 
     def __init__(self) -> None:
         super().__init__()
         self.network: Network | None = None
-        self.title = QLabel("Metro passengers an hour, station to station")
+        self.title = QLabel(self.TITLE)
         self.title.setStyleSheet("font-weight: 600;")
         self.table = QTableWidget()
+        self.table.setItemDelegate(_BlockedDelegate(self.table))  # the cells no one types in: shut
         self.table.itemChanged.connect(self._edited)
         layout = QVBoxLayout(self)
         layout.addWidget(self.title)
         layout.addWidget(self.table, 1)
-        self.empty = hint_label("No metro stations yet: deploy a line in Edit Network > Metro.")
+        self.empty = hint_label(self.EMPTY)
         layout.addWidget(self.empty)
 
+    @staticmethod
+    def _places(network: Network) -> list[str]:
+        """The rows' and columns' places: the stations, in number order."""
+        return sorted(network.metro_stops, key=lambda stop_id: int(stop_id[1:]) if stop_id[1:].isdigit() else 0)
+
+    @staticmethod
+    def _demand(network: Network) -> dict:
+        return network.metro_demand
+
+    @staticmethod
+    def _joined(network: Network, places: list[str]) -> set:
+        """The pairs that can be typed in: a ride joins them."""
+        return {(board, alight) for board in places for alight in places if ride(network, board, alight)}
+
+    @staticmethod
+    def _tip(network: Network, place: str) -> str:
+        lines = [line.id for line in lines_of(network, place)]
+        return ("Lines " if len(lines) > 1 else "Line ") + ", ".join(lines)
+
     def show_network(self, network: Network) -> None:
-        """Rows and columns for the network's stations, in number order, each cell its passengers an hour."""
+        """Rows and columns for the network's places (_places), each cell its people an hour."""
         self.network = network
-        stations = sorted(network.metro_stops, key=lambda stop_id: int(stop_id[1:]) if stop_id[1:].isdigit() else 0)
-        line_of = {stop_id: line.id for line in network.metro_lines.values() for stop_id in line.stops}
-        self.stations, self.line_of = stations, line_of
+        stations = self._places(network)
+        self.stations = stations
+        self.rides = self._joined(network, stations)
         table = self.table
         table.blockSignals(True)
         table.clear()
@@ -480,14 +643,14 @@ class MetroMatrix(QWidget):
         table.setVerticalHeaderLabels(stations)
         for index, stop_id in enumerate(stations):
             for header in (table.horizontalHeaderItem(index), table.verticalHeaderItem(index)):
-                header.setToolTip(f"Line {line_of.get(stop_id, '')}")
+                header.setToolTip(self._tip(network, stop_id))
         for row, board in enumerate(stations):
             for column, alight in enumerate(stations):
-                people = network.metro_demand.get(f"{board}->{alight}")
+                people = self._demand(network).get(f"{board}->{alight}")
                 item = QTableWidgetItem("" if people is None else f"{people:g}")
-                if board == alight or line_of.get(board) != line_of.get(alight):
-                    item.setFlags(Qt.ItemFlag.ItemIsEnabled)  # no ride: the same station, or another line
-                    item.setToolTip("No direct ride" if board != alight else "")
+                if (board, alight) not in self.rides:
+                    item.setFlags(Qt.ItemFlag.ItemIsEnabled)  # no ride: the same station, or no line joins them
+                    item.setToolTip("No ride between them" if board != alight else "")
                 table.setItem(row, column, item)
         table.blockSignals(False)
         self.table.setVisible(bool(stations))
@@ -498,19 +661,70 @@ class MetroMatrix(QWidget):
         key, text = f"{board}->{alight}", item.text().strip()
         try:
             people = float(text) if text else 0.0
-            if not (0 <= people <= MAX_METRO_DEMAND) or (people and (board == alight
-                                                                     or self.line_of[board] != self.line_of[alight])):
+            if not (0 <= people <= self.LIMIT) or (people and (board, alight) not in self.rides):
                 raise ValueError  # out of range, or no ride between them
         except ValueError:
+            demand = self._demand(self.network)
             self.table.blockSignals(True)
-            item.setText(f"{self.network.metro_demand[key]:g}" if key in self.network.metro_demand else "")
+            item.setText(f"{demand[key]:g}" if key in demand else "")
             self.table.blockSignals(False)
             return
         if people:
-            self.network.metro_demand[key] = people
+            self._demand(self.network)[key] = people
         else:
-            self.network.metro_demand.pop(key, None)
+            self._demand(self.network).pop(key, None)
         self.changed.emit()
+
+
+class SpawnMatrix(MetroMatrix):
+    """Demand Generator → Pedestrian spawn points: people walking an hour between the spawn points placed on the map
+    (Network.spawn_demand), rows from, columns to, typed in as MetroMatrix's; any two different points."""
+
+    TITLE = "Pedestrians an hour, spawn point to spawn point"
+    EMPTY = "No spawn points yet: Place Spawn Points, click the map, right-click to finish."
+    LIMIT = MAX_WALK_DEMAND
+
+    @staticmethod
+    def _places(network: Network) -> list[str]:
+        return sorted(network.spawn_points, key=lambda key: int(key[1:]) if key[1:].isdigit() else 0)
+
+    @staticmethod
+    def _demand(network: Network) -> dict:
+        return network.spawn_demand
+
+    @staticmethod
+    def _joined(network: Network, places: list[str]) -> set:
+        return {(a, b) for a in places for b in places if a != b}
+
+    @staticmethod
+    def _tip(network: Network, place: str) -> str:
+        return "Spawn point"
+
+
+class PedestrianMatrix(MetroMatrix):
+    """Demand Generator → Pedestrians: people walking an hour between boundary ends (Network.walk_demand), rows from,
+    columns to, typed in as MetroMatrix's; any two different ends (a run notes the pairs no footpath or path joins).
+    Institutions add their walkers on top."""
+
+    TITLE = "Pedestrians an hour, boundary end to boundary end"
+    EMPTY = "No boundary ends yet: add a road to the network's edge in Edit Network > Roads."
+    LIMIT = MAX_WALK_DEMAND
+
+    @staticmethod
+    def _places(network: Network) -> list[str]:
+        return sorted(network.approach_nodes)
+
+    @staticmethod
+    def _demand(network: Network) -> dict:
+        return network.walk_demand
+
+    @staticmethod
+    def _joined(network: Network, places: list[str]) -> set:
+        return {(a, b) for a in places for b in places if a != b}
+
+    @staticmethod
+    def _tip(network: Network, place: str) -> str:
+        return "Boundary end"
 
 
 class ODMatrix(QWidget):
@@ -695,17 +909,12 @@ class ODMatrix(QWidget):
                 cell.split = (*cell.split, 0)
             elif action == "deleted":
                 cell.split = redistribute(cell.split, index)
+            cell.drops = drops_after(cell.drops, action, index)
         self.refresh()
 
     def split_of(self, cell: ODCell) -> tuple[int, ...]:
-        """The split in effect: each timetabled type (a headway in Mode Behavior) fixed at its
-        vehicles over the pair's trips, per hour against the hourly flow, else per day against
-        the daily trips (running all 24 hours); the other types share the rest in their stored
-        proportions. Stored splits keep those proportions, so no flow typed on the way loses them."""
-        per_hour = self.vehicle_modes.vehicles_per_hour()
-        if cell.flow is not None:
-            return fixed_split(cell.split, per_hour, cell.flow)
-        return fixed_split(cell.split, {i: count * 24 for i, count in per_hour.items()}, cell.daily)
+        """The split in effect (demand.split_of), with Mode Behavior's timetabled types."""
+        return split_of(cell, self.vehicle_modes.vehicles_per_hour())
 
     def store(self, pair: tuple[str, str], cell: ODCell | None) -> None:
         """Save a pair's data (None clears it) and repaint."""
@@ -778,12 +987,17 @@ class ODCellPanel(QWidget):
         # equilibrate_demand's: (hourly flows, args, check_only) -> (plan, info), set by the window (its runs)
         self.equilibrator = None
         self.chooser = None  # choose_modes' split: (pairs, args, values) -> ({pair: {type: share}}, info), the window's
+        # (origin, destination) -> (metres, [(share of the length, junction id)]) of the fastest route, or None when
+        # there's none; set by the window; None: drop-offs can't be placed
+        self.router = None
         # Which demand to enter: choosing one shows its options for the selected pairs below.
         self.demand = QComboBox()
         self.demand.addItem("Hourly demand (veh/h)", "hourly")
         self.demand.addItem("Daily demand (veh/day)", "daily")
         self.demand.addItem("Institutions", "institutions")
         self.demand.addItem("Metro passengers (per hour)", "metro")  # the metro's own OD matrix (MetroMatrix)
+        self.demand.addItem("Pedestrians (per hour)", "walk")  # people walking between ends (PedestrianMatrix)
+        self.demand.addItem("Pedestrian spawn points", "spawn")  # points placed on the map, their own matrix
         self.demand.setToolTip("Which demand to edit")
         self.demand.currentIndexChanged.connect(self._demand_chosen)
         demand_form = QFormLayout()
@@ -793,9 +1007,26 @@ class ODCellPanel(QWidget):
         # The OD Pair editor shows only while a cell is selected; until then, one line says how.
         self.empty_hint = hint_label("Click a cell in the grid to edit its demand.")
         self.empty_hint.setToolTip("Ctrl+click to select several")
-        self.metro_hint = hint_label("Type passengers an hour between stations in the grid. Stations on different "
-                                     "lines have no direct ride. Buildings near stations add their own riders.")
+        self.metro_hint = hint_label("Type passengers an hour between stations in the grid. Stations no line joins, "
+                                     "directly or with one change, can't be typed in. Buildings near stations add "
+                                     "their own riders.")
         self.metro_hint.hide()
+        self.walk_hint = hint_label("Type people walking an hour between boundary ends in the grid. They walk the "
+                                    "footpaths and paths of Edit Network > Roads; buildings' walkers add on top.")
+        self.walk_hint.hide()
+        # Spawn points: placed on the map (each click one, a right-click finishes), then their own grid (SpawnMatrix)
+        self.spawn_box = QWidget()
+        spawn_layout = QVBoxLayout(self.spawn_box)
+        spawn_layout.setContentsMargins(0, 0, 0, 0)
+        self.place_spawn_button = styled_button("Place Spawn Points", tooltip="Click the map for points")
+        self.place_spawn_button.setCheckable(True)
+        spawn_layout.addWidget(self.place_spawn_button)
+        spawn_layout.addWidget(hint_label(
+            "Click anywhere near the network for each spawn point; right-click finishes and shows their grid. Type "
+            "people walking an hour between them there. A walker walks straight to the footpath nearest its point, "
+            "the shortest way on, and straight from the footpath nearest its destination. Click a point on the map "
+            "to select it; Delete removes it."))
+        self.spawn_box.hide()
         self.pair_group = group = QGroupBox("OD Pair")
         layout = QVBoxLayout(group)
         self.fields = QWidget()
@@ -837,6 +1068,32 @@ class ODCellPanel(QWidget):
         self.shares.setHorizontalSpacing(8)
         self._build_shares()
         form.addRow(self.shares_widget)
+        # One type's drop-offs (its zone clicked in Modes): trips ending part way along the pair's route.
+        self.drop_type: int | None = None
+        self.drop_box = QWidget()
+        drops = QVBoxLayout(self.drop_box)
+        drops.setContentsMargins(0, 4, 0, 4)
+        self.drop_heading = QLabel()
+        self.drop_heading.setStyleSheet("font-weight: 600;")
+        drops.addWidget(self.drop_heading)
+        self.drop_slider = DropSlider()
+        self.drop_slider.setToolTip("Click track to add drop-off")
+        drops.addWidget(self.drop_slider)
+        self.drop_share_row = QWidget()
+        share_row = QHBoxLayout(self.drop_share_row)
+        share_row.setContentsMargins(0, 0, 0, 0)
+        share_row.addWidget(QLabel("Ends here"))
+        self.drop_share = QSpinBox()
+        self.drop_share.setRange(1, 100)
+        self.drop_share.setSuffix(" %")
+        self.drop_share.setToolTip("Trips ending at this point")
+        share_row.addWidget(self.drop_share)
+        share_row.addStretch(1)
+        drops.addWidget(self.drop_share_row)
+        self.drop_hint = hint_label()
+        drops.addWidget(self.drop_hint)
+        self.drop_box.hide()
+        form.addRow(self.drop_box)
         fields.addLayout(form)
         # Daily demand: how the day's trips spread over 24 hours.
         self.daily_box = QWidget()
@@ -920,6 +1177,8 @@ class ODCellPanel(QWidget):
         outer.addLayout(demand_form)
         outer.addWidget(self.empty_hint)
         outer.addWidget(self.metro_hint)
+        outer.addWidget(self.walk_hint)
+        outer.addWidget(self.spawn_box)
         outer.addWidget(group)
         outer.addWidget(self.institutions)
 
@@ -928,6 +1187,10 @@ class ODCellPanel(QWidget):
         self.phf.valueChanged.connect(lambda: self._edited("quarters"))
         self.modes.changed.connect(lambda: self._edited("modes"))
         self.modes.changed.connect(self._sync_shares)
+        self.modes.type_clicked.connect(self._pick_drop_type)
+        self.drop_slider.changed.connect(lambda: self._edited("drops"))
+        self.drop_slider.picked.connect(self._show_drop_point)
+        self.drop_share.valueChanged.connect(self._drop_share_typed)
         self.curve.changed.connect(lambda: self._edited("profile"))
         self.curve_kind.activated.connect(self._kind_chosen)
         self.reset_curve.clicked.connect(lambda: self._set_profile(DailyProfile()))
@@ -948,6 +1211,10 @@ class ODCellPanel(QWidget):
         kind = self.demand.currentData()
         self.institutions.setVisible(kind == "institutions")
         self.metro_hint.setVisible(kind == "metro")
+        self.walk_hint.setVisible(kind == "walk")
+        self.spawn_box.setVisible(kind == "spawn")
+        if kind != "spawn":
+            self.place_spawn_button.setChecked(False)
         if kind in ("hourly", "daily"):
             self.matrix.set_mode(kind)
         self._show_editor()
@@ -992,6 +1259,7 @@ class ODCellPanel(QWidget):
         for widget in (self.flow, self.pattern, self.phf, self.modes):
             widget.blockSignals(False)
         self._show_profile(cell.profile)
+        self._show_drops()
         self._refresh_copy()
         if self.flow.hasFocus():
             self.flow.selectAll()
@@ -1013,6 +1281,9 @@ class ODCellPanel(QWidget):
                 cell.pattern = self.pattern.currentText()
             elif field == "quarters":
                 cell.quarters = phf_quarters(self.phf.value())
+            elif field == "drops":  # the picked type's points; the other types' stay
+                cell.drops = tuple(sorted([*(point for point in cell.drops if point[0] != self.drop_type),
+                                           *((self.drop_type, at, share) for at, share in self.drop_slider.points)]))
             else:
                 cell.split = self.modes.split()  # the other types' proportions, as set
             self.matrix.cells[pair] = cell
@@ -1024,6 +1295,57 @@ class ODCellPanel(QWidget):
             self.changed.emit(("od", tuple(pairs), field))  # typing into one field: one undo step
         self._refresh_copy()
         self._show_peak()
+
+    def _pick_drop_type(self, index: int) -> None:
+        """A type's zone clicked in Modes: its drop-offs below the shares (clicked again: put away)."""
+        self.drop_type = None if index == self.drop_type else index
+        self.drop_slider.selected = None
+        self._show_drops()
+
+    def _show_drops(self) -> None:
+        """The picked type's drop-offs on the current pair's fastest route: one pair at a time, as routes differ."""
+        pair = self.matrix.current_pair()
+        modes = self.matrix.vehicle_modes.modes
+        self.drop_box.setVisible(pair is not None and self.drop_type is not None and self.drop_type < len(modes))
+        if not self.drop_box.isVisible():
+            return
+        mode = modes[self.drop_type]
+        self.drop_heading.setText(f"Drop-offs: {mode.name}")
+        route = self.router(*pair) if self.router and len(self.matrix.selected_pairs()) == 1 else None
+        self.drop_slider.setVisible(route is not None)
+        if route is None:
+            self.drop_share_row.hide()
+            self.drop_hint.setText("Select one pair to place its drop-offs: each pair's route differs."
+                                   if len(self.matrix.selected_pairs()) > 1 else
+                                   f"No route from {pair[0]} to {pair[1]} yet, so nowhere to drop off.")
+            return
+        self.drop_slider.set_route(route[0], route[1], pair, mode.colour)
+        self.drop_slider.set_points((at, share) for kind, at, share in self.matrix.cell(pair).drops
+                                    if kind == self.drop_type)
+        self._show_drop_point()
+
+    def _show_drop_point(self) -> None:
+        """The selected point's % in its box, at most what the other points leave; and what reaches the exit."""
+        slider, pair = self.drop_slider, self.matrix.current_pair()
+        index = slider.selected
+        self.drop_share_row.setVisible(index is not None)
+        if index is not None:
+            share = slider.points[index][1]
+            self.drop_share.blockSignals(True)
+            self.drop_share.setMaximum(share + slider.left_over())
+            self.drop_share.setValue(share)
+            self.drop_share.blockSignals(False)
+        self.drop_hint.setText(f"{slider.left_over()} % of these trips reach {pair[1] if pair else 'the exit'} "
+                               f"({slider.length:.0f} m). Click the track to add a point where trips end, drag it, "
+                               "double-click or right-click to remove it.")
+
+    def _drop_share_typed(self, value: int) -> None:
+        slider = self.drop_slider
+        if slider.selected is not None:
+            slider.points[slider.selected][1] = value
+            slider.update()
+            self._edited("drops")
+            self._show_drop_point()
 
     def _show_profile(self, profile: DailyProfile) -> None:
         """Load a curve into the editor, the equation dropdown and its coefficients."""
@@ -1108,6 +1430,8 @@ class ODCellPanel(QWidget):
 
     def _vehicle_modes_changed(self, *_) -> None:
         """The vehicle types changed in Mode Behavior: new % boxes, and the pair's new shares."""
+        self.drop_type = None  # its index may have moved
+        self.drop_box.hide()
         self._build_shares()
         pair = self.matrix.current_pair()
         self.modes.set_split(self.matrix.split_of(self.matrix.cell(pair)) if pair else self.matrix.vehicle_modes.default_split,
@@ -1236,7 +1560,7 @@ class ODCellPanel(QWidget):
         """set_od_demand and shape_daily_curve: tried first (and put back) when only checking, so one that
         would change nothing, or a pattern or split alone for pairs with no such demand, is refused."""
         pairs = self._pairs_from(args)
-        plan = self._demand_plan(args) if name == "set_od_demand" else _profile_from(args)
+        plan = self._demand_plan(args) if name == "set_od_demand" else profile_from(args)
         if name == "set_od_demand" and plan[1] is None:  # a pattern or split alone
             daily = plan[0] == "daily"
             if not any((self.matrix.cell(pair).daily if daily else self.matrix.cell(pair).flow) for pair in pairs):
@@ -1300,7 +1624,7 @@ class ODCellPanel(QWidget):
                 info["checked_in_a_run"] = report
                 if share is not None and share < 1:
                     type_values({pair: round(value * share) for pair, value in typed.items()}, False)
-                    _lead_with_what_was_kept(info, share, sum(round(value * share) for value in typed.values()))
+                    lead_with_what_was_kept(info, share, sum(round(value * share) for value in typed.values()))
         except Exception:
             self.matrix.cells = before
             self.matrix.refresh()
@@ -1311,14 +1635,7 @@ class ODCellPanel(QWidget):
             self.changed.emit(None)
 
     def _demand_now(self, demand: str, scope: list) -> tuple[dict, dict | None]:
-        """The matrix's demand of this kind ({pair: veh/h or trips/day}) and, for daily demand, the 24
-        hourly shares of those pairs and of `scope` (a new pair's: the default curve's)."""
-        daily = demand == "daily"
-        values = {pair: cell.daily if daily else cell.flow for pair, cell in self.matrix.cells.items()
-                  if pair[0] in self.matrix.origins and pair[1] in self.matrix.destinations
-                  and (cell.daily if daily else cell.flow)}
-        shares = {pair: self.matrix.cell(pair).profile.shares() for pair in {*values, *scope}} if daily else None
-        return values, shares
+        return demand_now(self.matrix.cells, self.matrix.origins, self.matrix.destinations, demand, scope)
 
     def _scale(self, args: dict, check_only: bool) -> dict:
         """scale_demand: the demand shown, scaled (the window's scaler), typed into the grid; one undo step."""
@@ -1417,32 +1734,7 @@ class ODCellPanel(QWidget):
         return info
 
     def _pairs_from(self, args: dict) -> list[tuple[str, str]]:
-        """The (origin, destination) pairs a tool names: `pairs` like "1W->1E", or every pair
-        from `origins` and/or to `destinations` (one of them left out means all ends); none named
-        means every pair."""
-        origins, destinations = self.matrix.origins, self.matrix.destinations
-        named = _parsed(args.get("pairs"))
-        if named:
-            pairs = []
-            for item in named if isinstance(named, list) else [named]:
-                # "1W->1E", and as small models write it: "1W-1E", "1W->>1E", "1W=>1E", "1W to 1E" (no end has a "-")
-                parts = item if isinstance(item, (list, tuple)) else \
-                    re.split(r"\s*(?:-+>*|=+>|→|>+|\bto\b|,)\s*", str(item).strip())
-                if len(parts) != 2:
-                    raise ValueError(f"Can't read the pair {item!r}; write it as \"origin->destination\", e.g. \"1W->1E\".")
-                pairs.append((str(parts[0]).strip(), str(parts[1]).strip()))
-        else:
-            chosen_o = [str(end) for end in _listed(args.get("origins")) or origins]
-            chosen_d = [str(end) for end in _listed(args.get("destinations")) or destinations]
-            pairs = [(o, d) for o in chosen_o for d in chosen_d if o != d]
-        unknown = sorted({o for o, _ in pairs if o not in origins} | {d for _, d in pairs if d not in destinations})
-        if unknown:
-            raise ValueError(f"No such origin or destination: {', '.join(unknown)}. Origins: {', '.join(origins)}; "
-                             f"destinations: {', '.join(destinations)}.")
-        pairs = [pair for pair in dict.fromkeys(pairs) if pair[0] != pair[1]]
-        if not pairs:
-            raise ValueError("A trip can't start and end at the same boundary end.")
-        return pairs
+        return pairs_from(args, self.matrix.origins, self.matrix.destinations)
 
     def _show_mode(self, demand: str) -> None:
         """Switch the matrix to hourly or daily demand, as the Demand drop-down does."""
@@ -1458,37 +1750,7 @@ class ODCellPanel(QWidget):
             table.setRangeSelected(QTableWidgetSelectionRange(row, column, row, column), True)
 
     def _demand_plan(self, args: dict) -> tuple:
-        """(demand, value, pattern, shares, quarters) from set_od_demand's arguments, checked; nothing changes."""
-        demand = args.get("demand") or self.matrix.mode
-        if demand not in UNITS:
-            raise ValueError("demand must be 'hourly' (veh/h) or 'daily' (trips per day).")
-        value, pattern, split = args.get("value"), args.get("arrival_pattern"), _parsed(args.get("mode_split"))
-        split = split if split not in ([], {}) else None  # empty: llama3.2's filler, no split given
-        phf, quarters = args.get("peak_hour_factor"), _parsed(args.get("quarters"))
-        if value is None and not pattern and split is None and phf is None and quarters is None:
-            raise ValueError("Give a value, an arrival_pattern, a mode_split and/or a peak_hour_factor or quarters.")
-        if phf is not None or quarters is not None:
-            if demand == "daily":
-                raise ValueError("A peak-hour factor or 15-minute quarters apply to hourly demand only (the daily "
-                                 "curve shapes daily demand).")
-            if phf is not None and quarters is not None:
-                raise ValueError("Give peak_hour_factor or quarters, not both.")
-            if phf is not None and not isinstance(phf, (int, float)):
-                raise ValueError("peak_hour_factor must be a number, 0.25 to 1.")
-            quarters = phf_quarters(phf) if phf is not None else quarter_shares(quarters)
-        if value is not None:
-            value = round(float(value))
-            top = 2_000_000 if demand == "daily" else 100_000
-            if not 0 <= value <= top:
-                raise ValueError(f"{demand} demand must be 0 to {top:,} {UNITS[demand]}.")
-        if pattern:
-            matches = [name for name in ARRIVAL_PATTERNS if name.lower() == str(pattern).lower().replace("_", " ")]
-            if not matches:
-                raise ValueError(f"arrival_pattern must be one of {', '.join(ARRIVAL_PATTERNS)}.")
-            pattern = matches[0]
-        if split is not None:
-            shares = self._shares_from(split)
-        return demand, value, pattern, None if split is None else shares, quarters
+        return demand_plan(args, self.matrix.mode, self.matrix.vehicle_modes.names())
 
     def _set_demand(self, pairs: list[tuple[str, str]], demand: str, value, pattern, shares, quarters=None) -> dict:
         self._show_mode(demand)
@@ -1516,7 +1778,7 @@ class ODCellPanel(QWidget):
                   "matrix_total": total,  # every pair's, so "each" isn't read as the total
                   "arrival_pattern": cell.pattern,
                   "mode_split": dict(zip(self.matrix.vehicle_modes.names(), self.matrix.split_of(cell))),
-                  **(_quarters_record(cell) if demand == "hourly" else {})}
+                  **(quarters_record(cell) if demand == "hourly" else {})}
         timed = [f"{mode.name} every {mode.headway_min} min" for mode in self.matrix.vehicle_modes.modes
                  if mode.headway_min]
         if timed:
@@ -1524,38 +1786,13 @@ class ODCellPanel(QWidget):
                               "and the other types shared the rest in the proportions given.")
         return result
 
-    def _shares_from(self, split) -> list[int]:
-        """Whole percent per vehicle type, in Mode Behavior's order, from a mode_split given as
-        {name: percent}, [{"mode": name, "percent": n}, ...] or one number per type. Types left out get 0.
-        Fractions adding up to 1 are read as percent (llama3.2 sent [0.4, 0.6])."""
-        names = self.matrix.vehicle_modes.names()
-        if isinstance(split, list) and split and all(isinstance(item, dict) for item in split):
-            split = {str(item.get("mode", "")): item.get("percent", 0) for item in split}
-        if isinstance(split, dict):
-            given = {str(name).strip().lower(): share for name, share in split.items()}
-            unknown = [name for name in given if name not in [known.lower() for known in names]]
-            if unknown:
-                raise ValueError(f"No vehicle type called {', '.join(unknown)}. The types are {', '.join(names)} "
-                                 "(set in the Mode Behavior tab).")
-            split = [given.get(name.lower(), 0) for name in names]
-        try:
-            given = [float(share) for share in split]
-        except (TypeError, ValueError):
-            raise ValueError(f"mode_split must give a percent for the vehicle types {', '.join(names)}.") from None
-        scale = 100 if given and abs(sum(given) - 1) < 0.01 else 1
-        shares = [round(share * scale) for share in given]
-        if len(shares) != len(names) or min(shares) < 0 or sum(shares) != 100:
-            raise ValueError(f"mode_split must give {len(names)} percentages, one each for {', '.join(names)} in that "
-                             f"order, adding up to 100 (got {[f'{share:g}' for share in given]}).")
-        return shares
-
     def _shape_curve(self, pairs: list[tuple[str, str]], profile: DailyProfile) -> dict:
         self._show_mode("daily")
         self._select(pairs)
         self._set_profile(profile)  # loads the editor, its equation dropdown and coefficients
         shares = profile.shares()
         peak = max(range(HOURS), key=shares.__getitem__)
-        result = {"pairs": [f"{o}->{d}" for o, d in pairs], "curve": _curve_record(profile),
+        result = {"pairs": [f"{o}->{d}" for o, d in pairs], "curve": curve_record(profile),
                   "busiest_hour": f"{peak:02d}:00-{peak + 1:02d}:00", "busiest_share": round(shares[peak], 3)}
         if not any(profile.hourly_levels()):
             result["note"] = "The curve is zero all day, so the trips are spread evenly."
@@ -1566,123 +1803,9 @@ class ODCellPanel(QWidget):
         return result
 
     def _read_for_assistant(self) -> dict:
-        """read_od_matrix, compact for small models: every pair's values in one map per kind, what most pairs
-        share (pattern, split, daily curve) once under "usual", and only the pairs that differ under "different"."""
-        matrix, names = self.matrix, self.matrix.vehicle_modes.names()
-        cells = {f"{o}->{d}": cell for (o, d), cell in matrix.cells.items()
-                 if o in matrix.origins and d in matrix.destinations and (cell.flow is not None or cell.daily is not None)}
-        options = {pair: {"arrival_pattern": cell.pattern, "mode_split": dict(zip(names, matrix.split_of(cell))),
-                          **({"daily_curve": _curve_record(cell.profile)} if cell.daily is not None else {}),
-                          **({"quarters": [0.25] * 4, **_quarters_record(cell)} if cell.flow is not None else {})}
-                   for pair, cell in cells.items()}
-        usual: dict = {}
-        for key in ("arrival_pattern", "mode_split", "daily_curve", "peak_hour_factor", "quarters"):
-            seen = [json.dumps(option[key]) for option in options.values() if key in option]
-            if seen:
-                usual[key] = json.loads(max(set(seen), key=seen.count))
-        different = {pair: {key: value for key, value in option.items() if usual.get(key) != value}
-                     for pair, option in options.items()}
-        total = sum(1 for o in matrix.origins for d in matrix.destinations if o != d)
-        return {"showing": matrix.mode, "vehicle_types": names, "origins": matrix.origins,
-                "destinations": matrix.destinations, "pairs_total": total, "pairs_with_data_count": len(cells),
-                # the whole matrix, so a "how much demand" question isn't a small model's sum of dozens of pairs
-                "total_hourly_vph": round(sum(cell.flow or 0 for cell in cells.values())),
-                "total_daily_trips": round(sum(cell.daily or 0 for cell in cells.values())),
-                "hourly_vph": {pair: cell.flow for pair, cell in cells.items() if cell.flow is not None},
-                "daily_trips": {pair: cell.daily for pair, cell in cells.items() if cell.daily is not None},
-                "usual": usual, "different": {pair: values for pair, values in different.items() if values}}
-
-
-def _quarters_record(cell: ODCell) -> dict:
-    """An hourly pair's peak-hour factor, and its 15-minute shares of the hour when they aren't even."""
-    return {"peak_hour_factor": round(phf_of(cell.quarters), 3),
-            **({"quarters": [round(share, 4) for share in cell.quarters]} if cell.quarters else {})}
-
-
-def _lead_with_what_was_kept(info: dict, share: float, kept: float) -> None:
-    """A demand the check cut: the result starts with what the matrix now holds (qwen3.5 reported the 6,420 veh/h
-    made as the demand when 47 were kept), the made total renamed; under half kept, the busiest junctions that
-    only give way are named with what could let more hold (the model decides: signalise them, or main roads)."""
-    made = info.pop("total_made", None)
-    if made is None:  # scale_demand's: its total after scaling, and the factor that the check then cut too
-        made = info.pop("total_after", None)
-        if isinstance(info.get("factor"), (int, float)):
-            info["factor"] = round(info["factor"] * share, 3)
-    rest = dict(info)
-    info.clear()
-    info.update({"total_now": kept, "kept_after_check": f"{share:.0%} of {made} (the rest jammed in a run)",
-                 **rest, "total_before_check": made})
-    if share < 0.5:
-        giving_way = [node for node, control in (info.get("junction_controls") or {}).items() if control == "uncontrolled"]
-        if giving_way:
-            info["to_hold_more"] = (f"The busiest junctions only give way: {', '.join(giving_way)}. Signalising them "
-                                    "(set_junction_control, control 'signalised'), or main roads only "
-                                    "(network_from_background, road_classes 'main'), may let more demand hold; then "
-                                    "generate_demand again. Tell the user what was kept either way.")
-
-
-def _parsed(value):
-    """A tool argument as sent, or decoded when a small model sent a list or object as JSON text."""
-    if isinstance(value, str) and value.strip()[:1] in ("[", "{"):
-        try:
-            return json.loads(value)
-        except ValueError:
-            pass
-    return value
-
-
-def _listed(value) -> list:
-    """End names as a list: ["1W", "2W"], JSON text of one, or a single name."""
-    value = _parsed(value)
-    return [] if value in (None, "") else value if isinstance(value, list) else [value]
-
-
-def _profile_from(args: dict) -> DailyProfile:
-    """The curve a shape_daily_curve call describes: points, a polynomial or a preset."""
-    points, polynomial, preset = _parsed(args.get("points")), _parsed(args.get("polynomial")), args.get("preset")
-    if sum(item is not None and item != [] for item in (points, polynomial, preset)) != 1:
-        raise ValueError("Give exactly one of points, polynomial or preset.")
-    if preset:
-        if preset not in ("weekday", "flat"):
-            raise ValueError("preset must be 'weekday' or 'flat'.")
-        return DailyProfile() if preset == "weekday" else DailyProfile("points", [(0.0, 1.0), (24.0, 1.0)])
-    if polynomial is not None:
-        try:
-            coefficients = [float(a) for a in polynomial]
-        except (TypeError, ValueError):
-            raise ValueError("polynomial must be a list of numbers [a0, a1, ..., an].") from None
-        if not 2 <= len(coefficients) <= max(DEGREES) + 1:
-            raise ValueError(f"polynomial needs {min(DEGREES) + 1} to {max(DEGREES) + 1} coefficients (degree "
-                             f"{min(DEGREES)} to {max(DEGREES)}).")
-        return DailyProfile("poly", [], coefficients + [0.0] * (min(DEGREES) + 1 - len(coefficients)))
-    try:
-        pairs = sorted((float(p["hour"]), float(p["level"])) if isinstance(p, dict) else (float(p[0]), float(p[1]))
-                       for p in points)
-    except (TypeError, ValueError, KeyError, IndexError):
-        raise ValueError("points must be [[hour, level], ...] with hours 0-24 and levels 0-1.") from None
-    if len(pairs) < 2 or not all(0 <= hour <= HOURS for hour, _ in pairs) or min(level for _, level in pairs) < 0:
-        raise ValueError("points need at least two [hour, level] pairs, hours 0-24, levels not below zero.")
-    top = max(level for _, level in pairs)
-    if top <= 0:
-        raise ValueError("At least one point needs a level above zero.")
-    pairs = [(hour, level / top) for hour, level in pairs] if top > 1 else pairs  # relative levels are fine
-    if pairs[0][0] > 0:
-        pairs.insert(0, (0.0, pairs[0][1]))  # the curve runs from midnight...
-    if pairs[-1][0] < HOURS:
-        pairs.append((float(HOURS), pairs[-1][1]))  # ...to midnight
-    kept = [pairs[0]]
-    for hour, level in pairs[1:]:
-        if hour - kept[-1][0] >= MIN_GAP_H:
-            kept.append((hour, level))
-        elif hour == HOURS:
-            kept[-1] = (hour, level)  # keep the midnight end
-    return DailyProfile("points", kept)
-
-
-def _curve_record(profile: DailyProfile) -> dict:
-    if profile.kind == "poly":
-        return {"kind": "polynomial", "coefficients": [round(a, 4) for a in profile.coefficients]}
-    return {"kind": "points", "points": [[round(hour, 2), round(level, 3)] for hour, level in profile.points]}
+        matrix = self.matrix
+        return read_od(matrix.cells, matrix.origins, matrix.destinations, matrix.mode, matrix.vehicle_modes.names(),
+                       matrix.vehicle_modes.vehicles_per_hour())
 
 
 def _clock(hours: float) -> str:

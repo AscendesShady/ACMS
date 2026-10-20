@@ -36,9 +36,29 @@
   - **Edit Network:** its own tabs, Roads and Metro (`edit_tabs`), above the next-step banner and the selection
     editor. **Metro** (Metro Rail): Start deployment (`metro_button`, a train icon, checkable) and a summary of the
     lines, stops and km of track (`_show_metro_summary`, after every redraw). Deploying (`toggle_metro`,
-    `metro_clicked`): every left click on the map is a stop; the first waits (`scene.metro_pending`, drawn) until the
-    second makes the line (`add_metro_line`), and each after it joins the line's last stop (`add_metro_stop`); one too
-    near is refused with its reason in the banner. A right-click (`view.right_clicked`), Esc, another tool or tab
+    `metro_clicked`): every left click on the map is a stop (dragged from it, the pen tool's way: aimed, the track
+    running through it that way, Shift in 15 degree steps; `metro_clicked(x, y, dx, dy)`, the aimed leg and a
+    mirrored handle drawn as it is dragged, `_metro_ghost`); the first waits (`scene.metro_pending`, drawn) until the
+    Paths of their own (from OpenStreetMap or the assistant) are drawn; one clicked is selected ("walkway": the status bar
+    names it); Delete removes it (`delete_selection`, `delete_objects` too). Footpaths are a road's (the road
+    panel's Footpath list, previewed on the map: `properties.footpath_preview`).
+    **Pedestrian** tab (Edit Network's third): Crossings, **Add Zebra** (`zebra_button`) and **Add Overbridge**
+    (`overbridge_button`), checkable, one at a time with the other tools (`_crossing_tool`); each road clicked gets one
+    where clicked (`_place_crossing`: `Network.add_crossing`, refused with its reason in the banner; one undo step,
+    selected, the tool still on). A crossing clicked is selected ("crossing": the status bar names it); Delete removes
+    it.
+    **Pedestrian spawn points** (Demand Generator's Demand list, `_placing_spawn_points`, `spawn_clicked`): choosing
+    it with none yet, or Place Spawn Points, shows the map and makes every left click a spawn point (one undo step,
+    drawn at once, the hint saying how far its nearest footpath is, `walking.footpath_join`); a right-click, Esc,
+    another demand or tab finishes and shows their grid (`spawn_matrix`). A spawn point clicked is selected (it stays
+    the Demand Generator's); Delete removes it and the walking to and from it.
+    second makes the line (`add_metro_line`), and each after it joins the line's last stop (`add_metro_stop`: curving
+    from it, a bend too sharp drawn in); one too near, or a leg crossing its own track, is refused with its reason in
+    the banner. Before a click the leg it would add follows the mouse (`_show_pointer` → `_metro_ghost`,
+    `Network.metro_leg`, drawn dashed by `scene.show_metro_ghost`: the line's colour, amber where it would cross
+    another line, red where refused). A leg crossing another line asks (`_merge_or_discard`): **Merge** ends it at an
+    interchange station where they cross, on both lines; **Discard Line** removes the line being drawn; Cancel
+    places nothing. A right-click (`view.right_clicked`), Esc, another tool or tab
     finishes it and asks (`_accept_metro_line`, with the line's service: a train every, speed, carriages a train, passengers a carriage,
     fare, prefilled with `METRO_SERVICE`'s assumed values and labelled so): **Accept** keeps the line as final, one undo step, never edited after
     (a new deployment is always a new line); **Delete** removes it and its stops, leaving no undo step. A lone first stop
@@ -72,8 +92,10 @@
     (into the live run; ValueError with no run, an unknown end or junction, or no route) and `places` (boundary
     ends, then junctions).
   - Tabs are icons (`TAB_ICONS`: glyphs of Windows' Segoe Fluent Icons, or Segoe MDL2 Assets on
-    Windows 10), all the same slim width (`iconTabs` in theme.py); hovering a tab shows its name, and
-    the open tab's name heads the sidebar beside "ACMS" (`page_title`, `_name_open_tab`). Without either
+    Windows 10), equal tiles filling the row edge to edge with no base line under them, each icon centred
+    (`iconTabs` in theme.py; `_centre_tab_icons` pads the tiles to the row's width whenever it resizes, read off
+    the row's own hint so the sidebar never widens from it); hovering a tab shows its name, and the open tab's
+    name heads the sidebar beside "ACMS" on the brand's baseline (`page_title`, `_name_open_tab`). Without either
     font the tabs show their names.
   - The sidebar is as wide as its tab row or its widest page needs (each page's minimum width), plus
     its margins and scrollbar, and no wider (about 417 px with Segoe UI: the Extensions page's rows are as wide as their settings,

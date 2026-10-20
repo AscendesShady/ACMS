@@ -29,6 +29,28 @@ Dataclasses:
   the road's pockets and tapers fit between its stop lines. Pockets are kept by end node: `reverse_road` keeps
   them; `split_road` gives each to the part that reaches its end; `_retie` renames the key. Relative to the
   driving side, so `set_driving_side` leaves them as they are and each keeps serving the same turns.
+  `cycle_lanes`: the arrival ends (node ids) whose traffic has a cycle lane, bikes only, the road's whole length, a
+  bare list of ids (old files: none). `validate` refuses one at an end its traffic doesn't arrive at (made one-way)
+  or twice. `cycle_lane_line(road, end)`: its centre line, `CYCLE_LANE_M` 1.5 m wide (an assumption: a common
+  desirable minimum) just beyond the kerb lane on the driving side, moving out with the kerb along a pocket's taper
+  at that end; the lane graph and the map both use it. `width_m` leaves it out. `split_road` runs each cycle lane on
+  along both parts (to its end on one, to the cut on the other); `_retie` renames the end.
+  `footpaths`: "left" and/or "right" (as seen from from_node to to_node), a bare list; `validate` refuses any other
+  side or one twice; `reverse_road` swaps them and `split_road` gives both parts the same. `kerb_side(road, end)` is
+  the side the kerb of the traffic arriving at `end` is on; `beside_line(road, side, metres)` a line that far beyond
+  the carriageway's edge on a side, out along a pocket's taper there, which `cycle_lane_line` and `footpath_line`
+  (`FOOTPATH_M` 2.0 m, beyond any cycle lane on that side) both use. `Network.walkways` ({P1: `Walkway(id, start,
+  end, bends)`}: a path between two road nodes, `add_walkway`, `walkway_points`) and `Network.walk_demand` ({"1W->1E":
+  people an hour}, two different boundary ends, 0 to `MAX_WALK_DEMAND` 100,000) are checked by `validate`, saved
+  (network_io: `walkways`, `walk_demand`; older files have none) and pruned with the nodes and ends they name
+  (`_prune_walking`, after `delete_road` and `delete_node`): walking.md. `Network.pedestrian_crossings` ({X1:
+  `Crossing(id, road, distance_m, kind)`}: `add_crossing`, `crossing_problem`) follow their road as bus stops do (a
+  rename, `reverse_road` measuring from the other end, `split_road` to the part they are on) and go with it; validate
+  refuses an edit that leaves one impossible (a footpath taken away, the road shortened past it). (`Network.crossings`
+  is another thing: where a line crosses roads.) `Network.spawn_points` ({S1: `SpawnPoint(id, x, y)`},
+  `add_spawn_point`, `delete_spawn_point` taking the walking to and from it) and `Network.spawn_demand` ({"S1->S2":
+  people an hour}, two different spawn points, 0 to `MAX_WALK_DEMAND`) are checked by `validate` and saved
+  (network_io: `spawn_points`, `spawn_demand`; older files have none).
 - `BusStop(id, road, distance_m, direction, dwell_s)`: a bay beside the kerb. `distance_m` is the
   bay's middle, metres along the road's centre line from its `from_node`; `direction` is `"forward"`
   (from → to), `"backward"` or `"both"`; `dwell_s` is how long each bus stands at it (20 s by
@@ -43,15 +65,26 @@ Dataclasses:
   1 km²; a circle from its own walls to `MAX_INFLUENCE_M` 3 km; whole people and employees; a shift that
   starts and ends at different times; car share 0–100 %; `mode_shares` people % by mode name, each 0–100 and
   adding up to 100, or empty). `radius_m` is its catchment (institutions.md).
-- `MetroStop(id, x, y)` and `MetroLine(id, stops)` in `Network.metro_stops` / `metro_lines` (Edit Network → Metro):
-  a stop is a point in metres, apart from the roads; a line is its stops in order, the track running straight from
-  each to the next (`metro_length_m`). `add_metro_line(first, second)` makes ML1, ML2... from its first two stops
-  (stations M1, M2...: the metro's own network and OD matrix are labelled by them), and `add_metro_stop(line, x, y)`
-  extends it; both are checked first (finite numbers, at least
-  `METRO_MIN_SPACING_M` 150 m from the line's last stop, so platforms don't overlap: the app's floor) and a refusal
-  changes nothing. `validate`: every line has its own ID and two stops or more, all on the map, and each stop is on
-  exactly one line. `Network.metro_demand` is the metro's own OD matrix, {"M1->M2": passengers an hour}, each pair two
-  different stations, 0 to `MAX_METRO_DEMAND` 100,000 (`validate`). `delete_metro_line` removes a line, its stops and
+- `MetroStop(id, x, y)` and `MetroLine(id, stops, track)` in `Network.metro_stops` / `metro_lines` (Edit Network →
+  Metro): a stop is a point in metres, apart from the roads; a line is its stops in order and its `track`, a polyline
+  through them (`metro_track`; an older file's empty track: straight stop to stop; `metro_length_m` its length).
+  `add_metro_line(first, second, merge)` makes ML1, ML2... from its first two stops (stations M1, M2...: the metro's
+  own network and OD matrix are labelled by them), and `add_metro_stop(line, x, y, merge)` extends it with the leg
+  `metro_leg` works out (`heading`: aimed through the stop): `geometry.rail_leg` keeps the last stop's platform on
+  straight track (`METRO_PLATFORM_M` 120 m: a 5-carriage train and room, an assumption), eases into a curve of
+  `METRO_MIN_RADIUS_M` 300 m (a desirable urban metro minimum: an assumption) through transitions of
+  `METRO_TRANSITION_M` 60 m (L = v³ / (R C) at 80 km/h with C 0.6 m/s³: an assumption) and runs straight into the next
+  platform; a point needing a turn of `METRO_MAX_TURN_DEG` 89 or more (no right-angle or acute bends), or inside the
+  bend's reach, is drawn in like a rubber band to the most the leg may turn, as far out, and the stop goes where the leg
+  ends; an aim the leg can't meet is refused. Refused,
+  changing nothing: numbers off the map, a stop under `METRO_MIN_SPACING_M` 150 m (straight-line) from the line's last
+  (platforms would overlap: the app's floor), or a leg crossing its own track. A leg crossing another line raises
+  `MetroCrossing` (its `line_id`); with `merge` the leg ends at the first crossing in one stop on both lines (an
+  interchange), put into the other line's order by where it lies along its track, refused under 150 m from the other
+  line's stations. `validate`: every line has its own ID, two stops or more, all on the map, none twice, a track of
+  two [x, y] points or more (or none), and every stop is on a line (on two or more: an interchange). `Network.metro_demand` is the metro's own OD matrix, {"M1->M2": passengers an hour}, each pair two
+  different stations, 0 to `MAX_METRO_DEMAND` 100,000 (`validate`). `delete_metro_line` removes a line, its stops (an interchange off
+  the other line too, unless that would leave it under two) and
   the metro demand to or from them. A line's service (`headway_min`, `speed_kmh`,
   `cars_per_train`, `car_capacity`, `fare_cents`; `train_capacity` their product; `METRO_SERVICE`'s assumed defaults
   and ranges, `metro_line_problem`): metro.md.
@@ -135,5 +168,5 @@ Dataclasses:
   stops on known roads with a valid direction and a dwell time of 0 to 600 s, and institutions (`institution_problem`).
 - `synchronize_road_lengths()`: `length_m` is always the geometric length.
 - `Network.route_choice`: {} (every vehicle the fastest route) or {"theta_per_min", "routes", "link_times_s"}
-  (simulation.Graph.route_shares; AI Mode's assign_routes), checked by `route_choice_problem` in `validate()`
+  (lane_graph.Graph.route_shares; AI Mode's assign_routes), checked by `route_choice_problem` in `validate()`
   (θ 0.01–10, 1–6 routes, positive seconds by link id), saved with the network and part of undo.

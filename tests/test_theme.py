@@ -2,13 +2,18 @@
 monitor)."""
 
 import os
+import subprocess
+import sys
 import time
+from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+os.environ.setdefault("QT_QPA_FONTDIR", os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts"))  # real fonts
 
 from PySide6.QtCore import Qt  # noqa: E402
 from PySide6.QtTest import QTest  # noqa: E402
-from PySide6.QtWidgets import (QApplication, QCheckBox, QPushButton, QRadioButton, QStyle,
+from PySide6.QtCore import QPoint  # noqa: E402
+from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QPushButton, QRadioButton, QStyle,
                                QStyleOptionButton)  # noqa: E402
 
 from traffic_simulator.theme import FLASH_MS, PRESSED, READABLE_PAIRS, apply_theme  # noqa: E402
@@ -97,6 +102,48 @@ def test_keyboard_focus_keeps_button_content_and_size_stable():
     assert button.hasFocus()
     assert bounds() == resting  # a thicker focus border used to move the text and change the size hint
     button.close()
+
+
+def test_shared_widgets_need_no_properties_panel():
+    """The shared widgets (widgets.py) load without the selection editor or the model, and only main uses the editor."""
+    loaded = subprocess.run([sys.executable, "-c", "import sys, traffic_simulator.widgets; print(sorted(sys.modules))"],
+                            capture_output=True, text=True, timeout=60, check=True).stdout
+    assert "traffic_simulator.properties_panel" not in loaded and "traffic_simulator.models" not in loaded
+    root = Path(__file__).resolve().parents[1]
+    users = [path.relative_to(root).as_posix() for folder in ("src", "extensions", "tools")
+             for path in (root / folder).rglob("*.py") if "properties_panel import" in path.read_text(encoding="utf-8")]
+    assert users == ["src/traffic_simulator/main.py"], users
+
+
+def test_the_window_lines_up():
+    """The window's frame, measured: the menu bar's text centred on the run bar, which sits as far below the window's
+    top as above the panels; "ACMS" and the open tab's name on one baseline; the icon tabs filling the row edge to
+    edge with no base line through them; AI Mode's pages on the sidebar's column, as the others."""
+    from traffic_simulator.main import MainWindow
+    window = MainWindow()
+    window.resize(1280, 800)
+    window.show()
+    for _ in range(12):
+        APP.processEvents()
+    try:
+        top = lambda widget: widget.mapTo(window, QPoint(0, 0)).y()
+        menu, glass = window.menuBar(), window.menuBar().cornerWidget()
+        below = top(window.centralWidget()) - (top(glass) + glass.height())  # the panels start there
+        assert abs(top(glass) - below) <= 1, (top(glass), below)  # evenly padded above and below
+        item = menu.actionGeometry(menu.actions()[0])
+        # File's box on the bar's middle (Segoe UI's text sits ~1.5 px below its box's centre: on the bar's own)
+        assert abs(item.center().y() - (top(glass) - top(menu) + glass.height() / 2)) <= 2
+        brand = next(label for label in window.findChildren(QLabel) if label.property("role") == "brand")
+        baseline = lambda label: top(label) + label.contentsRect().top() + label.fontMetrics().ascent()
+        assert abs(baseline(brand) - baseline(window.page_title)) <= 1, (baseline(brand), baseline(window.page_title))
+        bar = window.tabs.tabBar()
+        assert not bar.drawBase()  # the line that ran into the tiles
+        assert bar.tabRect(0).left() == 0 and bar.tabRect(bar.count() - 1).right() >= bar.width() - 2
+        assert bar.width() - 2 * bar.count() < bar.sizeHint().width() <= bar.width()  # padded to fill, never wider
+        for index in range(window.ai_mode.systems.count()):
+            assert window.ai_mode.systems.widget(index).layout().contentsMargins().left() == 0
+    finally:
+        window.close()
 
 
 if __name__ == "__main__":

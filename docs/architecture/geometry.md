@@ -11,3 +11,12 @@
 - `distance_to_segment(p, a, b)`.
 - `nearest_along(points, p)`: how far along the polyline its nearest point to p is (a dragged bus
   stop, a bay's middle on its lane).
+- `rail_leg(track, x, y, radius, max_turn, platform_m, transition_m, heading)`: a metro leg from a track's last
+  point (a station) laid out as a railway is: straight on for half a platform, a bend (`_bend`: a clothoid transition,
+  curvature rising evenly to 1 / radius, the circular arc, a transition back; transitions shortened on a small turn so
+  the curvature never passes 1 / radius; integrated in 1 m pieces, points every 5 m), then straight into the next
+  station for half a platform at least. A plain click: the turn found by bisection so the last straight points at
+  (x, y) (straight ahead: no bend); one needing more than `max_turn`, or inside the bend's reach, drawn in to
+  `max_turn` and as far out as the point. Aimed (`heading`, a unit direction through the station: the pen tool's
+  drag): the turn is the angle between the two headings, the two straights solved (2 x 2); ValueError for an aim past
+  `max_turn` or one the straights can't meet (an S-bend: a station between). One point of track: straight.

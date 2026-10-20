@@ -121,6 +121,64 @@ def test_the_maps_roads_come_from_openstreetmap_data():
     network.validate()  # overridden by hand (or the assistant): an ordinary signalised junction, Webster to start
 
 
+def test_the_maps_footways_sidewalks_crossings_and_cycle_lanes_come_in_too():
+    # A main road east-west with sidewalks both sides and a cycle lane; a one-way street mapped against its node order
+    # (oneway=-1) with a sidewalk on its way's left; a zebra mid-block and one at the junction; a footbridge over the
+    # main road; a sidewalk mapped as its own way beside the street; a path from the junction to the east edge.
+    network, (cx, cy), at = on_the_map()
+    nodes, ways, number = [], [], [0]
+
+    def node(dx, dy, **tags):
+        number[0] += 1
+        lat, lon = at(dx, dy)
+        nodes.append({"type": "node", "id": number[0], "lat": lat, "lon": lon, **({"tags": tags} if tags else {})})
+        return number[0]
+
+    def way(refs, **tags):
+        ways.append({"type": "way", "id": 1000 + len(ways), "nodes": refs, "tags": tags})
+
+    middle = node(0, 0)
+    zebra, near_junction = node(-150, 0, highway="crossing", crossing="zebra"), node(-8, 0, highway="crossing",
+                                                                                         crossing="marked")
+    unmarked = node(150, 0, highway="crossing", crossing="unmarked")
+    way([node(-500, 0), node(-280, 0), zebra, near_junction, middle, unmarked, node(280, 0), node(500, 0)],
+        highway="primary", sidewalk="both", cycleway="lane")  # (as mapped ways run, with nodes near the edges too)
+    way([node(0, 500), node(0, 280), middle], highway="residential", oneway="-1", sidewalk="left")  # north to south
+    way([node(220, -20), node(220, 20)], highway="footway", bridge="yes")  # over the main road
+    way([node(9, 100), node(9, 250)], highway="footway", footway="sidewalk")  # east of the street, mapped apart
+    way([node(4, 6), node(150, 60), node(284, 6)], highway="footway")  # a path between two of the road's nodes
+    way([node(-260, 200), node(-280, 220)], highway="footway")  # reaches no road node: not joined
+    document = {"elements": nodes + ways}
+
+    real, background_network.post = background_network.post, lambda url, data: json.dumps(document).encode()
+    try:
+        result = tools.run_tool(network, "network_from_background", {"width_m": 600, "height_m": 600})
+    finally:
+        background_network.post = real
+    network.validate()
+    walking = result["pedestrians"]
+    main = [road for road in network.all_roads() if road.road_type == "primary"]
+    assert all(road.footpaths == ["left", "right"] and set(road.cycle_lanes) == set(road.arrival_ends()) for road in main)
+    street = next(road for road in network.all_roads() if road.road_type == "residential")
+    north, south = sorted((street.from_node, street.to_node), key=lambda n: network.node(n).y)
+    assert street.direction == "one-way" and street.from_node == north  # traffic north to south, as tagged
+    # its way ran south to north with a sidewalk on its left (the west); the road runs north to south, so the west is
+    # its right; the sidewalk way mapped east of it gives it its left
+    assert street.footpaths == ["left", "right"] and walking["sidewalks"] == 1 and not street.cycle_lanes
+    assert sorted(c.kind for c in network.pedestrian_crossings.values()) == ["overbridge", "zebra"]
+    assert walking["zebras"] == 1
+    assert walking["overbridges"] == 1 and walking["crossings_at_junctions"] == 1  # the one 8 m from it: in gaps
+    assert result["pedestrians"]["crossings_not_taken"] == {"unmarked": 1}
+    assert walking["paths"] == 1 and walking["paths_not_joined"] == 1
+    path, = network.walkways.values()
+    assert sorted((round(network.node(n).x - cx), round(network.node(n).y - cy)) for n in (path.start, path.end)) == [
+        (0, 0), (280, 0)] and path.bends  # the junction and the main road's last node before the edge, its bend kept
+    for kind, expected in (("all", 2), ("none", 0)):
+        again = deepcopy(network)
+        background_network.add_walking(again, background_network.Graph({}, []), kind)
+        assert all(len(road.footpaths) == expected for road in again.all_roads())
+
+
 def test_a_road_cut_just_past_a_junction_still_has_room_to_enter():
     # Dhanmondi: roads clipped a few metres past a junction left 5-15 m entry stubs holding one car each, so traffic
     # waited off the network and the demand check called any real demand a jam

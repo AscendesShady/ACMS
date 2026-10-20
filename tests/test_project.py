@@ -4,6 +4,7 @@ changed; older network-only files opening; unsaved changes shown in the title an
 closing. Run with `python tests/test_project.py` (or the test monitor)."""
 
 import json
+from dataclasses import replace
 import os
 import tempfile
 from pathlib import Path
@@ -46,6 +47,8 @@ def test_a_project_keeps_the_network_demand_types_and_run_settings():
                                             "arrival_pattern": "binomial", "peak_hour_factor": 0.85})
         first._od_command("set_od_demand", {"pairs": [f"{origins[1]}->{origins[2]}"], "demand": "daily", "value": 4800})
         first._od_command("shape_daily_curve", {"pairs": [f"{origins[1]}->{origins[2]}"], "polynomial": [0, 4, -4]})
+        pair = (origins[0], origins[1])
+        first.od_matrix.cells[pair] = replace(first.od_matrix.cells[pair], drops=((1, 0.5, 20),))  # a fifth of cars stop
         first.vehicle_modes.add()  # a fourth vehicle type...
         first.vehicle_modes.set_headway(0, 10)  # ...and a bus every 10 min
         first.vehicle_modes.set_pcu(0, 2.5)  # its passenger car units
@@ -68,15 +71,15 @@ def test_a_project_keeps_the_network_demand_types_and_run_settings():
         assert first.unsaved()
         assert first.save_file()  # Ctrl+S: to its file, no question
         assert json.loads(Path(path).read_text(encoding="utf-8"))["run"]["seed"] == 99
-        cells = {pair: (cell.flow, cell.daily, cell.pattern, cell.split, cell.profile, cell.quarters)
+        cells = {pair: (cell.flow, cell.daily, cell.pattern, cell.split, cell.profile, cell.quarters, cell.drops)
                  for pair, cell in first.od_matrix.cells.items()}
-        assert sum(bool(quarters) for *_, quarters in cells.values()) == 1  # the hourly pair's PHF
+        assert sum(bool(quarters) for *_, quarters, _ in cells.values()) == 1  # the hourly pair's PHF
         types = first.vehicle_modes.state()
         first.close()
 
         second = window()
         assert second.load_file(path)
-        assert {pair: (cell.flow, cell.daily, cell.pattern, cell.split, cell.profile, cell.quarters)
+        assert {pair: (cell.flow, cell.daily, cell.pattern, cell.split, cell.profile, cell.quarters, cell.drops)
                 for pair, cell in second.od_matrix.cells.items()} == cells
         assert second.vehicle_modes.state() == types and second.vehicle_modes.modes[0].headway_min == 10
         assert second.vehicle_modes.modes[0].pcu == 2.5 and second.vehicle_modes.modes[2].filters is False
@@ -107,7 +110,10 @@ def test_a_bad_project_changes_nothing_and_an_old_network_file_opens():
                                "arrival pattern"),
                               ({"demand": {"shown": "hourly", "pairs": [{"origin": "1W", "destination": "1E",
                                                                          "split": [100], "quarters": [1, -1, 1, 1]}]}},
-                               "quarters")):
+                               "quarters"),
+                              ({"demand": {"shown": "hourly", "pairs": [{"origin": "1W", "destination": "1E",
+                                                                         "split": [100], "drops": [[0, 0.5, 60], [0, 0.7, 50]]}]}},
+                               "more than 100 %")):
             assert message in project_problem(part), (part, project_problem(part))
         bad = Path(folder) / "bad.json"
         document = json.loads(old.read_text(encoding="utf-8"))

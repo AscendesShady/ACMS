@@ -298,9 +298,206 @@ def child_gpu():
     context.doneCurrent()
 
 
+def test_people_have_metre_scaled_models_and_keep_the_same_interpolated_world_poses():
+    from traffic_simulator import asset_mesh
+    from traffic_simulator.network_scene import VehicleLayer
+    vertices = [p for f in asset_mesh.pedestrian_mesh() for p in f.vertices]
+    assert max(p[2] for p in vertices) == 1.75 and min(p[2] for p in vertices) == 0.
+    assert max(p[1] for p in vertices) - min(p[1] for p in vertices) == .6
+    scene = NetworkGraphicsScene()
+    scene.isometric = True
+    scene.setSceneRect(-100, -100, 300, 300)
+    scene.frame = Frame(10., (), {}, 0, 0, walkers=((20., 0., 1., 0., (0., 0., 1., 0.)),))
+    layer = VehicleLayer(scene)
+    class Painter:
+        def __init__(self, iso): self.polygons, self.points, self.iso = [], [], iso
+        def worldTransform(self): return projection_transform(self.iso)
+        def setPen(self, value): pass
+        def setBrush(self, value): pass
+        def drawPolygon(self, points): self.polygons.append(list(points))
+        def drawPoints(self, points): self.points.extend(points)
+    scene.frame_alpha = 0.
+    a = Painter(True)
+    layer.paint(a, None)
+    scene.frame_alpha = .25
+    b = Painter(True)
+    layer.paint(b, None)
+    assert a.polygons and not a.points and len(a.polygons) == len(b.polygons)
+    for pa, pb in zip(a.polygons, b.polygons):
+        for p, q in zip(pa, pb):
+            assert distance(q - p, QPointF(5., 0.)) < 1e-9
+    flat = Painter(False)
+    layer.paint(flat, None)
+    assert not flat.polygons and flat.points == [QPointF(5., 0.)]
+    assert scene.frame.walkers[0][0] == 20. and scene.frame_alpha == .25
+
+
+def test_pedestrian_overbridge_has_height_pick_bounds_and_does_not_edit_walks_on_toggle():
+    from traffic_simulator import asset_mesh
+    from traffic_simulator.geometry import point_along
+    scene = NetworkGraphicsScene(generate_network(2, 2))
+    road = next(iter(scene.network.roads.values()))
+    road.footpaths = ['left', 'right']
+    along = scene.network.road_geometry_length(road) / 2
+    crossing = scene.network.add_crossing(road.id, along, 'overbridge')
+    before = deepcopy(scene.network.as_records())
+    scene.rebuild()
+    bridge = scene._overbridges[0]
+    x, y, ux, uy = point_along(scene.network.road_points(road), along)
+    assert bridge.height_at(x, y) == asset_mesh.FOOTBRIDGE_DECK_M == 6.
+    assert bridge.height_at(x + ux * 10, y + uy * 10) == 0.
+    frame = Frame(12., (), {}, 0, 0, walkers=((x, y, -uy, ux, (x, y, -uy, ux)),))
+    scene.show_frame(.4, frame)
+    view = NetworkView(scene)
+    view.resize(900, 700)
+    try:
+        for on in (True, False, True):
+            view.set_isometric(on)
+            assert scene.frame is frame and scene.frame_alpha == .4 and scene.network.as_records() == before
+            point = QPointF(x, y) + (projection_lift() * 6 if on else QPointF())
+            assert bridge.shape().contains(point)
+            assert bridge.boundingRect().contains(point) and scene.network_rect.contains(point)
+            assert any(item.data(0) == ('crossing', crossing.id) for item in scene.items(point))
+        scene.set_buildings_visible(False)
+        assert bridge.isVisible()
+    finally:
+        view.close()
+
+
+def paving_image(iso, scale, hardware=None):
+    from PySide6.QtCore import QRectF
+    from PySide6.QtGui import QPainterPath, QTransform
+    from traffic_simulator.network_scene import PavingItem
+    path = QPainterPath()
+    path.addRect(QRectF(-2., -1., 4., 2.))
+    item = PavingItem(path)
+    target = hardware[3] if hardware else QImage(500, 350, QImage.Format.Format_RGB32)
+    if hardware:
+        hardware[2].bind()
+    painter = QPainter(target)
+    painter.fillRect(0, 0, target.width(), target.height(), QColor('#075322'))
+    t = projection_transform(iso, scale)
+    painter.setTransform(QTransform(t.m11(), t.m12(), t.m21(), t.m22(), 250., 175.))
+    item.paint(painter, None)
+    painter.end()
+    return hardware[2].toImage() if hardware else target
+
+
+def test_brick_paving_keeps_a_warm_colour_at_overview_and_readable_joints_when_zoomed():
+    from traffic_simulator.theme import FOOTPATH, FOOTPATH_SHADE, FOOTPATH_MORTAR
+    base = QColor(FOOTPATH)
+    assert base.red() - base.green() > 40 and base.green() - base.blue() > 10
+    for iso in (False, True):
+        overview = paving_image(iso, 8.)
+        assert overview.pixelColor(250, 175) == base
+        close = paving_image(iso, 80.)
+        colours = [close.pixelColor(x, y) for x in range(225, 275) for y in range(160, 190)]
+        assert all(c.red() > c.green() > c.blue() for c in colours)
+        assert len({c.name() for c in colours}) >= 3  # two brick tones and visible mortar
+    assert len({FOOTPATH, FOOTPATH_SHADE, FOOTPATH_MORTAR}) == 3
+
+
+def test_brick_paving_preserves_world_footpath_hit_shapes_and_running_network_records():
+    from traffic_simulator.geometry import point_along
+    from traffic_simulator.network_scene import PavingItem
+    network = generate_network(2, 2)
+    road = next(iter(network.roads.values()))
+    road.footpaths = ['left', 'right']
+    before = deepcopy(network.as_records())
+    scene = NetworkGraphicsScene(network)
+    scene.rebuild()
+    paving = [item for item in scene.items() if isinstance(item, PavingItem)]
+    assert len(paving) == 2
+    for side in road.footpaths:
+        line = network.footpath_line(road, side)
+        x, y, ux, uy = point_along(line, 50.)
+        assert any(item.shape().contains(QPointF(x, y)) for item in paving)
+        assert not any(item.shape().contains(QPointF(x - uy * 1.2, y + ux * 1.2)) for item in paving)
+    frame = Frame(15., (), {}, 0, 0)
+    scene.show_frame(.3, frame)
+    view = NetworkView(scene)
+    try:
+        for on in (True, False):
+            view.set_isometric(on)
+            assert scene.frame is frame and scene.frame_alpha == .3 and network.as_records() == before
+    finally:
+        view.close()
+
+
+def test_spawn_labels_stay_with_screen_sized_pins_in_both_views_at_every_zoom():
+    from PySide6.QtWidgets import QGraphicsTextItem
+    network = generate_network(2, 2)
+    point = network.add_spawn_point(250., 200.)
+    scene = NetworkGraphicsScene(network)
+    scene.rebuild()
+    pin = next(item for item in scene.items() if item.data(0) == ('spawn', point.id))
+    label = next(item for item in scene.items() if isinstance(item, QGraphicsTextItem) and item.toPlainText() == point.id)
+    assert label.pos() == pin.pos() == QPointF(point.x, point.y)
+    view = NetworkView(scene)
+    view.resize(900, 650)
+    try:
+        for on in (False, True):
+            view.set_isometric(on)
+            for scale in (.25, 2., 40.):
+                view.setTransform(projection_transform(on, scale))
+                t = view.viewportTransform()
+                p = pin.deviceTransform(t).mapRect(pin.boundingRect())
+                l = label.deviceTransform(t).mapRect(label.boundingRect())
+                assert 0 < p.top() - l.bottom() < 5
+                assert abs(l.center().x() - p.center().x()) < 1e-9
+    finally:
+        view.close()
+
+
+def verify_brick_hardware():
+    from test_gpu import _gl_painter
+    hardware = _gl_painter(500, 350)
+    for iso in (False, True):
+        image = paving_image(iso, 80., hardware)
+        colours = [image.pixelColor(x, y) for x in range(225, 275) for y in range(160, 190)]
+        assert all(c.red() > c.green() > c.blue() for c in colours)
+        assert len({c.name() for c in colours}) >= 3
+    hardware[0].doneCurrent()
+
+
+def verify_people_overbridge_hardware():
+    from PySide6.QtCore import QRectF
+    from PySide6.QtGui import QPolygonF, QTransform
+    from traffic_simulator import asset_mesh
+    from traffic_simulator.network_scene import OverbridgeItem, VehicleLayer
+    from test_gpu import _gl_painter
+    context, surface, fbo, device = _gl_painter(700, 700)
+    scene = NetworkGraphicsScene()
+    scene.isometric = True
+    scene.setSceneRect(-100, -100, 200, 200)
+    scene.frame = Frame(10., (), {}, 0, 0, walkers=((0., 0., 0., 1., (0., 0., 0., 1.)),))
+    bridge = OverbridgeItem(scene, QPolygonF(QRectF(-1.5, -10, 3, 20)), 0., 0., 1., 0., 10., False)
+    scene._overbridges = [bridge]
+    scene.vehicle_layer = VehicleLayer(scene)
+    t = projection_transform(True, 20.)
+    t = QTransform(t.m11(), t.m12(), t.m21(), t.m22(), 350., 500.)
+    for target in (QImage(700, 700, QImage.Format.Format_RGB32), device):
+        if target is device:
+            fbo.bind()
+        painter = QPainter(target)
+        painter.fillRect(0, 0, 700, 700, QColor('#075322'))
+        painter.setWorldTransform(t)
+        scene.vehicle_layer.paint(painter, None)
+        bridge.paint(painter, None)
+        painter.end()
+        image = fbo.toImage() if target is device else target
+        head = t.map(projection_lift() * (asset_mesh.FOOTBRIDGE_DECK_M + 1.55)).toPoint()
+        torso = t.map(projection_lift() * (asset_mesh.FOOTBRIDGE_DECK_M + 1.1)).toPoint()
+        assert image.pixelColor(head).red() > 180 and image.pixelColor(head).blue() > 180
+        assert image.pixelColor(torso).red() > 180 and image.pixelColor(torso).blue() < 130
+    context.doneCurrent()
+
+
 if __name__ == "__main__":
     if "--gpu" in sys.argv:
         child_gpu()
+        verify_people_overbridge_hardware()
+        verify_brick_hardware()
         raise SystemExit(0)
     for name, check in list(globals().items()):
         if name.startswith("test_"):

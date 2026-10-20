@@ -338,6 +338,36 @@ def test_placing_on_the_map_like_an_rts():
     window.close()
 
 
+def test_its_walkers_walk_from_the_catchment_to_the_building_and_back():
+    from traffic_simulator.walking import walk_pairs
+
+    network, modes = generate_network(3, 4), VehicleModes().modes
+    school = _school(network)
+    school.mode_shares = {"Walk": 40.0, "Car": 60.0}
+    origins = catchment(network, school)
+    daily = walk_pairs(network, modes, daily=True)
+    arrive, leave = hourly_people(school)
+    coming = [pair for pair in daily if pair.destination == "1,1"]
+    assert {pair.origin for pair in coming} == set(origins) and all(pair.finish == (school.x, school.y) for pair in coming)
+    assert abs(sum(pair.daily for pair in coming) - 0.4 * sum(arrive)) < 1e-6  # its Walk share of those arriving
+    assert all(pair.start == (school.x, school.y) for pair in daily if pair.origin == "1,1")  # and back
+    hourly = walk_pairs(network, modes, daily=False)  # in the same design hour as its cars
+    assert "08:00-09:00" in run_demand(network, modes, daily=False)[1][0]
+    assert abs(sum(pair.hourly for pair in hourly if pair.destination == "1,1") - 0.4 * arrive[8]) < 1e-6
+    simulation = Simulation(network, run_demand(network, modes, daily=False)[0], modes, seed=3)
+    while simulation.time < 120:
+        simulation.step()
+    assert simulation.walk_spawned == 0 and simulation.walk_unreachable  # no footpath yet: noted, nobody walks
+    for road in network.all_roads():
+        road.footpaths = ["left", "right"]
+    simulation = Simulation(network, run_demand(network, modes, daily=False)[0], modes, seed=3)
+    while simulation.time < 600:
+        simulation.step()
+    assert simulation.walk_spawned and not simulation.walk_unreachable
+    ends = {tuple(walker.points[-1]) for walker in simulation.walkers}
+    assert (school.x, school.y) in ends  # on to the building, past its door
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

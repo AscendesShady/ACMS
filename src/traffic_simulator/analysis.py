@@ -23,7 +23,7 @@ from collections import Counter, defaultdict
 from . import emissions, stats
 from .results import MINUTE_COLUMNS
 from .roundabouts import hcm_entry_capacity, tanner_entry_capacity
-from .simulation import ROUNDABOUT_ENTRY_VPH, measured_capacity
+from .lane_graph import ROUNDABOUT_ENTRY_VPH, measured_capacity
 from .signal_timing import ALL_RED_S, AMBER_S, COORDINATED, effective, incremental_delay, lost_time, webster
 
 # HCM 2000 control delay thresholds, s/veh: (upper bound, LOS); above the last, F

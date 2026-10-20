@@ -1,7 +1,7 @@
 # ai_mode.py, assistant.py and network_tools.py: AI Mode
 
 - **Key discovery** (`ai_mode.scan_keys`, run by `AIModePanel.rescan` at start and by **Rescan PC**)
-  looks for `JEV_API_KEY`, `LAYA_EXE` (laya.exe's path), `GROK_API_KEY` and `GEMINI_API_KEY`:
+  looks for `JEV_API_KEY`, `GROK_API_KEY` and `GEMINI_API_KEY`:
   - First in the app's environment.
   - Then, on Windows, in the user and system environment settings (registry). A key set
     after the editor or terminal started is still found.
@@ -16,10 +16,11 @@
   - A line above it says what was found and what wasn't.
   - If a rescan no longer finds the chosen one, the chat goes back to Off.
   - System 1 works the same way, with no key box. It says what was found, and its **Use** dropdown
-    offers Off, JEV when `JEV_API_KEY` is set, and Laya (local) when `laya.exe` is found (`LAYA_EXE`,
-    else `laya` on PATH) or a Laya already answers on `LAYA_HOST`. See **System 1** below.
-- **Local models:** `assistant.ollama_models()` lists the models in the local Ollama server
-  (`OLLAMA_HOST`, default `127.0.0.1:11434`).
+    offers Off, JEV when `JEV_API_KEY` is set, and each of Ollama's decision models (Laya). See
+    **System 1** below.
+- **Local models:** `assistant.ollama_models()` lists the chat models in the local Ollama server
+  (`OLLAMA_HOST`, default `127.0.0.1:11434`): those whose `/api/tags` capabilities hold `completion` (an
+  Ollama that doesn't say counts as chat). `ollama_models(capability="decision")` lists System 1's.
 - **System 2 warm-up and prompt gate:**
   - Pick Grok, Gemini or Local under **Chat with**, then the model in **API model** or
     **Local model**. Picking only selects (`_choose`, `_choose_model`). For Grok and Gemini,
@@ -156,10 +157,10 @@
         - signalised: the critical X = Y·C/(C − L) at Webster's cycle (`signal_timing.critical_saturation`)
           with the Run's own lane-based flow ratios (`Graph.arm_ratio`), matching its Webster plan;
         - roundabout: each entry's flow over its capacity measured on the simulated drivers
-          (`simulation.ROUNDABOUT_ENTRY_VPH`) against the circulating flow in front of it (the movements
+          (`lane_graph.ROUNDABOUT_ENTRY_VPH`) against the circulating flow in front of it (the movements
           whose ring arc passes that entry); the ring is one path, so an entry's lanes don't add capacity;
         - priority (uncontrolled): each movement's flow over its measured capacity per lane
-          (`simulation.PRIORITY_CAPACITY_VPH`) against the movements it gives way to (the Graph's own
+          (`lane_graph.PRIORITY_CAPACITY_VPH`) against the movements it gives way to (the Graph's own
           conflicts), lane by lane as at a signal (`Graph._lane_load`).
         The capacities were measured by holding one approach saturated against priority traffic (sources.md);
         the HCM's formulas don't fit these drivers.
@@ -216,6 +217,13 @@
     - `set_signal_timing`: signalised junctions' method (`SIGNAL_METHODS`), phases, fixed greens, cycle
       limits, target saturation and stop weight, checked by `validate()`; a junction not signalised is refused.
     - `add_bus_stop` and `update_bus_stop` (distance along, direction served, dwell) through `Network.add_bus_stop`
+      (pedestrians, offered by walking words: the "pedestrians" group) `update_roads` `footpaths` ("both", "left",
+      "right", "none") and `cycle_lanes` ("both", "none"); `add_crossing(road, at_m, kind)` (the middle unless given;
+      `Network.add_crossing`'s refusals said); `add_path(start, end, bends)`; `set_pedestrian_demand(pairs,
+      people_per_hour)` (boundary-end pairs, 0 removes one); `pedestrian_summary` (read-only: footpaths, cycle lanes,
+      paths, crossings, demand, spawn points and theirs, pairs nobody can walk); `add_spawn_points(points)`;
+      `set_pedestrian_demand` takes spawn-point pairs ("S1->S2") too, into `spawn_demand`. `add_crossing` and `set_pedestrian_demand` may be an
+      experiment's scenario (SCENARIO_TOOLS: what a zebra does); `delete_objects` takes paths and crossings.
       and `move_bus_stop`; `update_institution` (people, employees, shift, car share, radius; its new links
       returned; a car share replaces a mode split).
     - `place_institution`: one building of a `kind`, at `x`, `y` or the nearest clear ground to a junction or end
@@ -241,7 +249,9 @@
       background's roads (background_network.py): over the map, OpenStreetMap's road data for `width_m` ×
       `height_m` (200–4,000 m, 1,200 by default) round the network's centre, `road_classes` main or all; over
       an image, the pixels of `road_colour` (required: the model is told to ask the user) within
-      `colour_tolerance`, traced at `resolution_m`. Settings, driving side and background stay; institutions
+      `colour_tolerance`, traced at `resolution_m`; `footpaths` tagged (the default), all or none, with the map's
+      zebras, footbridges, paths and cycle lanes (`add_walking`, counted under `pedestrians`). Settings, driving
+      side and background stay; institutions
       still on clear ground stay (those a new road runs through are listed as removed); a plain colour
       background is refused. It reports the source, junctions (signalised, roundabouts), roads, ends and
       the lanes read from an image.
@@ -613,24 +623,18 @@
   - `_show_on_map` points an object out.
   - `_ai_edited` redraws and commits the undo step. A new grid refreshes the Create tab and fits the view.
 - **System 1** (`assistant.py`, no Qt): fast typed answers, no text generated.
-  - **One API, two back ends.** `assistant.system_one(provider, state, questions, key)` posts
-    `{"model": "jev-latest", "state", "questions"}` to `/v1/systemone`: Jev at TypeSafe (`JEV_URL`, Bearer
-    `JEV_API_KEY`) or Laya on this PC (`laya_url`, `LAYA_HOST`, default `127.0.0.1:8080`). Questions are
-    typed: `noul` (P(yes)), `choice` (`criteria` {label: description}, up to 16 on Laya) and `score`
-    (`criteria` a list of levels). Each request goes in `USAGE`, so View Summary → AI Usage counts it.
-  - **Laya** is a ModernBERT-large decision model (`laya_english_f16.gguf`, 846 MB) run by ggmlc's
-    `laya.exe serve`; it isn't a chat model, so Ollama can't load it. Picking Laya under **Use**
-    (`AIModePanel._choose_system_1`) calls `assistant.start_laya` off the UI thread:
-    - a Laya already answering `/health` on `LAYA_HOST` is used as it is;
-    - otherwise `laya.exe serve --models-dir <its folder> --port <LAYA_HOST's>` starts with no window,
-      Ollama's CUDA 12 runtime (`lib/ollama/cuda_v12`, or `CUDA_PATH\bin`) put first on its PATH, since
-      its GPU build links to `cudart64_12.dll` and `cublas64_12.dll`, and its output in `acms-laya.log`
-      in the temp folder;
-    - it listens on every interface, so it gets a fresh random key (`LAYA_API_KEY`) that only this app
-      sends;
-    - the page then says "Laya is ready on cuda:0 (english)", or why it couldn't start (a missing CUDA
-      runtime, or the last words it printed);
-    - picking anything else, or closing the app (`atexit`), ends the one the app started.
+  - **One API, two back ends.** `assistant.system_one(provider, state, questions, key, model=)` posts
+    `{"model", "state", "questions"}` to `/v1/systemone`: Jev at TypeSafe (`JEV_URL`, Bearer `JEV_API_KEY`,
+    model `jev-latest`) or Ollama on this PC (provider `local`, `OLLAMA_HOST`, no key, the model one of its
+    decision models). Questions are typed: `noul` (P(yes)), `choice` (`criteria` {label: description}, up to
+    16 on Laya) and `score` (`criteria` a list of levels). Each request goes in `USAGE`, so View Summary →
+    AI Usage counts it.
+  - **Laya** is a ModernBERT-large decision model (421M, BF16, 844 MB) that Ollama serves with the
+    `decision` capability (`laya:421m-english-bf16`, `laya:421m-typed-decisions-bf16`); it isn't a chat
+    model, so System 2 never lists it. Picking one under **Use** (`AIModePanel._choose_system_1`) starts
+    nothing: Ollama loads it on the first question, and the page says "<model> answers through Ollama".
+    A choice is stored as `"jev"` or the Ollama model's name (`ai_mode._system_one` gives its provider and
+    model).
   - **What asks it:** the signal agent (`MainWindow._ask_agent`, simulation.md), for Transit Signal
     Priority when its **Decided by** is System 1 (extensions.md: the junction observed as structured data,
     one noul), about 50 ms warm on an RTX 3070 against seconds for a chat model; System 2 when it says
@@ -641,10 +645,10 @@
     traffic questions right (distances and seconds are its weak spot); a structured state with a specific
     question did far better, which is how TSP asks it.
   - **For batch runs** (the Batch Run extension): `agent_options()` lists who can decide TSP as the last scan
-    found them: the two baselines (Never preempt, then Always preempt: no system, a `rule` False or True), System 1's (Jev, Laya) and System 2's (every Ollama model; Grok and Gemini
+    found them: the two baselines (Never preempt, then Always preempt: no system, a `rule` False or True), System 1's (Jev, each Ollama decision model) and System 2's (every Ollama chat model; Grok and Gemini
     whenever their keys are on this PC, each with the model last started in System 2, else the provider's usual
     one, `assistant.PREFERRED`), each with its system, provider, model and a name for the run's file; `key_for(provider)` gives
-    its key and `start_laya()` starts Laya off the UI thread. `assistant.last_usage()` is a thread's last
+    its key; `system_one_for_agents()` gives (provider, key, model) of System 1's choice. `assistant.last_usage()` is a thread's last
     request's tokens, for each System 2 answer's record (`_record` keeps the thread's own record, never one read
     back from `USAGE`, which a batch's runs append to side by side).
   - View Summary's AI lines show System 1's choice and state.

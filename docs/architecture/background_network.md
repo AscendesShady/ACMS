@@ -29,6 +29,20 @@
   metres by the image's affine. Line ends within half a road width of the image's edge snap to it and
   become boundary ends; the road width is the road pixels over the lines' length, and the lanes that
   width over 7 m (1–4).
+- **Walking and cycling** (the map; walking.md): the query also takes footway, path, pedestrian and steps ways
+  (`WALK_CLASSES`) and highway=crossing nodes. A road way's `sidewalk` / `sidewalk:left|right|both` tags (yes,
+  separate) give its `Street.footpaths` (sides along its own way, swapped with it: oneway=-1, `_turned`), its
+  `cycleway*` tags (lane, track, opposite_*: `CYCLE_TAGS`) `Street.cycle`; streets join only when alike in both; a
+  road gets them (`dress`; cycle lanes for every way its traffic arrives). A crossing node marked zebra, marked,
+  uncontrolled or traffic_signals (`ZEBRA_TAGS`; a signalised one taken as a zebra, with no pedestrian signals)
+  goes into `Graph.crossings`, others into `Graph.walking_skipped` by kind; footways into `Graph.footways` as
+  sidewalk, crossing (footway=crossing), bridge or path. **`add_walking(network, graph, footpaths)`** after build:
+  footpaths "tagged" (the tags, and each footway=sidewalk way on the side of the road within `SIDEWALK_M` 15 m it
+  runs beside), "all" or "none"; a zebra on the road within `CROSSING_M` 8 m of its node, or where a crossing way
+  cuts a road, a footbridge where it passes over one an overbridge, each giving its road footpaths both sides (one
+  within `ZEBRA_CLEAR_M` of an end is counted, not placed: walkers cross a junction's arms in gaps); other footways
+  paths between the road nodes they come within `PATH_SNAP_M` 15 m of (one reaching fewer than two: counted as not
+  joined). It returns the counts, which `network_from_background` reports under `pedestrians`.
 - **`build(template, graph)`**: roundabout rings become one junction each at their centre; junctions within
   `MERGE_M` 20 m become one (a dual carriageway's crossing, mapped as 2-4 nodes 12-19 m apart: as
   separate junctions, 2-3 cars of room between them gridlocked Dhanmondi; SUMO's netconvert joins such clusters too); a node on two alike streets goes (one

@@ -332,6 +332,37 @@ def render_vehicle(vehicle, iso=False, scale=100., hardware=False):
     return image,t
 
 
+def test_bus_tyres_extrude_past_recessed_skirts_with_open_axles_inside_the_physical_width():
+    faces = asset_mesh.vehicle_mesh(4)
+    body = [asset_mesh.expand(p, 12., 2.5) for f in faces if f.part == 0 and f.ink == -1 for p in f.vertices]
+    tyres = [asset_mesh.expand(p, 12., 2.5) for f in faces if f.part == 1 for p in f.vertices]
+    assert max(abs(y) for _, y, _ in tyres) == 1.25
+    lower = [(x, y, z) for x, y, z in body if z < .39 * 2.5 - 1e-9]
+    assert lower and max(abs(y) for _, y, _ in lower) <= .86 * 1.25 + 1e-9
+    assert max(z for _, _, z in tyres) < .39 * 2.5  # upper body never swallows the tyre crown
+    # The skirt has a real opening at both axle centres, rather than a tyre decal over a flat wall.
+    for axle in (-.68 * 6., .68 * 6.):
+        for face in faces:
+            if face.part or face.ink != -1:
+                continue
+            points = [asset_mesh.expand(p, 12., 2.5) for p in face.vertices]
+            if max(z for _, _, z in points) <= .39 * 2.5 + 1e-9:
+                assert not min(x for x, _, _ in points) < axle < max(x for x, _, _ in points)
+
+
+def check_bus_extrusion_pixels(hardware=False):
+    vehicle = sample(kind='bus', length=12., width=2.5)
+    image, t = render_vehicle(vehicle, iso=True, scale=40., hardware=hardware)
+    for x in (-.68 * 6., .68 * 6.):
+        point = t.map(QPointF(x, 1.25) + projection_lift() * (.18 * 2.5)).toPoint()
+        patch = [image.pixelColor(point.x() + dx, point.y() + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1)]
+        assert sum(c.red() > 120 and c.green() > 120 and c.blue() > 120 for c in patch) >= 5
+
+
+def test_bus_wheel_hubs_are_visible_below_the_body_in_the_isometric_raster_view():
+    check_bus_extrusion_pixels()
+
+
 def test_car_silhouette_has_tapered_empty_corners_and_sloped_raised_cabin():
     vehicle=sample()
     skin=vehicle_assets.style(vehicle)
@@ -536,6 +567,7 @@ if __name__ == "__main__":
         compare_random_paint((context, surface, fbo, device))
         verify_hardware_geometry((context,surface,fbo,device))
         verify_hardware_depth((context,surface,fbo,device))
+        check_bus_extrusion_pixels((context,surface,fbo,device))
         context.doneCurrent()
         print("GPU and raster vehicle markings, shared frame and one upload: ok")
         raise SystemExit(0)

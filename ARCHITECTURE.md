@@ -27,14 +27,16 @@ experiment takes scenarios × seeds × minutes. Answer in a few lines.
 
 | Area | Implemented [not yet] | Doc |
 |---|---|---|
-| Network | Grid 1–20 × 1–20; roads (lanes, turn pockets, direction, speed, curvature); nodes signalised/roundabout/uncontrolled; left or right driving; ends `1E`… with flows; Add Edge (crossings → roundabout or overpass); undo/redo, box select [road type label] | [models.md](docs/architecture/models.md) |
+| Network | Grid 1–20 × 1–20; roads (lanes, turn pockets, cycle lanes, footpaths, direction, speed, curvature); paths; nodes signalised/roundabout/uncontrolled; left or right driving; ends `1E`… with flows; Add Edge (crossings → roundabout or overpass); undo/redo, box select [road type label] | [models.md](docs/architecture/models.md) |
 | Background | Colour, image or PDF to scale, OpenStreetMap by place [other tile servers] | [map_tiles.md](docs/architecture/map_tiles.md) |
 | Roundabouts | NCHRP 672 sizing, ≤ 3 entry lanes; entry capacity vs HCM 6 | [roundabouts.md](docs/architecture/roundabouts.md) |
 | Signals | Webster, TRANSYT, Synchro, SCATS, SCOOT, actuated, max-pressure, fixed; ITE amber/all-red per junction; TSP; ALINEA ramp meters [SCATS tactical] | [signal_timing.md](docs/architecture/signal_timing.md) |
 | Interchanges | Trumpet, diamond, SPUI; curved slip roads | [interchanges.md](docs/architecture/interchanges.md) |
 | Bus stops | Kerbside bays; HCM dwell; boarding, alighting, loads [stops for other types] | [models.md](docs/architecture/models.md) |
-| Demand | OD matrix hourly (peak-hour factor or 15-min profile) or daily (shaped curve), arrival pattern, mode split; gravity model [trip generation beyond it] | [od_matrix.md](docs/architecture/od_matrix.md) |
+| Demand | OD matrix hourly (peak-hour factor or 15-min profile) or daily (shaped curve), arrival pattern, mode split, drop-offs along the route per type; gravity model [trip generation beyond it] | [od_matrix.md](docs/architecture/od_matrix.md) |
 | Institutions | Buildings with catchments, logit mode split, their trips in a Run [trips beyond the catchment] | [institutions.md](docs/architecture/institutions.md) |
+| Pedestrians | Footpaths, paths, zebras and overbridges (Pedestrian tab); walkers from a pedestrian OD matrix and institutions' Walk share on the cheapest walk, SUMO NonInteracting; gaps at junction arms (HCM Eq 18-17), traffic stopping at zebras [crowding, walk signals] | [walking.md](docs/architecture/walking.md) |
+| Metro | Lines drawn stop by stop: 300 m curves, turns under 90°, the next leg previewed, no self-crossing; a crossing merged at an interchange (one change); its own OD matrix; HCM line loads; service set per line, never from demand [trains running, branches] | [metro.md](docs/architecture/metro.md) |
 | Vehicle types | Up to 8; timetables; a vehicle class each [behaviour editing in the tab] | [mode_behavior.md](docs/architecture/mode_behavior.md) |
 | Simulation | Krauss, LC2013, gap acceptance, junction delay in route costs once, route choice (logit), random streams per pair, closures, work zones, weather, emergency braking bound, optional ballistic update and shorter step (headless), optional lateral position: two-wheelers filter (headless), collisions counted (same lane, crossing) [pedestrians] | [simulation.md](docs/architecture/simulation.md) |
 | Clock | Run, Play/Pause, Stop, speed 1–60×, Seed, Export; every stopped or failed run exports | [clock.md](docs/architecture/clock.md) |
@@ -71,18 +73,23 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | roundabouts.py | Roundabout design (NCHRP 672) | no |
 | network_scene.py | Top-down/orthographic 2.5D network, map clicks and drags | Qt |
 | properties_panel.py | Editor for the selected road, node or end | Qt |
-| od_matrix.py | OD matrix, cell and curve editors, Institutions panel | Qt |
+| widgets.py | Shared buttons, hints, sections, tabs, choices and tick lists | Qt |
+| od_matrix.py | OD matrix grid, cell, curve and drop-off editors, Institutions panel, metro OD matrix | Qt |
+| demand.py | OD cells, mode-split arithmetic, demand tools' rules, a run's pair demand | no |
 | institutions.py | Buildings' doors, catchments, trips and modes | no |
+| walking.py | Footpaths, paths and crossings as a walking network, cheapest walks, a run's walkers (→ walking.md) | no |
 | daily_profile.py | Daily demand curves, hourly shares | no |
 | background_network.py | A network from OSM or an image (→ map_tiles.md) | no |
 | background.py | The map's background and its Create section (→ map_tiles.md) | Qt |
 | map_tiles.py | WGS84 ↔ scene metres, OSM tiles, place search | no |
 | mode_behavior.py | Vehicle types tab | Qt |
-| vehicle.py | A vehicle from its type; Krauss following | no |
+| vehicle.py | Vehicle types (VehicleMode); a vehicle from its type; Krauss following | no |
 | vehicle_assets.py | Shared display-only vehicle skins and stable random paint | no |
-| asset_mesh.py | Shared low-poly vehicle meshes and material faces | no |
+| asset_mesh.py | Low-poly vehicle/person meshes, footbridge scenery and material faces | no |
 | building_assets.py | Metre-height institution structures and assumed defaults | no |
-| simulation.py | Lane graph, signals, junctions, lane changes, demand, Runner thread | no |
+| metro_assets.py | Display-only overhead viaducts along the track, stations and parked train previews | no |
+| lane_graph.py | Lane graph: links, lanes, turns, bays, signals, routes, capacities | no |
+| simulation.py | Signals, junctions, lane changes, demand, Runner thread, over the lane graph | no |
 | signal_agent.py | TRUE/FALSE answers for signal overrides (→ simulation.md) | no |
 | signal_timing.py | Webster, TRANSYT, Synchro, SCATS, SCOOT, clearance | no |
 | transit_signal_priority.py | TSP controller at one junction (→ extensions.md) | no |
@@ -96,9 +103,9 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | scenario.py | Scenario Builder plan and report (→ ai_mode.md) | no |
 | analysis.py | Junction LOS, signal diagnosis, health, resilience, fuel | no |
 | emissions.py | Fuel and CO2, Biggs–Akçelik (→ analysis.md) | no |
-| design_checks.py | Design audit, Green Book (→ network_checks.md) | no |
+| design_checks.py | Design audit, Green Book; connectivity and graph indices (→ network_checks.md) | no |
 | weaving.py | Freeway weaving, HCM 2000 Ch 24 (→ weaving.md) | no |
-| metro.py | The metro's own network: rides, buildings' stations, line loads (→ metro.md) | no |
+| metro.py | The metro's own network: rides (one change at an interchange), buildings' stations, line loads (→ metro.md) | no |
 | accessibility.py | Cumulative / Hansen accessibility (→ network_checks.md) | no |
 | summary.py | View Summary tab | Qt |
 | clock.py | Run / Pause / Play / Stop clock | Qt |

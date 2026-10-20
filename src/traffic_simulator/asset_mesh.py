@@ -10,6 +10,10 @@ from math import cos, pi, sin, sqrt
 from typing import NamedTuple
 
 
+PEDESTRIAN_HEIGHT_M = 1.75
+FOOTBRIDGE_DECK_M = 6.0  # display assumption consistent with walking's assumed stair-climb height
+
+
 class Face(NamedTuple):
     vertices: tuple
     ink: int = -1  # -1: body paint; other entries index theme's material inks
@@ -22,6 +26,8 @@ def vertex(x, y, z, offset=0.):
 
 def wheel_fit(skin, length, width):
     axle, radius = (.55, .48) if skin == 6 else (.61, .33) if skin == 7 else (.63, .18) if skin in (1, 2, 3) else (.68, .18)
+    if skin == 4:
+        radius = .21  # the bus skirt's wheel opening must fit inside very short edited footprints too
     return min(1., length / 2 * (1 - axle) / (radius * width))
 
 
@@ -152,7 +158,20 @@ def vehicle_mesh(skin):
     # Commercial vehicles: a distinct cab, tall passenger/load body and visible wheels.
     if skin == 4:
         ring = ((1, .8), (.94, 1), (-.94, 1), (-1, .8), (-1, -.8), (-.94, -1), (.94, -1), (1, -.8))
-        faces += solid(tuple(vertex(x, y, .2) for x, y in ring), tuple(vertex(x, y, 1.12) for x, y in ring))
+        # The passenger body clears the tyre crown; a recessed skirt has real gaps at the axles.
+        # Outer tyre faces remain at +/- half-width, so extrusion never expands the collision footprint.
+        faces += solid(tuple(vertex(x, y, .39) for x, y in ring), tuple(vertex(x, y, 1.12) for x, y in ring))
+        faces += box(-.94, -.7, .94, .7, .18, .39, 1)
+        for side in (-1, 1):
+            for (x0, off0), (x1, off1) in (((-1, 0), (-.68, -.21)),
+                                         ((-.68, .21), (.68, -.21)), ((.68, .21), (1, 0))):
+                lower = tuple(vertex(x, side * y, .2, off) for x, off, y in
+                              ((x1, off1, .74), (x0, off0, .74), (x0, off0, .86), (x1, off1, .86)))
+                upper = tuple(vertex(p[0], p[1], .39, p[3]) for p in lower)
+                # Reverse the negative-side winding as well as the side's lateral coordinates.
+                if side > 0:
+                    lower, upper = tuple(reversed(lower)), tuple(reversed(upper))
+                faces += solid(lower, upper)
         for y in (-1, 1):
             for x in (-.8, -.53, -.26, .01, .28, .55):
                 faces.append(side_panel(x, x + .21, y, .61, .98, 0))
@@ -190,3 +209,31 @@ def vehicle_low_mesh(skin):
         faces += box(-.15,-.28,.12,.28,1.65,1.98,5)
         return tuple(faces)
     return tuple(f for f in vehicle_mesh(skin) if f.part==0 and f.ink in (-1,0))
+
+
+@lru_cache(maxsize=1)
+def pedestrian_mesh():
+    """Simple metre-scaled person: separate legs, torso, arms and head; forward is +x."""
+    faces = []
+    for y0, y1 in ((-.22, -.07), (.07, .22)):
+        faces += box(-.11, y0, .11, y1, 0., .78, 1)
+    faces += box(-.14, -.21, .14, .21, .75, 1.36)
+    for y0, y1 in ((-.30, -.22), (.22, .30)):
+        faces += box(-.09, y0, .09, y1, .78, 1.3)
+    faces += box(-.12, -.13, .16, .13, 1.39, PEDESTRIAN_HEIGHT_M, 5)
+    return tuple(faces)
+
+
+def footbridge_mesh(half):
+    """Deck across local y, with parapets, supports and illustrative stairs outside the carriageway."""
+    h = FOOTBRIDGE_DECK_M
+    faces = box(-1.5, -half, 1.5, half, h - .35, h)
+    for x in (-1.5, 1.35):
+        faces += box(x, -half, x + .15, half, h, h + 1.1, 1)
+    for side in (-1, 1):
+        y = side * (half - .8)
+        faces += box(-1.1, y - .25, 1.1, y + .25, 0., h - .35, 1)
+        for i in range(12):
+            faces += box(-5.5 + i / 3, y - .65, -5.5 + (i + 1) / 3, y + .65,
+                         0., h * (i + 1) / 12)
+    return tuple(faces)

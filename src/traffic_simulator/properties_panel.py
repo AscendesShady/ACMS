@@ -4,11 +4,9 @@ from __future__ import annotations
 
 from copy import deepcopy
 
-from PySide6.QtCore import QEvent, QSize, Qt, Signal
-from PySide6.QtGui import (QColor, QFont, QFontDatabase, QIcon, QKeySequence, QPainter, QPixmap, QShortcut,
-                           QStandardItem, QStandardItemModel)
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
-    QButtonGroup,
     QCheckBox,
     QComboBox,
     QDoubleSpinBox,
@@ -18,14 +16,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QMenu,
     QMessageBox,
-    QPushButton,
-    QRadioButton,
-    QSizePolicy,
     QSpinBox,
-    QStyle,
-    QStyleOptionComboBox,
-    QStylePainter,
-    QTabWidget,
     QVBoxLayout,
     QWidget,
 )
@@ -34,11 +25,9 @@ from .interchanges import fit_slip_roads
 from .models import MAX_BOARDING_PER_H, MAX_DWELL_S, POCKET_LENGTH_M, BusStop, Network, Node, Road
 from .roundabouts import design_roundabout
 from .signal_timing import SATURATION_PER_LANE_VPH
-from .theme import TEXT
-
-# Icons are glyphs from Windows' own icon font: Segoe Fluent Icons on Windows 11, Segoe MDL2
-# Assets on Windows 10, same code points.
-ICON_FONTS = ("Segoe Fluent Icons", "Segoe MDL2 Assets")
+# The shared widgets (widgets.py), also importable from here as before, for drop-in extensions
+from .widgets import (ICON_FONTS, MINI_ICON_PX, CheckList, ChoiceButtons, Collapsible, OpenPageTabs,  # noqa: F401
+                      align_form_labels, glyph_icon, hint_label, icon_button, set_glyph, styled_button)
 
 
 # The signal timing methods (models.SIGNAL_METHODS) as the junction panel and Generate Network name them.
@@ -46,278 +35,11 @@ TIMING_METHODS = (("Webster", "webster"), ("TRANSYT", "transyt"), ("Synchro", "s
                   ("SCOOT", "scoot"), ("Actuated", "actuated"), ("Max pressure", "max_pressure"), ("Fixed time", "fixed"))
 
 
-def glyph_icon(glyph: str, family: str, px: int = 20) -> QIcon:
-    """A white icon from one font glyph, drawn at 1x, 1.5x and 2x so it stays crisp on any display."""
-    icon = QIcon()
-    for size in (px, px * 3 // 2, px * 2):
-        pixmap = QPixmap(size, size)
-        pixmap.fill(Qt.GlobalColor.transparent)
-        painter = QPainter(pixmap)
-        font = QFont(family)
-        font.setPixelSize(size)
-        painter.setFont(font)
-        painter.setPen(QColor(TEXT))
-        painter.drawText(pixmap.rect(), Qt.AlignmentFlag.AlignCenter, glyph)
-        painter.end()
-        icon.addPixmap(pixmap)
-    return icon
-
-
-def icon_button(glyph: int, name: str, role: str = "") -> QPushButton:
-    """A small button showing one icon glyph, its name as the tooltip (and for screen readers): a few
-    words, never an explanation. Without an icon font it shows its name."""
-    button = styled_button("", role)
-    button.setProperty("glyph", True)  # square, in the app stylesheet
-    button.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-    set_glyph(button, glyph, name)
-    return button
-
-
-MINI_ICON_PX = 12  # a mini icon button's glyph (role "mini")
-
-
-def set_glyph(button: QPushButton, glyph: int, name: str) -> None:
-    """Give an icon button another glyph and name (e.g. Start becoming Restart)."""
-    family = next((family for family in ICON_FONTS if family in QFontDatabase.families()), None)
-    button.setText("" if family else name)
-    button.setToolTip(name)
-    button.setAccessibleName(name)
-    if family:
-        button.setIcon(glyph_icon(chr(glyph), family, 16))
-
-
-class Collapsible(QWidget):
-    """A section under a title that opens and closes it, a chevron showing which (right: closed,
-    down: open). `body` is laid out under the title, indented."""
-
-    def __init__(self, title: str, body: QWidget, expanded: bool = False, tooltip: str = "") -> None:
-        super().__init__()
-        family = next((family for family in ICON_FONTS if family in QFontDatabase.families()), None)
-        self._title = title
-        self._icons = (glyph_icon("\ue76c", family, 12), glyph_icon("\ue70d", family, 12)) if family else None
-        self.header = styled_button(title, "section", tooltip)
-        self.header.setCheckable(True)
-        self.header.setAccessibleName(title)
-        self.header.toggled.connect(self._show)
-        self.body = body
-        if body.layout() is not None:
-            body.layout().setContentsMargins(10, 6, 0, 10)
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-        layout.addWidget(self.header)
-        layout.addWidget(body)
-        self.header.setChecked(expanded)
-        self._show(expanded)
-
-    def _show(self, expanded: bool) -> None:
-        self.body.setVisible(expanded)
-        self.updateGeometry()  # so the panels holding it (and a scroll area) re-measure
-        if self._icons:
-            self.header.setIcon(self._icons[expanded])
-        else:
-            self.header.setText(("▾ " if expanded else "▸ ") + self._title)
-
-
-class OpenPageTabs(QTabWidget):
-    """Tabs as tall as the open page rather than the tallest one. QTabWidget sizes itself for its
-    tallest page, hidden ones included, in its size hints and, when pages wrap text, in its height for
-    a width; this swaps that page for the open one in all three, so a scroll area round the tabs
-    scrolls only when the open page needs it, and a short page isn't stretched past the window."""
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.currentChanged.connect(self.updateGeometry)
-
-    def tabInserted(self, index: int) -> None:  # type intentionally inherited from Qt
-        super().tabInserted(index)
-        self.widget(index).installEventFilter(self)  # a page's layout changed (a section opened): re-measure
-
-    def eventFilter(self, watched, event) -> bool:  # type intentionally inherited from Qt
-        if event.type() == QEvent.Type.LayoutRequest and watched is self.currentWidget():
-            self.updateGeometry()
-        return False
-
-    def _open_page(self, hint: QSize, size) -> QSize:
-        """`hint` with the tallest page's height (`size` of each page) swapped for the open page's."""
-        page = self.currentWidget()
-        if page is None:
-            return hint
-        tallest = max(size(self.widget(index)).height() for index in range(self.count()))
-        return QSize(hint.width(), hint.height() - tallest + size(page).height())
-
-    def sizeHint(self) -> QSize:  # type intentionally inherited from Qt
-        return self._open_page(super().sizeHint(), QWidget.sizeHint)
-
-    def minimumSizeHint(self) -> QSize:  # type intentionally inherited from Qt
-        return self._open_page(super().minimumSizeHint(), QWidget.minimumSizeHint)
-
-    def heightForWidth(self, width: int) -> int:  # type intentionally inherited from Qt
-        total, page = super().heightForWidth(width), self.currentWidget()
-        if total < 0 or page is None:
-            return total
-        inner = width - max(self.width() - page.width(), 0) if page.width() else width  # the pages' width
-        tallest = max(max(self.widget(index).heightForWidth(inner) for index in range(self.count())), 0)
-        mine = page.heightForWidth(inner)
-        return total - tallest + (mine if mine >= 0 else page.minimumSizeHint().height())
-
-
 def describe_group(objects: list[tuple[str, str]]) -> str:
     """'3 junctions, 1 road, 2 bus stops': a selection's objects counted by kind."""
     names = {"node": "junction", "road": "road", "end": "boundary end", "bus_stop": "bus stop"}
     counts = [(sum(kind == name for kind, _ in objects), single) for name, single in names.items()]
     return ", ".join(f"{count} {single}{'s' if count > 1 else ''}" for count, single in counts if count)
-
-
-def styled_button(text: str, role: str = "", tooltip: str = "") -> QPushButton:
-    """Button tagged for the app stylesheet: role "primary" (one per area) or "danger"."""
-    button = QPushButton(text)
-    button.setFocusPolicy(Qt.FocusPolicy.TabFocus)  # focus ring for keyboard use, not after clicks
-    if role:
-        button.setProperty("role", role)
-    if tooltip:
-        button.setToolTip(tooltip)
-    return button
-
-
-def align_form_labels(container: QWidget) -> None:
-    """Give every form inside `container` the same label width, so the fields of all its
-    sections start on one line. Call once the widgets use the app's stylesheet font."""
-    labels = []
-    for form in container.findChildren(QFormLayout):
-        for row in range(form.rowCount()):
-            item = form.itemAt(row, QFormLayout.ItemRole.LabelRole)
-            if item is not None and item.widget() is not None:
-                labels.append(item.widget())
-    for label in labels:
-        label.ensurePolished()
-    width = max((label.sizeHint().width() for label in labels), default=0)
-    for label in labels:
-        label.setMinimumWidth(width)
-
-
-def hint_label(text: str = "") -> QLabel:
-    """Secondary explanatory text, styled by the app stylesheet at readable contrast."""
-    label = QLabel(text)
-    label.setWordWrap(True)
-    label.setProperty("role", "hint")
-    return label
-
-
-class ChoiceButtons(QWidget):
-    """Radio buttons for a short list of options (fewer than 5 read better than a dropdown)."""
-
-    changed = Signal()  # the user picked an option; programmatic set_value() stays quiet
-
-    def __init__(self, options: list[tuple[str, object]], vertical: bool = False) -> None:
-        super().__init__()
-        layout = QVBoxLayout(self) if vertical else QHBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        self.values = [value for _, value in options]
-        self.group = QButtonGroup(self)
-        for index, (label, _) in enumerate(options):
-            button = QRadioButton(label)
-            self.group.addButton(button, index)
-            layout.addWidget(button)
-        if not vertical:
-            layout.addStretch(1)
-        self.group.button(0).setChecked(True)
-        self.group.idClicked.connect(lambda _: self.changed.emit())
-
-    def value(self) -> object:
-        return self.values[self.group.checkedId()]
-
-    def set_value(self, value: object) -> None:
-        self.group.button(self.values.index(value)).setChecked(True)
-
-    def set_labels(self, labels: list[str]) -> None:
-        for button, label in zip(self.group.buttons(), labels):
-            button.setText(label)
-
-
-class CheckList(QComboBox):
-    """A dropdown of ticks: each option is a checkbox, the list stays open while ticking, and the box shows
-    what is ticked. `before_open()` runs as it opens (to list what is there now). A long list scrolls: up to
-    MAX_SHOWN rows show at once, with a scroll bar (and the wheel). A click toggles its row once, on release; the
-    popup never sees it (it would toggle the row again, or close the list)."""
-
-    changed = Signal()
-    MAX_SHOWN = 10
-
-    def __init__(self, before_open=None) -> None:
-        super().__init__()
-        self.before_open = before_open
-        self.setModel(QStandardItemModel(self))
-        # Fusion's menu-like popup ignores maxVisibleItems and runs off the screen: a plain list that scrolls
-        self.setStyleSheet("QComboBox { combobox-popup: 0; }")
-        self.setMaxVisibleItems(self.MAX_SHOWN)
-        self.view().setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.view().viewport().installEventFilter(self)  # after the popup's own filter, so it runs first
-
-    def labels(self) -> list[str]:
-        model = self.model()
-        return [model.item(row).text() for row in range(model.rowCount())]
-
-    def ticked(self) -> list[str]:
-        model = self.model()
-        return [model.item(row).text() for row in range(model.rowCount())
-                if model.item(row).checkState() == Qt.CheckState.Checked]
-
-    def summary(self) -> str:
-        return ", ".join(self.ticked()) or "none"
-
-    def set_options(self, labels: list[str], ticked) -> None:
-        """List `labels`, ticking those in `ticked`."""
-        model = self.model()
-        model.clear()
-        for label in labels:
-            item = QStandardItem(label)
-            item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsUserCheckable)
-            item.setCheckState(Qt.CheckState.Checked if label in ticked else Qt.CheckState.Unchecked)
-            model.appendRow(item)
-        self.update()
-
-    def set_ticked(self, labels: list[str], check_only: bool = False) -> None:
-        """Tick exactly these (by label, any case); ValueError naming any it doesn't list."""
-        known = {label.lower(): label for label in self.labels()}
-        unknown = [label for label in labels if label.lower() not in known]
-        if unknown:
-            raise ValueError(f"Not listed: {', '.join(unknown)}. Listed: {', '.join(known.values())}.")
-        if not check_only:
-            self.set_options(self.labels(), {known[label.lower()] for label in labels})
-            self.changed.emit()
-
-    def eventFilter(self, watched, event) -> bool:  # type intentionally inherited from Qt
-        """The list's clicks: a left button's release toggles the row under it; press, release and double
-        click stop here."""
-        clicks = (QEvent.Type.MouseButtonPress, QEvent.Type.MouseButtonRelease, QEvent.Type.MouseButtonDblClick)
-        if watched is self.view().viewport() and event.type() in clicks:
-            if event.type() == QEvent.Type.MouseButtonRelease and event.button() == Qt.MouseButton.LeftButton:
-                index = self.view().indexAt(event.position().toPoint())
-                if index.isValid():
-                    self._toggle(index)
-            return True
-        return super().eventFilter(watched, event)
-
-    def _toggle(self, index) -> None:
-        item = self.model().itemFromIndex(index)
-        ticked = item.checkState() == Qt.CheckState.Checked
-        item.setCheckState(Qt.CheckState.Unchecked if ticked else Qt.CheckState.Checked)
-        self.update()
-        self.changed.emit()
-
-    def showPopup(self) -> None:
-        if self.before_open is not None:
-            self.before_open()
-        super().showPopup()
-
-    def paintEvent(self, _event) -> None:
-        painter = QStylePainter(self)
-        option = QStyleOptionComboBox()
-        self.initStyleOption(option)
-        option.currentText = self.summary()
-        painter.drawComplexControl(QStyle.ComplexControl.CC_ComboBox, option)
-        painter.drawControl(QStyle.ControlElement.CE_ComboBoxLabel, option)
 
 
 def _on_enter(section: QWidget, action) -> None:
@@ -335,12 +57,16 @@ def _section() -> tuple[QWidget, QFormLayout]:
     return widget, form
 
 
+FOOTPATH_CHOICES = {"none": (), "both": ("left", "right"), "left": ("left",), "right": ("right",)}  # the Footpath list
+
+
 class PropertiesPanel(QWidget):
     network_changed = Signal()
     interchange_requested = Signal(str)  # "trumpet", "diamond" or "spui"
     edited = Signal(object)  # a change that needs no redraw (signal settings); arg = undo merge key
     bus_stop_changed = Signal(str)  # a bus stop added, moved or re-pointed: select it, redraw, one undo step
     delete_group = Signal()  # Delete Selected: the box's selection, after asking
+    footpath_preview = Signal(str, object)  # the road and the footpath sides chosen, before Apply: shown on the map
     slip_road_requested = Signal(str, str, bool)  # Add Slip Road: the two selected roads, single lane?
 
     def __init__(self, parent: QWidget | None = None) -> None:
@@ -443,6 +169,25 @@ class PropertiesPanel(QWidget):
                                              spin.setEnabled(combo.currentData() is not None))
             self.pocket_rows.append((row, kind, pocket_length))
         self.pocket_ends: list[str] = []  # the junction each shown row is for
+        # A cycle lane (bikes only) for the traffic arriving at each end: one tick an end, named in show_object.
+        self.cycle_ticks = [QCheckBox() for _ in range(2)]
+        cycle_row = QWidget()
+        cycle_layout = QHBoxLayout(cycle_row)
+        cycle_layout.setContentsMargins(0, 0, 0, 0)
+        for tick in self.cycle_ticks:
+            tick.setToolTip("Bikes-only lane this way")
+            cycle_layout.addWidget(tick)
+        cycle_layout.addStretch(1)
+        form.addRow("Cycle lane", cycle_row)
+        self.cycle_ends: list[str] = []  # the arrival end each shown tick is for
+        # Footpaths: none, both sides, or one side ("left", "right" from from_node to to_node, named by its compass
+        # side in show_object); the choice is highlighted on the map before Apply (footpath_preview).
+        self.footpath_choice = QComboBox()
+        for key in FOOTPATH_CHOICES:
+            self.footpath_choice.addItem("", key)
+        self.footpath_choice.setToolTip("Footpaths beside this road")
+        form.addRow("Footpath", self.footpath_choice)
+        self.footpath_choice.currentIndexChanged.connect(self._preview_footpaths)
         form.addRow(road_type_note)
         form.addRow(buttons)
         # Apply is enabled only while the fields differ from the road, so it's clear
@@ -451,7 +196,8 @@ class PropertiesPanel(QWidget):
                        self.speed.currentTextChanged, self.direction.changed,
                        self.road_type.currentTextChanged,
                        *(widget.currentIndexChanged for _, widget, _ in self.pocket_rows),
-                       *(widget.valueChanged for _, _, widget in self.pocket_rows)):
+                       *(widget.valueChanged for _, _, widget in self.pocket_rows),
+                       *(tick.toggled for tick in self.cycle_ticks), self.footpath_choice.currentIndexChanged):
             signal.connect(self._refresh_apply)
         _on_enter(self.road_fields, self.apply_changes)
 
@@ -687,6 +433,27 @@ class PropertiesPanel(QWidget):
                     kind.setCurrentIndex(kind.findData(f"{pocket['side']} {pocket['lanes']}") if pocket else 0)
                     pocket_length.setValue(pocket["length_m"] if pocket else 50.0)
                     pocket_length.setEnabled(pocket is not None)
+            points = self.network.road_points(selected)
+            (ax, ay), (bx, by) = points[0], points[-1]
+            nx, ny = -(by - ay), bx - ax  # towards its "right" (geometry.offset_polyline's positive side), y down
+            right = ("East" if nx > 0 else "West") if abs(nx) > abs(ny) else ("South" if ny > 0 else "North")
+            opposite = {"East": "West", "West": "East", "North": "South", "South": "North"}[right]
+            names = {"none": "None", "both": "Both sides", "left": f"{opposite} side only", "right": f"{right} side only"}
+            choice = self.footpath_choice
+            choice.blockSignals(True)
+            for index in range(choice.count()):
+                choice.setItemText(index, names[choice.itemData(index)])
+            have = tuple(side for side in ("left", "right") if side in selected.footpaths)
+            choice.setCurrentIndex(choice.findData(next(key for key, sides in FOOTPATH_CHOICES.items() if sides == have)))
+            choice.blockSignals(False)
+            self.cycle_ends = list(selected.arrival_ends())
+            for index, tick in enumerate(self.cycle_ticks):
+                tick.setVisible(index < len(self.cycle_ends))
+                if index < len(self.cycle_ends):
+                    tick.blockSignals(True)
+                    tick.setText(f"To {self.cycle_ends[index]}")
+                    tick.setChecked(self.cycle_ends[index] in selected.cycle_lanes)
+                    tick.blockSignals(False)
             self._refresh_apply()
             a, b = selected.from_node, selected.to_node
             self.bus_stop_menu.clear()
@@ -757,7 +524,12 @@ class PropertiesPanel(QWidget):
     def _road_field_values(self) -> tuple:
         return (round(self.length.value(), 2), self.lanes.value(), self.lane_changing.isChecked(),
                 self.speed.currentText().strip(), self.direction.value(),
-                self.road_type.currentText().strip(), self._pocket_fields())
+                self.road_type.currentText().strip(), self._pocket_fields(), self._cycle_fields(),
+                list(FOOTPATH_CHOICES[self.footpath_choice.currentData()]))
+
+    def _cycle_fields(self) -> list[str]:
+        """The arrival ends ticked for a cycle lane, in the road's order."""
+        return [end for end, tick in zip(self.cycle_ends, self.cycle_ticks) if tick.isChecked()]
 
     def _pocket_fields(self) -> dict:
         """The turn pockets the form shows: end -> Road.pockets entry."""
@@ -772,7 +544,14 @@ class PropertiesPanel(QWidget):
     def _road_values(road: Road) -> tuple:
         return (round(road.length_m, 2), road.lanes_per_direction, road.lane_changing,
                 f"{road.speed_limit_kmh:g}", 0 if road.direction == "two-way" else 1, road.road_type,
-                {end: {**pocket, "length_m": round(pocket["length_m"], 1)} for end, pocket in road.pockets.items()})
+                {end: {**pocket, "length_m": round(pocket["length_m"], 1)} for end, pocket in road.pockets.items()},
+                [end for end in road.arrival_ends() if end in road.cycle_lanes],
+                [side for side in ("left", "right") if side in road.footpaths])
+
+    def _preview_footpaths(self) -> None:
+        """The footpath sides chosen, highlighted on the map until applied or the selection changes."""
+        if isinstance(self.selected, Road):
+            self.footpath_preview.emit(self.selected.id, FOOTPATH_CHOICES[self.footpath_choice.currentData()])
 
     def _refresh_apply(self) -> None:
         if isinstance(self.selected, Road):
@@ -798,9 +577,14 @@ class PropertiesPanel(QWidget):
                 self.network.reverse_road(road_id)  # a curve's points and curvature flip too
             road.road_type = self.road_type.currentText().strip() or "urban"
             road.single_lane = road.single_lane and road.direction == "one-way" and road.lanes_per_direction == 1
-            if self._pocket_fields() != self._road_values(self.selected)[-1]:  # as shown (unchanged: kept exactly)
+            if self._pocket_fields() != self._road_values(self.selected)[-3]:  # as shown (unchanged: kept exactly)
                 road.pockets = self._pocket_fields()
             road.pockets = {end: pocket for end, pocket in road.pockets.items() if end in road.arrival_ends()}
+            road.cycle_lanes = [end for end in self._cycle_fields() if end in road.arrival_ends()]
+            footpaths = list(FOOTPATH_CHOICES[self.footpath_choice.currentData()])
+            if self.direction.value() == 2:  # the sides were named before the road ran the other way
+                footpaths = [{"left": "right", "right": "left"}[side] for side in footpaths]
+            road.footpaths = footpaths
             self.network.validate()
         except ValueError as exc:
             vars(self.network).update(vars(before))  # the same Network object, as it was (call_tool's way)

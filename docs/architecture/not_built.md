@@ -12,7 +12,15 @@
   crossed between two samples; Batch Run compares agents deciding TSP (or plain runs), not network variants (the
   assistant's `run_experiment` does those); a live run has no decision deadline (a batch's Decide within); a batch's runs share one process, so many at once at a fast pace fall behind the clock (the pace achieved is
   recorded and said), and plain (non-TSP) batches go one at a time; a replay needs the run's network and demand open (it reads only the seed, the simulated time and the feed); telemetry is TSP's only;
-  pedestrians, gradual (sublane) lane changes, editing each type's behaviour in Mode Behavior.
+  pedestrians crowding each other (SUMO's NonInteracting walkers) or seen by traffic outside a zebra (at a gap the
+  walker judges the gap; no collision between walkers and vehicles is checked), pedestrian signals (a signalised
+  junction's arms are crossed in gaps, as anywhere: no walk phase), gradual (sublane) lane changes, editing each type's behaviour in Mode Behavior.
+- Cycle lanes are one fixed width (1.5 m), bicycles only (not mopeds), the road's whole length (none ending short of
+- Walking: footpaths are one fixed width (2 m), the road's whole length; a path's ends are road nodes (none part way along a footpath); zebras go part way along a road (none on a junction's arm); platoons crossing together (HCM Eq 18-18 to 18-20) aren't modelled, and crossing figures aren't warm-up aware; from OpenStreetMap, a footway reaching fewer than two road nodes, a crossing at a junction's arm and a crossing's signals don't come in, and cycle lanes come in for every direction whichever side is tagged.
+  a junction, no advanced stop line or bike box, no two-stage offside turn: a bike turns across from the cycle lane
+  as a car turns from the kerb); between junctions bikes and cars never meet (no bus crossing it into a bay, no car
+  crossing it to park); loop detectors, actuated signals and Webster's flows leave its bikes out; the assistant
+  sets them only both ways (update_roads cycle_lanes).
 - Lateral position (opt-in, `Simulation(lateral=True)`; simulation.md) is SL2015 at its smallest: no vehicle
   straddles two lanes or rides between them, only filtering types (motorcycle, moped, bicycle) move sideways (cars,
   buses and the rest keep to their lane's kerb side, so a car can't pass a cyclist within a lane), lane changes are
@@ -82,7 +90,7 @@
 - Bus lines calling at some stops only; passengers' destinations (alighting is a share of the load at each stop),
   their waiting time by person, more than one door; the passengers on a stop are set in the panel or by the
   assistant, not generated from institutions.
-- System 1 beyond the signal agent: it decides TSP's bus requests (Jev or a local Laya, one noul each) and
+- System 1 beyond the signal agent: it decides TSP's bus requests (Jev or Laya in Ollama, one noul each) and
   answers other extensions' yes/no; its choice and score answers (`assistant.system_one`) have no caller
   yet, and TSP's agent decides once per request (not again as the bus comes closer). System 2 answers questions, edits the network and
   demand, reads the live run (`read_traffic`) and runs its own headless tests, but can't start or stop
@@ -116,11 +124,12 @@
   ramps, Chapter 25's ramp junctions (merge and diverge alone) and the weaving length measured gore to gore (here node
   to node) aren't built.
 - Metro rail: its own network and OD matrix, drawn on by institutions (metro.md), but no trains run in the
-  simulation (riders just leave the roads), a trip uses one line (no transfers between lines or to buses; demand
-  between lines can't be entered), walks to a station are straight-line, not along the roads, its loads are at one
+  simulation (riders just leave the roads), a trip changes lines at most once, at an interchange (a station where
+  lines were merged; none to buses; demand between stations no such ride joins can't be entered), walks to a station are straight-line, not along the roads, its loads are at one
   design hour (the OD matrix the same every hour; no crowding feeding back into the choice), and car trips to
   stations (park-and-ride, drop-offs) aren't made. Road OD pairs never take the metro, by design. An accepted line is final by design (accept or delete
-  when it is finished; no later edits); undo still takes it back. Lines don't branch or join (each stop on one line).
+  when it is finished; no later edits); undo still takes it back. Lines don't branch or join end to end;
+  two crossing lines share only their interchange station. A curve is short straight viaduct pieces in 2.5D.
 - Design and accessibility checks: acceleration and deceleration lane lengths, grades and access within 50 m of a
   junction (a building's door is a junction) aren't checked; emissions are a light car's only (no buses, lorries or
   motorcycles, no grades); accessibility counts opportunities by road at free flow or one run's times, not by bus or

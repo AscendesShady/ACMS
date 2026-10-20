@@ -2,6 +2,9 @@
 Run with `python tests/test_mode_behavior.py` (or the test monitor)."""
 
 import os
+import subprocess
+import sys
+from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 os.environ.setdefault("QT_QPA_FONTDIR", os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts"))  # real fonts
@@ -372,6 +375,19 @@ def test_undo_leaves_a_half_typed_name_alone():
     window.redo()
     assert [mode.name for mode in window.vehicle_modes.modes] == before
     window.close()
+
+
+def test_vehicle_types_need_no_qt():
+    """A vehicle type (VehicleMode) lives in vehicle.py: made and filled in without Qt or this tab, so vehicle.py names
+    no Qt module, even for its types, and the physics doesn't loop back through the tab."""
+    check = ("import sys; from traffic_simulator.vehicle import VehicleMode; "
+             "m = VehicleMode('Moto', '#123456', vehicle_class='motorcycle'); "
+             "print(m.filters, m.emergency_decel, sorted(sys.modules))")
+    loaded = subprocess.run([sys.executable, "-c", check], capture_output=True, text=True, timeout=60, check=True).stdout
+    assert loaded.startswith("True 10.0 ")  # FILTERING_CLASSES and VEHICLE_CLASSES' emergency braking, read directly
+    assert "PySide6" not in loaded and "traffic_simulator.mode_behavior" not in loaded
+    source = (Path(__file__).resolve().parents[1] / "src" / "traffic_simulator" / "vehicle.py").read_text(encoding="utf-8")
+    assert "TYPE_CHECKING" not in source and "mode_behavior import" not in source
 
 
 if __name__ == "__main__":

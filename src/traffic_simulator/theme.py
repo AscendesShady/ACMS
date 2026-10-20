@@ -54,6 +54,15 @@ VEHICLE_PAINTS = ("#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#00830
 VEHICLE_INKS = ("#21394c", "#17222c", "#fff0bf", "#ee4148", "#438bff", "#e8edf0")
 # Metro rail on the map (non-text detail): a line's track and its stops' platform marker, ringed in the track colour.
 METRO_LINE, METRO_STOP = "#d946ef", "#f8fafc"
+FOOTPATH = "#9b5846"  # warm brick paving for road footpaths and pedestrian paths (non-text surface)
+FOOTPATH_SHADE, FOOTPATH_MORTAR = "#ad6e56", "#c8a68d"
+PAVING_SELECTED = "#f7d91e"
+WALKER = "#fde047"  # a pedestrian on the map (non-text marker): a yellow none of the vehicle paints uses
+# An OD matrix cell that takes no value (its diagonal: no trip from a place to itself; a metro pair no ride joins):
+# a darker fill hatched across, so it reads as shut (non-text surface)
+BLOCKED_CELL, BLOCKED_HATCH = "#191c20", "#59616b"
+CYCLE_LANE = "#52b788"  # a cycle lane's surface on the map (non-text detail): painted-lane green, lighter than the grass
+METRO_INKS = ("#a4aeb9", METRO_LINE, "#556474", "#21394c", METRO_STOP, "#657d8f", "#17222c", "#e5c15b")
 BUILDING_PAINTS = {"Residential": ("#c3aa8b", "#886354"), "School": ("#d7c8a2", "#657d7b"),
                    "Hospital": ("#c6d4d9", "#69858e"), "Office": ("#a2b0bc", "#495c6f"),
                    "Shop": ("#c8b294", "#597e68")}
@@ -108,9 +117,9 @@ QCheckBox, QRadioButton {{ spacing: 6px; }}
 /* Section titles lead each panel: semibold and white, with room above; what is inside
    the section stays at normal weight. */
 QGroupBox {{ font-weight: 600; font-size: 10.5pt; margin-top: 16px; padding-top: 4px; }}
-QGroupBox::title {{ subcontrol-origin: margin; left: 2px; padding: 0 2px; color: {TEXT}; }}
+QGroupBox::title {{ subcontrol-origin: margin; left: 0; padding: 0; color: {TEXT}; }}  /* on the sidebar's column */
 QGroupBox QWidget {{ font-weight: 400; font-size: 10pt; }}
-/* A collapsible section's title (properties_panel.Collapsible): chevron and title on the left, a
+/* A collapsible section's title (widgets.Collapsible): chevron and title on the left, a
    rule under it, no fill until hovered. */
 QPushButton[role="section"] {{ text-align: left; font-weight: 600; font-size: 10.5pt; min-height: 30px;
                                padding: 4px 8px; border: none; border-bottom: 1px solid {DIVIDER};
@@ -141,7 +150,10 @@ QTabBar::tab {{ background: {SURFACE}; color: {SECONDARY_TEXT}; border: 1px soli
                 border-radius: {RADIUS_SMALL}px; padding: 6px 10px; margin: 2px; }}
 QTabBar::tab:selected {{ background: {BANNER}; border-color: {ACCENT_EDGE}; color: {TEXT}; }}
 QTabBar::tab:hover:!selected {{ background: {BUTTON_HOVER}; border-color: {BORDER}; color: {TEXT}; }}
-QTabBar#iconTabs::tab {{ width: 20px; }}  /* the sidebar's icon-only tabs: no room kept for a name */
+QTabBar#iconTabs::tab {{ width: 20px; }}  /* icon-only tabs: no room kept for a name; main.py centres the icon */
+/* The row's ends line up with the content edges: the first tile flush left, the last flush right. */
+QTabBar::tab:first {{ margin-left: 0; }}
+QTabBar::tab:last {{ margin-right: 0; }}
 QProgressBar {{ background: {BUTTON}; color: {TEXT}; border: none; border-radius: 4px; }}
 QProgressBar::chunk {{ background: {ACCENT}; border-radius: 4px; }}
 QSlider::groove:horizontal {{ height: 4px; background: {GLASS_SELECTED}; border-radius: 2px; }}
@@ -162,8 +174,8 @@ QMenu::item:selected {{ background: {ACCENT}; }}
 QMenu::separator {{ height: 1px; background: {DIVIDER}; margin: 4px 8px; }}
 /* Menu bar (File, Edit and the simulation controls): room above and below so it doesn't look
    stuck to the window's edge or to the panels under it. */
-QMenuBar {{ padding: 5px 6px; background: {WINDOW}; color: {SECONDARY_TEXT}; }}
-QMenuBar::item {{ padding: 3px 10px; border-radius: {RADIUS_SMALL}px; background: transparent; }}
+QMenuBar {{ padding: 8px 6px; background: {WINDOW}; color: {SECONDARY_TEXT}; }}
+QMenuBar::item {{ padding: 7px 10px; border-radius: {RADIUS_SMALL}px; background: transparent; }}
 QMenuBar::item:selected, QMenuBar::item:pressed {{ background: {BUTTON_HOVER}; color: {TEXT}; }}
 QStatusBar {{ background: {WINDOW}; color: {SECONDARY_TEXT}; border-top: 1px solid {DIVIDER}; }}
 QStatusBar::item {{ border: none; }}

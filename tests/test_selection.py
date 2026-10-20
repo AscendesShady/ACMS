@@ -194,6 +194,145 @@ def test_a_turn_pocket_is_set_drawn_undone_and_refused_in_the_panel():
     window.close()
 
 
+def test_a_cycle_lane_is_ticked_drawn_and_undone_in_the_panel():
+    from PySide6.QtWidgets import QGraphicsPathItem
+
+    from traffic_simulator.main import MainWindow
+    from traffic_simulator.theme import CYCLE_LANE
+
+    window = MainWindow()
+    window.install_network(generate_network(3, 4))
+    window._commit()
+
+    def strips() -> int:
+        return sum(isinstance(item, QGraphicsPathItem) and item.pen().color().name() == CYCLE_LANE
+                   for item in window.scene.items())
+
+    steps = len(window.history.undo_stack)
+    window.select("road", "1,2-2,2")
+    panel = window.properties
+    assert [tick.text() for tick in panel.cycle_ticks] == ["To 2,2", "To 1,2"] and strips() == 0
+    panel.cycle_ticks[0].setChecked(True)
+    assert panel.apply_button.isEnabled()
+    panel.apply_button.click()
+    assert window.network.roads["1,2-2,2"].cycle_lanes == ["2,2"] and strips() == 1
+    assert len(window.history.undo_stack) == steps + 1
+    window.undo()
+    assert window.network.roads["1,2-2,2"].cycle_lanes == [] and strips() == 0
+    window.close()
+
+
+def test_footpaths_are_a_roads_choice_highlighted_before_apply_and_paths_are_selected_and_deleted():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window.install_network(generate_network(3, 4))
+    window._commit()
+    steps = len(window.history.undo_stack)
+    window.select("road", "1,2-2,2")  # runs east: its sides are north and south
+    panel = window.properties
+    choice = panel.footpath_choice
+    assert [choice.itemText(i) for i in range(choice.count())] == ["None", "Both sides", "North side only",
+                                                                  "South side only"]
+    assert choice.currentText() == "None" and not window.scene._footpath_preview
+    choice.setCurrentIndex(choice.findText("Both sides"))  # highlighted on the map where it would go, before Apply
+    assert len(window.scene._footpath_preview) == 2 and window.network.roads["1,2-2,2"].footpaths == []
+    choice.setCurrentIndex(choice.findText("South side only"))
+    assert len(window.scene._footpath_preview) == 1 and panel.apply_button.isEnabled()
+    panel.apply_button.click()
+    assert window.network.roads["1,2-2,2"].footpaths == ["right"] and len(window.history.undo_stack) == steps + 1
+    assert not window.scene._footpath_preview  # applied: the paving itself now
+    window.select("road", "1,2-2,2")
+    assert choice.currentText() == "South side only"
+    choice.setCurrentIndex(choice.findText("None"))  # the one to go: outlined dashed
+    assert len(window.scene._footpath_preview) == 1
+    assert not hasattr(window, "add_path_button")  # paths aren't drawn by hand; one from the map or the assistant:
+    window.network.add_walkway("1,1", "2,2", [[250.0, 250.0]])
+    window._commit()
+    window.canvas_clicked("walkway", "P1")
+    assert window.scene.selection == ("walkway", "P1") and "Delete removes it" in window.statusBar().currentMessage()
+    window.delete_selection()
+    assert not window.network.walkways
+    window.undo()
+    assert list(window.network.walkways) == ["P1"]
+    window.close()
+
+
+def test_the_pedestrian_tab_places_crossings_that_are_selected_deleted_and_undone():
+    from traffic_simulator.main import MainWindow
+
+    network = generate_network(2, 1)
+    for road in network.all_roads():
+        road.footpaths = ["left", "right"]
+    window = MainWindow()
+    window.install_network(network)
+    window._commit()
+    steps = len(window.history.undo_stack)
+    window.tabs.setCurrentWidget(window.edit_tab)
+    window.edit_tabs.setCurrentIndex(2)
+    assert window.edit_tabs.tabText(2) == "Pedestrian"
+    road = window.network.roads["1,2-1,1"]
+    (ax, ay), (bx, by) = window.network.road_points(road)[0], window.network.road_points(road)[-1]
+    window.zebra_button.setChecked(True)
+    assert "zebra crossing" in window.mode_hint.text()
+    window.canvas_clicked("node", "1,1")
+    assert "Click a road" in window.mode_hint.text() and not window.network.pedestrian_crossings
+    window.canvas_clicked("road", road.id, ax + (bx - ax) * 0.01, ay + (by - ay) * 0.01)  # on the junction: refused
+    assert "at least 20 m" in window.mode_hint.text() and not window.network.pedestrian_crossings
+    window.canvas_clicked("road", road.id, (ax + bx) / 2, (ay + by) / 2)
+    assert [(c.kind, c.road) for c in window.network.pedestrian_crossings.values()] == [("zebra", road.id)]
+    assert window.scene.selection == ("crossing", "X1") and len(window.history.undo_stack) == steps + 1
+    window.overbridge_button.setChecked(True)  # one tool at a time
+    assert not window.zebra_button.isChecked()
+    window.canvas_clicked("road", road.id, ax + (bx - ax) * 0.8, ay + (by - ay) * 0.8)
+    assert window.network.pedestrian_crossings["X2"].kind == "overbridge"
+    window.overbridge_button.setChecked(False)
+    window.canvas_clicked("crossing", "X1")
+    assert "Zebra X1" in window.statusBar().currentMessage()
+    window.delete_selection()
+    assert list(window.network.pedestrian_crossings) == ["X2"]
+    window.undo()
+    assert sorted(window.network.pedestrian_crossings) == ["X1", "X2"]
+    window.close()
+
+
+def test_spawn_points_are_placed_on_the_map_then_their_grid_shows():
+    from traffic_simulator.main import MainWindow
+
+    network = generate_network(3, 3)
+    for road in network.all_roads():
+        road.footpaths = ["left", "right"]
+    window = MainWindow()
+    window.install_network(network)
+    window._commit()
+    steps = len(window.history.undo_stack)
+    window.tabs.setCurrentWidget(window.demand_tab)
+    window.od_panel.demand.setCurrentIndex(window.od_panel.demand.findData("spawn"))  # none yet: placing at once
+    assert window.od_panel.place_spawn_button.isChecked() and window.scene.spawn_placing
+    assert window.workspace.currentWidget() is window.view and "S1" in window.mode_hint.text()
+    a = window.network.node("1,1")
+    for dx, dy in ((140, 60), (900, -800), (500, -300)):
+        window.scene.spawn_clicked.emit(a.x + dx, a.y + dy)
+    assert list(window.network.spawn_points) == ["S1", "S2", "S3"] and len(window.history.undo_stack) == steps + 3
+    assert "nearest footpath is" in window.mode_hint.text()
+    assert sum(1 for item in window.scene.items() if item.data(0) and tuple(item.data(0))[0] == "spawn") == 3
+    window.view.right_clicked.emit()  # finishes: their grid
+    assert not window.scene.spawn_placing and window.workspace.currentWidget() is window.spawn_matrix
+    window.spawn_matrix.table.item(0, 1).setText("300")
+    assert window.network.spawn_demand == {"S1->S2": 300.0} and len(window.history.undo_stack) == steps + 4
+    window.show_grid(False)
+    window.canvas_clicked("spawn", "S2")
+    assert window.scene.selection == ("spawn", "S2") and window.tabs.currentWidget() is window.demand_tab
+    window.delete_selection()  # it goes, and the walking to it
+    assert "S2" not in window.network.spawn_points and not window.network.spawn_demand
+    window.undo()
+    assert "S2" in window.network.spawn_points and window.network.spawn_demand == {"S1->S2": 300.0}
+    window.od_panel.place_spawn_button.setChecked(True)
+    window.cancel()  # Esc finishes placing too
+    assert not window.scene.spawn_placing
+    window.close()
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

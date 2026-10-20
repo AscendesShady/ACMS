@@ -6,6 +6,28 @@
   - Two-way roads get a yellow centre divider; one-way roads have none and show an ahead
     arrow in every lane.
   - Stop lines cross only the arriving lanes (and a turn pocket's); roundabout entries get give-way dashes.
+  - Footpaths (`Road.footpaths`): paving (`theme.FOOTPATH`) 2 m wide along `Network.footpath_line`.
+    Paths and footpaths use `PavingItem`: warm brick at overview scale, herringbone joints when level of detail is
+    at least 20 pixels/metre. The pattern repeats every 0.4 m, with 0.2 by 0.1 m bricks; it does not alter the
+    stroked footprint, world position, saved data, IDs or selected-path fill. Qt raster and GPU paint the same brush.
+    Paths (`_draw_walkways`, `Network.walkways`): their outline filled, under the roads, clickable as ("walkway", id),
+    yellow when selected. `preview_footpaths(road, sides)` (the road panel's Footpath choice, before Apply):
+    each side chosen outlined and filled in the selection colour (`ACCENT_EDGE`), a side there now but not chosen
+    outlined dashed; cleared by any redraw.
+    Spawn points (`_draw_spawn_points`): a 14-pixel disc in `WALKER` at any zoom with its name anchored to the same world point and a fixed pixel gap, a dashed line to
+    where its walkers join the footpaths (`walking.footpath_join`), clickable as ("spawn", id); `spawn_placing` makes
+    every left click a `spawn_clicked(x, y)`.
+    Crossings (`_draw_crossings`): a zebra's white stripes across the carriageway, 3 m wide along the road; an
+    overbridge's paving deck from footpath to footpath above the traffic (z over the vehicle layer); clickable as
+    ("crossing", id), outlined yellow when selected. `OverbridgeItem` keeps the flat 2D footprint; 2.5D adds a
+    6 m deck (assumed), parapets, supports and stairs. Picking and Fit bounds include its projected extrusion.
+    Walkers (`VehicleLayer._paint_walkers`, `Frame.walkers`): yellow (`theme.WALKER`) discs 0.6 m across, at least
+    3 pixels in 2D; in 2.5D they are metre-scaled 1.75 m people. Both interpolate the same two published poses,
+    after vehicles on either render path. Poses within an overbridge corridor are drawn at its deck height,
+    ramping at its ends, after the bridge. This is display inference from XY: frames do not carry route identity
+    or a stair trajectory, so coincident ground paths remain ambiguous. Road/walking motion and timings are untouched.
+  - Cycle lanes (`Road.cycle_lanes`): a green strip (`theme.CYCLE_LANE`) 1.5 m wide along
+    `Network.cycle_lane_line`, beside the carriageway on that traffic's kerb side, the road's whole length.
   - Turn pockets (`_draw_pocket`, `Road.pockets`): the carriageway widened on that traffic's kerb side,
     from nothing over the 20 m taper to the pocket's lanes along the pocket, on into the junction; a dashed
     lane line beside each lane it adds; a turn arrow leaning to the kerb or the offside in each pocket lane,
@@ -42,11 +64,26 @@
   click sets it down, then `NetworkView.wheelEvent` hands the wheel to `grow_placing` (the view doesn't
   zoom) and the circle grows or shrinks; the second click emits `placed`. `placement_changed` after each
   step. Right or middle drag still pans.
-- **Metro** (`_draw_metro`, `METRO_Z` 7.5: above roads and signals, below vehicles): each line's track straight stop to
-  stop (`METRO_LINE`, 4 px), each stop a ringed marker (`METRO_STOP`, `METRO_STOP_RADIUS_M` 12 m) labelled with its ID,
-  and a deployment's pending first stop. While `metro_deploying`, a left click emits `metro_clicked(x, y)` before
+- **Metro** (`_draw_metro`, `MetroItem`): top-down keeps the saved curved track (`METRO_LINE`, 4 px) and ringed stop
+  markers (`METRO_STOP`, 12 m radius) below road vehicles (`METRO_Z` 7.5). In 2.5D `metro_assets` draws an overhead
+  viaduct with piers, side-platform stations/canopies and a labelled parked train preview per line (its carriage
+  count). Assumed heights: 8 m underside, 9 m tracks, 9.4 m platforms, 14 m canopy; trains start at 9.15 m and
+  stand 3.4 m tall. No moving trains are simulated. Labels lift; bounds reserve every extrusion before toggling.
+  In 2.5D the item sits above road vehicles, with its own device-coordinate cache; it never joins the background
+  still cache, which would put it behind traffic. Whole-object layering is approximate: metro scenery does not
+  share the vehicle GPU depth buffer. Buildings visibility does not hide it. A pending first stop shows a station.
+  While `metro_deploying`, a left press marks a stop and its release emits `metro_clicked(x, y, dx, dy)` (a drag of
+  `METRO_AIM_PX` 6 px or more: the aim, a unit direction, Shift in 15 degree steps; `metro_aiming` as it moves;
+  (0, 0): a plain click), before
   anything else. `NetworkView.right_clicked`: a right press and release that panned under `RIGHT_CLICK_PX` (4 px), so
   a right drag still pans.
+  Meshes sweep the exact `metro_track`, with connected curved decks/rails/platforms and arc-distance piers.
+  The platform length uses `models.METRO_PLATFORM_M` (currently 120 m) as its minimum and grows to fit longer
+  trains. Pitched canopy shells stay within the existing 14 m height; beams and tactile edges distinguish stations.
+  Sloped cab glass follows the train nose; side glass replaces hull panels, with a thin livery band within the
+  existing 18 by 2.8 m carriage dimensions. Only the train's terminal carriages have cab windscreens.
+  The dashed metro deployment preview lifts to track level in 2.5D; path drawing stays on the ground. Preview
+  points, curve constraints, turn/crossing warnings and all emitted placement coordinates remain world metres.
 - **Clicks:** clickable items carry `data(0) = (kind, id)`. The `clicked(kind, id, x, y,
   additive)` signal reports the object (`road`, `node`, `entry`, `exit`, `bus_stop`, `institution` or `""`) and the
   point in metres; Ctrl/Shift makes `additive` true.

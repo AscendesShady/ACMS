@@ -19,7 +19,7 @@ import random
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QCheckBox, QComboBox, QHBoxLayout, QSpinBox, QVBoxLayout, QWidget
 
-from traffic_simulator.properties_panel import MINI_ICON_PX, hint_label, icon_button, styled_button
+from traffic_simulator.widgets import MINI_ICON_PX, hint_label, icon_button, styled_button
 from traffic_simulator.theme import STATUS
 
 NAME = "Dispatch Emergency Vehicle"

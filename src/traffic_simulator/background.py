@@ -26,7 +26,7 @@ from PySide6.QtWidgets import (QButtonGroup, QDoubleSpinBox, QFileDialog, QFormL
 
 from .map_tiles import ATTRIBUTION, Frame, PlaceSearch, TileStore
 from .models import Background
-from .properties_panel import ICON_FONTS, ChoiceButtons, glyph_icon, hint_label, icon_button, styled_button
+from .widgets import ICON_FONTS, ChoiceButtons, glyph_icon, hint_label, icon_button, styled_button
 from .theme import ACCENT_EDGE, TEXT, TOOLTIP
 
 # Solid backgrounds (map colours, like the scene's own road and grass colours): name -> colour.

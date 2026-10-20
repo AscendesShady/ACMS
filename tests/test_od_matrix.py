@@ -2,6 +2,8 @@
 Run with `python tests/test_od_matrix.py` (or the test monitor)."""
 
 import os
+import subprocess
+import sys
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -10,6 +12,7 @@ from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from traffic_simulator.daily_profile import WEEKDAY  # noqa: E402
+from traffic_simulator.demand import shares_from  # noqa: E402
 from traffic_simulator.od_matrix import ODCellPanel, ODMatrix  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
@@ -31,7 +34,7 @@ def daily(panel):
 
 
 def test_a_demand_cut_by_its_check_leads_with_what_was_kept():
-    from traffic_simulator.od_matrix import _lead_with_what_was_kept
+    from traffic_simulator.demand import lead_with_what_was_kept as _lead_with_what_was_kept
 
     # qwen3.5 told the user 6,420 veh/h when the check had kept 47 (Dhanmondi): the kept figure now comes first
     info = {"method": "gravity", "total_asked": 6503, "total_made": 6420, "junction_controls": {"N41": "uncontrolled",
@@ -50,7 +53,8 @@ def test_a_demand_cut_by_its_check_leads_with_what_was_kept():
 
 def test_hourly_and_daily_demand_are_kept_apart():
     matrix, panel = setup()
-    assert [panel.demand.itemData(i) for i in range(panel.demand.count())] == ["hourly", "daily", "institutions", "metro"]
+    assert [panel.demand.itemData(i) for i in range(panel.demand.count())] == \
+        ["hourly", "daily", "institutions", "metro", "walk", "spawn"]
     daily(panel)
     panel.demand.setCurrentIndex(panel.demand.findData("institutions"))  # its own panel, not the pair editor
     assert panel.institutions.isVisible() and not panel.pair_group.isVisible() and matrix.mode == "daily"
@@ -168,6 +172,38 @@ def test_the_curve_is_shaped_by_dragging_and_by_equations():
     assert matrix.cells[("1W", "1E")].profile.points == WEEKDAY
 
 
+def test_a_types_trips_can_end_part_way_along_the_pair():
+    matrix, panel = setup()
+    panel.router = lambda origin, destination: (1000.0, [(0.4, "J1"), (0.7, "J2")])  # the fastest route, 1 km
+    panel.flow.setValue(600)
+    modes, slider = panel.modes, panel.drop_slider
+    zone = QPoint(round(modes._x((modes.cuts[0] + modes.cuts[1]) / 2)), modes.TRACK_TOP + 6)  # the middle of Car's zone
+    split = modes.split()
+    QTest.mouseClick(modes, Qt.MouseButton.LeftButton, pos=zone)
+    assert modes.split() == split  # a zone, not a handle: nothing moves...
+    assert panel.drop_box.isVisibleTo(panel) and panel.drop_heading.text() == "Drop-offs: Car"  # ...Car's drop-offs
+    assert "100 % of these trips reach 1E" in panel.drop_hint.text() and not panel.drop_share_row.isVisibleTo(panel)
+    track = lambda at: QPoint(round(slider._x(at)), slider.TRACK_Y)  # noqa: E731
+    QTest.mouseClick(slider, Qt.MouseButton.LeftButton, pos=track(0.41))  # near J1: snapped to it
+    assert matrix.cells[("1W", "1E")].drops == ((1, 0.4, 10),) and panel.drop_share.value() == 10
+    panel.drop_share.setValue(25)  # typed: a quarter of the cars end at J1
+    assert matrix.cells[("1W", "1E")].drops == ((1, 0.4, 25),) and "75 % of these trips" in panel.drop_hint.text()
+    QTest.mousePress(slider, Qt.MouseButton.LeftButton, pos=track(0.4))
+    QTest.mouseMove(slider, track(0.55))
+    QTest.mouseRelease(slider, Qt.MouseButton.LeftButton, pos=track(0.55))  # dragged between the junctions
+    (kind, at, share), = matrix.cells[("1W", "1E")].drops
+    assert kind == 1 and abs(at - 0.55) < 0.01 and share == 25
+    QTest.mouseClick(slider, Qt.MouseButton.LeftButton, pos=track(0.9))
+    assert [point[2] for point in matrix.cells[("1W", "1E")].drops] == [25, 10]
+    assert panel.drop_share.maximum() == 75  # the two can't end more than all the cars
+    QTest.mouseClick(slider, Qt.MouseButton.RightButton, pos=track(0.9))  # removed
+    assert len(matrix.cells[("1W", "1E")].drops) == 1
+    read = panel._read_for_assistant()
+    assert read["different"]["1W->1E"]["drop_offs"]["Car"][0]["percent"] == 25  # the assistant sees them
+    matrix.vehicle_modes.delete(0)  # Bus goes: Car's points move down to its new index
+    assert matrix.cells[("1W", "1E")].drops[0][0] == 0 and not panel.drop_box.isVisibleTo(panel)
+
+
 def test_the_assistant_works_the_same_controls():
     matrix, panel = setup()
     undo_steps = []
@@ -217,7 +253,7 @@ def test_the_assistant_works_the_same_controls():
         else:
             raise AssertionError(f"{args} should have been refused")
     assert undo_steps == [None, None, None]  # refusals changed nothing
-    assert panel._shares_from([0.3, 0.6, 0.1]) == [30, 60, 10]  # fractions (llama3.2) read as percent
+    assert shares_from([0.3, 0.6, 0.1], panel.matrix.vehicle_modes.names()) == [30, 60, 10]  # fractions (llama3.2) read as percent
     for written in ("1W-1E", "1W->>1E", "1W => 1E", "1W - 1E"):  # pairs as small models write them
         assert panel._pairs_from({"pairs": [written]}) == [("1W", "1E")], written
     panel.command("shape_daily_curve", {"preset": "weekday"})  # no pairs named: every pair
@@ -273,6 +309,98 @@ def test_demand_tools_say_which_demand_a_run_uses_and_refuse_what_does_nothing()
     assert matrix.mode == "hourly" and matrix.cells == before  # the check tried it and put it all back
     done = panel.command("shape_daily_curve", {"preset": "flat"})
     assert done["runs_use"] == "daily demand" and "not the hourly demand" in done["note"]  # the switch is said
+
+
+def test_demand_rules_need_no_qt():
+    """The OD cells' rules (demand.py) without a widget: the split in effect, a tool's pairs and plan, the read-out and
+    a run's pair demand; importing them loads no Qt."""
+    loaded = subprocess.run([sys.executable, "-c", "import sys, traffic_simulator.demand; print(sorted(sys.modules))"],
+                            capture_output=True, text=True, timeout=60, check=True).stdout
+    assert "PySide6" not in loaded and "traffic_simulator.od_matrix" not in loaded
+    from traffic_simulator import demand
+    names, per_hour = ["Bus", "Car", "Bike"], {0: 6.0}  # a bus every 10 minutes
+    origins, destinations = ["1W", "2W"], ["1E", "2E"]
+    cells = {("1W", "1E"): demand.ODCell(flow=600, split=(10, 80, 10)), ("2W", "2E"): demand.ODCell(daily=4800),
+             ("9X", "1E"): demand.ODCell(flow=50)}  # an end no longer on the network: left out
+    assert demand.split_of(cells[("1W", "1E")], per_hour) == (1, 88, 11)  # 6 buses of 600, the rest 80:10
+    assert demand.pairs_from({"pairs": "1W-1E"}, origins, destinations) == [("1W", "1E")]
+    assert demand.demand_plan({"value": 12.6, "arrival_pattern": "poisson"}, "hourly", names) ==         ("hourly", 13, "Poisson", None, None)
+    read = demand.read_od(cells, origins, destinations, "hourly", names, per_hour)
+    assert read["hourly_vph"] == {"1W->1E": 600} and read["daily_trips"] == {"2W->2E": 4800}
+    runs = demand.pair_demand(cells, origins, destinations, "hourly", per_hour)
+    assert [(run.origin, run.destination, run.hourly, run.split) for run in runs] == [("1W", "1E", 600, (1, 88, 11))]
+
+
+def test_pedestrians_an_hour_are_typed_between_boundary_ends():
+    from traffic_simulator.models import MAX_WALK_DEMAND
+    from traffic_simulator.network_generator import generate_network
+    from traffic_simulator.od_matrix import PedestrianMatrix
+
+    network, grid = generate_network(2, 2), PedestrianMatrix()
+    grid.show_network(network)
+    assert grid.stations == sorted(network.approach_nodes) and grid.table.rowCount() == len(network.approach_nodes)
+    changes = []
+    grid.changed.connect(lambda: changes.append(1))
+    row, column = grid.stations.index("1W"), grid.stations.index("2E")
+    grid.table.item(row, column).setText("450")
+    assert network.walk_demand == {"1W->2E": 450.0} and changes == [1]
+    grid.table.item(row, column).setText(str(MAX_WALK_DEMAND + 1))  # too many: put back
+    assert network.walk_demand == {"1W->2E": 450.0} and grid.table.item(row, column).text() == "450"
+    assert not grid.table.item(row, row).flags() & Qt.ItemFlag.ItemIsEditable  # the diagonal: nowhere to walk
+    grid.table.item(row, column).setText("")
+    assert network.walk_demand == {}
+
+
+def test_pedestrians_an_hour_are_typed_between_spawn_points():
+    from traffic_simulator.network_generator import generate_network
+    from traffic_simulator.od_matrix import SpawnMatrix
+
+    network, grid = generate_network(2, 2), SpawnMatrix()
+    grid.show_network(network)
+    assert not grid.table.isVisibleTo(grid) and "No spawn points yet" in grid.empty.text()
+    for x, y in ((10.0, 20.0), (300.0, 40.0)):
+        network.add_spawn_point(x, y)
+    grid.show_network(network)
+    assert grid.stations == ["S1", "S2"]
+    grid.table.item(0, 1).setText("120")
+    assert network.spawn_demand == {"S1->S2": 120.0} and not network.walk_demand
+    assert not grid.table.item(0, 0).flags() & Qt.ItemFlag.ItemIsEditable
+
+
+def test_every_grids_diagonal_is_drawn_shut():
+    # A cell nothing can be typed in (the diagonal: no trip from a place to itself) is theme.BLOCKED_CELL hatched with
+    # BLOCKED_HATCH, in the vehicle OD grid and in the metro's, the pedestrians' and the spawn points' grids alike
+    from PySide6.QtGui import QColor
+
+    from traffic_simulator import theme
+    from traffic_simulator.network_generator import generate_network
+    from traffic_simulator.od_matrix import PedestrianMatrix, SpawnMatrix
+
+    shut = {QColor(theme.BLOCKED_CELL).name(), QColor(theme.BLOCKED_HATCH).name()}
+
+    def colours(table, row, column):
+        rect = table.visualRect(table.model().index(row, column))
+        image = table.viewport().grab().toImage()
+        return {image.pixelColor(x, y).name() for x in range(rect.left() + 2, rect.right() - 1, 3)
+                for y in range(rect.top() + 2, rect.bottom() - 1, 3)}
+
+    matrix = ODMatrix()
+    matrix.resize(420, 300)
+    matrix.set_ends(["1W", "2W", "1E"], ["1W", "2W", "1E"])  # the same ends as rows and columns: a diagonal
+    matrix.show()
+    APP.processEvents()
+    assert colours(matrix.table, 1, 1) <= shut and len(colours(matrix.table, 1, 1)) == 2  # hatched across
+    assert not colours(matrix.table, 0, 1) & {QColor(theme.BLOCKED_CELL).name()}  # a pair to type in: open
+    network = generate_network(2, 2)
+    for x, y in ((0.0, 0.0), (300.0, 0.0)):
+        network.add_spawn_point(x, y)
+    for grid in (SpawnMatrix(), PedestrianMatrix()):
+        grid.resize(400, 300)
+        grid.show_network(network)
+        grid.show()
+        APP.processEvents()
+        assert colours(grid.table, 1, 1) <= shut and not colours(grid.table, 0, 1) <= shut
+        grid.close()
 
 
 if __name__ == "__main__":
