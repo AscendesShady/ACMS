@@ -19,8 +19,8 @@
   on the road (`spawned − arrived − on the road`: every vehicle is one of the three) times dt is the **entry
   wait**, demand held off the network that the delay on the road leaves out. Each
   sample's queued vehicles add up too, for the mean queued at once (`queued_mean`). `kpis()` adds
-  `mean_wait_s` (per completed trip), `people_delay_h` (person·h), `mean_person_delay_s` (passenger delay ÷
-  people carried), `queued_mean`, `delay_vs_free_speed_veh_h`, `mean_trip_delay_vs_free_speed_s`,
+  `mean_wait_s` (per completed trip), `people_delay_h` (person·h), `mean_person_delay_s` (passenger delay ÷ the
+  people on the completed trips measured, `trip_people`), `queued_mean`, `delay_vs_free_speed_veh_h`, `mean_trip_delay_vs_free_speed_s`,
   `person_delay_on_board_h`, `waiting_to_enter` (now), `entry_wait_veh_h`, `delay_with_entry_wait_veh_h`
   (road-limit delay + entry wait), `mean_system_trip_s`, the **completion rate** (`completion_rate`, arrived ÷
   spawned) and the **unfinished share** (`unfinished_share`, on the road + waiting to enter ÷ spawned) beside the
@@ -28,17 +28,20 @@
   `mean_delay_vs_free_speed_s` (older totals read as 0). The Summary, By type and Trips sheets show them,
   after the columns they had.
   Per road: vehicles entering (seen on it after another road), vehicle-seconds and -metres, delay, and its
-  queue: vehicles slower than `QUEUE_KMH` 5 km/h, counted and as a length a lane (lengths + 2.5 m over its
-  lanes per direction), its most and mean. Each simulated minute appends a row to `minutes.csv` (on the
+  queue: vehicles slower than `QUEUE_KMH` 5 km/h, counted (both ways), its most and mean, and in each direction
+  (link, from the vehicle's lane in `place`) as a length a lane (lengths + 2.5 m over that direction's lanes,
+  `road_record`'s `lanes`: `Road.lanes_each_way`, a one-way road's all), the road's longest a lane its longer
+  direction's. Each simulated minute appends a row to `minutes.csv` (on the
   road, spawned and arrived from the frame, arrivals, throughput, people, mean speed, queued, delay,
   distance) and the trips to `trips.csv`, and rewrites `totals.json`, so an interruption loses a minute at
   most. For the statistics it also keeps the Per minute rows (`minute_rows`), every trip (`trip_log`: origin, destination, type, when it arrived, trip and delay
-  seconds), the vehicles first seen per origin and minute (`entries`) and each road's queue (metres a lane,
-  rounded) at every sample that had one (`queues`); `observed()` hands them out (experiments.analyse_run,
+  seconds), the vehicles first seen per origin and minute (`entries`) and each link's queue (metres a lane of
+  that direction, rounded) at every sample that had one (`queues`, keyed "road>" and "road<"); `observed()` hands them out (experiments.analyse_run,
   choose_modes' `from_run`). `kpis()` (any thread, under its lock) gives the network's figures, with the
   travel time index `tti`, planning time index `pti` and buffer index `bi` (`stats.reliability`, against each
   vehicle's own free speed: `trip_log` keeps that delay; not in the workbook's Summary,
-  which is made from the saved totals); `export(path)` a workbook now;
+  which is made from the saved totals); `export(path)` a workbook now (the minute under way as a row of its own,
+  written to a copy of the folder, so `minute_rows` and `minutes.csv` keep whole minutes for the statistics);
   `finish(results)` the workbook when the run ends (`MainWindow._stop_runner`: Stop, a new Run, a change to
   the network, closing, its physics failing, after one last sample, the part-sample, so a run stopped before
   its first 5 s still has one) and clears the folder, or nothing if it simulated nothing. Its `error` (why the
@@ -54,10 +57,15 @@
   run without walkers has none of these: its workbook is as it was.
 - **Warm-up** (`RunRecorder(measure_from_s=)`, 0 by default: everything counts): when the first sample past it
   comes, `_measure_from_here` starts every figure again from zero there (totals, roads, links, trips, queues;
-  `kpis()` then divides by the measured hours, throughput by the arrivals since), and trips that got on the road
-  before it are left out of the trips and their means. The per-minute rows, the vehicles first seen per minute
-  and the spawned and arrived counts (so the completion rate) cover the whole run. The Summary and Run sheets
-  say **Measured from**; analyse_run's MSER-5 warm-up suggests a value (experiments.md).
+  `kpis()` then divides by the measured hours, throughput by the arrivals since, and **People carried**,
+  passenger throughput and each type's people per hour by the people on those same arrivals), and trips that got
+  on the road before it are left out of the trips and their means. Road conditions (and the GeoJSON's
+  per-direction flows) divide by the same measured seconds. A run stopped (or recovered) inside its warm-up has
+  nothing measured: its rates and means are None (blank), its Roads and Road conditions rows none. The per-minute
+  rows (people carried a minute: every arrival in it; Throughput and People per hour over the time the row covers,
+  a whole minute or the last part one), the vehicles first seen per minute and the spawned and
+  arrived counts (so the completion rate) cover the whole run. The Summary and Run sheets say **Measured from**;
+  analyse_run's MSER-5 warm-up suggests a value (experiments.md).
 - **`workbook(folder, path)`**, named by when the run started, its seed and the AI model that decided TSP
   (`file_name(started, recovered, seed, model)`: `ACMS results 2026-09-30 14-05-33 seed 42 laya.xlsx`; the
   model is `jev` for Jev, else the Ollama or System 2 model id, `never` or `always` for a batch's baselines, `no-llm` when TSP had nobody to ask, `no-ai` without
@@ -71,18 +79,20 @@
   and when the workbook was written), **Per minute**, **Roads** (flow veh/h, mean speed, density veh/km,
   most and mean queued, longest queue a lane, delay), **By type** (with mean wait and passenger delay),
   **Trips** (with each trip's wait), the sheets the run's extensions reported (`add_sheets(reports)`, kept
-  in the folder's `extra.json`: TSP's **TSP** and **Agent decisions**, see extensions.md; each named in the
+  in the folder's `extra.json`, written whole as `analysis.json` and `files/` are: TSP's **TSP** and **Agent decisions**, see extensions.md; each named in the
   Read me; their files, kept in `files/`, go beside the workbook named after it: `<workbook name>
-  telemetry.jsonl`, at the end and on Export), and the inputs as they were at
+  telemetry.jsonl`, each copied to a .part then moved, at the end and on Export), and the inputs as they were at
   Run (`input_sheets`): **Junctions** (place, control, signal settings), **Road network**, **Boundary ends**,
   **Demand** (every pair: flow or trips a day with its 24 hourly shares, pattern, split), **Vehicle types**
   (every parameter and occupancy), **Signal plans** (what each method worked out), **Bus stops** (with
   boarding per hour and alighting share),
-  **Institutions**. The inputs and settings are kept in the folder's `meta.json`, so a recovered workbook
-  has them too. **`recover(results)`** makes one for each folder a crash left (`… (recovered).xlsx`) at the
-  next start. A run's folder is named with its start, process id and a number (`_numbers`), so runs started
-  in the same second have their own; runs finishing at once take their workbook names one at a time
-  (`_naming`, each reserving its name). A live run's folder holds `live.lock`
+  **Institutions**. The inputs and settings are kept in the folder's `meta.json` (written whole, `write_whole`:
+  a .part then `os.replace`, as the GeoJSON is), so a recovered workbook has them too. **`recover(results)`**
+  makes one for each folder a crash left (`… (recovered).xlsx`) at the next start. A run's folder is named with
+  its start, process id and a number (`_numbers`), so runs started in the same second have their own; runs
+  finishing at once, and recovered ones, take their workbook names one at a time (`unused_path` under `_naming`,
+  each reserving its name, numbered "(2)", "(3)"… when taken; a workbook that fails gives its name up again, and
+  the folder stays for `recover`). A live run's folder holds `live.lock`
   (`take_lock`: kept open, which Windows won't let another process delete, and `fcntl.flock`ed on POSIX;
   either lets go when the process ends, a crash too), so a second ACMS open at once leaves that run
   alone (`lock_held`).
@@ -90,9 +100,10 @@
   same run; the workbook records it.
 - **`xlsx.write_xlsx(path, sheets)`**: Office Open XML SpreadsheetML by hand (zipfile): numbers as numbers,
   other values as inline strings (escaped, XML's forbidden control characters dropped), a bold frozen
-  header, columns sized from the first 200 rows, sheet names made legal (31 characters, no []:*?/\) and
+  header, columns sized from the first 200 rows, a cell's text cut at Excel's 32,767 characters, sheet names made
+  legal (31 characters, no control characters, []:*?/\ or apostrophe at either end) and
   unique whatever their case (a taken one gets " 2", " 3"…, cut to make room),
-  written to a `.part` file and moved into place. **`xlsx.read_xlsx(path)`** reads such a workbook back (each
+  written to a `.part` file and moved into place (removed if the write fails). **`xlsx.read_xlsx(path)`** reads such a workbook back (each
   sheet's rows, numbers as floats): a replay reads a run's seed and simulated time with it, and the tests read
   workbooks with it.
 - **Occupancy**: `vehicle.VehicleMode.occupancy`, people a vehicle carries: Bus 20, Car 1.5, Bike 1, a
@@ -102,23 +113,24 @@
 - **The window**: results go to Documents\ACMS results (offscreen, i.e. tests: a temporary folder);
   **Export** (the menu bar corner) saves a workbook of the run so far (with TSP's sheets as they stand: its
   agent's decisions, latency and tokens, and the analysis of what it has observed so far), the run carrying on,
-  or copies the last run's; with neither, it saves the network alone (`network_workbook`: Read me, City, the
+  or copies the last run's (to its own suggested path, the workbook itself, it says it is already saved there); with neither, it saves the network alone (`network_workbook`: Read me, City, the
   inputs, Settings, and its GeoJSON). A run's end (`MainWindow._stop_runner`) and each headless run
-  (`_one_run`) add the extensions' reports (`ExtensionsPanel.reports`) and the analysis sheets
+  (`_one_run`) add the extensions' reports (`ExtensionsPanel.reports`; a live run's from every set of overrides it
+  was handed, ticking swapping them, `MainWindow._replaced`) and the analysis sheets
   (`add_analysis`) before the workbook is written (`MainWindow._end_recording`). Every run that ends, however
   it ends (stopped, cancelled, its physics or its extras raising), writes its workbook: the extras as far as
   they go, what failed in its Incomplete row and the status bar; a headless run's error then goes on up to
   its caller. `_quick_run` (a search's KPIs) keeps none, by design.
 - **Everything for analysis** (every run, the user's live ones too):
   - **Road conditions**: each direction of each road (link: "road>" from its from-node, "road<" back, from the
-    lane in each sample's `place`), its flow, flow a lane, mean speed and its share of the limit, level of service
+    lane in each sample's `place`), its flow, flow a lane (over that direction's lanes), mean speed and its share of the limit, level of service
     (`LOS_SPEED`, `level_of_service`: HCM 2010 urban street segments by travel speed as a share of free-flow speed,
     the limit standing in for it; A over 85 %, B 67, C 50, D 40, E 30, F at or below), travel time against free
     flow (travel time index), density and delay (`road_conditions`, from the totals' `links`).
   - **Roads by minute**: each road each simulated minute (entered, flow, mean speed, most queued, delay),
     written to `roads_minutes.csv` as the run goes.
   - **City** (`city_sheet`, an input sheet): place or background, driving side, extent, junctions by control and
-    timing method, ends, roads, road and lane length, one-way share, mean block length, junction and road density,
+    timing method, ends, roads, road and lane length (`Road.lanes`: a one-way road's every lane), one-way share, mean block length, junction and road density,
     road length by type, speed limit and lanes each way, curves (tightest radius, roads posted faster than their
     curve allows), roundabout diameters, interchanges, overpasses, bus stops, institutions, route choice, and the
     graph indices (`design_checks.network_indices`).

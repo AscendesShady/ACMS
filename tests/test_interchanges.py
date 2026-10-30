@@ -464,6 +464,37 @@ def test_a_slip_road_moves_out_of_a_new_roundabout_and_traffic_flows_through_bot
     short.nodes["1,1"].control = "signalised"
     assert short.as_records() == records
 
+
+def test_a_refused_interchange_or_slip_road_leaves_the_network_untouched():
+    # validate() ran only after the old roads were gone and the new ones built, so a refusal kept them; a slip road
+    # never validated, so a turn pocket could end up on a stub too short for it.
+    network = generate_network(3, 4)
+    network.nodes["1,2"].control = "roundabout"  # a 4-lane freeway into it: more entry lanes than NCHRP 672 designs
+    network.validate()
+    records = network.as_records()
+    for build in (lambda: build_trumpet(network, FREEWAY, "2,1", freeway_lanes=4),
+                  lambda: build_diamond(network, FREEWAY, CROSSROAD, freeway_lanes=4),
+                  lambda: build_diamond(network, FREEWAY, CROSSROAD, freeway_lanes=4, single_point=True)):
+        try:
+            build()
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("built into a roundabout it overloads")
+        assert network.as_records() == records
+    pocketed = generate_network(3, 4)
+    pocketed.roads["1,2-2,2"].pockets = {"2,2": {"lanes": 1, "length_m": 120.0, "side": "kerb"}}
+    pocketed.validate()
+    records = pocketed.as_records()
+    try:
+        build_slip_road(pocketed, "1,2-2,2", "2,3-2,2")
+    except ValueError as exc:
+        assert "turn pockets" in str(exc), exc
+    else:
+        raise AssertionError("a 120 m pocket on the slip road's stub")
+    assert pocketed.as_records() == records
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

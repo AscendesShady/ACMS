@@ -137,6 +137,45 @@ def test_a_bad_project_changes_nothing_and_an_old_network_file_opens():
     shown.close()
 
 
+def test_a_full_disk_leaves_saved_files_whole_and_nothing_beside_them():
+    def torn(source, target, *args, **kwargs):
+        Path(target).write_bytes(b"half")
+        raise OSError(28, "No space left on device")
+
+    shown, real_write = window(), Path.write_text
+    real_dialog, real_critical = QFileDialog.getSaveFileName, QMessageBox.critical
+    with tempfile.TemporaryDirectory() as folder:
+        saved, workbook = Path(folder) / "project.json", Path(folder) / "results.xlsx"
+        save_network(generate_network(2, 2), saved)
+        before = saved.read_bytes()
+        Path.write_text = lambda self, *args, **kwargs: torn(None, self)
+        try:
+            save_network(generate_network(3, 3), saved)
+        except OSError:
+            pass
+        finally:
+            Path.write_text = real_write
+        assert saved.read_bytes() == before and sorted(Path(folder).iterdir()) == [saved]  # no project.json.part
+        shown.last_results = Path(folder) / "last run.xlsx"
+        shown.last_results.write_bytes(b"the run")
+        workbook.write_bytes(b"kept")
+        QFileDialog.getSaveFileName = lambda *args: (str(workbook), "")
+        QMessageBox.critical = lambda *args: None
+        real_bytes = Path.write_bytes
+
+        def half(self, data):  # the copy, half written, then the disk is full
+            real_bytes(self, data[:len(data) // 2])
+            raise OSError(28, "No space left on device")
+        Path.write_bytes = half
+        try:
+            shown._export()  # Export Results: the last run's workbook over the one there
+        finally:
+            Path.write_bytes, QFileDialog.getSaveFileName, QMessageBox.critical = real_bytes, real_dialog, real_critical
+        assert workbook.read_bytes() == b"kept" and sorted(Path(folder).iterdir()) == sorted(
+            [saved, shown.last_results, workbook])  # nothing torn left beside it
+    shown.close()
+
+
 def test_a_malformed_conversation_refuses_the_open_before_anything_changes():
     shown = window()
     network, path, steps = shown.network, shown.network_path, len(shown.history.undo_stack)
@@ -170,6 +209,45 @@ def test_unsaved_changes_are_asked_about_before_closing():
         assert shown.close()
     finally:
         QMessageBox.question = real
+
+
+def test_the_hourly_daily_switch_is_an_unsaved_change():
+    shown = window()
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "switched.json"
+        real = QFileDialog.getSaveFileName
+        QFileDialog.getSaveFileName = lambda *args, **kwargs: (str(path), "")
+        try:
+            assert shown.save_file() and not shown.unsaved()
+        finally:
+            QFileDialog.getSaveFileName = real
+        shown.od_panel._show_mode("daily")  # as the switch does: a Run now uses daily demand
+        assert shown.unsaved() and shown.isWindowModified()
+        assert shown.save_file() and json.loads(path.read_text(encoding="utf-8"))["demand"]["shown"] == "daily"
+        assert not shown.unsaved()
+    shown.close()
+
+
+def test_a_deleted_ends_demand_goes_with_it_and_undo_brings_it_back():
+    shown = window()
+    shown._od_command("set_od_demand", {"pairs": ["2E->1W"], "demand": "hourly", "value": 500})
+    inner = shown.network.approach_roads["2E"].from_node
+    shown.network.delete_road("2E")
+    shown._commit()
+    assert ("2E", "1W") not in shown.od_matrix.cells  # gone with its end, so not saved
+    shown.undo()
+    assert shown.od_matrix.cells[("2E", "1W")].flow == 500  # the end and its demand come back together
+    shown.redo()
+    other = shown.network.nodes["2,1" if inner != "2,1" else "2,2"]
+    assert shown.network.add_end(other.id, other.x + 300, other.y - 120).id == "2E"  # the name again
+    shown._commit()
+    assert not [p for p in shown._pair_demand() if p.origin == "2E"]  # it inherits nothing
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "stale.json"
+        save_network(generate_network(2, 2), path, project={"demand": {"shown": "hourly", "pairs": [
+            {"origin": "9E", "destination": "1W", "flow": 500, "split": [10, 85, 5]}]}})  # no end 9E
+        assert shown.load_file(str(path)) and not shown.od_matrix.cells  # an unknown end's pair is dropped
+    shown.close()
 
 
 if __name__ == "__main__":

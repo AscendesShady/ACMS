@@ -37,6 +37,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import html
+import io
 import json
 import os
 import platform
@@ -49,6 +50,7 @@ from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QHBoxLayout, QLineEdit, QListWidget, QListWidgetItem,
                                QSplitter, QTextBrowser, QVBoxLayout, QWidget)
 
+from traffic_simulator.results import write_whole
 from traffic_simulator.widgets import hint_label, icon_button
 
 NAME = "Research Log"
@@ -67,6 +69,7 @@ PICTURES = (("map.png", "The map after"), ("demand.png", "The demand after"))  #
 _VERDICT_BUTTONS = ((0xE8FB, "As intended", "as intended"), (0xE7BA, "Partly as intended", "partly"),
                     (0xE711, "Not as intended", "not as intended"))
 
+BOM = "\N{ZERO WIDTH NO-BREAK SPACE}"  # what utf-8-sig puts first, so Excel reads a CSV as UTF-8
 _session: dict = {"folder": None, "root": None}  # the session being recorded, and the results folder it's in
 _ui: dict = {}  # the panel's labels and note box, while it exists
 
@@ -119,7 +122,14 @@ def _start(results_folder: str, provider=None, model=None) -> Path:
 
 
 def _write_json(path: Path, value) -> None:
-    path.write_text(json.dumps(value, indent=1, default=str), encoding="utf-8")
+    write_whole(path, json.dumps(value, indent=1, default=str))  # whole or not at all: a torn step.json lost the step
+
+
+def _write_csv(path: Path, rows) -> None:
+    """A table Excel opens (UTF-8 with its byte order mark), rewritten whole or not at all (write_whole)."""
+    text = io.StringIO()
+    csv.writer(text, lineterminator="\n").writerows(rows)
+    write_whole(path, BOM + text.getvalue())
 
 
 def _read_json(path: Path) -> dict:
@@ -163,7 +173,7 @@ def _sha256(path: str) -> str:
 def log(event: dict) -> None:
     """One AI Mode step (MainWindow._research_step): written to its folder, a row of steps.csv, the report."""
     folder = _session["folder"] or _start(event.get("results_folder") or ".", event.get("provider"), event.get("model"))
-    number = len(steps(folder)) + 1
+    number = sum(1 for _ in (folder / "steps").glob("[0-9]*")) + 1  # counted, not read back
     here = folder / "steps" / f"{number:04d}"
     here.mkdir(parents=True, exist_ok=True)
     calls = event.get("calls", [])
@@ -211,8 +221,9 @@ def log(event: dict) -> None:
         "tokens": {"input": sum(u.get("input_tokens") or 0 for u in usage),
                    "output": sum(u.get("output_tokens") or 0 for u in usage), "requests": len(usage)},
         "verdict": "", "note": ""})
-    _write_tables(folder)
-    _refresh_panel()
+    step = _step_at(here)
+    _add_step(folder, step)
+    _refresh_panel(step)
 
 
 # --- Reading a session back: everything comes from its folder ------------------------------------------------
@@ -232,20 +243,22 @@ def session_info(folder) -> dict:
 def steps(folder) -> list[dict]:
     """A session's steps (chats) in order, each its step.json with its folder, reply and its pictures
     ([(file, caption)]: the map and/or the demand after it)."""
-    found = []
-    for here in sorted((Path(folder) / "steps").glob("[0-9]*")):
-        record = _read_json(here / "step.json")
-        if not record:
-            continue
-        try:
-            reply = (here / "reply.md").read_text(encoding="utf-8")
-        except OSError:
-            reply = ""
-        record.setdefault("verdict", "")
-        record.setdefault("note", "")
-        found.append({**record, "folder": f"steps/{here.name}", "reply": reply,
-                      "pictures": [(name, caption) for name, caption in PICTURES if (here / name).is_file()]})
-    return found
+    return [step for here in sorted((Path(folder) / "steps").glob("[0-9]*")) if (step := _step_at(here))]
+
+
+def _step_at(here: Path) -> dict | None:
+    """One step as `steps` gives it, from its folder; None without a step.json."""
+    record = _read_json(here / "step.json")
+    if not record:
+        return None
+    try:
+        reply = (here / "reply.md").read_text(encoding="utf-8")
+    except OSError:
+        reply = ""
+    record.setdefault("verdict", "")
+    record.setdefault("note", "")
+    return {**record, "folder": f"steps/{here.name}", "reply": reply,
+            "pictures": [(name, caption) for name, caption in PICTURES if (here / name).is_file()]}
 
 
 def _understood(step: dict) -> str:
@@ -272,42 +285,65 @@ def _row(step: dict) -> list:
             tokens.get("requests"), step.get("error"), step["verdict"], step["note"], step["reply"][:500], step["folder"]]
 
 
+def _add_step(folder: Path, step: dict) -> None:
+    """A new step's row onto steps.csv and its section onto report.html, the earlier steps not read back (a verdict
+    or the session's end rewrites both whole: _write_tables)."""
+    new = not (folder / "steps.csv").is_file()
+    with open(folder / "steps.csv", "a", newline="", encoding="utf-8-sig") as file:
+        writer = csv.writer(file)
+        if new:
+            writer.writerow(COLUMNS)
+        writer.writerow(_row(step))
+    report = folder / "report.html"
+    head = "" if report.is_file() else _report_head(folder, session_info(folder))
+    with open(report, "a", encoding="utf-8") as file:
+        file.write(head + _section(step))
+
+
 def _write_tables(folder: Path) -> None:
-    """steps.csv and report.html of a session, from its folder (a verdict rewrites them), and the results
-    folder's sessions.csv."""
+    """steps.csv and report.html of a session, rewritten whole from its folder (a verdict, the session's end), and
+    the results folder's sessions.csv."""
     folder = Path(folder)
     every, info = steps(folder), session_info(folder)
-    with open(folder / "steps.csv", "w", newline="", encoding="utf-8-sig") as file:
-        writer = csv.writer(file)
-        writer.writerow(COLUMNS)
-        writer.writerows(_row(step) for step in every)
+    _write_csv(folder / "steps.csv", [COLUMNS, *(_row(step) for step in every)])
+    write_whole(folder / "report.html", _report_head(folder, info) + "".join(_section(step) for step in every))
+    if info["ended"]:
+        _write_document(folder, every, info)
+    _write_sessions(folder.parent)
+
+
+def _section(step: dict) -> str:
+    """A step in report.html: prompt -> understood -> did -> snapshot -> numbers, and your verdict."""
     e = html.escape
-    parts = []
-    for step in every:
-        understood = step.get("understood") or {}
-        calls = "".join(f"<li><b>{e(c.get('tool', ''))}</b> {e(c.get('what') or '')} <i>({e(str(c.get('decision', '')))})</i>"
-                        + (f"<pre>{e(c['plan'])}</pre>" if c.get("plan") else "") + "</li>" for c in step.get("calls") or [])
-        changes = "".join(f"<li>{e(line)}</li>" for line in step.get("changes") or []) \
-            or "<li>No change to the project.</li>"
-        t, k = step.get("timings_s") or {}, step.get("tokens") or {}
-        parts.append(
-            f"<section><h2>Step {step['step']} <small>{e(str(step.get('kind')))} · {e(str(step.get('model')))}"
-            f"</small></h2>"
-            f"<h3>1. Prompt</h3><blockquote>{e(step.get('prompt') or '')}</blockquote>"
-            f"<h3>2. Understood</h3><p>{e(_understood(step) or '(no Plan: line)')}"
-            + (f" <small>({len(understood['tools_offered'])} tools offered)</small>" if understood.get("tools_offered") else "")
-            + "</p>"
-            + f"<h3>3. Did</h3><ul>{calls or '<li>No tool used.</li>'}</ul>"
-            + (f"<p><b>Reply:</b></p><pre>{e(step['reply'])}</pre>" if step["reply"] else "")
-            + (f"<p class=error>Error: {e(str(step['error']))}</p>" if step.get("error") else "")
-            + f"<h3>4. Snapshot</h3><ul>{changes}</ul>"
-            + "".join(f"<p>{caption}</p><img src='{step['folder']}/{name}' alt='{caption} step {step['step']}'>"
-                      for name, caption in step["pictures"])
-            + f"<p class=numbers>Model {t.get('model')} s · your decisions {t.get('your_decisions')} s · compute "
-              f"{t.get('compute')} s · total {t.get('total')} s · tokens {k.get('input')} in, {k.get('output')} out "
-              f"({k.get('requests')} requests)"
-            + (f" · <b>verdict: {e(step['verdict'])}</b>" if step["verdict"] else "")
-            + (f" · note: {e(step['note'])}" if step["note"] else "") + "</p></section>")
+    understood = step.get("understood") or {}
+    calls = "".join(f"<li><b>{e(c.get('tool', ''))}</b> {e(c.get('what') or '')} <i>({e(str(c.get('decision', '')))})</i>"
+                    + (f"<pre>{e(c['plan'])}</pre>" if c.get("plan") else "") + "</li>" for c in step.get("calls") or [])
+    changes = "".join(f"<li>{e(line)}</li>" for line in step.get("changes") or []) \
+        or "<li>No change to the project.</li>"
+    t, k = step.get("timings_s") or {}, step.get("tokens") or {}
+    return (
+        f"<section><h2>Step {step['step']} <small>{e(str(step.get('kind')))} · {e(str(step.get('model')))}"
+        f"</small></h2>"
+        f"<h3>1. Prompt</h3><blockquote>{e(step.get('prompt') or '')}</blockquote>"
+        f"<h3>2. Understood</h3><p>{e(_understood(step) or '(no Plan: line)')}"
+        + (f" <small>({len(understood['tools_offered'])} tools offered)</small>" if understood.get("tools_offered") else "")
+        + "</p>"
+        + f"<h3>3. Did</h3><ul>{calls or '<li>No tool used.</li>'}</ul>"
+        + (f"<p><b>Reply:</b></p><pre>{e(step['reply'])}</pre>" if step["reply"] else "")
+        + (f"<p class=error>Error: {e(str(step['error']))}</p>" if step.get("error") else "")
+        + f"<h3>4. Snapshot</h3><ul>{changes}</ul>"
+        + "".join(f"<p>{caption}</p><img src='{step['folder']}/{name}' alt='{caption} step {step['step']}'>"
+                  for name, caption in step["pictures"])
+        + f"<p class=numbers>Model {t.get('model')} s · your decisions {t.get('your_decisions')} s · compute "
+          f"{t.get('compute')} s · total {t.get('total')} s · tokens {k.get('input')} in, {k.get('output')} out "
+          f"({k.get('requests')} requests)"
+        + (f" · <b>verdict: {e(step['verdict'])}</b>" if step["verdict"] else "")
+        + (f" · note: {e(step['note'])}" if step["note"] else "") + "</p></section>")
+
+
+def _report_head(folder: Path, info: dict) -> str:
+    """report.html's head: the session, whether it has ended, its verdict (no step count: steps are appended)."""
+    e = html.escape
     session = (f" · ended {e(info['ended'])}" if info["ended"] else " · going on") \
         + (f" · <b>session verdict: {e(info['verdict'])}</b>" if info["verdict"] else "") \
         + (f" · note: {e(info['note'])}" if info["note"] else "")
@@ -317,13 +353,8 @@ def _write_tables(folder: Path) -> None:
              "blockquote{margin:0;padding:.4em .8em;border-left:4px solid #8c959f}.numbers{color:#57606a}"
              ".error{color:#a40e26}@media (prefers-color-scheme:dark){body{color:#e6edf3;background:#0d1117}"
              "pre{background:#161b22}.numbers{color:#8d96a0}.error{color:#ff7b72}}")
-    (folder / "report.html").write_text(
-        f"<!doctype html><meta charset=utf-8><title>ACMS research log</title><style>{style}</style>"
-        f"<h1>ACMS research log</h1><p>{e(folder.name)} · {len(every)} steps{session}</p>"
-        + "".join(parts), encoding="utf-8")
-    if info["ended"]:
-        _write_document(folder, every, info)
-    _write_sessions(folder.parent)
+    return (f"<!doctype html><meta charset=utf-8><title>ACMS research log</title><style>{style}</style>"
+            f"<h1>ACMS research log</h1><p>{e(folder.name)}{session}</p>")
 
 
 DOC_RESULT_CHARS = 4000  # ponytail: a tool result longer than this is cut in the document; calls.jsonl keeps it whole
@@ -403,7 +434,9 @@ def _write_document(folder: Path, every: list[dict], info: dict) -> Path:
                      + (f" · note: {e(step['note'])}" if step["note"] else "") + "</p>")
     document.setHtml("".join(parts))
     path = folder / f"{folder.name}.odt"
-    QTextDocumentWriter(str(path), b"ODF").write(document)
+    part = path.with_name(path.name + ".part")  # whole or not at all, as write_whole
+    if QTextDocumentWriter(str(part), b"ODF").write(document):
+        os.replace(part, path)
     return path
 
 
@@ -417,10 +450,7 @@ def _write_sessions(root: Path) -> None:
                      *(verdicts.count(v) for v in VERDICTS), verdicts.count(""),
                      ", ".join(sorted({str(step.get("model")) for step in every})), info["verdict"], info["note"],
                      folder.name])
-    with open(root / "sessions.csv", "w", newline="", encoding="utf-8-sig") as file:
-        writer = csv.writer(file)
-        writer.writerow(SESSION_COLUMNS)
-        writer.writerows(rows)
+    _write_csv(root / "sessions.csv", [SESSION_COLUMNS, *rows])
 
 
 # --- Your verdicts ------------------------------------------------------------------------------------------
@@ -482,13 +512,14 @@ def _short(text, width: int = 70) -> str:
     return text[:width] + ("…" if len(text) > width else "")
 
 
-def _refresh_panel() -> None:
+def _refresh_panel(last: dict | None = None) -> None:
+    """The panel's lines: where it records and the latest step (`last`, the step just written; else read back)."""
     if not _ui:
         return
     try:
         folder = _session["folder"]
         _ui["where"].setText(f"Recording to {folder.name}" if folder else "Records from your next AI Mode question.")
-        every = steps(folder) if folder else []
+        every = [last] if last else steps(folder) if folder else []
         if every:
             last = every[-1]
             _ui["last"].setText(f"Step {last['step']}: {_short(last.get('prompt'))}"

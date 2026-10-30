@@ -32,11 +32,12 @@ import urllib.parse
 import urllib.request
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field, replace
-from math import floor, hypot
+from math import dist, floor, hypot
 from pathlib import Path
 
 from .geometry import distance_to_segment, nearest_along, polyline_length, segment_hit
-from .map_tiles import USER_AGENT
+from .map_tiles import USER_AGENT, fetch, prune
+from .results import write_whole
 from .models import LANE_WIDTH_M, ZEBRA_CLEAR_M, Network
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
@@ -44,7 +45,7 @@ OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 OVERPASS_URLS = (OVERPASS_URL, "https://overpass.kumi.systems/api/interpreter",
                  "https://overpass.private.coffee/api/interpreter")
 OVERPASS_RETRY_S = 5.0  # all busy (504s and timeouts come in bursts): once more round them after this pause
-# Seconds a server may take (the query asks it for 5 fewer). At 90, six tries took a live build 6.5 minutes when
+# Seconds a server may take for its whole answer (the query asks it for 5 fewer). At 90, six tries took a live build 6.5 minutes when
 # every server was down; a 1.2 km area answers in about 10 s.
 OVERPASS_TIMEOUT_S = 40
 # Each answer kept here by its query (the same area and size): when no server answers, the last copy is used and
@@ -52,6 +53,8 @@ OVERPASS_TIMEOUT_S = 40
 # younger than OSM_FRESH_DAYS is used without asking (roads change slowly; delete the folder for a fresh download).
 OSM_CACHE = Path(os.environ.get("LOCALAPPDATA") or Path.home() / ".cache") / "ACMS" / "osm-roads"
 OSM_FRESH_DAYS = 7
+OSM_KEEP_DAYS = 90  # a copy not downloaded again for this long is deleted (the folder would only grow)
+OVERPASS_MAX_BYTES = 100_000_000  # a bigger answer is refused: a dense 4 x 4 km area is a few tens of MB
 # OSM highway=* taken as a road: its speed limit (km/h) and lanes per direction when its tags don't say.
 CLASSES = {
     "motorway": (100, 2), "trunk": (80, 2), "primary": (60, 1), "secondary": (50, 1), "tertiary": (50, 1),
@@ -96,6 +99,7 @@ class Street:
     lanes: int = 1  # per direction
     speed_kmh: float = 50.0
     one_way: bool = False  # traffic runs start → end
+    one_lane: bool = False  # one-way with one lane in all (lanes=1, or none tagged and its class has one a direction)
     bridge: bool = False
     kind: str = "urban"  # the road type label
     ring: bool = False  # part of a roundabout's ring: the ring becomes one junction
@@ -121,6 +125,7 @@ class Graph:
     crossings: list = field(default_factory=list)  # (x, y) of zebra crossing nodes (ZEBRA_TAGS)
     footways: list = field(default_factory=list)  # (points, kind): "sidewalk", "crossing", "bridge" or "path"
     walking_skipped: dict = field(default_factory=dict)  # crossings not taken, by their crossing=* value
+    unroutable: int = 0  # streets `build` left out: no car could use them between the area's ends (_routable)
 
 
 # --- OpenStreetMap ---------------------------------------------------------------------------------
@@ -135,9 +140,8 @@ def overpass_query(south: float, west: float, north: float, east: float, classes
 
 def post(url: str, data: bytes) -> bytes:
     """The network (tests put a stand-in here): an identifying User-Agent, as OSM's services ask."""
-    request = urllib.request.Request(url, data=data, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=OVERPASS_TIMEOUT_S) as response:
-        return response.read()
+    return fetch(urllib.request.Request(url, data=data, headers={"User-Agent": USER_AGENT}), OVERPASS_TIMEOUT_S,
+                 OVERPASS_MAX_BYTES)
 
 
 def fetch_osm(query: str) -> dict:
@@ -166,18 +170,21 @@ def fetch_osm(query: str) -> dict:
         if attempt == len(OVERPASS_URLS):
             time.sleep(OVERPASS_RETRY_S)
         try:
-            document = json.loads(post(url, urllib.parse.urlencode({"data": query}).encode()))
+            answer = json.loads(post(url, urllib.parse.urlencode({"data": query}).encode()))
+            if not isinstance(answer, dict) or not isinstance(answer.get("elements"), list):
+                raise ValueError("no road data in its answer")
+            if "runtime error" in str(answer.get("remark", "")):  # its own timeout or memory limit: elements partial
+                raise ValueError(answer["remark"])
+            document = answer
             break
-        except OSError as exc:  # busy, offline or refused: the next server
+        except (OSError, ValueError) as exc:  # busy, offline, refused, cut short, an error page: the next server
             failures.append(f"{urllib.parse.urlparse(url).netloc}: {exc}")
-        except ValueError as exc:
-            raise ValueError("OpenStreetMap's Overpass API sent an answer that couldn't be read.") from exc
     if document is None:  # the last answer for this very area, said to be a copy and how old
         document = copy("OpenStreetMap's servers didn't answer")
-    elif isinstance(document, dict) and isinstance(document.get("elements"), list):
+    else:
         try:
-            kept.parent.mkdir(parents=True, exist_ok=True)
-            kept.write_text(json.dumps(document), encoding="utf-8")
+            write_whole(kept, json.dumps(document).encode("utf-8"))
+            prune(OSM_CACHE, OSM_KEEP_DAYS * 86400)
         except OSError:
             pass  # no cache: the next outage just can't fall back
     if document is None:
@@ -217,7 +224,7 @@ def _attributes(tags: dict) -> tuple[dict, bool]:
     cycle = any(str(tags.get(key, "")).lower() in CYCLE_TAGS
                 for key in ("cycleway", "cycleway:both", "cycleway:left", "cycleway:right"))
     return {"lanes": min(lanes, 6), "speed_kmh": _speed(tags.get("maxspeed")) or speed, "one_way": one_way,
-            "bridge": tags.get("bridge") not in (None, "no"), "kind": kind, "ring": ring,
+            "one_lane": one_way and (total == 1 or total <= 0 and lanes == 1), "bridge": tags.get("bridge") not in (None, "no"), "kind": kind, "ring": ring,
             "footpaths": tuple(sorted(footpaths)), "cycle": cycle}, tags.get("oneway") == "-1"
 
 
@@ -531,15 +538,11 @@ def _simplify(points: list, tolerance: float) -> list:
 
 # --- The network ----------------------------------------------------------------------------------
 
-def _length(points) -> float:
-    return sum(hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(points, points[1:]))
-
-
 def _halves(street: Street, key) -> tuple[Street, Street]:
     """A street cut at the point half way along it (a new node `key` there)."""
-    points, half, walked = street.points, _length(street.points) / 2, 0.0
+    points, half, walked = street.points, polyline_length(street.points) / 2, 0.0
     for index, (a, b) in enumerate(zip(points, points[1:])):
-        step = hypot(b[0] - a[0], b[1] - a[1])
+        step = dist(b, a)
         if walked + step >= half and step > 0:
             t = (half - walked) / step
             middle = (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
@@ -550,9 +553,10 @@ def _halves(street: Street, key) -> tuple[Street, Street]:
     raise ValueError("A road with no length.")
 
 
-def build(template: Network, graph: Graph) -> Network:
-    """A new network from the graph, with the template's settings and background. ValueError if it
-    would be empty or too big."""
+def build(template: Network, graph: Graph, lanes: dict | None = None) -> Network:
+    """A new network from the graph, with the template's settings and background: only its routable streets
+    (_routable), each street's lanes per direction held within `lanes` ({"main" or "local": (fewest, most)}; local:
+    LEVELS' unclassified, residential and living streets). ValueError if it would be empty or too big."""
     parent = {key: key for key in graph.positions}
 
     def find(key):
@@ -600,15 +604,20 @@ def build(template: Network, graph: Graph) -> Network:
         points = [position[start], *street.points[1:-1], position[end]]
         clean = [points[0]]
         for point in points[1:]:
-            if hypot(point[0] - clean[-1][0], point[1] - clean[-1][1]) >= 0.5:
+            if dist(point, clean[-1]) >= 0.5:
                 clean.append(point)
         clean[-1] = points[-1]
-        if start == end and _length(clean) < 4 * MERGE_M:
+        if start == end and polyline_length(clean) < 4 * MERGE_M:
             continue  # squeezed into its junction
-        if len(clean) < 2 or _length(clean) < 1.0:
+        if len(clean) < 2 or polyline_length(clean) < 1.0:
             continue
         kept.append(replace(street, start=start, end=end, points=clean, ring=False))
-    streets = _join_bends(kept, border | rings, graph.signals, position)
+    for index, street in enumerate(kept):
+        fewest, most = (lanes or {}).get("main" if street.kind not in CLASSES or street.kind in LEVELS["main"]
+                                         else "local") or (1, 6)
+        kept[index] = replace(street, lanes=min(max(street.lanes, fewest), most))
+    streets, graph.unroutable = _routable(kept, border)
+    streets = _join_bends(streets, border | rings, graph.signals, position)
     fresh = Network(horizontal_corridors=template.horizontal_corridors, vertical_corridors=template.vertical_corridors,
                     default_spacing=template.default_spacing, driving_side=template.driving_side,
                     default_speed_limit_kmh=template.default_speed_limit_kmh,
@@ -640,6 +649,7 @@ def build(template: Network, graph: Graph) -> Network:
         road.footpaths = sorted(street.footpaths)  # along the street, which the road runs along
         if street.one_way:
             road.direction = "one-way"
+            road.single_lane = street.one_lane and street.lanes == 1  # one lane, not a carriageway 2 x lanes wide
             if not forward:
                 fresh.reverse_road(road.id)  # (its footpaths' sides turned with it)
         road.cycle_lanes = list(road.arrival_ends()) if street.cycle else []
@@ -666,8 +676,8 @@ def build(template: Network, graph: Graph) -> Network:
             inner, points = junction(street.start), street.points
             far = points[-1]
             mid = next((i for i in range(len(points) - 2, 0, -1)
-                        if hypot(points[i][0] - far[0], points[i][1] - far[1]) >= 5.0
-                        and hypot(points[i][0] - points[0][0], points[i][1] - points[0][1]) >= 2.0), None)
+                        if dist(points[i], far) >= 5.0
+                        and dist(points[i], points[0]) >= 2.0), None)
             if mid is not None:  # the bends up to near the edge, then the end
                 corner = fresh.add_node(*points[mid])
                 corner.control = "uncontrolled"
@@ -699,6 +709,41 @@ def build(template: Network, graph: Graph) -> Network:
     return fresh
 
 
+def _routable(streets: list, border: set) -> tuple[list, int]:
+    """The streets a car can drive between the area's ends, and how many others there were: the largest strongly
+    connected part, with the one-way chains into it from an entry-only end and out of it to an exit-only end. A
+    one-way street into a dead end, a part cut off where the area's edge clips its loop, a road just crossing a
+    corner: left out, so every origin end reaches every destination end and each OD pair has a route (SUMO's
+    netconvert --keep-edges.components keeps the largest weakly connected parts; strongly, here, so routes run both
+    ways)."""
+    ahead, back = defaultdict(set), defaultdict(set)
+    for street in streets:
+        for a, b in [(street.start, street.end)] + ([] if street.one_way else [(street.end, street.start)]):
+            ahead[a].add(b)
+            back[b].add(a)
+
+    def spread(starts, links, within=None) -> set:
+        seen, todo = set(starts), list(starts)
+        while todo:
+            for key in links[todo.pop()]:
+                if key not in seen and (within is None or key in within):
+                    seen.add(key)
+                    todo.append(key)
+        return seen
+
+    left, main = set(ahead) | set(back), set()
+    while len(left) > len(main):  # ponytail: two reaches a part, O(parts x streets); Tarjan's if it lags
+        key = next(iter(left))
+        part = spread([key], ahead) & spread([key], back)
+        main, left = max(main, part, key=len), left - part
+    reached, reaching = spread(main, ahead), spread(main, back)
+    entries = {key for key in border if key in reaching and not back[key]}  # traffic only comes in there
+    exits = {key for key in border if key in reached and not ahead[key]}
+    keep = main | spread(entries, ahead, reaching - main - border) | spread(exits, back, reached - main - border)
+    kept = [street for street in streets if street.start in keep and street.end in keep]
+    return kept, len(streets) - len(kept)
+
+
 def _join_bends(streets: list, keep: set, signals: list, position: dict) -> list:
     """A node on only two streets alike (a bend, a change of way in OSM) goes: one street through it."""
     while True:
@@ -710,8 +755,9 @@ def _join_bends(streets: list, keep: set, signals: list, position: dict) -> list
             if len(two) != 2 or key in keep or two[0] is two[1]:
                 continue
             first, second = two
-            if (first.lanes, first.speed_kmh, first.one_way, first.bridge, first.kind, first.cycle) != \
-                    (second.lanes, second.speed_kmh, second.one_way, second.bridge, second.kind, second.cycle):
+            if (first.lanes, first.speed_kmh, first.one_way, first.one_lane, first.bridge, first.kind, first.cycle) != \
+                    (second.lanes, second.speed_kmh, second.one_way, second.one_lane, second.bridge, second.kind,
+                     second.cycle):
                 continue
             if first.end != key:
                 if first.one_way:
@@ -745,10 +791,10 @@ def _nearest_road(network: Network, x: float, y: float, within: float):
     return best[1:] if best else None
 
 
-def add_walking(network: Network, graph: Graph, footpaths: str = "tagged") -> dict:
+def add_walking(network: Network, graph: Graph, footpaths: str = "none") -> dict:
     """The map's walking network onto a network built from it (`build`), and what came in and what didn't.
     `footpaths`: "tagged" (as the roads' sidewalk=* tags say, and footway=sidewalk ways beside them), "all" (every
-    road both sides) or "none". Zebra crossings (nodes, and footway=crossing ways where they cut a road) and footbridges
+    road both sides) or "none" (the default: nothing for walkers, no crossings or paths either). Zebra crossings (nodes, and footway=crossing ways where they cut a road) and footbridges
     over a road (overbridges) on the road they belong to, with footpaths both sides (a crossing joins them); one too
     near a junction for a crossing of its own isn't, as walkers cross a junction's arms in gaps anyway. Other footways,
     paths and steps: paths between the road nodes they come within PATH_SNAP_M of."""
@@ -760,6 +806,8 @@ def add_walking(network: Network, graph: Graph, footpaths: str = "tagged") -> di
             road.footpaths = ["left", "right"]
         elif footpaths == "none":
             road.footpaths = []
+    if footpaths == "none":  # nothing for walkers at all: no walkways, crossings or paths (only when asked)
+        return {}
     found = Counter()
     if footpaths == "tagged":
         for points, kind in graph.footways:  # a sidewalk mapped as a way of its own: its road's footpath
@@ -795,7 +843,8 @@ def add_walking(network: Network, graph: Graph, footpaths: str = "tagged") -> di
             found["crossings_off_the_roads"] += 1
             continue
         road, along = near
-        if not ZEBRA_CLEAR_M <= along <= network.road_geometry_length(road) - ZEBRA_CLEAR_M:
+        low, high = (max(ZEBRA_CLEAR_M, network.footpath_corner_m(end)) for end in (road.from_node, road.to_node))
+        if not low <= along <= network.road_geometry_length(road) - high:  # as Network.crossing_problem asks
             found["crossings_at_junctions"] += 1  # crossed there in gaps
             continue
         before = list(road.footpaths)

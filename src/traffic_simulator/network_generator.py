@@ -34,13 +34,17 @@ def add_boundary_approaches(network: Network) -> None:
 
     for row in range(rows):
         number = rows - row
-        add_approach(f"{number}W", grid[row, 0], -approach_length, 0, row, -1, True)
-        add_approach(f"{number}E", grid[row, columns - 1], approach_length, 0,
-                     row, columns, False)
+        if (row, 0) in grid:  # a deleted edge junction has no end
+            add_approach(f"{number}W", grid[row, 0], -approach_length, 0, row, -1, True)
+        if (row, columns - 1) in grid:
+            add_approach(f"{number}E", grid[row, columns - 1], approach_length, 0,
+                         row, columns, False)
     for column in range(columns):
-        add_approach(f"{column + 1}N", grid[0, column], 0, -approach_length, -1, column, True)
-        add_approach(f"{column + 1}S", grid[rows - 1, column], 0, approach_length,
-                     rows, column, False)
+        if (0, column) in grid:
+            add_approach(f"{column + 1}N", grid[0, column], 0, -approach_length, -1, column, True)
+        if (rows - 1, column) in grid:
+            add_approach(f"{column + 1}S", grid[rows - 1, column], 0, approach_length,
+                         rows, column, False)
 
 
 def generate_network(

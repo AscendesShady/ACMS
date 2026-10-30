@@ -259,7 +259,7 @@ def test_turn_pockets_are_validated_and_stay_at_their_ends():
     refused(lambda n, r: setattr(r, "direction", "one-way"), "doesn't arrive at 1,2")  # its traffic leaves 1,2
     refused(lambda n, r: r.pockets.update({"2,2": pocket(length_m=150.0), "1,2": pocket(length_m=150.0)})
             or n.set_road_length(r.id, 300.0), "too short")
-    refused(lambda n, r: n.move_bus_stop(n.add_bus_stop(r.id).id, 420.0), "bay is beside")
+    refused(lambda n, r: setattr(n.add_bus_stop(r.id), "distance_m", 420.0), "bay is beside")  # move_bus_stop refuses it
     # Kept by the end it is at: reversing the road keeps them; splitting it leaves each on the part reaching its end.
     network.reverse_road("1,2-2,2")
     network.validate()
@@ -343,8 +343,227 @@ def test_cycle_lanes_are_validated_kept_through_splits_and_saved():
     assert all(road.cycle_lanes == [] for road in load_network(path).all_roads())
 
 
+def test_a_network_with_no_ends_reopens_with_none():
+    import json
+    import tempfile
+    from pathlib import Path
+
+    from traffic_simulator.network_io import load_network, save_network
+
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "net.json"
+        network = generate_network(2, 2)
+        for road_id in list(network.approach_roads):
+            network.delete_road(road_id)
+        save_network(network, path)
+        assert not load_network(path).approach_nodes  # saved with none: opens with none
+        network.delete_node("1,1")  # a grid position gone too
+        save_network(network, path)
+        assert "1,1" not in load_network(path).nodes
+        document = json.loads(path.read_text(encoding="utf-8"))
+        del document["approach_nodes"], document["approach_roads"]  # a file from before ends were saved
+        path.write_text(json.dumps(document), encoding="utf-8")
+        assert sorted(load_network(path).approach_nodes) == ["1E", "1N", "2E", "2N", "2S", "2W"]  # not 1,1's 1W, 1S
+
+
+def test_counts_must_be_whole_numbers():
+    from copy import deepcopy
+
+    from traffic_simulator.models import MetroLine, metro_line_problem
+
+    network = generate_network(2, 2)
+    for place, name, value in (("road", "lanes_per_direction", 1.5), ("road", "lanes_per_direction", 2.0),
+                               ("node", "signal_phases", 2.0), ("background", "page", 0.5)):
+        changed = deepcopy(network)
+        item = {"road": changed.roads["1,1-2,1"], "node": changed.nodes["1,1"], "background": changed.background}[place]
+        setattr(item, name, value)
+        try:
+            changed.validate()
+        except ValueError as exc:
+            assert name in str(exc) and "whole" in str(exc), str(exc)
+        else:
+            raise AssertionError(f"{place} {name} = {value} passed")
+    assert "whole" in metro_line_problem(MetroLine("ML1", ["M1", "M2"], cars_per_train=5.5))
+    assert metro_line_problem(MetroLine("ML1", ["M1", "M2"])) is None
+
+
+def test_a_file_saved_with_a_byte_order_mark_opens():
+    import tempfile
+    from pathlib import Path
+
+    from traffic_simulator.network_io import load_network, save_network, saved_conversation, saved_project
+
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "net.json"
+        save_network(generate_network(2, 2), path, {"messages": []}, {"run": {"seed": 7, "speed": 1.0}})
+        path.write_text("﻿" + path.read_text(encoding="utf-8"), encoding="utf-8")  # as Notepad may save it
+        assert len(load_network(path).nodes) == 4 and saved_project(path)["run"]["seed"] == 7
+        assert saved_conversation(path) == {"messages": []}
+
+
+def test_a_background_image_on_another_computer_is_refused():
+    import json
+    import tempfile
+    from pathlib import Path
+
+    from traffic_simulator.network_io import load_network, save_network
+
+    network = generate_network(2, 2)
+    network.background.kind = "image"
+    for local in ("", r"C:\plans\site.png", "plans/site.png"):
+        network.background.image = local
+        network.validate()
+    for remote in (r"\\198.51.100.7\share\plan.png", "//server/share/plan.png", r"\\?\UNC\server\share\plan.png",
+                   r"/\server\share\plan.png"):
+        network.background.image = remote
+        try:
+            network.validate()
+        except ValueError as exc:
+            assert "this computer" in str(exc), str(exc)
+        else:
+            raise AssertionError(f"{remote} passed: drawing it would contact that server")
+    with tempfile.TemporaryDirectory() as folder:  # opening someone's project: refused before anything reads it
+        path = Path(folder) / "net.json"
+        network.background.image = ""
+        save_network(network, path)
+        document = json.loads(path.read_text(encoding="utf-8"))
+        document["background"]["image"] = r"\\198.51.100.7\share\plan.png"
+        path.write_text(json.dumps(document), encoding="utf-8")
+        try:
+            load_network(path)
+        except ValueError as exc:
+            assert "this computer" in str(exc)
+        else:
+            raise AssertionError("a project pointing at a share opened")
+
+
+def test_a_move_that_brings_a_curves_ends_together_is_refused_unchanged():
+    # Moving 2,2 onto 1,2 left the curve's chord zero: a ZeroDivisionError with curvature values, or (without) a curve
+    # collapsed to a point that the undo skipped.
+    from copy import deepcopy
+
+    from traffic_simulator import network_tools
+
+    for curvature in ([0.002, 0.002], []):
+        network = generate_network(3, 4)
+        road = network.roads["1,2-2,2"]
+        road.shape, road.curvature = [(250.0, 440.0)], curvature
+        network.validate()
+        before = deepcopy(network)
+        try:
+            network_tools.run_tool(network, "move_junctions", {"junctions": ["2,2"], "dx": -500, "dy": 0})
+        except network_tools.ToolError:
+            pass
+        else:
+            raise AssertionError("a curve's ends met")
+        assert network == before, curvature
+        assert not network.move_nodes(["2,2"], -500, 0) and network == before
+
+
+def test_manual_windows_follow_a_road_split_or_renamed_and_stale_ones_are_refused():
+    from traffic_simulator.interchanges import build_diamond
+
+    network = generate_network(3, 4)
+    node = network.nodes["2,2"]
+    node.signal_method = "manual"
+    node.manual_greens_s = {road: [30.0 * i + 1, 30.0 * (i + 1)] for i, (road, _, _) in
+                            enumerate(network.signal_arms("2,2"))}
+    network.validate()
+    window = node.manual_greens_s["1,2-2,2"]
+    network.split_road("1,2-2,2", network.add_node(250, 500).id)  # the arm is N1-2,2 now: its window with it
+    assert node.manual_greens_s.get("N1-2,2") == window and "1,2-2,2" not in node.manual_greens_s
+    assert set(node.manual_greens_s) == {road for road, _, _ in network.signal_arms("2,2")}
+    network.validate()
+    network.delete_road("2,2-3,2")  # a deleted arm's window goes with it
+    assert "2,2-3,2" not in node.manual_greens_s
+    network.validate()
+    node.manual_greens_s["1,1-2,1"] = [100.0, 120.0]  # a road elsewhere
+    try:
+        network.validate()
+    except ValueError as exc:
+        assert "1,1-2,1" in str(exc), exc
+    else:
+        raise AssertionError("a window for a road not at the node validated")
+
+    mirrored = generate_network(3, 4)  # set_driving_side re-ties the roads into an interchange: renamed
+    build_diamond(mirrored, ("1,2", "3,2"), ("2,3", "2,1"))
+    outside = mirrored.nodes["1,2"]
+    outside.signal_method = "manual"
+    outside.manual_greens_s = {road: [30.0 * i + 1, 30.0 * (i + 1)] for i, (road, _, _) in
+                               enumerate(mirrored.signal_arms("1,2"))}
+    mirrored.validate()
+    assert mirrored.set_driving_side("left" if mirrored.driving_side == "right" else "right")
+    assert set(outside.manual_greens_s) == {road for road, _, _ in mirrored.signal_arms("1,2")}
+    mirrored.validate()
+
+
+def test_a_west_or_north_road_keeps_its_stops_and_crossings_from_the_junction():
+    # 1W and 1N run from their boundary end to the junction: what is measured from that outer end stays put from the
+    # junction when the road's length changes.
+    network = generate_network(3, 4)
+    for name in ("1W", "1N"):
+        road = network.road(name)
+        road.footpaths = ["left", "right"]
+        stop = network.add_bus_stop(name)
+        stop.distance_m = road.length_m - 125.0
+        crossing = network.add_crossing(name, road.length_m - 60.0)
+        network.set_road_length(name, 400)
+        assert abs(network.road(name).length_m - 400) < 1e-6
+        assert abs(400 - stop.distance_m - 125.0) < 1e-6 and abs(400 - crossing.distance_m - 60.0) < 1e-6, name
+    stop = network.add_bus_stop("1E")  # measured from the junction: nothing to move
+    stop.distance_m = 125.0
+    network.set_road_length("1E", 400)
+    assert stop.distance_m == 125.0
+    network.validate()
+
+
+def test_junctions_off_the_map_are_refused():
+    from copy import deepcopy
+
+    from traffic_simulator import network_tools
+
+    network = generate_network(2, 2)
+    before = deepcopy(network)
+    for name, args in (("add_junction", {"x": 1e300, "y": 0}), ("add_junction", {"x": 0, "y": float("inf")}),
+                       ("move_junctions", {"junctions": ["1,1"], "dx": 1e15, "dy": 0})):
+        try:
+            network_tools.run_tool(network, name, args)
+        except network_tools.ToolError as exc:
+            assert "off the map" in str(exc) or "number" in str(exc), exc  # inf: not a number, refused before it runs
+        else:
+            raise AssertionError(args)
+        assert network == before
+    network.add_node(999_000.0, -999_000.0)  # far, but on the map
+    network.validate()
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):
             check()
     print("ok")
+
+
+def test_an_older_file_with_a_window_for_a_gone_road_opens_without_it():
+    """Files saved before windows followed split roads kept them under the old id: they open, the stale window gone."""
+    import json
+    import tempfile
+    from pathlib import Path
+
+    from traffic_simulator.network_io import load_network, save_network
+
+    network = generate_network(3, 4)
+    node = network.nodes["2,2"]
+    node.signal_method = "manual"
+    node.manual_greens_s = {road: [30.0 * i + 1, 30.0 * (i + 1)] for i, (road, _, _) in
+                            enumerate(network.signal_arms("2,2"))}
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "net.json"
+        save_network(network, path)
+        record = json.loads(path.read_text(encoding="utf-8"))
+        nodes = record["nodes"]
+        saved = next(item for item in nodes if item["id"] == "2,2")
+        saved["manual_greens_s"]["9,9-2,2"] = [1.0, 30.0]  # a road split away long ago
+        path.write_text(json.dumps(record), encoding="utf-8")
+        loaded = load_network(path).nodes["2,2"].manual_greens_s
+    assert "9,9-2,2" not in loaded and loaded == node.manual_greens_s

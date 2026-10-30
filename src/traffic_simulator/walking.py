@@ -3,8 +3,8 @@
 Built from the network's footpaths (`Road.footpaths`, beside its roads: `Network.footpath_line`), its paths
 (`Network.walkways`) and its crossings (`Network.pedestrian_crossings`), each walked both ways, SUMO's NonInteracting model
 (references/reverse_engineering/simulation/pedestrian_system.md) for the walking itself. A footpath runs between
-the corners of the junctions at its road's ends (`corner_m` from each node); at a junction the corners, the path
-ends and the roads go round in angle order, and two neighbouring corners are joined free (the walking area) where no
+the corners of the junctions at its road's ends (`Network.footpath_corner_m` from each node); at a junction the
+corners, the path ends and the roads go round in angle order, and two neighbouring corners are joined free (the walking area) where no
 road lies between them, or by crossing it where one does: a gap crossing (HCM 2000 Ch 18, p18-13: the walker waits
 for a gap of tc = L / Sp + ts, Eq 18-17; traffic doesn't yield). A crossing splits its road's footpaths and joins
 them: a zebra (right of way: traffic stops for walkers on it) or an overbridge (no conflict, its stairs climbed).
@@ -18,12 +18,14 @@ from __future__ import annotations
 import heapq
 from collections import defaultdict
 from dataclasses import dataclass, field
-from math import atan2, hypot, pi
+from itertools import accumulate
+from math import atan2, dist, pi
 from typing import NamedTuple
 
+from .daily_profile import from_record
 from .geometry import nearest_along, point_along, polyline_length, sub_polyline
 from .metro import WALK_KMH
-from .models import CYCLE_LANE_M, FOOTPATH_M, Network
+from .models import Network
 
 WALK_SPEED_DEV = 0.1  # the spread of walkers' own speeds about WALK_KMH (a speed factor, as vehicles'): an assumption
 START_UP_S = 3.0  # HCM 2000 Eq 18-17's ts, a pedestrian's start-up and end clearance time (its Example Problem 4)
@@ -45,15 +47,6 @@ class Crossed(NamedTuple):
     slow: float = 1.0
 
 
-def corner_m(network: Network, node_id: str) -> float:
-    """How far from a junction its footpaths end at its corners: beyond its widest road's half, a cycle lane and a
-    footpath. 0 at a boundary end: its road's footpaths run to the map's edge."""
-    if node_id in network.approach_nodes:
-        return 0.0
-    return max((road.width_m / 2 + CYCLE_LANE_M * bool(road.cycle_lanes) + FOOTPATH_M for road in network.all_roads()
-                if node_id in (road.from_node, road.to_node)), default=0.0)
-
-
 @dataclass
 class WalkDemand:
     """People walking between two road nodes (a pedestrian OD pair, or an institution's walkers): `hourly` people an
@@ -66,9 +59,10 @@ class WalkDemand:
     shares: list = field(default_factory=list)
     start: tuple | None = None
     finish: tuple | None = None
-    quarters: tuple = ()
+    quarters: tuple = ()  # no 15-minute profile: an even hour (Simulation.rate_now)
     attach: bool = False  # between two points of their own (spawn points): routed from `start` to `finish`, each
-    # joining the walking network at its nearest footpath (WalkGraph.route), not from node to node  # no 15-minute profile: an even hour (Simulation.rate_now)
+    # joining the walking network at its nearest footpath (WalkGraph.route), not from node to node
+    timetabled: bool = True  # False: an institution's walkers, whose random streams (Simulation._rng) are their own
 
 
 class WalkGraph:
@@ -87,18 +81,21 @@ class WalkGraph:
         self._joined: dict[int, list] = {}
         speed = WALK_KMH / 3.6
         roads = list(network.all_roads())
-        corner = {node.id: corner_m(network, node.id) for node in network.all_nodes()}
+        corner = {node.id: network.footpath_corner_m(node.id) for node in network.all_nodes()}
         on_road = defaultdict(list)
         for crossing in network.pedestrian_crossings.values():
             if network.crossing_problem(crossing) is None:
                 on_road[crossing.road].append(crossing)
         for road in roads:
             crossings = sorted(on_road[road.id], key=lambda crossing: crossing.distance_m)
+            # A crossing's distance is along the centre line; on each footpath it is where that point is nearest
+            # (longer or shorter beside a curve). Cuts kept in order (accumulate): never a stretch run backwards.
+            middles = [point_along(network.road_points(road), c.distance_m)[:2] for c in crossings]
             sides = {}
             for side in road.footpaths:
                 line = network.footpath_line(road, side)
-                cuts = [corner[road.from_node], *(c.distance_m for c in crossings),
-                        polyline_length(line) - corner[road.to_node]]
+                cuts = list(accumulate([corner[road.from_node], *(nearest_along(line, at) for at in middles),
+                                        polyline_length(line) - corner[road.to_node]], max))
                 keys = [f"{road.id}|{side}|{road.from_node}", *(f"{c.id}|{side}" for c in crossings),
                         f"{road.id}|{side}|{road.to_node}"]
                 pieces = [sub_polyline(line, a, b) for a, b in zip(cuts, cuts[1:])]
@@ -107,10 +104,9 @@ class WalkGraph:
                     self.pieces.append([a, b, piece])
                 self.corners[road.from_node].append((keys[0], pieces[0][0]))
                 self.corners[road.to_node].append((keys[-1], pieces[-1][-1]))
-                sides[side] = line
-            for crossing in crossings if len(sides) == 2 else ():
-                across = [point_along(sides["left"], crossing.distance_m)[:2],
-                          point_along(sides["right"], crossing.distance_m)[:2]]
+                sides[side] = line, cuts[1:-1]
+            for i, crossing in enumerate(crossings if len(sides) == 2 else ()):
+                across = [point_along(line, along[i])[:2] for line, along in (sides["left"], sides["right"])]
                 metres = polyline_length(across)
                 cost = metres + (2 * OVERBRIDGE_CLIMB_S * speed if crossing.kind == "overbridge" else 0.0)
                 self._join(f"{crossing.id}|left", f"{crossing.id}|right", across, cost,
@@ -181,7 +177,7 @@ class WalkGraph:
                 continue
             along = nearest_along(line, (x, y))
             px, py = point_along(line, along)[:2]
-            gap = hypot(px - x, py - y)
+            gap = dist((px, py), (x, y))
             if best is None or gap < best[0]:
                 best = (gap, index, along, (px, py))
         if best is None:
@@ -252,17 +248,27 @@ def footpath_join(network: Network, x: float, y: float) -> tuple | None:
     lines = [network.footpath_line(road, side) for road in network.all_roads() for side in road.footpaths]
     lines += [network.walkway_points(way) for way in network.walkways.values()]
     joins = [point_along(line, nearest_along(line, (x, y)))[:2] for line in lines]
-    return min(joins, key=lambda at: hypot(at[0] - x, at[1] - y), default=None)
+    return min(joins, key=lambda at: dist(at, (x, y)), default=None)
 
 
 def walk_pairs(network: Network, modes: list, daily: bool) -> list[WalkDemand]:
-    """The people walking in a run: each pedestrian OD pair (people an hour, all day long in a daily run) and each
-    institution's walkers (institutions.walk_demand)."""
-    pairs = [WalkDemand(*key.split("->"), people) for key, people in network.walk_demand.items() if people > 0]
+    """The people walking in a run: each pedestrian and spawn-point OD pair (hourly: people an hour; daily: people a
+    day spread by the pair's curve, Network.walk_daily and spawn_daily) and each institution's walkers
+    (institutions.walk_demand)."""
+    def demand(key, people, **where) -> WalkDemand:
+        if daily:
+            return WalkDemand(*key.split("->"), None, people["people"], from_record(people["curve"]).shares(), **where)
+        return WalkDemand(*key.split("->"), people, **where)
+
+    def size(people) -> float:
+        return people["people"] if daily else people
+
+    pairs = [demand(key, people) for key, people in (network.walk_daily if daily else network.walk_demand).items()
+             if size(people) > 0]
     points = network.spawn_points
-    pairs += [WalkDemand(*key.split("->"), people, start=(points[key.split("->")[0]].x, points[key.split("->")[0]].y),
-                         finish=(points[key.split("->")[1]].x, points[key.split("->")[1]].y), attach=True)
-              for key, people in network.spawn_demand.items() if people > 0]
+    pairs += [demand(key, people, start=(points[key.split("->")[0]].x, points[key.split("->")[0]].y),
+                     finish=(points[key.split("->")[1]].x, points[key.split("->")[1]].y), attach=True)
+              for key, people in (network.spawn_daily if daily else network.spawn_demand).items() if size(people) > 0]
     if network.institutions:
         from .institutions import walk_demand  # noqa: PLC0415 - institutions builds on this module
         pairs += walk_demand(network, modes, daily)

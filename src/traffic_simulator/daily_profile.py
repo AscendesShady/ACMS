@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from bisect import bisect_right
 from dataclasses import dataclass, field
+from math import isfinite
 
 HOURS = 24
 ARRIVAL_PATTERNS = ["Random", "Poisson", "Binomial", "Negative binomial"]  # per OD pair
@@ -59,6 +60,41 @@ class DailyProfile:
         """Control points sampled from the current curve, to tune by hand."""
         hours = [i * HOURS / (count - 1) for i in range(count)]
         return DailyProfile("points", [(hour, self.level(hour)) for hour in hours])
+
+
+def profile_record(profile: DailyProfile) -> dict:
+    """A profile as plain data: a project file's pair, Network's daily demand, an institution's curves."""
+    return {"kind": profile.kind, "points": [list(point) for point in profile.points],
+            "coefficients": list(profile.coefficients)}
+
+
+def from_record(record) -> DailyProfile:
+    """profile_record's data back as a profile; ValueError if it isn't one."""
+    try:
+        profile = DailyProfile(record["kind"], [(float(hour), float(level)) for hour, level in record["points"]],
+                               [float(a) for a in record.get("coefficients") or []])
+    except (TypeError, KeyError, ValueError, AttributeError):
+        raise ValueError("A daily curve is {kind, points [[hour, level], ...], coefficients [a0, ...]}.") from None
+    values = [v for point in profile.points for v in point] + profile.coefficients
+    if not all(isfinite(v) for v in values) or (
+            profile.kind == "points" and (len(profile.points) < 2 or min(level for _, level in profile.points) < 0
+                                          or not all(0 <= hour <= HOURS for hour, _ in profile.points)
+                                          or not all(a[0] < b[0] for a, b in zip(profile.points, profile.points[1:])))) or (
+            profile.kind == "poly" and not min(DEGREES) < len(profile.coefficients) <= max(DEGREES) + 1) or (
+            profile.kind not in ("points", "poly")):
+        raise ValueError("A daily curve needs two points or more (hours 0-24 in order, levels not below zero) or "
+                         f"a polynomial of degree {min(DEGREES)}-{max(DEGREES)}.")
+    return profile
+
+
+def through_hours(values: list[float]) -> DailyProfile:
+    """A curve through 24 hourly values, one point at each hour's middle (an institution's day from its shift, to
+    shape by hand); a day of zeros: the weekday."""
+    if not any(values):
+        return DailyProfile()
+    top = max(values)
+    middles = [(hour + 0.5, value / top) for hour, value in enumerate(values)]
+    return DailyProfile("points", [(0.0, middles[0][1]), *middles, (float(HOURS), middles[-1][1])])
 
 
 def quarter_shares(values) -> tuple[float, ...]:

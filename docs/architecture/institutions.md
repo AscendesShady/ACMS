@@ -16,17 +16,23 @@ Each building is a zone of the four-step model: generation, distribution, mode s
   one trip each way a day; employees in the hours the shift starts and ends, and so do people who come
   together; the others evenly through the shift (`_through`, past midnight too); residents leave round the
   start and come back round the end (`RESIDENT_SPREAD`, a quarter the hour before, half in it, a quarter after).
-  `_groups(item)` keeps employees and the people apart (each with whether they commute: staff and residents).
-  `hourly_trips(item)`: the same by car (its Car share). An office's default visitors (500 a day: business
+  `_groups(item, daily)` keeps employees and the people apart (each with whether they commute: staff and residents).
+  Daily, its own curves (`Institution.curves`, {"arrive"|"leave": a `daily_profile.profile_record`}) spread each
+  group's day in their place, each group keeping its share of the day's arrivals (or departures); hourly, its
+  people an hour typed (`Institution.per_hour`) are the same every hour, shared as the groups share the day (a
+  building of nobody yet: all its people). Unset, the shift's shape (`shift_people(item)`: the shift alone, what its
+  curves start from in the panel). `hourly_people(item, daily=True)`, `hourly_trips(item, daily=True)` and
+  `run_demand` / `walk_demand` follow the Demand switch's mode; so `run_demand`'s design hour is any hour for a
+  typed building. `hourly_trips(item)`: the same by car (its Car share). An office's default visitors (500 a day: business
   visits and staff's midday trips) bring it to ITE 710's 3.3 car trips a day per employee, scaled to its car
   share.
 - **Distribution.** `door(network, item)`: its nearest junction (not a boundary end; equally near, the first by
   name), where its trips start and end. `catchment(network, item)`: the junctions and ends in its circle but the
   door: where its people come from, an equal share each (the circle of influence is the catchment).
 - **Mode split.** `shares(item)`: people % by mode, its `mode_shares` (set by `network_tools.institution_split`,
-  a logit: network_tools.md) or else `car_share` by Car and the rest on foot (`WALK`). `vehicle_split(item,
+  a logit: ai_mode.md) or else `car_share` by Car and the rest on foot (`WALK`). `vehicle_split(item,
   modes, commute)`: vehicles a person (share ÷ occupancy over the untimetabled types, a commute's at most
-  `COMMUTE_OCCUPANCY` 1.1, NHTS 2017; walkers, metro riders and timetabled riders add none: riders take the network's
+  `COMMUTE_OCCUPANCY` 1.1, NHTS 2017; walkers, MRT riders and timetabled riders add none: riders take the network's
   (`walk_demand(network, modes, daily)`: the Walk share of the people arriving, from each catchment junction or end
   an equal share to the door and on to the building, and of those leaving, back, as walking.WalkDemand; hourly in
   the same design hour as the vehicle trips, `_busiest` of `_vehicle_rows`, else its own busiest: walking.md.)

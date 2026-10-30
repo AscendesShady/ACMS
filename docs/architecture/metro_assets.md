@@ -1,4 +1,4 @@
-# metro_assets.py: overhead metro scenery (no Qt)
+# metro_assets.py: overhead MRT scenery (no Qt)
 
 - Render dimensions are assumptions in metres, not surveyed geometry or engineering clearance checks:
   viaduct underside 8 m, track level 9 m, platform 9.4 m, canopy top 14 m; a train starts at 9.15 m and is

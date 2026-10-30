@@ -167,6 +167,61 @@ def test_crossings_are_checked_follow_their_road_and_are_saved():
     assert not network.pedestrian_crossings
 
 
+def test_a_crossing_on_a_curve_goes_straight_across_from_footpath_to_footpath():
+    # Its distance is along the centre line; each footpath is longer or shorter beside a curve (a 785 m half circle:
+    # 810 and 761 m), so walking that distance along each put its two ends apart.
+    from math import cos, pi, sin
+
+    from traffic_simulator.geometry import point_along
+
+    network = generate_network(3, 4)
+    road = network.roads["1,2-2,2"]  # (0, 500) to (500, 500): a half circle of 250 m bulging north
+    road.shape = [(250 - 250 * cos(pi * i / 64), 500 - 250 * sin(pi * i / 64)) for i in range(1, 64)]
+    road.footpaths = ["left", "right"]
+    network.synchronize_road_lengths()
+    length = network.road_geometry_length(road)
+    assert 780 < length < 790
+    crossing = network.add_crossing(road.id, length / 3)
+    middle = point_along(network.road_points(road), crossing.distance_m)[:2]
+    across = next(line for after, line, *_ in WalkGraph(network).ways[f"{crossing.id}|left"]
+                  if after == f"{crossing.id}|right")
+    half = road.width_m / 2 + FOOTPATH_M / 2  # each footpath's centre from the road's
+    for end in (across[0], across[-1]):
+        assert abs(hypot(end[0] - middle[0], end[1] - middle[1]) - half) < 0.5, (end, middle)
+    assert abs(polyline_length(across) - 2 * half) < 0.5
+
+
+def test_a_crossing_keeps_clear_of_a_wide_or_roundabout_junctions_corners():
+    # A junction's corners (where its footpaths end) are beyond its widest road's half, a footpath and any cycle
+    # lane, and beyond a roundabout's circle: more than ZEBRA_CLEAR_M at 6 lanes a way, so a crossing at 20 m sat
+    # inside the corner and the footpath's cuts went out of order.
+    network = generate_network(3, 4)
+    road = network.roads["1,2-2,2"]
+    road.lanes_per_direction, road.footpaths = 6, ["left", "right"]
+    corner = network.footpath_corner_m("2,2")
+    assert corner > 20
+    for at in (21.0, 500 - 21.0):
+        try:
+            network.add_crossing(road.id, at)
+        except ValueError as exc:
+            assert "at least 20 m" in str(exc) and "corner" in str(exc), str(exc)
+        else:
+            raise AssertionError(at)
+    crossing = network.add_crossing(road.id, 500 - corner - 1)
+    network.validate()
+    graph = WalkGraph(network)
+    for side in road.footpaths:  # the footpath from corner to corner, cut at the crossing in order
+        pieces = [piece for a, b, piece in graph.pieces if f"{crossing.id}|{side}" in (a, b)]
+        expected = 500 - network.footpath_corner_m("1,2") - corner
+        assert abs(sum(polyline_length(piece) for piece in pieces) - expected) < 1e-6, side
+    from traffic_simulator.roundabouts import design_roundabout
+
+    round_about = generate_network(3, 4)
+    round_about.nodes["2,2"].control = "roundabout"
+    diameter = design_roundabout(round_about, "2,2").inscribed_diameter_m
+    assert round_about.footpath_corner_m("2,2") >= diameter / 2 + FOOTPATH_M
+
+
 def test_spawn_points_join_their_nearest_footpath_and_walk_between_them():
     from traffic_simulator.mode_behavior import VehicleModes
     from traffic_simulator.simulation import Simulation
@@ -195,7 +250,7 @@ def test_spawn_points_join_their_nearest_footpath_and_walk_between_them():
         simulation.step()
     assert simulation.walk_spawned and not simulation.walk_unreachable
     assert all(walker.points[0] == (s1.x, s1.y) and walker.points[-1] == (far.x, far.y) for walker in simulation.walkers)
-    for bad, words in (({"S1->S1": 5.0}, "two different spawn points"), ({"S1->S9": 5.0}, "two different spawn points"),
+    for bad, words in (({"S1->S1": 5.0}, "two different deploy points"), ({"S1->S9": 5.0}, "two different deploy points"),
                        ({"S1->S3": -1.0}, "0 to")):
         refused(network, lambda n, bad=bad: setattr(n, "spawn_demand", bad), words)
     path = Path(tempfile.mkdtemp()) / "spawn.json"
@@ -206,8 +261,51 @@ def test_spawn_points_join_their_nearest_footpath_and_walk_between_them():
     assert "S3" not in network.spawn_points and not network.spawn_demand
 
 
+
+def test_daily_walkers_spread_their_day_by_each_pairs_curve_kept_apart_from_hourly():
+    from traffic_simulator.daily_profile import DailyProfile, profile_record
+    from traffic_simulator.walking import walk_pairs
+
+    network = generate_network(2, 2)
+    network.walk_demand = {"1W->2E": 60.0}  # Hourly: kept apart from the day
+    evening = profile_record(DailyProfile("points", [(0.0, 0.0), (17.0, 0.0), (18.0, 1.0), (24.0, 0.0)]))
+    network.walk_daily = {"1W->2E": {"people": 2400.0, "curve": evening}}
+    s1, s2 = network.add_spawn_point(0.0, 0.0), network.add_spawn_point(50.0, 0.0)
+    network.spawn_daily = {"S1->S2": {"people": 240.0, "curve": profile_record(DailyProfile())}}
+    network.validate()
+    assert [(pair.origin, pair.hourly, pair.daily) for pair in walk_pairs(network, [], daily=False)] == [("1W", 60.0, None)]
+    walk, spawn = walk_pairs(network, [], daily=True)
+    assert (walk.hourly, walk.daily) == (None, 2400.0) and walk.shares[3] == 0 and abs(sum(walk.shares) - 1) < 1e-9
+    assert max(range(24), key=walk.shares.__getitem__) == 18  # the evening's curve
+    assert spawn.attach and spawn.daily == 240.0 and spawn.start == (s1.x, s1.y)
+    for bad, words in (({"1W->2E": {"people": -1.0, "curve": evening}}, "0 to"),
+                       ({"1W->2E": {"people": 5.0, "curve": {"kind": "points", "points": [[3, 1]]}}}, "two points"),
+                       ({"1W->1W": {"people": 5.0, "curve": evening}}, "two different")):
+        refused(network, lambda n, bad=bad: setattr(n, "walk_daily", bad), words)
+    path = Path(tempfile.mkdtemp()) / "daily_walking.json"
+    save_network(network, path)
+    loaded = load_network(path)
+    assert loaded.walk_daily == network.walk_daily and loaded.spawn_daily == network.spawn_daily
+    network.delete_spawn_point("S1")  # its day goes with it
+    assert not network.spawn_daily
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):
             check()
     print("ok")
+
+
+def test_an_institutions_walkers_draw_apart_from_the_matrix_pair_with_their_ends():
+    """Simulation._rng keeps an institution's walkers (timetabled False) off the streams of a pedestrian OD pair with
+    the same two nodes, so adding a building never shifts that pair's walkers."""
+    from types import SimpleNamespace
+
+    from traffic_simulator.simulation import Simulation
+    from traffic_simulator.walking import WalkDemand
+
+    run = SimpleNamespace(_streams={}, seed=7)
+    matrix, building = WalkDemand("1W", "1E", 60.0), WalkDemand("1W", "1E", 60.0, timetabled=False)
+    assert Simulation._rng(run, "walkers", matrix) is not Simulation._rng(run, "walkers", building)
+    assert Simulation._rng(run, "walkers", matrix) is Simulation._rng(run, "walkers", WalkDemand("1W", "1E", 5.0))

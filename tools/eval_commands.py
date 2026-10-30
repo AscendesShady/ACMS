@@ -258,7 +258,7 @@ def run_case(model: str, case: dict) -> dict:
         return result
 
     messages = [{"role": "system", "content": assistant.system_prompt(tools=True)},
-                {"role": "user", "content": EDITOR + request}]
+                {"role": "user", "content": EDITOR + request + network_tools.skills_for(request)}]
     before, started, error = len(assistant.USAGE), time.monotonic(), ""
     try:
         answer = assistant.converse("local", model, messages, "", offered, None, run_tool,

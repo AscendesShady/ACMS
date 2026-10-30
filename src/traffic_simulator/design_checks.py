@@ -4,8 +4,8 @@
   (Eq 3-2, metric; t = 2.5 s, a = 3.4 m/s²) and the clear offset it needs from the inside lane's centre on a curve of
   radius R, HSO = R·(1 − cos(28.65·SSD/R degrees)) (Eq 3-37); against the placed buildings.
 - Intersection sight (§9.5.3, Case B1): along the major road b = 0.278·V·t_g (Eq 9-1) with t_g 7.5 s for a car,
-  9.5 a single-unit truck, 11.5 a combination truck, 0.5 s (car) or 0.7 s (truck) more for each lane crossed beyond
-  one (Table 9-6); the triangle from a decision point 4.4 m back from the major road's edge; at junctions without
+  9.5 a single-unit truck, 11.5 a combination truck, 0.5 s (car) or 0.7 s (truck) more for each lane crossed from the
+  near side beyond one, the major road's lanes each way (Table 9-6); the triangle from a decision point 4.4 m back from the major road's edge; at junctions without
   signals, against the placed buildings.
 - Turning paths (§2.8, Table 2-5b): each junction turn's tightest radius (on the lane centres it follows) against the
   centreline turning radius of the largest design vehicle among the vehicle types: passenger car 6.40 m, city bus
@@ -31,7 +31,8 @@ from __future__ import annotations
 
 import heapq
 from collections import Counter, defaultdict
-from math import atan2, cos, degrees, hypot, pi, radians, sin, sqrt
+from math import atan2, cos, degrees, hypot, inf, pi, radians, sin, sqrt
+from statistics import fmean
 
 from . import weaving
 from .geometry import polyline_meets_box
@@ -147,7 +148,7 @@ def audit(network: Network, modes: list) -> dict:
             major = max(roads, key=lambda road: (road.speed_limit_kmh, road.lanes))
             kind = "combination truck" if heaviest[0] == "semitrailer" else "single-unit truck" if truck else "car"
             base, per_lane = GAPS_S[kind]
-            gap = base + per_lane * max(major.lanes - 2, 0)
+            gap = base + per_lane * max(major.lanes_each_way - 1, 0)  # lanes crossed from the near side beyond one
             along = 0.278 * major.speed_limit_kmh * gap
             if boxes:
                 for minor in [road for road in roads if road is not major]:
@@ -317,7 +318,7 @@ def network_indices(network: Network) -> dict:
     (junctions and ends), e edges (roads), p components; cyclomatic μ = e − v + p, α = μ / (2v − 5), β = e / v,
     γ = e / (3(v − 2)) (planar forms); the diameter in links; degrees; the detour index (route km over
     straight-line km between boundary ends, one-way roads kept); Shimbel accessibility (the sum of shortest km
-    from a junction to every other)."""
+    from a junction to every other; one that can't reach every other is least accessible, None)."""
     nodes = {node.id: node for node in network.all_nodes()}
     roads = list(network.all_roads())
     v, e = len(nodes), len(roads)
@@ -364,7 +365,10 @@ def network_indices(network: Network) -> dict:
         return best
 
     junctions = list(network.nodes)
-    shimbel = {node: sum(metres(node).get(other, 0.0) for other in junctions) / 1000 for node in junctions}
+    # A junction it can't reach is infinitely far (Shimbel's distances are a connected graph's): a cut-off one is least
+    # accessible, shown as None
+    shimbel = {node: sum(found[other] for other in junctions) / 1000 if all(other in found for other in junctions)
+               else inf for node, found in ((node, metres(node)) for node in junctions)}
     ends = list(network.approach_nodes)
     routed = route_lengths(network, ends)
     detours = [routed[o][d] / hypot(nodes[o].x - nodes[d].x, nodes[o].y - nodes[d].y)
@@ -375,9 +379,10 @@ def network_indices(network: Network) -> dict:
             "gamma": round(e / (3 * (v - 2)), 3) if v > 2 else None,
             "diameter_links": max((hops(node) for node in nodes), default=0),
             "degrees": dict(sorted(Counter(len(around[node]) for node in junctions).items())),
-            "detour_index": round(sum(detours) / len(detours), 3) if detours else None,
-            "most_accessible": {node: round(shimbel[node], 1) for node in ranked[:5]},
-            "least_accessible": {node: round(shimbel[node], 1) for node in ranked[-5:][::-1]},
+            "detour_index": round(fmean(detours), 3) if detours else None,
+            "most_accessible": {node: round(shimbel[node], 1) for node in ranked[:5] if shimbel[node] < inf},
+            "least_accessible": {node: round(shimbel[node], 1) if shimbel[node] < inf else None
+                                 for node in ranked[-5:][::-1]},
             "notes": ["alpha: share of the most circuits a planar graph could have (0 a tree, 1 complete); beta: roads a "
                       "node; gamma: share of the most roads possible. Shimbel: km to every other junction (lower is "
-                      "more accessible)."]}
+                      "more accessible; None: it can't reach them all)."]}

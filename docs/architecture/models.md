@@ -2,12 +2,19 @@
 
 Dataclasses:
 - `Node(id, x, y, row, column, control, supply_vph, demand_vph, signal_phases, signal_method, green_times_s,
-  cycle_min_s, cycle_max_s, target_saturation, stop_weight_s)`.
+  manual_greens_s, amber_s, cycle_min_s, cycle_max_s, target_saturation, stop_weight_s)`.
   `control` is `"signalised"`, `"roundabout"` or `"uncontrolled"` (merges, diverges, bends).
   `supply_vph` / `demand_vph` are the flows entering / leaving at a boundary end.
   Signal timing: `signal_phases` is 2 or 4; `signal_method` one of `SIGNAL_METHODS` (`webster`,
-  `transyt`, `synchro`, `scats`, `scoot`, `fixed`, `actuated`, `max_pressure`); `green_times_s`, one per phase, is used by `fixed`
-  only; the cycle limits (20–240 s, default 40–120) by the coordinated methods; `target_saturation`
+  `transyt`, `synchro`, `scats`, `scoot`, `fixed`, `actuated`, `max_pressure`, `manual`); `green_times_s`, one per phase, is used by `fixed`
+  only; `manual_greens_s` (arriving road id -> [first, last] second of the cycle the arm goes, 1-based: 1-120 is the
+  cycle's first 120 s; each key a road at the node, refused otherwise: `split_road` gives a window to the part
+  reaching the node, `_retie` renames it and moves it with the road's end, `delete_road` drops it) and `amber_s` (3–6 s, default `MANUAL_AMBER_S` 3, the last seconds of each window) by
+  `manual` only: red is the rest of the cycle, which ends at the latest window's last second. `_check_manual` refuses
+  a window outside 1–`MANUAL_CYCLE_MAX_S` (300) or no longer than its amber, and two arms sharing a second unless
+  they are opposite (more than 135° apart) with the same window. An arm with no window stays red; a window of a road
+  no longer at the junction is ignored. `signal_arms(node)`: each arriving road, its compass name (N, E, S, W; the
+  road's id too when two point the same way) and bearing, clockwise from north; the cycle limits (20–240 s, default 40–120) by the coordinated methods; `target_saturation`
   (50–110 %, default 90 %) by SCATS and SCOOT; `stop_weight_s` (the delay a stop counts as, default
   10 s) by TRANSYT and SCOOT. Older files load with the defaults. A new junction (`add_node`, a generated grid, an
   interchange's) takes the network's `default_signal_method` (default `webster`, saved with the network).
@@ -45,12 +52,18 @@ Dataclasses:
   (network_io: `walkways`, `walk_demand`; older files have none) and pruned with the nodes and ends they name
   (`_prune_walking`, after `delete_road` and `delete_node`): walking.md. `Network.pedestrian_crossings` ({X1:
   `Crossing(id, road, distance_m, kind)`}: `add_crossing`, `crossing_problem`) follow their road as bus stops do (a
-  rename, `reverse_road` measuring from the other end, `split_road` to the part they are on) and go with it; validate
+  rename, `reverse_road` measuring from the other end, `split_road` to the part they are on) and go with it; each at
+  least `ZEBRA_CLEAR_M` from either end and beyond that junction's corners (`footpath_corner_m`: its widest road's
+  half, a cycle lane and a footpath; a roundabout's circle and a footpath; 0 at a boundary end); validate
   refuses an edit that leaves one impossible (a footpath taken away, the road shortened past it). (`Network.crossings`
   is another thing: where a line crosses roads.) `Network.spawn_points` ({S1: `SpawnPoint(id, x, y)`},
   `add_spawn_point`, `delete_spawn_point` taking the walking to and from it) and `Network.spawn_demand` ({"S1->S2":
-  people an hour}, two different spawn points, 0 to `MAX_WALK_DEMAND`) are checked by `validate` and saved
-  (network_io: `spawn_points`, `spawn_demand`; older files have none).
+  people an hour}, two different deploy points, 0 to `MAX_WALK_DEMAND`) are checked by `validate` and saved
+  (network_io: `spawn_points`, `spawn_demand`; older files have none). Daily demand of the three matrices,
+  `Network.walk_daily`, `spawn_daily` and `metro_daily` ({"1W->1E": {"people": a day, "curve":
+  `daily_profile.profile_record`}}), is kept apart from the hourly: `validate` checks each pair's places as the
+  hourly's, its people 0 to 24 times the hourly limit and its curve (`daily_profile.from_record`); saved under the
+  same names (older files: none) and pruned with their places as the hourly is.
 - `BusStop(id, road, distance_m, direction, dwell_s)`: a bay beside the kerb. `distance_m` is the
   bay's middle, metres along the road's centre line from its `from_node`; `direction` is `"forward"`
   (from → to), `"backward"` or `"both"`; `dwell_s` is how long each bus stands at it (20 s by
@@ -58,7 +71,9 @@ Dataclasses:
   5,000) and `alighting_percent` (the share of a bus's load getting off, 0–100): either above 0 and the dwell
   comes from the passengers instead (simulation.md, Bus stops).
 - `Institution(id, kind, x, y, area_m2, radius_m, people, employees, shift_start_h, shift_end_h, car_share,
-  mode_shares, height_m=None)`:
+  mode_shares, height_m=None, curves={}, per_hour={})`: `curves` and `per_hour` are its own day's
+  arrive/leave curves and its people an hour (institutions.md), keyed "arrive" and "leave", checked by
+  `institution_problem` (people an hour 0 to `MAX_INSTITUTION_PER_H`; a curve `from_record` reads);
   a building that makes trips (institutions.py). `kind` is one of `INSTITUTION_KINDS` (Residential, School,
   Hospital, Office, Shop); (x, y) is its square footprint's centre; `radius_m` its circle of influence;
   the shift in hours after midnight. `institution_problem` checks the figures (a known kind; area 1 m² to
@@ -66,13 +81,13 @@ Dataclasses:
   starts and ends at different times; car share 0–100 %; `mode_shares` people % by mode name, each 0–100 and
   adding up to 100, or empty). `radius_m` is its catchment (institutions.md).
 - `MetroStop(id, x, y)` and `MetroLine(id, stops, track)` in `Network.metro_stops` / `metro_lines` (Edit Network →
-  Metro): a stop is a point in metres, apart from the roads; a line is its stops in order and its `track`, a polyline
+  MRT): a stop is a point in metres, apart from the roads; a line is its stops in order and its `track`, a polyline
   through them (`metro_track`; an older file's empty track: straight stop to stop; `metro_length_m` its length).
-  `add_metro_line(first, second, merge)` makes ML1, ML2... from its first two stops (stations M1, M2...: the metro's
+  `add_metro_line(first, second, merge)` makes ML1, ML2... from its first two stops (stations M1, M2...: the MRT's
   own network and OD matrix are labelled by them), and `add_metro_stop(line, x, y, merge)` extends it with the leg
   `metro_leg` works out (`heading`: aimed through the stop): `geometry.rail_leg` keeps the last stop's platform on
   straight track (`METRO_PLATFORM_M` 120 m: a 5-carriage train and room, an assumption), eases into a curve of
-  `METRO_MIN_RADIUS_M` 300 m (a desirable urban metro minimum: an assumption) through transitions of
+  `METRO_MIN_RADIUS_M` 300 m (a desirable urban MRT minimum: an assumption) through transitions of
   `METRO_TRANSITION_M` 60 m (L = v³ / (R C) at 80 km/h with C 0.6 m/s³: an assumption) and runs straight into the next
   platform; a point needing a turn of `METRO_MAX_TURN_DEG` 89 or more (no right-angle or acute bends), or inside the
   bend's reach, is drawn in like a rubber band to the most the leg may turn, as far out, and the stop goes where the leg
@@ -82,10 +97,10 @@ Dataclasses:
   `MetroCrossing` (its `line_id`); with `merge` the leg ends at the first crossing in one stop on both lines (an
   interchange), put into the other line's order by where it lies along its track, refused under 150 m from the other
   line's stations. `validate`: every line has its own ID, two stops or more, all on the map, none twice, a track of
-  two [x, y] points or more (or none), and every stop is on a line (on two or more: an interchange). `Network.metro_demand` is the metro's own OD matrix, {"M1->M2": passengers an hour}, each pair two
+  two [x, y] points or more (or none), and every stop is on a line (on two or more: an interchange). `Network.metro_demand` is the MRT's own OD matrix, {"M1->M2": passengers an hour}, each pair two
   different stations, 0 to `MAX_METRO_DEMAND` 100,000 (`validate`). `delete_metro_line` removes a line, its stops (an interchange off
   the other line too, unless that would leave it under two) and
-  the metro demand to or from them. A line's service (`headway_min`, `speed_kmh`,
+  the MRT demand to or from them. A line's service (`headway_min`, `speed_kmh`,
   `cars_per_train`, `car_capacity`, `fare_cents`; `train_capacity` their product; `METRO_SERVICE`'s assumed defaults
   and ranges, `metro_line_problem`): metro.md.
   Listed in `as_records`.
@@ -125,12 +140,16 @@ Dataclasses:
     so crossing roads lean instead. A shorter top edge over a longer bottom edge makes a
     trapezoid.
   - Boundary roads, off-grid nodes and curves move only the far end; a curve scales exactly.
+  - Bus stops and crossings stay put from the end that doesn't move: on a road whose from_node moves (a west
+    or north boundary road runs from its outer end) their `distance_m` shifts by the change in length.
 - `move_nodes(ids, dx, dy)`: rubber-band drag. Only these nodes move and their roads
-  stretch. A move that would leave any road shorter than 1 m is refused.
+  stretch. A move that would leave any road shorter than 1 m, or bring a curve's two ends together, is refused
+  (False): the nodes and every road's shape and curvature are put back exactly.
 - `_carry_shapes(before)`: keeps curves attached when their end nodes move.
   - Each curve follows the similarity transform (move, rotate, scale) that maps its old
     chord onto the new one, computed with complex numbers.
   - Its curvature divides by the scale factor.
+  - Ends brought together leave no chord to follow: ValueError (`move_nodes` refuses the move).
 - `add_node(x, y)`: adds an off-grid junction `N#`.
 - `add_road(a, b)`: adds a new two-way road with the network defaults.
   `connection_problem(a, b)` explains a refusal.
@@ -147,22 +166,33 @@ Dataclasses:
 - Bus stops:
   - `add_bus_stop(road, direction)`: the first mid-way between the road's junctions; each after it
     in the middle of the longest free stretch between the road's stops (all directions), or failing
-    that at the road end farthest from them, so no new bay lands on another. Refused, changing
-    nothing, on a road too short for a bay (40 m clear of both junctions) or with no room left (a
-    bay's length clear of every other stop). Moving a stop afterwards may bring bays together.
+    that at the road end farthest from them, so no new bay lands on another; the next of those spots
+    when one fails `bus_stop_problem`. Refused, changing nothing, on a road too short for a bay (40 m
+    clear of both junctions) or with no spot left (a bay's length clear of every other stop, and clear
+    of the crossings and turn pockets).
   - `move_bus_stop(id, metres)`: slides it, clamped to `bus_stop_range(road)` (the whole bay clear of
-    the junction at each end, `lane_end_inset`).
+    the junction at each end, `lane_end_inset`); refuses (returns False, nothing changed) a bay that
+    fails `bus_stop_problem`, so a drag stops short of the clash.
+  - `bus_stop_problem(stop)`: why its bay can't be where it is, or None: on another stop's bay (a bay's
+    length apart on its road), on a crossing (`crossing_problem`'s clearance) or beside a turn pocket of
+    the traffic it serves (`pocket_problem`).
   - `bus_stop_distance(stop)`: where it is now, clamped again if the road has changed since.
   - `bus_stop_sides(stop)`: the traffic it serves (a one-way road only has from → to).
   - `reverse_road` measures a stop from the other end and flips forward/backward; `split_road`
     moves it to the part it is on.
 - `objects_in_box(left, top, right, bottom, crossing)`: a selection box's `(kind, id)` objects
-  (`node`, `end`, `road`, `bus_stop`). A window (`crossing` false) takes what lies wholly inside:
-  a junction or end by its point, a road by every point of its line, a stop by its bay's stretch of road.
+  (`node`, `end`, `road`, `bus_stop`, `metro_line`). A window (`crossing` false) takes what lies wholly inside:
+  a junction or end by its point, a road by every point of its line, a stop by its bay's stretch of road, an MRT
+  line by every point of its track (`metro_track`).
   A crossing box takes whatever it touches (`polyline_meets_box`).
-- `validate()`: every invariant, including finite numbers in every number field of the network, its junctions,
+- `validate()`: every invariant, including finite numbers in every number field of the network, its junctions
+  (each within `MAP_LIMIT_M`, 1,000 km, of the origin: x = 1e300 is finite but off any map),
   roads (shape points and curvature too), bus stops and background (`number_problem`: no NaN, ±infinity, text or
-  bool, which every sign check would let through), IDs, references, positive lengths and speeds,
+  bool, which every sign check would let through; an int field such as `lanes_per_direction`, `signal_phases`
+  or a PDF's `page` a whole number, 2.0 refused too; an MRT line's `cars_per_train` and `car_capacity`
+  whole, `metro_line_problem`), a background image on this computer (`image_path_problem`: a network share,
+  `\\server\share` or `//server/share`, is refused, as drawing it would connect to that server and, on
+  Windows, send the user's sign-in hash), IDs, references, positive lengths and speeds,
   control types, 2 or 4 phases with positive greens, a known timing method with sensible limits, one
   curvature value per segment, and bus
   stops on known roads with a valid direction and a dwell time of 0 to 600 s, and institutions (`institution_problem`).

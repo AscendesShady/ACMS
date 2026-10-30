@@ -15,8 +15,8 @@ after TSP's. Each junction (`_Junction`) shows the state it is given (its plan, 
   LLM): TRUE, the rule. Past the agent's deadline (a batch's Decide within): FALSE. Who decides is the panel's
   (agent_choice.py): System 1 or System 2 and its model, or Multiple, the models Batch Run tests.
 - clearance, on TRUE: every arm ends its green (after its minimum green, as TSP never cuts one shorter), then amber,
-  then all-red; then only the kerbside lane of the vehicle's approach (lane 0, whichever side traffic drives on)
-  shows green, its lane signal flashing, while every other lane and arm stays red, so the
+  then all-red; then only the kerbside lane of the vehicle's approach (the view's `kerb_lane`: lane 0, whichever side
+  traffic drives on, or the lane past a kerb turn pocket's) shows green, its lane signal flashing, while every other lane and arm stays red, so the
   queue ahead of the vehicle clears and it goes through. The vehicle keeps to that lane as it comes (Simulation's
   EMERGENCY_LANE_M). Once it has left the arm (or after CLEAR_MAX_S), the lane shows amber, then all-red, and the
   junction goes back to its plan, or straight on to the next granted request. An emergency vehicle obeys red, but
@@ -25,7 +25,6 @@ Unticked, the simulation never calls it. report(agent) gives a run's workbook it
 """
 
 import json
-import threading
 from math import hypot
 from statistics import fmean, median
 
@@ -33,9 +32,10 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPen
 from PySide6.QtWidgets import QFormLayout, QGraphicsEllipseItem, QGraphicsRectItem, QWidget
 
-from traffic_simulator.agent_choice import AgentChoice
+from traffic_simulator.agent_choice import NOBODY, AgentChoice, run_for
 from traffic_simulator.models import stop_line_inset
 from traffic_simulator.network_scene import SIGNAL_SIZE
+from traffic_simulator.theme import LANE_SIGNAL_LIT, LANE_SIGNAL_UNLIT, SIGNAL_BODY, SIGNAL_RIM
 from traffic_simulator.widgets import hint_label
 
 NAME = "Dynamic Emergency Vehicle Lane (DEVL)"
@@ -47,16 +47,12 @@ QUEUED_KMH = 5.0  # slower than this, a vehicle ahead counts as queued
 DETECT_S = 30.0  # check-in: within this many seconds of the stop line at the arm's speed limit, or held in a queue
 CLEAR_MAX_S = 60.0  # the longest one vehicle's lane stays green
 SIGNALS = {"G": "green", "Y": "amber", "R": "red"}
-KERBSIDE = 0  # the lane DEVL clears: the kerbside lane, whichever side traffic drives on
 
 FLASH_PERIOD_S = 1.0  # one on-and-off cycle; lit for the first half
-GREEN = QColor("#4ade80")
-UNLIT = QColor("#26332a")
+GREEN = QColor(LANE_SIGNAL_LIT)
+UNLIT = QColor(LANE_SIGNAL_UNLIT)
 
-NOBODY = "no agent"  # a run's key when it has no signal agent
-KEEP_RUNS = 16  # runs whose state is kept: twice the most a batch has going at once
-_runs: dict = {}  # each run's signal agent (or NOBODY) -> its _Run, the latest last
-_runs_lock = threading.Lock()  # a batch's runs start side by side
+_runs: dict = {}  # each run's signal agent (or NOBODY) -> its _Run, the latest last (agent_choice.run_for)
 _latest = None  # the run stepped last
 app = None  # the window's services (agent_options, signal_agent: the live run's), set by the Extensions tab
 _choice = None  # who decides (AgentChoice)
@@ -101,7 +97,7 @@ def in_queue(vehicle: dict, ahead: list) -> bool:
 def telemetry(junction: str, arm: str, vehicle: dict, context: dict, state: str) -> dict:
     """The approach's telemetry for an emergency vehicle on it now (JSON-ready)."""
     view = context["arms"][arm]
-    left = KERBSIDE
+    left = view["kerb_lane"]  # the lane DEVL clears: the kerbside lane, past a kerb pocket's (the one it keeps to)
     ahead = [other for other in view["approaching"] if other["lane"] == left and other["distance_m"] < vehicle["distance_m"]]
     speed = vehicle["speed_kmh"] / 3.6
     return {"schema": SCHEMA, "type": "devl_request", "time_s": round(context["time_s"], 1), "junction": junction,
@@ -208,7 +204,7 @@ class _Junction:
                 message = telemetry(self.junction, arm, vehicle, context, self.shown.get(arm, ("R",))[0])
                 if row is None:
                     row = self.run.requests[key] = {
-                        "junction": self.junction, "approach": arm, "lane": KERBSIDE, "vehicle": vehicle["id"],
+                        "junction": self.junction, "approach": arm, "lane": message["lane"], "vehicle": vehicle["id"],
                         "asked_s": t, "system": system, "answer": None, "answered_s": None, "fell_back": False,
                         "checked_out_s": None, "green_s": None, "eta_at_s": t + message["emergency_vehicle"]["eta_s"],
                         "no_agent": agent is None or not getattr(agent, "asks", True), "telemetry": message}
@@ -284,29 +280,13 @@ class _Junction:
         return "G" if self.mode == "clear" else "Y"
 
 
-def _run_for(agent, t: float) -> _Run:
-    """The run this agent's (or NOBODY's) junctions belong to; a new one when its time goes back or jumps, or
-    its agent was reset (a new run, however soon after the last)."""
-    global _latest
-    key = agent if agent is not None else NOBODY
-    run = _runs.get(key)
-    if run is None or run.last_t is None or t < run.last_t or t - run.last_t > 2 \
-            or run.generation != getattr(agent, "generation", 0):  # or its agent reset: Stop, then Run at once
-        run = _Run(agent)
-        with _runs_lock:
-            _runs.pop(key, None)
-            _runs[key] = run
-            while len(_runs) > KEEP_RUNS:
-                _runs.pop(next(iter(_runs)))  # the oldest, long finished
-    run.last_t, _latest = t, run
-    return run
-
 
 def signal_override(junction: str, arm: str, state: str, context: dict, signal_agent):
     """This arm's state this step: the state it was given (the plan, or TSP's), or while a lane is cleared for an
     emergency vehicle, the clearance's: "R" for every arm, (the arm's "R", {kerbside lane: "G" or "Y"}) for the
     vehicle's. `signal_agent` carries the questions to System 1 or System 2."""
-    run = _run_for(signal_agent, context["time_s"])
+    global _latest
+    run = _latest = run_for(_runs, signal_agent, context["time_s"], _Run)
     here = run.junctions.get(junction)
     if here is None:
         here = run.junctions[junction] = _Junction(junction, run)
@@ -435,8 +415,8 @@ def draw(network, t):
             x = node.x + ux * inset - uy * kerb * keep
             y = node.y + uy * inset + ux * kerb * keep
             head = QGraphicsRectItem(x - SIGNAL_SIZE / 2, y - SIGNAL_SIZE / 2, SIGNAL_SIZE, SIGNAL_SIZE)
-            head.setBrush(QColor("#121719"))  # square, so it reads apart from the round junction heads
-            head.setPen(QPen(QColor("#eef5ed"), 0.1))
+            head.setBrush(QColor(SIGNAL_BODY))  # square, so it reads apart from the round junction heads
+            head.setPen(QPen(QColor(SIGNAL_RIM), 0.1))
             head.setZValue(6)
             head.setToolTip("Emergency lane cleared" if lit else "Emergency lane")
             lamp = QGraphicsEllipseItem(head.rect().adjusted(0.25, 0.25, -0.25, -0.25))

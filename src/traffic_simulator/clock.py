@@ -27,10 +27,10 @@ class SimulationClock(QObject):
         self.speed = 1.0  # simulated seconds per real second
         self.running = False
         self._last = 0.0
-        self._timer = QTimer(self)
-        self._timer.setInterval(STEP_MS)
-        self._timer.setTimerType(Qt.TimerType.PreciseTimer)  # Windows' default timer is 15 ms coarse
-        self._timer.timeout.connect(self._step)
+        self.timer = QTimer(self)
+        self.timer.setInterval(STEP_MS)
+        self.timer.setTimerType(Qt.TimerType.PreciseTimer)  # Windows' default timer is 15 ms coarse
+        self.timer.timeout.connect(self._step)
 
     def run(self) -> None:
         """Start again from 00:00:00."""
@@ -41,13 +41,13 @@ class SimulationClock(QObject):
     def play(self) -> None:
         if not self.running:
             self.running, self._last = True, time.monotonic()
-            self._timer.start()
+            self.timer.start()
             self.state_changed.emit(True)
 
     def pause(self) -> None:
         if self.running:
             self.running = False
-            self._timer.stop()
+            self.timer.stop()
             self.state_changed.emit(False)
 
     def stop(self) -> None:
@@ -55,10 +55,6 @@ class SimulationClock(QObject):
         self.pause()
         self.time_s = 0.0
         self.ticked.emit(self.time_s)
-
-    def set_step_ms(self, ms: int) -> None:
-        """Milliseconds between steps (STEP_MS; Power Saver's twice that): the time each covers follows."""
-        self._timer.setInterval(ms)
 
     def _step(self) -> None:
         now = time.monotonic()
@@ -74,6 +70,3 @@ class SimulationClock(QObject):
         self.time_s = seconds
 
 
-def clock_text(seconds: float) -> str:
-    whole = int(seconds)
-    return f"{whole // 3600:02d}:{whole // 60 % 60:02d}:{whole % 60:02d}"

@@ -18,6 +18,7 @@ the session:
 from __future__ import annotations
 
 import statistics
+from bisect import bisect_left, bisect_right
 from collections import Counter, defaultdict
 
 from . import emissions, stats
@@ -43,13 +44,10 @@ def grade(delay_s: float | None, thresholds) -> str | None:
     return next((los for top, los in thresholds if delay_s <= top), "F")
 
 
-def _column(name: str) -> int:
-    return MINUTE_COLUMNS.index(name)
-
-
-def queue_p95(observed: dict, road: str) -> float:
-    """A road's 95th-percentile queue, metres a lane, from the samples it had one (zeros: those it hadn't)."""
-    counts, samples = observed.get("queues", {}).get(road, {}), observed.get("samples", 0)
+def queue_p95(observed: dict, link: str) -> float:
+    """A link's (one direction of a road's) 95th-percentile queue, metres a lane of it, from the samples it had one
+    (zeros: those it hadn't)."""
+    counts, samples = observed.get("queues", {}).get(link, {}), observed.get("samples", 0)
     rank, seen, q95 = 0.95 * samples, samples - sum(counts.values()), 0.0
     for metres in sorted(counts, key=float):
         if seen >= rank:
@@ -109,7 +107,7 @@ def junction_los(kpis: dict, every: bool = False, period_min: int = 15) -> dict:
                        hcm_capacity_vph=None if hcm is None else round(hcm))
             if info["lanes"] == 1:  # against a bunched one-lane ring, which the HCM's random stream isn't
                 row["tanner_capacity_vph"] = round(tanner_entry_capacity(vc))
-        q95, length = queue_p95(observed, info["road"]), info["length_m"]
+        q95, length = queue_p95(observed, link), info["length_m"]
         if q95:
             row.update(queue_p95_m=q95, queue_share_of_road=round(q95 / length, 2) if length else None)
         by_junction[node].append(row)
@@ -124,7 +122,7 @@ def junction_los(kpis: dict, every: bool = False, period_min: int = 15) -> dict:
                           "worst_approach": worst["approach"], "worst_los": worst["los"],
                           "approaches": sorted(rows, key=lambda row: -row["control_delay_s"])})
     junctions.sort(key=lambda row: -row["control_delay_s"])
-    span = period_min * 60
+    span, start = period_min * 60, observed.get("observed_from_s", 0.0)  # periods from the end of a warm-up
     periods = int(seconds // span)
     grid = {}
     if periods >= 2:
@@ -133,12 +131,13 @@ def junction_los(kpis: dict, every: bool = False, period_min: int = 15) -> dict:
             bins: dict = defaultdict(list)
             for link in (row["approach"] for row in by_junction[node]):
                 for left, delay in delays[link]:
-                    bins[int(left // span)].append(delay)
+                    bins[int((left - start) // span)].append(delay)
             grid[node] = [grade(statistics.fmean(bins[i]), thresholds) if bins[i] else "-" for i in range(periods)]
     return {"junctions": junctions if every else junctions[:15], "junctions_graded": len(junctions),
             "periods": {"minutes": period_min, "los": grid} if grid else None,
-            "notes": ["Control delay: each vehicle's time on the approach and through the junction less that at the "
-                      "speed limit (and each turn's own speed), as the HCM measures it (Appendix A of Ch 16).",
+            "notes": ["Control delay: each vehicle's time on the approach and through the junction less that at its "
+                      "own free speed there (a bicycle's own, not the limit), as the HCM measures it (Appendix A of "
+                      "Ch 16).",
                       "Signals graded by HCM 2000 Exhibit 16-2; give-way, stop and roundabout entries by Exhibits "
                       "17-2 and 17-22 (HCM 2000 has no roundabout LOS; the HCM 2010 uses the same thresholds).",
                       "v/c of a signal approach: its flow over saturation flow × green share of the cycle.",
@@ -211,8 +210,7 @@ def diagnose_signal(kpis: dict, junction: str | None = None) -> dict:
                     row["hcm_delay_s"] = round(uniform * pf + incremental_delay(x, capacity), 1)
                 if delays.get(link):
                     row["simulated_delay_s"] = round(statistics.fmean(d for _, d in delays[link]), 1)
-                road = links.get(link, {}).get("road")
-                q95, length = queue_p95(observed, road) if road else 0.0, links.get(link, {}).get("length_m") or 0
+                q95, length = queue_p95(observed, link), links.get(link, {}).get("length_m") or 0
                 if q95 and length:
                     row.update(queue_p95_m=q95, spills_back=q95 >= SPILLBACK_SHARE * length)
                 approaches.append(row)
@@ -248,7 +246,8 @@ def _causes(plan: dict, approaches: list[dict], xc: float | None, webster_cycle:
     elif worst_x > 1.0:
         causes.append({"cause": "greens don't match demand", "severity": round(worst_x, 2),
                        "why": f"An approach runs at v/c {worst_x:.2f} while the junction as a whole could cope "
-                              f"(critical v/c {xc:.2f}).",
+                              f"(critical v/c {xc:.2f})." if xc is not None else
+                              f"An approach runs at v/c {worst_x:.2f}; the cycle is no longer than its lost time.",
                        "fix": "Retime: set_signal_timing method webster, or optimise_signals."})
     elif xc is not None and xc > 0.9:
         causes.append({"cause": "near capacity", "severity": round(xc, 2),
@@ -290,7 +289,7 @@ def run_health(kpis: dict) -> dict:
     observed = kpis["observed"]
     rows = observed.get("minute_rows", [])
     problems, checks = [], {}
-    on, arrived, speed = _column("Vehicles on the road"), _column("Arrived this minute"), _column("Mean speed (km/h)")
+    on, arrived, speed = map(MINUTE_COLUMNS.index, ("Vehicles on the road", "Arrived this minute", "Mean speed (km/h)"))
     run, start, stuck = 0, None, []
     for row in rows:
         if row[on] > 0 and row[arrived] == 0 and (row[speed] or 0) < GRIDLOCK_KMH:
@@ -384,7 +383,7 @@ def resilience(base: dict, disrupted: dict, measure: str = "throughput", toleran
     if measure not in RESILIENCE_MEASURES:
         raise ValueError(f"measure is one of {', '.join(RESILIENCE_MEASURES)}.")
     name, higher = RESILIENCE_MEASURES[measure]
-    column, delay = _column(name), _column("Delay (veh·h)")
+    column, delay = MINUTE_COLUMNS.index(name), MINUTE_COLUMNS.index("Delay (veh·h)")
     a, b = base["observed"].get("minute_rows", []), disrupted["observed"].get("minute_rows", [])
     minutes = min(len(a), len(b))
     if minutes < 6:
@@ -437,14 +436,34 @@ def emissions_report(kpis: dict) -> dict:
                       "modern car; use it to compare designs.", "CO2 = 2.35 kg a litre of petrol (US EPA)."]}
 
 
-STARVE_S = 180.0  # an arm with traffic left without a green longer than this: starved (W_max-like; Smith et al.'s
+STARVE_S = 180.0  # an arm holding traffic on red longer than this: starved (W_max-like; Smith et al.'s
 # compliance pattern in Explainable AI for ITS Ch 2: a fixed scenario battery checked against invariants)
 EMERGENCY_STANDSTILL_S = 30.0  # an emergency vehicle standing still longer than this at once: held up
 
 
+def _held_on_red(onsets: list, crossed: list, driven: list, free_s: float, arrived: int, start: float,
+                 end: float) -> float:
+    """The longest a signalised approach held traffic on red, seconds: for each vehicle that left on a green that
+    began after it reached the stop line (entered + the link's free-flow time), that green's onset less the later of
+    when it reached the line and the approach's last crossing before the onset (vehicles cross on green or amber, so
+    the red began after it); with vehicles still on it at the end (arrived, not crossed), from its last onset or
+    crossing to the end. A green that rests, or a long cycle's green, holds no one."""
+    longest = 0.0
+    for entered, took in driven:
+        reached, left = entered + free_s, entered + took
+        on = bisect_right(onsets, left) - 1  # the green it left on
+        if on < 0 or onsets[on] <= reached:
+            continue  # it came on that green (or left on one from before the record)
+        before = bisect_left(crossed, onsets[on]) - 1
+        longest = max(longest, onsets[on] - max(reached, crossed[before] if before >= 0 else start))
+    if arrived > len(crossed):  # some still waiting
+        longest = max(longest, end - max([start, *onsets[-1:], *crossed[-1:]]))
+    return longest
+
+
 def invariants(kpis: dict, reported: dict | None = None, starve_s: float = STARVE_S,
                standstill_s: float = EMERGENCY_STANDSTILL_S) -> list[dict]:
-    """What a run with an agent deciding broke, each with its evidence: a signal arm with traffic and no green for
+    """What a run with an agent deciding broke, each with its evidence: a signal arm holding traffic on red for
     over `starve_s` (from the run's start to its end), an emergency vehicle standing still over `standstill_s` at
     once, gridlock, and agent errors (its extension's report). Empty: it kept every one."""
     observed = kpis["observed"]
@@ -452,14 +471,19 @@ def invariants(kpis: dict, reported: dict | None = None, starve_s: float = STARV
     start = observed.get("observed_from_s", 0.0)  # recorded from the end of a warm-up
     end = start + (observed.get("observed_s") or kpis["time_s"])
     arrivals, links = observed.get("arrivals", {}), observed.get("links", {})
+    driven, crossed = defaultdict(list), defaultdict(list)
+    for link, entered, took, *_ in observed.get("traversal_log", []):
+        driven[link].append((entered, took))
+    for _, link, _, at, *_ in observed.get("stop_lines", []):
+        crossed[link].append(at)
     for link, (arrived, _) in arrivals.items():
         if not arrived:
             continue
-        times = [start] + list(observed.get("green_starts", {}).get(link, [])) + [end]
-        gap = max(b - a for a, b in zip(times, times[1:]))
+        gap = _held_on_red(sorted(observed.get("green_starts", {}).get(link, [])), sorted(crossed[link]), driven[link],
+                           links.get(link, {}).get("free_s", 0.0), arrived, start, end)
         if gap > starve_s:
             broken.append({"invariant": "no arm starved", "where": f"{link} at {links.get(link, {}).get('to')}",
-                           "evidence": f"{gap:.0f} s without a green with traffic waiting"})
+                           "evidence": f"{gap:.0f} s on red with traffic waiting"})
     for vehicle, waited in observed.get("emergency_standstill", {}).items():
         if waited > standstill_s:
             broken.append({"invariant": "emergency vehicles keep moving", "where": vehicle,

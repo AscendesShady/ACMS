@@ -6,6 +6,10 @@ Each layout is designed in a local frame `_Frame`:
 - **Keep side:** `_keep_sign` says which side each carriageway keeps to.
 - **Mirroring:** the same layout serves left- and right-hand driving; mirroring flips the
   curvature sign.
+- **All or nothing:** a trumpet, diamond, SPUI or slip road is built on a copy of the network
+  (`deepcopy`) and kept only if the copy validates (`_keep_if_valid`): a refusal (a roundabout leg
+  overloaded by the freeway's lanes, a turn pocket left on a stub too short for it) leaves the
+  network untouched (its dicts refilled in place, so a reference to `network.roads` still holds).
 - **Records:** each builder records its name, origin and freeway direction in
   `network.interchanges`, so a later change of driving side can mirror it; its ramps get the road
   type `ramp`.

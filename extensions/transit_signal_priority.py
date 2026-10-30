@@ -6,7 +6,8 @@ Batch Run: the models it tests, each against the baselines (Never, Always preemp
 Runs at once, Times each: batch_settings(), which Batch Run reads). A live run asks the System chosen last.
 
 Ticked, signal_override() runs inside every signal, for each arm of each signalised junction,
-every simulation step (0.5 s), whatever the junction's timing method. The junction shows its own
+every simulation step (0.5 s), whatever the junction's timing method (but manual windows: such a junction shows its
+windows, since they needn't run as phases in turn). The junction shows its own
 coordinated plan, exactly, unless priority is acting for a bus:
 - plan: each whole second a TSPController (built from the plan: its phases and greens, amber, minimum
   green 7 s, and the plan's all-red, lengthened only where amber and all-red can't let a bus that entered as
@@ -37,7 +38,6 @@ decisions) as a .jsonl file beside it.
 
 import importlib
 import json
-import threading
 from math import ceil, floor
 from statistics import fmean, median
 
@@ -45,7 +45,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPen
 from PySide6.QtWidgets import QFormLayout, QGraphicsEllipseItem, QSpinBox, QWidget
 
-from traffic_simulator.agent_choice import AgentChoice
+from traffic_simulator.agent_choice import NOBODY, AgentChoice, run_for
 from traffic_simulator.widgets import hint_label
 from traffic_simulator.stats import percentile
 from traffic_simulator.theme import SECONDARY_TEXT, STATUS
@@ -67,10 +67,7 @@ ACTS = ("HOLD", "TRUNCATE", "SKIP")  # what the controller logs when priority ch
 
 _choice = None  # who decides (agent_choice.AgentChoice), for batch_settings()
 
-NOBODY = "no agent"  # a run's key when it has no signal agent
-KEEP_RUNS = 16  # runs whose state is kept: twice the most a batch has going at once (8)
-_runs: dict = {}  # each run's signal agent (or NOBODY) -> its _Run, the latest last
-_runs_lock = threading.Lock()  # a batch's runs start side by side
+_runs: dict = {}  # each run's signal agent (or NOBODY) -> its _Run, the latest last (agent_choice.run_for)
 _latest = None  # the run stepped last
 _figures = None  # the panel's live figures line
 app = None  # the window's services, set by the Extensions tab: its live run's agent is app.signal_agent
@@ -388,18 +385,9 @@ def signal_override(junction: str, arm: str, state: str, context: dict, signal_a
     """The state this arm shows this step: "G", "Y" or "R". `signal_agent` carries the agent's
     questions to System 1 or System 2 (signal_agent.py)."""
     global _latest
-    key, t = signal_agent if signal_agent is not None else NOBODY, context["time_s"]
-    run = _runs.get(key)
-    # A new run: its time went back or jumped (ticked again), or its agent was reset (Stop, then Run at once)
-    if run is None or run.last_t is None or t < run.last_t or t - run.last_t > 2 \
-            or run.generation != getattr(signal_agent, "generation", 0):
-        run = _Run(signal_agent)
-        with _runs_lock:
-            _runs.pop(key, None)
-            _runs[key] = run
-            while len(_runs) > KEEP_RUNS:
-                _runs.pop(next(iter(_runs)))  # the oldest, long finished
-    run.last_t, _latest = t, run
+    run = _latest = run_for(_runs, signal_agent, context["time_s"], _Run)  # a new one for a new run
+    if context["plan"].get("method") == "manual":
+        return state  # its windows: they needn't run as phases in turn (plan_at's model), so no priority there
     here = run.junctions.get(junction)
     if here is None:
         here = run.junctions[junction] = _Junction(junction, context, signal_agent, run)

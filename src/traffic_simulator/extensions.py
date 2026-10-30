@@ -113,6 +113,9 @@ def load(path: Path) -> Extension:
         spec.loader.exec_module(module)
         if not any(callable(getattr(module, hook, None)) for hook in HOOKS):
             raise TypeError("an extension needs a draw(), panel(), signal_override() or algorithm() function")
+        order = getattr(module, "ORDER", 100)
+        if isinstance(order, bool) or not isinstance(order, (int, float)):  # the tab sorts by it: "1" or None can't
+            raise TypeError(f"ORDER must be a number, not {order!r}")
         extension.module = module
     except (Exception, SystemExit) as exc:  # SystemExit: an exit() in the file mustn't close the app
         extension.error = describe_error(exc, path)
@@ -355,8 +358,8 @@ class ExtensionsPanel(QWidget):
         return SignalOverrides(with_override, agent or self.agent, self._failures) if with_override else None
 
     def report_failures(self) -> list[str]:
-        """Switch off, saying why, each extension whose signal_override raised in any run since, live or headless
-        (a batch's, an experiment's): the physics threads only list them. The names, for a status line."""
+        """Switch off, saying why, each extension whose signal_override or report() raised in any run since, live or
+        headless (a batch's, an experiment's): the physics and test threads only list them. The names, for a status line."""
         names = []
         while self._failures:  # appended by the physics threads, taken here: one each way, safe under the GIL
             extension, message = self._failures.pop(0)
@@ -364,28 +367,34 @@ class ExtensionsPanel(QWidget):
             names.append(extension.name)
         return list(dict.fromkeys(names))
 
-    @staticmethod
-    def reports(overrides: SignalOverrides | None) -> list[dict]:
+    def reports(self, overrides: SignalOverrides | list | None) -> list[dict]:
         """When a run ends: the report() of each extension its overrides came from (sheets for its workbook,
-        figures to compare), asked with that run's agent. One that raises is left out, saying why."""
+        figures to compare), asked with that run's agent. `overrides`: the run's, or every one a live run was handed
+        in turn (ticking swaps them): each extension reported once, by the last that had it. One that raises is
+        left out, saying why, and listed to be switched off (report_failures; this may be a test's thread)."""
+        used = [one for one in (overrides if isinstance(overrides, list) else [overrides]) if one is not None]
+        last = {id(extension): (extension, one) for one in used for extension in one.extensions}
         found = []
-        for extension in (overrides.extensions if overrides is not None else []):
+        for extension, one in last.values():
             if extension.has("report"):
                 try:
-                    found.append(dict(extension.module.report(overrides.agent_of(extension))))
+                    found.append(dict(extension.module.report(one.agent_of(extension))))
                 except (Exception, SystemExit) as exc:
-                    found.append({"sheets": [(f"{extension.name[:20]} report", [["Couldn't report"],
-                                              [describe_error(exc, extension.path)]], "Its report() raised.")]})
-        if overrides is not None and overrides.dropped:
-            found.append({"sheets": [("Extensions dropped", [["Extension", "Why"], *map(list, overrides.dropped)],
+                    message = describe_error(exc, extension.path)
+                    self._failures.append((extension, message))
+                    found.append({"sheets": [(f"{extension.name[:20]} report", [["Couldn't report"], [message]],
+                                              "Its report() raised.")]})
+        dropped = [row for one in used for row in one.dropped]
+        if dropped:
+            found.append({"sheets": [("Extensions dropped", [["Extension", "Why"], *map(list, dropped)],
                                       "Its signal_override raised during the run: the run went on without it from "
                                       "then (the signal plan stood), so the figures are not its alone.")]})
         return found
 
-    @staticmethod
-    def fields(extension: Extension) -> dict:
+    def fields(self, extension: Extension) -> dict:
         """An extension's settings by label: its panel's labelled form rows ({"Seeds": the box, ...}), a dropdown
-        that lists afresh as it opens (TSP's Model, Models) listed now."""
+        that lists afresh as it opens (TSP's Model, Models) listed now (one that raises switches the extension off,
+        its list as it was)."""
         from PySide6.QtWidgets import QFormLayout  # noqa: PLC0415
 
         fields = {}
@@ -395,7 +404,10 @@ class ExtensionsPanel(QWidget):
                 if label and label.widget() and field:
                     widget = field.widget() or (field.layout().itemAt(0).widget() if field.layout() else None)
                     if callable(getattr(widget, "before_open", None)):
-                        widget.before_open()
+                        try:
+                            widget.before_open()
+                        except (Exception, SystemExit) as exc:
+                            self.fail(extension, describe_error(exc, extension.path))
                     fields[label.widget().text().strip()] = widget
         return fields
 

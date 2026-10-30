@@ -46,10 +46,10 @@ def glyph_icon(glyph: str, family: str, px: int = 20) -> QIcon:
     return icon
 
 
-def icon_button(glyph: int, name: str, role: str = "") -> QPushButton:
+def icon_button(glyph: int, name: str, role: str = "", checkable: bool = False) -> QPushButton:
     """A small button showing one icon glyph, its name as the tooltip (and for screen readers): a few
     words, never an explanation. Without an icon font it shows its name."""
-    button = styled_button("", role)
+    button = styled_button("", role, checkable=checkable)
     button.setProperty("glyph", True)  # square, in the app stylesheet
     button.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
     set_glyph(button, glyph, name)
@@ -78,8 +78,7 @@ class Collapsible(QWidget):
         family = next((family for family in ICON_FONTS if family in QFontDatabase.families()), None)
         self._title = title
         self._icons = (glyph_icon("\ue76c", family, 12), glyph_icon("\ue70d", family, 12)) if family else None
-        self.header = styled_button(title, "section", tooltip)
-        self.header.setCheckable(True)
+        self.header = styled_button(title, "section", tooltip, checkable=True)
         self.header.setAccessibleName(title)
         self.header.toggled.connect(self._show)
         self.body = body
@@ -146,9 +145,10 @@ class OpenPageTabs(QTabWidget):
 
 
 
-def styled_button(text: str, role: str = "", tooltip: str = "") -> QPushButton:
-    """Button tagged for the app stylesheet: role "primary" (one per area) or "danger"."""
+def styled_button(text: str, role: str = "", tooltip: str = "", checkable: bool = False) -> QPushButton:
+    """Button tagged for the app stylesheet: role "primary" (one per area) or "danger"; `checkable`: a toggle."""
     button = QPushButton(text)
+    button.setCheckable(checkable)
     button.setFocusPolicy(Qt.FocusPolicy.TabFocus)  # focus ring for keyboard use, not after clicks
     if role:
         button.setProperty("role", role)
@@ -199,13 +199,20 @@ class ChoiceButtons(QWidget):
         if not vertical:
             layout.addStretch(1)
         self.group.button(0).setChecked(True)
-        self.group.idClicked.connect(lambda _: self.changed.emit())
+        self._checked = 0  # re-clicking the checked option is no change
+        self.group.idClicked.connect(self._clicked)
+
+    def _clicked(self, index: int) -> None:
+        if index != self._checked:
+            self._checked = index
+            self.changed.emit()
 
     def value(self) -> object:
         return self.values[self.group.checkedId()]
 
     def set_value(self, value: object) -> None:
-        self.group.button(self.values.index(value)).setChecked(True)
+        self._checked = self.values.index(value)
+        self.group.button(self._checked).setChecked(True)
 
     def set_labels(self, labels: list[str]) -> None:
         for button, label in zip(self.group.buttons(), labels):

@@ -34,11 +34,15 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
   movements, each downstream green starting as the platoon from upstream arrives.
 - **`hill_climb`** (TRANSYT's optimiser): for step sizes 16, 8, 4, 2, 1 s, try each junction's offset,
   and green moved between neighbouring phases, by the step either way, keeping each change that lowers
-  the PI, until a round changes nothing; it stops at a 3 s budget with the best so far.
+  the PI, until a round changes nothing ("finished"). It stops early with the best so far after `OPTIMISE_TRIALS`
+  4,000 plans tried ("trials": the same plan on any machine, about 4 s here; a 4x4 grid needs about 1,600, a 6x6
+  3,300), or at the safety cap of `OPTIMISE_CAP_S` 30 s of real time ("time": that plan depends on the machine's
+  speed, and its junctions' plans say `stopped: "time"`). A plan's `finished` says whether it finished.
 - **TRANSYT** (`transyt`): cycle from the critical junction (`common_cycle`: the longest Webster cycle,
   within the limits); equisaturation greens; progression offsets; hill-climb on offsets and greens.
 - **Synchro** (`synchro_cycle`, `percentile_greens`, `synchro`): greens for each phase's 90th percentile
-  flow (arrivals per cycle λ + 1.28√λ); the common cycle, from the limits in 5 s steps, with the least
+  flow (arrivals per cycle λ + 1.28√λ); the common cycle, from the limits in 5 s steps (never under the minimum
+  greens' need, rounded up, however low the maximum), with the least
   total percentile delay (control delay averaged over the 90th, 70th, 50th, 30th and 10th percentile
   flows, `percentile_delay`); offsets by the hill-climb for delay alone (no stop weight), greens kept.
 - **SCATS** (`ScatsRegion`, `ScatsJunction`): each lane's degree of saturation during its green,

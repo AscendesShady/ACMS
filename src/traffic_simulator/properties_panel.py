@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QDoubleSpinBox,
     QFormLayout,
+    QGridLayout,
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -22,7 +23,8 @@ from PySide6.QtWidgets import (
 )
 
 from .interchanges import fit_slip_roads
-from .models import MAX_BOARDING_PER_H, MAX_DWELL_S, POCKET_LENGTH_M, BusStop, Network, Node, Road
+from .models import (MANUAL_AMBER_RANGE_S, MANUAL_AMBER_S, MANUAL_CYCLE_MAX_S, MAX_BOARDING_PER_H, MAX_DWELL_S,
+                     POCKET_LENGTH_M, BusStop, Network, Node, Road)
 from .roundabouts import design_roundabout
 from .signal_timing import SATURATION_PER_LANE_VPH
 # The shared widgets (widgets.py), also importable from here as before, for drop-in extensions
@@ -32,12 +34,15 @@ from .widgets import (ICON_FONTS, MINI_ICON_PX, CheckList, ChoiceButtons, Collap
 
 # The signal timing methods (models.SIGNAL_METHODS) as the junction panel and Generate Network name them.
 TIMING_METHODS = (("Webster", "webster"), ("TRANSYT", "transyt"), ("Synchro", "synchro"), ("SCATS", "scats"),
-                  ("SCOOT", "scoot"), ("Actuated", "actuated"), ("Max pressure", "max_pressure"), ("Fixed time", "fixed"))
+                  ("SCOOT", "scoot"), ("Actuated", "actuated"), ("Max pressure", "max_pressure"), ("Fixed time", "fixed"),
+                  ("Manual", "manual"))
+MANUAL_ROWS = 6  # a manual signal's arms the junction panel shows
 
 
 def describe_group(objects: list[tuple[str, str]]) -> str:
     """'3 junctions, 1 road, 2 bus stops': a selection's objects counted by kind."""
-    names = {"node": "junction", "road": "road", "end": "boundary end", "bus_stop": "bus stop"}
+    names = {"node": "junction", "road": "road", "end": "boundary end", "bus_stop": "bus stop",
+             "metro_line": "MRT line"}
     counts = [(sum(kind == name for kind, _ in objects), single) for name, single in names.items()]
     return ", ".join(f"{count} {single}{'s' if count > 1 else ''}" for count, single in counts if count)
 
@@ -89,9 +94,7 @@ class PropertiesPanel(QWidget):
         header.addRow("Object", self.object_type)
         header.addRow("ID", self.object_id)
         layout.addWidget(self.header)
-        self.drag_button = styled_button(
-            "Drag to Adjust", tooltip="Drag selection on map")
-        self.drag_button.setCheckable(True)
+        self.drag_button = styled_button("Drag to Adjust", tooltip="Drag selection on map", checkable=True)
         self.delete_node_button = styled_button(
             "Delete Node…", "danger", "Delete junction and roads (Del)")
         self.delete_node_button.clicked.connect(self.delete_node)
@@ -278,8 +281,51 @@ class PropertiesPanel(QWidget):
             green.valueChanged.connect(lambda value, phase=phase: self.apply_green(phase, value))
             form.addRow(label, green)
             self.green_times.append((label, green))
+        # Manual: each arm's window of the cycle (first to last second), red worked out; Apply checks them together.
+        self.manual_box = QWidget()
+        manual = QVBoxLayout(self.manual_box)
+        manual.setContentsMargins(0, 0, 0, 0)
+        grid = QGridLayout()
+        manual.addLayout(grid)
+        self.manual_roads: list[str] = []  # the arms the rows show, in order
+        self.manual_rows: list[tuple[QLabel, QSpinBox, QSpinBox, QLabel, QLabel]] = []  # name, first, last, "to", red
+        for row in range(MANUAL_ROWS):
+            first, last = QSpinBox(), QSpinBox()
+            for spin, low, tip in ((first, 1, "First second of its go"), (last, 0, "Last second of its go")):
+                spin.setRange(low, MANUAL_CYCLE_MAX_S)
+                spin.setSuffix(" s")
+                spin.setToolTip(tip)
+            last.setSpecialValueText("none")  # 0: the arm never goes
+            widgets = (QLabel(), first, last, QLabel("to"), hint_label())
+            for column, widget in enumerate((widgets[0], first, widgets[3], last, widgets[4])):
+                grid.addWidget(widget, row, column)
+            self.manual_rows.append(widgets)
+        amber_row = QHBoxLayout()
+        self.amber_check = QCheckBox("Set amber")
+        self.amber_check.setToolTip(f"Unticked: {MANUAL_AMBER_S:g} s amber")
+        self.amber = QDoubleSpinBox()
+        self.amber.setRange(*MANUAL_AMBER_RANGE_S)
+        self.amber.setDecimals(1)
+        self.amber.setSuffix(" s")
+        self.amber.setToolTip("Amber at each window's end")
+        self.amber_check.toggled.connect(self._manual_changed)
+        self.amber.valueChanged.connect(self._manual_changed)
+        for _, first, last, _, _ in self.manual_rows:
+            first.valueChanged.connect(self._manual_changed)
+            last.valueChanged.connect(self._manual_changed)
+        amber_row.addWidget(self.amber_check)
+        amber_row.addWidget(self.amber)
+        manual.addLayout(amber_row)
+        self.manual_apply = styled_button("Apply Timing", "primary", "Check and use these windows")
+        self.manual_apply.clicked.connect(self.apply_manual)
+        manual.addWidget(self.manual_apply)
+        manual.addWidget(hint_label("Each arm goes from its first second to its last, the last few amber; red is the "
+                                    "rest of the cycle. Give arms the same window to go together (opposite arms "
+                                    "only), or windows one after another to go in turn."))
+        form.addRow(self.manual_box)
         self.signal_note = hint_label()
         form.addRow(self.signal_note)
+        self.signal_form = form
 
         # Several junctions picked with Ctrl+click: offer the interchanges they can form.
         self.multi_fields = QWidget()
@@ -698,12 +744,17 @@ class PropertiesPanel(QWidget):
 
     def _show_signal(self, node: Node) -> None:
         """Fill the signal section from the node; filling doesn't write back to it."""
+        manual = node.signal_method == "manual"
+        self.signal_form.setRowVisible(self.phases, not manual)
+        self.manual_box.setVisible(manual)
+        if manual:
+            self._show_manual(node)
         self.phases.set_value(node.signal_phases)
         self.timing_method.blockSignals(True)
         self.timing_method.setCurrentIndex(max(0, self.timing_method.findData(node.signal_method)))
         self.timing_method.blockSignals(False)
         for phase, (label, green) in enumerate(self.green_times):
-            shown = phase < node.signal_phases
+            shown = phase < node.signal_phases and not manual
             label.setVisible(shown)
             green.setVisible(shown)
             if shown:
@@ -728,6 +779,8 @@ class PropertiesPanel(QWidget):
         """What the run did with the junction's timing."""
         if method == "fixed":
             return "Runs use these greens every cycle."
+        if method == "manual":
+            return "Runs use these windows every cycle."
         lead = {"webster": "Webster: each Run works out the cycle and greens from the OD demand (each phase's "
                            f"critical flow ratio, with {SATURATION_PER_LANE_VPH:,.0f} veh/h saturation flow per lane).",
                 "transyt": "TRANSYT: each Run optimises the group's offsets and greens on one cycle.",
@@ -771,7 +824,11 @@ class PropertiesPanel(QWidget):
 
     def apply_timing_method(self) -> None:
         if isinstance(self.selected, Node):
-            self.selected.signal_method = self.timing_method.currentData()
+            node = self.selected
+            node.signal_method = self.timing_method.currentData()
+            if node.signal_method == "manual" and not node.manual_greens_s:  # a start: each arm in turn, 30 s
+                node.manual_greens_s = {road: [30.0 * i + 1, 30.0 * (i + 1)]
+                                        for i, (road, _, _) in enumerate(self.network.signal_arms(node.id))}
             self._show_signal(self.selected)
             self.edited.emit(("method", self.selected.id))
 
@@ -784,6 +841,70 @@ class PropertiesPanel(QWidget):
                 setattr(self.selected, other, value)
                 self._show_signal(self.selected)
             self.edited.emit(("timing", self.selected.id, name))
+
+    def _show_manual(self, node: Node) -> None:
+        """One row per arm (MANUAL_ROWS at most): its name, first and last second, and its red; then the amber."""
+        arms = self.network.signal_arms(node.id)[:MANUAL_ROWS]
+        self.manual_roads = [road for road, _, _ in arms]
+        for row, widgets in enumerate(self.manual_rows):
+            for widget in widgets:
+                widget.setVisible(row < len(arms))
+            if row < len(arms):
+                road, name, _ = arms[row]
+                window = node.manual_greens_s.get(road)
+                widgets[0].setText(name)
+                for spin, value in ((widgets[1], window[0] if window else 1), (widgets[2], window[1] if window else 0)):
+                    spin.blockSignals(True)
+                    spin.setValue(int(value))
+                    spin.blockSignals(False)
+        self.amber_check.blockSignals(True)
+        self.amber.blockSignals(True)
+        self.amber_check.setChecked(node.amber_s != MANUAL_AMBER_S)
+        self.amber.setValue(node.amber_s)
+        self.amber_check.blockSignals(False)
+        self.amber.blockSignals(False)
+        self._manual_changed()
+
+    def _manual_windows(self) -> tuple[dict[str, list[float]], float]:
+        """The windows and amber as entered (not yet applied): an arm whose last second is "none" has none."""
+        amber = self.amber.value() if self.amber_check.isChecked() else MANUAL_AMBER_S
+        return {road: [float(first.value()), float(last.value())]
+                for road, (_, first, last, _, _) in zip(self.manual_roads, self.manual_rows) if last.value()}, amber
+
+    def _manual_changed(self) -> None:
+        """Each arm's green, amber and red as entered, worked out as they change; Apply only when they differ."""
+        self.amber.setEnabled(self.amber_check.isChecked())
+        if not self.amber_check.isChecked():
+            self.amber.blockSignals(True)
+            self.amber.setValue(MANUAL_AMBER_S)  # what unticked means
+            self.amber.blockSignals(False)
+        windows, amber = self._manual_windows()
+        cycle = max((last for _, last in windows.values()), default=0)
+        for road, (*_, red) in zip(self.manual_roads, self.manual_rows):
+            if road in windows:
+                first, last = windows[road]
+                red.setText(f"green {last - first + 1 - amber:g}, red {cycle - (last - first + 1):g} s")
+            else:
+                red.setText("always red")
+        node = self.selected
+        self.manual_apply.setEnabled(isinstance(node, Node) and (windows, amber) != (
+            {road: window for road, window in node.manual_greens_s.items() if road in self.manual_roads}, node.amber_s))
+
+    def apply_manual(self) -> None:
+        """Use the windows and amber entered, if the network takes them (Network._check_manual); else keep the
+        last ones and say why."""
+        if not isinstance(self.selected, Node):
+            return
+        node, before = self.selected, (self.selected.manual_greens_s, self.selected.amber_s)
+        node.manual_greens_s, node.amber_s = self._manual_windows()
+        try:
+            self.network.validate()
+        except ValueError as exc:
+            node.manual_greens_s, node.amber_s = before
+            QMessageBox.warning(self, "Cannot use this timing", str(exc))
+            return
+        self._manual_changed()
+        self.edited.emit(("manual", node.id))
 
     def apply_green(self, phase: int, seconds: float) -> None:
         if isinstance(self.selected, Node) and phase < len(self.selected.green_times_s):

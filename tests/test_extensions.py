@@ -14,7 +14,8 @@ from PySide6.QtCore import Qt  # noqa: E402
 from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication, QCheckBox, QComboBox, QLabel, QLineEdit, QPushButton, QSlider, QSpinBox  # noqa: E402
 
-from traffic_simulator.clock import SimulationClock, clock_text  # noqa: E402
+from traffic_simulator.clock import SimulationClock  # noqa: E402
+from traffic_simulator.results import clock as clock_text  # noqa: E402
 from traffic_simulator.extensions import EXTENSIONS_DIR, ExtensionsPanel  # noqa: E402
 from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
@@ -53,6 +54,8 @@ def test_extensions_draw_and_errors_only_switch_them_off():
         Path(folder, "quits.py").write_text("exit()\n", encoding="utf-8")
         Path(folder, "bad_panel.py").write_text("def panel():\n    return 1 / 0\n", encoding="utf-8")
         Path(folder, "_helper.py").write_text("raise RuntimeError\n", encoding="utf-8")
+        for name, order in (("text_order.py", '"1"'), ("no_order.py", "None")):  # the tab sorts by ORDER
+            Path(folder, name).write_text(f"ORDER = {order}\ndef draw(network, t):\n    return []\n", encoding="utf-8")
         network = generate_network(2, 2)
         roads = set(network.roads)
         scene = NetworkGraphicsScene(network)
@@ -61,6 +64,8 @@ def test_extensions_draw_and_errors_only_switch_them_off():
         clock = SimulationClock()
         panel = ExtensionsPanel(scene, clock, Path(folder))
         by_name = {extension.path.name: extension for extension in panel.extensions}
+        assert by_name.pop("text_order.py").error == "TypeError: ORDER must be a number, not '1'"  # its own error
+        assert "ORDER must be a number" in by_name.pop("no_order.py").error
         assert sorted(by_name) == ["bad_panel.py", "broken.py", "dot.py", "fails_later.py", "no_draw.py", "quits.py"]
         assert by_name["broken.py"].error.startswith("Line 1: SyntaxError") and "signal_override()" in by_name["no_draw.py"].error
         assert by_name["bad_panel.py"].error == "Line 2: ZeroDivisionError: division by zero"
@@ -113,12 +118,17 @@ def test_the_clock_runs_pauses_and_plays():
     assert window.runner is None and not clock.running and clock.time_s == 0 and labels.text() == "00:00:00"
     assert window.play_action.isVisible()
     assert window.last_results is not None and window.last_results.exists()  # Stop saved the run's workbook
-    from PySide6.QtWidgets import QFileDialog
+    from PySide6.QtWidgets import QFileDialog, QMessageBox
     real, QFileDialog.getSaveFileName = QFileDialog.getSaveFileName, lambda *args: ("", "")
+    failed, QMessageBox.critical = QMessageBox.critical, lambda *args: (_ for _ in ()).throw(AssertionError(args[1:]))
     try:
         window.export_action.trigger()  # Export asks where (cancelled here: nothing written)
+        QFileDialog.getSaveFileName = lambda parent, title, start, *args: (start, "")  # its own suggestion: the workbook
+        saved = window.last_results.read_bytes()
+        window.export_action.trigger()
+        assert "already saved" in window.statusBar().currentMessage() and window.last_results.read_bytes() == saved
     finally:
-        QFileDialog.getSaveFileName = real
+        QFileDialog.getSaveFileName, QMessageBox.critical = real, failed
     window.close()
 
 
@@ -263,9 +273,8 @@ def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
     panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
     assert [extension.name for extension in panel.extensions] == [
         "Batch Run", "Transit Signal Priority (TSP)", "Dynamic Emergency Vehicle Lane (DEVL)", "Dispatch Emergency Vehicle",
-        "Research Log", "Campaign Apply"]
-    batch, tsp, devl, dispatch, research, campaign = panel.extensions
-    assert campaign.has("draw") and not campaign.on and not campaign.check.isChecked()
+        "Research Log"]
+    batch, tsp, devl, dispatch, research = panel.extensions
     assert batch.arrow and tsp.arrow and devl.arrow and dispatch.arrow and research.arrow  # each has settings
     assert research.has("log") and not panel.wants("log")  # the log hook, asked for only while ticked
     assert panel.signal_override() is None  # TSP unticked: runs pass no override at all
@@ -327,6 +336,37 @@ def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
     assert devl.on and not devl.error
 
 
+def test_the_model_picked_is_read_off_the_ui_thread_without_the_box():
+    """DEVL's signal_override asks model_option() on the physics thread while the UI thread may be refilling the
+    box: it reads a plain attribute set on the UI thread, never the QComboBox."""
+    from PySide6.QtWidgets import QFormLayout, QWidget
+    from traffic_simulator import agent_choice
+
+    options = [{"label": "System 1: Jev", "provider": "jev", "system": "1", "model": "jev", "name": "jev"},
+               {"label": "System 1: Laya", "provider": "laya", "system": "1", "model": "laya", "name": "laya"}]
+    widget = QWidget()
+    choice = agent_choice.AgentChoice(QFormLayout(widget), lambda: options)
+    choice.model.setCurrentIndex(1)
+    real = choice.model.currentData
+
+    def no_box():
+        raise AssertionError("read the box off the UI thread")
+    choice.model.currentData = no_box
+    assert choice.model_option()["label"] == "System 1: Laya"
+    choice.model.currentData = real
+    choice.refresh()  # refilled: the pick kept
+    assert choice.model_option()["label"] == "System 1: Laya"
+    # Each run's state, by its signal agent: a new one when time goes back or the agent resets; the last 16 kept
+    runs, make = {}, lambda agent: SimpleNamespace(last_t=None, generation=getattr(agent, "generation", 0))
+    first = agent_choice.run_for(runs, None, 5.0, make)
+    assert agent_choice.run_for(runs, None, 6.0, make) is first and runs == {agent_choice.NOBODY: first}
+    assert agent_choice.run_for(runs, None, 1.0, make) is not first  # time went back: a new run
+    agents = [type("Agent", (), {"generation": 0})() for _ in range(20)]
+    for agent in agents:
+        agent_choice.run_for(runs, agent, 0.0, make)
+    assert len(runs) == agent_choice.KEEP_RUNS and agents[-1] in runs and agents[0] not in runs
+
+
 BUS = VehicleMode("Bus", PALETTE[0], length_m=12.0, width_m=2.55, max_speed_kmh=100, accel=1.2, decel=4.0)
 
 
@@ -379,6 +419,35 @@ def test_tsp_keeps_the_plan_unless_priority_acts_and_returns_to_it_after_the_bus
     assert len(finished) >= len(episodes) - 1  # all back on the plan, but one perhaps still on its way at the end
     assert all(episode[0] <= episode[1] <= episode[2] <= episode[1] + 2 * cycle for episode in finished)  # within 2 cycles
     agent.decisions.clear()
+
+
+def test_tsp_leaves_a_manual_window_junction_to_its_windows():
+    # TSP's plan model is the phases in turn, each green, amber, all-red; a manual junction's windows may leave gaps or
+    # overlap and its cycle is its last window's end (60 s here, 64 s modelled), so priority acted on a plan that wasn't
+    # running. Such a junction shows its windows; the others still act for buses.
+    network = generate_network(3, 4)
+    node = network.nodes["1,1"]
+    node.signal_method, node.amber_s = "manual", 3.0
+    node.manual_greens_s = {road: [31.0, 60.0] if name in ("N", "S") else [1.0, 30.0]
+                            for road, name, _ in network.signal_arms("1,1")}
+    network.validate()
+    panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
+    tsp = next(extension for extension in panel.extensions if extension.path.name == "transit_signal_priority.py")
+    tsp.check.setChecked(True)
+    buses = [PairDemand("1W", "1E", 120, None, [], "Poisson", (100,)), PairDemand("1S", "3N", 120, None, [], "Poisson", (100,))]
+    tsp.module.tsp_agent.decisions.update({"1,1": True, "2,1": True})
+    try:
+        simulation = Simulation(network, buses, [BUS], seed=3)
+        simulation.signal_override = overrides = panel.signal_override()
+        signal = simulation.graph.signals["1,1"]
+        while simulation.time < 900:
+            simulation.step()
+            assert {road: state for (junction, road), state in simulation.signal_states().items() if junction == "1,1"} \
+                == {link.road: signal.state(link.id, simulation.time) for link in simulation.graph.arriving["1,1"]}
+        here = tsp.module._latest.junctions
+        assert not overrides.failed and "1,1" not in here and here["2,1"].episodes
+    finally:
+        tsp.module.tsp_agent.decisions.clear()
 
 
 def test_a_run_started_at_once_after_a_stop_starts_afresh():
@@ -762,7 +831,8 @@ def devl_run(network, module, agent=None, steps=1600, demand=None):
         if step == 240:
             simulation.dispatch("1W", "1E")
         simulation.step()
-        lanes = simulation.lane_states()
+        lanes = {(simulation.graph.links[link].end, simulation.graph.links[link].road, index): state
+                 for (link, index), state in simulation._lane_states.items()}  # (junction, road, lane) -> its state
         if lanes:
             junctions = {junction for junction, *_ in lanes}
             log.append((simulation.time, lanes, {k: v for k, v in simulation.signal_states().items() if k[0] in junctions}))
@@ -818,6 +888,24 @@ def test_devl_clears_the_kerbside_lane_for_an_emergency_vehicle_and_flashes_its_
     assert set(lamps(0.2)) == {dark}
     devl.check.setChecked(False)
     assert not devl.items  # unticked: gone
+
+
+def test_devl_clears_the_kerbside_lane_past_a_kerb_turn_pocket():
+    # With a kerb pocket on the approach, lane 0 is the pocket: DEVL cleared it while the emergency vehicle kept to the
+    # lane past it (every vehicle's kerbside lane there), stood behind that lane's queue till the clearance ran out
+    # (60 s, every other arm red) and arrived 75 s late
+    network = generate_network(3, 3)
+    network.roads["1,1-2,1"].pockets = {"2,1": {"lanes": 1, "length_m": 100.0, "side": "kerb"}}
+    network.validate()
+    panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
+    module = next(extension for extension in panel.extensions if extension.path.name == "dynamic_emergency_lane.py").module
+    simulation, run, log = devl_run(network, module)
+    kerb = simulation.graph.links["1,1-2,1>"].pockets[0]
+    row = next(row for row in run.requests.values() if row["junction"] == "2,1")
+    assert kerb == 1 and row["lane"] == kerb and row["telemetry"]["lane"] == kerb
+    assert [entry[:2] for entry in run.junctions["2,1"].cleared] == [("1,1-2,1", kerb)]
+    assert {index for _, lanes, _ in log for junction, _, index in lanes if junction == "2,1"} == {kerb}
+    assert next(iter(simulation.emergency_trips.values()))["arrived_s"] < 280  # 313 s when it cleared the pocket
 
 
 def test_devl_asks_the_agent_once_per_junction_and_clears_only_on_true():
@@ -1010,6 +1098,119 @@ def test_the_signal_agent_never_waits():
     assert SignalAgent(None).decide("C", "?") is False  # nobody to ask
     assert parse("TRUE") and parse(" yes, override") and not parse("FALSE") and not parse("maybe")
     assert parse("call decide_tsp: activate true") and not parse("No, keep the plan") and not parse("nothing")
+
+
+FAILS_TO_REPORT = '''
+NAME = "Reporter"
+def signal_override(junction, arm, state, context, agent):
+    return state
+def report(agent):
+    raise RuntimeError("no figures")
+'''
+FAILS_TO_LIST = '''
+from PySide6.QtWidgets import QComboBox, QFormLayout, QWidget
+NAME = "Lister"
+class Models(QComboBox):
+    def before_open(self):
+        raise RuntimeError("no models")
+def panel():
+    page = QWidget()
+    QFormLayout(page).addRow("Model", Models())
+    return page
+'''
+
+
+def test_a_failing_report_or_settings_list_switches_its_extension_off():
+    with tempfile.TemporaryDirectory() as folder:
+        Path(folder, "reporter.py").write_text(FAILS_TO_REPORT, encoding="utf-8")
+        Path(folder, "lister.py").write_text(FAILS_TO_LIST, encoding="utf-8")
+        panel = ExtensionsPanel(NetworkGraphicsScene(generate_network(2, 2)), SimulationClock(), Path(folder))
+        lister, reporter = panel.extensions
+        reporter.check.setChecked(True)
+        reports = panel.reports(panel.signal_override())  # as a run ends, maybe on a test's thread
+        assert [sheet[0] for report in reports for sheet in report["sheets"]] == ["Reporter report"]  # saying why
+        assert panel.report_failures() == [reporter.name] and not reporter.on and "no figures" in reporter.error
+        lister.check.setChecked(True)
+        described = {extension["name"]: extension for extension in panel.describe()}  # read_extensions carries on
+        assert "Model" in described["Lister"]["settings"] and not lister.on and "no models" in lister.error
+        assert described["Reporter"]["ticked"] is False
+
+
+def test_a_live_runs_workbook_keeps_the_report_of_an_override_dropped_mid_run():
+    from traffic_simulator.extensions import Extension
+    from traffic_simulator.main import MainWindow
+    from traffic_simulator.xlsx import read_xlsx
+
+    window = MainWindow()
+    window._ask_to_save = False
+    module = SimpleNamespace(NAME="Flaky", signal_override=lambda *args: 1 / 0,
+                             report=lambda agent: {"sheets": [("Flaky report", [["Figure"], [1]], "Its figures.")]})
+    flaky = Extension(Path("flaky.py"), module)
+    window.extensions.extensions.append(flaky)
+    window.extensions.rows.addWidget(window.extensions._row(flaky))
+    flaky.check.setChecked(True)
+    window.run_action.trigger()
+    window.runner.set_speed(60)
+    for _ in range(60):  # it raises in the physics, dropped at once; a frame switches it off
+        QTest.qWait(50)
+        if not flaky.on:
+            break
+    assert not flaky.on and window.runner.simulation.signal_override is None  # the run is handed none from then
+    window.stop_action.trigger()
+    sheets = read_xlsx(window.last_results)
+    assert "Flaky report" in sheets and sheets["Extensions dropped"][1][0] == "Flaky"  # what it did, and when it went
+    window.close()
+
+
+def test_closing_the_window_stops_its_clock():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window._ask_to_save = False
+    window.run_action.trigger()
+    assert window.clock.running
+    window.close()
+    assert window.runner is None and not window.clock.running  # no frames, draw() or algorithm() after it
+
+
+def test_scheduling_an_emergency_vehicle_ticks_dispatch_emergency_vehicle():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    dispatch = window._extension("dispatch_emergency")
+    schedule = {"schedules": [{"from": "1W", "to": "1E", "every_min": 5}]}
+    assert window._schedule_emergency(schedule, check_only=True) == {"ok": True} and not dispatch.on  # checked: as it was
+    window._schedule_emergency(schedule)
+    assert dispatch.on and dispatch.controls.isEnabled()  # its tab is used only while ticked, as Test DEVL does
+    assert dispatch.module.fleet() == [("1W", "1E", 5, 0)]
+    window.close()
+
+
+def test_a_replay_reads_only_workbooks_in_the_results_folder():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+
+    def refusal(path):
+        try:
+            window._runs_command("replay_run", {"path": str(path)}, check_only=True)
+        except ValueError as exc:
+            return str(exc).replace(str(path), "<path>")
+        raise AssertionError(f"{path} was taken")
+
+    with tempfile.TemporaryDirectory() as folder:
+        outside = Path(folder, "run.xlsx")
+        outside.write_bytes(b"")
+        assert refusal(outside) == refusal(Path(folder, "none.xlsx"))  # whether a file is there isn't told
+    window.results_folder.mkdir(parents=True, exist_ok=True)
+    inside = window.results_folder / "replay check.xlsx"
+    inside.write_bytes(b"")
+    try:
+        assert window._runs_command("replay_run", {"path": str(inside)}, check_only=True) == {"ok": True}
+        assert window._runs_command("replay_run", {"path": inside.name}, check_only=True) == {"ok": True}  # by name
+    finally:
+        inside.unlink()
+    window.close()
 
 
 if __name__ == "__main__":

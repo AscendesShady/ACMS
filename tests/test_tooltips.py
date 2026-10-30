@@ -45,9 +45,12 @@ def test_every_tooltip_is_five_words_at_most():
         network.institutions[f"IN{number}"] = Institution(f"IN{number}", kind, 300.0 * number, -400.0, 2500.0, 300.0, 120, 8)
     window._commit()
     window.od_matrix.set_ends(*window._od_ends())
-    for mode in ("hourly", "daily", "institutions"):
+    for mode in ("hourly", "daily"):
         window.od_panel._show_mode(mode)
         window.od_panel._select([(window.od_matrix.origins[0], window.od_matrix.destinations[1])])
+        problems += _long_tooltips(window)
+        window.od_panel.demand.setCurrentIndex(window.od_panel.demand.findData("institutions"))
+        window.od_panel.institutions.show_selected(network, network.institutions["IN1"])  # its hourly or daily demand
         problems += _long_tooltips(window)
     shown = []
     window.ai_mode.indicator.connect(lambda text, tip: shown.append(tip))  # the status bar's System 2 line
@@ -56,6 +59,22 @@ def test_every_tooltip_is_five_words_at_most():
     window.ai_mode._wanted = "llama3.1:8b"
     window.ai_mode._indicate("ready")
     problems += _long_tooltips(window) + [f"System 2 status: {tip!r}" for tip in shown if _words(tip) > MAX_WORDS]
+    window.close()
+    assert not problems, "\n".join(sorted(set(problems)))
+
+
+def test_tooltips_set_while_a_test_runs_are_five_words_at_most():
+    from traffic_simulator.main import MainWindow
+
+    app = QApplication.instance() or QApplication([])
+    window = MainWindow()
+    window._testing, window._busy_what = True, "Never preempt (baseline) batch run of every seed"
+    window._headless.update({"Never preempt (baseline), seed 1": (754.0, 1800.0), "Testing the network": (60.0, 1800.0)})
+    window._show_busy()  # Run and Play name what holds them back
+    window._show_headless()  # the menu bar's clock shows the runs going
+    problems = _long_tooltips(window)
+    window._testing = False
+    window._headless.clear()
     window.close()
     assert not problems, "\n".join(sorted(set(problems)))
 

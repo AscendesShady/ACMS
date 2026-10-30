@@ -159,46 +159,21 @@ def test_a_halted_campaign_closes_its_research_log():
     assert events[-1] == 'research_log_not_closed'
 
 
-def test_live_update_retains_pending_request_and_ledger():
+def test_a_completion_check_that_raises_halts_the_campaign():
+    """An exception in `finished` (a Qt slot: Qt only prints it) halts the campaign saying why, rather than leaving
+    it 'answering' until its deadline."""
     from types import SimpleNamespace as NS
-    spec = importlib.util.spec_from_file_location('campaign_apply_test', ROOT / 'extensions/campaign_apply.py')
-    extension = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(extension)
     campaign = runner.Campaign.__new__(runner.Campaign)
-    pending, ledger = object(), object()
-    events = []
-    campaign.phase, campaign.active, campaign.failure = 'answering', {'id': 'N011'}, None
-    campaign.panel = NS(_pending=pending)
-    campaign.path = ledger
-    campaign.index = 10
-    campaign.timer = NS(isActive=lambda: True)
+    events, closed = [], []
     campaign.record = lambda event, **fields: events.append((event, fields))
-    extension.activate(campaign, runner.Campaign.advance)
-    assert campaign.panel._pending is pending and campaign.path is ledger
-    assert campaign.index == 10 and campaign.active['id'] == 'N011'
-    assert campaign.advance.__func__ is runner.Campaign.advance
-    assert events == [('driver_updated', {'automatic_apply': 'both', 'id': 'N011'})]
-    campaign.failure = 'Timed out'
-    try:
-        extension.activate(campaign, runner.Campaign.advance)
-    except ValueError:
-        pass
-    else:
-        assert False, 'Must not resume a halted campaign blindly'
-    request = NS(result=None, call={'name': 'build_scenario'})
-    returned, started = [], []
-    campaign.failure = 'Deadline exceeded; no retry. Inspect ledger and Research Log.'
-    campaign._applying = request
-    campaign.window = NS(_testing=False)
-    campaign.panel = NS(_pending=request, _step={'prompt': 'N011\tTest'},
-                        proposal=NS(isHidden=lambda: True),
-                        _settle_pending=lambda result: returned.append(result))
-    campaign.active['prompt'] = 'N011\tTest'
-    campaign.timer = NS(isActive=lambda: False, start=lambda ms: started.append(ms))
-    extension.activate(campaign, runner.Campaign.advance)
-    assert len(returned) == 1 and 'not repeated' in returned[0]['error']
-    assert started == [100] and campaign.failure is None and campaign.index == 10
-    assert campaign.active['id'] == 'N011'
+    campaign.timer = NS(stop=lambda: None)
+    campaign.active, campaign.failure = dict(id='N001', prompt='N001\tTest'), None
+    log = NS(on=True, error='', module=NS(_session={'folder': None}, steps=lambda folder: 1 / 0,
+                                         end_session=lambda: closed.append(True)))
+    campaign.window = NS(extensions=NS(find=lambda name: log), statusBar=lambda: NS(showMessage=lambda text: None))
+    campaign.panel = NS(_session=1, _step=None)
+    campaign.finished(1, 1, 'answer', ([], None), None)
+    assert campaign.failure and 'ZeroDivisionError' in campaign.failure and events[0][0] == 'halted' and closed
 
 
 if __name__ == '__main__':

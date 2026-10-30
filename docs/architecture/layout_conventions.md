@@ -1,6 +1,6 @@
 # Layout conventions
 
-- One left column: the brand, the hint under it, the tab row's first tile, inner tab rows (Roads | Metro,
+- One left column: the brand, the hint under it, the tab row's first tile, inner tab rows (Roads | MRT,
   System 1 | System 2), section titles and each page's text all start at the sidebar's content edge; inner
   tab pages have no side margins (AI Mode's System pages: 0, 8, 0, 0, as the others). Tab rows put their first
   tile flush left and their last flush right.

@@ -76,6 +76,47 @@ def drops_problem(drops, types: int | None) -> str | None:
     return "a vehicle type's drop-offs add up to more than 100 %" if any(v > 100 for v in taken.values()) else None
 
 
+MAX_DROP_PAIRS = 20  # set_od_demand's drop_offs: pairs at a time (each needs its own route found)
+
+
+def drops_from(given, names: list[str], route, pair: tuple, drops: tuple = ()) -> tuple:
+    """set_od_demand's drop_offs for one pair, as the drop-off slider would hold them: [{mode, at, percent}], `at` a
+    junction on the pair's fastest route (`route`: its metres and (share, junction) list, the window's
+    _route_along; None: no route) or a share of the trip 0-1. They replace the pair's `drops` of the types named,
+    the others' stay; [] clears them all. ValueError says what to fix."""
+    given = listed(given)
+    if not given:
+        return ()
+    if route is None:
+        raise ValueError(f"No route from {pair[0]} to {pair[1]}, so nowhere to drop off. Nothing was changed.")
+    stops = {junction: share for share, junction in route[1]}
+    points = []
+    for item in given:
+        item = item if isinstance(item, dict) else {}
+        kind = next((i for i, name in enumerate(names) if name.lower() == str(item.get("mode", "")).strip().lower()),
+                    None)
+        if kind is None:
+            raise ValueError(f"No vehicle type called {item.get('mode')!r}. The types are {', '.join(names)}.")
+        at = str(item.get("at", "")).strip()
+        try:
+            at = stops[at] if at in stops else float(at)
+        except ValueError:
+            at = None
+        if at is None or not 0 < at < 1:
+            listed_stops = ", ".join(f"{junction} ({share:.0%})" for junction, share in list(stops.items())[:15])
+            raise ValueError(f"{item.get('at')!r} isn't on {pair[0]}->{pair[1]}'s route. Its junctions, at their "
+                             f"share of the trip: {listed_stops or 'none'}; or give a share between 0 and 1.")
+        share = item.get("percent")
+        points.append([kind, round(at, 4), int(share) if isinstance(share, (int, float)) and share == int(share)
+                       else share])
+    kinds = {point[0] for point in points}
+    merged = [list(point) for point in drops if point[0] not in kinds] + points
+    problem = drops_problem(merged, len(names))
+    if problem:
+        raise ValueError(f"{pair[0]}->{pair[1]}: {problem}. Nothing was changed.")
+    return tuple(sorted(tuple(point) for point in merged))
+
+
 def drops_record(drops: tuple, names: list[str]) -> dict:
     """read_od_matrix's drop-offs: per vehicle type, each point's share of the trip's length and its % of trips."""
     record: dict = {}
@@ -194,12 +235,13 @@ def curve_record(profile: DailyProfile) -> dict:
     return {"kind": "points", "points": [[round(hour, 2), round(level, 3)] for hour, level in profile.points]}
 
 
-def split_of(cell: ODCell, per_hour: dict[int, float]) -> tuple[int, ...]:
+def split_of(cell: ODCell, per_hour: dict[int, float], mode: str) -> tuple[int, ...]:
     """The split in effect: each timetabled type (`per_hour`: index -> vehicles an hour, from its headway) fixed at
-    its vehicles over the pair's trips, per hour against the hourly flow, else per day against the daily trips
-    (running all 24 hours); the other types share the rest in their stored proportions. Stored splits keep those
-    proportions, so no flow typed on the way loses them."""
-    if cell.flow is not None:
+    its vehicles over the pair's trips, per hour against the hourly flow in `mode` "hourly", per day against the
+    daily trips (running all 24 hours) in "daily" (the other kind when the pair has none of this one); the other
+    types share the rest in their stored proportions. Stored splits keep those proportions, so no flow typed on
+    the way loses them."""
+    if cell.flow is not None and (mode == "hourly" or cell.daily is None):
         return fixed_split(cell.split, per_hour, cell.flow)
     return fixed_split(cell.split, {i: count * 24 for i, count in per_hour.items()}, cell.daily)
 
@@ -241,8 +283,10 @@ def demand_plan(args: dict, shown: str, names: list[str]) -> tuple:
     value, pattern, split = args.get("value"), args.get("arrival_pattern"), parsed(args.get("mode_split"))
     split = split if split not in ([], {}) else None  # empty: llama3.2's filler, no split given
     phf, quarters = args.get("peak_hour_factor"), parsed(args.get("quarters"))
-    if value is None and not pattern and split is None and phf is None and quarters is None:
-        raise ValueError("Give a value, an arrival_pattern, a mode_split and/or a peak_hour_factor or quarters.")
+    if value is None and not pattern and split is None and phf is None and quarters is None \
+            and args.get("drop_offs") is None:
+        raise ValueError("Give a value, an arrival_pattern, a mode_split, drop_offs and/or a peak_hour_factor or "
+                         "quarters.")
     if phf is not None or quarters is not None:
         if demand == "daily":
             raise ValueError("A peak-hour factor or 15-minute quarters apply to hourly demand only (the daily "
@@ -285,11 +329,11 @@ def shares_from(split, names: list[str]) -> list[int]:
     except (TypeError, ValueError):
         raise ValueError(f"mode_split must give a percent for the vehicle types {', '.join(names)}.") from None
     scale = 100 if given and abs(sum(given) - 1) < 0.01 else 1
-    shares = [round(share * scale) for share in given]
-    if len(shares) != len(names) or min(shares) < 0 or sum(shares) != 100:
+    # Rounded together, not each on its own: 12.5 / 82.5 / 5 and thirds still add up to 100
+    if len(given) != len(names) or min(given, default=0) < 0 or abs(sum(given) * scale - 100) > 0.5:
         raise ValueError(f"mode_split must give {len(names)} percentages, one each for {', '.join(names)} in that "
                          f"order, adding up to 100 (got {[f'{share:g}' for share in given]}).")
-    return shares
+    return whole_percent(given)
 
 
 def demand_now(cells: dict, origins: list[str], destinations: list[str], demand: str,
@@ -310,7 +354,7 @@ def read_od(cells: dict, origins: list[str], destinations: list[str], shown: str
     share (pattern, split, daily curve) once under "usual", and only the pairs that differ under "different"."""
     entered = {f"{o}->{d}": cell for (o, d), cell in cells.items()
                if o in origins and d in destinations and (cell.flow is not None or cell.daily is not None)}
-    options = {pair: {"arrival_pattern": cell.pattern, "mode_split": dict(zip(names, split_of(cell, per_hour))),
+    options = {pair: {"arrival_pattern": cell.pattern, "mode_split": dict(zip(names, split_of(cell, per_hour, shown))),
                       **({"daily_curve": curve_record(cell.profile)} if cell.daily is not None else {}),
                       **({"quarters": [0.25] * 4, **quarters_record(cell)} if cell.flow is not None else {}),
                       **({"drop_offs": drops_record(cell.drops, names)} if cell.drops else {})}
@@ -340,7 +384,7 @@ def pair_demand(cells: dict, origins: list[str], destinations: list[str], mode: 
     from .simulation import PairDemand  # noqa: PLC0415 - the simulation's type
     daily = mode == "daily"
     return [PairDemand(origin, destination, None if daily else cell.flow, cell.daily if daily else None,
-                       cell.profile.shares() if daily else [], cell.pattern, split_of(cell, per_hour),
+                       cell.profile.shares() if daily else [], cell.pattern, split_of(cell, per_hour, mode),
                        quarters=() if daily else cell.quarters, drops=cell.drops)
             for (origin, destination), cell in cells.items()
             if origin in origins and destination in destinations

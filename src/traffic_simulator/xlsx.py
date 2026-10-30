@@ -9,7 +9,7 @@ import zipfile
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-MAX_ROWS = 1_048_576  # Excel's limit
+MAX_ROWS, MAX_CHARS = 1_048_576, 32_767  # Excel's limits: rows a sheet, characters a cell
 _CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")  # not allowed in XML
 
 
@@ -34,7 +34,7 @@ def _cell(ref: str, value, style: int) -> str:
             return ""
         return f'<c r="{ref}"{styled}><v>{value!r}</v></c>' if isinstance(value, float) else \
             f'<c r="{ref}"{styled}><v>{value}</v></c>'
-    text = escape(_CONTROL.sub("", str(value)))
+    text = escape(_CONTROL.sub("", str(value))[:MAX_CHARS])
     return f'<c r="{ref}"{styled} t="inlineStr"><is><t xml:space="preserve">{text}</t></is></c>'
 
 
@@ -62,7 +62,9 @@ def write_xlsx(path: str | Path, sheets: list[tuple[str, list[list]]]) -> Path:
     """Write the sheets, (name, rows), to a workbook at `path` (written whole, then moved into place)."""
     names, used = [], set()
     for name, _ in sheets:
-        clean = base = re.sub(r"[\[\]:*?/\\]", " ", name).strip()[:31] or "Sheet"
+        # Excel's rules: no control characters or []:*?/\, no apostrophe at either end, at most 31 characters
+        clean = base = re.sub(r"[\[\]:*?/\\]", " ", re.sub(r"[\x00-\x1f]", "", name)).strip(" '")[:31].rstrip(" '") \
+            or "Sheet"
         number = 1
         while clean.lower() in used:  # taken (Excel ignores case): " 2", " 3"… on the name, cut to make room
             number += 1
@@ -71,6 +73,16 @@ def write_xlsx(path: str | Path, sheets: list[tuple[str, list[list]]]) -> Path:
         names.append(clean)
     target = Path(path)
     part = target.with_suffix(".part")
+    try:
+        _write_parts(part, sheets, names)
+    except BaseException:
+        part.unlink(missing_ok=True)  # a failed write leaves nothing behind
+        raise
+    part.replace(target)
+    return target
+
+
+def _write_parts(part: Path, sheets: list[tuple[str, list[list]]], names: list[str]) -> None:
     with zipfile.ZipFile(part, "w", zipfile.ZIP_DEFLATED) as book:
         book.writestr("[Content_Types].xml",
                       '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
@@ -116,8 +128,6 @@ def write_xlsx(path: str | Path, sheets: list[tuple[str, list[list]]]) -> Path:
                       '</styleSheet>')
         for i, (_, rows) in enumerate(sheets, 1):
             book.writestr(f"xl/worksheets/sheet{i}.xml", _sheet(rows))
-    part.replace(target)
-    return target
 
 
 _MAIN = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"

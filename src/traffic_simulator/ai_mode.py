@@ -4,7 +4,8 @@ Both take their keys only from this PC's environment variables (JEV_API_KEY for
 System 1; GROK_API_KEY, GEMINI_API_KEY for System 2): the app scans for them and for a running
 Ollama when it starts (Rescan PC looks again) and offers just what it found. System 1 (Jev, or
 one of Ollama's decision models, as Laya) answers the signal agent's TRUE/FALSE
-questions, else System 2's started model does. System 2 chats through assistant.py:
+questions, else System 2's started model does, and the user's own Bool, Choice or Ranking question
+(Grab context fills its context from the open project). System 2 chats through assistant.py:
 pick Grok, Gemini or a local Ollama model and it warms up on the app's documents; the prompt box
 stays locked (the prompt gate) until the model is ready. Replies stream in, and the
 model can look at the open network and propose changes (network_tools.py): reads run
@@ -27,12 +28,14 @@ import time
 from copy import deepcopy
 from types import SimpleNamespace
 
-from PySide6.QtCore import QObject, QTimer, Signal
-from PySide6.QtWidgets import (QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit,
-                               QMessageBox, QProgressBar, QSizePolicy, QTextBrowser, QVBoxLayout, QWidget)
+from PySide6.QtCore import QObject, Qt, QTimer, Signal
+from PySide6.QtGui import QTextDocument
+from PySide6.QtWidgets import (QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
+                               QPlainTextEdit, QProgressBar, QSizePolicy, QTextBrowser, QVBoxLayout, QWidget)
 
 from traffic_simulator import assistant, network_tools, theme
 from traffic_simulator.assistant import AssistantError, Cancelled, ToolsUnsupported, ollama_models  # noqa: F401
+from traffic_simulator.results import write_whole
 from traffic_simulator.widgets import OpenPageTabs, hint_label, icon_button, set_glyph, styled_button
 
 PROVIDERS = {"grok": "Grok (xAI)", "gemini": "Gemini (Google)", "local": "Local (Ollama)"}
@@ -41,17 +44,30 @@ WINDOWS_ENVIRONMENTS = (  # (root, path) as winreg names: user first, then syste
     ("HKEY_LOCAL_MACHINE", r"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
 )
 READY = "Ask about the simulator or your network"
+DECISIONS = ("Bool", "Choice", "Ranking")  # System 1's own questions: noul; choice; choice, sorted
+# Messages of the history and the record, lines of the planning journal: past these the oldest go (a long session grew
+# them, and the saved project, without end; `fit` sends a model far fewer)
+KEEP = 1000
 
 
 TOOLS_NOTE = "Available tools"  # the transcript's speaker for Available Tools' list (not saved)
 START, RESTART = (0xE768, "Start"), (0xE72C, "Restart")
 
 
-def scan_keys(names: list[str]) -> dict[str, str]:
+def scan_keys(names: list[str], refused: list | None = None) -> dict[str, str]:
     """The named keys set on this device: the app's own environment first, then on
     Windows the user and system environment settings, which also hold variables set
-    after whatever launched the app (an editor, a terminal) had started."""
-    found = {name: os.environ[name].strip() for name in names if os.environ.get(name, "").strip()}
+    after whatever launched the app (an editor, a terminal) had started. A key holding a line
+    break or other control character is left out, its name added to `refused`: no request
+    header can carry it, and the error saying so would quote the key."""
+    def sendable(name: str, value: str) -> bool:
+        if any(ord(char) < 32 or ord(char) == 127 for char in value.strip()):
+            if refused is not None and name not in refused:
+                refused.append(name)
+            return False
+        return bool(value.strip())
+
+    found = {name: os.environ[name].strip() for name in names if sendable(name, os.environ.get(name, ""))}
     if sys.platform == "win32":
         import winreg
 
@@ -66,8 +82,10 @@ def scan_keys(names: list[str]) -> dict[str, str]:
                     continue
                 if kind == winreg.REG_EXPAND_SZ:
                     value = winreg.ExpandEnvironmentStrings(value)
-                if str(value).strip():
+                if sendable(name, str(value)):
                     found[name] = str(value).strip()
+    if refused is not None:  # a good copy found in another place after all
+        refused[:] = [name for name in refused if name not in found]
     return found
 
 
@@ -133,18 +151,137 @@ def _plain(html_text: str) -> str:
     return re.sub(r"<[^>]+>", "", html_text.replace("<br>", "\n")).strip()
 
 
+def project_context(network, od: dict, selection: dict) -> str:
+    """The open project in short lines, for System 1's Context (Grab context): the network, each signal's plan,
+    the boundary ends' flows, the OD demand (its five busiest pairs) and the map selection."""
+    summary = network_tools.network_summary(network)
+    defaults = summary["defaults"]
+    lines = [f"Network: {summary['grid']}; {summary['roads']} roads, {summary['one_way_roads']} one-way; driving on "
+             f"the {summary['driving_side']}; {defaults['speed_limit_kmh']:g} km/h and "
+             f"{defaults['lanes_per_direction']} lanes each way by default."]
+    lines += [f"{control.capitalize()} junctions: {' '.join(ids)}." for control, ids in summary["junctions"].items()
+              if ids and control != "signalised"]  # the signals' lines name those
+    plans: dict[str, list[str]] = {}  # junctions sharing a plan share a line (Laya reads 512-1,024 tokens)
+    for node in network.nodes.values():
+        if node.control == "signalised":
+            greens = "/".join(f"{green:g}" for green in node.green_times_s)
+            plans.setdefault(f"{node.signal_method}, {node.signal_phases} phases"
+                             + (f", greens {greens} s" if node.signal_method == "fixed" else "")
+                             + f", cycle {node.cycle_min_s:g}-{node.cycle_max_s:g} s", []).append(node.id)
+    lines += [f"Signals {' '.join(ids)}: {plan}." for plan, ids in plans.items()]
+    ends = summary["boundary_ends"]
+    flows = [f"{end['id']} {end['supply_vph']:g} in, {end['demand_vph']:g} out" for end in ends
+             if end["supply_vph"] or end["demand_vph"]]
+    if ends:
+        lines.append(f"Boundary ends (veh/h): {'; '.join(flows)}." if flows else f"{len(ends)} boundary ends, no flows set.")
+    daily = od.get("showing") == "daily"
+    pairs = od.get("daily_trips" if daily else "hourly_vph") or {}
+    if pairs:
+        busiest = sorted(pairs.items(), key=lambda pair: -pair[1])[:5]
+        lines.append(f"OD demand ({'trips/day' if daily else 'veh/h'}): "
+                     f"{od['total_daily_trips' if daily else 'total_hourly_vph']:,} in all over "
+                     f"{od['pairs_with_data_count']} of {od['pairs_total']} pairs; busiest "
+                     + ", ".join(f"{pair} {value:,.0f}" for pair, value in busiest) + ".")
+    else:
+        lines.append("OD demand: none entered.")
+    if selection.get("ids"):
+        lines.append(f"Selected on the map: {selection['selected']} {' '.join(selection['ids'])}.")
+    return "\n".join(lines)
+
+
 def _system_one(choice: str) -> tuple[str, str]:
     """(provider, model) of a System 1 choice: "jev", else an Ollama decision model's name."""
     return ("jev", assistant.SYSTEM_ONE_MODEL) if choice == "jev" else ("local", choice)
 
 
+class AnswerRows(QWidget):
+    """The answers System 1 weighs, listed as a Google Forms question lists its options: a row each with a circle,
+    the answer and what it means (optional). `fixed` answers (Bool's True and False) stay; otherwise each is typed
+    in, x removes one (two stay at least) and Add option adds one (MAX at most)."""
+
+    MAX = 26
+
+    def __init__(self, fixed: tuple[str, ...] = ()) -> None:
+        super().__init__()
+        self.fixed = fixed
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4)
+        self.list = QVBoxLayout()
+        self.list.setSpacing(4)
+        layout.addLayout(self.list)
+        self.rows: list[tuple[QWidget, QLabel | QLineEdit, QLineEdit]] = []
+        self.add_button = icon_button(0xE710, "Add option")  # native Add (+) glyph
+        self.add_button.setText("Add option")
+        self.add_button.setProperty("glyph", False)  # an icon and its name: a button's padding
+        self.add_button.clicked.connect(lambda: self.add().setFocus())
+        layout.addWidget(self.add_button, 0, Qt.AlignmentFlag.AlignLeft)
+        self.add_button.setVisible(not fixed)
+        self.set_options([(label, "") for label in fixed] or [("", ""), ("", "")])
+
+    def add(self, label: str = "", description: str = "") -> QLineEdit:
+        """A row for one more answer (none past MAX); its description box, or its answer box when typed in."""
+        row = QWidget()
+        line = QHBoxLayout(row)
+        line.setContentsMargins(0, 0, 0, 0)
+        line.addWidget(QLabel("○"))  # a choice's circle, as a form shows it
+        name = QLabel(label) if self.fixed else QLineEdit(label)
+        about = QLineEdit(description)
+        about.setPlaceholderText(f"What {label.lower()} means (optional)" if self.fixed else "Description (optional)")
+        line.addWidget(name, 2)
+        line.addWidget(about, 3)
+        if not self.fixed:
+            remove = icon_button(0xE711, "Remove option", "mini")  # native Cancel (x) glyph
+            remove.clicked.connect(lambda: self._remove(row))
+            line.addWidget(remove)
+        self.list.addWidget(row)
+        self.rows.append((row, name, about))
+        self._renumber()
+        return about if self.fixed else name
+
+    def _remove(self, row: QWidget) -> None:
+        if len(self.rows) > 2:
+            self.rows = [entry for entry in self.rows if entry[0] is not row]
+            row.deleteLater()
+            self._renumber()
+
+    def _renumber(self) -> None:
+        """Placeholders Option 1, 2...; x only while more than two; Add option only below MAX."""
+        for number, (row, name, _) in enumerate(self.rows, 1):
+            if isinstance(name, QLineEdit):
+                name.setPlaceholderText(f"Option {number}")
+            for button in row.findChildren(type(self.add_button)):
+                button.setEnabled(len(self.rows) > 2)
+        self.add_button.setEnabled(len(self.rows) < self.MAX)
+
+    def options(self) -> list[tuple[str, str]]:
+        """(answer, description) of each row with an answer, in order."""
+        return [(name.text().strip(), about.text().strip()) for _, name, about in self.rows if name.text().strip()]
+
+    def set_options(self, options: list[tuple[str, str]]) -> None:
+        """Replace the rows (typed answers only; fixed ones keep their answers and take the descriptions)."""
+        if self.fixed:
+            for (_, _, about), (_, description) in zip(self.rows, options):
+                about.setText(description)
+            if self.rows:
+                return
+        for row, _, _ in self.rows:
+            row.deleteLater()
+        self.rows = []
+        for label, description in options[:self.MAX]:
+            self.add(label, description)
+
+
 class _Relay(QObject):
     """Carries a background request's events back to the UI thread."""
 
-    done = Signal(int, str, object, object)  # session, job ("warm"/"answer"), result, error
+    done = Signal(int, int, str, object, object)  # session, turn, job ("warm"/"answer"), result, error
     text = Signal(int, int, str, str)  # session, turn, speaker, streamed text
     tool = Signal(int, int, object)  # session, turn, _ToolRequest: answer it, then set its done event
     listed = Signal(int, str, object, object)  # session, provider, its chat models, error
+    decided = Signal(str, object, object, object)  # System 1's decision: kind, [(answer, probability)], concentration, error
+    ui = Signal(object)  # _ToolRequest whose call is a function: run it here on the UI thread (_on_ui)
+    scanned = Signal(int, object, object, object, object)  # scan, keys found, keys refused, Ollama deciders, models
 
 
 class AIModePanel(QWidget):
@@ -159,6 +296,7 @@ class AIModePanel(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self._found: dict[str, str] = {}  # keys found in the environment by the last scan
+        self._scan, self._ollama = 0, ([], None)  # the latest rescan; Ollama's (decision models, chat models) it found
         self._system_1 = ""  # System 1's choice ("jev" or an Ollama model), apart from the widget for the agent's thread
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -177,6 +315,8 @@ class AIModePanel(QWidget):
         form.addRow(self.system_1_state)
         form.addRow(hint_label("System 1 answers the signal agent's TRUE/FALSE questions in one pass, with no "
                                "text generated; while it is Off, System 2's started model answers them."))
+        self._relay = _Relay()
+        self._build_decide(form)
         systems.addTab(page, "System 1")
         page = QWidget()
         form = QFormLayout(page)
@@ -191,7 +331,7 @@ class AIModePanel(QWidget):
             "Keys stay in memory for this session and are never shown or saved. On another PC, "
             "save the same environment variables (see README); the app finds them when it starts."))
         layout.addStretch(1)
-        self.rescan()
+        self.rescan(wait=False)
 
     # --- System 2 chat ---------------------------------------------------------------
 
@@ -218,7 +358,7 @@ class AIModePanel(QWidget):
         self.tools_button = icon_button(0xE90F, "Available Tools")
         self.tools_button.clicked.connect(self.show_tools)
         rescan = icon_button(0xE721, "Rescan PC")
-        rescan.clicked.connect(self.rescan)
+        rescan.clicked.connect(lambda: self.rescan(wait=False))
         self.export_button = icon_button(0xE896, "Export History…")
         self.export_button.clicked.connect(self.export_history)
         self.clear_button = icon_button(0xE74D, "Clear Conversation…", "danger")
@@ -273,11 +413,12 @@ class AIModePanel(QWidget):
         prompt_row.addWidget(self.send_button)
         prompt_row.addWidget(self.stop_button)
         form.addRow(prompt_row)
-        self._relay = _Relay()
         self._relay.done.connect(self._finished)
         self._relay.text.connect(self._streamed)
         self._relay.tool.connect(self._tool_requested)
         self._relay.listed.connect(self._listed)
+        self._relay.ui.connect(self._on_ui)
+        self._relay.scanned.connect(self._scanned)
         self._busy_text, self._busy_since = None, 0.0
         self._busy_timer = QTimer(self, interval=1000)  # the seconds count, so a slow model shows it's alive
         self._busy_timer.timeout.connect(self._show_busy)
@@ -300,6 +441,12 @@ class AIModePanel(QWidget):
         # applied, skipped, refused), for studying how the agent plans; kept with experiment workbooks.
         self.journal: list[dict] = []
         self._seen = None  # the network as the assistant last knew it; see _context()
+        # _seen as the last kept answer left it: an answer left out (stopped, failed, restarted) goes back to it, so
+        # the next editor update tells of the changes made in it, applied ones too
+        self._kept = None
+        # Answers left out since the last kept one: the network when the last was asked (_asked), the user's changes
+        # their editor updates told (_untold: the model never read them) and the edits they applied that stand (_stood)
+        self._asked, self._untold, self._stood = None, [], []
         self.history: list[dict] = []  # the conversation, without the system prompt
         # Every message of every answer as it happened (the user's with its editor update, the model's with
         # its thinking and tool calls, the tool results), for Export History; not saved, not made portable.
@@ -320,10 +467,25 @@ class AIModePanel(QWidget):
                                      types=types or (lambda name, args, check_only=False: {"error": "No vehicle types here."}),
                                      runs=runs or (lambda name, args, check_only=False: {"error": "No runs here."}),
                                      state=state or (lambda: None), step=step or (lambda event: None))
-        self._seen = self._snapshot()
+        self._know_now()
 
     def _snapshot(self):
         return deepcopy(self._host.network()) if self._host else None
+
+    def _know_now(self) -> None:
+        """A conversation starts (or starts over) from the network as it is."""
+        self._seen = self._kept = self._snapshot()
+        self._asked, self._untold, self._stood = None, [], []
+
+    def _leave_out(self) -> None:
+        """The answer under way is left out of the conversation (stopped, failed, restarted): the user's changes its
+        editor update told are told again, and the edits it applied, which stand, are told as its own (not the
+        user's) in the next editor update."""
+        if self._asked is not None and self._kept is not None and self._seen is not None:
+            self._untold += network_tools.describe_changes(self._kept, self._asked)
+            self._stood += network_tools.describe_changes(self._asked, self._seen)
+            self._kept = self._seen
+        self._seen, self._asked = self._kept, None
 
     def _selection(self) -> tuple[str, str]:
         """(provider, model) picked in the dropdowns; the model is "" while none is picked."""
@@ -354,6 +516,7 @@ class AIModePanel(QWidget):
         self._session += 1  # replies still on their way are ignored
         self._turn += 1
         self._running = False
+        self._leave_out()  # an answer under way is left out
         self._settle_pending({"error": "The model was changed."})
         self._connected, self._model = ("", ""), ""
         self._stopping(False)
@@ -475,8 +638,9 @@ class AIModePanel(QWidget):
         self._render()
 
     def _render(self) -> None:
-        self.transcript.setMarkdown("\n\n".join(f"**{who}**\n\n{said}" if who else f"*{said}*"
-                                                for who, said in self._shown))
+        self.transcript.document().setMarkdown(  # the model's Markdown, but any HTML in it shown as text
+            "\n\n".join(f"**{who}**\n\n{said}" if who else f"*{said}*" for who, said in self._shown),
+            QTextDocument.MarkdownFeature.MarkdownDialectGitHub | QTextDocument.MarkdownFeature.MarkdownNoHTML)
         bar = self.transcript.verticalScrollBar()
         bar.setValue(bar.maximum())
 
@@ -486,13 +650,15 @@ class AIModePanel(QWidget):
         session, turn, relay = self._session, self._turn, self._relay
         self._running = True
 
-        def cancelled() -> bool:  # a new chat, or Stop
-            return session != self._session or turn != self._turn
+        def cancelled() -> bool:  # a new chat, or (an answer) Stop, Clear or another project's conversation
+            return session != self._session or job == "answer" and turn != self._turn  # a warm-up's model is the same
 
         def run_tool(call: dict):
-            if self._host is not None:  # its slow or random part first, here off the UI thread
+            if self._host is not None:  # its slow or random part first, here off the UI thread, on a copy of the
+                name = call.get("name", "")  # network taken on the UI thread (the user may be editing it)
+                network = self._on_ui_thread(self._snapshot, cancelled) if name in network_tools.PREPARE_READS else None
                 try:
-                    network_tools.prepare(self._host.network(), call.get("name", ""), call.get("arguments"))
+                    network_tools.prepare(network, name, call.get("arguments"))
                 except Exception:  # noqa: BLE001 - the tool itself reports any problem
                     pass
             request = _ToolRequest(call)
@@ -506,15 +672,33 @@ class AIModePanel(QWidget):
             try:
                 result = work(lambda text, speaker: relay.text.emit(session, turn, speaker, text), run_tool,
                               cancelled)
-                relay.done.emit(session, job, result, None)
+                relay.done.emit(session, turn, job, result, None)
             except Cancelled:
-                relay.done.emit(session, job, STOPPED, None)
+                relay.done.emit(session, turn, job, STOPPED, None)
             except AssistantError as exc:
-                relay.done.emit(session, job, None, str(exc))
+                relay.done.emit(session, turn, job, None, str(exc))
             except Exception as exc:  # noqa: BLE001 - show anything unexpected rather than hang busy
-                relay.done.emit(session, job, None, f"Unexpected error: {exc!r}")
+                relay.done.emit(session, turn, job, None, f"Unexpected error: {exc!r}")
 
         threading.Thread(target=target, daemon=True).start()
+
+    def _on_ui_thread(self, work, cancelled):
+        """work() run on the UI thread for a worker, which waits for its result (None if stopped first or it raised):
+        the open network and the step's record are the UI thread's."""
+        request = _ToolRequest(work)
+        self._relay.ui.emit(request)
+        while not request.done.wait(0.2):
+            if cancelled():
+                return None
+        return request.result
+
+    def _on_ui(self, request: _ToolRequest) -> None:
+        try:
+            request.result = request.call()
+        except Exception:  # noqa: BLE001 - the worker gets None and carries on; the tool reports any problem
+            request.result = None
+        finally:
+            request.done.set()
 
     def start(self) -> None:
         """Start (or Restart): connect the picked model. It warms up on the documents and the
@@ -525,6 +709,7 @@ class AIModePanel(QWidget):
         self._session += 1  # replies still on their way from the last choice are ignored
         self._turn += 1
         self._running = False
+        self._leave_out()  # an answer under way is left out
         self._settle_pending({"error": "The chat was restarted."})
         self.history = assistant.portable(self.history)  # plain text any model can carry on from
         self._model = ""
@@ -575,10 +760,13 @@ class AIModePanel(QWidget):
         if self._host is None:
             return "", []
         network = self._host.network()
-        changes = network_tools.describe_changes(self._seen, network) if self._seen is not None else []
+        changes = self._untold + (network_tools.describe_changes(self._seen, network) if self._seen is not None else [])
         selection = self._host.selection()
         selected = f"{selection['selected']} {', '.join(selection['ids'])}" if selection["ids"] else "nothing"
         lines = ["[Editor update]"]
+        if self._stood:  # its own, from an answer left out of the conversation
+            lines += ["Your stopped answer's changes, applied before it ended, still stand:",
+                      *(f"- {line}" for line in self._stood)]
         if changes:
             lines += ["The user changed the network since your last reply:", *(f"- {line}" for line in changes)]
         lines += [f"Selected on the map: {selected}", "[End of editor update]", "", ""]
@@ -593,7 +781,8 @@ class AIModePanel(QWidget):
         provider, model, tools = self._provider(), self._model, self._tools
         key = self.keys().get(assistant.KEY_NAMES.get(provider, ""), "")
         context, shared = self._context()
-        self._seen = self._snapshot()  # the assistant now knows the network as it is
+        self._seen = self._asked = self._snapshot()  # the assistant now knows the network as it is
+        before = next((said for who, said in reversed(self._shown) if who == "You"), "")  # the request it follows
         self._say("You", shown)
         if shared:
             self._say(None, "Shared with the assistant: " + ", ".join(shared))
@@ -601,43 +790,51 @@ class AIModePanel(QWidget):
         self._busy(f"{model} is thinking…")
         self._indicate("answering")
         self._stopping(True)
+        # How to do this kind of task well (network_tools.SKILLS), only the ones not already in the conversation
+        skills = network_tools.skills_for(prompt, "".join(m.get("content") or "" for m in self.history
+                                                          if m["role"] == "user")) if tools else ""
         messages = [{"role": "system", "content": self._system}, *self.history,
-                    {"role": "user", "content": context + prompt}]
-        # The tools this request most likely needs (network_tools.tools_for), and those used in the last two exchanges
-        # (all of a long conversation's grew the offer, and every request, without end); find_tools adds others
-        # mid-answer, and a tool the model names that it wasn't offered is added as it runs.
+                    {"role": "user", "content": context + prompt + skills}]
+        # The tools this request and the one before it most likely need (network_tools.tools_for: an answer to the
+        # assistant's question, "dhanmondi, dhaka bangladesh", has no words of its own for them), and those used in
+        # the last two exchanges (all of a long conversation's grew the offer, and every request, without end);
+        # find_tools adds others mid-answer, and a tool the model names that it wasn't offered is added as it runs.
         asked = [i for i, message in enumerate(self.history) if message["role"] == "user"]
         recent = self.history[asked[-2]:] if len(asked) >= 2 else self.history
         used = {call.get("name") for message in recent for call in message.get("tool_calls") or []}
-        offered = network_tools.tools_for(prompt, used) if tools else None
+        offered = network_tools.tools_for(f"{before}. {prompt}" if before else prompt, used) if tools else None
         self._step = {"kind": "prompt", "prompt": shown, "editor_update": context,
                       "provider": provider, "model": model, "started": time.time(), "calls": [],
                       "tools_offered": [spec["name"] for spec in offered or []],
                       "before": self._host.state() if self._host else None}
 
-        tag = self._step["started"]
+        tag, step = self._step["started"], self._step
 
         def answer(on_text, run_tool, cancelled):
             assistant.USAGE_TAG.value = tag  # this worker's requests are this step's
             speak = lambda text: on_text(text, model)  # noqa: E731
 
+            def record(call: dict, **fields) -> None:  # into this answer's own record, on the UI thread
+                self._on_ui_thread(lambda: self._step is step and self._record_call(call, **fields), cancelled)
+
             def call_tool(call: dict):
                 if call.get("name") == network_tools.FIND_TOOLS:  # answered here, kept in the step's record
                     found = network_tools.expand_tools(call.get("arguments"), offered)
-                    self._record_call(call, what="find more tools", decision="read", result=found)
+                    record(call, what="find more tools", decision="read", result=found)
                     return found
                 against = network_tools.contradicts(call.get("name", ""), call.get("arguments"), prompt) if shown else None
                 if against:  # not run, nor shown to the user: the model is told what they asked for
                     refused = {"error": against, "error_type": "not_what_was_asked"}
-                    self._record_call(call, what=network_tools.describe_call(call["name"], call.get("arguments") or {}),
-                                      decision="refused: not what was asked", result=refused)
+                    record(call, what=network_tools.describe_call(call["name"], call.get("arguments") or {}),
+                           decision="refused: not what was asked", result=refused)
                     return refused
                 if offered is not None and call.get("name") not in {spec["name"] for spec in offered}:
                     offered.extend(spec for spec in network_tools.tool_specs() if spec["name"] == call.get("name"))
                 repaired = "; ".join(filter(None, (
                     network_tools.fold_incident(call.get("name", ""), call.get("arguments")),
                     network_tools.drop_strays(call.get("name", ""), call.get("arguments")),
-                    network_tools.repair_ends(self._host.network(), call.get("name", ""), call.get("arguments"), prompt)
+                    self._on_ui_thread(lambda: network_tools.repair_ends(  # reads the open network: on its thread
+                        self._host.network(), call.get("name", ""), call.get("arguments"), prompt), cancelled)
                 ))) if shown and self._host else None
                 result = run_tool(call)
                 if repaired and isinstance(result, dict):
@@ -671,7 +868,7 @@ class AIModePanel(QWidget):
         self._turn += 1  # stops an answer in progress
         self._settle_pending({"error": "The conversation was cleared."})
         self.history, self._shown, self.record = [], [], []
-        self._seen = self._snapshot()
+        self._know_now()
         self._render()
 
     def show_tools(self) -> None:
@@ -709,10 +906,9 @@ class AIModePanel(QWidget):
         as_json = path.lower().endswith(".json") or (chosen.startswith("JSON") and not path.lower().endswith(".md"))
         if as_json and not path.lower().endswith(".json"):
             path += ".json"
-        try:
-            Path(path).parent.mkdir(parents=True, exist_ok=True)
-            Path(path).write_text(history_json(self._shown, self.record, self.journal) if as_json else
-                                  history_markdown(self._shown, self.record, self.journal), encoding="utf-8")
+        try:  # swapped in whole: a failed write keeps the old
+            write_whole(path, history_json(self._shown, self.record, self.journal) if as_json else
+                        history_markdown(self._shown, self.record, self.journal))
         except OSError as exc:
             self._say("Error", f"Couldn't save the history: {exc}")
             return
@@ -737,7 +933,7 @@ class AIModePanel(QWidget):
                        if isinstance(item, list) and len(item) == 2 for who, said in [item] if isinstance(said, str)]
         if self._shown:
             self._shown.append([None, "Conversation restored from the project file."])
-        self._seen = self._snapshot()
+        self._know_now()
         self._render()
 
     def _streamed(self, session: int, turn: int, speaker: str, text: str) -> None:
@@ -752,6 +948,25 @@ class AIModePanel(QWidget):
             self._render_timer.start()
 
     def _tool_requested(self, session: int, turn: int, request: _ToolRequest) -> None:
+        """A tool call from the worker (_answer_tool). Whatever it raises is answered as an error the model reads:
+        Qt only prints a slot's exception, and the worker would wait on `request.done` until Stop."""
+        try:
+            self._answer_tool(session, turn, request)
+        except Exception as exc:  # noqa: BLE001 - see above
+            name = request.call.get("name")
+            result = network_tools.explain_error(f"Couldn't run {name}: {type(exc).__name__}: {exc}.")
+            if self._pending is request:
+                self._settle_pending(result)
+            elif not request.done.is_set():
+                request.result = result
+                request.done.set()
+            self._record_call(request.call, decision="failed", result=result)
+            self.log(name, request.call.get("arguments"), f"failed: {result['error']}")
+            self._say(None, f"Not run: {name}. {result['error']}")
+            self._busy(f"{self._model} is thinking…")
+            self._indicate("answering")
+
+    def _answer_tool(self, session: int, turn: int, request: _ToolRequest) -> None:
         call = request.call
         if (session, turn) != (self._session, self._turn):  # queued before Stop (or a restart): never run
             request.result = {"error": "The chat was restarted." if session != self._session else "Stopped by the user."}
@@ -785,9 +1000,10 @@ class AIModePanel(QWidget):
             return
         if call["name"] in network_tools.EDIT_TOOLS:
             self._pending = request
+            card = html.escape(line)  # rich text: the model's words (a place, a name) shown as text, never markup
             if self._preview:  # the Scenario Builder's plan, step by step, with what it assumed
-                line = f"{line}<br>{self._preview}"
-            self.proposal_text.setText(f"<b>Proposed change</b><br>{line}")
+                card += "<br>" + html.escape(_plain(self._preview)).replace("\n", "<br>")
+            self.proposal_text.setText(f"<b>Proposed change</b><br>{card}")
             request.record = self._record_call(call, what=network_tools.describe_call(call["name"], call["arguments"]),
                                                plan=_plain(self._preview) if self._preview else None,
                                                decision="waiting", proposed_at=time.time(), check_s=check_s)
@@ -825,6 +1041,8 @@ class AIModePanel(QWidget):
                 network_tools.run_tool(deepcopy(self._host.network()), name, args)
         except (network_tools.ToolError, ValueError) as exc:
             return str(exc)
+        except Exception as exc:  # noqa: BLE001 - a window callback that can't read these arguments: refused too
+            return f"Bad arguments for {name}: {type(exc).__name__}: {exc}. {network_tools.signature(name)}."
         return None
 
     def _decide(self, apply: bool) -> None:
@@ -932,6 +1150,7 @@ class AIModePanel(QWidget):
         what = network_tools.describe_call(tool, args if isinstance(args, dict) else {})
         self.journal.append({"time": time.strftime("%Y-%m-%d %H:%M:%S"), "kind": kind, "tool": tool,
                              "what": what, "arguments": json.dumps(args, default=str)[:2000], "outcome": outcome})
+        del self.journal[:-KEEP]
 
     def _note_plan(self, args: dict) -> dict:
         """note_plan: the assistant's goal, hypothesis, plan, expectation or conclusion, into the journal."""
@@ -941,11 +1160,14 @@ class AIModePanel(QWidget):
             return {"error": "Say at least one of goal, hypothesis, plan, expected or conclusion."}
         self.journal.append({"time": time.strftime("%Y-%m-%d %H:%M:%S"), "kind": "plan", "tool": "note_plan",
                              "what": " · ".join(parts), "arguments": "", "outcome": "noted"})
+        del self.journal[:-KEEP]
         return {"noted": len(self.journal), "note": "Kept in the planning journal (each experiment's workbook)."}
 
-    def _finished(self, session: int, job: str, result, error: str | None) -> None:
+    def _finished(self, session: int, turn: int, job: str, result, error: str | None) -> None:
         if session != self._session:
             return  # from a conversation that has since been replaced
+        if job == "answer" and turn != self._turn:  # ended as Stop was pressed, the chat cleared or a project loaded:
+            result, error = STOPPED, None            # it never overwrites the conversation there now
         self._running = False
         self._render_timer.stop()
         self._render()
@@ -955,6 +1177,8 @@ class AIModePanel(QWidget):
         provider = self._provider()
         if job == "answer":
             self._end_step(result, error)
+            if result is STOPPED or error:  # left out of the conversation, and so is what the model learnt in it
+                self._leave_out()
         if result is STOPPED:
             self._say(None, "Stopped. That question is left out of the conversation.")
             self._gate(True, READY)
@@ -971,14 +1195,19 @@ class AIModePanel(QWidget):
                     self._say(None, f"{self._model} can't use tools, so it answers from the documents only "
                                     "and can't see or change your network. Try llama3.1 or llama3.2.")
                 if not self.history:
-                    self._seen = self._snapshot()  # a new conversation starts from the network as it is
+                    self._know_now()  # a new conversation starts from the network as it is
             else:
                 messages, tools = result
+                self._kept, self._asked, self._untold, self._stood = self._seen, None, [], []  # all of it known
                 at = time.strftime("%Y-%m-%d %H:%M:%S")
                 self.record += [{"at": at, "model": self._model, **{key: value for key, value in message.items()
                                                                     if key != "raw"}}
                                 for message in messages[1 + len(self.history):]]
+                del self.record[:-KEEP]
                 self.history = messages[1:]  # without the system prompt
+                if len(self.history) > KEEP:  # the oldest exchanges go whole: each call kept keeps its result
+                    starts = [i for i, message in enumerate(self.history) if message["role"] == "user"]
+                    self.history = self.history[next((i for i in starts if i >= len(self.history) - KEEP), starts[-1]):]
                 if self._tools and tools is None:
                     self._say(None, f"{self._model} can't use tools after all, so it answers from the "
                                     "documents only.")
@@ -989,12 +1218,30 @@ class AIModePanel(QWidget):
 
     # --- Keys and local models -------------------------------------------------------
 
-    def rescan(self) -> None:
+    def rescan(self, wait: bool = True) -> None:
         """Scan this PC's environment variables for the keys, and Ollama for its models; offer
-        System 2 only what was found. Keeps the chosen option if it is still there."""
-        found = scan_keys(["JEV_API_KEY", *assistant.KEY_NAMES.values()])
-        self._found = found
-        deciders = ollama_models(capability="decision") or []  # Ollama's decision models (Laya)
+        System 2 only what was found. Keeps the chosen option if it is still there. `wait` False (the panel's own
+        start, Rescan PC): the keys are offered at once with the Ollama models found before, and Ollama is asked on
+        a thread (a second's timeout each when it isn't running), its lists delivered by the relay to _scanned."""
+        refused: list[str] = []
+        found = scan_keys(["JEV_API_KEY", *assistant.KEY_NAMES.values()], refused)
+        if wait:
+            self._ollama = (ollama_models(capability="decision"), ollama_models())
+        self._scan += 1
+        scan, relay = self._scan, self._relay
+        self._scanned(scan, found, refused, *self._ollama)
+        if not wait:
+            threading.Thread(target=lambda: relay.scanned.emit(scan, found, refused, ollama_models(capability="decision"),
+                                                               ollama_models()), daemon=True).start()
+
+    def _scanned(self, scan: int, found: dict, refused: list, deciders, models) -> None:
+        """A scan's findings offered (UI thread); an older scan's, arriving late, are dropped."""
+        if scan != self._scan:
+            return
+        self._found, self._ollama = found, (deciders, models)
+        broken = (f" Left out: {', '.join(refused)}, holding a line break or other control character; save "
+                  "it again without one." if refused else "")
+        deciders = deciders or []  # Ollama's decision models (Laya)
         here = [*(["jev"] if "JEV_API_KEY" in found else []), *deciders]
         chosen = self.system_1.currentData() or ""
         self.system_1.clear()
@@ -1011,9 +1258,9 @@ class AIModePanel(QWidget):
         self.system_1_status.setText(
             "Found on this PC: " + (", ".join(have) or "nothing yet") + "."
             + (f" Not found: {', '.join(missing_1)}. Save the key as an environment variable (see README) or "
-               "pull the model, then Rescan PC." if missing_1 else ""))
+               "pull the model, then Rescan PC." if missing_1 else "") + broken)
 
-        models, chosen = ollama_models(), self.local_models.currentText()
+        chosen = self.local_models.currentText()
         self.local_models.clear()
         self.local_models.addItems(models or [])
         self.local_models.setCurrentIndex(max(0, self.local_models.findText(chosen)))
@@ -1034,7 +1281,7 @@ class AIModePanel(QWidget):
         self.found_status.setText(
             "Found on this PC: " + (", ".join(have) or "nothing yet") + "."
             + (f" Not found: {', '.join(missing)}. Save a key as an environment variable "
-               "(see README) or start Ollama, then Rescan PC." if missing else ""))
+               "(see README) or start Ollama, then Rescan PC." if missing else "") + broken)
         if current and current not in offered:
             self._choose()  # its key or Ollama has gone: back to Off
         else:
@@ -1063,6 +1310,119 @@ class AIModePanel(QWidget):
         self._system_1 = choice = self.system_1.currentData() or ""
         self.system_1_state.setText("Jev answers through TypeSafe's API." if choice == "jev" else
                                     f"{choice} answers through Ollama." if choice else "")
+
+    def _build_decide(self, form: QFormLayout) -> None:
+        """A question of the user's own for System 1, as Laya Decision Studio asks it: the question, the context
+        it decides from (Grab context fills it from the open project) and the answers to weigh."""
+        self.decide_type = QComboBox()
+        self.decide_type.addItems(DECISIONS)
+        self.decide_type.setToolTip("Kind of answer")
+        self.decide_type.currentTextChanged.connect(self._decide_type_changed)
+        form.addRow("Decision", self.decide_type)
+        self.decide_question = QLineEdit()
+        self.decide_question.setPlaceholderText("Question, e.g. Should 2,2 run SCOOT?")
+        self.decide_question.returnPressed.connect(self.decide)
+        form.addRow("Question", self.decide_question)
+        self.decide_context = QPlainTextEdit()
+        self.decide_context.setPlaceholderText("The facts it decides from")
+        self.decide_context.setMaximumHeight(120)
+        grab = styled_button("Grab context", tooltip="Fill from the open project")
+        grab.clicked.connect(self.grab_context)
+        context = QVBoxLayout()
+        context.addWidget(self.decide_context)
+        context.addWidget(grab, 0, Qt.AlignmentFlag.AlignRight)
+        form.addRow("Context", context)
+        self.decide_bool = AnswerRows(("True", "False"))  # Bool's answers
+        form.addRow("Answers", self.decide_bool)
+        self.decide_options = AnswerRows()  # Choice's and Ranking's, kept while Bool shows
+        form.addRow("Options", self.decide_options)
+        self.decide_button = styled_button("Decide", "primary", "Ask System 1")
+        self.decide_button.clicked.connect(self.decide)
+        form.addRow(self.decide_button)
+        self.decide_result = QLabel()
+        self.decide_result.setWordWrap(True)
+        form.addRow(self.decide_result)
+        form.addRow(hint_label("Probabilities are estimates; concentration says how sharp, not how right. Laya "
+                               "reads about 1,024 tokens (Typed Decisions) or 512 (English) of it all."))
+        self._decide_form = form
+        self._relay.decided.connect(self._decided)
+        self._decide_type_changed(self.decide_type.currentText())
+
+    def _decide_type_changed(self, kind: str) -> None:
+        """Bool weighs true and false; Choice and Ranking weigh the options."""
+        for widget, shown in ((self.decide_bool, kind == "Bool"), (self.decide_options, kind != "Bool")):
+            self._decide_form.setRowVisible(widget, shown)
+
+    def grab_context(self) -> None:
+        """Fill Context with the open project (project_context), replacing what was there."""
+        if self._host is not None:
+            self.decide_context.setPlainText(project_context(self._host.network(),
+                                                             self._host.od("read_od_matrix", {}),
+                                                             self._host.selection()))
+
+    def _decision(self) -> tuple[str, str, str, dict | None]:
+        """(kind, question, context, criteria) from the form; ValueError says what's missing."""
+        kind, question = self.decide_type.currentText(), self.decide_question.text().strip()
+        state = self.decide_context.toPlainText().strip()
+        if not question or not state:
+            raise ValueError("Write a question and its context first.")
+        if kind == "Bool":
+            (_, true), (_, false) = self.decide_bool.options()
+            return kind, question, state, {"true": true or "Yes", "false": false or "No"} if true or false else None
+        options = self.decide_options.options()
+        criteria = {label: description or None for label, description in options}
+        if not 2 <= len(options) <= AnswerRows.MAX or len({label.lower() for label in criteria}) != len(options):
+            raise ValueError(f"Give 2 to {AnswerRows.MAX} options, each label different.")
+        return kind, question, state, criteria
+
+    def decide(self) -> None:
+        """Ask the System 1 chosen under Use the form's question, on a thread; _decided shows the answer."""
+        if not self.decide_button.isEnabled():
+            return  # one question at a time (Enter in Question too), so an older reply never lands last
+        try:
+            kind, question, state, criteria = self._decision()
+        except ValueError as exc:
+            self.decide_result.setText(str(exc))
+            return
+        chosen = self.system_one_for_agents()
+        if chosen is None:
+            self.decide_result.setText("Pick a System 1 under Use first.")
+            return
+        provider, key, model = chosen
+        asked = {"type": "noul" if kind == "Bool" else "choice", "instructions": question,
+                 **({"criteria": criteria} if criteria else {})}
+        self.decide_button.setEnabled(False)
+        self.decide_result.setText(f"{'Jev' if provider == 'jev' else model} is deciding…")
+        relay = self._relay
+
+        def target() -> None:
+            try:
+                answer = assistant.system_one(provider, state, {"decision": asked}, key, model=model)["answers"]["decision"]
+                if kind == "Bool":
+                    rows = [("True", float(answer["noul"])), ("False", 1 - float(answer["noul"]))]
+                else:
+                    rows = [(label, float(answer["probabilities"][label])) for label in criteria]
+                relay.decided.emit(kind, sorted(rows, key=lambda row: -row[1]) if kind == "Ranking" else rows,
+                                   answer.get("confidence"), None)
+            except AssistantError as exc:
+                relay.decided.emit(kind, None, None, str(exc))
+            except Exception as exc:  # noqa: BLE001 - a reply without the answers asked for: say so
+                relay.decided.emit(kind, None, None, f"Unexpected reply: {exc!r}")
+
+        threading.Thread(target=target, daemon=True).start()
+
+    def _decided(self, kind: str, rows, concentration, error: str | None) -> None:
+        self.decide_button.setEnabled(True)
+        if error:
+            self.decide_result.setText(html.escape(error))  # rich text below: a server's words shown as text
+            return
+        best = max(rows, key=lambda row: row[1])[0]
+        ranked = kind == "Ranking"  # as asked, whatever the form shows now
+        lines = [f"<b>{html.escape(best)}</b>"]
+        lines += [f"{f'{n}. ' if ranked else ''}{html.escape(label)}: {p:.0%}" for n, (label, p) in enumerate(rows, 1)]
+        if concentration is not None:
+            lines.append(f"Concentration {float(concentration):.2f}")
+        self.decide_result.setText("<br>".join(lines))
 
     def agent_options(self) -> list[dict]:
         """Who a batch run can put in charge of TSP or DEVL, as found by the last scan: the two baselines (Never

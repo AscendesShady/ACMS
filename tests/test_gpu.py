@@ -148,11 +148,11 @@ def test_power_saver_draws_half_as_often():
 
     window = MainWindow()
     window._ask_to_save = False
-    assert window.power_button.toolTip() == "Power Saver" and window.clock._timer.interval() == 16
+    assert window.power_button.toolTip() == "Power Saver" and window.clock.timer.interval() == 16
     window.power_button.setChecked(True)
-    assert window.clock._timer.interval() == 32
+    assert window.clock.timer.interval() == 32
     window.power_button.setChecked(False)
-    assert window.clock._timer.interval() == 16
+    assert window.clock.timer.interval() == 16
     window.close()
 
 

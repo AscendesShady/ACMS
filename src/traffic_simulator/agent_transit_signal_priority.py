@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import json
 
+from .results import clock
 from .transit_signal_priority import eff_min
 
 SYSTEMS = {"1": "System 1", "2": "System 2"}
@@ -107,11 +108,6 @@ SYSTEM_2_ROLE = (
     "of the network both ways and compares the person-seconds of delay.\n"
     "Give your decision by calling decide_tsp: activate true to allow the bus priority, false to keep the plan. "
     "If you can't call tools, reply with exactly one word: TRUE or FALSE.")
-
-
-def clock(seconds: float) -> str:
-    whole = int(seconds)
-    return f"{whole // 3600:02d}:{whole // 60 % 60:02d}:{whole % 60:02d}"
 
 
 def key_of(junction: str, request) -> str:

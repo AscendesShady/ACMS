@@ -13,6 +13,18 @@ def test_curve_passes_through_its_points_without_overshoot():
         assert min(inside) >= min(y0, y1) - 1e-12 and max(inside) <= max(y0, y1) + 1e-12
 
 
+def test_a_curve_with_two_points_at_one_hour_is_refused():
+    from traffic_simulator.daily_profile import from_record
+
+    try:
+        from_record({"kind": "points", "points": [[0, 1], [8, 1], [8, 2], [24, 1]]})
+    except ValueError as exc:
+        assert "in order" in str(exc)
+    else:
+        raise AssertionError("two points at 08:00 would divide by zero in pchip")
+    assert len(from_record({"kind": "points", "points": [[0, 1], [8, 2], [24, 1]]}).shares()) == HOURS
+
+
 def test_shares_split_the_day():
     weekday = DailyProfile()
     shares = weekday.shares()

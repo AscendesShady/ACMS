@@ -111,7 +111,13 @@ class Campaign:
             self.record('research_log_not_closed', error=repr(closing))
         self.window.statusBar().showMessage('Campaign halted: ' + error)
 
-    def finished(self, session, job, result, error):
+    def finished(self, session, turn, job, result, error):
+        try:  # a Qt slot: Qt only prints what it raises, and the campaign would wait for its deadline
+            self._finished(session, job, result, error)
+        except Exception as failure:  # noqa: BLE001  halted, saying why, as tick() does
+            self.stop(repr(failure))
+
+    def _finished(self, session, job, result, error):
         if session != self.panel._session:
             return
         if error:

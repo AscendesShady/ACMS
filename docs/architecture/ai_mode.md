@@ -7,6 +7,9 @@
     after the editor or terminal started is still found.
   - Keys stay in memory only; nothing is saved with networks, so the app can be copied to
     another device.
+  - A key holding a line break or other control character is left out (`scan_keys`' `refused`), and both
+    status lines name it: no request header can carry it, and http.client's error would quote it. A header
+    error that still reaches `assistant._network_error` is said without the header ("the key can't be sent").
   - System 2 has **no key boxes**: its keys come only from the environment and are never shown.
     Its **Chat with** dropdown offers only what the scan found:
     - Off;
@@ -15,6 +18,9 @@
     - Local, if Ollama is running with models.
   - A line above it says what was found and what wasn't.
   - If a rescan no longer finds the chosen one, the chat goes back to Off.
+  - At start and on **Rescan PC** (`rescan(wait=False)`) the keys are offered at once and Ollama is asked on a
+    thread (a second's timeout each when it isn't running), its lists coming back by `_Relay.scanned` to
+    `_scanned` (a later scan's win); `rescan()` called directly waits for them, as scripts and tests want.
   - System 1 works the same way, with no key box. It says what was found, and its **Use** dropdown
     offers Off, JEV when `JEV_API_KEY` is set, and each of Ollama's decision models (Laya). See
     **System 1** below.
@@ -47,7 +53,7 @@
   - Gemini: `POST /v1beta/models/{model}:streamGenerateContent?alt=sse`. Its function declarations take only an
     OpenAPI subset of JSON Schema, so each tool's parameters go to it with only `GEMINI_SCHEMA_KEYS`, at every
     level (`_gemini_schema`: e.g. no `additionalProperties`, which it refuses with a 400); Ollama and xAI get the
-    schemas as written.
+    schemas as written. Each tool result goes to it as JSON, or as its text when `fit` cut it short.
   - Ollama: one JSON object per line from `POST /api/chat`, with `num_ctx` sized to fit the documents.
   - Reasoning a model streams apart from its answer is kept on the reply as `thinking` (Ollama's
     `message.thinking`, xAI's `reasoning_content`, Gemini's thought parts when it sends them); it isn't
@@ -58,15 +64,25 @@
   reply waits up to `API_TIMEOUT_S` (180 s) for its first words, a local model too when Ollama has it loaded
   (`/api/ps`), else `LOCAL_TIMEOUT_S` (600 s: loading from disk); every local request asks Ollama to keep the
   model loaded `KEEP_ALIVE` (30 min; its own default, 5 min, reloaded it after a pause); once it streams, `STALL_TIMEOUT_S` (90 s) of silence ends it as stalled. The
-  worker's streamed text and tool calls carry its session and turn (`_Relay`): one still queued when Stop,
+  worker's streamed text, tool calls and result carry its session and turn (`_Relay`): one still queued when Stop,
   Restart, Clear or another project changes them is dropped, a tool call answered "Stopped by the user."
-  without running, so the worker isn't left waiting.
+  without running, so the worker isn't left waiting, and an answer's result counts as stopped (`_finished`), never
+  overwriting the conversation there now. A warm-up ignores the turn (`_run`'s `cancelled`): Clear or another
+  project's conversation doesn't change which model is warming up, so it finishes and the prompt opens with it set;
+  only Restart or a new pick (a new session) stops it. An answer left out (stopped, failed, or cut by Restart or a new pick)
+  leaves out what the model learnt in it too (`_leave_out`): the user's changes its editor update told
+  (`_untold`) are told again, and the edits applied in it, which stand, are told as the model's own under "Your
+  stopped answer's changes, applied before it ended, still stand" (`_stood`), never as the user's; both until an
+  answer is kept.
 - **Export History…** (`export_history`): saves, as Markdown (`history_markdown`, to read) or JSON
   (`history_json`), the chat as shown; the record (`AIModePanel.record`: every message of every answer
   this session with its time and model, the user's with the editor update it carried, the model's with
   its thinking and tool calls, and each tool's result, i.e. what the assistant observed; Gemini's raw
-  parts left out); and the planning journal. It offers the window's results folder. The record isn't
-  saved with the project or made portable on Restart; Clear Conversation empties it.
+  parts left out); and the planning journal. It offers the window's results folder, and writes beside the file
+  and swaps it in (`os.replace`): a failed write keeps the file there was. The record isn't
+  saved with the project or made portable on Restart; Clear Conversation empties it. The record, the journal and the
+  history (saved with the project) keep their last `KEEP` (1,000) messages or lines; the history drops whole
+  exchanges, from a user's message, so each tool call kept keeps its result.
 - **Tools** (`network_tools.py`, no Qt). `assistant.converse` runs the loop: the model asks for a tool,
   the app runs it, the result goes back, and the model continues (up to 12 rounds per answer). A call the model
   wrote as text instead of making it (llama3.1 often does: `{"name": "describe", "parameters": {...}}`) is made
@@ -78,7 +94,12 @@
     nulls are left out, and so is text meaning nothing (`_NOTHING`: "None", "null", "n/a"…, which llama3.2
     sends for every optional argument, even ones the tool lacks), a real 0 kept; lists stay as sent). An unknown or missing argument, or a value that can't be read,
     is refused before anything runs, the error giving the tool's signature (`signature`), e.g.
-    "set_end_flows takes end (text, required), supply_vph (number), demand_vph (number)".
+    "set_end_flows takes end (text, required), supply_vph (number), demand_vph (number)". Whatever a call
+    raises on the UI thread (`_tool_requested` around `_answer_tool`) comes back to the model as an error
+    (`explain_error`), the card put away: Qt only prints a slot's exception, which would leave the answer waiting
+    until Stop.
+    `describe_call` gives any argument shape a line (the call as sent when its own can't be read), and
+    `contradicts` reads objects for ids without raising.
   - **Edits that change nothing** (`run_tool`: the network equal before and after) are refused ("Nothing
     would change … it is like that already"), so they are never proposed; a network edit's result lists
     what it changed (`changed`, from `describe_changes`). The system prompt tells the model to read every
@@ -132,6 +153,11 @@
       - `mode_split` is `[{"mode": name, "percent": n}, …]` (a {name: percent} object also works).
       - Names come from `read_od_matrix`'s `vehicle_types`; types left out get 0, and the total
         must be 100. An unknown type is refused, with the real names in the error.
+      - `drop_offs` is `[{"mode", "at", "percent"}, …]`: the drop-off slider's points for up to 20 pairs
+        (`demand.drops_from`, each pair's route from the window's `_route_along`), `at` a junction on the pair's route
+        (its share of the trip, as the slider snaps) or a share 0–1, `percent` whole % of that type's trips. They
+        replace the types named ([] clears all); a junction off the route is refused with the route's junctions,
+        a pair with no route or no demand is refused, and the result reads them back as `drop_offs`.
     - `shape_daily_curve`: loads the curve editor with `points` [[hour, level]…] (sorted, scaled to
       0–1, run from 00:00 to 24:00), a `polynomial` [a0…an] of degree 2–6, or a `preset` (weekday,
       flat).
@@ -174,7 +200,7 @@
         unless, over the last 15 minutes, the vehicles in the network (and those waiting to enter) grow by
         more than 5 % of those setting off, and by 25 or more (`experiments.holds`). If it doesn't, the share of the tool's
         pairs that holds is found by bisection (`experiments.largest_holding`, 4 more runs) and typed in
-        instead, in the same undo step; `checked_in_a_run` reports the runs, `total_kept` what stayed. If
+        instead, in the same undo step; `checked_in_a_run` reports the runs, `total_now` and `kept_after_check` what stayed. If
         even the smallest share jams, the tool is refused and the matrix put back. Not checked while a run
         is going (it says so).
     - `scale_demand`: scales the demand already entered (the kind shown), keeping its pattern between
@@ -184,7 +210,7 @@
       checked in a run as above.
     - `choose_modes`: each pair's split by multinomial logit (`network_tools.mode_plan`, the Demand
       Generator's `ODCellPanel.chooser`): for each of the `alternatives` (vehicle types; road pairs never take the
-      metro, which has its own OD matrix: metro.md), U = constant +
+      MRT, which has its own OD matrix: metro.md), U = constant +
       in_vehicle_per_min × in-vehicle minutes + out_of_vehicle_per_min × (out_of_vehicle_min + half its
       headway) + cost × (cost + cost_per_km × route km), `coefficients` by default HCM 2000's (−0.025, −0.050
       a minute, −0.005 a cent). In-vehicle minutes are `from_run`'s mean measured trip time of that pair and
@@ -203,7 +229,8 @@
     - Applied during a run, a demand change reaches it from its next minute, and the run carries on
       (see main.py, Run); the model is told so.
   - **Checked before asking** (`AIModePanel._check`): network edits are first tried on a copy of the
-    network, and demand changes run only their checks. A change that would fail goes straight back
+    network, and demand changes run only their checks. A change that would fail (any exception: a window
+    callback's TypeError is "Bad arguments for …" with the signature) goes straight back
     to the model as an error, so the user is only ever asked to approve changes that can work.
   - **Edit tools** wait for the user. A "Proposed change" card appears with **Apply** / **Skip**,
     and nothing changes until Apply. The tools:
@@ -213,17 +240,35 @@
     - `move_junctions`, `delete_objects` (institutions too), `build_interchange`, `add_slip_road` (2 roads meeting
       at a junction, `single_lane` or two; `build_slip_road`), `set_end_flows` (one end a call;
       only generate_demand reads end flows: a Run spawns from the OD matrix), `generate_grid` (blocks 20–2,000 m,
-      `GRID_SPACING_M`: asked for a 50 x 50 km city of 3 x 3 junctions, models built 12.5 and 50 km blocks).
-    - `set_signal_timing`: signalised junctions' method (`SIGNAL_METHODS`), phases, fixed greens, cycle
+      `GRID_SPACING_M`: asked for a 50 x 50 km city of 3 x 3 junctions, models built 12.5 and 50 km blocks;
+      `footpaths` true: pedestrian walkways on both sides of every road, else none).
+    - `set_signal_timing`: signalised junctions' method (`SIGNAL_METHODS`), phases, fixed greens, manual
+      `windows` by arm name (N/E/S/W or road id -> [first, last] s; given alone they mean manual) and `amber_s`, cycle
       limits, target saturation and stop weight, checked by `validate()`; a junction not signalised is refused.
-    - `add_bus_stop` and `update_bus_stop` (distance along, direction served, dwell) through `Network.add_bus_stop`
+    - `add_bus_stop` and `update_bus_stop` (distance along, direction served, dwell; a move `Network.move_bus_stop`
+      refuses, onto a crossing, another bay or beside a turn pocket, is refused saying which and the range) through `Network.add_bus_stop`
       (pedestrians, offered by walking words: the "pedestrians" group) `update_roads` `footpaths` ("both", "left",
-      "right", "none") and `cycle_lanes` ("both", "none"); `add_crossing(road, at_m, kind)` (the middle unless given;
+      "right", "none") and `cycle_lanes` ("both", "forward" to the to-node, "backward" to the from-node, "none"; a
+      one-way road's backward refused); `add_crossing(road, at_m, kind)` (the middle unless given;
       `Network.add_crossing`'s refusals said); `add_path(start, end, bends)`; `set_pedestrian_demand(pairs,
-      people_per_hour)` (boundary-end pairs, 0 removes one); `pedestrian_summary` (read-only: footpaths, cycle lanes,
-      paths, crossings, demand, spawn points and theirs, pairs nobody can walk); `add_spawn_points(points)`;
+      people_per_hour | people_per_day, points | polynomial | preset)` (boundary-end pairs, 0 removes one; a day's
+      people into `walk_daily` / `spawn_daily` with the curve given, else the pair's own or the weekday's, as
+      shape_daily_curve reads it: `demand.profile_from`; a curve with hourly people refused; `runs_use` says a run
+      takes them only while the Demand switch shows Daily); `pedestrian_summary` (read-only: footpaths, cycle lanes,
+      paths, crossings, demand, deploy points and theirs, pairs nobody can walk); `add_spawn_points(points)`;
       `set_pedestrian_demand` takes spawn-point pairs ("S1->S2") too, into `spawn_demand`. `add_crossing` and `set_pedestrian_demand` may be an
       experiment's scenario (SCENARIO_TOOLS: what a zebra does); `delete_objects` takes paths and crossings.
+      Requests about cycling (the "cycling" group) get `update_roads`, `pedestrian_summary` and the vehicle-type
+      tools: only a bicycle type rides a cycle lane.
+    - (metro, the "MRT" group) `add_metro_line(stations, merge, service)`: stations [[x, y], ...] in order through
+      `Network.add_metro_line` and `add_metro_stop` (refusals said; a leg crossing another line refused unless merge,
+      then an interchange there and on to the point asked for); the service (`METRO_SERVICE`'s fields) checked by
+      `metro_line_problem` in `validate()`; the result each station's place (a sharp turn draws one in), track km
+      and capacity each way. `update_metro_line(line, service)`: the service only, the track as built.
+      `set_metro_demand(pairs, passengers_per_hour | passengers_per_day, points | polynomial | preset)`: as
+      `set_pedestrian_demand` (`_pair_demand`, `_store_pair_demand`) into `metro_demand` / `metro_daily`, a pair no
+      `metro.ride` joins refused. `delete_objects` takes a line (`Network.delete_metro_line`); a station alone is
+      refused, naming its line. All three may be an experiment's scenario.
       and `move_bus_stop`; `update_institution` (people, employees, shift, car share, radius; its new links
       returned; a car share replaces a mode split).
     - `place_institution`: one building of a `kind`, at `x`, `y` or the nearest clear ground to a junction or end
@@ -231,11 +276,14 @@
       catchment `radius_m` (default 10 m past its 4th nearest junction or end); returns its door and catchment.
     - `institution_mode_split` (the window, `MainWindow._institution_split`; checked first, its preview the shares):
       each of `institutions` (all by default) split by `network_tools.institution_split`: a multinomial logit
-      between Walk and the vehicle types on the trips from each catchment place to the door, and, with metro lines,
-      Metro or Walk from each station of its door station's line inside its circle (those stations are places too,
+      between Walk and the vehicle types on the trips from each catchment place to the door, and, with MRT lines,
+      MRT or Walk from each station of its door station's line inside its circle (those stations are places too,
       as the junctions are: metro.md) (route km; vehicle
       types as choose_modes, Walk all out-of-vehicle at `walk_kmh`, default 5), averaged over the catchment;
-      `alternatives` default to Walk and every type with stated assumed attributes (`default_alternative`);
+      `alternatives` default to Walk and every type with stated assumed attributes (`default_alternative`: a
+      bicycle-class type 1 min to lock up and no running cost, another untimetabled one 3 min and 15 cents a km, a
+      timetabled one 5 min and a 100 cent fare); a bicycle's in-vehicle minutes on roads with cycle lanes count at
+      `lane_graph.CYCLE_LANE_TIME_FACTOR` 0.7 (`_cycled`, in the length's proportion), here and in choose_modes;
       `observed_percent` calibrates the constants (Train 2009 §2.8). Sets `mode_shares` (and `car_share` to Car's)
       as one undo step; returns the shares, the constants, the people and vehicles a day, each origin's km and shares.
     - `place_map`: the map's place, by name (Nominatim, throttled to a request a second and cached, fetched in
@@ -249,17 +297,27 @@
       background's roads (background_network.py): over the map, OpenStreetMap's road data for `width_m` ×
       `height_m` (200–4,000 m, 1,200 by default) round the network's centre, `road_classes` main or all; over
       an image, the pixels of `road_colour` (required: the model is told to ask the user) within
-      `colour_tolerance`, traced at `resolution_m`; `footpaths` tagged (the default), all or none, with the map's
-      zebras, footbridges, paths and cycle lanes (`add_walking`, counted under `pedestrians`). Settings, driving
+      `colour_tolerance`, traced at `resolution_m`; `footpaths` none (the default: nothing for walkers), tagged or all, the
+      latter two with the map's zebras, footbridges and paths; cycle lanes as mapped (`add_walking`, counted under `pedestrians`). Settings, driving
       side and background stay; institutions
       still on clear ground stay (those a new road runs through are listed as removed); a plain colour
-      background is refused. It reports the source, junctions (signalised, roundabouts), roads, ends and
-      the lanes read from an image.
+      background is refused. `main_lanes` / `local_lanes` ([fewest, most] lanes per direction, 1–6; "2-3" or one
+      number read the same) hold main roads (motorway to tertiary) and local streets in that range. Only roads a car
+      can drive between the ends are kept (`background_network._routable`), so every OD pair has a route and the
+      drop-off slider a route to show. Given ranges are said back (`lanes_held`, "nothing more to change": qwen3.5 4B
+      "fixed" the lanes with update_roads after the build), and `contradicts` refuses a build without them when the
+      request states lanes ("2 to 3 lanes", "single lane"), saying how they map (`[1, 6]` keeps OSM's, for lanes meant
+      for particular roads). It reports the source, junctions (signalised, roundabouts), roads, ends,
+      `roads_by_lanes_per_direction`, `streets_left_out` with why, and the lanes read from an image.
   - **Prepared off the UI thread** (`network_tools.prepare`, called by `AIModePanel._run` on the model's
-    thread before a call is checked): a `deploy_institutions` call without a seed gets one, so the check and
+    thread before a call is checked, given a copy of the network the UI thread took (`_on_ui_thread`) for the tools
+    in `PREPARE_READS`; `repair_ends` and the worker's lines in the step's record run on the UI thread the same
+    way, so the worker never reads the network the user is editing): a `deploy_institutions` call without a seed gets one, so the check and
     the change approved place the same buildings; `network_from_background` fetches the OSM data or traces
-    the image into a cache (`_PREPARED`, 8 entries; a failure kept a minute), so the check and Apply use it
-    at once and the window never waits on the network or the tracing.
+    the image, and `place_map` looks its place up, into a cache (`_PREPARED`, 8 entries; a failure of any kind
+    kept a minute, then a ValueError), with the arguments as `run_tool` reads them (`normalise`: "Main",
+    `road_class`, `["Dhaka"]`), so the check and Apply use it at once and the window never waits on the network
+    or the tracing.
   - **Safety:**
     - The model reaches the app only through these tools: its replies are data the app acts on, and
       a name that isn't a tool is refused. No tool writes files (`read_source` only reads, and only
@@ -268,7 +326,11 @@
       any new capability is a deliberate change. The wholesale tools build only through the same checked
       paths (the Demand Generator's controls, `institutions.place`, `Network` methods and `validate()`).
     - Edits go through the same model methods as the editor, then `validate()`.
-    - `run_tool` rolls back a failed edit completely.
+    - `run_tool` rolls back a failed edit completely, whatever it raised (a fault in the tool itself comes back
+      as a ToolError, "<tool> failed: ZeroDivisionError: … Nothing was changed.").
+    - The model's words go into rich text escaped (`html.escape`: the approval card's line and the Scenario
+      Builder's plan, as text lines; System 1's error), and the chat's Markdown is read without HTML
+      (`MarkdownNoHTML`): a place or name holding markup shows as written.
     - Each applied change is one undo step (Ctrl+Z).
     - Tools run on the UI thread; the model's requests run on a background thread and wait for
       them.
@@ -334,8 +396,9 @@
       into weighted travel conditions by k-means).
     - Edits that run tests: `assign_routes` (route choice by path-size logit on the network, its link and move
       times (`turn_times_s`, junction delay counted once: simulation.md) by successive averages over `iterations` headless runs, or `off`; one undo step) and `optimise_signals` (a
-      genetic algorithm over fixed-time settings for `junctions`, up to 120 runs without workbooks; returns
-      the `set_signal_timing` to apply and changes nothing). Both pass the signal agent's waiting form, as
+      genetic algorithm over fixed-time settings for `junctions`, up to 120 runs without workbooks, every one on
+      a copy taken when it starts, so an edit meanwhile never reaches the search; returns the `set_signal_timing`
+      to apply and changes nothing). Both pass the signal agent's waiting form, as
       the other headless runs do. `assign_routes` takes `until_gap` (stop once the relative gap, the share of flow off its logit share, is under it;
       `MainWindow._equilibrium`, shared with run_experiment's scenarios).
     - `run_simulation` and run_experiment's scenarios also take `incidents`, `weather`, `random_incidents`,
@@ -346,8 +409,8 @@
       ("fine" or its problems, analysis.run_health).
     - Reads on runs and experiments (analysis.md): `junction_los` (control delay and LOS per approach and
       junction, by 15-minute period), `metro_report` (metro.md: each line's riders, busiest segment against HCM
-      2000 Eq 27-28's capacity, stop boardings, at the design hour, from the metro OD matrix and the buildings' metro
-      riders; words like metro, rail, station, transit offer it), `weaving_los` (weaving.md: each weaving segment's HCM 2000 Ch 24 speeds,
+      2000 Eq 27-28's capacity, stop boardings, at the design hour, from the MRT OD matrix and the buildings' MRT
+      riders; words like MRT, rail, station, transit offer it), `weaving_los` (weaving.md: each weaving segment's HCM 2000 Ch 24 speeds,
       density, LOS and capacity from the demand, a run's own speed and density beside them; words like weave,
       ramp, freeway, merge offer it), `diagnose_signal` (one signal's flow ratios, v/c, arrival type, HCM delay
       against simulated, causes worst first with the tool to fix each), `check_run_health`, `emissions_report`,
@@ -376,10 +439,12 @@
       each setting by label with its value and what it can be, a dropdown that lists as it opens listed now; and the
       emergency schedules); `schedule_emergency` (`_schedule_emergency`: the Dispatch Emergency Vehicle tab's rows
       replaced by `set_fleet`, each an end or junction with a route between them (`_route_check`), every_min or
-      after_min 0-120, not both; dispatch_now also sends them into the live run); `start_batch` (Batch Run's
+      after_min 0-120, not both; applied, it ticks the extension first, as Test DEVL does; dispatch_now also sends
+      them into the live run); `start_batch` (Batch Run's
       `start`: its seeds, duration and Test TSP/DEVL set in the panel, then Start Batch as a click would, the TSP
       and DEVL tabs giving the models; checked first: the seeds, duration, demand, no run going, the tabs' models,
-      with Test DEVL the schedules); `replay_run` (a workbook's path, `MainWindow.replay_run`). The Research Log has
+      with Test DEVL the schedules); `replay_run` (a workbook in the results folder, by its path or name, `MainWindow.replay_run`;
+      any other path is refused alike, whether a file is there or not). The Research Log has
       none: grading the agent is the user's.
   - The assistant's note (`assistant.TOOLS_NOTE`) sets the workflow: `note_plan`, an experiment with the
     network as built first and one change a scenario, 3 seeds or more, `read_results`, `note_plan` with the
@@ -411,7 +476,8 @@
   - Checked first: the approval card shows the plan step by step with its assumptions (`describe`, the
     check's `preview`); one Apply runs it all. Each step goes through its tool's own path (the Demand
     Generator, Mode Behavior, the run tools, a checked network edit), and the whole build commits once
-    (`MainWindow._building`): one undo step. A failed step is recovered where a known fix exists (demand that
+    (`MainWindow._building`): one undo step (meanwhile Undo and Redo wait, and the map and editing tabs are
+    disabled: main.md). A failed step is recovered where a known fix exists (demand that
     can't be sized by saturation: a flow per boundary end by the level; a what-if that can't be built: left
     out, the rest tested; a step that would change nothing, such as the grid already on screen, counted done),
     else reported; nothing runs after a failed network, demand or baseline step.
@@ -424,13 +490,16 @@
   follow a conversation; guided mode, which had local models fill in the Scenario Builder's form, was removed on
   2026-10-05 after the Research Log showed it missing the point of every build request it got: institutions, a
   2000 x 1500 m size, "busy city" read as a place, none of which the form could hold).
-  - **Tool selection** (`network_tools.tools_for`, from `AIModePanel._ask`): each request is offered `CORE_TOOLS`
+  - **Tool selection** (`network_tools.tools_for`, from `AIModePanel._ask`, on the request with the user's one before
+    it: "dhanmondi, dhaka bangladesh", answering "which city?", has no words of its own): each is offered `CORE_TOOLS`
     (network_summary, describe, list_roads, list_junctions, show_on_map, get_selection, note_plan, find_tools),
-    the tools of each `TOOL_GROUPS` group its words point to (build, place, demand, institutions, run, signals,
-    experiment, analysis, transit, extensions, docs: regex stems; "place" also when a capitalised word that isn't
-    the app's own names somewhere, `_places_named`), any tool it names, and those called in the last two exchanges (the whole conversation's made the offer grow
+    the tools of each `TOOL_GROUPS` group its words point to (build, place, MRT, freeway, demand, institutions,
+    run, signals, experiment, analysis, pedestrians, cycling, transit, extensions, docs: regex stems; "place" also when a capitalised word that isn't
+    the app's own names somewhere, `_places_named`, or "a network / roads / streets / map of X" in any case, `_OF_A_PLACE`, or "an X network / roads / streets" with X not a
+    describing word, `_NOT_A_PLACE`; all three in `_places_in`, which the invented-grid check uses too: "Create a netowrk of
+    dhanmondi dhaka" offered grok-4.7 no map tools, and qwen3.5 4B built an 8 x 6 grid for "Create a dhanmondi network"), any tool it names, and those called in the last two exchanges (the whole conversation's made the offer grow
     without end: 26 to 63 tools over a 190-prompt campaign).
-    Typically 13 to 40 of the 78 (a greeting gets 8). The long specs are offered only when their own words are
+    Typically 14 to 41 of the 89 (10th to 90th percentile over the 339 campaign prompts; a greeting gets 8). The long specs are offered only when their own words are
     used: `build_scenario` (3.8k characters) when a request touches three or more of `STUDY_GROUPS` (build, place,
     demand, run, signals, experiment), both builds and tests ("build a 3x2 grid, run it"), or says "study"; the demand models (`demand_models`: shape_daily_curve,
     calibrate_demand, choose_modes, equilibrate_demand) for words like mode, split, fare, counts, daily; and "junction"
@@ -443,13 +512,22 @@
     (Paramanayakam et al. 2025; sources.md).
   - **The prompt** (`assistant.TOOLS_NOTE`): before its first call the model writes one `Plan:` line (what the user
     wants in its words and the tools in order: Plan-and-Solve prompting; `assistant.plan_line` reads it for the
-    Research Log), then calls them in the same reply; recipes for what users ask most (a city of W x H m, demand
-    from buildings, a traffic level word, a real place, simulate, what-if on a copy, a slow junction, a question
-    about an idea, "more people" (there is no population figure: update_institution or scale_demand, saying which),
-    the metro as the user's own network (they draw lines and fill its OD matrix; the assistant reads metro_report
-    and buildings' metro shares), things the app doesn't have (a stadium, a harbour: say so, put nothing else in their
-    place, call no invented tool;
-    a number past a tool's limit: say the limit first)); the honesty rules (an error means nothing happened; quote the results' own numbers).
+    Research Log), then calls them in the same reply; things the app doesn't have (a stadium, a harbour: say so, put
+    nothing else in their place, call no invented tool; a number past a tool's limit: say the limit first), a
+    question about an idea (no tools); the honesty rules (an error means nothing happened; quote the results' own
+    numbers).
+  - **Skills** (`network_tools.SKILLS`, by tool group; `skills_for`): how to do a group's task well, appended to the
+    request as a `[Skills]` block only when its words offer that group, and only if the conversation doesn't hold it
+    yet (sent with every request as one list they were 4.5k characters of each): a city of W x H m, and before
+    pedestrian walkways only when the user's words ask for them, never asked about nor offered (build; a call adding
+    them otherwise is refused by `contradicts`, `_adds_walkways`); a real place: place_map, then
+    network_from_background (footpaths 'none' unless asked), sized
+    to it, lane ranges only when given, its routable roads reported (place); a traffic level word, scaling, drop-offs at a junction on the route (demand); a whole study
+    (study); a signal method, windows, a slow junction (signals); simulate (run); what-if on a copy (experiment);
+    demand from buildings and "more people" (institutions); the MRT as its own network (metro); walkers (pedestrians);
+    cycle lanes ridden only by a bicycle type (cycling). `find_tools` returns the skills of the tools it adds, and
+    `tools/eval_commands.py` sends them as the app does. "Peak" offers demand's tools, not a run's (6k characters
+    fewer): a request to map a place and give it peak traffic went from 41k to 31k characters a round.
   - **The loop** (`assistant.converse`): a call that failed is not run again unchanged (the model is told so,
     `error_type` "repeated"); a local model that sends nothing (all of it in its thinking: `NoAnswer`) or a tool
     call Ollama can't parse (`MALFORMED`: qwen3.5 4B's "XML syntax error") is asked again with thinking off
@@ -471,7 +549,13 @@
     done, or ask; no RETRY for it): llama3.2 3B called set_end_flows 7 times with new wrong arguments, to the round
     limit at 110k input tokens. A reply that claims a change (`CLAIM`: "I've set…", "has been added", "Done") when no
     tool ran in the answer gets one reminder (`CLAIMED`: call the tool, or say plainly it wasn't done), then, still
-    claiming, `NOTHING_RAN_NOTE`. The app's ending note (`_ended`) lists what ran in this answer only. Usage records
+    claiming, `NOTHING_RAN_NOTE`. A reply that says its next step and calls nothing (`PROMISE`: "I'll build…",
+    "Building the streets from it next": grok-4.7 after place_map) gets one reminder (`PROMISED`), then stands. A call that
+    ran is not run again unchanged until an edit changes the network (the model is told it has the result); a
+    second such repeat ends the answer (`MAX_REPEATS`: qwen3.5 4B listed the roads four times running to the round
+    limit). An edit the user dismissed is not proposed again in that answer (`error_type` "dismissed"). The place
+    and build skills propose footpaths last, so Apply or Dismiss ends the request. "Unknown id" for a tool that takes
+    "all" (`ALL_IDS`) says so. The app's ending note (`_ended`) lists what ran in this answer only. Usage records
     carry the asking step's tag (`USAGE_TAG`, a thread-local), so a step counts its own requests. An Ollama model's
     own prompt count, when above the estimate, sizes its next num_ctx (`_CHARS_PER_TOKEN_SEEN`). A request that
     ends with no answer is recorded too (`no_answer`; qwen3.5 thought for 40 s, then said nothing, uncounted before).
@@ -480,7 +564,7 @@
     used and said so in `read_as` ("None" there is no end). Another tool's argument is dropped and said so in `read_as` (`drop_strays`: llama3.2
     sent set_od_demand's peak_hour_factor to generate_demand on every try); `normalise` called directly refuses it,
     naming the tool it belongs to. A mean_trip_km of 0 is no length (the default decay);
-    an empty mode_split is none, and fractions adding up to 1 are percent (`ODMatrixPanel._shares_from`); generate_demand
+    an empty mode_split is none, and fractions adding up to 1 are percent (`demand.shares_from`); generate_demand
     with nothing to size it by names degree_of_saturation first.
     A traffic level put in a choice of another kind (`LEVEL_WORDS`: demand "peak") is read as the degree_of_saturation
     it means (`_level_read`: busy/peak 0.85, medium 0.65, light 0.4) when the tool takes one and none in range was
@@ -553,7 +637,11 @@
   - **Context budget** (`assistant.fit`, in `stream_chat` before every request): a model past its window fails
     quietly (Ollama cuts the reply off or drops the start of the prompt; 82 % of a 190-prompt campaign's replies
     were cut), so each request is trimmed to its window less `REPLY_TOKENS` (4096), counted at `CHARS_PER_TOKEN`
-    3 (JSON and code run near 3) with the tools' schemas and tool calls included. Always, budget or not, tool
+    3 (JSON and code run near 3) with the tools' schemas and tool calls included; a local model whose own count
+    showed more tokens (`_CHARS_PER_TOKEN_SEEN`) is trimmed at that rate, the one its `num_ctx` is sized by, so the
+    request always fits the window it is sent with. The app's own reminders (user messages starting `APP_NOTE`,
+    "(The app:": NUDGE, RETRY, CLAIMED, FOLLOW_THROUGH) belong to the exchange they nudge, so they never push the
+    answer's own results out as "older", nor leave a reminder without the request it is about. Always, budget or not, tool
     results more than one exchange back are a stub (`STUB`; the previous exchange's stay whole for a follow-up):
     a local model's time grows with what it reads, and the same stub every time keeps Ollama's cached prefix.
     Past the budget: the previous exchange's results become a stub too, then the oldest exchanges go whole (each tool call keeps its result; the system prompt says how
@@ -577,7 +665,7 @@
     loops (each since handled). Ollama's prompt_eval_count reports the whole prompt even when it is cached, so
     the saving shows in time, not tokens.
   - **Measured, adversarial** (2026-10-05: 15 prompts asking for what the tools can't do, e.g. invented tools, ids
-    that don't exist, numbers past the limits, a metro, "increase the population", a past the model never had; the
+    that don't exist, numbers past the limits, an MRT, "increase the population", a past the model never had; the
     real window offscreen, Research Log ticked, each from a fresh 4 x 4 grid, every card applied, 300 s each; method
     and files in Documents\ACMS results\AI stress test\adversarial-2026-10-05). Before the changes above, then
     after, one run each: qwen3.5 4B 1,811 s → 492 s, timeouts 2 → 1; llama3.2 3B tool calls written as its answer
@@ -596,7 +684,9 @@
   - **Editor updates.** Every message starts with an `[Editor update]` block the app writes.
     It carries the user's own changes since the assistant's last reply, from
     `network_tools.describe_changes`, which compares the network then and now (bus stops added,
-    moved or re-pointed, and deleted, included). It also carries what's selected on the map.
+    moved or re-pointed, and deleted; an institution moved, its circle, figures, mode split or curves changed; a
+    road curved or straightened, a reversal or a moved end not counted as a reshape; the background, e.g. the map
+    `place_map` put under it, included). It also carries what's selected on the map.
   - The transcript notes what was shared. The assistant's own edits are not reported back to it.
   - **Conversation as state.**
     - The conversation belongs to the project, not to one model. Switching models keeps it:
@@ -652,6 +742,24 @@
     request's tokens, for each System 2 answer's record (`_record` keeps the thread's own record, never one read
     back from `USAGE`, which a batch's runs append to side by side).
   - View Summary's AI lines show System 1's choice and state.
+  - **Your own question** (below Use, as Laya Decision Studio asks it, `Laya/README.md`): **Decision** Bool,
+    Choice or Ranking (`DECISIONS`), **Question**, **Context** and the answers, listed as a Google Forms question
+    lists its options (`AnswerRows`, a row each: a circle, the answer, its description): Bool's **Answers**, True and
+    False fixed, their descriptions optional (sent as `criteria` {true, false}, a blank one "Yes" or "No"), or Choice's
+    and Ranking's **Options** (`decide_options`, kept while Bool shows): two blank rows to start, **Add option** (+)
+    adds one up to 26, × removes one while more than two are left; rows with no answer are skipped. **Decide**
+    (`AIModePanel.decide`) checks the form first (a question and context; 2 to 26 options, labels different
+    ignoring case; a System 1 under Use), then asks the chosen one on a thread: one `noul` for Bool, one `choice`
+    for the others, Context as the state. The answer shows the likeliest in bold, then each answer's
+    probability: Bool true and false, Choice in the options' order, Ranking sorted from likeliest, and the reply's
+    concentration (how sharp the distribution is, not how right). One question at a time: Decide (or Enter in
+    Question) asks nothing while one is out, and a reply is shown as the kind it was asked as. Nothing is saved or
+    added to the network.
+  - **Grab context** replaces Context with the open project in short lines (`project_context`, no Qt): the grid,
+    roads and defaults (`network_summary`); roundabouts and uncontrolled junctions; each signal plan once, with the
+    junctions sharing it (method, phases, greens when fixed, cycle limits); the boundary ends' flows; the OD
+    matrix's total and five busiest pairs (`read_od_matrix`, the demand it shows); the map selection. Laya reads
+    about 1,024 tokens (Typed Decisions) or 512 (English) of state, question and options, so edit it down.
 
 ## Local campaign harness
 

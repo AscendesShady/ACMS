@@ -36,14 +36,14 @@ experiment takes scenarios × seeds × minutes. Answer in a few lines.
 | Demand | OD matrix hourly (peak-hour factor or 15-min profile) or daily (shaped curve), arrival pattern, mode split, drop-offs along the route per type; gravity model [trip generation beyond it] | [od_matrix.md](docs/architecture/od_matrix.md) |
 | Institutions | Buildings with catchments, logit mode split, their trips in a Run [trips beyond the catchment] | [institutions.md](docs/architecture/institutions.md) |
 | Pedestrians | Footpaths, paths, zebras and overbridges (Pedestrian tab); walkers from a pedestrian OD matrix and institutions' Walk share on the cheapest walk, SUMO NonInteracting; gaps at junction arms (HCM Eq 18-17), traffic stopping at zebras [crowding, walk signals] | [walking.md](docs/architecture/walking.md) |
-| Metro | Lines drawn stop by stop: 300 m curves, turns under 90°, the next leg previewed, no self-crossing; a crossing merged at an interchange (one change); its own OD matrix; HCM line loads; service set per line, never from demand [trains running, branches] | [metro.md](docs/architecture/metro.md) |
+| MRT | Lines drawn stop by stop: 300 m curves, turns under 90°, the next leg previewed, no self-crossing; a crossing merged at an interchange (one change); its own OD matrix; HCM line loads; service set per line, never from demand [trains running, branches] | [metro.md](docs/architecture/metro.md) |
 | Vehicle types | Up to 8; timetables; a vehicle class each [behaviour editing in the tab] | [mode_behavior.md](docs/architecture/mode_behavior.md) |
-| Simulation | Krauss, LC2013, gap acceptance, junction delay in route costs once, route choice (logit), random streams per pair, closures, work zones, weather, emergency braking bound, optional ballistic update and shorter step (headless), optional lateral position: two-wheelers filter (headless), collisions counted (same lane, crossing) [pedestrians] | [simulation.md](docs/architecture/simulation.md) |
+| Simulation | Krauss, LC2013, gap acceptance, junction delay in route costs once, route choice (logit), random streams per pair, closures, work zones, weather, emergency braking bound, optional ballistic update and shorter step (headless), optional lateral position: two-wheelers filter (headless), collisions counted (same lane, crossing) [pedestrian crowding, walk signals] | [simulation.md](docs/architecture/simulation.md) |
 | Clock | Run, Play/Pause, Stop, speed 1–60×, Seed, Export; every stopped or failed run exports | [clock.md](docs/architecture/clock.md) |
 | Results | KPIs every 5 s (delay vs road limit and own free speed, person delay, entry wait); exact trip and system travel times, completion rate, buffer index, warm-up (assistant); workbook, GeoJSON, crash recovery [signal/junction KPIs] | [results.md](docs/architecture/results.md) |
 | Testing | Headless runs; experiments over seeds (paired, ANOVA, factorials, equilibrium); LOS, diagnosis, health, resilience, emissions, accessibility, design audit, benefit-cost, safety, calibration [parallel runs] | [experiments.md](docs/architecture/experiments.md) |
-| AI Mode | System 2 chat (Grok, Gemini, Ollama) with tools, offered by the request's words; each request trimmed to its context window (`ACMS_NUM_CTX`), docs searched with `read_source` find, a stalled reply ended at 90 s; System 1 (Jev, Laya) answers yes/no signal questions [System 1 elsewhere] | [ai_mode.md](docs/architecture/ai_mode.md) |
-| Extensions | TSP, Dynamic Emergency Vehicle Lane, Batch Run, Dispatch Emergency, Research Log (each AI step; a picture only of what changed: map or OD matrix), Campaign Apply [traffic yielding to emergency vehicles] | [extensions.md](docs/architecture/extensions.md) |
+| AI Mode | System 2 chat (Grok, Gemini, Ollama) with tools and their skills, offered by the request's words; each request trimmed to its context window (`ACMS_NUM_CTX`), docs searched with `read_source` find, a stalled reply ended at 90 s; System 1 (Jev, Laya) answers yes/no signal questions [System 1 elsewhere] | [ai_mode.md](docs/architecture/ai_mode.md) |
+| Extensions | TSP, Dynamic Emergency Vehicle Lane, Batch Run, Dispatch Emergency, Research Log (each AI step; a picture only of what changed: map or OD matrix) [traffic yielding to emergency vehicles] | [extensions.md](docs/architecture/extensions.md) |
 | Projects, Summary | One validated JSON project; View Summary pages | [network_io.md](docs/architecture/network_io.md), [summary.md](docs/architecture/summary.md) |
 
 Full list: [capabilities.md](docs/architecture/capabilities.md); placeholders: [not_built.md](docs/architecture/not_built.md).
@@ -56,7 +56,7 @@ stages/                    Numbered stage contracts (code, campaign, research), 
 run.py, run_monitor.py     The editor; the test monitor window
 src/traffic_simulator/     The modules (map below)        tests/       Plain assert tests
 extensions/                Drop-in features               docs/        Module docs, sources, tests
-config/defaults.json       New-grid defaults              references/  UI rulebook, SUMO notes, books, theory
+references/                UI rulebook, SUMO notes, books, theory
 tools/                     Prompt campaign; tools/run_test.py (quick, timed tests)
 reports/, references/       On this PC only (git keeps the UI rulebook); research/: book mining
 ```
@@ -74,7 +74,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | network_scene.py | Top-down/orthographic 2.5D network, map clicks and drags | Qt |
 | properties_panel.py | Editor for the selected road, node or end | Qt |
 | widgets.py | Shared buttons, hints, sections, tabs, choices and tick lists | Qt |
-| od_matrix.py | OD matrix grid, cell, curve and drop-off editors, Institutions panel, metro OD matrix | Qt |
+| od_matrix.py | OD matrix grid, cell, curve and drop-off editors, Institutions panel, MRT OD matrix | Qt |
 | demand.py | OD cells, mode-split arithmetic, demand tools' rules, a run's pair demand | no |
 | institutions.py | Buildings' doors, catchments, trips and modes | no |
 | walking.py | Footpaths, paths and crossings as a walking network, cheapest walks, a run's walkers (→ walking.md) | no |
@@ -105,7 +105,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | emissions.py | Fuel and CO2, Biggs–Akçelik (→ analysis.md) | no |
 | design_checks.py | Design audit, Green Book; connectivity and graph indices (→ network_checks.md) | no |
 | weaving.py | Freeway weaving, HCM 2000 Ch 24 (→ weaving.md) | no |
-| metro.py | The metro's own network: rides (one change at an interchange), buildings' stations, line loads (→ metro.md) | no |
+| metro.py | The MRT's own network: rides (one change at an interchange), buildings' stations, line loads (→ metro.md) | no |
 | accessibility.py | Cumulative / Hansen accessibility (→ network_checks.md) | no |
 | summary.py | View Summary tab | Qt |
 | clock.py | Run / Pause / Play / Stop clock | Qt |
@@ -117,7 +117,6 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |
 | assistant.py | Grok, Gemini, Ollama back end; context budget; System 1 (→ ai_mode.md) | no |
 | network_tools.py | The assistant's tools (→ ai_mode.md) | no |
-| config.py | Reads config/defaults.json | no |
 
 ## 3. Conventions
 

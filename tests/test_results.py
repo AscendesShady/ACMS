@@ -7,6 +7,7 @@ import os
 import tempfile
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -350,10 +351,14 @@ def test_a_free_bicycle_has_no_delay_against_its_own_free_speed():
 
 
 def test_vehicles_waiting_to_enter_are_counted_and_their_wait_reported():
-    """Demand that can't get onto the network (a 4 m entry road holds no car) still shows: as the entry wait and
-    the vehicles waiting, spawned = waiting + on the road + arrived."""
+    """Demand that can't get onto the network (a 4 m entry road whose arm has no window, so never green: the one car
+    it holds stands at the line) still shows: as the entry wait and the vehicles waiting, spawned = waiting + on the
+    road + arrived."""
     network = generate_network(1, 1, lanes_per_direction=1)
     network.set_road_length("1W", 4)
+    node = network.node("1,1")
+    node.signal_method, node.manual_greens_s = "manual", {"1E": [1.0, 30.0], "1N": [31.0, 60.0], "1S": [31.0, 60.0]}
+    network.validate()
     simulation = Simulation(network, [PairDemand("1W", "1E", 600, None, [], "Random", (0, 100, 0))], MODES, seed=7)
     with tempfile.TemporaryDirectory() as folder:
         recorder = results.RunRecorder(network, MODES, folder=Path(folder) / "run")
@@ -363,9 +368,10 @@ def test_vehicles_waiting_to_enter_are_counted_and_their_wait_reported():
                 recorder.sample(simulation.frame())
         k = recorder.kpis()
         waiting = sum(len(queue) for queue in simulation.pending.values())
-        assert waiting > 10 and k["on_road"] == k["delay_veh_h"] == 0  # none got in: no delay on the road...
+        assert waiting > 10 and k["on_road"] == 1  # one at the line, the rest never got in: little delay on the road...
         assert k["waiting_to_enter"] == waiting == k["spawned"] - k["arrived"] - k["on_road"]
-        assert k["entry_wait_veh_h"] > 0.2 and k["delay_with_entry_wait_veh_h"] == k["entry_wait_veh_h"]  # ...but this
+        assert k["entry_wait_veh_h"] > 0.2 > k["delay_veh_h"]  # ...but their wait shows, and counts in the delay with it
+        assert abs(k["delay_with_entry_wait_veh_h"] - k["entry_wait_veh_h"] - k["delay_veh_h"]) <= 0.011  # (each rounded)
 
 
 def test_person_delay_counts_the_people_on_board():
@@ -536,8 +542,195 @@ def test_pedestrians_walks_and_crossings_go_into_the_workbook():
         assert summary["Walks completed"] == k["walk_trips"] and summary["Mean walk time"] == k["mean_walk_s"]
 
 
+def car(id_, link="1,1-2,1>", speed=10.0, lane=0):
+    """A car in a hand-made frame, on `link`'s lane `lane`."""
+    return SimpleNamespace(id=id_, mode="Car", origin="1W", destination="1E", speed=speed, road=link.rstrip("<>"),
+                           length_m=5.0, place=f"{link} lane {lane}")
+
+
+def test_after_a_warm_up_people_and_road_conditions_count_the_window_throughput_does():
+    """Measured from 10 s: a car on the road from 5 s and one from 15 s both arrive at 20 s. Throughput and the people
+    carried count both (every arrival after the warm-up), the trip means only the one that entered after it; each
+    direction's flow is over the 10 measured seconds, as the road's is."""
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(generate_network(2, 2), MODES, folder=Path(folder) / "run", measure_from_s=10)
+        for t, ids in ((5, "a"), (10, "a"), (15, "ab")):
+            recorder.sample(SimpleNamespace(time=float(t), vehicles=[car(i) for i in ids], spawned=2, arrived=0))
+        recorder.sample(SimpleNamespace(time=20.0, vehicles=[], spawned=2, arrived=2))
+        k = recorder.kpis()
+        assert k["throughput_vph"] == 720 and k["trips"] == 1  # 2 arrivals in 10 s; 1 trip entered after the warm-up
+        assert k["people"] == 3.0 and k["people_per_h"] == 1080 == k["by_type"]["Car"]["people_per_h"]  # 1.5 a car
+        sheets = read_xlsx(recorder.finish(Path(folder)))
+        assert sheets["Per minute"][-1][7] == 3.0  # people carried that minute: both cars
+        roads = {row[0]: dict(zip(sheets["Roads"][0], row)) for row in sheets["Roads"][1:]}
+        east = next(dict(zip(sheets["Road conditions"][0], row)) for row in sheets["Road conditions"][1:]
+                    if row[0] == "1,1-2,1>")
+        assert east["Flow (veh/h)"] == roads["1,1-2,1"]["Flow (veh/h)"] == 360  # 1 entered in the 10 measured s
+
+
+def test_a_run_stopped_in_its_warm_up_has_nothing_measured():
+    """Stopped at 20 s of a 600 s warm-up: no measured figures (not 10¹² veh/km of density from 20 s ÷ a negative
+    window, not the warm-up's speed labelled measured); the counts of the whole run as they are."""
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(generate_network(2, 2), MODES, folder=Path(folder) / "run", measure_from_s=600)
+        for t in (5, 10, 15, 20):
+            recorder.sample(SimpleNamespace(time=float(t), vehicles=[car("a")], spawned=1, arrived=0))
+        k = recorder.kpis()
+        assert k["throughput_vph"] is None and k["people_per_h"] is None and k["mean_speed_kmh"] is None
+        assert k["roads"] == [] and k["trips"] == 0 and k["vehicle_km"] == 0 and (k["spawned"], k["on_road"]) == (1, 1)
+        sheets = read_xlsx(recorder.finish(Path(folder)))
+        assert len(sheets["Road conditions"]) == 1  # its header only
+
+
+def test_a_queue_a_lane_is_each_directions_over_its_own_lanes():
+    """4 cars queued each way on a two-way road of 1 lane each way: 30 m a lane (not both ways added, 60 m); 4 over
+    the 2 lanes of a one-way road: 15 m (not over 1, 30 m). The statistics keep each direction (a link) apart."""
+    from traffic_simulator import analysis
+
+    network = generate_network(2, 2)
+    network.roads["1,1-2,1"].lanes_per_direction = 1
+    one_way = network.roads["1,2-2,2"]
+    one_way.lanes_per_direction, one_way.direction = 1, "one-way"  # its 2 lanes, one way
+    assert results.road_record(network, one_way)["lanes"] == 2
+    cars = [car(f"e{i}", "1,1-2,1>", 0.0) for i in range(4)] + [car(f"w{i}", "1,1-2,1<", 0.0) for i in range(4)]
+    cars += [car(f"o{i}", "1,2-2,2>", 0.0, i % 2) for i in range(4)]
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(network, MODES, folder=Path(folder) / "run")
+        recorder.sample(SimpleNamespace(time=5.0, vehicles=cars, spawned=12, arrived=0))
+        roads = {row["road"]: row for row in recorder.kpis()["roads"]}
+        assert roads["1,1-2,1"]["queue_m_max"] == 30.0 and roads["1,1-2,1"]["queue_max"] == 8
+        assert roads["1,2-2,2"]["queue_m_max"] == 15.0
+        observed = recorder.observed()
+        assert analysis.queue_p95(observed, "1,1-2,1>") == analysis.queue_p95(observed, "1,1-2,1<") == 30.0
+
+
+def test_the_city_sheet_counts_a_one_way_roads_lanes():
+    network = generate_network(2, 2)
+    before = {row[0]: row[1] for row in results.city_sheet(network)[1:]}
+    network.roads["1,1-2,1"].direction = "one-way"  # its 4 lanes (2 a direction), now all one way
+    after = {row[0]: row[1] for row in results.city_sheet(network)[1:]}
+    assert after["Lane length"] == before["Lane length"] and "4 0.50" in after["Road length by lanes each way"]
+
+
+def test_a_crashed_runs_files_are_whole_and_recovered_under_names_of_their_own():
+    """meta.json and the GeoJSON are written whole or not at all (a write torn half way leaves the old file); two
+    crashed runs that started in the same second with the same seed and model are both recovered, numbered."""
+    import json
+    import shutil
+
+    real = Path.write_text
+
+    def torn(self, text, *args, **kwargs):  # the disk fills half way through
+        real(self, text[:len(text) // 2], *args, **kwargs)
+        raise OSError("disk full")
+
+    with tempfile.TemporaryDirectory() as folder:
+        root = Path(folder) / "runs"
+        recorder = results.RunRecorder(generate_network(2, 2), MODES, folder=root / "run a", seed=3)
+        recorder.sample(SimpleNamespace(time=60.0, vehicles=[car("a")], spawned=1, arrived=0))  # a whole minute saved
+        recorder.error, geojson = "stopped", Path(folder) / "net.geojson"
+        geojson.write_text("{}", encoding="utf-8")
+        Path.write_text = torn
+        try:
+            for write in (lambda: recorder.finish(Path(folder)),
+                          lambda: results.write_geojson(geojson, "", {}, {}, {}, None)):
+                try:
+                    write()
+                except OSError:
+                    continue
+                raise AssertionError("the torn write should have raised")
+        finally:
+            Path.write_text = real
+        assert json.loads((root / "run a" / "meta.json").read_text(encoding="utf-8"))["seed"] == 3
+        assert geojson.read_text(encoding="utf-8") == "{}"
+        shutil.copytree(root / "run a", root / "run b")  # the same start, seed and model
+        made = results.recover(Path(folder), root)
+        assert len(set(made)) == 2 and all(path.exists() for path in made), made
+
+
+def test_a_mid_run_export_leaves_the_minute_series_whole():
+    """720 veh/h exported at 90 s: the workbook shows the half minute at its rate (720, not 360), the series the
+    statistics read keeps whole minutes, and the finished run's rows are 720 each, its last part-minute's too."""
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(generate_network(2, 2), MODES, folder=Path(folder) / "run")
+        for t in range(5, 181, 5):
+            recorder.sample(SimpleNamespace(time=float(t), vehicles=[], spawned=t // 5, arrived=t // 5))
+            if t == 90:
+                rows = read_xlsx(recorder.export(Path(folder) / "now.xlsx"))["Per minute"]
+                assert [row[6] for row in rows[1:]] == [720.0, 720.0], rows
+                assert [row[0] for row in recorder.minute_rows] == [60.0]  # the half minute isn't in the series
+        recorder.sample(SimpleNamespace(time=210.0, vehicles=[], spawned=42, arrived=42))
+        rows = read_xlsx(recorder.finish(Path(folder)))["Per minute"]
+        assert [row[6] for row in rows[1:]] == [720.0] * 4, rows
+
+
+def test_a_failed_workbook_leaves_no_empty_file_behind():
+    """finish() takes the workbook's name at once; a write that fails gives it up again and leaves no .part."""
+    import traffic_simulator.xlsx as xlsx
+
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(generate_network(2, 2), MODES, folder=Path(folder) / "run")
+        recorder.sample(SimpleNamespace(time=60.0, vehicles=[car("a")], spawned=1, arrived=0))
+        real = xlsx._sheet
+        xlsx._sheet = lambda rows: 1 / 0  # fails half way through the zip
+        try:
+            recorder.finish(Path(folder))
+            raise AssertionError("the failed write should have raised")
+        except ZeroDivisionError:
+            pass
+        finally:
+            xlsx._sheet = real
+        left = [path.name for path in Path(folder).iterdir() if path.suffix in (".xlsx", ".part")]
+        assert not left, left
+
+
+def test_the_runs_extra_files_are_written_whole():
+    """extra.json, analysis.json and the extensions' files: a torn write leaves nothing half written under the real
+    name."""
+    real = Path.write_text
+
+    def torn(self, text, *args, **kwargs):
+        real(self, text[:len(text) // 2], *args, **kwargs)
+        raise OSError("disk full")
+
+    with tempfile.TemporaryDirectory() as folder:
+        work = Path(folder) / "run"
+        recorder = results.RunRecorder(generate_network(2, 2), MODES, folder=work)
+        Path.write_text = torn
+        try:
+            for write in (lambda: recorder.add_sheets([{"sheets": [["X", [[1]], "x"]], "files": [("t.jsonl", "{}")]}]),
+                          lambda: recorder.add_sheets([{"files": [("t.jsonl", "{}")]}]),
+                          lambda: recorder.add_analysis([["Y", [[1]], "y"]])):
+                try:
+                    write()
+                except OSError:
+                    continue
+                raise AssertionError("the torn write should have raised")
+        finally:
+            Path.write_text = real
+        assert not any((work / name).exists() for name in ("extra.json", "analysis.json", "files/t.jsonl"))
+
+
+def test_the_excel_writer_keeps_to_excels_limits():
+    """A sheet name with a control character or edge apostrophes, and a cell over Excel's 32,767 characters, still
+    make a workbook Excel opens."""
+    with tempfile.TemporaryDirectory() as folder:
+        path = write_xlsx(Path(folder) / "book.xlsx", [("bad\x01name", [["x" * 40_000]]), ("'quoted'", [[1]])])
+        sheets = read_xlsx(path)
+        assert list(sheets) == ["badname", "quoted"]
+        assert len(sheets["badname"][0][0]) == 32_767
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):
             check()
     print("ok")
+
+
+def test_one_clock_writes_seconds_and_hours_of_the_day():
+    """results.clock and clock_h are the app's only clock texts; an hour just short of eight is 08:00, never 07:60."""
+    from traffic_simulator.results import clock, clock_h
+
+    assert clock(0) == "00:00:00" and clock(3725.9) == "01:02:05"
+    assert clock_h(7.999) == "08:00" and clock_h(8.5) == "08:30" and clock_h(0) == "00:00"

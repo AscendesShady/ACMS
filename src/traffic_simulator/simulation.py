@@ -80,7 +80,7 @@ from .lane_graph import (BAY_OFFSET_M, BAY_SPEED, GIVE_WAY_KMH, JUNCTION_TURN_FR
                          Lane, Link, Signal, Turn, measured_capacity, path_size_logit)
 from .models import BAY_ENTRY_M, LANE_WIDTH_M, Network
 from .signal_timing import (ACTUATED, ADAPTIVE, COORDINATED, DETECTOR_GAP_S, MIN_GREEN_S,
-                            OPTIMISE_BUDGET_S, ActuatedJunction, MaxPressureJunction,
+                            OPTIMISE_TRIALS, ActuatedJunction, MaxPressureJunction,
                             STOP_LINE_LOOP_M, UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M,
                             Approach, ScatsJunction, ScatsRegion, ScootJunction, ScootLink, ScootRegion, TimingModel,
                             common_cycle, fit_greens, percentile_greens, synchro, synchro_cycle, transyt, webster)
@@ -300,6 +300,8 @@ class Frame(NamedTuple):
     # waited at kerbs s); and each crossing's running figures (Simulation.crossing_stats)
     walk_exits: tuple = ()
     crossings: Mapping = MappingProxyType({})
+    # (junction, arriving road) -> seconds until its signal changes (Simulation.signal_countdowns): the map's clocks
+    countdowns: Mapping = MappingProxyType({})
 
     def records(self, road: str | None = None, limit: int | None = 100) -> dict:
         """Plain data for an AI (the assistant's read_traffic): the time, counts, signals and each
@@ -494,13 +496,14 @@ class Simulation:
         self.meters: dict[str, Meter] = {}  # ramp link id -> its meter (meter())
         # Passengers waiting at each bay with passengers (count, when last counted), from their own random stream so
         # the traffic's random numbers stay the same whether stops have passengers or not
-        self._waiting: dict[int, list] = {}
+        self._waiting: dict[tuple[str, str], list] = {}  # (stop, link id) -> [count, when]
         self._passenger_rng = random.Random(f"passengers {seed}")
         self._states: dict[str, str] = {}
         self._lane_states: dict[tuple[str, int], str] = {}  # (link id, lane index) -> its own state (an override's)
         self._box_m: dict[str, float] = {}  # distance across each signalised junction, for overrides
         self._time_step_signals()
         self._next_count = 0.0
+        self._cycle_lanes = any(link.cycle is not None for link in self.graph.links.values())  # bikes' own routes
         # Pedestrians: their own demand, draws and departures, so the vehicles' stay as they were. None: the network's
         # pedestrian matrix and its institutions' walkers (walking.walk_pairs)
         self.walk_demand = list(walk_pairs(network, self.modes, any(pair.daily is not None for pair in demand))
@@ -532,8 +535,11 @@ class Simulation:
 
     def _rng(self, purpose: str, pair: PairDemand | None = None) -> random.Random:
         """The run's random stream for `purpose` ("arrivals", "types", "routes", "drivers", "timetable", "drops": one
-        a pair; "dawdling"), made the first time it's asked for from the seed and the purpose (and pair) alone."""
-        key = f"{purpose} {pair.origin}>{pair.destination}" if pair is not None else purpose
+        a pair; "dawdling"), made the first time it's asked for from the seed and the purpose (and pair) alone. An
+        institution's pair (timetabled False) has streams apart from a matrix pair with the same ends."""
+        key = purpose
+        if pair is not None:
+            key = f"{purpose} {pair.origin}>{pair.destination}" + ("" if getattr(pair, "timetabled", True) else " institution")
         found = self._streams.get(key)
         if found is None:
             found = self._streams[key] = random.Random(f"{key} {self.seed}")
@@ -559,7 +565,7 @@ class Simulation:
         - Webster: each junction on its own.
         - TRANSYT, Synchro, SCATS, SCOOT: every junction with the method is one group on a common
           cycle (_coordinate), held within the group's cycle limits.
-        - Fixed time: the greens entered."""
+        - Fixed time, manual: the greens or windows entered."""
         hour, flows, moves = self.design_flows()
         graph = self.graph
         self.saturation_vph = {link.id: graph.saturation_vph(link.id, moves)  # each signalised arm's, for every method
@@ -585,8 +591,9 @@ class Simulation:
                                   "note": "greens decided as it runs"}
                 self._actuate(method, node_id, signal)
             else:
-                plans[node_id] = {"method": "fixed", "cycle_s": round(signal.cycle, 1),
-                                  "greens_s": [round(green, 1) for _, green in signal.phases], "note": "the greens entered"}
+                plans[node_id] = {"method": method, "cycle_s": round(signal.cycle, 1),
+                                  "greens_s": [round(green, 1) for _, green in signal.phases],
+                                  "note": "the windows entered" if method == "manual" else "the greens entered"}
         self.signal_plans = plans
         for method, nodes in groups.items():
             plans.update(self._coordinate(method, nodes, flows, moves, design))
@@ -614,9 +621,9 @@ class Simulation:
         model = TimingModel(self._approaches(nodes, flows, moves, weights), greens, cycle, spans)
         result: dict = {}
         if method == "transyt":
-            result = transyt(model, OPTIMISE_BUDGET_S)
+            result = transyt(model, OPTIMISE_TRIALS)
         elif method == "synchro":
-            result = synchro(model, OPTIMISE_BUDGET_S)
+            result = synchro(model, OPTIMISE_TRIALS)
         else:
             model.progression()
         for node, signal in signals.items():
@@ -629,7 +636,9 @@ class Simulation:
         if result:
             for plan in plans.values():
                 plan.update(pi_before=round(result["pi_before"]), pi_after=round(result["pi_after"]),
-                            finished=result["finished"])
+                            finished=result["stopped"] == "finished")
+                if result["stopped"] == "time":  # the safety cap ended it: this plan depends on the machine's speed
+                    plan["stopped"] = "time"
         if method in ADAPTIVE:
             self._adapt(method, nodes, model, low, high, ratios)
         return plans
@@ -646,7 +655,7 @@ class Simulation:
             controller = ActuatedJunction(node, len(signal.phases), report)
             for link in graph.arriving[node]:
                 phase = signal.phase_of[link.id]
-                for lane in link.lanes:
+                for lane in link.all_lanes():  # a cycle lane's bikes call their green too
                     at = max(lane.length - DETECTOR_GAP_S * link.speed, 0.0)
                     self._loops.append((Loop(lane, at, at + 2.0, self._out[lane]),
                                         lambda occupied, passed, phase=phase: (occupied or passed) and
@@ -654,11 +663,11 @@ class Simulation:
         else:
             def on(link) -> int:  # Varaiya's x upstream: the vehicles near the line, moving or not (PRESSURE_ZONE_M:
                 # the whole 500 m link counted one still half a minute away, and held a side road's lone car 52 s)
-                return sum(1 for lane in link.lanes for vehicle in lane.vehicles
+                return sum(1 for lane in link.all_lanes() for vehicle in lane.vehicles
                            if lane.length - vehicle.s <= PRESSURE_ZONE_M)
 
             def held(link) -> int:  # downstream, only what can block the junction: vehicles standing in a queue
-                return sum(1 for lane in link.lanes for vehicle in lane.vehicles if vehicle.speed < HELD_MPS)
+                return sum(1 for lane in link.all_lanes() for vehicle in lane.vehicles if vehicle.speed < HELD_MPS)
 
             def pressure(group) -> float:
                 total = 0.0
@@ -713,7 +722,7 @@ class Simulation:
                 controller = ScatsJunction(node, region, plans, model.offsets[node], junction.target_saturation, report,
                                            signal.span)
                 for link in graph.arriving[node]:
-                    for lane in link.lanes:
+                    for lane in link.all_lanes():
                         controller.add_lane(lane, signal.phase_of[link.id])
                         self._loops.append((Loop(lane, lane.length - STOP_LINE_LOOP_M, lane.length, self._out[lane]),
                                             lambda occupied, passed, lane=lane, link=link, controller=controller:
@@ -725,7 +734,7 @@ class Simulation:
                     links.append(ScootLink(link.id, signal.phase_of[link.id], self.saturation_vph[link.id] / 3600,
                                            (link.lanes[0].length - at) / link.speed, link.start if link.start in group else None,
                                            junction.stop_weight_s))
-                    for lane in link.lanes:
+                    for lane in link.all_lanes():
                         self._loops.append((Loop(lane, at, at + UPSTREAM_LOOP_M, self._out[lane]),
                                             lambda occupied, passed, link=link, node=node:
                                             region.junctions[node].count(link.id, self.time, passed)))
@@ -807,6 +816,8 @@ class Simulation:
         """A vehicle of the pair waiting to enter; `at`: when it asked to depart (its departure's time; None: now)."""
         mode = self.modes[mode_index]
         route = self.graph.pick_route(pair.origin, pair.destination, self._rng("routes", pair))
+        if self._cycle_lanes and self._classes.get(mode.name) == "bicycle":  # (its draw made all the same)
+            route = self.graph.bike_route(pair.origin, pair.destination) or route  # along cycle lanes where it pays
         route, drop_s = self._dropped(pair, mode_index, route)
         self.spawned += 1
         self.spawned_by_mode[mode.name] += 1
@@ -1096,15 +1107,15 @@ class Simulation:
                     if self.lateral and rear is not None:  # side by side, the rearmost front may not be the rearmost rear
                         rear = min(lane.vehicles, key=lambda other: other.s - other.length_m)
                     room = (rear.s - rear.length_m) if rear else lane.length
-                    if room >= vehicle.length_m + vehicle.min_gap:
+                    if room >= min(vehicle.length_m + vehicle.min_gap, lane.length):  # an empty lane: even a short one
                         # As fast as is safe (SUMO's departSpeed "max", without dawdling): its free speed, no faster
                         # than lets it keep behind what _plan will see ahead (the vehicle, a red, a stop, a turn).
-                        vehicle.segment, vehicle.s = lane, vehicle.length_m
+                        vehicle.segment, vehicle.s = lane, min(vehicle.length_m, lane.length)
                         if self.lateral and lane.index >= 0:  # on its lane's kerb side (SUMO's latAlignment "right")
                             vehicle.lat_m = -self.graph.keep * max(LANE_WIDTH_M / 2 - vehicle.width_m / 2, 0.0)
                         vehicle.speed, vehicle.turn = free_speed(vehicle, lane.speed), self._next_turn(vehicle)
                         vehicle.may_enter = vehicle.turn is not None and rear is None and \
-                            lane.length - vehicle.s < LOOKAHEAD_M and self._may_enter(vehicle, vehicle.turn)
+                            lane.length - vehicle.s < self._reach(vehicle) and self._may_enter(vehicle, vehicle.turn)
                         leader = self._lane_leader(vehicle, rear)
                         vehicle.speed = min(self._limit(vehicle), safe_speed(vehicle, *leader) if leader else inf)
                         _place(lane, vehicle)
@@ -1191,6 +1202,14 @@ class Simulation:
         return {(node, link.road): self._states[link.id]
                 for node in self.graph.signals for link in self.graph.arriving[node]}
 
+    def signal_countdowns(self) -> dict[tuple[str, str], float]:
+        """(junction, arriving road) -> seconds until its signal changes, by its plan (Signal.remaining). An arm a
+        signal override holds other than its plan is left out: its plan's countdown would be wrong."""
+        return {(node, link.road): signal.remaining(link.id, self.time)
+                for node, signal in self.graph.signals.items() for link in self.graph.arriving[node]
+                if signal.windows is None or link.id in signal.windows  # a manual arm with no window: never changes
+                if self.signal_override is None or self._states[link.id] == signal.state(link.id, self.time)}
+
     def _lane_state(self, lane: Lane) -> str:
         """The signal a lane's vehicles obey: its own (an override's lane state), else its arm's."""
         return self._lane_states.get((lane.link.id, lane.index)) or self._states[lane.link.id]
@@ -1203,11 +1222,6 @@ class Simulation:
                                      if link_id == lane.link.id):
             return "G"
         return self._lane_state(lane)
-
-    def lane_states(self) -> dict[tuple[str, str, int], str]:
-        """(junction, arriving road, lane index) -> "G", "Y" or "R" for each lane an override set apart."""
-        return {(self.graph.links[link_id].end, self.graph.links[link_id].road, index): state
-                for (link_id, index), state in self._lane_states.items()}
 
     def _time_step_signals(self) -> None:
         """This step's signal states: each junction's plan, then the signal override, if one is set
@@ -1236,7 +1250,7 @@ class Simulation:
         phases (the arms each serves, its green), amber, all-red and minimum green; each arm's
         vehicles, nearest the stop line first (type, its vehicle class, distance to it, speed, lane, people on
         board: a bus's simulated load, else its type's occupancy; the exit lane it will take), speed
-        limit and length; each of those exit lanes' room (`exit_room_m`: its length less what its vehicles and those turning into it take
+        limit, length and kerbside lane (`kerb_lane`: the lane past a kerb pocket's, 0 without one); each of those exit lanes' room (`exit_room_m`: its length less what its vehicles and those turning into it take
         up, gaps included, as _may_enter reckons it); the vehicles crossing the junction; and the
         distance across it, stop line to far stop line; and the cycle (its length, when it began, the
         offset). The arm's own vehicles are also `approaching` in each arm's context."""
@@ -1266,7 +1280,7 @@ class Simulation:
                       "emergency": vehicle.emergency}
                      for lane in link.lanes for vehicle in lane.vehicles), key=lambda vehicle: vehicle["distance_m"]),
                 "speed_limit_mps": link.speed, "length_m": min(lane.length for lane in link.lanes),
-                "lanes": len(link.lanes)}
+                "lanes": len(link.lanes), "kerb_lane": link.pockets[0]}  # past a kerb pocket's lanes
                 for link in arriving}
         road_of = {link.id: link.road for link in arriving}
         return {"time_s": self.time, "plan": self.signal_plans.get(node, {}), "arms": arms, "exit_room_m": rooms,
@@ -1290,8 +1304,7 @@ class Simulation:
         # On amber it stops if it can brake in time, SUMO's rule (MSVehicle.cpp:2792-2807: no reaction distance,
         # at max(min(tls.yellow.min-decel 3.0, emergencyDecel), decel)): drivers then use 2.5 s of the amber, nearer the
         # HCM's e = 2.0 s than the 2.7 s an ITE reaction distance (τ) left them (2026-10-18)
-        stops = state == "Y" and distance >= brake_gap(vehicle.speed, max(min(AMBER_STOP_DECEL, vehicle.emergency_decel),
-                                                                          vehicle.decel))
+        stops = state == "Y" and self._stops_at_amber(vehicle, distance)
         if state == "R" or (stops and not clearing):
             return False
         if not turn.permitted and not vehicle.emergency:  # in a lane its turn isn't made from: impatient only while it could go
@@ -1301,11 +1314,12 @@ class Simulation:
                 return False
         # Keep the junction clear: room on the exit lane, its length less what its vehicles and those
         # on their way there take up, each with its gap (SUMO's brutto occupancy). A queue on the exit
-        # lane leaves room behind it; traffic moving off it doesn't take the room a queue would.
+        # lane leaves room behind it; traffic moving off it doesn't take the room a queue would. An empty lane shorter
+        # than the vehicle and its gap still takes it, its tail left behind (SUMO lets a vehicle be longer than its lane).
         exit_lane = turn.lane_out
         taken = sum(v.length_m + v.min_gap for v in exit_lane.vehicles)
         taken += sum(v.length_m + v.min_gap for t in self._turns_into(exit_lane) for v in t.vehicles)
-        if exit_lane.length - taken < vehicle.length_m + vehicle.min_gap and can_stop and \
+        if exit_lane.length - taken < min(vehicle.length_m + vehicle.min_gap, exit_lane.length) and can_stop and \
                 (signal is not None or turn.ring or self._foes_coming(turn)):
             return False  # an uncontrolled node (a merge, a bend) is kept clear only for someone coming
         if turn.ring:
@@ -1313,6 +1327,11 @@ class Simulation:
         if not self._occupied_clear(turn):
             return False  # never into an occupied crossing or merge, however close
         return self._gaps_clear(turn) or not can_stop  # too close to stop for a gap: it goes (committed)
+
+    @staticmethod
+    def _stops_at_amber(vehicle: Vehicle, distance: float) -> bool:
+        """It can stop for an amber this far off (SUMO's rule, _may_enter)."""
+        return distance >= brake_gap(vehicle.speed, max(min(AMBER_STOP_DECEL, vehicle.emergency_decel), vehicle.decel))
 
     @staticmethod
     def _foes_coming(turn: Turn) -> bool:
@@ -1417,6 +1436,14 @@ class Simulation:
 
     # --- one step -------------------------------------------------------------------------
 
+    def _reach(self, vehicle: Vehicle) -> float:
+        """How far ahead it looks past its lane's end (a junction to ask, a red, vehicles beyond): LOOKAHEAD_M, or at
+        speed as far as it needs to stop from its next step's speed, as SUMO's look-ahead (MSVehicle::planMoveInternal:
+        brakeGap(v) + v·Δt). A junction beyond is a stop line to it, one it needn't slow for yet (its safe speed there
+        is no lower than its speed), so it brakes only for a junction it must stop at."""
+        speed = vehicle.speed + vehicle.accel * self.dt
+        return max(LOOKAHEAD_M, brake_gap(speed, vehicle.decel, vehicle.tau + self.dt) + STOP_MARGIN_M)
+
     def _leader(self, vehicle: Vehicle, ahead: Vehicle | None) -> tuple[float, float, float] | None:
         """(free gap, speed, braking) of whatever the vehicle must keep behind, or None. `ahead`:
         the next vehicle on its own lane or turn, if any."""
@@ -1442,8 +1469,16 @@ class Simulation:
             merging = self._merging_leader(vehicle, segment, distance)
             if merging is not None and (best is None or merging[0] < best[0]):
                 best = merging
+            # The stop line at the end of the lane it is turning into: on a short link between signals its red (an
+            # amber it can stop for) is in reach before the vehicle is on that lane to ask (SUMO looks ahead link by link).
+            lane, line = segment.lane_out, distance + segment.lane_out.length
+            if line < self._reach(vehicle) and lane.link.end in self.graph.signals and vehicle.leg + 2 < len(vehicle.route):
+                state = self._signal_for(vehicle, lane)
+                if state == "R" or state == "Y" and self._stops_at_amber(vehicle, line):
+                    best = _closer(best, (line - STOP_MARGIN_M, 0.0, vehicle.decel))
+        reach = self._reach(vehicle)
         for piece in following:
-            if distance > LOOKAHEAD_M:
+            if distance > reach:
                 break
             rear = piece.vehicles[0] if piece.vehicles else None
             if self.lateral and rear is not None:  # the one with the nearest rear of those it isn't clear of
@@ -1559,7 +1594,7 @@ class Simulation:
             ahead = self._ahead_on(segment, vehicle)
         # Only the first vehicle in its lane (lateral: in its line along it) can reach the junction this step (the
         # rest follow it), and far off there is no need to ask yet.
-        near = turn is not None and ahead is None and segment.length - vehicle.s < LOOKAHEAD_M
+        near = turn is not None and ahead is None and segment.length - vehicle.s < self._reach(vehicle)
         vehicle.may_enter = near and self._may_enter(vehicle, turn)
         if isinstance(segment, Bay):
             if vehicle.dwell_end is None and vehicle.speed < 0.1 and vehicle.s >= segment.stop_s - 1.0:
@@ -1650,6 +1685,7 @@ class Simulation:
                     vehicle.s, vehicle.speed = segment.length, 0.0
                     break
                 over, next_piece = vehicle.s - segment.length, turn
+                vehicle.impatience_s = 0.0  # left behind with the line it waited at (SUMO: waiting time resets on moving)
             else:
                 over, next_piece = vehicle.s - segment.length, segment.lane_out
                 vehicle.leg, vehicle.came_from = vehicle.leg + 1, segment
@@ -1692,7 +1728,7 @@ class Simulation:
         (Poisson arrivals at the stop's rate since it was last counted) as fit."""
         if not bay.boarding_per_h and not bay.alighting_share:
             return bay.dwell_s
-        rng, key = self._passenger_rng, id(bay)
+        rng, key = self._passenger_rng, (bay.stop, bay.lane.link.id)  # not id(bay): a fork's bays are copies
         waiting = self._waiting.setdefault(key, [0, 0.0])
         waiting[0] += _poisson(rng, bay.boarding_per_h * (self.time - waiting[1]) / 3600)
         waiting[1] = self.time
@@ -1793,6 +1829,8 @@ class Simulation:
             return
         if vehicle.s < vehicle.length_m + 10:
             return  # not until it is clear of the junction it came through
+        if vehicle.may_enter and lane.length - vehicle.s < vehicle.speed * vehicle.speed / (2 * vehicle.decel):
+            return  # granted its turn and too near the line to stop for another lane's (_may_enter's can_stop): committed
         reach = self._lane_reach(vehicle)
         top = max(reach)
         best = [i for i, metres in enumerate(reach) if metres >= top - 1e-6]
@@ -1958,7 +1996,7 @@ class Simulation:
             self.vehicles.remove(vehicle)
             vehicle.leg += 1  # ponytail: straight to the next link's queue; SUMO also charges its travel time
             vehicle.segment, vehicle.s, vehicle.speed, vehicle.waiting_s = None, 0.0, 0.0, 0.0
-            vehicle.turn, vehicle.may_enter = None, False
+            vehicle.turn, vehicle.may_enter, vehicle.impatience_s = None, False, 0.0
             self.pending[vehicle.route[vehicle.leg].id].append(vehicle)
             self.teleports += 1
             if self.observed is not None:
@@ -2185,7 +2223,7 @@ class Simulation:
             if link is None:
                 continue
             at = self._along_link(link, crossing.distance_m)
-            lanes = [*link.lanes, *([link.cycle] if link.cycle is not None else [])]
+            lanes = link.all_lanes()
             coming = [(at - link.cut_start - vehicle.s, vehicle) for lane in lanes for vehicle in lane.vehicles]
             coming += [(turn.length - vehicle.s + at - link.cut_start, vehicle)
                        for lane in lanes for turn in self._turns_into(lane) for vehicle in turn.vehicles]
@@ -2399,7 +2437,7 @@ class Simulation:
         return Frame(self.time, vehicles, self.signal_states(), self.spawned, self.arrived, detached(self.signal_plans),
                      tuple(self._exits), dict(self.link_entries),
                      tuple((*walker.pose, walker.prev_pose) for walker in self.walkers), tuple(self._walk_exits),
-                     {key: dict(figures) for key, figures in self.crossing_stats.items()})
+                     {key: dict(figures) for key, figures in self.crossing_stats.items()}, self.signal_countdowns())
 
     @staticmethod
     def _heading_to(vehicle: Vehicle) -> tuple[str, str, float]:

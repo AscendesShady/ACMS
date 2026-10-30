@@ -35,6 +35,7 @@ from __future__ import annotations
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from math import ceil, floor, sqrt
+from statistics import fmean
 from time import monotonic
 
 AMBER_S, ALL_RED_S = 3.0, 2.0  # a junction's own come from its approach speed and width (clearance)
@@ -70,10 +71,11 @@ MIN_GREEN_S, MAX_CYCLE_S = 7.0, 120.0
 # Signal Timing Manual; Webster's own 25 s), so a pedestrian or a slow start still gets a usable green
 MIN_CYCLE_S = 30.0
 # TRANSYT: Robertson's platoon dispersion factor and travel time factor (TRANSYT's defaults); the
-# offline optimisers' step sizes and the time they may take at Run.
+# offline optimisers' step sizes; the most plans a hill-climb tries at Run (the same plan on any machine: about 4 s
+# here, a 4x4 grid needing about 1,600, a 6x6 3,300), and a safety cap on its real time, reported when it ends one.
 DISPERSION_ALPHA, DISPERSION_BETA = 0.35, 0.8
 OFFSET_STEPS_S, GREEN_STEPS_S = (16, 8, 4, 2, 1), (8, 4, 2, 1)
-OPTIMISE_BUDGET_S = 3.0
+OPTIMISE_TRIALS, OPTIMISE_CAP_S = 4000, 30.0
 # HCM incremental delay: analysis period (h), k for fixed-time control, upstream filtering I.
 HCM_PERIOD_H, HCM_K, HCM_I = 0.25, 0.5, 1.0
 # Synchro: the 90th, 70th, 50th, 30th and 10th percentile scenarios (standard normal z); cycles tried.
@@ -422,21 +424,23 @@ class TimingModel:
         self.offsets = {node: float(round(offset)) for node, offset in self.offsets.items()}
 
 
-def hill_climb(model: TimingModel, greens: bool = True, budget_s: float = OPTIMISE_BUDGET_S) -> bool:
+def hill_climb(model: TimingModel, greens: bool = True, trials: int = OPTIMISE_TRIALS,
+               cap_s: float = OPTIMISE_CAP_S) -> str:
     """TRANSYT's optimiser: for each step size in turn, try moving each junction's offset, and
     (with `greens`) green between neighbouring phases, by that step either way, keeping every change
-    that lowers the PI, until a round changes nothing. It stops early, keeping the best so far, once
-    `budget_s` of real time has gone; returns False then."""
-    deadline = monotonic() + budget_s
+    that lowers the PI, until a round changes nothing ("finished"). It stops early, keeping the best so far, once it
+    has tried `trials` plans ("trials": the same plan on any machine), or, a safety cap, once `cap_s` of real time
+    has gone ("time": that plan depends on the machine's speed)."""
+    deadline, tried = monotonic() + cap_s, 0
     model.solve()
     offset_steps = sorted({min(step, model.cycle // 2) for step in OFFSET_STEPS_S}, reverse=True)
     for step in offset_steps:
         for _ in range(6):
             better = False
             for node in model.greens:
-                if monotonic() > deadline:
+                if tried >= trials or monotonic() > deadline:
                     model.solve(2)
-                    return False
+                    return "trials" if tried >= trials else "time"
                 base = model.local(node)
                 current, offset = model.greens[node], model.offsets[node]
                 options = [(current, offset + step), (current, offset - step)]
@@ -451,13 +455,14 @@ def hill_climb(model: TimingModel, greens: bool = True, budget_s: float = OPTIMI
                                 options.append((trial, offset))
                 for trial_greens, trial_offset in options:
                     cost, queues = model.trial(node, trial_greens, trial_offset)
+                    tried += 1
                     if cost < base - 1e-6:
                         model.accept(node, trial_greens, trial_offset, queues)
                         base, current, offset, better = cost, model.greens[node], model.offsets[node], True
             if not better:
                 break
         model.solve(2)
-    return True
+    return "finished"
 
 
 def common_cycle(ratios: dict[str, list[float]], low: float, high: float, spans: dict[str, float] | None = None) -> int:
@@ -469,14 +474,14 @@ def common_cycle(ratios: dict[str, list[float]], low: float, high: float, spans:
     return int(ceil(max(min(max(cycle, low), high), need)))
 
 
-def transyt(model: TimingModel, budget_s: float = OPTIMISE_BUDGET_S) -> dict:
+def transyt(model: TimingModel, trials: int = OPTIMISE_TRIALS) -> dict:
     """TRANSYT: from equisaturation greens and progression offsets, the hill-climb on offsets and
-    greens. Returns the PI before and after and whether it finished within the budget."""
+    greens. Returns the PI before and after and why the climb stopped (hill_climb)."""
     model.progression()
     model.solve()
     before = model.pi()
-    finished = hill_climb(model, greens=True, budget_s=budget_s)
-    return {"pi_before": before, "pi_after": model.pi(), "finished": finished}
+    stopped = hill_climb(model, greens=True, trials=trials)
+    return {"pi_before": before, "pi_after": model.pi(), "stopped": stopped}
 
 
 def percentile_delay(phases: list[tuple[float, float]], greens: list[float], cycle: float) -> float:
@@ -508,21 +513,22 @@ def synchro_cycle(junctions: dict[str, list[tuple[float, float]]], low: float, h
     total percentile delay over the group, each junction on its percentile greens."""
     spans = spans or {}
     need = max(len(phases) * (MIN_GREEN_S + spans.get(node, SPAN_S)) for node, phases in junctions.items())
-    first, last = int(ceil(max(low, need))), int(floor(max(high, need)))
+    first = int(ceil(max(low, need)))
+    last = max(first, int(floor(high)))  # a cap below the minimum greens' need: that need, rounded up
     cycles = list(range(first, last + 1, CYCLE_STEP_S)) + ([last] if (last - first) % CYCLE_STEP_S else [])
     return min(cycles, key=lambda cycle: sum(
         percentile_delay(phases, percentile_greens(phases, cycle, spans.get(node, SPAN_S)), cycle)
         for node, phases in junctions.items()))
 
 
-def synchro(model: TimingModel, budget_s: float = OPTIMISE_BUDGET_S) -> dict:
+def synchro(model: TimingModel, trials: int = OPTIMISE_TRIALS) -> dict:
     """Synchro's offsets: from progression, the hill-climb on offsets alone (its greens are the
     percentile greens), for delay alone (its approaches carry no stop weight)."""
     model.progression()
     model.solve()
     before = model.pi()
-    finished = hill_climb(model, greens=False, budget_s=budget_s)
-    return {"pi_before": before, "pi_after": model.pi(), "finished": finished}
+    stopped = hill_climb(model, greens=False, trials=trials)
+    return {"pi_before": before, "pi_after": model.pi(), "stopped": stopped}
 
 
 # --- SCATS and SCOOT: adaptive, a region on one common cycle ---------------------------------------
@@ -622,7 +628,7 @@ class ScatsJunction:
         saturation = [w / n if n else 0.0 for w, n in zip(weighted, passed)]
         self.saturation = saturation
         self.reported.append(max(saturation) / self.target)
-        self.region.report(self.node, sum(self.reported) / len(self.reported), t)
+        self.region.report(self.node, fmean(self.reported), t)
         cycle = realigned_length(t, self.region.reference, self.region.cycle, self.offset)
         current = [green for _, green in signal.phases]
         options = [fit_greens(plan, cycle, self.span) for plan in self.plans]

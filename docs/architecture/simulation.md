@@ -50,9 +50,13 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     movements do. A bicycle-class type's vehicle (`Vehicle.cycles`) enters a road with a cycle lane in it
     (`_insert`), takes `bike_turns` first (`_next_turn`), and never changes lane or moves sideways in it
     (`_change_lanes`, `_sidestep`: one file, down its middle). Cars and bikes don't meet between junctions; a bus
-    pulling into a bay crosses the cycle lane unseen, and loop detectors and signal flows leave cycle lanes out.
+    pulling into a bay crosses the cycle lane unseen, and signal flows leave cycle lanes out; signal detectors
+    (actuated, SCATS, SCOOT) and max-pressure's counts take in a cycle lane's bikes (`Link.all_lanes`).
+    On a network with cycle lanes a bicycle takes `Graph.bike_route` (`_spawn`; its routes draw still made, so the
+    other vehicles' draws stay as they were): as fast a route as a car's, or a little slower, with more of it in
+    cycle lanes.
   - Pedestrians (walking.md; SUMO's NonInteracting model): `Simulation.walk_demand` (`walkers=` given, else
-    `walking.walk_pairs` of its network, daily if any pair is) on their own "walkers" and "walk speeds" streams and
+    `walking.walk_pairs` of its network, daily if any pair is; a Run passes them in the Demand switch's mode) on their own "walkers" and "walk speeds" streams and
     heap (`walk_departures`), so a run's vehicles are exactly as without them. `_walk` each step (after the
     vehicles' poses): each minute's departures, Poisson, as `_count_arrivals` draws a pair's; those due set off on
     `WalkGraph.route` (with its `start` / `finish` place), a pair with none noted once in `walk_unreachable`; every
@@ -78,7 +82,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     swings out into the junction rather than turning on the stop lines); at a roundabout, an entry
     curve, an arc round the ring (radius at the middle of the circulatory roadway; clockwise when
     driving on the left) and an exit curve (a U-turn goes almost all the way round).
-  - **No offside turns at two-phase signals** (`_two_phase`): no phase protects them from oncoming
+  - **No offside turns at two-phase signals** (`_two_phase`; a manual signal where opposite arms share a
+    window counts as one): no phase protects them from oncoming
     traffic, so they aren't built. `_add_detours` gives each one a median U-turn instead: straight
     on to the next junction, a U-turn there, back, and a kerb-side turn (left, driving on the left;
     right, driving on the right). Where straight ahead is a boundary end or a one-way road, it turns
@@ -92,7 +97,7 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     0 still turns kerb-side without a kerb pocket; the offside lane offside without an offside one), and
     straight-on traffic keeps its lane counted from the first whole lane. Other turns exist but are only taken after
     standing 8 s at the line in the wrong lane while free to go (impatience; waiting at a red doesn't
-    count), so nothing gridlocks.
+    count; it resets once the vehicle drives into the junction or is teleported on), so nothing gridlocks.
   - Ramps (`Graph._ramp_lanes`: lane-to-lane connections as SUMO's, laid out as the HCM 2000 Ch 24 draws ramps): where a ramp joins or leaves a
     road along it on the kerb side at a junction without signals, the joining ramp lands on the kerbside lanes and the
     road on the offside ones (a lane added between them is the auxiliary lane); leaving, the ramp is taken from the
@@ -111,11 +116,19 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     kerb movements (HCM 2000's ranks: rank 4 gives way to rank 3; first-come before). An imported trunk no longer gives way to a residential lane that
     happens to line up better: on Dhanmondi that had gridlocked the network.
   - `Signal`: a signalised junction's phases in turn, each green followed by its amber and all-red
-    (`signal_timing.clearance` from its fastest approach and its width: 3.3 s and 2.0 s on the default grid). Two phases: east-west arms, then north-south; four: each arm alone, in turn round the
+    (`signal_timing.clearance` from its fastest approach and its width: 3.3 s and 2.0 s on the default grid). Two phases
+    by the junction's own roads, not the screen's axes (`lane_graph.two_phases`): its most nearly opposite pair of arms
+    sets one road's line (their bisector), the arm furthest off it the other's, and each arm goes with the line it runs
+    nearer, the more east-west line's phase first (a grid: east-west, then north-south; two roads crossing at 60° or
+    40°, or a side road 40° off its main road, two phases, not one); four: each arm alone, in turn round the
     junction. Fixed-time: the same greens every cycle, the first phase's green starting `offset` s
     into each (`state(link, t)` from `(t − offset) mod cycle`; `cycle_start(t)`). Adaptive (`adapt`):
     it steps from phase to phase, telling its `controller` (a SCATS or SCOOT junction) as each cycle
-    and each phase starts, which may change the greens (and so the cycle) from then on.
+    and each phase starts, which may change the greens (and so the cycle) from then on. Manual (`windows`, link
+    -> (start, end) s into the cycle): each arm green from its start, amber its last `node.amber_s` s, red the rest;
+    arms with the same window form a phase (for conflicts and the capacity model); the cycle is the last window's
+    end. `remaining(link, t)`: seconds
+    until that arm changes (its green or amber ends; red: its phase's green starts), the phases in turn at today's greens.
 - **Signal timing** (`_time_signals`, before the run; `signal_plans`; the methods in signal_timing.py).
   `Graph.assign` routes every pair's veh/h and `Graph.saturation` gives a junction's degree of saturation
   by its control (see AI Mode's generate_demand) and `Graph.storage_ratio` its worst queue over the room behind it
@@ -140,11 +153,11 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     (−28 % at 1,000): the ring's traffic bunches (2.25–2.5 s headways) where the HCM assumes a random stream, as
     Tanner's formula predicts (`roundabouts.tanner_entry_capacity`; not_built.md).
   - Webster: each junction alone, `webster(flow ratios)`.
-  - Fixed time: the greens entered.
+  - Fixed time, manual: the greens or windows entered (`Signal(windows=...)`, lane_graph.md).
   - Actuated and max-pressure (`signal_timing.ACTUATED`, `_actuate`): each junction on its own, its greens decided
-    step by step, starting from Webster's plan. Actuated: a loop on each lane `DETECTOR_GAP_S` (2 s) of travel
+    step by step, starting from Webster's plan. Actuated: a loop on each lane (its cycle lane too) `DETECTOR_GAP_S` (2 s) of travel
     before its stop line places a call for its phase (`ActuatedJunction.detect`). Max-pressure: each phase's
-    pressure is the vehicles within `PRESSURE_ZONE_M` (100 m) of its stop lines less the mean of those standing (under `HELD_MPS`, 5 km/h) on the
+    pressure is the vehicles (bikes in a cycle lane too) within `PRESSURE_ZONE_M` (100 m) of its stop lines less the mean of those standing (under `HELD_MPS`, 5 km/h) on the
     links they feed. `Signal.set_green` ends the running green now; `_position` takes the phase the controller
     names next (`next_phase`). The plan each settles on is reported to `signal_plans`.
   - TRANSYT, Synchro, SCATS, SCOOT (`_coordinate`): every junction with the method is one group on a
@@ -197,7 +210,10 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     line; a slip road: its diverge node), from each link's lane cut-backs (`Link.cut_start`, `cut_end`).
     How it drives at each comes from its turn there: the signal, giving way to the ring, the kerbside lane
     and the slip's curve speed.
-- **Junctions** (algorithms/junction_behaviour.md): a vehicle within 150 m asks whether it may enter
+- **Junctions** (algorithms/junction_behaviour.md): a vehicle within its look-ahead (`_reach`: `LOOKAHEAD_M`,
+  150 m, or at speed its braking distance from its next step's speed, v²/2b + v·(τ + Δt), as SUMO's planMove
+  looks brakeGap(v) + v·Δt ahead; further off the line is a stop it needn't slow for yet, so a car at 130 km/h keeps
+  its speed through a junction it may cross) asks whether it may enter
   its turn (`_may_enter`): not on red, nor amber if it can stop in time braking at max(min(3.0, emergency
   decel), decel), SUMO's rule with no reaction distance (`AMBER_STOP_DECEL`, tls.yellow.min-decel; MSVehicle.cpp:2792):
   drivers then use 2.4 s of the amber, nearer the HCM's e = 2.0 s than the 2.8 s a reaction distance left — unless it has waited at
@@ -209,7 +225,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   junction (at an uncontrolled node, a merge or a bend, only while a vehicle is on or coming for a
   movement it would block: otherwise the queue runs on through it, `_foes_coming`): the lane's length less what its vehicles and those on their way to it take up, each with
   its gap (SUMO's brutto occupancy), so a queue there leaves room behind it and traffic moving off
-  takes none. A vehicle that drove out of the conflicting turn counts while its tail is still in the
+  takes none; an empty lane shorter than the vehicle and its gap (a road under about 13 m between two junctions) still
+  takes it, its tail left behind, as SUMO lets a vehicle be longer than its lane (it had jammed such a road for good). A vehicle that drove out of the conflicting turn counts while its tail is still in the
   junction, but not one ahead that came through this same turn (the queue discharging: a leader,
   not a foe, even where the two turns merge into one lane; `Vehicle.came_from`). At a roundabout (`_ring_clear`) it never enters beside a vehicle there or where one would be when it
   joins the ring (its entry curve driven at the ring's speed, and, yet to commit, also at its own faster
@@ -223,7 +240,10 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   as it happens, since everyone planned from the same moment (at a roundabout, as committed).
 - **Leaders** (`_leader`): the vehicle ahead on its lane or turn; the tail of any vehicle that drove
   on from this lane but is still on it; the stop line if it may not enter; beyond it, its turn and
-  exit lane; on a turn, a vehicle on another turn into the same lane that is nearer the merge; on a
+  exit lane; on a turn, a vehicle on another turn into the same lane that is nearer the merge, and the stop line at
+  the end of that lane while its signal is red (or amber it can stop for, `_stops_at_amber`) and within
+  its look-ahead (`_reach`), its route going on there (SUMO looks ahead link by link: on signals 40 m apart a car crossing the
+  first had stopped at the second's red from 11–16 m/s in one step); on a
   roundabout, the nearest vehicle ahead round the ring. Speed limits drop in good time for a slower
   turn ahead (v² = v_turn² + 2bd).
 - **Lateral position** (opt-in: `Simulation(lateral=True)`, `run_headless(lateral=)`, a scenario's or the
@@ -248,7 +268,9 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   conflict point. Frames carry `lat_m`; x, y include it (drawing needs nothing more).
 - **Lane changing** (`_change_lanes`; SUMO's LC2013 motives, strongest first, simplified;
   simulation/lane_changing.md), only where the road allows it, once the vehicle is clear of the
-  junction it came through, and 3 s between changes:
+  junction it came through, and 3 s between changes; never once it is granted its turn and too near the stop line to
+  stop at its comfortable deceleration (committed: its new lane's turn would not be granted, and it was held at the
+  line at once, 14 to 0 m/s, and run into):
   - Best lanes (`Simulation.reach`, SUMO's bestLanes): for each lane of its link, how far it leads
     along the route without a change, looking 3000 m ahead. A lane that can't take the next turn ends
     at its stop line; the others go on into the lanes their turns lead to. So before a straight-on
@@ -295,7 +317,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     `dwell_s` (`Bay.dwell_s`), or with passengers (`Bay.boarding_per_h`, `alighting_share`; `_serve`) the
     dwell of HCM 2000 Eq 27-2: `DOOR_S` 3 s + alighting × `ALIGHT_S` 1.7 s + boarding × `BOARD_S` 2.6 s
     (+ `STANDING_BOARD_S` 0.5 s each once over `SEATED_SHARE` of its capacity is aboard). Passengers arrive at
-    the stop by Poisson at its rate (`_passenger_rng`, its own stream); each aboard (at its first stop, its
+    the stop by Poisson at its rate (`_passenger_rng`, its own stream), kept by stop and link (`_waiting`, so a
+    fork's copied bays find them); each aboard (at its first stop, its
     type's occupancy, the people the signal view gave it until then) alights with the stop's
     share; boarders fit up to `CAPACITY_PER_M` 6.5 a metre of bus, the rest wait for the next. The bus's
     `Vehicle.load` (aboard − alighting + boarding) is its people from then on (the signal view's `people`,
@@ -318,7 +341,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   vehicle's type drawn from the pair's split. Timetabled types (a headway) depart every headway from a
   random first time, on every pair but an institution's (`PairDemand.timetabled` False: its riders take the
   network's buses). An origin or destination may be a junction (an institution's catchment and door), not only a
-  boundary end. A spawned vehicle waits at its origin until a lane has room (kerbside for its
+  boundary end. A spawned vehicle waits at its origin until a lane has room for it and its gap (an empty lane shorter
+  than that will do, the vehicle's front at its end: a teleport onto a very short link; kerbside for its
   first turn if it can; never a turn pocket's lane), then enters as fast as is safe (SUMO's departSpeed "max", no dawdling): its free
   speed, no faster than `_limit` and the Krauss safe speed behind what `_plan` would see ahead
   (`_lane_leader`: the vehicle ahead with its secure gap, a red or a give-way, a bay, a closure, a meter).
@@ -327,7 +351,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   go to `_exits` (`_exited`), kept `EXITS_KEPT_S` 60 s for the frames, so results.py has every trip's
   exact times.
 - **Random streams** (`_rng(purpose, pair)`): one `random.Random` a purpose, seeded from the run's seed and
-  the purpose alone (`"arrivals 1W>1E 42"`): per pair its arrival counts and times (`arrivals`), its
+  the purpose alone (`"arrivals 1W>1E 42"`; an institution's pair, `timetabled` False, adds " institution", so it
+  never shares a matrix pair's streams with the same ends; its walkers too, `WalkDemand.timetabled` False): per pair its arrival counts and times (`arrivals`), its
   vehicle types (`types`), its timetable's first offsets (`timetable`), its route draws (`routes`) and its
   drivers' speed factors (`drivers`); emergency vehicles' drivers (`drivers emergency`); every vehicle's
   dawdle each step (`dawdling`); bus stop passengers (`_passenger_rng`). So changing a road or adding a pair
@@ -390,10 +415,11 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   (arms, green), amber, all-red and minimum green; each arm's vehicles nearest the stop line first
   (type, distance, speed, lane), speed limit and length; the vehicles crossing the junction; and
   `box_m`, the distance across it (twice the stop line inset, cached); the cycle (`cycle_s`,
-  `cycle_start_s`, `offset_s`; an adaptive plan is moved on to now first); each arm's `lanes`, and each approaching vehicle's `emergency`; plus the arm's own `planned` state and
+  `cycle_start_s`, `offset_s`; an adaptive plan is moved on to now first); each arm's `lanes` and `kerb_lane` (its
+  kerbside lane past a kerb pocket's lanes, `Link.pockets[0]`; 0 without one), and each approaching vehicle's `emergency`; plus the arm's own `planned` state and
   `approaching` vehicles. It returns the arm's state, or (that, {lane index: the lane's own state}) to set lanes
   apart (DEVL clearing the kerbside lane): `_lane_state` is what a lane's vehicles obey (`_signal_for`: an emergency vehicle also goes on its arm's lane green) (`_may_enter`, and gap
-  acceptance against a lane's foes), `lane_states()` lists them for the map and tests. With it unset nothing else
+  acceptance against a lane's foes), kept in `_lane_states` ((link, lane index) -> state). With it unset nothing else
   runs: the plans are untouched.
 - **Signal agent** (signal_agent.py, no Qt): `SignalAgent.decide(key, question)` returns the latest
   TRUE/FALSE for the key at once (FALSE until one arrives) and asks again, in a background worker, only
@@ -443,7 +469,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   once; the window sees it at its next display frame and ends the run (`MainWindow._end_run`).
   `stop(wait_s)` says whether the physics has ended: False while a step is still going (a slow hook), which
   then ends the run as it returns, no step after it.
-- `advance(target, budget)` steps synchronously (tests, tools); `signal_states()` for the map;
+- `advance(target, budget)` steps synchronously (tests, tools); `signal_states()` for the map, `signal_countdowns()` for its
+  clocks (`Frame.countdowns`; an arm an override holds off its plan, or a manual arm with no window, is left out);
   counts: `spawned`, `spawned_by_mode`, `arrived`, `pending`, `unreachable`.
 - `link_entries` counts every vehicle entering each link (inserted, or off a turn), and each `Frame` carries a copy
   (`entries`): results counts road flows from it, exactly (5-s samples had missed 39 % of a 40 m road's).

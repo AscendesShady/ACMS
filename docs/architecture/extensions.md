@@ -2,7 +2,7 @@
 
 - An extension is one file `extensions/<name>.py` (names starting with `_` are skipped) with at
   least one hook, plus optional `NAME`, `DESCRIPTION` and `ORDER` (its place in the tab, then by file
-  name). `DESCRIPTION` is for the assistant only (read_extensions, set_extension; without one, the docstring's first
+  name; a number: any other is that extension's load error, "ORDER must be a number", the others still load). `DESCRIPTION` is for the assistant only (read_extensions, set_extension; without one, the docstring's first
   paragraph): the tab shows no text under a tick, so each extension's settings stand alone. A row with settings is
   as wide as they are open, folded or not, so the sidebar is sized for them and opening one never clips:
   - `draw(network, t)`: Qt graphics items in metres, drawn after every map redraw
@@ -31,19 +31,23 @@
   - `report(agent)` (optional, beside one of those): when a run whose overrides it supplied ends (and at
     Export), `{"sheets": [(name, rows, what it holds)], "measures": {key: value}}`: its sheets go in the
     run's workbook after Trips (named in its Read me), its measures in a batch's comparison.
-    `ExtensionsPanel.reports(overrides)` calls them with that run's signal agent; one that raises gives a
-    sheet saying so.
+    `ExtensionsPanel.reports(overrides)` calls them with that run's signal agent (a live run's: every set of
+    overrides it was handed as boxes were ticked, each extension once); one that raises gives a sheet saying so
+    and is switched off (listed like a failed `signal_override`, as it may run on a test's thread).
   - `app` (optional, a module variable): the tab sets it to the window's services, `run_batch`, `replay_run`,
-    `tsp_batch`, `agent_options`, `dispatch_emergency`, `places`, `signal_agent` and `busy` (what is using the
+    `tsp_batch`, `devl_batch`, `agent_options`, `dispatch_emergency`, `places`, `tick_extension` (ticks the
+    extension from `extensions/<stem>.py`), `show_runs` (whether headless test runs are drawn on the map), `signal_agent` and `busy` (what is using the
     simulator, "" when nothing) (`MainWindow`, `AIModePanel`),
     on load and whenever they're given.
 - Nothing runs until its box is ticked, and unticking makes it neutral again: with no ticked
   extension defining `signal_override` the simulation is handed none and calls nothing.
   `ExtensionsPanel.signal_override()` wraps the ticked ones (`SignalOverrides`); `hooks_changed`
-  tells the window, which hands it to the run at once (`MainWindow._apply_hooks`) and at each Run.
+  tells the window, which hands it to the run at once (`MainWindow._apply_hooks`, keeping the ones it replaces in
+  `_replaced` for the run's workbook: their reports and **Extensions dropped** rows) and at each Run.
 - **Can't break the editor:** `network` is a deep copy, made once per map redraw, so changes to it
   never reach the real network. Loading and every hook run inside try/except (including
-  `SystemExit`): a failure switches that extension off and shows the error with its line in the tab.
+  `SystemExit`): a failure switches that extension off and shows the error with its line in the tab (a settings
+  dropdown's `before_open`, listing afresh for read_extensions or set_extension, too: `fields`).
   A `signal_override` that raises (or returns anything but G/Y/R) in the physics thread is dropped at
   once, the plan standing (its arm state and lanes are both checked before either counts, so it leaves no
   lane green behind, even for that step), and listed in `SignalOverrides.failed` and the tab's own list of failures from
@@ -59,7 +63,8 @@
   who decides, **Agent choice** below; System 1 or 2 sets the agent's `system` and `model` (`tsp_agent.model`, sent
   as each question's `choice`), the Run sheet records it; `batch_settings()` gives Batch Run what to test): ticked, each signalised junction **shows its own coordinated plan, exactly,
   unless priority is acting for a bus** (`_Junction.mode`: "plan", "tsp", "recovering"), whatever its
-  timing method, so with nothing granted coordination is untouched (a run is the plain run, vehicle for
+  timing method but manual windows (a manual junction shows its windows, no controller and no requests there: windows
+  may leave gaps or overlap and the cycle is the last one's end, so `plan_at`'s phases-in-turn model doesn't hold), so with nothing granted coordination is untouched (a run is the plain run, vehicle for
   vehicle). Each junction has its own `TSPController` (below), built from the method's plan the first time
   the junction is seen (a new run, or a gap over 2 s, starts afresh), following it as it changes
   (`_follow`, every step: each phase's green is the method's current one, SCATS and SCOOT adapting theirs,
@@ -117,7 +122,7 @@
     read; **Agent per minute** (`per_minute`) has each simulated minute's requests raised, answers reaching
     the controllers (TRUE, FALSE, fell back), requests withdrawn, latency mean and 95th percentile, how long
     after their requests the answers counted, and the most questions waiting in the agent's queue (sampled
-    each second, `_backlog`). Its file `telemetry.jsonl` (the feed, a JSON message a line) goes beside the
+    each second, `_Run.backlog`). Its file `telemetry.jsonl` (the feed, a JSON message a line) goes beside the
     run's workbook.
   - **Watching it** while a run goes: `draw` rings each junction with a bus request on (`halo`: the active
     request's state; none once the clock has moved more than 5 s from the run, e.g. after Stop), in the
@@ -180,8 +185,9 @@
 - **Per-run state** (the TSP extension): each run's controllers, last time, backlog and the agent's record
   (`_Run`) are found by the run's signal agent (`_runs`, a run without one under `NOBODY`; a new run when its
   time goes back or jumps, or its agent was reset since (`SignalAgent.generation`: the window's one agent is reset
-  at every Run, so Stop then Run at once is a new run too; DEVL's `_run_for` the same); the last `KEEP_RUNS` 16 kept, twice a batch's most at once; created under a lock,
-  as a batch's runs start side by side). The map and the panel show the window's live run (`app.signal_agent`,
+  at every Run, so Stop then Run at once is a new run too); DEVL's the same, both through `agent_choice.run_for`
+  (no Qt touched: the physics and batch threads call it); the last `KEEP_RUNS` 16 kept, twice a batch's most at
+  once; created under a lock, as a batch's runs start side by side). The map and the panel show the window's live run (`app.signal_agent`,
   the Extensions tab's services), else the one stepped last (`_shown`); `report(agent)` reads the agent's run.
 - **TSP controller** (src/traffic_simulator/transit_signal_priority.py, stdlib only, no simulator
   imports): `TSPController(NodeCfg, gate)` for one isolated node, dt = 1 s. `on_checkin`,
@@ -197,7 +203,7 @@
   red_since)` puts it in that plan's state before a tick (requests kept, its own changes cleared), so it can
   take over exactly where the plan is; `set_green(seconds)` sets the green running (at least its minimum, no
   credit or debt: a transition back to the plan); `note(t, event)` logs the caller's events (BLOCKED). Its 17
-  tests run under `__main__`.
+  tests are in `tests/test_transit_signal_priority.py`.
 - **Agent choice** (src/traffic_simulator/agent_choice.py, `AgentChoice`: the rows TSP's and DEVL's panels share):
   **Decided by**, radio buttons, System 1, System 2 or Multiple (`ChoiceButtons`). With System 1 or 2, **Model**, a
   dropdown of that system's models from AI Mode's `agent_options()` (System 1: Jev and Ollama's decision models, as Laya; System 2: every Ollama chat
@@ -210,13 +216,15 @@
   simulated seconds; missed, the extension's fallback); **Pace**, radio buttons 1×, 2×, 5×, 10× (simulated seconds a
   real second: a batch's runs where a model decides keep in step with the wall clock and never pause for an answer,
   so a model's latency costs pace × its seconds; its baselines run as fast as the CPU allows); **Runs at once** (1–8, 4 at first; never two on one model server); **Times each**
-  (1–100: runs per seed and model, an LLM's answers varying). A live run asks the System chosen last.
+  (1–100: runs per seed and model, an LLM's answers varying). A live run asks the System chosen last;
+  `model_option()` (DEVL asks it on the physics thread) reads a plain attribute the UI thread sets as the pick or
+  the list changes, never the combo box, which the UI thread may be refilling.
   `batch_settings()`: deadline_s, speed, at_once, times and agents (labels) with their model servers, or `system` when
   no model is listed to pick. All set by label too (`set_settings`, the assistant's set_extension).
 - `extensions/dynamic_emergency_lane.py`, **Dynamic Emergency Vehicle Lane (DEVL)** (a collapsible section: who
   decides, Agent choice above, and a live figures line): a signal override like TSP's, run after it for each arm of
   each signalised junction every step. Each junction has its own controller (`_Junction`; each run's found by its
-  signal agent, `_run_for`, as TSP's), showing the state it is given (the plan, or TSP's) unless it is clearing:
+  signal agent, `agent_choice.run_for`, as TSP's), showing the state it is given (the plan, or TSP's) unless it is clearing:
   - **detection**, like TSP's check-in: an emergency vehicle (dispatched, or a type in `EMERGENCY_TYPES`) on an arm
     within `DETECT_S` (30 s) of the stop line at the arm's speed limit, or held in a queue further out (`in_queue`:
     slower than `QUEUED_KMH` behind a vehicle in its lane), checks in, and stays in until it leaves the arm; its request (key
@@ -231,7 +239,8 @@
     reaches the controller; past the deadline, FALSE (fell back).
   - **clearance**, on TRUE (`update`, `state`): "to_red", every arm ends its green after its minimum green (as TSP
     never cuts one shorter), then amber, then all-red; "clear", only the **kerbside lane** of the vehicle's arm
-    (lane 0, kerbside, either driving side) shows green, (the arm's "R", {lane: "G"}), every other lane and arm red, so the queue ahead of
+    (the view's `kerb_lane`: lane 0, either driving side, or past a kerb turn pocket the lane beyond its lanes, the one
+    the vehicle keeps to) shows green, (the arm's "R", {lane: "G"}), every other lane and arm red, so the queue ahead of
     the vehicle (which keeps to that lane, Simulation's `EMERGENCY_LANE_M`) clears and it goes through; once it has
     left the arm (or after `CLEAR_MAX_S`, 60 s) "lane_amber" ({lane: "Y"}) and "all_red", then the plan again, or
     straight on to the next granted request. One that left before its lane went green ends at the all-red.
@@ -258,7 +267,8 @@
   every row into the live run (`app.dispatch_emergency`, MainWindow.dispatch_emergency, Simulation.dispatch), after
   checking them all (one that can't go sends none). A line under it says what was sent, or in red why not (no run,
   nothing ticked, an unknown place, no route). `fleet()` gives the rows, (from, to, every min, after min), for Batch
-  Run's Test DEVL; `set_fleet(schedules)` replaces them as + would add them (the assistant's schedule_emergency).
+  Run's Test DEVL; `set_fleet(schedules)` replaces them as + would add them (the assistant's schedule_emergency, which ticks the
+  extension first, `app.tick_extension`, as Test DEVL does: its tab is used only while ticked).
 - `extensions/batch_run.py`, **Batch Run** (a collapsible section of settings): one headless run per
   seed (and model, and time). Only time, seeds and two ticks:
   - **Seeds** are typed like pages to print, `45, 34, 1-45` (`parse_seeds`: numbers and ranges,
@@ -274,8 +284,8 @@
     TRUE), always run too; every agent is compared with Never preempt, seed by seed, and Always preempt brackets them.
   - **While it runs**: the menu bar's clock shows the batch's runs' simulated time (`MainWindow._one_run` records
     each run's time as it steps, once a simulated second, in `_headless`; `_show_headless` shows the least
-    advanced of those going), its tooltip each run by name (Never preempt (baseline), seed 1: 00:12:34 of 00:30:00), and
-    the status bar how many are done and about how long is left at the pace so far; the same for an experiment
+    advanced of those going; its tooltip "Slowest test run's time"), and the status bar that run by name (Never
+    preempt (baseline), seed 1: 00:12:34 of 00:30:00), how many are done and about how long is left at the pace so far; the same for an experiment
     or run_simulation. Afterwards the clock is the live run's again. **Show runs on map** (the pin beside Start,
     on at first; `app.show_runs` → `MainWindow._show_runs_on_map`): the map draws that same run as it goes, as a
     live run is drawn: each run's thread takes a frame at most 10 times a real second (`run_headless`'s
@@ -321,15 +331,20 @@
   the network changed and the OD matrix after it if the demand changed; no picture when nothing changed), `artifacts.json` (the workbooks and GeoJSON its tools wrote, with size and SHA-256; build_scenario lists its
   `files`), `activity.csv` (with Watch my edits on, what the user did since the step before), `step.json` (all of it, with timings: the model's seconds, the user's deciding, compute, total; and tokens);
   `steps.csv` (a row a step, for analysis) and `report.html` (each step as prompt → understood → did → snapshot →
-  numbers, under the session's verdict), both rewritten each step and each verdict, from the folder; once the session
+  numbers, under the session's verdict): a step appends its row and its section (`_add_step`, reading back only its
+  own folder, so a step's cost doesn't grow with the session), and each verdict and the session's end
+  rewrite both whole from the folder (`_write_tables`). Every rewrite (step.json and session.json by `_write_json`,
+  steps.csv and sessions.csv by `_write_csv`, report.html, the .odt) goes to a `.part` beside the file and replaces
+  it (`results.write_whole`, `os.replace`): a full disk cutting one short leaves the old file whole, and the step
+  still in every table; once the session
   has ended, `<session folder name>.odt` (`_write_document`, Qt's ODF writer; Word and LibreOffice open it), the whole
   session as one document to read: its facts (times, agent, version, code SHA-256, Python, Qt, OS, verdict), then each
   step's prompt and editor update, what was understood, the plan, every tool call with its arguments, decision and
   result (each cut at `DOC_RESULT_CHARS`, 4000; the step's files keep it whole), the model's messages, the reply, the
   changes, the map and/or OD matrix after (embedded), the files it wrote, timings, tokens and your verdict, rewritten when you grade
   the ended session or its chats; and in the
-  results folder `sessions.csv` (`_write_sessions`: a row a session, its steps, how many of each verdict and unmarked,
-  its models, its verdict and note). Everything is read back from the folders (`sessions`,
+  results folder `sessions.csv` (`_write_sessions`, with each verdict and session end: a row a session, its steps, how
+  many of each verdict and unmarked, its models, its verdict and note). Everything is read back from the folders (`sessions`,
   `session_info`, `steps`), so any session can be graded later. Its panel: where it records, the latest step, a note,
   **As intended**, **Partly as intended**, **Not as intended** (`mark(verdict, note, step=None, folder=None)`: a
   step's verdict and note into its step.json, the CSV and the report; the latest step by default), **End session**
@@ -339,6 +354,3 @@
   decisions, reply, error, changes, the map), a note and the three verdicts for the chat, and for the session
   (`rank_session(verdict, note, folder)`), and **Open report**.
 
-- `campaign_apply.py`, **Campaign Apply**: opt-in one-time live update of an already-running CLI prompt campaign. Reload and tick it to retain the pending request and ledger while installing the user-authorized automatic Apply driver. It refuses halted or ambiguous drivers and never resends a prompt. Unticking does not undo the installed update. See `prompt_campaign.md`.
-
-Campaign Apply additionally supports strictly checked recovery of a deadline-halted, previously clicked card whose callback never returned a tool result, and guards old-process callback exceptions. It returns an explicit error to the existing model worker without repeating the action.

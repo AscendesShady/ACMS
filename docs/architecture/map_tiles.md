@@ -19,15 +19,22 @@
 - **Tiles** (`map_tiles.TileStore`): `tile.openstreetmap.org/{z}/{x}/{y}.png`, following the OSM Tile
   Usage Policy: an identifying User-Agent, at most two downloads at a time, each tile cached on disk
   (Qt's cache folder, `osm-tiles/z/x/y.png`) and reused for 7 days, only the tiles in view, a failed
-  one not asked again for a minute. `ready` (from the download thread) asks the view to redraw.
+  one not asked again for a minute. `ready` (from the download thread) asks the view to redraw. A tile is written
+  whole (`results.write_whole`, the app's one file writer: a `.part` beside it, then `os.replace`), tiles untouched for `KEEP_S` (30 days) are deleted
+  when a store opens (`prune`, on its download thread), and one on disk that can't be decoded is deleted and
+  fetched again (`discard`, from `BackgroundPainter`). Every download (`fetch`: tiles, searches, Overpass) gives up,
+  as an OSError, after `DOWNLOAD_S` (20 s) for the whole answer or past `DOWNLOAD_MAX_BYTES` (4 MB), and turns
+  http.client's own errors (an answer cut short) into OSError.
 - **Place search** (`map_tiles.PlaceSearch`): OSM's Nominatim (`nominatim.openstreetmap.org/search`, jsonv2, up
   to 5 places), following its Usage Policy: the same identifying User-Agent, one request at a time on its own
-  thread and at most one a second (`SEARCH_GAP_S`), each query's answer cached (case aside), and only when the
+  thread and at most one a second from the whole app (`search_turn`, `SEARCH_GAP_S`: the assistant's place_map
+  waits its turn too), each query's answer cached (case aside), and only when the
   user asks (Enter or the search icon; never as they type). `ready(query, found)` gets (name, lat, lon) best
-  first, places beyond Web Mercator's ±85° left out, or a message (offline, an unreadable answer).
+  first, places beyond Web Mercator's ±85° left out, or a message (offline, an unreadable answer: whatever goes
+  wrong, it answers).
 - **Drawing** (`background.BackgroundPainter`, used by `NetworkView.drawBackground`, behind the whole
   scene, so redrawing the network never touches it): the colour; the image (PNG or JPG; a PDF's page
-  rendered 2,400 px wide with QtPdf) through `image_transform` (its pixels scaled to its width, turned
+  rendered 2,400 px wide with QtPdf; decoded once per file, page and change, only the latest kept) through `image_transform` (its pixels scaled to its width, turned
   about its top-left corner, placed), its height from its proportions; or the tiles
   in view at the view's zoom (the device pixel ratio counted), 400 kept decoded. Tiles are drawn
   opaque, a screen pixel overlapping and without edge antialiasing, and the colour is laid back over
@@ -39,9 +46,10 @@
   `extent` lets the view scroll over the image (the bounds of its turned rectangle), or 5 km of map
   round the network.
 - **Create tab** (`background.BackgroundPanel`, the body of the Own Network section): Background (Colour, Image, Map); for a
-  colour, six swatches (Grass, Meadow, Asphalt, Concrete, Paper, Night; hidden for an image or the map,
-  whose veil keeps the last one); for an image, Open (PNG, JPG, PDF:
-  laid as wide as the network and centred on it; one that can't be read is refused, nothing changed),
+  colour, six swatches (`theme.MAP_COLOURS`: Grass, Meadow, Asphalt, Concrete, Paper, Night; hidden for an image or
+  the map, whose veil keeps the last one); for an image, Open (PNG, JPG, PDF:
+  laid as wide as the network and centred on it; one that can't be read is refused, nothing changed, and one on a
+  network share is refused before it is opened, the file label saying why: `models.image_path_problem`, as saving does),
   the PDF's page, its width, top-left corner and turn; for the map, **Place** (a name, an address: Enter or the
   search icon asks Nominatim through `BackgroundPainter.places`, its answer queued back to the GUI thread
   as `found`; one place goes under the network's centre at once, several are offered in a menu under the

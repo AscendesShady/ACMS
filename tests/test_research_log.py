@@ -195,6 +195,82 @@ def test_each_step_is_recorded_for_research():
             os.environ["OLLAMA_HOST"] = before
 
 
+def test_a_step_is_added_without_reading_the_earlier_ones_back():
+    """A step appends its row to steps.csv and its section to report.html, reading back only its own folder (each
+    step read and rewrote every earlier one, and every session's: 0.7 s a step by the 300th); a verdict rewrites
+    them, and sessions.csv, whole."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("research_log_appends",
+                                                  Path(__file__).resolve().parents[1] / "extensions" / "research_log.py")
+    log = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(log)
+    root = Path(tempfile.mkdtemp())
+
+    def event(n):
+        return {"results_folder": str(root), "provider": "grok", "model": "m", "kind": "prompt", "prompt": f"ask {n}",
+                "calls": [], "reply": f"answer {n}", "started": time.time(), "ended": time.time()}
+
+    for n in (1, 2, 3):
+        log.log(event(n))
+    read, original = [], log._read_json
+    log._read_json = lambda path: read.append(Path(path)) or original(path)
+    try:
+        log.log(event(4))
+    finally:
+        log._read_json = original
+    folder = log._session["folder"]
+    assert [path.parent.name for path in read] == ["0004"], read  # its own step.json only
+    with open(folder / "steps.csv", encoding="utf-8-sig") as file:
+        assert [row["Prompt"] for row in csv.DictReader(file)] == ["ask 1", "ask 2", "ask 3", "ask 4"]
+    report = (folder / "report.html").read_text(encoding="utf-8")
+    assert report.count("<h1>") == 1 and "ask 4" in report and "Step 4" in report
+    assert log.mark("partly", "close", step=2)
+    with open(folder / "steps.csv", encoding="utf-8-sig") as file:
+        rows = list(csv.DictReader(file))
+    assert len(rows) == 4 and rows[1]["Verdict"] == "partly" and "verdict: partly" in (folder / "report.html").read_text(
+        encoding="utf-8")
+    with open(root / "sessions.csv", encoding="utf-8-sig") as file:
+        assert next(csv.DictReader(file))["Steps"] == "4"
+    log.end_session()
+
+
+def test_a_write_cut_short_leaves_the_step_as_it_was():
+    """A full disk cut a rewrite mid-write: step.json torn read back as {} and the step vanished from steps.csv, the
+    report and the .odt. Rewrites go to a .part beside the file, then replace it: a torn one leaves the old whole."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("research_log_torn",
+                                                  Path(__file__).resolve().parents[1] / "extensions" / "research_log.py")
+    log = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(log)
+    root = Path(tempfile.mkdtemp())
+    log.log({"results_folder": str(root), "provider": "grok", "model": "m", "kind": "prompt", "prompt": "ask 1",
+             "calls": [], "reply": "answer 1", "started": time.time(), "ended": time.time()})
+    folder = log._session["folder"]
+    real = Path.write_text
+
+    def torn(self, text, *args, **kwargs):  # half written, then the disk is full
+        real(self, text[:len(text) // 2], *args, **kwargs)
+        raise OSError(28, "No space left on device")
+    Path.write_text = torn
+    try:
+        for write in (lambda: log.mark("partly", "close"), lambda: log._write_tables(folder)):
+            try:
+                write()
+            except OSError:
+                pass
+            else:
+                raise AssertionError("the full disk must fail the write")
+    finally:
+        Path.write_text = real
+    assert [step["step"] for step in log.steps(folder)] == [1] and log.steps(folder)[0]["verdict"] == ""
+    with open(folder / "steps.csv", encoding="utf-8-sig") as file:
+        assert [row["Prompt"] for row in csv.DictReader(file)] == ["ask 1"]
+    log.end_session()
+    assert (folder / f"{folder.name}.odt").is_file()
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

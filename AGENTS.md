@@ -12,7 +12,7 @@ order; at each, load only the files its Inputs table lists and write what its Ou
 | 0 | Where am I, what always holds? | this file (`CLAUDE.md` points here) |
 | 1 | Which stages? | `CONTEXT.md` |
 | 2 | What do I do in this stage? | `stages/<pipeline>/<NN_stage>/CONTEXT.md` |
-| 3 | What rules and facts apply? (stable; read as constraints) | `ARCHITECTURE.md`, `docs/architecture/`, `references/`, `config/` |
+| 3 | What rules and facts apply? (stable; read as constraints) | `ARCHITECTURE.md`, `docs/architecture/`, `references/` |
 | 4 | What am I working on? (changes each run; process as input) | `src/`, `tests/`, `extensions/`, `tools/`, `research/`, `reports/`, `stages/*/*/output/` |
 
 ## Always

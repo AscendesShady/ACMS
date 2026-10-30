@@ -25,7 +25,7 @@ from math import hypot
 from .geometry import nearest_along
 from .models import Network
 
-METRO = "Metro"  # the mode's name in an institution's mode choice (a vehicle type of the same name takes precedence)
+METRO = "MRT"  # the mode's name in an institution's mode choice (a vehicle type of the same name takes precedence)
 METRO_WALK_M = 800.0  # the farthest walk between a building and its station: an assumption (about ten minutes)
 METRO_PHF = 0.75  # HCM 2000 p27-25: the peak-hour factor for light rail's person capacity (Eq 27-28)
 WALK_KMH = 5.0  # an assumed walking speed: to and from a station, and an institution's walk (network_tools)

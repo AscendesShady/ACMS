@@ -55,6 +55,9 @@ MAX_TOOL_ROUNDS = 12  # tool calls and replies in one answer before giving up
 # Refusals of one tool in one answer before it isn't run again in that answer: llama3.2 3B called set_end_flows 7
 # and generate_demand 9 times with new wrong arguments each time, to the round limit (110k input tokens a step)
 MAX_REFUSALS = 3
+# Calls repeated unchanged with no edit between before the app ends the answer (qwen3.5 4B: list_roads 4 times while
+# its update_roads kept failing, to the round limit)
+MAX_REPEATS = 2
 # The context budget, in tokens. Past its window a model fails quietly (Ollama cuts the reply off, or drops the start
 # of the prompt: the instructions and documents), so every request is trimmed to fit first (fit). ACMS_NUM_CTX sets a
 # local model's window (default 32k, what an 8 GB GPU holds for a 4B model; 16384 for a 12B one).
@@ -69,6 +72,7 @@ CHARS_PER_TOKEN = 3.0  # on the safe side: JSON and code run near 3 characters a
 # it, so the window isn't too small for its tokenizer (a cache only lowers the count, so it never lowers this wrongly)
 _CHARS_PER_TOKEN_SEEN: dict[str, float] = {}
 STUB = '{"note": "an earlier tool result, left out to fit the context window"}'
+APP_NOTE = "(The app:"  # how the app's own messages to the model begin (NUDGE, RETRY, CLAIMED, FOLLOW_THROUGH)
 CUT = " ... (cut to fit the context window: ask for less, e.g. one road, or a line range)"
 WARM_UP = ("In one or two sentences, confirm you have read the documents "
            "and say what you can help with.")
@@ -88,56 +92,19 @@ TOOLS_NOTE = (
     "reply: never stop at saying what you will do. A request with several parts: do every part, in order. "
     "When you are done, reply in plain words (there is no answer tool). You are offered the tools this request most likely needs; if one "
     "you need isn't there, call find_tools with what you need. When the user leaves a choice to you, pick a sensible "
-    "value and say so rather than asking; ask only when the request can be read two very different ways. Edit "
+    "value and say so rather than asking; ask only when the request can be read two very different ways or a "
+    "skill says to ask. Edit "
     "tools change the network only after the user approves each one in this chat (Ctrl+Z undoes it); if they "
     "decline, don't retry. Read every result: one with \"error\" means nothing happened; fix the call as its "
     "suggested_fix says, or tell the user. If what was asked can't be done (a service is down, nothing fits), say "
     "so and stop: never put something else in its place (a made-up grid for a real place) without asking. Quote "
     "the results' own numbers, never ones you expect. Leave out "
     "optional arguments the user didn't ask for: the defaults are quick, and route choice, conditions or extra "
-    "seeds multiply a test's time."
-    "\n\nRECIPES (adapt them; the words in quotes are examples of what users say):"
-    "\n- \"a city of W x H metres\", \"a new grid\": generate_grid with vertical = W / spacing_m + 1 columns and "
-    "horizontal = H / spacing_m + 1 rows (spacing_m 200-400; a dense city 200-250). It replaces the network; to keep "
-    "some roads, edit the network instead (add_road, delete_objects, update_roads)."
-    "\n- \"demand from buildings / institutions\", \"a dense city with homes, schools, offices\": deploy_institutions "
-    "(count 1-50: about 10 a square km, 30 for a 2 x 1.5 km city; 50 when dense). A run spawns their trips itself, on top of "
-    "the OD matrix's demand; there is nothing else to generate for them."
-    "\n- \"busy\", \"heavy\", \"rush hour\", \"peak\", \"quiet\" traffic: a level, not a place. generate_demand with "
-    "degree_of_saturation: light 0.4, medium 0.65, busy/heavy/peak 0.85, near capacity 0.95. Hourly is the default; "
-    "a whole day is demand \"daily\" then shape_daily_curve. \"Busier\", \"quieter\", \"30% more\", \"double it\": "
-    "scale_demand on the demand there is (factor 1.3, 0.7, 1.3, 2), not a new build."
-    "\n- A real named place (\"Dhanmondi, Dhaka\", \"Times Square\"): place_map with the place, then "
-    "network_from_background, then demand. build_scenario does all of a study in one call (place or grid, traffic "
-    "level, signals, buses, what-ifs, reports): use it when the user describes a whole study."
-    "\n- \"use SCOOT\", \"switch the signals to Webster\", \"make 2,2 actuated\": set_signal_timing with that "
-    "method (the junctions named, else every signalised one from list_junctions). optimise_signals is only for "
-    "tuning fixed-time greens by many test runs, when the user asks to optimise them."
-    "\n- \"simulate\", \"test it\", \"how does it perform\": run_simulation (30 min unless said), then read_results "
-    "or analyse_run."
-    "\n- \"would X help\", \"compare\", \"what if\": never edit the open network to test. note_plan (goal, "
-    "hypothesis), then run_experiment with the network as built first and each other scenario one change "
-    "(changes: edit tools applied to a copy; demand_scale to stress it), 3 or more seeds; then read_results and "
-    "note_plan with your conclusion. Call a difference only where the comparison says clear; where "
-    "replications_needed is above the seeds run, say more seeds are needed."
-    "\n- \"why is junction X slow\": run_simulation if there is no run yet, then diagnose_signal (a signal) or "
-    "junction_los."
-    "\n- \"more people\", \"increase the population\": there is no population figure. With institutions "
-    "(list_institutions), update_institution raises their people; else scale_demand. Say which you used and that "
-    "trips, not residents, are what changed."
-    "\n- The metro is the user's own network: they draw its lines (Edit Network > Metro) and fill its OD matrix "
-    "(Demand Generator > Metro); you read its loads (metro_report) and buildings' metro shares (institution_mode_split) "
-    "but can't draw lines or turn road trips into metro trips. Lines curve (300 m at least, turns under 90 deg) and "
-    "riders change once at an interchange where two lines were merged; the service, not the OD matrix, is the schedule."
-    "\n- Pedestrians walk footpaths (update_roads footpaths), paths (add_path) and crossings (add_crossing: a zebra, "
-    "where traffic stops for them, or an overbridge); at a junction's arm they wait for a gap. People walking come "
-    "from set_pedestrian_demand and buildings' Walk share; pedestrian_summary says who can't walk anywhere, and a "
-    "run's results give walk times, kerb waits and each crossing's figures. Cycle lanes: update_roads cycle_lanes."
-    "\n- Things the app doesn't have (a harbour, an airport, a stadium, a university, weather on the "
-    "open network, deaths): say so in one line. Don't put something else in their place, and don't call a tool "
-    "that doesn't exist. When a number is past a tool's limit, tell the user the limit and do what fits only once "
-    "they agree."
-    "\n- A question about an idea (\"what is a level of service?\"): answer from the documents, no tools."
+    "seeds multiply a test's time. A request may end with [Skills]: how to do its kind of task well; follow them."
+    "\n\nThings the app doesn't have (a harbour, an airport, a stadium, a university, weather on the open network, "
+    "deaths): say so in one line. Don't put something else in their place, and don't call a tool that doesn't "
+    "exist. When a number is past a tool's limit, tell the user the limit and do what fits only once they agree. A "
+    "question about an idea (\"what is a level of service?\"): answer from the documents, no tools."
     "\n\nGrid junction '1,1' is the bottom-left one; positions are metres with x to the right and y downward. Name "
     "only OD pairs the matrix has (read_od_matrix), none for every pair. While the user's run goes, read_traffic shows "
     "it live; a demand change reaches it from its next simulated minute, a network change stops it. Ground "
@@ -197,16 +164,12 @@ def system_prompt(tools: bool = True) -> str:
     )
 
 
-def _local_url(variable: str, port: int, path: str) -> str:
-    host = os.environ.get(variable, "").strip() or f"127.0.0.1:{port}"
-    parts = urlsplit(host if "://" in host else f"http://{host}")
-    name = parts.hostname if parts.hostname not in (None, "", "0.0.0.0") else "127.0.0.1"
-    return f"{parts.scheme}://{name}:{parts.port or port}{path}"
-
-
 def ollama_url(path: str) -> str:
     """URL on the local Ollama server (OLLAMA_HOST, default 127.0.0.1:11434)."""
-    return _local_url("OLLAMA_HOST", 11434, path)
+    host = os.environ.get("OLLAMA_HOST", "").strip() or "127.0.0.1:11434"
+    parts = urlsplit(host if "://" in host else f"http://{host}")
+    name = parts.hostname if parts.hostname not in (None, "", "0.0.0.0") else "127.0.0.1"
+    return f"{parts.scheme}://{name}:{parts.port or 11434}{path}"
 
 
 # --- HTTP ---------------------------------------------------------------------------------
@@ -278,6 +241,9 @@ def _network_error(url: str, exc: Exception, timeout_s: float) -> AssistantError
         return AssistantError(f"No reply from {host} within {timeout_s:g} s.")
     if isinstance(exc, (urllib.error.URLError, OSError)):
         return AssistantError(f"Could not reach {host}: {getattr(exc, 'reason', exc)}")
+    if isinstance(exc, ValueError) and "header" in str(exc).lower():  # http.client quotes the header: the key
+        return AssistantError(f"{host}: the key can't be sent: it holds a line break or other control character. "
+                              "Save it again without one, then Rescan PC.")
     return AssistantError(f"{host}: {exc}")
 
 
@@ -446,7 +412,11 @@ def _gemini_request(messages: list[dict], tools: list[dict] | None) -> dict:
     contents: list[dict] = []
     for message in messages:
         if message["role"] == "tool":
-            response = {"name": message["name"], "response": {"result": json.loads(message["content"])}}
+            try:
+                result = json.loads(message["content"])
+            except ValueError:  # a result `fit` cut short is no longer JSON: its text as it is
+                result = message["content"]
+            response = {"name": message["name"], "response": {"result": result}}
             if message.get("id"):
                 response["id"] = message["id"]
             if contents and contents[-1]["role"] == "user" and "functionResponse" in contents[-1]["parts"][0]:
@@ -505,15 +475,17 @@ def compact(value):
     return value
 
 
-def fit(messages: list[dict], tokens: int, tools: list[dict] | None = None) -> list[dict]:
+def fit(messages: list[dict], tokens: int, tools: list[dict] | None = None,
+        chars_per_token: float = CHARS_PER_TOKEN) -> list[dict]:
     """`messages` kept small and within about `tokens` with the tools' schemas, so a request never overflows the
     model's window and reads no more than it needs (a local model's time grows with what it reads). Always: tool
     results more than one exchange back become a stub (the replies say what they found; the previous exchange's
     stay whole, for a follow-up). Then, only past the budget: the previous exchange's results become a stub too,
     the oldest exchanges go whole (a user message and everything after it up to the next, so each tool call keeps
     its result), then the current exchange's longest tool results are cut. The system prompt and the latest user
-    message always stay; the list passed in is never changed. A request that still doesn't fit is sent as it is."""
-    budget = tokens * CHARS_PER_TOKEN - len(json.dumps(tools or []))
+    message always stay; the list passed in is never changed. A request that still doesn't fit is sent as it is.
+    The app's own reminders (NUDGE, RETRY...: user messages starting APP_NOTE) belong to the exchange they're in."""
+    budget = tokens * chars_per_token - len(json.dumps(tools or []))
 
     def size(part: list[dict]) -> int:
         return sum(_chars(message) for message in part)
@@ -524,7 +496,8 @@ def fit(messages: list[dict], tokens: int, tools: list[dict] | None = None) -> l
 
     system = [message for message in messages[:1] if message["role"] == "system"]
     rest = messages[len(system):]
-    starts = [0] + [i for i, message in enumerate(rest) if message["role"] == "user" and i > 0]
+    starts = [0] + [i for i, message in enumerate(rest) if message["role"] == "user" and i > 0
+                    and not str(message.get("content") or "").startswith(APP_NOTE)]
     turns = [rest[a:b] for a, b in zip(starts, starts[1:] + [len(rest)])]
     older = [stubbed(turn) for turn in turns[:-2]] + turns[-2:-1]
     current = list(turns[-1]) if turns else []
@@ -572,7 +545,9 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
     option and is only asked."""
     require = [name for name in require or [] if any(tool["name"] == name for tool in tools or [])]
     window = LOCAL_CONTEXT_TOKENS if provider == "local" else API_CONTEXT_TOKENS
-    messages = fit(messages, window - REPLY_TOKENS, tools)
+    # One rate for the trim and for Ollama's num_ctx: a local model's own, once it has shown more tokens than 3.0 gave
+    rate = _CHARS_PER_TOKEN_SEEN.get(model, CHARS_PER_TOKEN) if provider == "local" else CHARS_PER_TOKEN
+    messages = fit(messages, window - REPLY_TOKENS, tools, rate)
     started, first = time.monotonic(), None
     tokens = {"input_tokens": None, "output_tokens": None, "cached_tokens": None}
 
@@ -648,9 +623,10 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
         reply = {"role": "assistant", "content": "".join(text), "tool_calls": calls}
     else:
         # Ollama's default context window is a few thousand tokens and silently cuts off the documents; size it to
-        # the request (fit has already kept it within LOCAL_CONTEXT_TOKENS) plus room to reply, never past the cap.
+        # the request (fit, at the same rate, has kept it and the tools within LOCAL_CONTEXT_TOKENS - REPLY_TOKENS)
+        # plus room to reply, never past the cap.
         chars = sum(_chars(message) for message in messages) + len(json.dumps(tools or []))
-        size = int(chars / _CHARS_PER_TOKEN_SEEN.get(model, CHARS_PER_TOKEN))
+        size = int(chars / rate)
         payload = {"model": model, "messages": _openai_messages(messages, ollama=True), "stream": True,
                    "options": {"num_ctx": min(context_size(size + REPLY_TOKENS), LOCAL_CONTEXT_TOKENS)},
                    "keep_alive": KEEP_ALIVE}
@@ -831,10 +807,13 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
     messages = list(messages)
     start, reminded, require = len(messages), 0, None
     failed = set()  # calls that came back with an error: made again unchanged, they aren't run (small models loop)
+    had, repeats = set(), 0  # calls that ran since the last edit: made again unchanged, not run; MAX_REPEATS ends it
+    dismissed = set()  # edit tools the user dismissed in this answer: not proposed again
     refusals: dict[str, int] = {}  # per tool: at MAX_REFUSALS it isn't run again in this answer
     outcomes = []  # each call's result: True ran, False refused
     refused, succeeded, retried = {}, set(), False  # tools refused and never run: one reminder to try them again
     claimed = False  # a change claimed with no tool run: reminded once (CLAIMED)
+    promised = False  # a next step said, with no call: reminded once (PROMISED)
     for _ in range(MAX_TOOL_ROUNDS):
         reply = _next_reply(provider, model, messages, key, tools, on_text, cancelled, require)
         require = None
@@ -865,6 +844,10 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
                     messages.append({"role": "user", "content": RETRY.format(again[0], again[1][:300])})
                     continue
                 said = reply.get("content") or ""
+                if tools and not promised and PROMISE.search(said):  # "Building the streets from it next", then it
+                    promised = True                                     # stopped (grok-4.7, after place_map)
+                    messages.append({"role": "user", "content": PROMISED})
+                    continue
                 if tools and not outcomes and CLAIM.search(said) and not claimed:  # done, it says; nothing ran
                     claimed = True
                     messages.append({"role": "user", "content": CLAIMED})
@@ -895,11 +878,24 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
                 result = {"error": f"{call['name']} was refused {MAX_REFUSALS} times in this answer, so it isn't run "
                                    "again now. Tell the user in one or two lines what you couldn't do and why (the "
                                    "last refusal says), or ask them for what's missing.", "error_type": "gave_up"}
+            elif call["name"] in dismissed:  # the user's Dismiss is their answer: not asked again in this answer
+                result = {"error": f"The user dismissed {call['name']} in this answer, so it isn't proposed again. "
+                                   "Carry on with the rest of the request, or answer them.", "error_type": "dismissed"}
+            elif same in had:  # qwen3.5 4B listed the roads 4 times running, then hit the round limit
+                repeats += 1
+                result = {"note": "You made this exact call already in this answer and its result is above. Use it: "
+                                  "make the change it was for, or answer the user. Don't call it again."}
             else:
                 result = run_tool(call) if run_tool else {"error": "Tools aren't available here."}
                 if isinstance(result, dict) and "error" in result:
                     failed.add(same)
                     refusals[call["name"]] = refusals.get(call["name"], 0) + 1
+                elif isinstance(result, dict) and "declined" in result:
+                    dismissed.add(call["name"])
+                elif call["name"] in edits:
+                    had.clear()  # the network changed: a read now has news
+                else:
+                    had.add(same)
             if call["name"] not in ("find_tools", "note_plan"):  # bookkeeping, not doing
                 outcomes.append(not (isinstance(result, dict) and "error" in result))
                 if outcomes[-1]:
@@ -908,6 +904,9 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
                     refused.setdefault(call["name"], str(result.get("error") if isinstance(result, dict) else result))
             messages.append({"role": "tool", "id": call["id"], "name": call["name"],
                              "content": json.dumps(compact(result), separators=(",", ":"), default=str)})
+        if repeats >= MAX_REPEATS:  # going round in circles: the answer ends with what was done
+            return _ended(messages, "it kept repeating calls it already had the results of, so the app stopped it",
+                          on_text, start)
     return _ended(messages, f"it made {MAX_TOOL_ROUNDS} rounds of tool calls without answering, so the app stopped it",
                   on_text, start)
 
@@ -924,6 +923,12 @@ CLAIM = re.compile(r"(?i)^\s*\**done\b|\b(?:i(?:'ve| have)|(?:has|have) been|(?:
 CLAIMED = ("(The app: your reply says a change was made, but no tool ran in this answer, so nothing changed. Call the "
            "tool now, or tell the user plainly that it wasn't done.)")
 NOTHING_RAN_NOTE = "(The app: no tool ran in this answer, so nothing was changed.)"
+# A reply saying what it will do next, ending without the call (grok-4.7: "Building the streets from it next."):
+# reminded once
+PROMISE = re.compile(r"(?i)\b(?:i'll|i will|i'm going to|i am going to|let me)\s+(?:now\s+)?(?!be\b)\w+|"
+                     r"\b\w+ing\b[^.!?\n]{0,80}\bnext\b")
+PROMISED = ("(The app: your reply says what you'll do next but calls no tool, so nothing happens until you do. Call it "
+            "now, or say in one line why not.)")
 RETRY = ("(The app: {} was refused: {} Do what that says and call it again, or the tool it points to; or tell the user "
          "in one line why it can't be done.)")
 UNGROUNDED_NOTE = ("(The app: {} of the figures in this reply come from no tool result in this answer, so they are "

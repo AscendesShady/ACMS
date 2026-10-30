@@ -17,5 +17,4 @@ tools/eval_commands.json
 stages/*/*/output/*
 !stages/*/*/output/.gitkeep
 
-# SUMO source checkout (eclipse-sumo/sumo), local reference only
-sumo/
+# (The SUMO source checkout, eclipse-sumo/sumo, lives in references/sumo/: ignored with the rest of references/)

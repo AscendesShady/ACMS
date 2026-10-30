@@ -1,7 +1,8 @@
 # 5. Main flows
 
 1. **Start:** `run.py` → `main()`.
-   - It generates the default grid from `config/defaults.json`, builds the window and applies the theme.
+   - It generates the default grid (`main.py`'s `DEFAULT_*`: 3 × 4 corridors, left-hand, 50 km/h, 2 lanes), builds the
+     window and applies the theme.
    - The first undo snapshot is taken.
    - The AI panel scans for keys and Ollama models (chat for System 2, decision for System 1).
 2. **Edit a road:** click a road → `scene.clicked` → `MainWindow.canvas_clicked` → `select` →
@@ -19,7 +20,7 @@
 6. **Delete by box:** drag over empty map → `scene.boxed` → `MainWindow.box_selected` →
    `network.objects_in_box` (Ctrl/Shift adds to the selection) → `show_group`. Del or Delete
    Selected → `delete_group` asks, naming the roads that go with the selected junctions →
-   `delete_objects` → one undo step.
+   `delete_objects` (an MRT line by `delete_metro_line`) → one undo step.
 7. **Save/Load:** JSON through `network_io`, validated both ways; the AI Mode conversation is
    saved in the same file and restored on load.
 8. **Ask the assistant:** AI Mode → System 2 → pick Chat with and the model → **Start** →

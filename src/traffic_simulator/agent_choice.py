@@ -10,6 +10,8 @@ live run asks the System chosen last. `batch_settings()` gives Batch Run what to
 
 from __future__ import annotations
 
+import threading
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QComboBox, QFormLayout, QHBoxLayout, QLabel, QSlider, QSpinBox
 
@@ -20,6 +22,28 @@ DEADLINE_S = (1, 280, 30)  # Decide within: least, most, at first (simulated s)
 PACES = (1, 2, 5, 10)  # simulated seconds a real second; an answer's latency costs pace x its seconds
 AT_ONCE = (1, 8, 4)  # Runs at once: least, most, at first
 MAX_TIMES = 100
+NOBODY = "no agent"  # a run's key when it has no signal agent
+KEEP_RUNS = 16  # runs whose state is kept: twice the most a batch has going at once (8)
+_runs_lock = threading.Lock()  # a batch's runs start side by side
+
+
+def run_for(runs: dict, agent, t: float, make):
+    """An extension's state for the run this agent's (or NOBODY's) step at time t belongs to, from `runs` (signal
+    agent -> state with last_t and generation, the latest last); a new one, make(agent), when its time went back or
+    jumped (ticked again) or its agent was reset (Stop, then Run at once). The physics and batch threads call it:
+    no Qt here. The last KEEP_RUNS are kept."""
+    key = agent if agent is not None else NOBODY
+    run = runs.get(key)
+    if run is None or run.last_t is None or t < run.last_t or t - run.last_t > 2 \
+            or run.generation != getattr(agent, "generation", 0):
+        run = make(agent)
+        with _runs_lock:
+            runs.pop(key, None)
+            runs[key] = run
+            while len(runs) > KEEP_RUNS:
+                runs.pop(next(iter(runs)))  # the oldest, long finished
+    run.last_t = t
+    return run
 
 
 class ModelBox(QComboBox):
@@ -41,6 +65,7 @@ class AgentChoice:
     def __init__(self, form: QFormLayout, options, system: str = "1", changed=None) -> None:
         self.options, self.changed, self.last_system = options, changed, system
         self._found: dict = {}  # label -> option, as last listed
+        self._picked = None  # model_option(), kept on the UI thread for the physics thread to read
         self.choice = ChoiceButtons(list(SYSTEMS))
         self.choice.set_value(system)
         self.model = ModelBox(self.refresh)
@@ -92,6 +117,7 @@ class AgentChoice:
                 self.model.addItem(option["label"].split(": ", 1)[-1], option["label"])
         self.model.setCurrentIndex(max(0, self.model.findData(picked)))
         self.model.blockSignals(False)
+        self._picked = self._found.get(self.model.currentData())
         if self.model.currentData() != picked:
             self._tell()
 
@@ -100,8 +126,9 @@ class AgentChoice:
         return self.last_system
 
     def model_option(self) -> dict | None:
-        """The model picked for System 1 or 2 (an agent_options entry), or None: AI Mode's own."""
-        return self._found.get(self.model.currentData())
+        """The model picked for System 1 or 2 (an agent_options entry), or None: AI Mode's own. Safe from any
+        thread: a plain attribute the UI thread sets, never the combo box (refresh may be refilling it)."""
+        return self._picked
 
     def batch_settings(self) -> dict:
         """What Batch Run tests: deadline_s, speed, at_once, times, and agents (labels) with their servers (label ->
@@ -129,5 +156,6 @@ class AgentChoice:
         self._tell()
 
     def _tell(self) -> None:
+        self._picked = self._found.get(self.model.currentData())
         if self.changed is not None:
             self.changed(self.last_system, self.model_option())

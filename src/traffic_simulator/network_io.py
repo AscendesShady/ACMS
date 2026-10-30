@@ -21,6 +21,7 @@ from math import ceil, isfinite
 
 from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, quarter_shares
 from .demand import drops_problem
+from .metro import METRO
 from .models import (METRO_SERVICE, Background, BusStop, Crossing, Institution, MetroLine, MetroStop, Network, Node,
                      Road, SpawnPoint, Walkway)
 from .vehicle import VEHICLE_CLASSES
@@ -28,6 +29,7 @@ from .vehicle import VEHICLE_CLASSES
 PROJECT_FORMAT = {"app": "ACMS project", "version": 2}
 MAX_SEED = 2**31 - 1
 from .network_generator import add_boundary_approaches
+from .results import write_whole
 
 
 def save_network(network: Network, path: str | Path, conversation: dict | None = None, project: dict | None = None) -> None:
@@ -39,7 +41,8 @@ def save_network(network: Network, path: str | Path, conversation: dict | None =
     document = {"network": network.configuration(), **network.as_records(), "background": asdict(network.background),
                 "interchanges": network.interchanges, "route_choice": network.route_choice,
                 "metro_demand": network.metro_demand, "walk_demand": network.walk_demand,
-                "spawn_demand": network.spawn_demand}
+                "spawn_demand": network.spawn_demand, "metro_daily": network.metro_daily,
+                "walk_daily": network.walk_daily, "spawn_daily": network.spawn_daily}
     if project is not None:
         problem = project_problem(project)
         if problem:
@@ -47,10 +50,7 @@ def save_network(network: Network, path: str | Path, conversation: dict | None =
         document = {"format": PROJECT_FORMAT, **document, **project}
     if conversation:
         document["conversation"] = conversation
-    target = Path(path)
-    part = target.with_name(target.name + ".part")
-    part.write_text(json.dumps(document, indent=2, allow_nan=False), encoding="utf-8")  # NaN isn't JSON
-    part.replace(target)
+    write_whole(path, json.dumps(document, indent=2, allow_nan=False))  # NaN isn't JSON; a full disk keeps the old
 
 
 def _not_a_number(name: str):
@@ -162,7 +162,7 @@ def project_problem(project: dict) -> str | None:
 def saved_project(path: str | Path) -> dict:
     """A project file's demand, vehicle_types and run (those it has), checked. ValueError says what's wrong."""
     try:
-        document = json.loads(Path(path).read_text(encoding="utf-8"), parse_constant=_not_a_number)
+        document = json.loads(Path(path).read_text(encoding="utf-8-sig"), parse_constant=_not_a_number)
     except (OSError, ValueError) as exc:
         raise ValueError(f"Could not read the project: {exc}") from exc
     project = {key: document[key] for key in ("demand", "vehicle_types", "run") if key in document}
@@ -175,7 +175,7 @@ def saved_project(path: str | Path) -> dict:
 def saved_conversation(path: str | Path) -> dict | None:
     """The AI Mode conversation saved in a network file, or None."""
     try:
-        conversation = json.loads(Path(path).read_text(encoding="utf-8")).get("conversation")
+        conversation = json.loads(Path(path).read_text(encoding="utf-8-sig")).get("conversation")
     except (OSError, ValueError, AttributeError):
         return None
     return conversation if isinstance(conversation, dict) else None
@@ -189,8 +189,8 @@ def _require_list(document: dict[str, Any], key: str) -> list[dict[str, Any]]:
 
 
 def load_network(path: str | Path) -> Network:
-    try:
-        document = json.loads(Path(path).read_text(encoding="utf-8"), parse_constant=_not_a_number)
+    try:  # utf-8-sig: a byte order mark (Notepad, PowerShell 5.1's Set-Content) is read past
+        document = json.loads(Path(path).read_text(encoding="utf-8-sig"), parse_constant=_not_a_number)
     except (OSError, ValueError) as exc:
         raise ValueError(f"Could not read network JSON: {exc}") from exc
     if not isinstance(document, dict) or not isinstance(document.get("network"), dict):
@@ -237,6 +237,8 @@ def load_network(path: str | Path) -> Network:
         network.metro_demand = dict(document.get("metro_demand") or {})  # older files have none
         network.walk_demand = dict(document.get("walk_demand") or {})  # older files have none
         network.spawn_demand = dict(document.get("spawn_demand") or {})
+        for name in ("metro_daily", "walk_daily", "spawn_daily"):  # older files have none
+            setattr(network, name, dict(document.get(name) or {}))
         if isinstance(document.get("background"), dict):  # older files have none: the default
             network.background = Background(**document["background"])
         for record in _require_list(document, "bus_stops"):  # older files have none
@@ -246,13 +248,15 @@ def load_network(path: str | Path) -> Network:
             network.bus_stops[stop.id] = stop
         for record in _require_list(document, "institutions"):  # older files have none
             item = Institution(**record)
+            if "Metro" in item.mode_shares:  # older files: the MRT's mode was named Metro
+                item.mode_shares[METRO] = item.mode_shares.pop("Metro")
             if item.id in network.institutions:
                 raise ValueError(f"Duplicate institution ID: {item.id}")
             network.institutions[item.id] = item
         for record in _require_list(document, "spawn_points"):  # older files have none
             point = SpawnPoint(**record)
             if point.id in network.spawn_points:
-                raise ValueError(f"Duplicate spawn point ID: {point.id}")
+                raise ValueError(f"Duplicate deploy point ID: {point.id}")
             network.spawn_points[point.id] = point
         for record in _require_list(document, "walkways"):  # older files have none
             way = Walkway(**record)
@@ -267,7 +271,7 @@ def load_network(path: str | Path) -> Network:
         for record in _require_list(document, "metro_stops"):  # older files have none
             stop = MetroStop(**record)
             if stop.id in network.metro_stops:
-                raise ValueError(f"Duplicate metro stop ID: {stop.id}")
+                raise ValueError(f"Duplicate MRT stop ID: {stop.id}")
             network.metro_stops[stop.id] = stop
         for record in _require_list(document, "metro_lines"):
             if "train_capacity" in record:  # saved before carriages: the fewest carriages that hold it (400 each at most)
@@ -277,20 +281,25 @@ def load_network(path: str | Path) -> Network:
                 record.update(cars_per_train=cars, car_capacity=round(total / cars) if isinstance(total, (int, float)) else total)
             line = MetroLine(**record)
             if line.id in network.metro_lines:
-                raise ValueError(f"Duplicate metro line ID: {line.id}")
+                raise ValueError(f"Duplicate MRT line ID: {line.id}")
             network.metro_lines[line.id] = line
         # Older files also list static mock-up vehicles; vehicles now come from the simulation.
-        if not network.approach_nodes and not network.approach_roads:
+        if "approach_nodes" not in document and "approach_roads" not in document:
             # Files produced by the initial editor did not persist approaches;
             # reconstruct them from the loaded, possibly edited, grid geometry.
+            # A file that lists none (every end deleted) opens with none.
             add_boundary_approaches(network)
-        elif not network.approach_nodes or not network.approach_roads:
+        elif bool(network.approach_nodes) != bool(network.approach_roads):
             raise ValueError("Approach nodes and approach roads must be provided together.")
     except (KeyError, TypeError, ValueError) as exc:
         if isinstance(exc, ValueError) and str(exc).startswith("Duplicate"):
             raise
         raise ValueError(f"Invalid network record: {exc}") from exc
 
+    for node in network.nodes.values():  # older files kept a split or re-tied road's window under its old id
+        if isinstance(node.manual_greens_s, dict) and node.manual_greens_s:
+            here = {road.id for road in network.all_roads() if node.id in (road.from_node, road.to_node)}
+            node.manual_greens_s = {road: window for road, window in node.manual_greens_s.items() if road in here}
     network.validate()
     # Geometry is authoritative; reject files where duplicated lengths disagree.
     for road in network.all_roads():

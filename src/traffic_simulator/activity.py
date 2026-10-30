@@ -8,7 +8,7 @@ changes (the network, demand and vehicle types: MainWindow._state_changes) goes 
 kind, where (the open tab, or a dialog's title), what (the control's name: its text, form label, placeholder or
 tooltip) and the value. A click or a choice also logs everything it changed besides itself, from the window's
 values noted when it was pressed (`_state`, `_changes`): a field or list the app filled ("set": a Random button's
-pick), a box it ticked, a message it showed ("shown") and the status bar's ("message"). Lines also wait in `pending` for the Research Log's next step (`take`). Password fields log
+pick), a box it ticked, a message it showed ("shown") and the status bar's ("message"). Lines also wait in `pending` for the Research Log's next step (`take`), the last KEEP_PENDING at most. Password fields log
 "(hidden)", and a text field the app itself changed (the question box cleared after Ask) logs nothing. A logger
 only: it never asks the assistant anything.
 """
@@ -20,7 +20,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from PySide6.QtCore import QEvent, QObject, Qt, QTimer
+from PySide6.QtCore import QEvent, QObject, Qt, QTimer, Signal
 from PySide6.QtWidgets import (QAbstractButton, QAbstractSlider, QAbstractSpinBox, QApplication, QComboBox,
                                QFormLayout, QGraphicsView, QLabel, QLineEdit, QMainWindow, QMenu, QPlainTextEdit,
                                QTextEdit, QToolButton, QWidget)
@@ -28,7 +28,8 @@ from PySide6.QtWidgets import (QAbstractButton, QAbstractSlider, QAbstractSpinBo
 COLUMNS = ["Time", "Seconds", "Kind", "Where", "What", "Value"]
 SAME_WITHIN_S = 0.4  # one gesture reaching the log two ways (a button and its action) is logged once
 MAX_TEXT = 500
-ENTRIES = (QLineEdit, QAbstractSpinBox, QTextEdit, QPlainTextEdit)
+KEEP_PENDING = 5000  # lines waiting for a Research Log step: with none taking them, the oldest go (the CSV has them all)
+ENTRIES =(QLineEdit, QAbstractSpinBox, QTextEdit, QPlainTextEdit)
 
 
 def name_of(widget: QWidget) -> str:
@@ -67,6 +68,8 @@ def value_of(widget: QWidget) -> str:
 
 class ActivityLog(QObject):
     """The window's activity log: `start(folder)`, `stop()`, `log(...)`; `where()` names the open tab."""
+
+    failed = Signal(str)  # the file couldn't be written (a full disk): logging went off; why
 
     def __init__(self, where=lambda: "", parent: QObject | None = None) -> None:
         super().__init__(parent)
@@ -119,13 +122,20 @@ class ActivityLog(QObject):
         if not self.on:
             return None
         self.log("watch", "Watch my edits", "off")
+        if self.on:  # that last line could have failed and shut it already
+            self._shut()
+        return self.path
+
+    def _shut(self) -> None:
         app = QApplication.instance()
         app.removeEventFilter(self)
         app.focusChanged.disconnect(self._focus_changed)
-        self._file.close()
-        self._file = self._writer = None
+        file, self._file, self._writer = self._file, None, None
         self._at_focus.clear()
-        return self.path
+        try:
+            file.close()
+        except OSError:
+            pass  # what it couldn't flush is lost either way
 
     def log(self, kind: str, what: str, value: str = "", where: str | None = None) -> None:
         """One line, unless the same thing was logged a moment ago (one gesture seen two ways)."""
@@ -138,9 +148,15 @@ class ActivityLog(QObject):
         self._last = (key, now)
         line = [datetime.now().isoformat(timespec="milliseconds"), round(now - self._began, 2), kind, where, what,
                 str(value)[:MAX_TEXT]]
-        self._writer.writerow(line)
-        self._file.flush()
+        try:
+            self._writer.writerow(line)
+            self._file.flush()
+        except OSError as exc:  # a full disk: off, said once, rather than an error on every click
+            self._shut()
+            self.failed.emit(f"Watch my edits stopped: couldn't write {self.path} ({exc.strerror or exc}).")
+            return
         self.pending.append(line)
+        del self.pending[:-KEEP_PENDING]
 
     def take(self) -> list[list]:
         """The lines since the last call (each Research Log step takes its own)."""

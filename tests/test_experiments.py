@@ -955,8 +955,10 @@ def test_emergency_vehicles_join_a_run_and_a_batch_tests_the_devl():
         watch.stop()
         experiments.run_headless = unpaced
     assert any(text not in ("00:00:00", "0:00:00") for text, _, _ in seen), seen[:3]
-    assert any("Never preempt (baseline), seed 1:" in tip and "of 00:05:00" in tip for _, tip, _ in seen)  # by name
-    assert any(text == tip.split(": ")[1].split(" of")[0] for text, tip, _ in seen if "seed 1:" in tip)  # its time
+    assert any("Never preempt (baseline), seed 1:" in message and "of 00:05:00" in message
+               for _, _, message in seen)  # by name, in the status bar (the tooltip: five words)
+    assert any(text == message.split("seed 1: ")[1].split(" of")[0] for text, _, message in seen
+               if "seed 1: " in message)  # its time
     assert any("left" in message for _, _, message in seen)  # the batch's time left
     assert window.clock_label.toolTip() == "Simulation time" and not window._headless  # back to the live clock
     shown = [frame for frame in drawn if frame is not None]
@@ -1083,6 +1085,93 @@ def test_the_window_checks_a_sized_demand_in_a_run():
     share, report = window._check_demand([pair])
     assert 0 < share < 0.5 and report["kept"] == f"{share:.0%}" and len(report["tried"]) == 1 + experiments.HOLD_STEPS
     window.close()
+
+
+def test_the_demand_check_runs_as_long_as_its_busiest_quarter_needs():
+    """hold_minutes, which the window's progress and report show: an even hour 45 min; the busiest quarter's end
+    otherwise, a first-quarter peak's in the second hour."""
+    from types import SimpleNamespace
+
+    from traffic_simulator.experiments import hold_minutes
+
+    def demand(*quarters):
+        return [SimpleNamespace(hourly=600.0, quarters=quarters)]
+
+    assert hold_minutes(demand()) == hold_minutes(demand(0.25, 0.25, 0.25, 0.25)) == 45
+    assert hold_minutes(demand(0.05, 0.05, 0.05, 0.85)) == 60
+    assert hold_minutes(demand(0.85, 0.05, 0.05, 0.05)) == 75
+    assert hold_minutes(demand(0.2, 0.4, 0.2, 0.2)) == 45  # a peak-hour factor's second quarter: inside the 45
+
+
+def test_the_demand_check_judges_the_busiest_quarter_wherever_it_falls():
+    # quarters putting the hour's peak in its last 15 minutes: judged there (the run goes on to 60 min), not in the
+    # second quarter, which then passed a peak that jams
+    from traffic_simulator.daily_profile import quarter_shares
+
+    demand = [PairDemand(o, d, 1000, None, [], "Random", (0, 100, 0), quarters=quarter_shares((5, 5, 5, 85)))
+              for o, d in (("1W", "2E"), ("2E", "1W"))]
+    found = experiments.holds(generate_network(2, 2), demand, VehicleModes().modes, seed=1)
+    assert found["holds"] is False and found["peak_quarter_build_up"] > experiments.HOLD_BUILD_UP, found
+
+
+def test_detector_minutes_and_calibration_intervals_start_where_the_warm_up_ends():
+    """Observed from 10 min for 10: a detector's 5 vehicles a minute are counted in those 10 minutes (not minutes
+    0-9, all empty); a profile's intervals are the measured ones (15-min intervals of a run measured from 15 min:
+    three), trip time by arrival with no fake 0 s for an interval nobody arrived in."""
+    passages = [("r", "r>", 0, 600 + 12 * i + 6, 10.0, 5.0) for i in range(50)]
+    found = experiments.detectors({"observed": {"passages": passages, "observed_s": 600, "observed_from_s": 600},
+                                   "time_s": 1200})
+    assert found["detectors"][0]["counts_per_minute"]["mean"] == 5
+    rows = [[60 * (minute + 1)] + [0] * 5 + [100 if minute < 15 else 200] + [0] * 7 for minute in range(60)]
+    kpis = {"time_s": 3600, "measure_from_s": 900,
+            "observed": {"minute_rows": rows, "trips": [("1W", "1E", "Car", 100.0, 0.0, 2000.0),
+                                                        ("1W", "1E", "Car", 200.0, 0.0, 3000.0)],
+                         "observed_s": 2700, "observed_from_s": 900}}
+    assert experiments.series(kpis, "throughput", interval_min=15) == [200, 200, 200]
+    try:
+        experiments.series(kpis, "trip_time", interval_min=15)  # nobody arrived in 15-30 min
+    except ValueError as exc:
+        assert "interval 1" in str(exc)
+    else:
+        raise AssertionError("an interval without arrivals is refused, not read as 0 s")
+    kpis["observed"]["trips"].append(("1W", "1E", "Car", 150.0, 0.0, 1700.0))
+    assert experiments.series(kpis, "trip_time", interval_min=15) == [150, 100, 200]
+
+
+def test_queues_are_judged_against_the_length_of_their_own_direction():
+    """Each direction's 95th-percentile queue (a link, metres a lane of it) against the road's length: 300 m of a
+    500 m road each way is 0.6 of it, not spilling back."""
+    observed = {"trips": [], "minute_rows": [], "minutes": 0, "entries": {}, "samples": 10,
+                "queues": {"r>": {300: 10}, "r<": {300: 10}}, "roads": {"r": {"length_m": 500.0}}}
+    rows = experiments.analyse_run({"observed": observed, "roads": []}, every=True)["queues_p95"]
+    assert [(row["link"], row["road"], row["ratio"], row["spills_back"]) for row in rows] == [
+        ("r>", "r", 0.6, False), ("r<", "r", 0.6, False)]
+
+
+def test_a_designs_weighted_mean_is_over_the_conditions_it_was_run_under():
+    conditions = [{"name": "dry", "weight": 3}, {"name": "wet", "weight": 1}]
+    runs = [{"scenario": "A | dry", "measures": {"delay_veh_h": 10}}, {"scenario": "A | wet", "measures": {"delay_veh_h": 20}},
+            {"scenario": "B | dry", "measures": {"delay_veh_h": 8}}]  # B not run in the wet
+    designs = {row["design"]: row for row in experiments.condition_summary(runs, ["A", "B"], conditions, "delay_veh_h",
+                                                                           False)["designs"]}
+    assert designs["A"]["weighted_mean"] == 12.5 and designs["B"]["weighted_mean"] == 8  # not 8 × 3 / 4 = 6
+
+
+def test_a_sensitivity_sweep_leaves_no_run_for_recover_to_find():
+    """Its runs are kept to their KPIs: no working folder is left in the runs folder for the next launch to turn
+    into a "(recovered)" workbook."""
+    from traffic_simulator import results
+
+    network, modes = generate_network(2, 2), VehicleModes().modes
+    demand = [PairDemand("1W", "1E", 600.0, None, [], "Random", (0, 100, 0))]
+    real = results.RUNS
+    with tempfile.TemporaryDirectory() as folder:
+        results.RUNS = Path(folder)
+        try:
+            found = experiments.parameter_sensitivity(network, demand, modes, [1], 60, ("tau_s",))
+        finally:
+            results.RUNS = real
+        assert found["runs"] == 3 and not list(Path(folder).iterdir()), list(Path(folder).iterdir())
 
 
 if __name__ == "__main__":

@@ -22,18 +22,21 @@ import json
 import random
 import re
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 from copy import deepcopy
 from math import ceil, cos, exp, hypot, isfinite, log, radians, sin, sqrt
 from pathlib import Path
 
 from . import background_network
-from .daily_profile import ARRIVAL_PATTERNS
+from .daily_profile import ARRIVAL_PATTERNS, DailyProfile, profile_record
+from .demand import profile_from
 from .design_checks import analyse_network, network_indices, roads_at, route_lengths, tightest
 from .geometry import distance_to_segment, polyline_length
 from .institutions import KINDS, WALK, catchment, door, footprint_problem, hourly_people, links, place, shares
-from .models import CROSSING_KINDS, MAX_WALK_DEMAND
+from .models import (CROSSING_KINDS, MAX_METRO_DEMAND, MAX_WALK_DEMAND, METRO_MIN_SPACING_M, METRO_SERVICE,
+                     MetroCrossing)
 from .metro import METRO, METRO_WALK_M, WALK_KMH, door as metro_door, places as metro_places, ride as metro_ride
+from .results import clock_h
 from .interchanges import (build_diamond, build_slip_road, build_trumpet, curve_speed_kmh, fit_slip_roads, guess_stem,
                            pair_legs)
 from . import map_tiles
@@ -41,7 +44,7 @@ from .map_tiles import Frame, mercator
 from .models import BUS_STOP_DIRECTIONS, MAX_BOARDING_PER_H, SIGNAL_METHODS, Network, Road
 from .network_generator import generate_network
 from .roundabouts import MAX_ENTRY_LANES, design_roundabout
-from .lane_graph import Graph
+from .lane_graph import CYCLE_LANE_TIME_FACTOR, Graph
 from . import scenario, stats
 from .stats import geh
 from .vehicle import VEHICLE_CLASSES
@@ -123,6 +126,7 @@ _CONDITIONS = {key: _SCENARIO["properties"][key] for key in ("incidents", "weath
 _MEASURE_FROM = {"measure_from_min": {"type": "number", "description": "Warm-up left out of the figures: measure from "
                                       "this minute (default 0; analyse_run's MSER-5 warm-up suggests one)."}}
 FOOTPATH_SIDES = {"both": ("left", "right"), "left": ("left",), "right": ("right",), "none": ()}  # update_roads
+CYCLE_LANE_SIDES = ("both", "forward", "backward", "none")  # update_roads: forward rides from -> to, to the to-node
 
 TOOLS = [
     # Read: run straight away.
@@ -241,7 +245,16 @@ TOOLS = [
                                            "{\"mode\": \"Car\", \"percent\": 80}].",
                                            "items": {"type": "object", "required": ["mode", "percent"],
                                                      "properties": {"mode": {"type": "string"},
-                                                                    "percent": {"type": "number"}}}}})},
+                                                                    "percent": {"type": "number"}}}},
+                            "drop_offs": {"type": "array", "description": "The drop-off slider's stops: trips of a "
+                                          "type ending part way, at a junction on the pair's route (or a share of "
+                                          "the trip 0-1), whole % of that type's trips; the rest reach the "
+                                          "destination. Replaces the types named; [] clears. Up to 20 pairs, e.g. "
+                                          "[{\"mode\": \"Bus\", \"at\": \"N12\", \"percent\": 30}].",
+                                          "items": {"type": "object", "required": ["mode", "at", "percent"],
+                                                    "properties": {"mode": {"type": "string"},
+                                                                   "at": {"type": "string"},
+                                                                   "percent": {"type": "integer"}}}}})},
     {"name": "shape_daily_curve", "edits": True,
      "description": "Shape how the pairs' daily trips spread over 24 hours, in the Demand Generator's curve "
                     "editor. Give exactly one of: points [[hour, level], ...] with hours 0-24 and levels 0-1 "
@@ -458,8 +471,8 @@ TOOLS = [
                     "junctions.",
      "parameters": _object({"id": {"type": "string"}})},
     {"name": "metro_report", "edits": False,
-     "description": "The metro lines' loads at the design hour (the hour most ride): the metro's own OD matrix (station "
-                    "to station, M1->M2) and the buildings' metro riders between their stations, on their line (no "
+     "description": "The MRT lines' loads at the design hour (the hour most ride): the MRT's own OD matrix (station "
+                    "to station, M1->M2) and the buildings' MRT riders between their stations, on their line (no "
                     "transfers); each line's riders, "
                     "passenger-km, busiest stop-to-stop segment and its load each way against capacity (HCM 2000 Eq "
                     "27-28: 60 / headway trains x carriages x passengers a carriage x PHF 0.75), over capacity "
@@ -648,7 +661,7 @@ TOOLS = [
                     "and type (a run id, e.g. R1) where it has them, else free flow along the shortest route. The "
                     "logit shares are people; each type's vehicles are its people over its occupancy, and timetabled "
                     "types keep their timetable. A pair's people stay; its vehicles change with the split. Road pairs "
-                    "never take the metro (it has its own OD matrix). nests make it a nested logit. Also returns "
+                    "never take the MRT (it has its own OD matrix). nests make it a nested logit. Also returns "
                     "the value of time, each mode's mean direct elasticities and each pair's logsum (a change's "
                     "benefit is the change in logsum over -cost, cents a trip). Works the Demand Generator's controls.",
      "parameters": _object({**_PAIRS,
@@ -687,14 +700,21 @@ TOOLS = [
                     "(webster: each junction alone from its demand; transyt, synchro: coordinated offline; scats, "
                     "scoot: adaptive from detectors; actuated: each green extends while vehicles keep coming, 7-50 s; "
                     "max_pressure: the phase with the most vehicles waiting, less those queued past it, goes next; "
-                    "fixed: the green_times_s given), phases 2 or 4, green_times_s "
-                    "(one a phase, for fixed), cycle_min_s and cycle_max_s (20-240, the coordinated methods), "
+                    "fixed: the green_times_s given; manual: the windows given), phases 2 or 4, green_times_s "
+                    "(one a phase, for fixed), windows (manual: each arm, N/E/S/W or its road id, -> [first, last] "
+                    "second of the cycle it goes, its last amber_s seconds amber, red the rest; opposite arms may share "
+                    "a window to go together, others go in turn; an arm left out stays red), amber_s (3-6, manual; "
+                    "3 by default), cycle_min_s and cycle_max_s (20-240, the coordinated methods), "
                     "target_saturation_percent (50-110, SCATS and SCOOT), stop_weight_s (TRANSYT and SCOOT). Give "
                     "only what changes. The junctions must be signalised (set_junction_control).",
      "parameters": _object({"junctions": _IDS, "method": {"type": "string", "enum": list(SIGNAL_METHODS)},
                             "phases": {"type": "integer", "description": "2 or 4"},
                             "green_times_s": {"type": "array", "items": {"type": "number"},
                                               "description": "seconds, one a phase; given alone they mean method fixed"},
+                            "windows": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "number"}},
+                                        "description": "arm -> [first, last] s, e.g. {\"N\": [1, 120], \"E\": [121, 150]}; "
+                                                       "given alone they mean method manual"},
+                            "amber_s": {"type": "number"},
                             "cycle_min_s": {"type": "number"}, "cycle_max_s": {"type": "number"},
                             "target_saturation_percent": {"type": "number"}, "stop_weight_s": {"type": "number"}},
                            ("junctions",))},
@@ -740,7 +760,8 @@ TOOLS = [
                     "pocket_junction (an end its traffic arrives at) sets a turn pocket on that approach: "
                     "pocket_lanes 1-2 (0 removes it), pocket_length_m 15-150, pocket_side 'kerb' (kerb turns) or "
                     "'offside' (offside turns, U-turns). footpaths 'both', 'left', 'right' (from -> to) or 'none'; "
-                    "cycle_lanes 'both' (a bikes-only lane each way) or 'none'.",
+                    "cycle_lanes 'both' (a bikes-only lane each way), 'forward' (from -> to only), 'backward' (to -> "
+                    "from only) or 'none'. Only a bicycle vehicle type rides one (create_vehicle_types).",
      "parameters": _object({"roads": _IDS, "lanes_per_direction": {"type": "integer"},
                             "add_lanes": {"type": "integer", "description": "Lanes to add each way (negative: remove)."},
                             "speed_limit_kmh": {"type": "number"},
@@ -751,10 +772,10 @@ TOOLS = [
                             "pocket_lanes": {"type": "integer"}, "pocket_length_m": {"type": "number"},
                             "pocket_side": {"type": "string", "enum": ["kerb", "offside"]},
                             "footpaths": {"type": "string", "enum": list(FOOTPATH_SIDES)},
-                            "cycle_lanes": {"type": "string", "enum": ["both", "none"]}}, ("roads",))},
+                            "cycle_lanes": {"type": "string", "enum": list(CYCLE_LANE_SIDES)}}, ("roads",))},
     {"name": "add_crossing", "edits": True,
      "description": "Put a pedestrian crossing across a road with footpaths on both sides, at_m from its from-junction "
-                    "(the middle if not given), at least 20 m from either junction: kind 'zebra' (walkers have right of "
+                    "(the middle if not given), at least 20 m from either junction and beyond its corners: kind 'zebra' (walkers have right of "
                     "way: traffic stops for them) or 'overbridge' (over the traffic, stairs to climb). Without one, "
                     "walkers cross a junction's arm in a gap in its traffic.",
      "parameters": _object({"road": {"type": "string"}, "at_m": {"type": "number"},
@@ -766,12 +787,18 @@ TOOLS = [
                             "bends": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}}},
                            ("start", "end"))},
     {"name": "set_pedestrian_demand", "edits": True,
-     "description": "Set people walking an hour between boundary ends (pairs like '1W->1E') or between spawn "
-                    "points ('S1->S2'; add_spawn_points); 0 removes a pair. They walk the footpaths and paths in a run; "
-                    "institutions' walkers come on top.",
-     "parameters": _object({"pairs": _IDS, "people_per_hour": {"type": "number"}}, ("pairs", "people_per_hour"))},
+     "description": "Set people walking between boundary ends (pairs like '1W->1E') or between deploy points "
+                    "('S1->S2'; add_spawn_points): people_per_hour (hourly demand) or people_per_day (daily demand), "
+                    "one of them; 0 removes a pair. Daily: shape the pairs' day with points, polynomial or preset as "
+                    "shape_daily_curve takes them (else a new pair's day is the weekday's, a pair's own kept). A run "
+                    "uses whichever the Demand Generator's Hourly/Daily switch shows, as for vehicles. They walk the "
+                    "footpaths and paths; institutions' walkers come on top.",
+     "parameters": _object({"pairs": _IDS, "people_per_hour": {"type": "number"}, "people_per_day": {"type": "number"},
+                            "points": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}},
+                            "polynomial": {"type": "array", "items": {"type": "number"}},
+                            "preset": {"type": "string", "enum": ["weekday", "flat"]}}, ("pairs",))},
     {"name": "add_spawn_points", "edits": True,
-     "description": "Place pedestrian spawn points S1, S2... at points [[x, y], ...] metres, anywhere near the "
+     "description": "Place pedestrian deploy points S1, S2... at points [[x, y], ...] metres, anywhere near the "
                     "network: walkers go straight from one to its nearest footpath and from the footpath nearest their "
                     "destination straight to it. Then set_pedestrian_demand between them ('S1->S2').",
      "parameters": _object({"points": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}}},
@@ -800,8 +827,41 @@ TOOLS = [
                     "SOUTH (down the screen): 50 m north is dy -50.",
      "parameters": _object({"junctions": _IDS, "dx": {"type": "number"}, "dy": {"type": "number"}},
                            ("junctions", "dx", "dy"))},
+    {"name": "add_metro_line", "edits": True,
+     "description": "Build an MRT line (as Edit Network > MRT does) through stations at points [[x, y], ...] "
+                    f"metres, in order, 2 or more, each at least {METRO_MIN_SPACING_M:g} m from the last: underground or "
+                    "raised, apart from "
+                    "the roads. Each leg curves from its station; a turn too sharp draws the station in, so the result "
+                    "gives where each one went. A leg crossing another line is refused unless merge is true: then "
+                    "it ends at an interchange station there, on both lines, and the next point carries on. Service "
+                    "(assumed if not given): headway_min 5 (1-60) between trains each way, speed_kmh 35 (10-120, "
+                    "dwell included), cars_per_train 5 (1-12), car_capacity 200 (20-400 passengers), fare_cents 100. "
+                    "Then set_metro_demand gives it riders; institutions' MRT riders come on top.",
+     "parameters": _object({"stations": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}},
+                            "merge": {"type": "boolean"}, "headway_min": {"type": "number"},
+                            "speed_kmh": {"type": "number"}, "cars_per_train": {"type": "integer"},
+                            "car_capacity": {"type": "integer"}, "fare_cents": {"type": "number"}}, ("stations",))},
+    {"name": "update_metro_line", "edits": True,
+     "description": "Change an MRT line's service (ranges as add_metro_line's); give only what changes. Its stations "
+                    "and track stay as built.",
+     "parameters": _object({"line": {"type": "string"}, "headway_min": {"type": "number"},
+                            "speed_kmh": {"type": "number"}, "cars_per_train": {"type": "integer"},
+                            "car_capacity": {"type": "integer"}, "fare_cents": {"type": "number"}}, ("line",))},
+    {"name": "set_metro_demand", "edits": True,
+     "description": "Set MRT passengers between stations (pairs like 'M1->M2', joined by one line or one change at "
+                    "an interchange), the Demand Generator's MRT matrix: passengers_per_hour (hourly demand) or "
+                    "passengers_per_day (daily demand), one of them; 0 removes a pair. Daily: shape the pairs' day "
+                    "with points, polynomial or preset as shape_daily_curve takes them. metro_report then gives the "
+                    "lines' loads against capacity.",
+     "parameters": _object({"pairs": _IDS, "passengers_per_hour": {"type": "number"},
+                            "passengers_per_day": {"type": "number"},
+                            "points": {"type": "array", "items": {"type": "array", "items": {"type": "number"}}},
+                            "polynomial": {"type": "array", "items": {"type": "number"}},
+                            "preset": {"type": "string", "enum": ["weekday", "flat"]}}, ("pairs",))},
     {"name": "delete_objects", "edits": True,
-     "description": "Delete roads, junctions (with their roads), boundary ends, bus stops or institutions.",
+     "description": "Delete roads, junctions (with their roads), boundary ends, bus stops, institutions, paths, "
+                    "crossings, deploy points or MRT lines (ML1: with its stations and their demand; an interchange "
+                    "stays on its other line).",
      "parameters": _object({"ids": _IDS}, ("ids",))},
     {"name": "build_interchange", "edits": True,
      "description": "Build a grade-separated interchange. trumpet: 3 junctions (two on the freeway, stem "
@@ -842,8 +902,8 @@ TOOLS = [
                     "catchment. observed_percent (e.g. {\"Car\": 30}) calibrates the constants until the model gives "
                     "those shares (the others keep their relative odds). Defaults are stated in the result. Sets "
                     "mode_shares; a Run's vehicles are people x share / occupancy (walkers none, bus riders on the buses). "
-                    "With metro lines, the metro stations of its door station's line (the nearest within 800 m) inside "
-                    "its circle are places its people come from too, as the junctions are: there they choose \"Metro\" "
+                    "With MRT lines, the MRT stations of its door station's line (the nearest within 800 m) inside "
+                    "its circle are places its people come from too, as the junctions are: there they choose \"MRT\" "
                     "(the ride, half the headway, the walk on; cost the line's fare plus any given) or Walk; riders add "
                     "no vehicles.",
      "parameters": _object({"institutions": _IDS,
@@ -878,11 +938,20 @@ TOOLS = [
                     "residential streets, the default). Image: the pixels of road_colour ('#rrggbb'; ask the "
                     "user if you don't know it) within colour_tolerance (default 40), traced to centre lines at "
                     "resolution_m metres a pixel (default 2); lanes from their width. Roads leaving the area "
-                    "become boundary ends. Institutions still on clear ground stay. Walking (the map): footpaths "
-                    "'tagged' (as OSM's sidewalk tags and sidewalk ways say; the default), 'all' (every road both "
-                    "sides) or 'none'; zebra crossings, footbridges (overbridges), paths and cycle lanes as mapped.",
+                    "become boundary ends. Only roads a car can drive between the ends are kept (one-way traps and "
+                    "cut-off parts left out: streets_left_out), so every OD pair has a route. Institutions still on "
+                    "clear ground stay. Walking (the map), only when the user asks for it: "
+                    "footpaths 'tagged' (OSM's sidewalk tags and ways, with its zebras, footbridges and paths), 'all' "
+                    "(every road both sides, and those) or 'none' (the default: no walkways, crossings or paths). "
+                    "Cycle lanes as mapped.",
      "parameters": _object({"road_classes": {"type": "string", "enum": ["main", "all"]},
                             "footpaths": {"type": "string", "enum": ["tagged", "all", "none"]},
+                            "main_lanes": {"type": "array", "items": {"type": "integer"}, "description":
+                                           "[fewest, most] lanes per direction, 1-6, for main roads (motorway to "
+                                           "tertiary): OSM's lanes, or its class default, held in that range. "
+                                           "Only when the user gives lanes."},
+                            "local_lanes": {"type": "array", "items": {"type": "integer"}, "description":
+                                            "The same for local streets (unclassified, residential)."},
                             "width_m": {"type": "number"}, "height_m": {"type": "number"},
                             "road_colour": {"type": "string"}, "colour_tolerance": {"type": "number"},
                             "resolution_m": {"type": "number"}})},
@@ -903,7 +972,9 @@ TOOLS = [
                             "signal_method": {"type": "string", "enum": list(SIGNAL_METHODS)},
                             "width_m": {"type": "number", "description": "A size in metres instead of horizontal and "
                                         "vertical: the rows and columns are worked out (blocks widened to fit 20)."},
-                            "height_m": {"type": "number"}})},
+                            "height_m": {"type": "number"},
+                            "footpaths": {"type": "boolean", "description": "Pedestrian walkways (footpaths) on both "
+                                          "sides of every road; false or omitted: none. Ask the user if not said."}})},
 ]
 EDIT_TOOLS = {tool["name"] for tool in TOOLS if tool["edits"]}
 OD_TOOLS = {"read_od_matrix", "set_od_demand", "shape_daily_curve", "generate_demand", "scale_demand", "calibrate_demand",
@@ -921,7 +992,8 @@ RUN_TOOLS = {"run_simulation", "run_experiment", "read_results", "compare_runs",
 SCENARIO_TOOLS = {"set_signal_timing", "set_junction_control", "update_roads", "add_junction", "add_road",
                   "add_boundary_end", "move_junctions", "delete_objects", "build_interchange", "add_slip_road",
                   "set_end_flows", "add_bus_stop", "update_bus_stop", "update_institution",
-                  "add_crossing", "set_pedestrian_demand"}  # what an experiment's scenario may change (a zebra: what if)
+                  "add_crossing", "set_pedestrian_demand",
+                  "add_metro_line", "update_metro_line", "set_metro_demand"}  # what an experiment's scenario may change
 TYPE_TOOLS = {"list_vehicle_types", "create_vehicle_types", "update_vehicle_type"}  # Mode Behavior's types: the window
 UI_TOOLS = {"get_selection", "show_on_map", "read_traffic", "note_plan", "find_tools", *OD_TOOLS, *TYPE_TOOLS, *RUN_TOOLS}  # need the window
 
@@ -947,8 +1019,9 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
                "add_boundary_end", "set_junction_control", "build_interchange", "add_slip_road")),
     "place": (r"\bmap\b|openstreetmap|\bosm\b|background|image|picture|real\b|district|neighbo|suburb",
               ("place_map", "network_from_background")),
-    "metro": (r"metro|rail|subway|underground|\btube\b|train|station|transit|ridership|crowd",
-              ("metro_report", "choose_modes", "institution_mode_split")),
+    "metro": (r"metro|\bmrt\b|rail|subway|underground|\btube\b|train|station|transit|ridership|crowd",
+              ("add_metro_line", "update_metro_line", "set_metro_demand", "metro_report", "delete_objects",
+               "choose_modes", "institution_mode_split")),
     "freeway": (r"weav|freeway|motorway|highway|ramp|merge|diverg|auxiliary|interchange",
                 ("weaving_los", "design_audit", "build_interchange", "add_slip_road")),
     "demand": (r"dema?nd|traffic|trip|\bod\b|matrix|flow|bus(?:y|ier|iest)|heav|light\b|quiet|peak|rush|satur|veh|"
@@ -964,8 +1037,9 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
                      r"populat|dense|land use|employ|catchment|block",
                      ("list_institutions", "deploy_institutions", "place_institution", "update_institution",
                       "institution_mode_split")),
+    # not "peak": peak traffic is a demand level (demand's words), and a run's tools are 6k characters more
     "run": (r"simulat|\brun|test|result|perform|throughput|delay|speed|queue|slow|congest|jam|how (?:well|bad|good)|"
-            r"peak|busiest|worst|live",
+            r"busiest|worst|live",
             ("run_simulation", "read_results", "analyse_run", "check_run_health", "read_traffic", "compare_runs")),
     "signals": (r"signal|traffic light|timing|phase|cycle|green|webster|transyt|synchro|scats|scoot|actuat|pressure|"
                 r"slow|\blos\b|level of service|optimi",
@@ -983,11 +1057,13 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
                   "regress", "emissions_report", "resilience", "junction_los", "diagnose_signal", "critical_links",
                   "network_indices", "design_audit", "accessibility_report", "cluster_conditions", "assign_routes",
                   "parameter_sensitivity")),
-    "pedestrians": (r"pedestri|walk|footpath|sidewalk|pavement|zebra|crossing|overbridge|footbridge|cycle lane|"
-                    r"bike lane|cyclist|\bpath",
+    "pedestrians": (r"pedestri|walk|footpath|sidewalk|pavement|zebra|crossing|overbridge|footbridge|\bpath",
                     ("pedestrian_summary", "add_crossing", "add_path", "set_pedestrian_demand", "add_spawn_points",
                      "update_roads",
                      "delete_objects")),
+    # a cycle lane is ridden only by a bicycle type: offered with the types
+    "cycling": (r"cycle lane|bike lane|cycle path|cyclist|cycling|bicycl",
+                ("update_roads", "pedestrian_summary", "list_vehicle_types", "create_vehicle_types")),
     "transit": (r"\bbus(?:es)?\b|bus stop|\bstops?\b|transit|passenger|vehicle type|truck|lorry|bike|bicycle|taxi|van\b|fleet|headway|tram",
                 ("add_bus_stop", "update_bus_stop", "list_vehicle_types", "create_vehicle_types",
                  "update_vehicle_type")),
@@ -998,6 +1074,73 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
     "docs": (r"\bcode\b|source|function|module|formula|implement|where does|how (?:do|can) i\b|how to\b|readme|"
              r"setup|set up|install|api key|\bkeys?\b|button|menu|shortcut|undo", ("read_source",)),
 }
+# Skills: how to do a group's kind of task well, sent with a request only when its words offer that group (and with
+# find_tools' tools), not every request: as one system-prompt list they were 4.5k characters of every request. The
+# words in quotes are examples of what users say.
+SKILLS = {
+    "build": "\"a city of W x H metres\", \"a new grid\": generate_grid with vertical = W / spacing_m + 1 columns and "
+             "horizontal = H / spacing_m + 1 rows (spacing_m 200-400; a dense city 200-250). It replaces the network; "
+             "to keep some roads, edit the network instead (add_road, delete_objects, update_roads). No pedestrian walkways "
+             "unless the user's words ask for them (footpaths, walkways, sidewalks, pedestrians): generate_grid "
+             "footpaths false otherwise; never ask about them or offer them.",
+    "place": "A real named place (\"map out Dhanmondi\", \"Times Square's roads\"): place_map with the place as "
+             "the user named it, a city or country only if they gave one (never a guessed one: the search finds "
+             "it), then network_from_background (never a grid in its place), footpaths "
+             "'none' (no walkways, crossings or paths) unless the user's words ask for them ('tagged' as mapped, "
+             "'all' every road); never ask about them or offer them. Leave width_m, "
+             "height_m and road_classes out for a neighbourhood, old town or downtown (1200 m, every street); give "
+             "them only for a size the user names (\"3 km\": 3000, road_classes 'main' past 2500). Lanes the user "
+             "gives go in that call: \"main roads 2 to 3 lanes\" -> main_lanes [2, 3], \"side streets single lane\" -> "
+             "local_lanes [1, 1]; it holds every road in them, so change no roads after. It keeps only roads a car can "
+             "drive between the ends, so every OD pair has a route: report its junctions, roads, "
+             "roads_by_lanes_per_direction and streets_left_out, and don't add those streets back. Then demand, if "
+             "asked.",
+    "demand": "\"busy\", \"heavy\", \"rush hour\", \"peak\", \"quiet\" traffic: a level, not a place. generate_demand "
+              "with degree_of_saturation: light 0.4, medium 0.65, busy/heavy/peak 0.85, near capacity 0.95. Hourly is "
+              "the default; a whole day is demand \"daily\" then shape_daily_curve. \"Busier\", \"quieter\", \"30% "
+              "more\", \"double it\": scale_demand on the demand there is (factor 1.3, 0.7, 1.3, 2), not a new build. "
+              "Trips ending part way (\"30% of buses stop at N12\"): set_od_demand drop_offs on those pairs, at a "
+              "junction on each pair's route (a refusal lists them).",
+    "study": "A whole study described (place or grid, traffic level, signals, buses, what-ifs, reports): "
+             "build_scenario does all of it in one call.",
+    "signals": "\"use SCOOT\", \"switch the signals to Webster\", \"make 2,2 actuated\": set_signal_timing with that "
+               "method (the junctions named, else every signalised one from list_junctions); \"north green 1-120, "
+               "east 121-150\", \"amber 4 s\": windows by arm (N/E/S/W) and amber_s. optimise_signals only tunes "
+               "fixed-time greens by many test runs, when the user asks to optimise them. \"why is junction X "
+               "slow\": run_simulation if there is no run yet, then diagnose_signal (a signal) or junction_los.",
+    "run": "\"simulate\", \"test it\", \"how does it perform\": run_simulation (30 min unless said), then read_results "
+           "or analyse_run.",
+    "experiment": "\"would X help\", \"compare\", \"what if\": never edit the open network to test. note_plan (goal, "
+                  "hypothesis), then run_experiment with the network as built first and each other scenario one "
+                  "change (changes: edit tools applied to a copy; demand_scale to stress it), 3 or more seeds; then "
+                  "read_results and note_plan with your conclusion. Call a difference only where the comparison says "
+                  "clear; where replications_needed is above the seeds run, say more seeds are needed.",
+    "institutions": "\"demand from buildings / institutions\", \"a dense city with homes, schools, offices\": "
+                    "deploy_institutions (count 1-50: about 10 a square km, 30 for a 2 x 1.5 km city; 50 when dense). "
+                    "A run spawns their trips itself, on top of the OD matrix's demand. \"more people\": there is no "
+                    "population figure: update_institution raises their people (else scale_demand); say that trips, "
+                    "not residents, changed.",
+    "metro": "The MRT is its own network: add_metro_line builds a line through stations (merge true makes an "
+             "interchange where it crosses another), update_metro_line changes its service, set_metro_demand fills "
+             "its OD matrix (station to station), delete_objects removes a line; metro_report gives its loads and "
+             "institution_mode_split buildings' MRT shares. Road trips never turn into MRT trips. Lines curve "
+             "(300 m at least, turns under 90 deg); riders change once at an interchange; the service is the schedule.",
+    "pedestrians": "Pedestrians walk footpaths (update_roads footpaths), paths (add_path) and crossings (add_crossing: "
+                   "a zebra, where traffic stops for them, or an overbridge); at a junction's arm they wait for a gap. "
+                   "Walkers come from set_pedestrian_demand and buildings' Walk share; pedestrian_summary says who "
+                   "can't walk anywhere; a run's results give walk times, kerb waits and each crossing's figures.",
+    "cycling": "Cycle lanes: update_roads cycle_lanes (both ways or one); only a bicycle vehicle type rides them "
+               "(create_vehicle_types).",
+}
+
+
+def skills_for(request: str, seen: str = "") -> str:
+    """The [Skills] block for a request: the SKILLS of the groups its words point to, less any already in `seen`
+    (the conversation so far: sent once, they stay in it); "" when none."""
+    texts = [SKILLS[group] for group in tool_groups(request) if group in SKILLS and SKILLS[group] not in seen]
+    return "\n\n[Skills]\n" + "\n".join(f"- {text}" for text in texts) + "\n[End of skills]" if texts else ""
+
+
 # Capitalised words that aren't place names (a request naming a place gets the map's tools)
 _NOT_PLACES = {"Webster", "Synchro", "Transyt", "Scats", "Scoot", "Krauss", "Poisson", "Excel", "Ollama", "Grok",
                "Gemini", "Laya", "Jev", "Research", "Log", "Batch", "Run", "Apply", "Skip", "Dispatch", "Summary",
@@ -1013,6 +1156,25 @@ def _places_named(request: str) -> bool:
     return False
 
 
+# "a network of X" names a place even typed in lower case ("Create a netowrk of dhanmondi dhaka": no capital, so no
+# map tools offered, and grok-4.7 placed the map, said it would build the streets next and stopped)
+_OF_A_PLACE = re.compile(r"\b(?:net\w*|roads?|streets?|map)\s+(?:of|for|in)\s+(?!(?:the|a|an|my|this|that|it|its|"
+                         r"roads?|streets?|junctions?|lanes?|grid|size)\b)[a-z]{3,}")
+# ...and so does "a dhanmondi network" (qwen3.5 4B built a made-up 8 x 6 grid for it): the word before network, roads
+# or streets, unless it's one that describes a network rather than naming somewhere
+_A_PLACES_NETWORK = re.compile(r"\b([a-z]{3,})\s+(?:net\w*|roads|streets)\b")
+_NOT_A_PLACE = set("""the this that its new grid road small big large simple nice dense city town test sample whole entire
+full basic current existing urban rural traffic local simulation demo square circular radial ring toy real complex busy
+highway motorway freeway metro mrt rail bus pedestrian walking cycle bike transit own another different bigger smaller
+larger same empty blank default standard regular typical random style like main side minor major arterial way all some
+these those both other every more fewer two three four five six one city's""".split())
+
+
+def _places_in(text: str) -> bool:
+    """Whether the request names somewhere: capitalised (_places_named) or not ("a network of X", "an X network")."""
+    lowered = text.lower().replace("-", " ")
+    return _places_named(text) or bool(_OF_A_PLACE.search(lowered)) or any(
+        word not in _NOT_A_PLACE for word in _A_PLACES_NETWORK.findall(lowered))
 STUDY_GROUPS = {"build", "place", "demand", "run", "signals", "experiment"}  # 3 or more of them: a whole study
 
 
@@ -1021,7 +1183,7 @@ def tool_groups(text: str) -> list[str]:
     touches three or more of STUDY_GROUPS or both builds and tests (build it, run it: build_scenario's kind)."""
     lowered = text.lower()
     found = [name for name, (pattern, _) in TOOL_GROUPS.items() if re.search(pattern, lowered)]
-    if "place" not in found and _places_named(text):
+    if "place" not in found and _places_in(text):
         found.append("place")
     builds, tests = {"build", "place"} & set(found), {"run", "experiment"} & set(found)
     if "study" not in found and (len(STUDY_GROUPS.intersection(found)) >= 3 or builds and tests):
@@ -1040,6 +1202,16 @@ def tools_for(request: str, used=()) -> list[dict]:
     return [spec for spec in tool_specs() if spec["name"] in wanted]
 
 
+def _adds_walkways(name: str, args: dict) -> bool:
+    """Whether a call puts pedestrian walkways, crossings or paths on the network (the user's to ask for, never the
+    model's to offer: 2026-10-30)."""
+    if name == "generate_grid":
+        return args.get("footpaths") is not None and _bool(args["footpaths"])
+    if name in ("network_from_background", "update_roads"):
+        return str(args.get("footpaths") or "none").strip().lower() != "none"
+    return name in ("add_crossing", "add_path")
+
+
 def contradicts(name: str, args: dict, request: str) -> str | None:
     """Why a call goes against the user's own words, or None: a signal method (an argument named method or
     *_method) the request doesn't name while it names another (qwen3.5 4B, asked for SCOOT, thought SCOOT and sent
@@ -1050,7 +1222,10 @@ def contradicts(name: str, args: dict, request: str) -> str | None:
         return None
     words = request.lower().replace("-", " ")
     if name == "delete_objects":  # a road the user named, its two junctions deleted instead (with every road at them)
-        ids = [str(item).strip() for item in _ids(args.get("ids") or [])]
+        try:
+            ids = [str(item).strip() for item in _ids(args.get("ids") or [])]
+        except ValueError:  # objects for ids: the tool's own check refuses them, saying how to give them
+            ids = []
         for road in re.findall(r"[\w.]+,[\w.]+-[\w.]+,[\w.]+|N\d+-N\d+", request):
             ends = road.split("-", 1) if road.startswith("N") else re.split(r"-(?=[\w.]+,)", road, maxsplit=1)
             rest = request.replace(road, " ")  # a junction the user names apart from the road is theirs to delete
@@ -1058,10 +1233,21 @@ def contradicts(name: str, args: dict, request: str) -> str | None:
             if road not in ids and len(ends) == 2 and set(ends) <= set(ids) and not named:
                 return (f"The user asked to delete road {road}, but this deletes its junctions {ends[0]} and {ends[1]} "
                         f"(and every road at them). Call again with ids [\"{road}\"].")
-    if name == "generate_grid" and _places_named(request) and "grid" not in words:
+    # lanes the user gave, applied with update_roads after the build instead (qwen3.5 4B, 2 of 3 stress prompts)
+    said = re.search(r"\b(?:\d|one|two|three|four|five|six|single)(?:\s*(?:to|or)\s*(?:\d|two|three|four|five|six))?"
+                     r"\s+lanes?\b", words)
+    if name == "network_from_background" and said and not {"main_lanes", "local_lanes"} & set(args):
+        return (f"The user gave lanes (\"{said.group(0)}\"): put them in this call, main_lanes [fewest, most] for main "
+                "roads and/or local_lanes for side streets, e.g. \"2 to 3 lanes\" -> [2, 3], \"single lane\" -> [1, 1]. "
+                "(Lanes for particular roads only: main_lanes [1, 6] here, then update_roads.)")
+    if name == "generate_grid" and _places_in(request) and "grid" not in words:
         return ("The user asked for a real place's roads, not an invented grid: generate_grid would put a made-up grid "
                 "in its place. Use place_map (if the map isn't there yet), then network_from_background; or tell the "
                 "user why that can't be done.")
+    if _adds_walkways(name, args) and not re.search(TOOL_GROUPS["pedestrians"][0], words):
+        return ("The user didn't ask for pedestrian walkways: build without them (generate_grid footpaths false, "
+                "network_from_background footpaths 'none') and don't offer them. Walkways, crossings and paths only "
+                "when the user's own words ask for footpaths, walkways or pedestrians.")
     for key, spec in tool["parameters"].get("properties", {}).items():
         value = args.get(key)
         if not (key == "method" or key.endswith("_method")) or "enum" not in spec or not isinstance(value, str):
@@ -1150,8 +1336,9 @@ def expand_tools(args: dict, offered: list[dict]) -> dict:
     if not added:
         return {"found": sorted(names & have), "note": "Nothing new: the tools for that are already yours to call."
                 if names else "No tool matches. Groups: " + ", ".join(TOOL_GROUPS) + "."}
+    skills = [SKILLS[group] for group in tool_groups(need) if group in SKILLS]  # how to use them well
     return {"added": [{"name": spec["name"], "does": spec["description"].split(". ")[0]} for spec in added],
-            "note": "Call them now as you need them."}
+            "note": "Call them now as you need them.", **({"skills": skills} if skills else {})}
 
 
 # --- Helpers -----------------------------------------------------------------------------
@@ -1400,7 +1587,7 @@ def describe(network: Network, id: str) -> dict:  # noqa: A002 - the model's arg
         info["roundabout_design"] = _design(network, id)
     if node.control == "signalised":
         info["signal_settings"] = {"phases": node.signal_phases, "method": node.signal_method,
-                                   "green_times_s": node.green_times_s,
+                                   "green_times_s": node.green_times_s, **_manual(network, id),
                                    "cycle_limits_s": [node.cycle_min_s, node.cycle_max_s],
                                    "target_saturation": node.target_saturation, "stop_weight_s": node.stop_weight_s,
                                    "note": "Each Run times it by its method (the greens entered are used by "
@@ -1413,7 +1600,7 @@ def describe(network: Network, id: str) -> dict:  # noqa: A002 - the model's arg
 def read_source(network: Network, path: str = "", start_line: int = 1, end_line: int = 0, find: str = "") -> dict:
     del network  # the source, not the network
     found = {*ROOT.glob("*.md"), *ROOT.glob("*.py"), *(ROOT / "src" / "traffic_simulator").glob("*.py"),
-             *(ROOT / "tests").glob("*.py"), *(ROOT / "config").glob("*.json"),
+             *(ROOT / "tests").glob("*.py"),
              *(ROOT / "docs" / "architecture").glob("*.md")}
     files = sorted(file.relative_to(ROOT).as_posix() for file in found)
     target = (ROOT / path).resolve() if path else None
@@ -1471,8 +1658,8 @@ def update_roads(network: Network, roads, lanes_per_direction=None, speed_limit_
     ids = _ids(roads)
     if footpaths is not None and footpaths not in FOOTPATH_SIDES:
         raise ValueError(f"footpaths must be {', '.join(map(repr, FOOTPATH_SIDES))}.")
-    if cycle_lanes not in (None, "both", "none"):
-        raise ValueError("cycle_lanes must be 'both' or 'none'.")
+    if cycle_lanes is not None and cycle_lanes not in CYCLE_LANE_SIDES:
+        raise ValueError(f"cycle_lanes must be {', '.join(map(repr, CYCLE_LANE_SIDES))}.")
     for road_id in ids:
         network.road(road_id)  # KeyError for an unknown road, before anything changes
     if add_lanes is not None and lanes_per_direction is not None:
@@ -1509,7 +1696,12 @@ def update_roads(network: Network, roads, lanes_per_direction=None, speed_limit_
         if footpaths is not None:
             road.footpaths = list(FOOTPATH_SIDES[footpaths])
         if cycle_lanes is not None:
-            road.cycle_lanes = list(road.arrival_ends()) if cycle_lanes == "both" else []
+            ends = {"both": list(road.arrival_ends()), "forward": [road.to_node], "backward": [road.from_node],
+                    "none": []}[cycle_lanes]
+            if not set(ends) <= set(road.arrival_ends()):
+                raise ValueError(f"{road.id} is one-way from {road.from_node} to {road.to_node}: its cycle lane can "
+                                 "only run forward.")
+            road.cycle_lanes = ends
         road.cycle_lanes = [end for end in road.cycle_lanes if end in road.arrival_ends()]
         road.single_lane = road.single_lane and road.direction == "one-way" and road.lanes_per_direction == 1
         if pocket_junction:  # Network.validate (run_tool) checks where it is and that it fits
@@ -1566,9 +1758,17 @@ def delete_objects(network: Network, ids) -> dict:
     nodes = {**network.nodes, **network.approach_nodes}
     unknown = [item for item in ids if item not in roads and item not in nodes and item not in network.bus_stops
                and item not in network.institutions and item not in network.walkways
-               and item not in network.pedestrian_crossings and item not in network.spawn_points]
+               and item not in network.pedestrian_crossings and item not in network.spawn_points
+               and item not in network.metro_lines]
+    stations = [item for item in unknown if item in network.metro_stops]
+    if stations:  # a station alone would cut its line's track in two
+        raise ValueError(f"MRT station {stations[0]} goes only with its line: delete "
+                         f"{' or '.join(line.id for line in network.metro_lines.values() if stations[0] in line.stops)}.")
     if unknown:  # run_tool tries a road named from its other end, else says "Unknown id" with the nearest
         raise KeyError(unknown[0])
+    for line_id in ids:
+        if line_id in network.metro_lines:
+            network.delete_metro_line(line_id)
     for stop_id in ids:  # bus stops and institutions first, then roads; a node then takes whatever roads it still has
         network.bus_stops.pop(stop_id, None)
         network.institutions.pop(stop_id, None)
@@ -1642,7 +1842,7 @@ GRID_SPACING_M = (20.0, 2000.0)  # generate_grid's block length: shorter than a 
 
 def generate_grid(network: Network, horizontal=None, vertical=None, spacing_m=None, driving_side=None,
                   speed_limit_kmh=None, lanes_per_direction=None, lane_changing=None, signal_method=None,
-                  width_m=None, height_m=None) -> dict:
+                  width_m=None, height_m=None, footpaths=None) -> dict:
     if width_m is not None or height_m is not None:  # a size in metres: the rows and columns that make it
         width, height = float(width_m or height_m), float(height_m or width_m)
         spacing = float(spacing_m or network.default_spacing)
@@ -1667,14 +1867,14 @@ def generate_grid(network: Network, horizontal=None, vertical=None, spacing_m=No
         _int(lanes_per_direction or network.default_lanes_per_direction),
         network.default_lane_changing if lane_changing is None else _bool(lane_changing),
         signal_method or network.default_signal_method)
+    walkways = footpaths is not None and _bool(footpaths)
+    for road in fresh.all_roads() if walkways else ():  # pedestrian walkways on both sides
+        road.footpaths = list(FOOTPATH_SIDES["both"])
     vars(network).update(vars(fresh))  # same object: the window keeps its reference
     return {"generated": f"{vertical} x {horizontal} grid ({vertical} columns, {horizontal} rows)",
             "junctions": len(network.nodes),
-            "roads": len(network.roads), "boundary_ends": len(network.approach_nodes)}
-
-
-def _clock(hours: float) -> str:
-    return f"{int(hours):02d}:{round(hours % 1 * 60):02d}"
+            "roads": len(network.roads), "boundary_ends": len(network.approach_nodes),
+            "footpaths": "both sides of every road" if walkways else "none"}
 
 
 def list_institutions(network: Network) -> dict:
@@ -1683,10 +1883,13 @@ def list_institutions(network: Network) -> dict:
         arrive, _ = hourly_people(item)
         rows.append({"id": item.id, "kind": item.kind, "x": round(item.x, 1), "y": round(item.y, 1),
                      "area_m2": item.area_m2, "radius_m": round(item.radius_m, 1), "people": item.people,
-                     "employees": item.employees, "shift": f"{_clock(item.shift_start_h)}-{_clock(item.shift_end_h)}",
+                     "employees": item.employees, "shift": f"{clock_h(item.shift_start_h)}-{clock_h(item.shift_end_h)}",
                      "mode_shares_percent": shares(item), "split_by": "logit" if item.mode_shares else "car share",
                      "door": door(network, item), "catchment": catchment(network, item),
-                     "people_per_day_each_way": round(sum(arrive))})
+                     "people_per_day_each_way": round(sum(arrive)),
+                     # hourly demand's typed figures, and the days shaped by curves rather than its shift (the panel's)
+                     **({"people_per_hour_typed": item.per_hour} if item.per_hour else {}),
+                     **({"days_by_own_curve": sorted(item.curves)} if item.curves else {})})
     return _limited(rows, "institutions")
 
 
@@ -1777,17 +1980,18 @@ def _centre(network: Network) -> tuple[float, float]:
 
 
 def _cached(key, make):
-    """make()'s value, kept by key; a failure is kept a minute, so a check and its change don't ask twice."""
+    """make()'s value, kept by key; a failure (of any kind: then a ValueError) is kept a minute, so a check and its
+    change don't ask twice."""
     found = _PREPARED.get(key)
     if found is not None:
         made, value = found
-        if not isinstance(value, ValueError):
+        if not isinstance(value, Exception):
             return value
         if time.time() - made < 60:
             raise ValueError(str(value))
     try:
         value = make()
-    except ValueError as exc:
+    except Exception as exc:
         _PREPARED[key] = (time.time(), exc)
         raise
     while len(_PREPARED) >= 8:
@@ -1840,11 +2044,25 @@ def _background_graph(network: Network, road_classes="all", width_m=1200.0, heig
                      "an image: Create Network > Own Network), then network_from_background.")
 
 
+def _lane_range(key: str, value) -> tuple[int, int] | None:
+    """network_from_background's main_lanes or local_lanes: [fewest, most] lanes a direction, 1-6 (one number, or
+    text like "2-3", reads the same)."""
+    if value is None:
+        return None
+    numbers = [float(n) for n in re.findall(r"\d+(?:\.\d+)?", json.dumps(value))]
+    if not 1 <= len(numbers) <= 2 or any(n != int(n) for n in numbers) or not 1 <= numbers[0] <= numbers[-1] <= 6:
+        raise ValueError(f"{key} must be [fewest, most] lanes per direction, whole numbers 1 to 6, e.g. [2, 3].")
+    return int(numbers[0]), int(numbers[-1])
+
+
 def network_from_background(network: Network, road_classes="all", width_m=1200.0, height_m=1200.0, road_colour=None,
-                            colour_tolerance=40.0, resolution_m=2.0, footpaths="tagged") -> dict:
+                            colour_tolerance=40.0, resolution_m=2.0, footpaths="none", main_lanes=None,
+                            local_lanes=None) -> dict:
+    lanes = {kind: held for kind, held in (("main", _lane_range("main_lanes", main_lanes)),
+                                           ("local", _lane_range("local_lanes", local_lanes))) if held}
     graph, source = _background_graph(network, road_classes, width_m, height_m, road_colour, colour_tolerance,
                                       resolution_m)
-    fresh = background_network.build(network, graph)
+    fresh = background_network.build(network, graph, lanes)
     walking = background_network.add_walking(fresh, graph, str(footpaths))  # what the map has for walkers
     kept = {key: item for key, item in network.institutions.items()
             if footprint_problem(fresh, item.x, item.y, item.area_m2) is None}
@@ -1858,6 +2076,15 @@ def network_from_background(network: Network, road_classes="all", width_m=1200.0
     if graph.lanes_note:
         result["lanes"] = graph.lanes_note
     roads = list(network.all_roads())
+    result["roads_by_lanes_per_direction"] = dict(sorted(Counter(road.lanes_per_direction for road in roads).items()))
+    if lanes:  # said back, so a model doesn't "fix" the lanes with update_roads after (qwen3.5 4B did)
+        result["lanes_held"] = {f"{kind}_lanes": list(held) for kind, held in lanes.items()}
+        result["lanes_note"] = "Every road's lanes per direction are within these ranges: nothing more to change."
+    if graph.unroutable:  # one-way traps, parts cut off at the edge: every OD pair left has a route
+        result["streets_left_out"] = graph.unroutable
+        result["streets_left_out_why"] = ("no car could drive them between the area's ends (a one-way street into a "
+                                          "dead end, a part cut off at the area's edge), so they were left out and "
+                                          "every OD pair has a route")
     result["pedestrians"] = {"roads_with_footpaths": sum(bool(road.footpaths) for road in roads),
                              "roads_with_cycle_lanes": sum(bool(road.cycle_lanes) for road in roads), **walking,
                              **({"crossings_not_taken": graph.walking_skipped} if graph.walking_skipped else {})}
@@ -1873,24 +2100,28 @@ def network_from_background(network: Network, road_classes="all", width_m=1200.0
     return result
 
 
-def prepare(network: Network, name: str, args) -> None:
+PREPARE_READS = {"network_from_background"}  # the tools whose prepare reads the network (the others get None)
+
+
+def prepare(network: Network | None, name: str, args) -> None:
     """A tool call's slow or random part, done before its check, off the UI thread (ai_mode runs it on the
-    model's thread): a random layout gets its seed, so the check and the change agree; the background's
-    roads are fetched or traced into the cache. Problems are left for the tool itself to report."""
-    if not isinstance(args, dict):
-        return
-    if name == "deploy_institutions" and args.get("seed") is None:
+    model's thread, with a copy of the network the UI thread took, for PREPARE_READS): a random layout gets its seed,
+    so the check and the change agree; the background's roads are fetched or traced into the cache, and a place
+    looked up, with the arguments as run_tool reads them (normalise), so the tool finds them there. Problems are
+    left for the tool itself to report (_cached keeps one)."""
+    if name == "deploy_institutions" and isinstance(args, dict) and args.get("seed") is None:
         args["seed"] = random.randrange(1_000_000)
-    if name == "network_from_background":
-        try:
-            _background_graph(network, **{key: value for key, value in args.items() if key != "footpaths"})
-        except (ValueError, TypeError):
-            pass
-    if name == "place_map" and args.get("place"):
-        try:
+    if name not in ("network_from_background", "place_map"):
+        return
+    try:
+        args = normalise(name, args)
+        if name == "network_from_background":
+            _background_graph(network, **{key: value for key, value in args.items()
+                                          if key not in ("footpaths", "main_lanes", "local_lanes")})
+        elif args.get("place"):
             _places(args["place"])
-        except ValueError:
-            pass
+    except Exception:  # noqa: BLE001 - never on the model's thread: the tool reports it
+        pass
 
 
 SATURATION_RANGE = (0.1, 1.2)
@@ -2155,8 +2386,18 @@ def scale_plan(network: Network, values: dict, pairs: list, args: dict, shares: 
     return plan, info
 
 
+def _manual(network: Network, node_id: str) -> dict:
+    """A manual junction's windows by arm name and its amber; nothing for the other methods."""
+    node = network.nodes[node_id]
+    if node.signal_method != "manual":
+        return {}
+    return {"windows": {name: node.manual_greens_s.get(road, "none: always red")
+                        for road, name, _ in network.signal_arms(node_id)}, "amber_s": node.amber_s}
+
+
 def set_signal_timing(network: Network, junctions, method=None, phases=None, green_times_s=None, cycle_min_s=None,
-                      cycle_max_s=None, target_saturation_percent=None, stop_weight_s=None) -> dict:
+                      cycle_max_s=None, target_saturation_percent=None, stop_weight_s=None, windows=None,
+                      amber_s=None) -> dict:
     ids = [_junction(network, node_id) for node_id in _ids(junctions)]
     unsignalised = [node_id for node_id in ids if network.nodes[node_id].control != "signalised"]
     if unsignalised:  # all of them at once, so one call can put them right
@@ -2180,8 +2421,22 @@ def set_signal_timing(network: Network, junctions, method=None, phases=None, gre
                                  f"{len(greens)} greens given" + (" (or give phases too)." if phases is None else "."))
         if method is None:
             method, note = "fixed", "Fixed time with the greens given (they are used only by a fixed plan)."
+    if windows is not None:  # likewise only a manual plan uses windows
+        windows = json.loads(windows) if isinstance(windows, str) else dict(windows)
+        if method not in (None, "manual"):
+            raise ValueError(f"windows are only used by method manual. Give method manual with them, or leave them out.")
+        method, note = "manual", "Manual: each arm goes in its window every cycle, red the rest."
     for node_id in ids:
         node = network.nodes[node_id]
+        if windows is not None:
+            arms = {key: road for road, name, _ in network.signal_arms(node_id) for key in (road, name)}
+            unknown = [arm for arm in windows if arm not in arms]
+            if unknown:
+                raise ValueError(f"{node_id} has no arm {', '.join(map(str, unknown))}: its arms are "
+                                 f"{', '.join(name for _, name, _ in network.signal_arms(node_id))}.")
+            node.manual_greens_s = {arms[arm]: [float(s) for s in window] for arm, window in windows.items()}
+        if amber_s is not None:
+            node.amber_s = float(amber_s)
         if method is not None:
             node.signal_method = method
         if phases is not None:
@@ -2201,6 +2456,7 @@ def set_signal_timing(network: Network, junctions, method=None, phases=None, gre
     network.validate()  # phases, greens, limits: refused (and rolled back) with the reason
     return {"timed": {node_id: {"method": network.nodes[node_id].signal_method, "phases": network.nodes[node_id].signal_phases,
                                 "green_times_s": network.nodes[node_id].green_times_s,
+                                **_manual(network, node_id),
                                 "cycle_limits_s": [network.nodes[node_id].cycle_min_s, network.nodes[node_id].cycle_max_s],
                                 "target_saturation_percent": round(network.nodes[node_id].target_saturation * 100)}
                       for node_id in ids},
@@ -2208,20 +2464,17 @@ def set_signal_timing(network: Network, junctions, method=None, phases=None, gre
 
 
 place_download = None  # stands in for the network in tests: url -> bytes
-_last_search = [0.0]
 
 
 def _places(query: str) -> list:
-    """Places by name from Nominatim (its policy: one request a second, the app's User-Agent), cached."""
+    """Places by name from Nominatim (its policy: one request a second from the whole app, map_tiles.search_turn;
+    the app's User-Agent), cached."""
     query = " ".join(str(query).split())
     if not query:
         raise ValueError("Give a place name, or lat and lon.")
 
     def fetch():
-        wait = _last_search[0] + map_tiles.SEARCH_GAP_S - time.monotonic()
-        if wait > 0:
-            time.sleep(wait)
-        _last_search[0] = time.monotonic()
+        map_tiles.search_turn()
         url = map_tiles.SEARCH_URL.format(limit=map_tiles.SEARCH_LIMIT, query=__import__("urllib.parse").parse.quote(query))
         try:
             found = json.loads((place_download or map_tiles._download)(url))
@@ -2274,10 +2527,37 @@ def add_path(network: Network, start, end, bends=None) -> dict:
             "length_m": round(polyline_length(network.walkway_points(way)), 1)}
 
 
-def set_pedestrian_demand(network: Network, pairs, people_per_hour) -> dict:
-    people = float(people_per_hour)
-    if not 0 <= people <= MAX_WALK_DEMAND:
-        raise ValueError(f"people_per_hour must be 0 to {MAX_WALK_DEMAND:,}.")
+def _pair_demand(word: str, per_hour, per_day, most: float, shaped: dict) -> tuple[float, bool, dict | None]:
+    """(how many, daily, the day's curve or None) from a pair demand tool's `word`_per_hour or `word`_per_day, one of
+    them, at most `most` an hour (24 times it a day), and its curve's points, polynomial or preset (daily only)."""
+    if (per_hour is None) == (per_day is None):
+        raise ValueError(f"Give {word}_per_hour (hourly demand) or {word}_per_day (daily demand), one of them.")
+    daily = per_day is not None
+    people, most = float(per_day if daily else per_hour), most * (24 if daily else 1)
+    if not 0 <= people <= most:
+        raise ValueError(f"{word}_per_{'day' if daily else 'hour'} must be 0 to {most:,.0f}.")
+    curve = profile_record(profile_from(shaped)) if any(v not in (None, "", []) for v in shaped.values()) else None
+    if curve is not None and not daily:
+        raise ValueError(f"A curve shapes daily demand: give {word}_per_day with it.")
+    return people, daily, curve
+
+
+def _store_pair_demand(keys: list, people: float, daily: bool, curve: dict | None) -> None:
+    """Each (pair, its matrix) of `keys` set to `people` (0 removes it); daily, with `curve` or the pair's own."""
+    for key, demand in keys:
+        if not people:
+            demand.pop(key, None)
+        elif daily:  # its own curve kept unless one is given
+            demand[key] = {"people": people, "curve": curve or demand.get(key, {}).get("curve")
+                           or profile_record(DailyProfile())}
+        else:
+            demand[key] = people
+
+
+def set_pedestrian_demand(network: Network, pairs, people_per_hour=None, people_per_day=None, points=None,
+                          polynomial=None, preset=None) -> dict:
+    people, daily, curve = _pair_demand("people", people_per_hour, people_per_day, MAX_WALK_DEMAND,
+                                        {"points": points, "polynomial": polynomial, "preset": preset})
     keys = []
     for pair in _ids(pairs):
         ends = [end.strip() for end in re.split(r"->|=>|>>| to |-", str(pair)) if end.strip()]
@@ -2285,16 +2565,83 @@ def set_pedestrian_demand(network: Network, pairs, people_per_hour) -> dict:
                       if len(ends) == 2 and all(end in places for end in ends)), None)
         if among is None or ends[0] == ends[1]:
             raise ValueError(f"{pair!r}: a pair is two different boundary ends, as '1W->1E' (the ends: "
-                             f"{', '.join(sorted(network.approach_nodes))}), or two different spawn points, as "
+                             f"{', '.join(sorted(network.approach_nodes))}), or two different deploy points, as "
                              f"'S1->S2' (the points: {', '.join(sorted(network.spawn_points)) or 'none yet'}).")
-        keys.append((f"{ends[0]}->{ends[1]}", network.walk_demand if among is network.approach_nodes
-                     else network.spawn_demand))
-    for key, demand in keys:
-        if people:
-            demand[key] = people
-        else:
-            demand.pop(key, None)
-    return {"pedestrians_per_hour": {key: people for key, _ in keys}}
+        walk = among is network.approach_nodes
+        keys.append((f"{ends[0]}->{ends[1]}", (network.walk_daily if walk else network.spawn_daily) if daily
+                     else network.walk_demand if walk else network.spawn_demand))
+    _store_pair_demand(keys, people, daily, curve)
+    if not daily:
+        return {"pedestrians_per_hour": {key: people for key, _ in keys}}
+    return {"pedestrians_per_day": {key: people for key, _ in keys},
+            "curves": {key: demand[key]["curve"] for key, demand in keys if key in demand},
+            "runs_use": "daily walkers only while the Demand Generator's switch shows Daily (set_od_demand or "
+                        "shape_daily_curve with daily demand switches it)"}
+
+
+def add_metro_line(network: Network, stations, merge=False, **service) -> dict:
+    stations = _parsed_json(stations) if isinstance(stations, str) else stations
+    if not isinstance(stations, list) or len(stations) < 2 or not all(
+            isinstance(p, (list, tuple)) and len(p) == 2 for p in stations):
+        raise ValueError("stations must be a list of 2 or more [x, y] in metres.")
+    points = [(float(x), float(y)) for x, y in stations]
+    try:
+        line = network.add_metro_line(points[0], points[1], bool(merge))
+        target = 1
+        while True:  # a merged leg ends at its interchange (as a click does): on from there to the point asked for
+            last = network.metro_stops[line.stops[-1]]
+            x, y = points[target]
+            if any(last.id in other.stops for other in network.metro_lines.values() if other is not line) \
+                    and hypot(x - last.x, y - last.y) >= METRO_MIN_SPACING_M:
+                network.add_metro_stop(line.id, x, y, True)
+                continue
+            target += 1
+            if target == len(points):
+                break
+            network.add_metro_stop(line.id, *points[target], bool(merge))
+    except MetroCrossing as crossing:  # run_tool puts back whatever was built
+        raise ValueError(f"A leg crosses line {crossing.line_id}: give merge true for an interchange station where "
+                         "they cross, or route this line clear of it.") from None
+    for name, value in service.items():  # metro_line_problem (validate) refuses one out of range
+        setattr(line, name, value)
+    return _metro_line_info(network, line.id)
+
+
+def update_metro_line(network: Network, line, **service) -> dict:
+    found = network.metro_lines[str(line)]  # KeyError for an unknown line
+    for name, value in service.items():
+        setattr(found, name, value)
+    return _metro_line_info(network, found.id)
+
+
+def _metro_line_info(network: Network, line_id: str) -> dict:
+    line = network.metro_lines[line_id]
+    return {"line": line.id, "stations": {stop_id: [round(network.metro_stops[stop_id].x, 1),
+                                                    round(network.metro_stops[stop_id].y, 1)] for stop_id in line.stops},
+            "track_km": round(network.metro_length_m(line.id) / 1000, 2),
+            "service": {name: getattr(line, name) for name in METRO_SERVICE},
+            "capacity_per_h_each_way": round(60 / line.headway_min * line.train_capacity)}
+
+
+def set_metro_demand(network: Network, pairs, passengers_per_hour=None, passengers_per_day=None, points=None,
+                     polynomial=None, preset=None) -> dict:
+    people, daily, curve = _pair_demand("passengers", passengers_per_hour, passengers_per_day, MAX_METRO_DEMAND,
+                                        {"points": points, "polynomial": polynomial, "preset": preset})
+    keys = []
+    for pair in _ids(pairs):
+        ends = [end.strip() for end in re.split(r"->|=>|>>| to |-", str(pair)) if end.strip()]
+        if len(ends) != 2 or ends[0] == ends[1] or not all(end in network.metro_stops for end in ends):
+            raise ValueError(f"{pair!r}: a pair is two different stations, as 'M1->M2' (the stations: "
+                             f"{', '.join(sorted(network.metro_stops)) or 'none yet: add_metro_line'}).")
+        if not metro_ride(network, *ends):
+            raise ValueError(f"No ride joins {ends[0]} and {ends[1]}: one line, or one change at an interchange.")
+        keys.append((f"{ends[0]}->{ends[1]}", network.metro_daily if daily else network.metro_demand))
+    _store_pair_demand(keys, people, daily, curve)
+    if not daily:
+        return {"passengers_per_hour": {key: people for key, _ in keys}}
+    return {"passengers_per_day": {key: people for key, _ in keys},
+            "curves": {key: demand[key]["curve"] for key, demand in keys if key in demand},
+            "runs_use": "daily passengers only while the Demand Generator's switch shows Daily"}
 
 
 def add_spawn_points(network: Network, points) -> dict:
@@ -2322,10 +2669,13 @@ def pedestrian_summary(network: Network) -> dict:
             "crossings": [{"id": c.id, "kind": c.kind, "road": c.road, "at_m": round(c.distance_m)}
                           for c in network.pedestrian_crossings.values()],
             "pedestrians_per_hour": dict(network.walk_demand),
+            "pedestrians_per_day": {pair: day["people"] for pair, day in network.walk_daily.items()},
             "spawn_points": {key: [round(p.x), round(p.y)] for key, p in network.spawn_points.items()},
             "spawn_pedestrians_per_hour": dict(network.spawn_demand),
-            "pairs_nobody_can_walk": [pair for pair in network.walk_demand if graph.route(*pair.split("->")) is None]
-            + [pair for pair in network.spawn_demand if graph.route(*(
+            "spawn_pedestrians_per_day": {pair: day["people"] for pair, day in network.spawn_daily.items()},
+            "pairs_nobody_can_walk": [pair for pair in {**network.walk_demand, **network.walk_daily}
+                                      if graph.route(*pair.split("->")) is None]
+            + [pair for pair in {**network.spawn_demand, **network.spawn_daily} if graph.route(*(
                 (network.spawn_points[end].x, network.spawn_points[end].y) for end in pair.split("->"))) is None],
             "without_a_crossing": "walkers cross a junction's arm in a gap in its traffic (HCM 2000 Eq 18-17)"}
 
@@ -2362,8 +2712,14 @@ def update_bus_stop(network: Network, stop, distance_m=None, direction=None, dwe
         if direction not in BUS_STOP_DIRECTIONS:
             raise ValueError(f"direction must be one of {', '.join(BUS_STOP_DIRECTIONS)}.")
         item.direction = direction
-    if distance_m is not None:
-        network.move_bus_stop(stop, float(distance_m))
+    if distance_m is not None and not network.move_bus_stop(stop, float(distance_m)):  # refused: the bay stays
+        low, high = network.bus_stop_range(network.road(item.road))
+        if low > high:
+            raise ValueError(f"Road {item.road} is too short for bus stop {stop}'s bay clear of its junctions.")
+        there = deepcopy(item)
+        there.distance_m = min(max(float(distance_m), low), high)
+        raise ValueError(f"{network.bus_stop_problem(there)} Give another distance_m ({low:.0f} to {high:.0f} m "
+                         f"along road {item.road}), or move what is in the way first.")
     if dwell_s is not None:
         item.dwell_s = float(dwell_s)
     return {"stop": stop, "road": item.road, "distance_m": round(network.bus_stop_distance(item), 1),
@@ -2506,7 +2862,19 @@ def default_alternative(mode) -> dict:
     type (a bus or tram) a 5 min walk to its stop and a 100 cent fare; any other 3 min to park and walk, and 15 cents a km."""
     if mode.headway_min or getattr(mode, "timetabled", False):
         return {"mode": mode.name, "out_of_vehicle_min": 5.0, "cost": 100.0}
+    if getattr(mode, "vehicle_class", "") == "bicycle":  # a minute to lock it up; next to no running cost
+        return {"mode": mode.name, "out_of_vehicle_min": 1.0, "cost_per_km": 0.0}
     return {"mode": mode.name, "out_of_vehicle_min": 3.0, "cost_per_km": 15.0}
+
+
+def _cycled(mode, roads: list, minutes: float) -> float:
+    """A bicycle's in-vehicle minutes as a cyclist feels them: those on roads with cycle lanes at
+    lane_graph.CYCLE_LANE_TIME_FACTOR (in the length's proportion); any other type's, as they are."""
+    if getattr(mode, "vehicle_class", "") != "bicycle":
+        return minutes
+    total = sum(road.length_m for road in roads)
+    laned = sum(road.length_m for road in roads if road.cycle_lanes) / total if total else 0.0
+    return minutes * (1 - laned + laned * CYCLE_LANE_TIME_FACTOR)
 
 
 def institution_split(network: Network, item, modes: list, args: dict) -> tuple[dict, dict]:
@@ -2528,7 +2896,7 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
         raise ValueError(f"Give 2 or more alternatives like [{{\"mode\": \"Walk\"}}, {{\"mode\": \"Car\", "
                          f"\"cost_per_km\": 15}}]; modes: {offered}.")
     chosen = [WALK if str(a.get("mode", "")).strip().lower() == "walk" else
-              METRO if by_metro and str(a.get("mode", "")).strip().lower() == METRO.lower() else
+              METRO if by_metro and str(a.get("mode", "")).strip().lower() in (METRO.lower(), "metro") else
               getattr(names.get(str(a.get("mode", "")).strip().lower()), "name", None) for a in given]
     if None in chosen or len(set(chosen)) != len(chosen):
         raise ValueError(f"Each alternative is a different mode: {offered}.")
@@ -2581,7 +2949,7 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
                 continue
             vehicle = names[mode.lower()]
             top = min(vehicle.max_speed_kmh, vehicle.desired_max_kmh)
-            ivt = sum(road.length_m / (min(top, road.speed_limit_kmh) / 3.6) for road in roads) / 60
+            ivt = _cycled(vehicle, roads, sum(road.length_m / (min(top, road.speed_limit_kmh) / 3.6) for road in roads) / 60)
             found[mode] = (ivt, ovt + vehicle.headway_min / 2, cost)
         attributes.append((origin, km, found))
     # The stations in its circle are places its people come from too, as the junctions are (each an equal share):
@@ -2656,7 +3024,7 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
                          "note": (f"The stations of its door station's line inside its circle are places its people "
                                   f"come from, as the junctions are; its door station is the nearest within "
                                   f"{METRO_WALK_M:g} m. Riders add no vehicles." if station_door else
-                                  f"No station within {METRO_WALK_M:g} m of it: nobody comes by metro.")}
+                                  f"No station within {METRO_WALK_M:g} m of it: nobody comes by MRT.")}
     return percent, info
 
 
@@ -2724,6 +3092,7 @@ def mode_plan(network: Network, pairs: list, args: dict, modes: list, values: di
                 top = min(mode.max_speed_kmh, mode.desired_max_kmh)
                 ivt = sum(road.length_m / (min(top, road.speed_limit_kmh) / 3.6) for road in roads) / 60
                 sources.add("free flow")
+            ivt = _cycled(mode, roads, ivt)
             ovt = float(alternative.get("out_of_vehicle_min") or 0) + mode.headway_min / 2
             cost = float(alternative.get("cost") or 0) + float(alternative.get("cost_per_km") or 0) * km
             attributes[mode.name] = (ivt, cost)
@@ -2987,6 +3356,7 @@ def critical_links_plan(network: Network, flows: dict, limit: int = 10, area: di
 _FUNCTIONS = {function.__name__: function for function in (
     set_signal_timing, place_map, add_bus_stop, update_bus_stop, update_institution,
     add_crossing, add_path, set_pedestrian_demand, pedestrian_summary, add_spawn_points,
+    add_metro_line, update_metro_line, set_metro_demand,
     network_summary, list_roads, list_junctions, describe, analyse_network, read_source, list_institutions,
     set_junction_control, update_roads, add_junction, add_road, add_boundary_end, move_junctions,
     delete_objects, build_interchange, add_slip_road, set_end_flows, deploy_institutions, network_from_background, generate_grid,
@@ -3066,7 +3436,9 @@ def normalise(name: str, args) -> dict:
         out[target] = _coerced(name, target, properties[target], value)
     missing = [key for key in required if out.get(key) in (None, "", [])]
     if missing:
-        raise ToolError(f"{name} needs {', '.join(missing)}. {signature(name)}.")
+        every = [f"{key} 'all' is every one" for key in missing if (name, key) in ALL_IDS]  # never list them all
+        raise ToolError(f"{name} needs {', '.join(missing)}{f' ({chr(59).join(every)})' if every else ''}. "
+                        f"{signature(name)}.")
     return out
 
 
@@ -3213,10 +3585,15 @@ def run_tool(network: Network, name: str, args: dict) -> dict:
                     flipped[given] = own
                     args = _swapped(args, given, own)
                     continue
-                raise ToolError(f"Unknown id {given!r}.") from exc
+                every = next((f" For every one, send {key} \"all\"." for tool, key in ALL_IDS if tool == name), "")
+                raise ToolError(f"Unknown id {given!r}.{every}") from exc  # qwen3.5 4B sent junction names as roads
             if isinstance(exc, TypeError):
                 raise ToolError(f"Bad arguments for {name}: {exc}. {signature(name)}.") from exc
             raise ToolError(str(exc)) from exc
+        except Exception as exc:  # a fault in the tool itself: the network as it was all the same, and the model told
+            if before is not None:
+                vars(network).update(vars(before))
+            raise ToolError(f"{name} failed: {type(exc).__name__}: {exc}. Nothing was changed.") from exc
 
 
 # "all" where a tool takes ids: what it means for that tool (small models send roads "all" for "every road", and the
@@ -3285,12 +3662,15 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
             if getattr(old, key) != getattr(new, key):
                 lines.append(f"{node_id}: {label} {getattr(old, key):g} → {getattr(new, key):g} veh/h")
         timing = ("signal_phases", "signal_method", "green_times_s", "cycle_min_s", "cycle_max_s",
-                  "target_saturation", "stop_weight_s")
+                  "target_saturation", "stop_weight_s", "manual_greens_s", "amber_s")
         if any(getattr(old, key) != getattr(new, key) for key in timing):
             lines.append(f"{node_id}: signal settings → {new.signal_phases} phases, {new.signal_method}, "
                          f"greens {', '.join(f'{green:g}' for green in new.green_times_s)} s, cycle "
                          f"{new.cycle_min_s:g}-{new.cycle_max_s:g} s, target {new.target_saturation:.0%}, "
-                         f"stop weight {new.stop_weight_s:g} s")
+                         f"stop weight {new.stop_weight_s:g} s" + (
+                             "; windows " + ", ".join(f"{name} {w[0]:g}-{w[1]:g}" for road, name, _ in after.signal_arms(node_id)
+                                                      if (w := new.manual_greens_s.get(road))) + f" s, amber {new.amber_s:g} s"
+                             if new.signal_method == "manual" else ""))
     old_roads, new_roads = {**before.roads, **before.approach_roads}, {**after.roads, **after.approach_roads}
     lines += [f"Added road {i} ({new_roads[i].from_node} → {new_roads[i].to_node})"
               for i in new_roads if i not in old_roads and i not in new_nodes]  # an added end names its road
@@ -3305,6 +3685,10 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
                    if getattr(old, key) != getattr(new, key)]
         if (old.from_node, old.to_node) == (new.to_node, new.from_node):
             changes.append(f"now runs {new.from_node} → {new.to_node}")
+        shape = old.shape[::-1] if (old.from_node, old.to_node) == (new.to_node, new.from_node) else old.shape
+        if [tuple(p) for p in shape] != [tuple(p) for p in new.shape] and not {new.from_node, new.to_node} & moved:
+            changes.append(f"curved through {len(new.shape)} point{'s' if len(new.shape) != 1 else ''}"
+                           if new.shape else "now straight")  # a moved end carries its curves along (_carry_shapes)
         if abs(old.length_m - new.length_m) > 0.5 and not {new.from_node, new.to_node} & moved:
             changes.append(f"length {old.length_m:.0f} → {new.length_m:.0f} m")
         if changes:
@@ -3326,12 +3710,39 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
     lines += [f"Placed institution {key} ({item.kind}) at ({item.x:.0f}, {item.y:.0f}) m, its circle "
               f"{item.radius_m:.0f} m" for key, item in after.institutions.items() if key not in before.institutions]
     lines += [f"Deleted institution {key}" for key in before.institutions if key not in after.institutions]
+    for key, new in after.institutions.items():
+        old = before.institutions.get(key)
+        if old is None or old == new:
+            continue
+        changes = [f"moved by ({new.x - old.x:+.0f}, {new.y - old.y:+.0f}) m"] \
+            if hypot(new.x - old.x, new.y - old.y) > 0.5 else []
+        changes += [f"kind {old.kind} → {new.kind}"] if old.kind != new.kind else []
+        changes += [f"{label} {getattr(old, field):g} → {getattr(new, field):g}" for field, label in (
+            ("radius_m", "circle (m)"), ("area_m2", "area (m²)"), ("people", "people"), ("employees", "employees"),
+            ("shift_start_h", "shift start (h)"), ("shift_end_h", "shift end (h)"), ("car_share", "car share (%)"))
+            if getattr(old, field) != getattr(new, field)]
+        changes += [f"{label} changed" for field, label in (("mode_shares", "mode split"), ("curves", "daily curves"),
+                                                            ("per_hour", "hourly demand"), ("height_m", "height"))
+                    if getattr(old, field) != getattr(new, field)]
+        if changes:
+            lines.append(f"Institution {key}: {', '.join(changes)}")
     lines += [f"Added path {key} ({way.start} to {way.end})" for key, way in after.walkways.items()
               if key not in before.walkways]
     lines += [f"Deleted path {key}" for key in before.walkways if key not in after.walkways]
-    lines += [f"Added spawn point {key} at ({p.x:.0f}, {p.y:.0f}) m" for key, p in after.spawn_points.items()
+    for key, line in after.metro_lines.items():
+        old = before.metro_lines.get(key)
+        if old != line:
+            lines.append(f"{'Added' if old is None else 'Changed'} MRT line {key}: {', '.join(line.stops)}, a train "
+                         f"every {line.headway_min:g} min at {line.speed_kmh:g} km/h, {line.cars_per_train} carriages "
+                         f"of {line.car_capacity}")
+    lines += [f"Deleted MRT line {key}" for key in before.metro_lines if key not in after.metro_lines]
+    for pair in sorted(set(before.metro_demand) | set(after.metro_demand)):
+        old, new = before.metro_demand.get(pair), after.metro_demand.get(pair)
+        if old != new:
+            lines.append(f"MRT passengers {pair}: {old or 0:g} → {new or 0:g} an hour")
+    lines += [f"Added deploy point {key} at ({p.x:.0f}, {p.y:.0f}) m" for key, p in after.spawn_points.items()
               if key not in before.spawn_points]
-    lines += [f"Deleted spawn point {key}" for key in before.spawn_points if key not in after.spawn_points]
+    lines += [f"Deleted deploy point {key}" for key in before.spawn_points if key not in after.spawn_points]
     for pair in sorted(set(before.spawn_demand) | set(after.spawn_demand)):
         old, new = before.spawn_demand.get(pair), after.spawn_demand.get(pair)
         if old != new:
@@ -3343,11 +3754,25 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
         old, new = before.walk_demand.get(pair), after.walk_demand.get(pair)
         if old != new:
             lines.append(f"Pedestrians {pair}: {old or 0:g} → {new or 0:g} an hour")
+    for label, old_days, new_days in (("Pedestrians", before.walk_daily, after.walk_daily),
+                                      ("Pedestrians", before.spawn_daily, after.spawn_daily),
+                                      ("MRT passengers", before.metro_daily, after.metro_daily)):
+        for pair in sorted(set(old_days) | set(new_days)):
+            old, new = (old_days.get(pair) or {}).get("people", 0), (new_days.get(pair) or {}).get("people", 0)
+            if old_days.get(pair) != new_days.get(pair):
+                lines.append(f"{label} {pair}: " + (f"{old:g} → {new:g} a day" if old != new else "its day reshaped"))
     if before.route_choice != after.route_choice:
         choice = after.route_choice
         lines.append("Route choice off: every vehicle takes the fastest route" if not choice else
                      f"Route choice: {choice.get('routes', 3)} routes a pair by path-size logit, theta "
                      f"{choice.get('theta_per_min', 0.5):g}/min, {len(choice.get('link_times_s', {}))} measured link times")
+    if before.background != after.background:  # place_map, or the user's Background settings
+        back = after.background
+        lines.append("Background now " + (
+            f"the OpenStreetMap map at {back.lat:.5f}, {back.lon:.5f}"
+            + (f", turned {back.map_rotation_deg:g}°" if back.map_rotation_deg else "") if back.kind == "map" else
+            f"the image {Path(back.image).name}, {back.width_m:g} m wide" if back.kind == "image" else
+            f"the colour {back.colour}"))
     if len(lines) > limit:
         lines = lines[:limit] + [f"...and {len(lines) - limit} more changes"]
     return lines
@@ -3408,11 +3833,24 @@ def explain_error(message: str, network: Network | None = None) -> dict:
 
 
 def describe_call(name: str, args: dict) -> str:
-    """One line saying what a tool call does, for the chat and the approval card."""
+    """One line saying what a tool call does, for the chat and the approval card. Arguments of any shape (a model's
+    objects for ids, a number for a list) get one too, its name and arguments as sent: the line never raises, as it is
+    written before the call is checked and for a refused one."""
     a = args if isinstance(args, dict) else {}
+    try:
+        return _call_line(name, a)
+    except Exception:  # noqa: BLE001 - shapes the line can't read: the call as sent; its check says what's wrong
+        return f"{name}({', '.join(f'{key}={value}' for key, value in a.items())})"
 
+
+def _call_line(name: str, a: dict) -> str:
+    """describe_call's line, from arguments in the shapes the tool's schema gives."""
     def listed(key: str) -> str:
         return ", ".join(_ids(a.get(key, [])))
+
+    def every_pair() -> str:
+        return "every pair" + (f" from {listed('origins')}" if a.get("origins") else "") + \
+            (f" to {listed('destinations')}" if a.get("destinations") else "")
 
     def crossing() -> str:
         return f", {a['crossings']} where it crosses roads" if a.get("crossings") else ""
@@ -3423,9 +3861,11 @@ def describe_call(name: str, args: dict) -> str:
         labels = {"lanes_per_direction": "lanes/direction", "add_lanes": "lanes added each way", "speed_limit_kmh": "speed (km/h)",
                   "direction": "direction", "lane_changing": "lane changing", "road_type": "type",
                   "length_m": "length (m)", "pocket_junction": "turn pocket at", "pocket_lanes": "pocket lanes",
-                  "pocket_length_m": "pocket length (m)", "pocket_side": "pocket side"}
+                  "pocket_length_m": "pocket length (m)", "pocket_side": "pocket side",
+                  "footpaths": "pedestrian walkways", "cycle_lanes": "cycle lanes"}
         changes = ", ".join(f"{label} → {a[key]}" for key, label in labels.items() if a.get(key) is not None)
-        return f"Change road {listed('roads')}: {changes or 'nothing'}"
+        roads = "every road" if str(a.get("roads", "")).strip().lower() in _ALL_WORDS else f"road {listed('roads')}"
+        return f"Change {roads}: {changes or 'nothing'}"
     if name == "add_junction":
         return f"Add a junction at ({float(a.get('x', 0)):.0f}, {float(a.get('y', 0)):.0f}) m"
     if name == "add_road":
@@ -3449,7 +3889,8 @@ def describe_call(name: str, args: dict) -> str:
         return f"Set {a.get('end')} {flows or 'flows'}"
     if name == "generate_grid":
         return (f"Replace the whole network with a new {a.get('vertical')} × {a.get('horizontal')} grid "
-                f"({a.get('vertical')} columns, {a.get('horizontal')} rows)")
+                f"({a.get('vertical')} columns, {a.get('horizontal')} rows)"
+                + (", with pedestrian walkways" if a.get("footpaths") is not None and _bool(a["footpaths"]) else ""))
     if name == "set_signal_timing":
         what = ", ".join(f"{key.replace('_', ' ')} {a[key]}" for key in ("method", "phases", "green_times_s", "cycle_min_s",
                                                                           "cycle_max_s", "target_saturation_percent",
@@ -3515,13 +3956,15 @@ def describe_call(name: str, args: dict) -> str:
     if name == "add_path":
         return f"Add a path from {a.get('start')} to {a.get('end')}"
     if name == "set_pedestrian_demand":
-        people = f"{a['people_per_hour']:g} " if isinstance(a.get("people_per_hour"), (int, float)) else ""
-        return f"Set {people}pedestrians an hour on {', '.join(map(str, a.get('pairs') or [])) or 'pairs'}"
+        per = "a day" if a.get("people_per_day") is not None else "an hour"
+        figure = a.get("people_per_day") if a.get("people_per_day") is not None else a.get("people_per_hour")
+        people = f"{figure:g} " if isinstance(figure, (int, float)) else ""
+        return f"Set {people}pedestrians {per} on {', '.join(map(str, a.get('pairs') or [])) or 'pairs'}"
     if name == "pedestrian_summary":
         return "Read the network for pedestrians"
     if name == "add_spawn_points":
-        return f"Place {len(a.get('points') or [])} pedestrian spawn points" if a.get("points") else \
-            "Place pedestrian spawn points"
+        return f"Place {len(a.get('points') or [])} pedestrian deploy points" if a.get("points") else \
+            "Place pedestrian deploy points"
     if name == "update_bus_stop":
         return f"Change bus stop {a.get('stop')}"
     if name == "update_institution":
@@ -3552,16 +3995,12 @@ def describe_call(name: str, args: dict) -> str:
                 f"{float(a.get('width_m') or 1200):g} × {float(a.get('height_m') or 1200):g} m round its centre")
         return f"Replace the whole network with {what}"
     if name == "generate_demand":
-        if a.get("pairs"):
-            which = "the pairs " + ", ".join(_ids(a["pairs"])[:4])
-        else:
-            which = "every pair" + (f" from {listed('origins')}" if a.get("origins") else "") + \
-                (f" to {listed('destinations')}" if a.get("destinations") else "")
+        which = "the pairs " + ", ".join(_ids(a["pairs"])[:4]) if a.get("pairs") else every_pair()
         total = (f"{a['total']:g} {'trips/day' if a.get('demand') == 'daily' else 'veh/h'} in all"
                  if isinstance(a.get("total"), (int, float)) else "the ends' supply and demand")
         return f"Generate {a.get('demand') or 'hourly'} demand for {which} by a gravity model from {total}"
     if name == "scale_demand":
-        which = ("the pairs " + ", ".join(_ids(a["pairs"])[:4])) if a.get("pairs") else "every pair" +             (f" from {listed('origins')}" if a.get("origins") else "") + (f" to {listed('destinations')}" if a.get("destinations") else "")
+        which = "the pairs " + ", ".join(_ids(a["pairs"])[:4]) if a.get("pairs") else every_pair()
         how = (f"so the busiest junction runs at {a['degree_of_saturation']:g} of capacity"
                if isinstance(a.get("degree_of_saturation"), (int, float)) else f"by {a.get('factor')}")
         return f"Scale the demand of {which} {how}"
@@ -3570,8 +4009,7 @@ def describe_call(name: str, args: dict) -> str:
             named = [str(p).replace("->", " → ") for p in _ids(a["pairs"])]
             which = ", ".join(named[:4]) + (f" and {len(named) - 4} more" if len(named) > 4 else "")
         else:
-            which = "every pair" + (f" from {listed('origins')}" if a.get("origins") else "") \
-                + (f" to {listed('destinations')}" if a.get("destinations") else "")
+            which = every_pair()
         if name == "shape_daily_curve":
             how = (f"the {a['preset']} shape" if a.get("preset") else f"a degree-{len(a['polynomial']) - 1} "
                    "polynomial" if isinstance(a.get("polynomial"), list) else

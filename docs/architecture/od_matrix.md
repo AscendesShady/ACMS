@@ -5,12 +5,20 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
 
 - `ODMatrix`: rows are origins and columns destinations (boundary ends that can take
   traffic in or out; one-way ends only one way).
-  - The **Demand** drop-down at the top of the Demand Generator tab (`ODCellPanel.demand` →
-    `ODMatrix.set_mode`) picks the demand shown and edited: **Hourly demand (veh/h)** or **Daily
-    demand (veh/day)**, or **Institutions**. Choosing one shows its options: for the selected pairs,
-    Flow, or Trips per day and the day's curve; for Institutions, `InstitutionPanel` instead of the OD
-    pair editor (below). The two are kept separately per pair. (A drop-down for two options, against
-    the rulebook's dropdown threshold, by request.)
+  - Its `cells` are kept across rebuilds by end name (an end turned one-way keeps its pairs). `prune(ends)` drops
+    the pairs naming an end that's gone, as `Network._prune_walking` does for pedestrians; `MainWindow._commit`
+    calls it before each undo step is taken, so a deleted end's demand isn't saved or inherited by a new end given
+    its name, Undo brings the end and its demand back together, and a project's pairs of ends it lacks are dropped
+    when it opens.
+  - The **Demand** switch at the top of the Demand Generator tab (`ODCellPanel.period`, `ChoiceButtons`
+    **Hourly** / **Daily** → `_period_chosen` → `ODMatrix.set_mode`) holds for every tab at once: a Run takes all
+    its demand in that one mode. Under it, five tabs (`DemandTabs`: checkable buttons three to a row, drawn as tab
+    tiles by `QPushButton[role="tab"]`, with `currentData` / `findData` as a combo box has and `currentIndex` /
+    `setCurrentIndex` / `currentChanged` as a tab bar has; `ODCellPanel.demand`): **Vehicle OD** (`vehicles`: this
+    grid and the OD pair editor), **Pedestrian OD** (`walk`, `PedestrianMatrix`), **Deploy Pedestrian** (`spawn`,
+    `SpawnMatrix`), **Institutions** (`InstitutionPanel`) and **MRT** (`metro`, `MetroMatrix`). Each tab's hourly
+    and daily demand are kept separately, so switching writes nothing. A grid's sidebar day curve (`MetroMatrix.side`)
+    shows only under Daily with a pair picked that has people a day; with no grid shown yet, nothing.
   - **Zoom and pan** (`set_zoom`, `fit`, `eventFilter` on the table's viewport), as on the map: the
     wheel zooms at the cursor (the cell under it stays put), a right or middle drag pans, and the
     title row (`ODMatrix.corner`) has Zoom Out, Zoom In (×1.25) and Fit Grid (the whole grid, up to
@@ -19,8 +27,8 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
     pixels.
   - Cells stay blank until they have a value; a filled cell shows it over a bus/car/bike bar.
   - The diagonal is drawn shut and unselectable (`_paint_blocked`: `theme.BLOCKED_CELL` hatched with
-    `BLOCKED_HATCH`); the metro's, the pedestrians' and the spawn points' grids draw every cell that can't be typed
-    in the same way (`_BlockedDelegate`: their diagonals, and a metro pair no ride joins).
+    `BLOCKED_HATCH`); the MRT's, the pedestrians' and the deploy points' grids draw every cell that can't be typed
+    in the same way (`_BlockedDelegate`: their diagonals, and an MRT pair no ride joins).
   - Ctrl+click selects several cells, and arrow keys or Tab move between them.
   - Keyboard entry, spreadsheet style (`ODCellPanel.eventFilter`): a digit typed on the matrix starts
     that cell's flow in the Flow box; Enter or double-click on a cell opens its flow. In the Flow box
@@ -29,7 +37,7 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
 - `ODCellPanel`: edits the selected pairs. Its **OD Pair** box shows only while a cell is selected; until
   then one line says to click a cell. Esc, a click beside the cells or
   on the diagonal (`ODMatrix.clear_selection`), and leaving the tab put it away; a cell clicked while
-  Institutions is chosen switches the Demand drop-down back to the grid's demand (`MainWindow._cell_clicked`).
+  another tab is open switches back to Vehicle OD (`MainWindow._cell_clicked`).
   - Flow in veh/h, or trips per day in daily mode ("—" = not entered); Enter jumps to the next cell.
   - Arrival pattern: Random, Poisson, Binomial or Negative binomial.
   - PHF (hourly demand only; hidden for daily): the peak-hour factor, 0.25–1 (spin box, `ODCellPanel.phf`).
@@ -38,7 +46,8 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
   - Mode split: `ModeSplitSlider` has one zone per vehicle type from Mode Behavior, in its colours,
     and one handle between each pair of neighbours. The shares always sum to 100 %. There is one
     % box per type, four to a row. Typing a type's share moves the handle after it, so the next
-    type absorbs the difference.
+    type absorbs the difference. Only a press on a handle drags: a press on a zone picks that type, and the
+    mouse slipping before release moves nothing.
   - **Drop-offs** (`ODCellPanel._show_drops`): clicking a type's zone in the Modes bar (away from the handles,
     `ModeSplitSlider.type_clicked`) shows that type's drop-offs under the % boxes; clicking it again puts them away.
     `DropSlider` is the pair's fastest route from its entry to its exit (`ODCellPanel.router`, the window's
@@ -47,22 +56,27 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
     double-click or right-click to remove it; the selected point's % is typed in **Ends here** (at most what the
     others leave). The hint says what % reach the exit. Each edit is one undo step (`_edited("drops")`); one pair at
     a time (several selected, or no route: a line says so). A point is a share of the trip's length, so it holds on
-    whichever route a vehicle takes. Copy to row/column leaves drop-offs out (each pair's route differs).
+    whichever route a vehicle takes. Copy to row/column leaves drop-offs out (each pair's route differs). The
+    assistant sets them with set_od_demand's `drop_offs` (a junction on the route, at its share; ai_mode.md).
   - **Timetabled types** (a headway in Mode Behavior, e.g. a bus every 10 min): `ODMatrix.split_of`
-    fixes each one's share at its vehicles over the pair's trips (60 ÷ headway per hour against the
-    hourly flow, else × 24 against the daily trips; `demand.split_of`, `demand.fixed_split`). The other types share
+    fixes each one's share at its vehicles over the pair's trips of the demand shown (60 ÷ headway per hour
+    against the hourly flow, × 24 against the daily trips; a pair with none of that kind: the other;
+    `demand.split_of`, `demand.fixed_split`). The other types share
     the rest in their stored proportions, so changing the flow moves only them. The stored split keeps
     those proportions and the fixed share is worked out whenever it is read (matrix bars, tooltips,
     summary, assistant), so small flows typed on the way lose nothing. The fixed type's % box is
     read-only and the slider handles beside it are locked (grey).
-  - **Daily mode: Spread over the day.** A curve over 24 hours decides how the day's trips spread.
+  - **Daily mode: Spread over the day** (`DayCurve`, `ODCellPanel.day`; the same block shapes a walker, spawn or
+    MRT pair's day and an institution's arrivals and departures). A curve over 24 hours decides how the day's
+    trips spread.
   - **`CurveEditor`:** shapes the curve like an image editor's Curves tool.
     - Drag a point, click to add one, double-click or right-click to remove one. The ends stay
       at 00:00 and 24:00.
     - Bars under the curve show each hour's share. Hovering shows the hour's share and trips.
   - **Equation dropdown:** Free curve (points), or Polynomial of degree 2–6 with editable
     coefficients a0…an. Switching keeps the shape as closely as the new kind allows.
-  - **Weekday Shape** (a calendar icon beside the Equation choice) restores the default two-peak shape. The busiest hour and its veh/h are shown.
+  - **Weekday Shape** (a calendar icon beside the Equation choice) restores the default two-peak shape. The busiest
+    hour and its trips an hour (`DayCurve.unit`: veh, people, passengers) are shown.
   - Copy the ticked items (pattern / modes / flow or trips per day / daily curve, ticked in a two-by-two
     grid so they fit the sidebar) to the row, the
     column or every empty cell.
@@ -76,9 +90,15 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
   starts placing on the map (`placing_changed`, the area; the footprint follows the Area box). The
   banner says the next step (red, green, the circle's radius and what it reaches). A building clicked on
   the map (`show_selected`) shows its figures, its mode shares (logit, or its car share), its door, its
-  catchment and its people a day, with **Mode split** (`split_requested`) and Delete (Del).
+  catchment and its people a day, with **Mode split** (`split_requested`) and Delete (Del). Below them, its demand
+  as the switch shows it (`set_daily`): Hourly, **Arriving** and **Leaving** people an hour (`per_hour`, "—" = its
+  day's busiest hour); Daily, **Arriving over the day** and **Leaving over the day** (`days`, two `DayCurve`s), each
+  starting from its shift (`daily_profile.through_hours` of `institutions.shift_people`: a point each hour) until
+  shaped, and **Use Shift Times** to drop its curves. Each edit emits `demand_requested` (the whole `per_hour` or
+  `curves`, and which box or curve), validated by `MainWindow._set_institution_demand`; a burst of edits to one
+  box or curve is one undo step.
 - `ModeSplitDialog` (the selected building's Mode split, opened by `MainWindow._open_mode_split`): a row per
-  mode (Walk, each vehicle type, and Metro when the network has lines: use it, out-of-vehicle minutes, cost ¢ (Metro: on
+  mode (Walk, each vehicle type, and MRT when the network has lines: use it, out-of-vehicle minutes, cost ¢ (Metro: on
   top of the line's fare), cost ¢/km, observed %), the three
   coefficients and the walking speed, prefilled with `network_tools.default_alternative`, `LOGIT_DEFAULTS` and
   `WALK_KMH`; the shares, people and vehicles a day, mean trip and constants update as they change (`compute`:
@@ -101,10 +121,10 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
   (`_demand_now`), so a degree of saturation counts the pairs left out and the busiest hour.
   A demand tool naming no pairs works on every pair; a pair is "1W->1E", or as small models write it ("1W-1E",
   "1W->>1E", "1W=>1E", "1W to 1E": `_pairs_from`; no end name has a "-"). An empty mode_split is none, and fractions
-  adding up to 1 are percent (`_shares_from`). `_type_in` types a tool's numbers (one undo step)
+  adding up to 1 are percent, and shares are rounded together to whole percent (`demand.shares_from`). `_type_in` types a tool's numbers (one undo step)
   and, for a degree of saturation, has `ODCellPanel.checker` (the window's `_check_demand`) run them,
   typing in the share that held; a failed check puts the matrix back. A cut demand's result leads with what the
-  matrix now holds (`_lead_with_what_was_kept`: `total_now`, `kept_after_check`; the made total as
+  matrix now holds (`demand.lead_with_what_was_kept`: `total_now`, `kept_after_check`; the made total as
   `total_before_check`, as qwen3.5 had reported it as kept) and, under half kept, `to_hold_more`: the busiest junctions
   that only give way and what might let more hold (signalising them, or main roads only).
 - `ODCell(flow, daily, profile, pattern, split, quarters, drops)`: the data for one pair (drops: demand.md). `split` is one percent
@@ -113,13 +133,21 @@ tools' argument checks and read-out, a run's pair demand) are demand.py's (deman
   `quarters` (four 15-minute counts or shares) for hourly demand, refused for daily; its result and
   read_od_matrix give each hourly pair's `peak_hour_factor` and `quarters`. Saved with the project (network_io) and in the undo
   history.
-- `SpawnMatrix` (Demand → **Pedestrian spawn points**, `spawn_box`): `MetroMatrix`'s grid over the spawn points
-  (S1, S2... in number order), any two different, each cell `Network.spawn_demand`'s people an hour; the panel's
-  **Place Spawn Points** (`place_spawn_button`, checkable) places more on the map (main.md), with one hint on how.
-- `PedestrianMatrix` (Demand → **Pedestrians (per hour)**, `walk_hint`): `MetroMatrix`'s grid over the boundary ends (`_places`), any two different (`_joined`), each cell `Network.walk_demand`'s people an hour (0 to `MAX_WALK_DEMAND` 100,000); a pair no footpath or path joins is noted when a run starts (walking.md).
-- `MetroMatrix` (Demand → **Metro passengers (per hour)**, in the main area in place of the grid): the metro's own OD
+- `SpawnMatrix` (Demand → **Spawn**, `spawn_box`): `MetroMatrix`'s grid over the deploy points
+  (S1, S2... in number order), any two different, each cell `Network.spawn_demand`'s people an hour (daily:
+  `spawn_daily`); the panel's **Place Deploy Points** (`place_spawn_button`, checkable) places more on the map
+  (main.md), with one hint on how.
+- `PedestrianMatrix` (Demand → **Pedestrian OD**, `walk_hint`): `MetroMatrix`'s grid over the boundary ends (`PLACES`), any two different (`ANY_PAIR`), each cell `Network.walk_demand`'s people an hour (0 to `MAX_WALK_DEMAND` 100,000; daily: `walk_daily`, up to 24 times that a day); a pair no footpath or path joins is noted when a run starts (walking.md).
+- `MetroMatrix` (Demand → **MRT**, in the main area in place of the grid): the MRT's own OD
   matrix, stations M1, M2... as rows (from) and columns (to), each cell `Network.metro_demand`'s passengers an hour.
-  A number typed sets it (an undo step), 0 or blank clears it, anything else (or past 100,000) is refused and the cell
-  put back; the diagonal and pairs no ride joins (`metro.ride`: one line, or one change at an interchange) can't be
-  typed in; a station's header names its line, or lines at an interchange. Apart from the roads'
-  demand: road pairs never ride the metro (metro.md). The panel shows one line on how (`metro_hint`).
+  Daily (`daily`, set by `MainWindow.show_grid` from the switch; the three grids alike): each cell is the pair's
+  people a day (`DAILY`: `metro_daily`, `walk_daily`, `spawn_daily`, {"people", "curve"}); a new pair's day starts
+  as the weekday's, and the selected pair's `DayCurve` shows in the sidebar under the tab's hint (`side`, placed by
+  `ODCellPanel.add_side`, so the grid keeps the whole area as Vehicle OD's does; `_show_day`; before it has people a
+  day, one line says so); a burst of edits to one curve is one undo step (`changed`'s merge key).
+  A number typed sets it (an undo step), 0 or blank clears it, anything else (or past 100,000, 24 times that a day)
+  is refused and the cell put back; the diagonal and pairs no ride joins (`metro.ride`: one line, or one change at an interchange) can't be
+  typed in; a station's header names its line, or lines at an interchange ("5 lines" past four: five words at
+  most). The three grids differ only in class attributes: `PLACES`, `DEMAND`, `DAILY` (the network's attributes),
+  `TIP` (a header's tooltip) and `ANY_PAIR` (any two different places, or only those a ride joins). Apart from the roads'
+  demand: road pairs never ride the MRT (metro.md). The panel shows one line on how (`metro_hint`).

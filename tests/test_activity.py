@@ -131,6 +131,46 @@ def test_controls_are_named_and_read_as_the_user_sees_them():
     assert name_of(field) == "Seeds, e.g. 1-5"
 
 
+def test_lines_no_step_takes_keep_only_the_latest_waiting():
+    """With Watch my edits on and no Research Log step taking its lines, `pending` keeps the last KEEP_PENDING
+    (it grew without end); activity.csv still has every line."""
+    from traffic_simulator import activity
+
+    log, keep = activity.ActivityLog(), activity.KEEP_PENDING
+    activity.KEEP_PENDING = 10
+    try:
+        log.start(Path(tempfile.mkdtemp()))
+        for n in range(25):
+            log.log("entry", f"field {n}", str(n))
+        assert len(log.pending) == 10 and log.pending[-1][4] == "field 24"
+        assert len(rows(log.path)) == 26  # "Watch my edits on", then every entry
+    finally:
+        log.stop()
+        activity.KEEP_PENDING = keep
+
+
+def test_a_full_disk_turns_the_eye_off_and_says_so_once():
+    from traffic_simulator.main import MainWindow
+
+    class Full:
+        def write(self, _):
+            raise OSError(28, "No space left on device")
+
+        flush = close = lambda self: None
+
+    window = MainWindow()
+    window.results_folder = Path(tempfile.mkdtemp())
+    window.watch_action.setChecked(True)
+    real = window.activity._file
+    window.activity._file, window.activity._writer = Full(), csv.writer(Full())
+    real.close()
+    window.activity.log("click", "Run")  # the eventFilter's and focusChanged's way in: no error raised
+    assert not window.activity.on and not window.watch_action.isChecked()
+    assert "No space left" in window.statusBar().currentMessage()
+    window.activity.log("click", "Stop")  # off now: nothing tried, nothing said again
+    window.close()
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

@@ -11,7 +11,7 @@
 - `distance_to_segment(p, a, b)`.
 - `nearest_along(points, p)`: how far along the polyline its nearest point to p is (a dragged bus
   stop, a bay's middle on its lane).
-- `rail_leg(track, x, y, radius, max_turn, platform_m, transition_m, heading)`: a metro leg from a track's last
+- `rail_leg(track, x, y, radius, max_turn, platform_m, transition_m, heading)`: an MRT leg from a track's last
   point (a station) laid out as a railway is: straight on for half a platform, a bend (`_bend`: a clothoid transition,
   curvature rising evenly to 1 / radius, the circular arc, a transition back; transitions shortened on a small turn so
   the curvature never passes 1 / radius; integrated in 1 m pieces, points every 5 m), then straight into the next

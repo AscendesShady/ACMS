@@ -30,12 +30,12 @@ assistant's tools can ask any run of the session (`read_results` lists them).
   Graded A–F: signals by Exhibit 16-2 (≤10, 20, 35, 55, 80 s), give-way, stop and roundabout entries by
   Exhibits 17-2 and 17-22 (≤10, 15, 25, 35, 50 s; HCM 2000 has no roundabout LOS, HCM 2010 uses these). Per
   junction the flow-weighted delay and its LOS, the worst approach; signal approaches' capacity
-  (saturation × effective green ÷ cycle) and v/c; each approach's 95th-percentile queue against its road
-  (`queue_p95`); a roundabout entry's circulating flow (its link's `circulating` movements counted in
+  (saturation × effective green ÷ cycle) and v/c; each approach's 95th-percentile queue (its link's: metres a
+  lane of that direction) against its road (`queue_p95`); a roundabout entry's circulating flow (its link's `circulating` movements counted in
   `turn_traversals`), its capacity measured on the simulated drivers (`ROUNDABOUT_ENTRY_VPH`) and v/c, and the
   HCM 6 capacity beside it (`roundabouts.hcm_entry_capacity`), and for a one-lane entry Tanner's against a bunched ring
   (`tanner_entry_capacity`, `tanner_capacity_vph`: below the HCM's above about 800 veh/h circulating, as the simulation is); and a grid of LOS per 15-minute period (two whole
-  periods or more).
+  periods or more, counted from the end of the warm-up, `observed_from_s`).
 - `diagnose_signal(kpis, junction)` (tool `diagnose_signal`): flow ratio y = q/s per phase (its busiest
   approach), Y, the critical v/c Xc = Y·C/(C − L) (L = `signal_timing.lost_time`, as Webster's), Webster's cycle for the demand; per approach
   v/c, arrivals on green P, platoon ratio Rp = P/(g/C), arrival type and f_PA (Exhibits 16-11, 16-12), PF =
@@ -58,7 +58,10 @@ assistant's tools can ask any run of the session (`read_results` lists them).
   (Bruneau et al. 2003; Taylor, Vulnerability Analysis for Transportation).
 - `emissions_report(kpis)` (tool `emissions_report`), `co2_kg(kpis)` (the experiments' "CO2 of cars and vans").
 - `invariants(kpis, reported)` (tool `test_agent_compliance`, and every run with an agent): what an agent's run
-  broke, each with its evidence: an approach with traffic and no green for over `STARVE_S` (180 s), an emergency
+  broke, each with its evidence: an approach holding traffic on red for over `STARVE_S` (180 s) (`_held_on_red`:
+  a vehicle that reached the stop line, entered + free-flow time, and left on a later green waited from the later of
+  then and the approach's last crossing before that green; vehicles still on it at the end, from its last green or
+  crossing; a resting green or a long cycle holds no one), an emergency
   vehicle standing still over `EMERGENCY_STANDSTILL_S` (30 s) at once, gridlock, agent errors (Explainable AI for
   ITS: safety constraints checked on the agent's behaviour, not its words).
 

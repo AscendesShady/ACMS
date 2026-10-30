@@ -10,8 +10,8 @@ import heapq
 import random
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
-from itertools import count
-from math import atan2, cos, hypot, log, pi, sin, sqrt
+from itertools import combinations, count
+from math import atan2, cos, dist, hypot, log, pi, sin, sqrt
 
 from .geometry import bezier, nearest_along, offset_polyline, point_along, polyline_length, segment_hit, sub_polyline
 from .interchanges import curve_speed_kmh
@@ -81,6 +81,11 @@ def measured_capacity(table: tuple, conflicting_vph: float) -> float:
     return table[-1][1]
 
 
+# A minute riding in a cycle lane is felt as this much of one in mixed traffic (bike_route; network_tools' mode choice):
+# an assumption. Broach, Dill & Gliebe 2012 (Transportation Research Part A 46(10)) found bike lanes about exactly
+# offset the deterrence of the traffic beside them; their coefficients aren't in the references.
+CYCLE_LANE_TIME_FACTOR = 0.7
+
 @dataclass(eq=False)
 class Lane:
     link: Link
@@ -122,6 +127,10 @@ class Link:
     def all_turns(self) -> list:
         """Every turn out of it, bikes' too: what a vehicle crossing or merging with another has to look out for."""
         return [*self.turns.values(), *self.bike_turns.values()]
+
+    def all_lanes(self) -> list:
+        """Every lane of it, its cycle lane too: what a detector or a count of its vehicles covers."""
+        return [*self.lanes, *([self.cycle] if self.cycle is not None else [])]
 
 
 
@@ -176,28 +185,38 @@ class Bay:
 
 
 class Signal:
-    """A signalised junction's phases in turn, each green, then amber, then all-red. Two phases:
-    east-west arms, then north-south. Four: each arm on its own.
+    """A signalised junction's phases in turn, each green, then amber, then all-red. Two phases: its two roads'
+    arms (two_phases), the more east-west first. Four: each arm on its own.
 
     Fixed-time (Webster, TRANSYT, Synchro, the greens entered): the same greens every cycle, the first
     phase's green starting `offset` seconds into each. Adaptive (SCATS, SCOOT): its `controller` is
     told as each cycle and each phase starts, and may change the greens (and so the cycle) from then.
-    Its amber and all-red are the junction's own (signal_timing.clearance)."""
+    Its amber and all-red are the junction's own (signal_timing.clearance).
+
+    Manual (`windows`): each arm goes in its own window of the cycle, as entered, its last `amber` s amber; arms with
+    the same window make one phase. An arm with none stays red."""
 
     def __init__(self, node, arms: dict[str, tuple[float, float]], amber: float = AMBER_S,
-                 all_red: float = ALL_RED_S) -> None:
+                 all_red: float = ALL_RED_S, windows: dict[str, tuple[float, float]] | None = None) -> None:
+        self.windows = windows  # manual: arriving link id -> (start, end) s into the cycle, amber included; else None
+        if windows is not None:
+            amber = node.amber_s
         self.amber, self.all_red, self.span = amber, all_red, amber + all_red
         # arms: arriving link id -> unit vector from the junction out along that arm
-        if node.signal_phases == 2:
-            groups = [[link for link, (ux, uy) in arms.items() if abs(ux) >= abs(uy)],
-                      [link for link, (ux, uy) in arms.items() if abs(ux) < abs(uy)]]
+        if windows is not None:
+            order = sorted(set(windows.values()))
+            groups = [[link for link in windows if windows[link] == window] for window in order]
+            greens = [end - start - amber for start, end in order]
+        elif node.signal_phases == 2:
+            groups = two_phases(arms)
         else:
             groups = [[link] for link in sorted(arms, key=lambda link: atan2(arms[link][1], arms[link][0]))]
-        groups = [group for group in groups if group]
-        greens = node.green_times_s or [30.0]
+        if windows is None:
+            groups = [group for group in groups if group]
+            greens = node.green_times_s or [30.0]
         self.phases = [(set(group), max(1.0, greens[i % len(greens)])) for i, group in enumerate(groups)]
         self.phase_of = {link: i for i, (group, _) in enumerate(self.phases) for link in group}
-        self.cycle = sum(green + self.span for _, green in self.phases)
+        self.cycle = max((end for _, end in windows.values()), default=1.0) if windows is not None else             sum(green + self.span for _, green in self.phases)
         self.offset = 0.0  # when the first phase's green starts in the cycle
         self.controller = None  # an adaptive method's junction (signal_timing), or None: fixed-time
         self._index = 0  # adaptive: the phase running, when its green began, when its cycle began
@@ -249,12 +268,60 @@ class Signal:
 
     def state(self, link_id: str, t: float) -> str:
         """"G", "Y" or "R" for the arm arriving on this link."""
+        if self.windows is not None:
+            start, end = self.windows.get(link_id, (0.0, 0.0))
+            into = (t - self.offset) % self.cycle
+            return "G" if start <= into < end - self.amber else "Y" if start <= into < end else "R"
         index, into = self._position(t)
         group, green = self.phases[index]
         if link_id not in group:
             return "R"
         return "G" if into < green else "Y" if into < green + self.amber else "R"
 
+    def remaining(self, link_id: str, t: float) -> float | None:
+        """Seconds until the arm arriving on this link changes: its green or amber ends, or (red) its phase's
+        green starts, the phases taken in turn at their greens now (an adaptive controller may still change them).
+        None: it never changes (a manual arm with no window)."""
+        if self.windows is not None:
+            if link_id not in self.windows:
+                return None
+            start, end = self.windows[link_id]
+            into = (t - self.offset) % self.cycle
+            if start <= into < end:
+                return (end - self.amber if into < end - self.amber else end) - into
+            return (start - into) % self.cycle
+        index, into = self._position(t)
+        group, green = self.phases[index]
+        if link_id in group and into < green + self.amber:
+            return (green if into < green else green + self.amber) - into
+        left, mine = green + self.span - into, self.phase_of[link_id]
+        index = (index + 1) % len(self.phases)
+        while index != mine:
+            left += self.phases[index][1] + self.span
+            index = (index + 1) % len(self.phases)
+        return left
+
+
+
+def two_phases(arms: dict[str, tuple[float, float]]) -> list[list[str]]:
+    """A two-phase signal's arms (arriving link id -> unit vector out along the arm) by the junction's own roads, not
+    the screen's axes: the most nearly opposite pair of arms sets one road's line (along their bisector), the arm
+    furthest off it the other's, and each arm goes with the line it runs nearer (a tie: the first). The more
+    east-west line's arms go first; a road that runs straight through makes one phase."""
+    def along(link: str, line: tuple[float, float]) -> float:
+        return abs(arms[link][0] * line[0] + arms[link][1] * line[1])
+
+    links = list(arms)
+    if len(links) < 2:
+        return [links]
+    a, b = min(combinations(links, 2),  # the most nearly opposite: the least dot product
+               key=lambda pair: arms[pair[0]][0] * arms[pair[1]][0] + arms[pair[0]][1] * arms[pair[1]][1])
+    x, y = arms[a][0] - arms[b][0], arms[a][1] - arms[b][1]
+    first = (x / (hypot(x, y) or 1.0), y / (hypot(x, y) or 1.0))
+    second = arms[max(links, key=lambda link: along(link, (-first[1], first[0])))]
+    groups = [[link for link in links if along(link, first) >= along(link, second)],
+              [link for link in links if along(link, first) < along(link, second)]]
+    return groups if abs(first[0]) >= abs(second[0]) else groups[::-1]
 
 
 def _unit(points: list, at_end: bool) -> tuple[float, float]:
@@ -306,9 +373,11 @@ class Graph:
                     arms[link.id] = (-ux, -uy)
                 # Its amber and all-red: from its fastest approach, across it stop line to far stop line
                 arriving = self.arriving[node.id]
+                windows = {link.id: (node.manual_greens_s[link.road][0] - 1, node.manual_greens_s[link.road][1])
+                           for link in arriving if link.road in node.manual_greens_s}                     if node.signal_method == "manual" else None
                 self.signals[node.id] = Signal(node, arms, *clearance(
                     max(link.speed for link in arriving),
-                    2 * max(self._trim(node.id, network.road(link.road)) for link in arriving)))
+                    2 * max(self._trim(node.id, network.road(link.road)) for link in arriving)), windows)
             self._add_conflicts(node.id)
         self._add_detours()
         self.control_delay = self._control_delays()
@@ -339,9 +408,16 @@ class Graph:
         return delays
 
     def _two_phase(self, node_id: str) -> bool:
-        """A two-phase signal: no phase protects a turn across oncoming traffic, so there is none."""
+        """A two-phase signal, or a manual one where opposite arms share a window: no phase protects a turn across
+        oncoming traffic, so there is none."""
         node = self.network.nodes.get(node_id)  # junctions only: boundary ends have no signal
-        return node is not None and node.control == "signalised" and node.signal_phases == 2
+        if node is None or node.control != "signalised":
+            return False
+        if node.signal_method == "manual":
+            windows = [tuple(node.manual_greens_s[road]) for road, _, _ in self.network.signal_arms(node_id)
+                       if road in node.manual_greens_s]
+            return len(set(windows)) < len(windows)
+        return node.signal_phases == 2
 
     def _kind(self, arrive: Link, leave: Link) -> str:
         """How the movement from one link onto the next turns: "uturn" (back along its road),
@@ -602,7 +678,7 @@ class Graph:
     def _curve_turn(self, node_id: str, lane: Lane, out: Lane, kind: str, permitted: bool) -> Turn:
         p0, p3 = lane.points[-1], out.points[0]
         u0, u3 = _unit(lane.points, at_end=True), _unit(out.points, at_end=False)
-        chord = hypot(p3[0] - p0[0], p3[1] - p0[1])
+        chord = dist(p0, p3)
         pull = chord * 0.4
         if kind == "uturn":  # swing out into the junction to turn round, not on the stop lines
             node = self.network.node(node_id)
@@ -900,6 +976,16 @@ class Graph:
         key = (origin, destination)
         if key not in self._routes:
             self._routes[key] = self._fastest(origin, destination, self.free_move_time)
+        return self._routes[key]
+
+    def bike_route(self, origin: str, destination: str) -> list[Link] | None:
+        """A cyclist's route: the least perceived time, a link with a cycle lane at CYCLE_LANE_TIME_FACTOR of its
+        free_move_time (cyclists prefer them: Broach, Dill & Gliebe 2012). On a network with no cycle lanes it is
+        route()'s."""
+        key = ("bike", origin, destination)
+        if key not in self._routes:
+            self._routes[key] = self._fastest(origin, destination, lambda link, after: self.free_move_time(link, after)
+                                              * (CYCLE_LANE_TIME_FACTOR if link.cycle is not None else 1.0))
         return self._routes[key]
 
     def _fastest(self, origin: str, destination: str, cost) -> list[Link] | None:

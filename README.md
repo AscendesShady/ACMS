@@ -3,7 +3,6 @@
 ## Layout
 
 - `src/traffic_simulator/` — application and domain implementation.
-- `config/defaults.json` — editable default network settings.
 - `ARCHITECTURE.md` — the index: capabilities, layout, conventions and a map of every module. The in-app
   assistant reads it with every request, so it stays short.
 - `docs/architecture/` — each module in full, plus flows, sources, tests and what isn't built yet.
@@ -48,14 +47,14 @@ The editor also starts with `.venv\Scripts\acms.exe` or
   Choose paint before Run: like other vehicle-type edits, changing it stops an active run.
 - **Show Buildings:** the city icon beside 3D View hides/shows placed institutions, their labels and selected
   catchments. It changes visibility only: institutions and their demand remain. Placement previews still show
-  while you add a building. Buildings start visible; this display choice lasts for the session.
-- **Overhead metro:** 3D View raises metro lines onto viaducts with piers and station platforms/canopies.
+  while you add a building. Buildings start hidden; this display choice lasts for the session.
+- **Overhead MRT:** 3D View raises MRT lines onto viaducts with piers and station platforms/canopies.
   Stations match the current 120 m platform minimum, with pitched canopies, beams and yellow platform edges.
   Train previews have sloped cab noses and a thin livery band, with cab windscreens at the train ends.
   Decks, rails and platforms follow the saved curved track continuously; pier spacing uses world metres.
   Display assumptions: 8 m underside clearance, 9 m tracks, 14 m station canopies and 3.4 m tall train bodies.
   A labelled parked train preview shows each line's carriage count; trains do not move in the simulation.
-  The 2D track (with its curves), station markers and passenger calculations stay unchanged. Show Buildings keeps metro visible.
+  The 2D track (with its curves), station markers and passenger calculations stay unchanged. Show Buildings keeps MRT visible.
 - **Building heights:** 3D View extrudes the existing metre-scaled footprints into structures with facades and
   roofs. In **Demand Generator → Institutions**, set **Height** when placing or selecting a building.
   Height includes the roof, is saved and undoable, and can be edited during a run. Old files use labelled
@@ -68,10 +67,10 @@ The editor also starts with `.venv\Scripts\acms.exe` or
 - **Pedestrians:** select a road and choose its **Footpath**: None, Both sides or one side; the map highlights
   where it will go before you Apply. Paving uses warm reddish-brown brick: a metre-scaled herringbone pattern
   at detail zoom, a quiet solid colour at overview zoom. Saved pedestrian paths use the same finish.
-  **Demand Generator → Pedestrian spawn points**: click anywhere near the network for spawn points, right-click,
-  then type people walking an hour between them; walkers go straight to the nearest footpath and walk the shortest
+  **Demand Generator → Deploy Pedestrian** opens on its OD matrix: press **Place Deploy Points**, click anywhere
+  near the network for each point, right-click, then type people walking an hour between them in the matrix; walkers go straight to the nearest footpath and walk the shortest
   way. Or type people walking an hour between boundary ends in
-  **Demand Generator → Pedestrians**; buildings' Walk share walks too. In a run they're yellow dots on their
+  **Demand Generator → Pedestrian OD**; buildings' Walk share walks too. In a run they're yellow dots on their
   cheapest walk at about 5 km/h. In **Edit Network → Pedestrian**, **Add Zebra** or **Add Overbridge** and click a
   road with footpaths on both sides. Traffic stops for walkers on a zebra; at a junction's arm they wait for a gap
   in the traffic; an overbridge takes them over it, stairs to climb. A run's workbook then has walk times, kerb
@@ -89,12 +88,12 @@ The editor also starts with `.venv\Scripts\acms.exe` or
   slider shows the pair's route, its junctions marked. Click it to add a point where trips end (it snaps to a
   junction nearby), drag it, type its **Ends here** %, right-click to remove it; the rest reach the exit. In a run
   those vehicles leave the road there.
-- **Metro:** in **Edit Network → Metro**, Start deployment and click stop after stop. Trains don't take sharp
+- **MRT:** in **Edit Network → MRT**, Start deployment and click stop after stop. Trains don't take sharp
   bends: each leg curves from its stop at 300 m or more and turns less than 90°; a dashed preview follows the
   mouse, pulled in like a rubber band when you ask for too sharp a turn (amber where it would cross another line,
   red where it can't go). A line can't cross itself; crossing another line asks **Merge** (one station on both
   lines, where riders change) or **Discard Line**. Right-click to finish and set its service: that is its
-  schedule. Passengers typed in **Demand Generator → Metro** only load the lines (riders served, over capacity);
+  schedule. Passengers typed in **Demand Generator → MRT** only load the lines (riders served, over capacity);
   they never change the schedule.
 - **Run, Pause, Play, Stop:** every run writes its workbook to Documents\ACMS results when it ends, however it
   ends: Stop, a new Run, a network edit, closing the window or a failure. A run that didn't finish normally says
@@ -157,6 +156,10 @@ When the program starts, it scans the PC's environment variables and Ollama auto
   once connected, it reads **Restart**.
 - **System 1 → Use**: Off, JEV when `JEV_API_KEY` is found, and each of Ollama's decision models
   (Laya). Ollama loads the model on its first question.
+- **System 1 → your own question**: pick **Bool**, **Choice** or **Ranking**, write the question and its
+  context (**Grab context** fills it with the open network, its signals and the OD demand), give the answers as a
+  form does (Bool: what True and False mean; Choice and Ranking: an option a row, its description optional,
+  **+ Add option** for another, × to remove one) and press **Decide**: each answer comes back with its probability.
 
 Saved a key or started Ollama while the program was open? Press **Rescan PC** (the magnifier beside Start on System 2). Keys are
 never shown, typed in or saved with your networks, so the app can be copied to another PC;

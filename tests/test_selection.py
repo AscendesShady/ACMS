@@ -97,6 +97,56 @@ def test_the_map_selects_by_box_and_deletes_what_it_took():
     window.close()
 
 
+def test_a_box_selects_a_metro_line_by_its_track_and_deletes_it():
+    from traffic_simulator.main import MainWindow
+    from traffic_simulator.network_scene import MetroItem
+
+    network = generate_network(3, 4)
+    network.add_metro_line((250, 250), (750, 250))  # ML1, M1 to M2, between the junction rows
+    window = MainWindow()
+    window.install_network(network)
+    window._commit()
+    scene = window.scene
+    window.box_selected(300, 200, 400, 300, crossing=False, additive=False)  # a window over part of it: not all of it
+    assert ("metro_line", "ML1") not in window.group
+    window.box_selected(300, 200, 400, 300, crossing=True, additive=False)  # a crossing box touching it
+    assert window.group == [("metro_line", "ML1")] and window.properties.object_type.text() == "1 MRT line selected"
+    window.box_selected(200, 200, 800, 300, crossing=False, additive=False)  # a window round its whole track
+    assert window.group == [("metro_line", "ML1")]
+    assert [item.selected for item in scene.items() if isinstance(item, MetroItem)] == [True]  # outlined
+    asked = []
+    real, QMessageBox.question = QMessageBox.question, lambda *args: asked.append(args[2]) or QMessageBox.StandardButton.Yes
+    try:
+        window.delete_selection()
+    finally:
+        QMessageBox.question = real
+    assert asked == ["Delete 1 MRT line?"] and not window.network.metro_lines and not window.network.metro_stops
+    window.undo()
+    assert list(window.network.metro_lines) == ["ML1"]
+    window.close()
+
+
+def test_redo_while_deploying_a_metro_line_ends_the_deployment_first():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window._accept_metro_line = lambda summary: {"headway_min": 5}  # Accept pressed
+    nodes = len(window.network.nodes)
+    window.add_node_button.setChecked(True)
+    window.canvas_clicked("", "", 3000.0, 3000.0)
+    window.undo()  # something to redo
+    window.edit_tabs.setCurrentIndex(1)
+    window.metro_button.setChecked(True)
+    window.metro_clicked(100.0, -300.0)
+    window.metro_clicked(900.0, -300.0)
+    window.redo()  # the line accepted first: a new step, so there's nothing left to redo
+    assert list(window.network.metro_lines) == ["ML1"] and len(window.network.nodes) == nodes
+    assert window._snapshot() == window.history.current and not window.history.redo_stack
+    window.undo()  # takes the line back, nothing else
+    assert not window.network.metro_lines and len(window.network.nodes) == nodes
+    window.close()
+
+
 def test_ctrl_clicking_two_meeting_roads_offers_add_slip_road():
     from traffic_simulator.main import MainWindow
 
@@ -307,9 +357,13 @@ def test_spawn_points_are_placed_on_the_map_then_their_grid_shows():
     window._commit()
     steps = len(window.history.undo_stack)
     window.tabs.setCurrentWidget(window.demand_tab)
-    window.od_panel.demand.setCurrentIndex(window.od_panel.demand.findData("spawn"))  # none yet: placing at once
-    assert window.od_panel.place_spawn_button.isChecked() and window.scene.spawn_placing
-    assert window.workspace.currentWidget() is window.view and "S1" in window.mode_hint.text()
+    window.od_panel.demand.setCurrentIndex(window.od_panel.demand.findData("spawn"))  # its OD matrix, empty yet
+    assert window.workspace.currentWidget() is window.spawn_matrix and not window.scene.spawn_placing
+    assert window.spawn_matrix.empty.isVisibleTo(window.spawn_matrix) and not window.spawn_matrix.day.isVisibleTo(
+        window.spawn_matrix.side)  # Hourly: no day curve in the sidebar
+    window.od_panel.place_spawn_button.setChecked(True)  # Place Deploy Points: the map
+    assert window.scene.spawn_placing and window.workspace.currentWidget() is window.view
+    assert "S1" in window.mode_hint.text()
     a = window.network.node("1,1")
     for dx, dy in ((140, 60), (900, -800), (500, -300)):
         window.scene.spawn_clicked.emit(a.x + dx, a.y + dy)
@@ -331,6 +385,183 @@ def test_spawn_points_are_placed_on_the_map_then_their_grid_shows():
     window.cancel()  # Esc finishes placing too
     assert not window.scene.spawn_placing
     window.close()
+
+
+def _everything_scene():
+    """A 3 x 3 grid with one of each thing the map draws: a bus stop, footpaths and cycle lanes, a zebra and an
+    overbridge, a path, a spawn point, a building, a metro line, an adaptive signal, a roundabout and a bridge."""
+    from traffic_simulator.models import Institution
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+
+    network = generate_network(3, 3)
+    for road in network.all_roads():
+        road.footpaths = ["left", "right"]
+    network.roads["1,2-2,2"].cycle_lanes = list(network.roads["1,2-2,2"].arrival_ends())
+    network.add_bus_stop("2,2-3,2", "both")
+    network.add_crossing("1,2-2,2", 150.0, "zebra")
+    network.add_crossing("2,3-2,2", 250.0, "overbridge")
+    network.add_walkway("1,1", "2,2", [[250.0, 250.0]])
+    network.add_spawn_point(140.0, 820.0)
+    network.institutions["IN1"] = Institution("IN1", "Office", 750.0, 250.0, 900.0, 200.0)
+    network.add_metro_line((100.0, 100.0), (900.0, 150.0))
+    network.nodes["2,2"].control, network.nodes["2,2"].signal_method = "signalised", "scats"
+    network.nodes["3,3"].control = "roundabout"
+    network.add_road("1,1", "3,2").overpass = True  # a bridge over the roads round 2,2: parapets where it crosses
+    scene = NetworkGraphicsScene(network)
+    scene.rebuild()
+    return scene
+
+
+def _picture(scene):
+    """The scene's network drawn to an image (the same rect whatever the scene's own)."""
+    from PySide6.QtCore import QRectF
+    from PySide6.QtGui import QImage, QPainter
+
+    image = QImage(900, 900, QImage.Format.Format_RGB32)
+    painter = QPainter(image)
+    scene.render(painter, QRectF(0, 0, 900, 900), QRectF(-300, -300, 1700, 1700))
+    painter.end()
+    return image
+
+
+def _still(scene, item) -> bool:
+    """Whether the item is still the scene's: not drawn again."""
+    try:
+        return item.scene() is scene
+    except RuntimeError:  # deleted with a whole redraw
+        return False
+
+
+def _redrawn(scene):
+    """The same network and selection drawn afresh, whole: what the scene must look like."""
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+
+    whole = NetworkGraphicsScene(scene.network)
+    whole.selection, whole.multi_nodes, whole.group = scene.selection, set(scene.multi_nodes), set(scene.group)
+    whole.rebuild()
+    return whole
+
+
+def test_a_selection_click_redraws_only_what_it_picks_and_drops_and_looks_as_a_whole_redraw():
+    scene = _everything_scene()
+    network = scene.network
+    far = next(item for item in scene.items() if item.data(0) == ("road", "1,3-2,3"))  # never picked here
+    end = next(iter(network.approach_nodes))
+    for kind, identifier in (("road", "1,2-2,2"), ("node", "2,2"), ("bus_stop", "BS1"), ("entry", end), ("exit", end),
+                             ("crossing", "X1"), ("crossing", "X2"), ("walkway", "P1"), ("spawn", "S1"),
+                             ("institution", "IN1"), ("node", "3,3"), ("", "")):
+        scene.set_selection(kind, identifier)
+        assert far.scene() is scene, kind  # not drawn again: the click redrew only what changed
+        assert _picture(scene) == _picture(_redrawn(scene)), (kind, identifier)
+    scene.set_multi_selection(["1,1", "2,2"])
+    assert _picture(scene) == _picture(_redrawn(scene))
+    scene.set_group([("road", "2,2-3,2"), ("end", end), ("bus_stop", "BS1"), ("metro_line", "M1"), ("node", "3,3")])
+    assert _picture(scene) == _picture(_redrawn(scene)) and far.scene() is scene
+    scene.set_selection("bus_stop", "BS1")
+    scene.preview_footpaths("1,2-2,2", ("left",))  # the road panel's choice shows until the selection changes
+    scene.set_selection("road", "1,2-2,2")
+    assert not scene._footpath_preview and _picture(scene) == _picture(_redrawn(scene))
+    network.roads["1,3-2,3"].lanes_per_direction = 2  # an edit, then the window selects again: drawn whole
+    scene.set_selection("road", "1,3-2,3")
+    assert not _still(scene, far) and _picture(scene) == _picture(_redrawn(scene))
+
+
+def test_a_drag_redraws_what_it_carries_and_looks_as_a_whole_redraw():
+    from PySide6.QtCore import QEvent
+    from PySide6.QtWidgets import QGraphicsSceneMouseEvent
+
+    scene = _everything_scene()
+    network = scene.network
+    far = next(item for item in scene.items() if item.data(0) == ("road", "1,1-2,1"))  # nowhere near 2,2
+    scene.set_selection("node", "2,2")
+    scene.drag_nodes = ["2,2"]
+    node = network.nodes["2,2"]
+    scene._drag_from = QPointF(node.x, node.y)
+    for dx, dy in ((40.0, -25.0), (35.0, 60.0)):
+        move = QGraphicsSceneMouseEvent(QEvent.Type.GraphicsSceneMouseMove)
+        move.setScenePos(scene._drag_from + QPointF(dx, dy))
+        scene.mouseMoveEvent(move)
+        assert far.scene() is scene  # only what the junction carries is drawn again
+        assert _picture(scene) == _picture(_redrawn(scene)), (dx, dy)
+    assert (node.x, node.y) == (scene._drag_from.x(), scene._drag_from.y())
+    scene.drag_nodes, scene._drag_from = [], None
+    scene.set_selection("bus_stop", "BS1")  # let go (the window selects again): drawn whole; a bus stop slides
+    assert not _still(scene, far)
+    far = next(item for item in scene.items() if item.data(0) == ("road", "1,1-2,1"))
+    stop = network.bus_stops["BS1"]
+    scene._slide = ("BS1", 0.0, False)
+    move = QGraphicsSceneMouseEvent(QEvent.Type.GraphicsSceneMouseMove)
+    x, y = network.nodes["3,2"].x, network.nodes["3,2"].y
+    move.setScenePos(QPointF((node.x + x) / 2 + 30, (node.y + y) / 2))
+    before = stop.distance_m
+    scene.mouseMoveEvent(move)
+    assert stop.distance_m != before and far.scene() is scene
+    assert _picture(scene) == _picture(_redrawn(scene))
+
+
+def test_a_drag_that_never_moves_or_loses_its_stop_is_no_edit():
+    from PySide6.QtCore import QEvent
+    from PySide6.QtWidgets import QGraphicsSceneMouseEvent
+
+    scene = _everything_scene()
+    network = scene.network
+    finished, moved = [], []
+    scene.drag_finished.connect(lambda: finished.append(1))
+    scene.bus_stop_moved.connect(moved.append)
+
+    def event(kind, at):
+        made = QGraphicsSceneMouseEvent(kind)
+        made.setButton(Qt.MouseButton.LeftButton)
+        made.setScenePos(at)
+        return made
+
+    node = network.nodes["2,2"]
+    scene.set_selection("node", "2,2")
+    scene.drag_nodes = ["2,2"]
+    scene.mousePressEvent(event(QEvent.Type.GraphicsSceneMousePress, QPointF(node.x, node.y)))
+    assert scene._drag_from is not None  # grabbed...
+    scene.mouseReleaseEvent(event(QEvent.Type.GraphicsSceneMouseRelease, QPointF(node.x, node.y)))
+    assert not finished  # ...and let go where it was: Drag to Adjust made no edit
+    scene.drag_nodes = []
+    scene.set_selection("bus_stop", "BS1")
+    scene._slide = ("BS1", 0.0, True)
+    del network.bus_stops["BS1"]  # Delete or Ctrl+Z mid-slide
+    scene.mouseMoveEvent(event(QEvent.Type.GraphicsSceneMouseMove, QPointF(node.x + 30, node.y)))
+    assert scene._slide is None  # the slide ended there, no KeyError
+    network.add_bus_stop("2,2-3,2", "both")
+    stop = next(iter(network.bus_stops))
+    scene.set_selection("bus_stop", stop)
+    network.move_bus_stop = lambda *_: False  # refused: another stop's bay, a crossing
+    assert scene.nudge_bus_stop(1.0, 0.0, 5.0) and not moved
+
+
+def test_a_redraw_while_a_selection_box_is_dragged_ends_the_box():
+    from PySide6.QtCore import QEvent, QPoint
+    from PySide6.QtWidgets import QGraphicsSceneMouseEvent
+
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+
+    scene = NetworkGraphicsScene(generate_network(2, 2))
+    scene.rebuild()
+    empty = scene.network_rect.topLeft() - QPointF(30, 30)
+
+    def event(kind, at, screen):
+        made = QGraphicsSceneMouseEvent(kind)
+        made.setButton(Qt.MouseButton.LeftButton)
+        made.setScenePos(at)
+        made.setScreenPos(screen)
+        made.setButtonDownScreenPos(Qt.MouseButton.LeftButton, QPoint(0, 0))
+        return made
+
+    scene.mousePressEvent(event(QEvent.Type.GraphicsSceneMousePress, empty, QPoint(0, 0)))
+    scene.mouseMoveEvent(event(QEvent.Type.GraphicsSceneMouseMove, empty + QPointF(50, 50), QPoint(40, 40)))
+    assert scene._band is not None
+    scene.rebuild()  # an undo, or the assistant's edit, mid-drag: the box went with the items
+    boxed = []
+    scene.boxed.connect(lambda *args: boxed.append(args))
+    scene.mouseMoveEvent(event(QEvent.Type.GraphicsSceneMouseMove, empty + QPointF(80, 80), QPoint(60, 60)))
+    scene.mouseReleaseEvent(event(QEvent.Type.GraphicsSceneMouseRelease, empty + QPointF(80, 80), QPoint(60, 60)))
+    assert scene._band is None and not boxed  # no error, and that box selects nothing
 
 
 if __name__ == "__main__":

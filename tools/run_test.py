@@ -54,6 +54,7 @@ def run_all(jobs: int) -> int:
 
 
 def main(argv: list[str]) -> int:
+    sys.stdout.reconfigure(errors="backslashreplace")  # a failure's '→' can't crash the report on a cp1252 console
     if not argv:
         print(__doc__)
         return 2
@@ -75,7 +76,7 @@ def main(argv: list[str]) -> int:
         try:
             check()
             verdict = "PASS"
-        except Exception:  # noqa: BLE001 - reported, and the next test still runs
+        except (Exception, SystemExit):  # noqa: BLE001 - reported (an exit too), and the next test still runs
             verdict, failed = "FAIL", failed + 1
             traceback.print_exc()
         print(f"{time.monotonic() - started:7.1f} s  {verdict}  {name}", flush=True)

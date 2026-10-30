@@ -137,6 +137,48 @@ def test_network_analyses_need_no_assistant_tools():
     assert design_checks.analyse_network(network)["valid"] is True and design_checks.network_indices(network)["components"] == 1
 
 
+def test_the_sight_time_gap_counts_the_lanes_crossed_from_the_near_side():
+    # Table 9-6: 0.5 s more a lane crossed from the near side beyond one, the major road's lanes each way (2 + 2:
+    # 8.0 s, not 8.5 for the 4 lanes across; 3 + 3: 8.5, not 9.5)
+    network = generate_network(2, 2)
+    for node in network.nodes.values():
+        node.control = "uncontrolled"
+    assert {row["time_gap_s"] for row in design_checks.audit(network, CARS)["findings"]["intersection_sight"]} == {8.0}
+    for road in network.all_roads():
+        road.lanes_per_direction = 3
+    assert {row["time_gap_s"] for row in design_checks.audit(network, CARS)["findings"]["intersection_sight"]} == {8.5}
+
+
+def test_closing_a_road_reports_who_it_cuts_off_not_a_shorter_mean():
+    """A line of three junctions, a hospital at the far end, 1,000 residents at the near end and 100 in the middle:
+    closing the road between them cuts the 1,000 off. The minutes to the hospital are compared over the residents who
+    reach it both times (not 1.15 before and 0.6 after, an improvement), with the share cut off beside them."""
+    network = generate_network(3, 1)
+
+    def at(node_id):
+        return network.node(node_id).x + 5, network.node(node_id).y + 5
+
+    network.institutions = {"IN1": Institution("IN1", "Hospital", *at("1,3"), 400.0, 100.0, people=50, employees=100),
+                            "IN2": Institution("IN2", "Residential", *at("1,1"), 400.0, 100.0, people=1000),
+                            "IN3": Institution("IN3", "Residential", *at("1,2"), 400.0, 100.0, people=100)}
+    found = accessibility.report(network, close_road="1,2-1,1")
+    assert found["residents_mean"]["cut_off_from_hospital_percent"] == 0
+    closing = found["closing"]["loss_percent"]["minutes_to_nearest_hospital"]
+    assert closing["residents_cut_off_percent"] == 90.9 and closing["before"] == closing["after"] > 0
+
+
+def test_a_junction_cut_off_from_the_rest_is_the_least_accessible():
+    """Shimbel's distance to a junction it can't reach is infinite (Rodrigue): two junctions on a road of their own
+    are least accessible, not most."""
+    network = generate_network(2, 2)
+    first, second = network.add_node(5000, 5000), network.add_node(5100, 5000)
+    network.add_road(first.id, second.id)
+    found = design_checks.network_indices(network)
+    assert found["components"] == 2 and not {first.id, second.id} & set(found["most_accessible"]), found
+    assert set(list(found["least_accessible"])[:2]) == {first.id, second.id}
+    assert found["least_accessible"][first.id] is None
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

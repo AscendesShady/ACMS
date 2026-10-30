@@ -10,13 +10,15 @@
   `drop_offs` per type name, listed under "different" for the pairs that have them). `pair_demand` passes them on as
   `PairDemand.drops`.
 - Split arithmetic: `whole_percent` (whole numbers in proportion, largest remainders first), `redistribute` (a
-  deleted type's share to the others), `fixed_split` and `split_of(cell, per_hour)`: the split in effect, each
-  timetabled type fixed at its vehicles over the pair's trips (per hour against the flow, per day against the
-  daily trips), the others sharing the rest in their stored proportions.
+  deleted type's share to the others), `fixed_split` and `split_of(cell, per_hour, mode)`: the split in effect,
+  each timetabled type fixed at its vehicles over the pair's trips (in an "hourly" run per hour against the
+  flow, in a "daily" one per day against the daily trips; the other kind only when the pair has none of this
+  one), the others sharing the rest in their stored proportions.
 - The demand tools' rules: `pairs_from` (pairs named as "1W->1E" and the ways small models write it, or by
   origins and destinations; unknown ends refused, naming the real ones), `demand_plan` (set_od_demand's value,
   pattern, split, peak-hour factor or quarters, each checked), `shares_from` (a mode_split as names, a list of
-  objects, or one number per type; fractions read as percent), `profile_from` (shape_daily_curve's points,
+  objects, or one number per type; fractions read as percent; shares adding up to 100 within half a point
+  rounded together by `whole_percent`, so 12.5 / 82.5 / 5 and thirds are kept), `profile_from` (shape_daily_curve's points,
   polynomial or preset), `demand_now`, and `read_od` (read_od_matrix: totals, each pair's values, what most pairs
   share once as "usual" and only what differs). `lead_with_what_was_kept` puts what a run's check kept first.
 - `pair_demand(cells, origins, destinations, mode, per_hour)`: a run's simulation.PairDemand list, each pair with

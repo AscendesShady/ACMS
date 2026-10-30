@@ -180,15 +180,45 @@ def test_a_hill_climb_never_makes_the_plan_worse():
     model.offsets = {"X": 0.0, "Y": 0.0}
     model.solve()
     before = model.pi()
-    assert hill_climb(model) and model.pi() <= before
+    assert hill_climb(model) == "finished" and model.pi() <= before
     model.progression()  # B's green starts as A's platoon arrives, 30 s after A's
     assert (model.offsets["Y"] - model.offsets["X"]) % 60 == 30.0
+
+
+def test_a_hill_climb_stops_at_its_trials_whatever_the_machine():
+    # It stopped at 3 s of real time: a slower or busier machine stopped sooner and the same seed gave another plan.
+    # Now its bound is the plans it tries; real time is only a safety cap, and says so when it ends a climb.
+    import traffic_simulator.signal_timing as timing
+    network = generate_network(1, 4)
+    for node in network.nodes.values():
+        node.signal_method = "transyt"
+    simulation = Simulation(network, [pair("1W", "1E", 900), pair("1E", "1W", 150)], CAR)
+    assert simulation.signal_plans["1,1"]["finished"] and "stopped" not in simulation.signal_plans["1,1"]
+
+    def model():
+        return TimingModel(simulation._approaches(["1,1", "2,1", "3,1", "4,1"], *simulation.design_flows()[1:],
+                                                  {node: 10.0 for node in network.nodes}),
+                           {node: [30.0, 20.0] for node in network.nodes}, 60)
+
+    fast, slow, capped = model(), model(), model()
+    for each in (fast, slow, capped):
+        each.progression()
+    assert hill_climb(fast, trials=40) == "trials"
+    clock, ticks = timing.monotonic, iter(range(10 ** 6))
+    timing.monotonic = lambda: next(ticks) * 0.01  # a machine far slower: 10 ms gone at every look at the clock
+    try:
+        assert hill_climb(slow, trials=40) == "trials" and (slow.greens, slow.offsets) == (fast.greens, fast.offsets)
+        assert hill_climb(capped, cap_s=0.05) == "time"
+    finally:
+        timing.monotonic = clock
 
 
 def test_synchro_picks_its_cycle_by_percentile_delay():
     light = {"X": [(300.0, 3600.0), (200.0, 3600.0)]}
     heavy = {"X": [(1500.0, 3600.0), (1200.0, 3600.0)]}
     assert synchro_cycle(light, 40, 150) < synchro_cycle(heavy, 40, 150)  # busier: a longer cycle
+    # minimum greens need 4 x (7 + 5.3) = 49.2 s, above the 45 s cap: the cycle rounds up to 50 s, never down to 49
+    assert synchro_cycle({"A": [(300.0, 1800.0)] * 4}, 30, 45, {"A": 5.3}) == 50
     greens = percentile_greens([(900.0, 1800.0), (300.0, 1800.0)], 90)
     assert greens[0] > greens[1] and isclose(sum(greens) + 2 * SPAN_S, 90)
     network = generate_network(1, 4)
@@ -330,13 +360,13 @@ def test_the_junction_editor_shows_each_methods_settings():
     node = network.node("1,1")
     panel.show_object("node", node)
     methods = [panel.timing_method.itemData(i) for i in range(panel.timing_method.count())]
-    assert methods == ["webster", "transyt", "synchro", "scats", "scoot", "actuated", "max_pressure", "fixed"]
+    assert methods == ["webster", "transyt", "synchro", "scats", "scoot", "actuated", "max_pressure", "fixed", "manual"]
     shown = {}
     for method in methods:
         panel.timing_method.setCurrentIndex(methods.index(method))
         shown[method] = {label.text() for label, _ in panel.timing_settings.items() if label.isVisibleTo(panel)}
         assert panel.green_times[0][1].isEnabled() == (method == "fixed")  # the greens entered: fixed time only
-    assert shown["webster"] == shown["fixed"] == shown["actuated"] == shown["max_pressure"] == set()
+    assert shown["webster"] == shown["fixed"] == shown["actuated"] == shown["max_pressure"] == shown["manual"] == set()
     assert shown["synchro"] == {"Cycle limits"}
     assert shown["transyt"] == {"Cycle limits", "Stop weight"} and shown["scats"] == {"Cycle limits", "Target saturation"}
     assert shown["scoot"] == {"Cycle limits", "Target saturation", "Stop weight"}
@@ -348,6 +378,80 @@ def test_the_junction_editor_shows_each_methods_settings():
     panel.show_plans({"1,1": {"method": "scoot", "cycle_s": 64, "greens_s": [30, 24], "offset_s": 12, "group": 4,
                               "saturation": [0.8, 0.5]}})
     assert "Now: cycle 64 s, greens 30 / 24 s, offset 12 s, 4 junctions; saturation 80% / 50%." in panel.signal_note.text()
+
+
+def test_manual_windows_run_each_arm_in_turn_or_opposite_arms_together():
+    network = generate_network(3, 4)
+    node = network.node("1,1")
+    names = {name: road for road, name, _ in network.signal_arms("1,1")}
+    assert list(names) == ["N", "E", "S", "W"]  # clockwise from north
+    node.signal_method = "manual"
+    node.manual_greens_s = {names["N"]: [1, 120], names["E"]: [121, 150], names["S"]: [151, 180]}  # W: always red
+    network.validate()
+    simulation = Simulation(network, [pair("1S", "1N", 300)], CAR)
+    signal = simulation.graph.signals["1,1"]
+    link = {arm.road: arm.id for arm in simulation.graph.arriving["1,1"]}
+    state = lambda arm, t: (signal.state(link[names[arm]], t), signal.remaining(link[names[arm]], t))
+    assert signal.cycle == 180 and simulation.signal_plans["1,1"]["method"] == "manual"
+    assert state("N", 0) == ("G", 117) and state("N", 118) == ("Y", 2)  # 1-120: green 117 s, then 3 s amber
+    assert state("E", 118) == ("R", 2) and state("E", 120) == ("G", 27)  # E starts as N's window ends
+    assert state("N", 121) == ("R", 59) and state("S", 0) == ("R", 150)  # red: until its own window comes round
+    assert state("W", 50) == ("R", None) and not simulation.graph._two_phase("1,1")  # each arm alone: turns protected
+    assert all(key[1] != names["W"] for key in simulation.frame().countdowns if key[0] == "1,1")  # no clock: never changes
+    node.manual_greens_s = {names["N"]: [1, 60], names["S"]: [1, 60], names["E"]: [61, 100], names["W"]: [61, 100]}
+    node.amber_s = 4.0
+    simulation = Simulation(network, [pair("1S", "1N", 300)], CAR)
+    signal = simulation.graph.signals["1,1"]
+    assert len(signal.phases) == 2 and simulation.graph._two_phase("1,1")  # opposite arms together, as two phases
+    north_south = [arm.id for arm in simulation.graph.arriving["1,1"] if arm.road in (names["N"], names["S"])]
+    assert [signal.state(arm, 56.5) for arm in north_south] == ["Y", "Y"] and signal.cycle == 100
+    for windows, amber, refused in (({"N": [1, 60], "E": [50, 90]}, 3.0, "N and E would go at the same time"),
+                                    ({"N": [1, 60], "S": [1, 50]}, 3.0, "N and S would go at the same time"),
+                                    ({"N": [1, 3]}, 3.0, "N's window"), ({"N": [1, 60]}, 2.0, "amber must be 3 to 6 s"),
+                                    ({"N": [1, 301]}, 3.0, "at most 300")):
+        before = (dict(node.manual_greens_s), node.amber_s)
+        node.manual_greens_s, node.amber_s = {names[arm]: window for arm, window in windows.items()}, amber
+        try:
+            network.validate()
+            raise AssertionError(f"not refused: {windows}")
+        except ValueError as exc:
+            assert refused in str(exc), exc
+        node.manual_greens_s, node.amber_s = before
+
+
+def test_the_junction_editor_enters_manual_windows():
+    from traffic_simulator.properties_panel import PropertiesPanel
+
+    network = generate_network(3, 4)
+    panel = PropertiesPanel()
+    panel.set_network(network)
+    node = network.node("1,1")
+    panel.show_object("node", node)
+    edits = []
+    panel.edited.connect(edits.append)
+    panel.timing_method.setCurrentIndex(panel.timing_method.findData("manual"))
+    names = {name: road for road, name, _ in network.signal_arms("1,1")}
+    assert node.manual_greens_s == {names["N"]: [1, 30], names["E"]: [31, 60], names["S"]: [61, 90], names["W"]: [91, 120]}
+    assert panel.manual_box.isVisibleTo(panel) and not panel.phases.isVisibleTo(panel)
+    rows = dict(zip(panel.manual_roads, panel.manual_rows))
+    assert rows[names["N"]][4].text() == "green 27, red 90 s" and not panel.manual_apply.isEnabled()
+    rows[names["E"]][2].setValue(45)
+    panel.amber_check.setChecked(True)
+    panel.amber.setValue(4)
+    rows[names["W"]][2].setValue(0)  # "none": always red
+    assert rows[names["E"]][4].text() == "green 11, red 75 s" and rows[names["W"]][4].text() == "always red"
+    assert panel.manual_apply.isEnabled() and node.manual_greens_s[names["E"]] == [31, 60]  # not until Apply
+    panel.manual_apply.click()
+    assert node.manual_greens_s == {names["N"]: [1, 30], names["E"]: [31, 45], names["S"]: [61, 90]}
+    assert node.amber_s == 4 and edits[-1] == ("manual", "1,1") and not panel.manual_apply.isEnabled()
+    rows[names["S"]][1].setValue(40)  # S over E's window: refused, nothing changed
+    from PySide6.QtWidgets import QMessageBox
+    warned, QMessageBox.warning = [], lambda *args: warned.append(args[2])
+    try:
+        panel.manual_apply.click()
+    finally:
+        del QMessageBox.warning
+    assert "E and S would go at the same time" in warned[0] and node.manual_greens_s[names["S"]] == [61, 90]
 
 
 if __name__ == "__main__":

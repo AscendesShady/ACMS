@@ -30,7 +30,11 @@ def setup():
 
 
 def daily(panel):
-    panel.demand.setCurrentIndex(panel.demand.findData("daily"))  # the Demand drop-down
+    panel.period.group.button(1).click()  # the Demand switch
+
+
+def hourly(panel):
+    panel.period.group.button(0).click()
 
 
 def test_a_demand_cut_by_its_check_leads_with_what_was_kept():
@@ -53,24 +57,27 @@ def test_a_demand_cut_by_its_check_leads_with_what_was_kept():
 
 def test_hourly_and_daily_demand_are_kept_apart():
     matrix, panel = setup()
-    assert [panel.demand.itemData(i) for i in range(panel.demand.count())] == \
-        ["hourly", "daily", "institutions", "metro", "walk", "spawn"]
+    assert [panel.demand.tabData(i) for i in range(panel.demand.count())] == \
+        ["vehicles", "walk", "spawn", "institutions", "metro"]  # one switch over five tabs
     daily(panel)
     panel.demand.setCurrentIndex(panel.demand.findData("institutions"))  # its own panel, not the pair editor
     assert panel.institutions.isVisible() and not panel.pair_group.isVisible() and matrix.mode == "daily"
-    panel.demand.setCurrentIndex(panel.demand.findData("hourly"))
+    assert panel.institutions.daily  # the switch holds on every tab
+    hourly(panel)
+    assert not panel.institutions.daily and matrix.mode == "hourly"
+    panel.demand.setCurrentIndex(panel.demand.findData("vehicles"))
     assert not panel.institutions.isVisible() and panel.pair_group.isVisible() and matrix.mode == "hourly"
     panel.flow.setValue(300)
     assert matrix.cells[("1W", "1E")].flow == 300
     daily(panel)  # choosing daily shows its options: trips per day and the day's curve
-    assert matrix.mode == "daily" and panel.flow.value() == -1 and panel.daily_box.isVisible()
+    assert matrix.mode == "daily" and panel.flow.value() == -1 and panel.day.isVisible()
     assert "day" in panel.flow.suffix()
     panel.flow.setValue(1_500_000)  # more than an hourly box allows
     cell = matrix.cells[("1W", "1E")]
     assert (cell.flow, cell.daily) == (300, 1_500_000)
-    panel.demand.setCurrentIndex(panel.demand.findData("hourly"))
+    hourly(panel)
     assert matrix.cells[("1W", "1E")].flow == 300 and panel.flow.value() == 300  # switching wrote nothing
-    assert not panel.daily_box.isVisible()
+    assert not panel.day.isVisible()
     daily(panel)
     panel.clear_cell()  # clears the daily demand only
     cell = matrix.cells[("1W", "1E")]
@@ -145,7 +152,7 @@ def test_the_curve_is_shaped_by_dragging_and_by_equations():
     matrix, panel = setup()
     daily(panel)
     panel.flow.setValue(2400)
-    curve = panel.curve
+    curve = panel.day.curve
     peak = curve._screen(*WEEKDAY[3]).toPoint()  # the 08:00 point
     QTest.mousePress(curve, Qt.MouseButton.LeftButton, pos=peak)
     QTest.mouseMove(curve, peak + QPoint(0, 40))
@@ -155,20 +162,21 @@ def test_the_curve_is_shaped_by_dragging_and_by_equations():
     count = len(stored.points)
     QTest.mouseDClick(curve, Qt.MouseButton.LeftButton, pos=curve._screen(*stored.points[3]).toPoint())
     assert len(matrix.cells[("1W", "1E")].profile.points) == count - 1  # double-click removes it
-    assert "Busiest hour" in panel.peak.text() and "veh/h" in panel.peak.text()
+    assert "Busiest hour" in panel.day.peak.text() and "veh/h" in panel.day.peak.text()
 
-    panel.curve_kind.setCurrentIndex(panel.curve_kind.findData(3))
-    panel._kind_chosen()
+    day = panel.day
+    day.kind.setCurrentIndex(day.kind.findData(3))
+    day._kind_chosen()
     profile = matrix.cells[("1W", "1E")].profile
     assert profile.kind == "poly" and len(profile.coefficients) == 4
-    assert panel.coefficients[3].isVisibleTo(panel) and not panel.coefficients[4].isVisibleTo(panel)
-    panel.coefficients[0].setValue(panel.coefficients[0].value() + 0.5)
-    assert abs(matrix.cells[("1W", "1E")].profile.coefficients[0] - panel.coefficients[0].value()) < 1e-9
+    assert day.coefficients[3].isVisibleTo(panel) and not day.coefficients[4].isVisibleTo(panel)
+    day.coefficients[0].setValue(day.coefficients[0].value() + 0.5)
+    assert abs(matrix.cells[("1W", "1E")].profile.coefficients[0] - day.coefficients[0].value()) < 1e-9
 
     panel.copy_choices["curve"].setChecked(True)
     panel.apply_to("row")  # 1W -> 2E gets the same curve
     assert matrix.cells[("1W", "2E")].profile == matrix.cells[("1W", "1E")].profile
-    panel.reset_curve.click()
+    panel.day.reset.click()
     assert matrix.cells[("1W", "1E")].profile.points == WEEKDAY
 
 
@@ -204,13 +212,45 @@ def test_a_types_trips_can_end_part_way_along_the_pair():
     assert matrix.cells[("1W", "1E")].drops[0][0] == 0 and not panel.drop_box.isVisibleTo(panel)
 
 
+def test_the_assistant_puts_drop_offs_at_junctions_on_the_pairs_route():
+    matrix, panel = setup()
+    panel.router = lambda origin, destination: (1000.0, [(0.4, "J1"), (0.7, "J2")])  # as the slider's route
+    panel.command("set_od_demand", {"pairs": ["1W->1E"], "value": 600})
+    done = panel.command("set_od_demand", {"pairs": ["1W->1E"], "drop_offs": [
+        {"mode": "Bus", "at": "J2", "percent": 30}, {"mode": "car", "at": "0.25", "percent": 10}]})
+    assert matrix.cells[("1W", "1E")].drops == ((0, 0.7, 30), (1, 0.25, 10))  # a stop at J2, as the slider snaps
+    assert done["drop_offs"]["Bus"] == [{"at_share_of_trip": 0.7, "percent": 30}] and matrix.cells[("1W", "1E")].flow == 600
+    panel.command("set_od_demand", {"pairs": ["1W->1E"], "drop_offs": [{"mode": "Bus", "at": "J1", "percent": 20}]})
+    assert matrix.cells[("1W", "1E")].drops == ((0, 0.4, 20), (1, 0.25, 10))  # Bus's replaced, Car's kept
+    for drops, why in (([{"mode": "Bus", "at": "J9", "percent": 5}], "J1 (40%), J2 (70%)"),  # names the route's stops
+                       ([{"mode": "Bus", "at": "J1", "percent": 60}, {"mode": "Bus", "at": "J2", "percent": 50}], "more than 100 %"),
+                       ([{"mode": "Tram", "at": "J1", "percent": 5}], "No vehicle type called")):
+        try:
+            panel.command("set_od_demand", {"pairs": ["1W->1E"], "drop_offs": drops}, check_only=True)
+        except ValueError as exc:
+            assert why in str(exc), exc
+        else:
+            raise AssertionError(f"{drops} must be refused")
+    assert matrix.cells[("1W", "1E")].drops == ((0, 0.4, 20), (1, 0.25, 10))  # each refusal changed nothing
+    panel.router = lambda origin, destination: None
+    try:
+        panel.command("set_od_demand", {"pairs": ["1W->1E"], "drop_offs": [{"mode": "Bus", "at": "0.5", "percent": 5}]})
+    except ValueError as exc:
+        assert "No route from 1W to 1E" in str(exc)
+    else:
+        raise AssertionError("a pair with no route has nowhere to drop off")
+    panel.command("set_od_demand", {"pairs": ["1W->1E"], "drop_offs": []})
+    assert matrix.cells[("1W", "1E")].drops == ()  # [] clears them
+
+
 def test_the_assistant_works_the_same_controls():
     matrix, panel = setup()
     undo_steps = []
     panel.changed.connect(undo_steps.append)
     panel.command("set_od_demand", {"origins": ["1W"], "demand": "daily", "value": 1200, "arrival_pattern": "poisson",
                                     "mode_split": {"bus": 20, "car": 70, "bike": 10}})
-    assert matrix.mode == "daily" and panel.demand.currentData() == "daily"  # switched like the drop-down
+    assert matrix.mode == "daily" and panel.period.value() == "daily"  # switched like the switch
+    assert panel.demand.currentData() == "vehicles"
     assert matrix.selected_pairs() == [("1W", "1E"), ("1W", "2E")]  # selected in the grid
     for pair in (("1W", "1E"), ("1W", "2E")):
         cell = matrix.cells[pair]
@@ -231,10 +271,10 @@ def test_the_assistant_works_the_same_controls():
     panel.command("shape_daily_curve", {"pairs": ["1W->1E"], "points": [[17, 90], [8, 100], [3, 5]]})
     profile = matrix.cells[("1W", "1E")].profile  # sorted, scaled to 0-1 and run from midnight to midnight
     assert profile.points == [(0.0, 0.05), (3.0, 0.05), (8.0, 1.0), (17.0, 0.9), (24.0, 0.9)]
-    assert panel.curve.profile == profile and panel.curve_kind.currentData() == "points"
+    assert panel.day.profile == profile and panel.day.kind.currentData() == "points"
     panel.command("shape_daily_curve", {"pairs": ["1W to 2E"], "polynomial": [0, 4, -4]})
     assert matrix.cells[("1W", "2E")].profile.coefficients == [0.0, 4.0, -4.0]
-    assert panel.curve_kind.currentData() == 2 and panel.coefficients[2].value() == -4.0  # the equation shows
+    assert panel.day.kind.currentData() == 2 and panel.day.coefficients[2].value() == -4.0  # the equation shows
     assert matrix.cells[("1W", "1E")].profile == profile  # the other pair kept its curve
 
     read = panel.command("read_od_matrix", {})
@@ -311,6 +351,21 @@ def test_demand_tools_say_which_demand_a_run_uses_and_refuse_what_does_nothing()
     assert done["runs_use"] == "daily demand" and "not the hourly demand" in done["note"]  # the switch is said
 
 
+def test_shares_adding_up_to_100_are_kept_in_whole_percent():
+    # Each share was rounded on its own: 12.5 + 82.5 + 5 made 99 (round half to even) and was refused, so were thirds.
+    names = ["Bus", "Car", "Bike"]
+    assert shares_from({"Bus": 12.5, "Car": 82.5, "Bike": 5}, names) == [13, 82, 5]
+    assert sum(shares_from([33.3, 33.3, 33.4], names)) == 100 and sum(shares_from([1 / 3] * 3, names)) == 100
+    assert shares_from([1 / 3] * 3, names) == [34, 33, 33]
+    for bad in ([30, 30, 30], [0.5, 0.2, 0.2], [110, -5, -5], [50, 50]):
+        try:
+            shares_from(bad, names)
+        except ValueError as exc:
+            assert "adding up to 100" in str(exc), exc
+        else:
+            raise AssertionError(bad)
+
+
 def test_demand_rules_need_no_qt():
     """The OD cells' rules (demand.py) without a widget: the split in effect, a tool's pairs and plan, the read-out and
     a run's pair demand; importing them loads no Qt."""
@@ -322,7 +377,12 @@ def test_demand_rules_need_no_qt():
     origins, destinations = ["1W", "2W"], ["1E", "2E"]
     cells = {("1W", "1E"): demand.ODCell(flow=600, split=(10, 80, 10)), ("2W", "2E"): demand.ODCell(daily=4800),
              ("9X", "1E"): demand.ODCell(flow=50)}  # an end no longer on the network: left out
-    assert demand.split_of(cells[("1W", "1E")], per_hour) == (1, 88, 11)  # 6 buses of 600, the rest 80:10
+    assert demand.split_of(cells[("1W", "1E")], per_hour, "hourly") == (1, 88, 11)  # 6 buses of 600, the rest 80:10
+    both = demand.ODCell(flow=60, daily=20_000, split=(10, 85, 5))  # a daily run fixes it against the trips a day
+    assert demand.split_of(both, per_hour, "daily") == demand.split_of(demand.ODCell(daily=20_000, split=(10, 85, 5)),
+                                                                       per_hour, "daily") == (1, 94, 5)
+    assert demand.pair_demand({("1W", "1E"): both}, origins, destinations, "daily", per_hour)[0].split == (1, 94, 5)
+    assert demand.split_of(both, per_hour, "hourly") == (10, 85, 5)  # 6 buses of 60 an hour
     assert demand.pairs_from({"pairs": "1W-1E"}, origins, destinations) == [("1W", "1E")]
     assert demand.demand_plan({"value": 12.6, "arrival_pattern": "poisson"}, "hourly", names) ==         ("hourly", 13, "Poisson", None, None)
     read = demand.read_od(cells, origins, destinations, "hourly", names, per_hour)
@@ -356,8 +416,9 @@ def test_pedestrians_an_hour_are_typed_between_spawn_points():
     from traffic_simulator.od_matrix import SpawnMatrix
 
     network, grid = generate_network(2, 2), SpawnMatrix()
+    assert not grid.day.isVisibleTo(grid.side) and not grid.day_hint.isVisibleTo(grid.side)  # no curve before a pair
     grid.show_network(network)
-    assert not grid.table.isVisibleTo(grid) and "No spawn points yet" in grid.empty.text()
+    assert not grid.table.isVisibleTo(grid) and "No deploy points yet" in grid.empty.text()
     for x, y in ((10.0, 20.0), (300.0, 40.0)):
         network.add_spawn_point(x, y)
     grid.show_network(network)
@@ -401,6 +462,20 @@ def test_every_grids_diagonal_is_drawn_shut():
         APP.processEvents()
         assert colours(grid.table, 1, 1) <= shut and not colours(grid.table, 0, 1) <= shut
         grid.close()
+
+
+def test_a_stations_tooltip_names_its_lines_in_five_words_at_most():
+    from types import SimpleNamespace
+
+    from traffic_simulator.network_generator import generate_network
+    from traffic_simulator.od_matrix import MetroMatrix, PedestrianMatrix
+
+    network = generate_network(2, 2)
+    grid = MetroMatrix()
+    for count, tip in ((1, "Line ML1"), (4, "Lines ML1, ML2, ML3, ML4"), (5, "5 lines"), (12, "12 lines")):
+        network.metro_lines = {f"ML{n}": SimpleNamespace(id=f"ML{n}", stops=["M1"]) for n in range(1, count + 1)}
+        assert grid._tip(network, "M1") == tip and len(tip.split()) <= 5
+    assert PedestrianMatrix()._tip(network, "1W") == "Boundary end"
 
 
 if __name__ == "__main__":

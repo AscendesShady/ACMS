@@ -19,7 +19,8 @@ The harness waits for every answer and verifies its exact prompt in Research
 Log before advancing. It records a checksummed manifest and an append-only,
 flushed ledger in `reports/prompt_campaign`. Research Log retains its normal
 output location. A ledger already present prevents an accidental duplicate
-launch. Errors and one-hour deadlines halt advancement without retry; a halt closes
+launch. Errors (an exception in the answer's completion check, `finished`, too: Qt would only print it) and
+one-hour deadlines halt advancement without retry; a halt closes
 the Research Log's session, as completion does, so its report covers the steps that
 ran. `--isolate` (`Campaign(isolate=True)`): the starting project is saved to
 `baseline.json` (its hash in the ledger) and reloaded, with an empty conversation,
@@ -40,17 +41,8 @@ missing/duplicate/reordered IDs, duplicate launch prevention, multiple cards and
 submissions requiring Apply in both prompt groups through the real Qt window and Research Log. Mock testing never
 submits an actual document prompt to a real model. No simulator behavior changes.
 
-## Updating a running campaign
-
-If the original process is already waiting at an Apply card, open Extensions,
-press Reload, then tick **Campaign Apply**. This opt-in extension locates exactly
-one same-process CLI driver and replaces only its `advance` method. It keeps the
-worker, pending card, model conversation, network, index and ledger intact and
-records `driver_updated`; it never resends the active prompt. It refuses a halted
-or ambiguous campaign. It acts only when ticked. This is a one-time driver update;
-unticking it does not undo an already-installed update. No desktop helper is
-needed for subsequent automatic Apply cards.
+## Running it
 
 The CLI sets `AA_UseDesktopOpenGL` before creating QApplication, matching the normal `run.py` graphics startup. A user-requested full restart begins a new ledger and preserves the abandoned campaign logs.
 
-The driver halts immediately if Apply returns without a result outside a running headless test. Campaign Apply can recover a deadline halt only when the same active prompt still owns the exact previously clicked, hidden, unresolved card and no headless test is running. It settles that existing request with an explicit failure, restarts only the timer, and never repeats the tool call or prompt. It also guards the old process's Apply callback against future exceptions. Other halted states still require reconciliation.
+The driver halts immediately if Apply returns without a result outside a running headless test. A halted campaign needs reconciliation before it goes on.

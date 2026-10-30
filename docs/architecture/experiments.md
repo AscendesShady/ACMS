@@ -40,16 +40,21 @@
   its own free speed (a bike's is its own, not the limit), TTI and BI on the same mean, PTI a spread across the run's
   trips, not FHWA's across days; the least reliable pairs with 5 trips or more; trips still on the road are in
   `RunRecorder.observed()["unfinished"]`), each origin's
-  arrivals per whole minute against Poisson (`stats.dispersion`), and the ten roads whose 95th-percentile
-  queue is the largest share of their length (`spills_back` when it reaches it).
+  arrivals per whole minute against Poisson (`stats.dispersion`), and the ten links (each direction of a road:
+  `link`, `road`) whose 95th-percentile queue, metres a lane of that direction, is the largest share of the road's
+  length (`spills_back` when it reaches it).
   `check_calibration(kpis, counts)`: each counted road's measured flow, GEH, and `stats.fit`'s scores.
 - `holds(network, demand, modes, seed, ...)`: one `HOLD_MINUTES` (45) headless run; it holds unless the
   vehicles in the network and waiting to enter grow over the last `HOLD_WINDOW_MINUTES` (15) by more than
   `HOLD_BUILD_UP` (5 %) of those setting off, and by at least `HOLD_MIN_PILE` (25: a light demand's
   few vehicles swing more than that by chance). Where a pair's hour is uneven (a peak-hour factor or quarters), the
-  busiest quarter (`PEAK_QUARTER`) is judged the same way too (`peak_quarter_build_up`), its count at the start scaled by the rise in arrivals (more vehicles
-  are on the road at once with no queue, Little's law; uncorrected, X 0.6 at PHF 0.85 read 0.07-0.09): the last window came after it
-  and saw its queue draining (PHF 0.7 at X 0.85 ran the peak quarter at X 1.21 and passed). `holds_by_majority(check,
+  network's busiest quarter (the pairs' veh/h in each quarter added up) is judged the same way too
+  (`peak_quarter_build_up`; negative when a first-hour queue is still draining), the run going on to that quarter's
+  end (60 min for the last; the first is judged in the second hour, 60-75 min, as in the first the network fills
+  from empty; `hold_minutes(demand)` gives the run's length, which the window's progress and report show), its count at the start scaled by the
+  rise in arrivals (more vehicles are on the road at once with no queue, Little's law; uncorrected, X 0.6 at PHF
+  0.85 read 0.07-0.09): the last window alone came before it, or after it and saw its queue draining (PHF 0.7 at
+  X 0.85 ran the peak quarter at X 1.21 and passed; quarters 5/5/5/85 jammed in their last quarter and passed). `holds_by_majority(check,
   seed)`: a verdict within half the threshold either side of it (`BORDERLINE`) goes to three seeds' majority (one
   seed's largest holding share had come out 0.875, 0.875 or 0.75). `largest_holding(check)`: the whole demand, else
   the largest share that holds by bisection (`HOLD_STEPS` 4). `at_busiest_hour(demand)`: daily pairs as veh/h in the
@@ -60,7 +65,9 @@
   with each of `SENSITIVITY_PARAMETERS` (tau_s: every vehicle type's; critical_gap_s, ring_timegap_s: the
   Simulation's, set through `run_headless(params=…)`; `varied`) at ×(1 ± `SENSITIVITY_STEP`, 0.1), on the same seeds;
   per parameter and `SENSITIVITY_MEASURES` figure, the central-difference elasticity (Y₊ − Y₋) / (2·step·Y₀), mean over
-  the seeds with its 95 % interval (FHWA Traffic Analysis Toolbox III's calibration step). None if stopped. AI Mode's
+  the seeds with its 95 % interval (FHWA Traffic Analysis Toolbox III's calibration step). None if stopped. Each
+  run records to a folder of its own under the system temp, removed after (as `MainWindow._quick_run`'s), so none
+  is left for `results.recover`. AI Mode's
   parameter_sensitivity (`MainWindow._parameter_sensitivity`: the open network and demand, 1 to 5 seeds, default the
   run seed and the next, 20 simulated minutes, in the background).
 - `experiment_workbook(path, experiment, inputs, journal)`, named by `experiment_name(started)`.
@@ -81,7 +88,8 @@
   headways at each stop, cv against its timetable and HCM 2000's headway adherence LOS (Exhibit 27-8, 6 buses
   an hour or more), and the expected wait.
 - `detectors(kpis, road)`: per link, flow, time-mean and space-mean speed, v15/v50/v85, SD, headways (mean,
-  cv, shortest, under 3 s), occupancy, density and counts a minute against Poisson; `discharge`: at signalised
+  cv, shortest, under 3 s), occupancy, density and counts a minute against Poisson (the minutes counted from the
+  end of the warm-up, `observed_from_s`); `discharge`: at signalised
   stop lines, through movements of the commonest type, each green's standing queue (cut at a gap over
   `QUEUE_GAP_S` 4 s): the saturation headway from the 5th vehicle, saturation flow, start-up lost time.
 - `safety(kpis, ttc_s)`: conflicts under the threshold per road, severe ones (TTC < 1 s or DRAC > 3.35 m/s²),
@@ -89,8 +97,10 @@
   ln km as offset; NB2 α when overdispersed) and the Empirical Bayes excess ranking (a Poisson fit makes EB the
   expectation, no excess anywhere: then by z = (conflicts − expected)/√expected, `ranked_by`); with them, the run's recorded
   `collisions` (count, by road or junction, by kind: same lane or crossing) and `emergency_braking` (count, by where).
-- `series(kpis, what, road, interval_min)`: a run's values per interval (network throughput, mean speed, on
-  the road, queued; trip time by arrival; a road's flow or space-mean speed from its detectors), for
+- `series(kpis, what, road, interval_min)`: a run's values per whole interval from the end of its warm-up
+  (`observed_from_s`, else `measure_from_s`; network throughput, mean speed, on the road, queued from the minutes
+  after it; trip time by arrival; a road's flow or space-mean speed from its detectors); an interval with no trip
+  arriving (trip time) or no vehicle passing (speed) is refused (a longer interval_min), not read as 0, for
   `forecast` (stats.holt) and `check_calibration(kpis, counts, profiles)`'s FHWA 2019 envelopes
   (`stats.envelopes`: Criteria I–IV against the representative day).
 - The window also runs `assign_routes` (`MainWindow._assign_routes`: the method of successive averages over
@@ -158,7 +168,7 @@
   name, demand_scale, weather, incidents, random_incidents, weight): every design runs under each (`under`: named
   "design | condition"), each condition's designs are compared against its own baseline, and `condition_summary`
   gives on the `objective` figure each design's mean per condition, the winner, every design's regret, the weighted
-  mean, the worst regret and the robust choice (the least worst regret), and whether the winner changes.
+  mean (over the conditions that design has a mean under, by their weights), the worst regret and the robust choice (the least worst regret), and whether the winner changes.
 - **Factorial designs** (run_experiment's `factors`, `factorial`): 1 to 3 factors with 2 or more labelled levels
   (each with changes, demand_scale, extensions, weather, incidents, meters), every combination a scenario named
   "factor=level, ..." (12 at most); with two factors `MainWindow._factorial` gives the two-way ANOVA
@@ -169,7 +179,7 @@
   estimate). `bus_stops` adds `bunched_percent` (a bus under a quarter of the headway behind the last) and
   `excess_wait_min`; `bus_passengers(observed)` (each stop's buses, boarded, alighted, most left behind, dwell
   mean and longest, heaviest load) is in `analyse_run` and a Bus passengers sheet.
-- **stats.py** (no Qt; the tests behind these tools): Student's t, χ², normal tails (`t_sf`, `normal_sf`); rank
+- **stats.py** (no Qt; the tests behind these tools): Student's t, χ², the normal tail (`normal_sf`); rank
   tests with tie corrections (`friedman` with seeds as blocks, `kruskal_wallis`, `mann_whitney`); `all_pairs`
   (every pair by the paired t, or Mann–Whitney unpaired, Bonferroni over the pairs, with compact letters: designs
   sharing a letter aren't told apart); `paired_power`, `seeds_for_power`, `detectable` (power of the paired test,

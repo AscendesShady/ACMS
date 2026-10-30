@@ -64,6 +64,26 @@ def test_generate_network_times_its_signals_by_the_chosen_method():
     window.close()
 
 
+def test_idle_signal_lamps_light_the_phases_a_run_would():
+    # Roads crossing at 60° (20° and 40° off east-west): by the screen's axes all four arms showed green while
+    # nothing ran; the junction's own roads split them as the simulation does (lane_graph.two_phases).
+    from math import cos, pi, sin
+
+    from traffic_simulator.models import Network
+    from traffic_simulator.network_scene import SIGNAL_GREEN, NetworkGraphicsScene
+
+    network = Network()
+    centre = network.add_node(0.0, 0.0)
+    angle = {network.add_end(centre.id, 300 * cos(a * pi / 180), 300 * sin(a * pi / 180)).id: a
+             for a in (20, 140, 200, 320)}
+    scene = NetworkGraphicsScene(network)
+    scene.rebuild()
+    green = {angle[network.road(road).to_node if network.road(road).from_node == centre.id else
+                   network.road(road).from_node] for (node, road), (_, idle) in scene.signal_lamps.items()
+             if node == centre.id and idle == SIGNAL_GREEN}
+    assert green == {20, 200}
+
+
 def test_the_driving_side_flips_the_whole_network_at_once():
     from traffic_simulator.interchanges import build_trumpet
 
@@ -89,6 +109,21 @@ def test_the_driving_side_flips_the_whole_network_at_once():
     window.close()
 
 
+def test_an_action_that_changes_nothing_leaves_a_run_going():
+    window = window_with()
+    window.run_action.trigger()
+    runner, steps = window.runner, len(window.history.undo_stack)
+    changed = []
+    window.driving_side.changed.connect(lambda: changed.append(1))
+    window.driving_side.group.button(0).click()  # re-clicking the checked option: no change
+    window.properties.edited.emit(("phases", "2,2"))  # Apply Phases with the phases as they were
+    window.scene.drag_finished.emit()
+    assert not changed and window.runner is runner and len(window.history.undo_stack) == steps
+    window.driving_side.group.button(1).click()  # a real change still stops it, as one undo step
+    assert changed and window.runner is None and len(window.history.undo_stack) == steps + 1
+    window.close()
+
+
 def test_the_roads_settings_are_kept_for_new_roads():
     window = window_with()
     steps = len(window.history.undo_stack)
@@ -109,6 +144,20 @@ def test_the_roads_settings_are_kept_for_new_roads():
     assert (network.default_lanes_per_direction, network.default_lane_changing, network.default_speed_limit_kmh) == \
         (2, True, 50.0) and window.lanes_spin.value() == 2
     assert len(window.history.undo_stack) == steps  # restoring the fields made no steps of its own
+    window.close()
+
+
+def test_a_network_installed_keeps_its_roads_settings_as_they_are():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    network = generate_network(2, 2)
+    network.default_lanes_per_direction, network.default_signal_method = 8, "manual"  # as a file or the assistant set
+    steps = len(window.history.undo_stack)
+    window.install_network(network)  # as Open, Undo and generate_grid do
+    assert (window.network.default_lanes_per_direction, window.network.default_signal_method) == (8, "manual")
+    assert len(window.history.undo_stack) == steps  # showing them is no edit
+    assert window.lanes_spin.value() == 8 and window.signal_method_combo.currentData() == "manual"  # shown as they are
     window.close()
 
 

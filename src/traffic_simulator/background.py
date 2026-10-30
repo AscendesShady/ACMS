@@ -25,13 +25,11 @@ from PySide6.QtWidgets import (QButtonGroup, QDoubleSpinBox, QFileDialog, QFormL
                                QInputDialog, QLabel, QLineEdit, QMenu, QPushButton, QSizePolicy, QSpinBox, QWidget)
 
 from .map_tiles import ATTRIBUTION, Frame, PlaceSearch, TileStore
-from .models import Background
+from .models import Background, image_path_problem
 from .widgets import ICON_FONTS, ChoiceButtons, glyph_icon, hint_label, icon_button, styled_button
-from .theme import ACCENT_EDGE, TEXT, TOOLTIP
+from .theme import ACCENT_EDGE, MAP_COLOURS, TEXT, TOOLTIP
 
-# Solid backgrounds (map colours, like the scene's own road and grass colours): name -> colour.
-COLOURS = {"Grass": "#075322", "Meadow": "#3f7f3a", "Asphalt": "#2f3438", "Concrete": "#9aa1a6",
-           "Paper": "#f4f1e8", "Night": "#0b0f14"}
+COLOURS = MAP_COLOURS  # solid backgrounds (map colours, like the scene's own road and grass colours): name -> colour
 PDF_WIDTH_PX = 2400  # a PDF page is drawn at this width
 TILE_MEMORY = 400  # tiles kept decoded in memory
 ALIGN_STEPS = ("Click a point you can recognise on the image (1 of 2).",
@@ -70,7 +68,7 @@ class BackgroundPainter(QObject):
         kwargs = {"download": download} if download else {}
         self.tiles = TileStore(folder, ready=lambda *_: self.tile_ready.emit(), **kwargs)
         self.places = PlaceSearch(ready=self.found.emit)  # emitted from its thread: Qt queues it to ours
-        self._images: dict[tuple, QImage | None] = {}
+        self._image: tuple[tuple, QImage | None] = ((), None)  # the last image loaded, by its key: only that one kept
         # Loading is one at a time: the assistant traces roads off the GUI thread (road_mask) while the map may be
         # drawing, and a PDF page is rendered by PDFium, which is not thread-safe
         self._loading = threading.Lock()
@@ -81,20 +79,22 @@ class BackgroundPainter(QObject):
         self.hidden = False  # Hide Background: only its colour drawn, to see the roads alone; a view, never saved
 
     def image(self, background: Background) -> QImage | None:
-        """The background's image (a PDF's page rendered), loaded once per file, page and change."""
+        """The background's image (a PDF's page rendered), loaded once per file, page and change; only the
+        latest is kept (an image swapped for another, or a PDF paged through, would pile up decoded pages)."""
         path = background.image
         try:
             key = (path, background.page, Path(path).stat().st_mtime)
         except OSError:
             return None
         with self._loading:
-            if key not in self._images:
+            if self._image[0] != key:
                 if path.lower().endswith(".pdf"):
-                    self._images[key] = _pdf_page(path, background.page)
+                    image = _pdf_page(path, background.page)
                 else:
                     image = QImage(path)
-                    self._images[key] = None if image.isNull() else image
-            return self._images[key]
+                    image = None if image.isNull() else image
+                self._image = (key, image)
+            return self._image[1]
 
     def image_transform(self, background: Background) -> QTransform | None:
         """Image pixels to scene metres: scaled to its width, turned about its top-left corner, placed."""
@@ -162,6 +162,7 @@ class BackgroundPainter(QObject):
             return None
         pixmap = QPixmap()
         if not pixmap.loadFromData(data):
+            self.tiles.discard(z, x, y)
             return None
         self._pixmaps[key] = pixmap
         while len(self._pixmaps) > TILE_MEMORY:
@@ -400,8 +401,7 @@ class BackgroundPanel(QWidget):
 
         # Dragging the image or map is the way to line it up, so it's the section's primary button: a middle
         # or right drag only pans the view, moving the network and the background together.
-        self.move_button = icon_button(0xE7C2, "Drag to Adjust",
-                                       "primary")
+        self.move_button = icon_button(0xE7C2, "Drag to Adjust", "primary", checkable=True)
         self.move_button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         form.addRow(self.move_button)
         # While choosing the map's place, the section's primary button ends it.
@@ -415,20 +415,17 @@ class BackgroundPanel(QWidget):
         tools = QWidget()
         row = QHBoxLayout(tools)
         row.setContentsMargins(0, 0, 0, 0)
-        self.lock_button = icon_button(0xE72E, "Lock Background")
-        self.lock_button.setCheckable(True)
+        self.lock_button = icon_button(0xE72E, "Lock Background", checkable=True)
         self.lock_button.clicked.connect(lambda checked: self._set("locked", checked))
         row.addWidget(self.lock_button)
         # Hide Background: the roads alone once they're drawn over it; only the view, so not an edit or an undo step
-        self.hide_button = icon_button(0xE890, "Hide Background")  # an eye
-        self.hide_button.setCheckable(True)
+        self.hide_button = icon_button(0xE890, "Hide Background", checkable=True)  # an eye
         self.hide_button.toggled.connect(self._hide)
         row.addWidget(self.hide_button)
-        self.align_button = icon_button(0xE718, "Two Points")
-        self.measure_button = icon_button(0xECC6, "Measure")  # ruler glyph
+        self.align_button = icon_button(0xE718, "Two Points", checkable=True)
+        self.measure_button = icon_button(0xECC6, "Measure", checkable=True)  # ruler glyph
         for button, name in ((self.move_button, "move"), (self.align_button, "align"),
                              (self.measure_button, "measure")):
-            button.setCheckable(True)
             button.clicked.connect(lambda _=False, name=name: self.start_tool(name))
             if button is not self.move_button:
                 row.addWidget(button)
@@ -586,8 +583,13 @@ class BackgroundPanel(QWidget):
 
     def use_image(self, path: str) -> bool:
         """Lay the image (or a PDF's first page) under the network, as wide as it and centred on it,
-        unturned. False, changing nothing, if it can't be read."""
+        unturned. False, changing nothing, if it can't be read or is on a network share (refused before it is
+        opened, as Network.validate refuses it: models.image_path_problem)."""
         network = self._network()
+        problem = image_path_problem(path)
+        if problem:
+            self.file_label.setText(problem)
+            return False
         trial = Background(kind="image", image=path)
         if network is None or self.painter.image(trial) is None:
             self.file_label.setText("Couldn't read that file")

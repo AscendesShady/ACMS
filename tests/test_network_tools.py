@@ -30,6 +30,18 @@ def test_every_tool_is_described_for_the_model():
         assert tools.describe_call(spec["name"], {})  # never crashes on missing arguments
 
 
+def test_any_argument_shape_is_described_and_read_without_raising():
+    """A model's arguments in any shape get a line (chat, approval card, journal) and are read by contradicts
+    without raising: a raise there left the answer waiting until Stop, or ended it as an unexpected error."""
+    odd = ({}, [{}], [[]], "", "zz", -1, 1e12, True, [None], {"a": 1}, [1, 2], [{"road": "1,1-2,1", "speed_limit_kmh": 30}])
+    for spec in tools.tool_specs():
+        for key in spec["parameters"]["properties"]:
+            for value in odd:
+                assert isinstance(tools.describe_call(spec["name"], {key: value}), str), (spec["name"], key, value)
+                tools.contradicts(spec["name"], {key: value}, "delete road 1,1-2,1 with SCOOT")
+    assert tools.describe_call("delete_objects", {"ids": [{"id": "2,2"}]}).startswith("delete_objects(")
+
+
 def test_the_assistant_can_do_only_what_its_tools_say():
     """Its whole reach, pinned: a new tool, or a new way to change things, fails here until it is
     added on purpose. No tool writes files, so it can't change the app's code; demand it changes
@@ -46,6 +58,7 @@ def test_the_assistant_can_do_only_what_its_tools_say():
         "add_bus_stop", "update_bus_stop",
         "add_crossing", "add_path", "set_pedestrian_demand",  # pedestrians: a crossing, a path, people walking
         "add_spawn_points",  # pedestrian spawn points, with their own OD matrix
+        "add_metro_line", "update_metro_line", "set_metro_demand",  # the metro: a line, its service, its riders
         "create_vehicle_types", "update_vehicle_type",  # vehicle types made as SUMO classes
         "run_simulation", "run_experiment", "set_extension",  # tests: they write result workbooks, so they ask too
         "schedule_emergency", "start_batch", "replay_run",  # the extensions' own actions: a schedule, a batch, a replay
@@ -213,6 +226,17 @@ def test_edits_go_through_the_model_and_roll_back_on_failure():
     assert "add_junction needs y. add_junction takes x (number, required)" in refused(network, "add_junction", x=1)
     assert network.as_records() == before  # nothing half-applied
     assert "is a boundary end, not a junction" in refused(network, "set_junction_control", junctions=["1E"], control="roundabout")
+    real = tools._FUNCTIONS["update_roads"]
+
+    def faulty(network, **args):  # a fault in an edit tool, halfway: the road changed, then it breaks
+        network.roads["1,2-2,2"].lanes_per_direction = 3
+        return 1 / 0
+    tools._FUNCTIONS["update_roads"] = faulty
+    try:
+        assert "update_roads failed: ZeroDivisionError" in refused(network, "update_roads", roads=["1,2-2,2"], lanes_per_direction=3)
+    finally:
+        tools._FUNCTIONS["update_roads"] = real
+    assert network.as_records() == before  # put back, whatever it raised
 
 
 def test_new_roads_ask_how_to_cross_and_interchanges_build():
@@ -237,8 +261,26 @@ def test_new_roads_ask_how_to_cross_and_interchanges_build():
     assert network.approach_nodes["1E"].supply_vph == 600
     moved = run(network, "move_junctions", junctions=["4,3"], dx=20, dy=-10)
     assert moved["moved"]["4,3"] == [1520.0, -10.0]
-    run(network, "generate_grid", horizontal=2, vertical=2, lanes_per_direction=3)
+    grid = run(network, "generate_grid", horizontal=2, vertical=2, lanes_per_direction=3)
     assert len(network.nodes) == 4 and network.default_lanes_per_direction == 3
+    assert grid["footpaths"] == "none" and not any(road.footpaths for road in network.all_roads())
+    assert "roads 'all' is every one" in refused(network, "update_roads", footpaths="both")  # never list them all
+    grid = run(network, "generate_grid", horizontal=2, vertical=2, footpaths=True)  # the user wanted walkways
+    assert grid["footpaths"] == "both sides of every road" 
+    assert all(road.footpaths == ["left", "right"] for road in network.all_roads())
+    assert "with pedestrian walkways" in tools.describe_call("generate_grid", {"horizontal": 2, "vertical": 2,
+                                                                                "footpaths": True})
+    for skill in ("build", "place"):  # walkways only when the user's words ask: never asked about nor offered
+        assert "never ask about them or offer them" in tools.SKILLS[skill] and "Apply" not in tools.SKILLS[skill]
+    against = tools.contradicts
+    for name, args in (("generate_grid", {"footpaths": True}), ("network_from_background", {"footpaths": "tagged"}),
+                       ("update_roads", {"roads": "all", "footpaths": "both"}), ("add_crossing", {"road": "1W"})):
+        assert "didn't ask for pedestrian walkways" in against(name, args, "build a 3 by 3 grid of roads"), name
+        assert against(name, args, "build it with footpaths for pedestrians") is None, name
+    assert against("update_roads", {"roads": "all", "footpaths": "none"}, "tidy the roads") is None  # taking them off
+    assert against("network_from_background", {}, "create a map of dhanmondi") is None
+    assert tools.describe_call("update_roads", {"roads": "all", "footpaths": "both"}) == \
+        "Change every road: pedestrian walkways → both"
 
 
 def test_source_reading_stays_inside_the_project():
@@ -289,6 +331,44 @@ def test_changes_are_described_for_the_assistant():
     assert not any("length" in line for line in changes)  # moved ends explain their roads' lengths
     assert tools.describe_changes(before, generate_network(2, 2))[0].startswith("Generated a new network")
     assert tools.describe_changes(before, network, limit=2)[-1] == f"...and {len(changes) - 2} more changes"
+
+
+def test_institution_map_and_curve_changes_are_described():
+    """The edits the [Editor update] and a tool's `changed` must not miss: an institution moved or its circle and
+    figures changed, the map placed under the network, a road curved or straightened (a reversal is no reshape)."""
+    network = generate_network(3, 4)
+    run(network, "deploy_institutions", count=1, seed=1)
+    before = deepcopy(network)
+    run(network, "update_institution", id="IN1", radius_m=444, people=900)
+    network.institutions["IN1"].x += 30  # dragged on the map
+    lines = tools.describe_changes(before, network)
+    line = next(line for line in lines if line.startswith("Institution IN1:"))
+    assert "moved by (+30, +0) m" in line and "circle (m) " in line and "→ 444" in line and "→ 900" in line
+    assert any("map" in line for line in run(deepcopy(before), "place_map", lat=23.74, lon=90.37)["changed"])
+    road = network.roads["1,1-2,1"]
+    start, end = network.node(road.from_node), network.node(road.to_node)
+    curved = deepcopy(network)
+    curved.roads[road.id].shape = [((start.x + end.x) / 2, (start.y + end.y) / 2 + 40)]
+    assert any(line.startswith("Road 1,1-2,1:") and "curved" in line for line in tools.describe_changes(network, curved))
+    assert any("now straight" in line for line in tools.describe_changes(curved, network))
+    turned = deepcopy(curved)
+    run(turned, "update_roads", roads=["1,1-2,1"], direction="reverse")
+    assert not any("curved" in line or "straight" in line for line in tools.describe_changes(curved, turned))
+
+
+def test_a_bus_stop_moved_onto_a_crossing_or_another_bay_is_refused_saying_why():
+    """Network.move_bus_stop keeps a bay where it was rather than on a crossing, another stop's bay or beside a turn
+    pocket; update_bus_stop says so, so neither the model nor the approval check (run on a copy) reads it as done."""
+    network = generate_network(1, 2)  # 1,1-2,1: 500 m
+    network.road("1,1-2,1").footpaths = ["left", "right"]
+    network.add_crossing("1,1-2,1", 250.0)
+    stop, other = network.add_bus_stop("1,1-2,1"), network.add_bus_stop("1,1-2,1")
+    before = deepcopy(network)
+    assert "Crossing" in refused(network, "update_bus_stop", stop=stop.id, distance_m=250)
+    assert f"bus stop {stop.id}'s" in refused(network, "update_bus_stop", stop=other.id, distance_m=stop.distance_m + 10)
+    assert network == before
+    moved = run(network, "update_bus_stop", stop=stop.id, distance_m=stop.distance_m + 1)
+    assert moved["distance_m"] == round(before.bus_stops[stop.id].distance_m + 1, 1)
 
 
 def _flows(network, supply: dict, demand: dict):
@@ -508,6 +588,22 @@ def test_each_request_is_offered_the_tools_its_words_point_to():
     assert {"update_institution", "scale_demand"} <= offered("increase the population")
     assert "read_source" in offered("how do I save my API key?")
     assert "generate_demand" in offered("genrate demnd for the netwrk at 0.8 degree of saturtion")
+    assert "run_simulation" not in offered("map out Dhanmondi and add peak traffic")  # peak: a level, not a run
+    # a place typed in lower case (grok-4.7 was offered no map tools, placed the map by find_tools, then stopped)
+    assert {"place_map", "network_from_background"} <= offered("Create a netowrk of dhanmondi dhaka")
+    assert "network_from_background" not in offered("create a network of 6x5")
+    assert "network_from_background" not in offered("create a network of roads")
+
+
+def test_a_request_gets_the_skills_of_its_tools_once():
+    from traffic_simulator import assistant
+    skills = tools.skills_for("map out Dhanmondi, Dhaka and add peak traffic")
+    assert skills.startswith("\n\n[Skills]") and "network_from_background" in skills and "degree_of_saturation" in skills
+    assert "run_experiment" not in skills and tools.skills_for("hi") == ""  # only its own groups'
+    assert tools.skills_for("map out Gulshan", seen=skills) == ""  # sent once: it stays in the conversation
+    assert "network_from_background" not in assistant.TOOLS_NOTE  # not in every request's instructions
+    found = tools.expand_tools({"need": "metro lines"}, tools.tools_for("hi"))
+    assert found["skills"] == [tools.SKILLS["metro"]]  # tools found mid-answer come with how to use them
 
 
 def test_a_grid_of_impossible_blocks_is_refused():
@@ -534,6 +630,23 @@ def test_an_invented_tool_is_refused_with_the_nearest_real_ones():
         raise AssertionError("a misspelt tool must be refused")
 
 
+def test_manual_windows_are_set_by_arm_name():
+    network = generate_network(3, 4)
+    done = run(network, "set_signal_timing", junctions="1,1", windows={"N": [1, 120], "E": [121, 150]}, amber_s=4)
+    node = network.node("1,1")
+    assert node.signal_method == "manual" and node.amber_s == 4  # windows alone mean method manual
+    assert done["timed"]["1,1"]["windows"] == {"N": [1, 120], "E": [121, 150], "S": "none: always red",
+                                               "W": "none: always red"}
+    assert "windows N 1-120, E 121-150 s, amber 4 s" in "\n".join(done["changed"])
+    assert "has no arm Q: its arms are N, E, S, W" in refused(network, "set_signal_timing", junctions="1,1",
+                                                              windows={"Q": [1, 30]})
+    assert "N and E would go at the same time" in refused(network, "set_signal_timing", junctions="1,1",
+                                                          windows={"N": [1, 60], "E": [30, 90]})
+    assert "only used by method manual" in refused(network, "set_signal_timing", junctions="1,1", method="fixed",
+                                                   windows={"N": [1, 60]})
+    assert node.manual_greens_s[network.signal_arms("1,1")[0][0]] == [1, 120]  # each refusal changed nothing
+
+
 def test_a_signal_method_other_than_the_one_asked_for_is_caught():
     # qwen3.5 4B, asked for SCOOT, thought "SCOOT" and sent scats
     said = tools.contradicts("set_signal_timing", {"junctions": ["2,2"], "method": "scats"}, "switch every signal to SCOOT")
@@ -555,6 +668,17 @@ def test_an_invented_grid_for_a_named_place_is_caught():
                  "Create a new network with 4 columns and 3 rows"):  # a grid asked for, or no place named
         assert tools.contradicts("generate_grid", grid, fine) is None, fine
     assert tools.contradicts("network_from_background", {}, asked) is None
+    # a place typed in lower case (qwen3.5 4B built an 8 x 6 grid for "Create a dhanmondi network")
+    assert "network_from_background" in tools.contradicts("generate_grid", grid, "Create a dhanmondi network")
+    assert {"place_map", "network_from_background"} <= {s["name"] for s in tools.tools_for("Create a dhanmondi network")}
+    for fine in ("make a dense city network", "create a nice network", "widen the main roads", "update all roads"):
+        assert tools.contradicts("generate_grid", grid, fine) is None, fine
+    # lanes the user gave go in the build (qwen3.5 4B set them with update_roads after it, in 2 of 3 stress prompts)
+    lanes = "Map out Krakow's old town: main roads 2 to 3 lanes each way, side streets single lane."
+    assert "main_lanes [fewest, most]" in tools.contradicts("network_from_background", {}, lanes)
+    assert tools.contradicts("network_from_background", {"main_lanes": [2, 3], "local_lanes": [1, 1]}, lanes) is None
+    for fine in ("map out Shibuya in Tokyo", "build Gangnam and add a bus lane", "map out X, no lane changing"):
+        assert tools.contradicts("network_from_background", {}, fine) is None, fine
 
 
 def test_an_incident_given_beside_a_runs_arguments_is_that_incident():
@@ -578,6 +702,7 @@ def test_ids_are_read_however_a_small_model_lists_them():
     timed = tools.run_tool(network, "set_signal_timing", {"junctions": "all", "method": "fixed", "green_times_s": [30, 20]})
     assert "2,2" not in timed["timed"] and "1,1" in timed["timed"]  # "all" signals: the roundabouts aren't
     for name, args, why in (("set_junction_control", {"junctions": ["9,9"], "control": "roundabout"}, "Unknown id '9,9'"),
+                            ("update_roads", {"roads": "1-1, 2-1, 3-1", "footpaths": "both"}, 'send roads "all"'),
                             ("add_road", {"from_junction": "1W", "to_junction": "2,2"}, "is a boundary end, not a junction"),
                             ("set_end_flows", {"end": "2,3", "supply_vph": 100}, "is a junction, not a boundary end"),
                             ("set_signal_timing", {"junctions": ["2,2", "3,3"]}, "2,2, 3,3 are not signalised"),
@@ -734,13 +859,13 @@ def test_the_assistant_places_spawn_points_and_walking_between_them():
     network = generate_network(3, 3)
     tools.run_tool(network, "update_roads", {"roads": [road.id for road in network.all_roads()], "footpaths": "both"})
     placed = tools.run_tool(network, "add_spawn_points", {"points": [[140, 1060], [850, 180]]})
-    assert placed["spawn_points"] == ["S1", "S2"] and "Added spawn point S1" in placed["changed"][0]
+    assert placed["spawn_points"] == ["S1", "S2"] and "Added deploy point S1" in placed["changed"][0]
     tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["S1->S2", "1W->3E"], "people_per_hour": 200})
     assert network.spawn_demand == {"S1->S2": 200.0} and network.walk_demand == {"1W->3E": 200.0}
     try:
         tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["S1->1W"], "people_per_hour": 10})  # mixed
     except tools.ToolError as exc:
-        assert "spawn points" in str(exc)
+        assert "deploy points" in str(exc)
     else:
         raise AssertionError("a spawn point and a boundary end mixed")
     summary = tools.run_tool(network, "pedestrian_summary", {})
@@ -748,6 +873,49 @@ def test_the_assistant_places_spawn_points_and_walking_between_them():
     tools.run_tool(network, "delete_objects", {"ids": ["S1"]})
     assert list(network.spawn_points) == ["S2"] and not network.spawn_demand
     assert "add_spawn_points" in {spec["name"] for spec in tools.tools_for("put pedestrian spawn points near the park")}
+
+
+def test_the_assistant_builds_a_metro_line_sets_its_service_and_demand_and_deletes_it():
+    network = generate_network(2, 2)
+    built = run(network, "add_metro_line", stations=[[0, 0], [800, 0], [1600, 200]], headway_min=3)
+    assert built["stations"] == {"M1": [0.0, 0.0], "M2": [800.0, 0.0], "M3": [1600.0, 200.0]}
+    assert built["service"]["headway_min"] == 3 and built["capacity_per_h_each_way"] == 20000  # 20 trains of 1,000
+    before = deepcopy(network)
+    assert "merge true" in refused(network, "add_metro_line", stations=[[400, -600], [400, 600]])  # crosses ML1
+    assert "headway min must be 1 to 60" in refused(network, "add_metro_line", stations=[[0, 900], [0, 1300]],
+                                                     headway_min=0.5)
+    assert network == before  # refused: nothing built
+    crossing = run(network, "add_metro_line", stations=[[400, -600], [400, 600]], merge=True)
+    assert list(crossing["stations"]) == ["M4", "M5", "M6"] and crossing["stations"]["M6"] == [400.0, 600.0]
+    assert network.metro_lines["ML1"].stops == ["M1", "M5", "M2", "M3"]  # the interchange, on both lines
+    run(network, "set_metro_demand", pairs=["M1->M3", "M4-M3"], passengers_per_hour=2000)  # M4->M3: a change at M5
+    assert network.metro_demand == {"M1->M3": 2000.0, "M4->M3": 2000.0}
+    day = run(network, "set_metro_demand", pairs=["M3->M1"], passengers_per_day=24000, preset="flat")
+    assert network.metro_daily["M3->M1"]["people"] == 24000 and "M3->M1" in day["curves"]
+    assert "stations" in refused(network, "set_metro_demand", pairs=["M1->M9"], passengers_per_hour=5)
+    assert "passengers_per_hour" in refused(network, "set_metro_demand", pairs=["M1->M2"])
+    changed = run(network, "update_metro_line", line="ML1", cars_per_train=8)["changed"]
+    assert network.metro_lines["ML1"].cars_per_train == 8 and "8 carriages" in changed[0]
+    assert "delete ML1" in refused(network, "delete_objects", ids=["M2"])  # a station goes only with its line
+    run(network, "delete_objects", ids=["ML2"])
+    assert list(network.metro_lines) == ["ML1"] and network.metro_lines["ML1"].stops == ["M1", "M2", "M3"]
+    assert network.metro_demand == {"M1->M3": 2000.0}  # M4's demand went with it
+    offered = {spec["name"] for spec in tools.tools_for("build a metro line from the station to the hospital")}
+    assert {"add_metro_line", "set_metro_demand", "metro_report"} <= offered
+    assert {"add_metro_line", "update_metro_line", "set_metro_demand"} <= tools.SCENARIO_TOOLS
+
+
+def test_a_cycle_lane_runs_one_way_and_cycling_requests_are_offered_vehicle_types():
+    network = generate_network(2, 2)
+    road = network.roads["1,2-2,2"]
+    run(network, "update_roads", roads=[road.id], cycle_lanes="forward")
+    assert road.cycle_lanes == [road.to_node]
+    run(network, "update_roads", roads=[road.id], cycle_lanes="backward")
+    assert road.cycle_lanes == [road.from_node]
+    run(network, "update_roads", roads=[road.id], direction="one-way", cycle_lanes="none")
+    assert "only run forward" in refused(network, "update_roads", roads=[road.id], cycle_lanes="backward")
+    offered = {spec["name"] for spec in tools.tools_for("add a cycle lane for cyclists on the main road")}
+    assert {"update_roads", "create_vehicle_types"} <= offered
 
 
 if __name__ == "__main__":

@@ -296,7 +296,7 @@ def hourly_chart(values: list[float], width: int, height: int = 150) -> QImage:
     slot = (width - 2 * left) / HOURS
     peak = max(range(HOURS), key=values.__getitem__)
     most = values[peak] or 1
-    painter.setPen(QColor("#454b53"))
+    painter.setPen(QColor(theme.BORDER))  # the axis
     painter.drawLine(left, bottom, width - left, bottom)
     for hour, value in enumerate(values):
         bar = (bottom - top) * value / most

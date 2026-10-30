@@ -13,6 +13,7 @@ from PySide6.QtCore import QPoint, Qt  # noqa: E402
 from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
+from traffic_simulator.daily_profile import DailyProfile, from_record  # noqa: E402
 from traffic_simulator.models import METRO_MIN_SPACING_M, MetroLine  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.network_io import load_network, save_network, saved_project  # noqa: E402
@@ -44,7 +45,7 @@ def test_a_line_is_its_stops_in_order_and_refusals_change_nothing():
         try:
             network.validate()
         except ValueError as exc:
-            assert "Metro demand" in str(exc)
+            assert "MRT demand" in str(exc)
         else:
             raise AssertionError(bad)
     network.metro_demand = {"M1->M3": 1200.0, "M4->M5": 300.0}
@@ -161,9 +162,13 @@ def test_deploying_shows_the_next_leg_and_asks_at_a_crossing():
 def test_metro_is_saved_and_loaded_with_the_network():
     import json
 
+    from traffic_simulator.models import Institution
+
     network = generate_network(2, 2)
     network.add_metro_line((0.0, 0.0), (500.0, 200.0)).cars_per_train = 8
     network.metro_demand = {"M1->M2": 750.0}
+    network.institutions["IN1"] = Institution("IN1", "School", 100.0, 100.0, 2000.0, 300.0, 50, 5,
+                                              mode_shares={"Car": 70.0, "MRT": 30.0})
     with tempfile.TemporaryDirectory() as folder:
         path = Path(folder) / "metro.json"
         save_network(network, path)
@@ -172,10 +177,13 @@ def test_metro_is_saved_and_loaded_with_the_network():
         record = document["metro_lines"][0]
         record["train_capacity"] = 900
         del record["cars_per_train"], record["car_capacity"]
+        document["institutions"][0]["mode_shares"] = {"Car": 70.0, "Metro": 30.0}  # the MRT's mode, as once named
         path.write_text(json.dumps(document), encoding="utf-8")
-        older = load_network(path).metro_lines["ML1"]
+        older_network = load_network(path)
+        older = older_network.metro_lines["ML1"]
     assert loaded.metro_lines == network.metro_lines and loaded.metro_stops == network.metro_stops
     assert loaded.metro_demand == {"M1->M2": 750.0}
+    assert older_network.institutions["IN1"].mode_shares == {"Car": 70.0, "MRT": 30.0}
     assert (older.cars_per_train, older.car_capacity, older.train_capacity) == (3, 300, 900)  # 400 a carriage at most
 
 
@@ -221,11 +229,11 @@ def test_only_institutions_draw_on_the_metro_from_the_stations_in_their_circle()
     near = place(network, "Office", 650.0, 1180.0, 2000, 1000, people=200, employees=300)  # by M2; M1, M3 in its circle
     percent, info = tools.institution_split(network, near, modes, {})
     assert info["metro"]["door"] == "M2" and sorted(info["metro"]["stations"]) == ["M1", "M3"]
-    assert 0 < percent["Metro"] < 100 and info["metro"]["places"] == info["origins"] + 2  # its junctions, and M1, M3
+    assert 0 < percent["MRT"] < 100 and info["metro"]["places"] == info["origins"] + 2  # its junctions, and M1, M3
     narrow = place(network, "Shop", 750.0, 1700.0, 1000, 700)  # M2 within the walk (618 m), no other station in its circle
     percent, info = tools.institution_split(network, narrow, modes, {})
-    assert percent["Metro"] == 0 and info["metro"]["stations"] == []
-    near.mode_shares = {"Walk": 20.0, "Car": 50.0, "Metro": 30.0}
+    assert percent["MRT"] == 0 and info["metro"]["stations"] == []
+    near.mode_shares = {"Walk": 20.0, "Car": 50.0, "MRT": 30.0}
     per_person, _, unknown = vehicle_split(near, modes)
     assert not unknown and abs(per_person - 0.5 / 1.5) < 1e-9  # walkers and metro riders: no vehicles
 
@@ -271,12 +279,31 @@ def test_the_metro_has_its_own_od_matrix_and_the_report_loads_it_with_the_buildi
     row = next(row for row in report["lines"] if row["line"] == "ML1")
     assert row["peak_load_per_h"] == 2500 and "at its busiest" in window.metro_summary.text()
     building = place(network, "Office", 650.0, 1180.0, 2000, 1000, people=200, employees=300)
-    building.mode_shares = {"Car": 60.0, "Metro": 40.0}  # its metro riders between M2 and M1, M3, in equal shares
+    building.mode_shares = {"Car": 60.0, "MRT": 40.0}  # its metro riders between M2 and M1, M3, in equal shares
     report = window._metro_report()
     row = next(row for row in report["lines"] if row["line"] == "ML1")
     assert row["riders_per_h"] > 2500 and row["stops"]["M2"]["alighting"] > 0
     window.undo()
     assert window.network.metro_demand == {}
+    window.network.institutions.clear()
+
+    window.od_panel.period.group.button(1).click()  # Daily: people a day, each pair's curve in the sidebar
+    matrix, network = window.metro_matrix, window.network
+    assert window.workspace.currentWidget() is matrix and "a day" in matrix.title.text()
+    assert matrix.day_hint.isVisibleTo(matrix.side) and not matrix.day.isVisibleTo(matrix.side)
+    matrix.table.setCurrentCell(0, 2)
+    matrix.table.item(0, 2).setText("24000")  # more than an hour holds
+    assert network.metro_daily["M1->M3"]["people"] == 24000 and network.metro_demand == {}  # kept apart
+    assert matrix.day.isVisibleTo(matrix.side) and "M1 to M3" in matrix.day.heading.text()
+    assert matrix.side.parent() is not matrix and matrix.side.isVisibleTo(window.od_panel)  # the sidebar's
+    steps = len(window.history.undo_stack)
+    evening = DailyProfile("points", [(0.0, 0.0), (17.0, 0.0), (18.0, 1.0), (24.0, 0.0)])
+    matrix.day.set_profile(evening)
+    matrix.day.set_profile(evening.as_points())  # one curve's burst of edits: one undo step
+    assert from_record(network.metro_daily["M1->M3"]["curve"]) == evening.as_points()
+    assert len(window.history.undo_stack) == steps + 1
+    report = window._metro_report()
+    assert report["design_hour"] == "18:00-19:00"  # its curve's busiest hour
     window.close()
 
 
@@ -377,7 +404,7 @@ def test_deploying_places_a_stop_a_click_joined_to_the_last_and_a_right_click_fi
     answers_given = [{"headway_min": 4.0, "speed_kmh": 40.0, "cars_per_train": 6, "car_capacity": 180,
                       "fare_cents": 150.0}, None]
     # the first line accepted with its service, the second deleted
-    assert window.metro_summary.text() == "No metro lines yet" and not window.scene.metro_deploying
+    assert window.metro_summary.text() == "No MRT lines yet" and not window.scene.metro_deploying
     steps = len(window.history.undo_stack)
     window.metro_button.setChecked(True)
     assert window.scene.metro_deploying and "first stop" in window.mode_hint.text()
@@ -408,7 +435,7 @@ def test_deploying_places_a_stop_a_click_joined_to_the_last_and_a_right_click_fi
     window.undo()  # while deploying, Ctrl+Z takes back the unfinished line only
     assert list(window.network.metro_lines) == ["ML1"] and not window.metro_button.isChecked()
     window.undo()  # then the accepted line goes, as one step
-    assert not window.network.metro_lines and window.metro_summary.text() == "No metro lines yet"
+    assert not window.network.metro_lines and window.metro_summary.text() == "No MRT lines yet"
     window.redo()
     assert window.network.metro_lines["ML1"].stops == ["M1", "M2", "M3"]
     window.metro_button.setChecked(True)

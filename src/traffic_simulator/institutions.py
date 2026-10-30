@@ -8,7 +8,9 @@ finishes (`Placement`).
 
 The four-step model, each building a zone:
 - generation (`hourly_people`): everyone makes one trip each way a day, at the shift's times (residents spread
-  over the hours round them); a school's pupils are driven there and fetched, each car driving on again;
+  over the hours round them); a school's pupils are driven there and fetched, each car driving on again. Daily
+  demand: the building's own arrive/leave curves, where set, spread the day instead of the shift; hourly demand:
+  its people an hour, where typed, instead of its busiest hour (`Institution.curves`, `per_hour`);
 - distribution (`door`, `catchment`): the circle of influence is the catchment its people come from. Its
   junctions and boundary ends share them equally, and they travel to and from the building's door, its
   nearest junction;
@@ -22,9 +24,10 @@ The figures entered drive it; the kinds' defaults are illustrative.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from math import hypot, sqrt
 
+from .daily_profile import from_record
 from .geometry import polyline_meets_box
 from .metro import METRO
 from .models import (INSTITUTION_KINDS, MAX_AREA_M2, MAX_INFLUENCE_M, Institution, Network,
@@ -95,22 +98,30 @@ def links(network: Network, x: float, y: float, radius_m: float) -> list[str]:
     return [node_id for distance, node_id in reached if distance <= radius_m]
 
 
-def hourly_trips(item: Institution) -> tuple[list[float], list[float]]:
+def hourly_trips(item: Institution, daily: bool = True) -> tuple[list[float], list[float]]:
     """Arrivals at and departures from the building by car in each hour of the day (people a hour: the
     car share of `hourly_people`; with a mode split, its Car share)."""
     car = shares(item).get("Car", 0.0) / 100
-    arrive, leave = hourly_people(item)
+    arrive, leave = hourly_people(item, daily)
     return [v * car for v in arrive], [v * car for v in leave]
 
 
-def hourly_people(item: Institution) -> tuple[list[float], list[float]]:
-    """People arriving at and leaving the building in each hour of the day, by any mode (its groups together)."""
-    groups = _groups(item)
+def hourly_people(item: Institution, daily: bool = True) -> tuple[list[float], list[float]]:
+    """People arriving at and leaving the building in each hour of the day, by any mode (its groups together).
+    Daily: its day (by its curves, where set); hourly: its people an hour, where typed, the same every hour."""
+    groups = _groups(item, daily)
     return ([sum(group[0][h] for group in groups) for h in range(HOURS)],
             [sum(group[1][h] for group in groups) for h in range(HOURS)])
 
 
-def _groups(item: Institution) -> list[tuple[list[float], list[float], bool]]:
+def shift_people(item: Institution) -> tuple[list[float], list[float]]:
+    """People arriving and leaving each hour by its shift alone: the shape its curves start from."""
+    groups = _groups(replace(item, curves={}))
+    return ([sum(group[0][h] for group in groups) for h in range(HOURS)],
+            [sum(group[1][h] for group in groups) for h in range(HOURS)])
+
+
+def _groups(item: Institution, daily: bool = True) -> list[tuple[list[float], list[float], bool]]:
     """(people arriving each hour, people leaving each hour, commuting) for its employees and for its people. Everyone
     makes one trip each way a day: employees arrive in the hour the shift starts and leave in the hour it ends; so do
     people who come together (students), while visitors and customers come and go evenly all through the shift;
@@ -132,7 +143,18 @@ def _groups(item: Institution) -> list[tuple[list[float], list[float], bool]]:
     else:
         arrive[start] += people
         leave[end] += people
-    return [(staff_in, staff_out, True), (arrive, leave, kind.home)]
+    groups = [(staff_in, staff_out, True), (arrive, leave, kind.home)]
+    for side, key in ((0, "arrive"), (1, "leave")):  # its own curve or people an hour: each group keeps its share
+        totals = [sum(group[side]) for group in groups]
+        everyone = sum(totals)
+        if daily and key in item.curves:
+            spread = from_record(item.curves[key]).shares()
+            for group, total in zip(groups, totals):
+                group[side][:] = [total * share for share in spread]
+        elif not daily and key in item.per_hour:
+            for index, (group, total) in enumerate(zip(groups, totals)):  # nobody yet: all its people
+                group[side][:] = [item.per_hour[key] * (total / everyone if everyone else index)] * HOURS
+    return groups
 
 
 def _through(start: float, end: float) -> list[float]:
@@ -189,7 +211,7 @@ def run_demand(network: Network, modes: list, daily: bool) -> tuple[list, list[s
     each pair's flow in the design hour, the hour when all institutions together make the most vehicle trips."""
     from .simulation import PairDemand  # noqa: PLC0415 - the simulation's type
 
-    made, notes = _vehicle_rows(network, modes)
+    made, notes = _vehicle_rows(network, modes, daily)
     if not made:
         return [], notes
     hour = _busiest(made)
@@ -218,7 +240,7 @@ def walk_demand(network: Network, modes: list, daily: bool) -> list:
         entrance, origins = door(network, item), catchment(network, item)
         if not walk or entrance is None or not origins:
             continue
-        arrive, leave = hourly_people(item)
+        arrive, leave = hourly_people(item, daily)
         here = (item.x, item.y)
         for profile, ends in ((arrive, [(o, entrance, None, here) for o in origins]),
                               (leave, [(entrance, d, here, None) for d in origins])):
@@ -227,14 +249,14 @@ def walk_demand(network: Network, modes: list, daily: bool) -> list:
                 rows += [(o, d, people, start, finish) for o, d, start, finish in ends]
     if not rows:
         return []
-    made = _vehicle_rows(network, modes)[0]
+    made = _vehicle_rows(network, modes, daily)[0]
     hour = _busiest(made or rows)
-    return [WalkDemand(o, d, None, sum(p), [x / sum(p) for x in p], start, finish) if daily
-            else WalkDemand(o, d, p[hour], start=start, finish=finish)
+    return [WalkDemand(o, d, None, sum(p), [x / sum(p) for x in p], start, finish, timetabled=False) if daily
+            else WalkDemand(o, d, p[hour], start=start, finish=finish, timetabled=False)
             for o, d, p, start, finish in rows if daily or p[hour]]
 
 
-def _vehicle_rows(network: Network, modes: list) -> tuple[list, list[str]]:
+def _vehicle_rows(network: Network, modes: list, daily: bool = True) -> tuple[list, list[str]]:
     """Each institution's vehicle trips as (origin, destination, vehicles each hour, split) rows, and notes on what
     couldn't be (run_demand)."""
     made, notes = [], []
@@ -249,7 +271,7 @@ def _vehicle_rows(network: Network, modes: list) -> tuple[list, list[str]]:
             notes.append(f"{item.id}: its circle reaches no junction or end other than its door, so its trips have "
                          "nowhere to come from: make its circle bigger.")
             continue
-        for index, (arrive, leave, commute) in enumerate(_groups(item)):
+        for index, (arrive, leave, commute) in enumerate(_groups(item, daily)):
             per_person, split, _ = vehicle_split(item, modes, commute)
             if index and KINDS[item.kind].escorted:  # a car that brings or fetches a pupil drives on again
                 arrive = leave = [a + b for a, b in zip(arrive, leave)]

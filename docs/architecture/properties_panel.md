@@ -23,8 +23,12 @@
     it needs more room (`fit_slip_roads`: a roundabout); if they can't, the control stays as it was, with
     a message.
   - Signalised shows phases (2/4), the timing method dropdown (Webster, TRANSYT, Synchro, SCATS,
-    SCOOT, Fixed time) and a green time per phase, editable for Fixed
-    time only. Only the settings the method uses show: Cycle limits (the coordinated four), Target
+    SCOOT, Fixed time, Manual) and a green time per phase, editable for Fixed
+    time only. Manual hides the phases and greens and shows a row per arm (`MANUAL_ROWS`, 6 at most: N, E, S, W
+    from `signal_arms`): its first and last second ("none": always red) and, worked out as you type, its green
+    and red; Set amber (unticked: 3 s; ticked: 3–6 s); and Apply Timing, enabled when the entries differ from the
+    junction's, which applies them only if `validate()` takes them (else a warning says why, nothing changed).
+    Choosing Manual on a junction with no windows starts each arm in turn, 30 s each. Only the settings the method uses show: Cycle limits (the coordinated four), Target
     saturation (SCATS, SCOOT), Stop weight (TRANSYT, SCOOT); a minimum past the maximum carries it.
     The note under them says what the run did: Webster's cycle and Y, TRANSYT's and Synchro's cycle,
     greens, offset, group and delay-and-stops before and after optimising, and for SCATS and SCOOT

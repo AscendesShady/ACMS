@@ -27,8 +27,6 @@ BUTTON, BUTTON_HOVER = "#273449", "#33455e"
 BORDER, DIVIDER = "#42536d", "#303e53"
 # Glass: white at these strengths over what lies under it (the package's dark variant: 8 %), its rim lit at 135°
 GLASS_ALPHA, GLASS_HOVER_ALPHA, GLASS_SELECTED_ALPHA = 0.08, 0.14, 0.20
-GLASS = f"rgba(255, 255, 255, {GLASS_ALPHA})"
-GLASS_HOVER = f"rgba(255, 255, 255, {GLASS_HOVER_ALPHA})"
 GLASS_SELECTED = f"rgba(255, 255, 255, {GLASS_SELECTED_ALPHA})"
 GLASS_SHEEN = ("qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 0.14), "
                "stop: 0.5 rgba(255, 255, 255, 0.07), stop: 1 rgba(255, 255, 255, 0.05))")  # the specular light
@@ -44,7 +42,6 @@ TOOLTIP = "#202c40"
 DANGER, DANGER_SURFACE = "#fca5a5", "#642b37"
 SHADOW = "#0b101b"
 RADIUS, RADIUS_SMALL, RADIUS_LARGE = 12, 6, 16
-CAPSULE = 13  # retained for small floating toolbars
 # Status text on the backdrop (test monitor): light tints keep contrast.
 STATUS = {"running": "#93c5fd", "passed": "#86efac", "failed": "#fca5a5", "waiting": "#fcd34d"}
 
@@ -61,11 +58,28 @@ WALKER = "#fde047"  # a pedestrian on the map (non-text marker): a yellow none o
 # An OD matrix cell that takes no value (its diagonal: no trip from a place to itself; a metro pair no ride joins):
 # a darker fill hatched across, so it reads as shut (non-text surface)
 BLOCKED_CELL, BLOCKED_HATCH = "#191c20", "#59616b"
+# The OD panel's editors (non-text details): a handle's rim (and a fixed handle's fill), its fill, the curve's grid
+HANDLE_EDGE, HANDLE_FILL, CURVE_GRID = "#9ca3af", "#ffffff", "#454b53"
 CYCLE_LANE = "#52b788"  # a cycle lane's surface on the map (non-text detail): painted-lane green, lighter than the grass
 METRO_INKS = ("#a4aeb9", METRO_LINE, "#556474", "#21394c", METRO_STOP, "#657d8f", "#17222c", "#e5c15b")
 BUILDING_PAINTS = {"Residential": ("#c3aa8b", "#886354"), "School": ("#d7c8a2", "#657d7b"),
                    "Hospital": ("#c6d4d9", "#69858e"), "Office": ("#a2b0bc", "#495c6f"),
                    "Shop": ("#c8b294", "#597e68")}
+# The road map (network_scene; non-text surfaces and markings but MAP_LABEL): the grass, the carriageway and its paint
+GRASS = "#075322"  # also the plain background's first choice (MAP_COLOURS)
+ROAD_SURFACE, LANE_LINE, ROAD_PAINT, YELLOW_PAINT = "#20292d", "#bcc5c5", "#e8eef0", "#f7cf28"  # yellow: dividers, bays
+STOP_LINE, ZEBRA_STRIPE, PARAPET = "#ffffff", "#f5f5f5", "#d9dde2"
+MAP_SELECTED = "#ff8b23"  # a selected junction's, end's or bus stop's outline (PAVING_SELECTED fills a road)
+MAP_LABEL = "#f4f7f2"  # names and ids on the map, over the grass
+JUNCTION, JUNCTION_EDGE, ISLAND, MINI_ISLAND = "#343c3e", "#ffeb2d", "#0b6a2c", "#c9ced3"
+ENTRY_MARKER, MARKER_EDGE, VEHICLE_OUTLINE = "#ffe82c", "#111719", "#dffcff"
+SIGNAL_GREEN, SIGNAL_AMBER, SIGNAL_RED = "#b6e21c", "#ffb000", "#ff2020"
+SIGNAL_BODY, SIGNAL_RIM = "#121719", "#eef5ed"  # a signal head's (and its clock's) housing
+LANE_SIGNAL_LIT, LANE_SIGNAL_UNLIT = "#4ade80", "#26332a"  # DEVL's lane signal lamp: its flashing green, dark (non-text)
+DETECTOR, BUILDING_ROOF = "#8fdcf5", "#8a7a66"  # loop detectors' outlines; an institution's roof (2D)
+# The plain backgrounds offered (background.py): name -> colour
+MAP_COLOURS = {"Grass": GRASS, "Meadow": "#3f7f3a", "Asphalt": "#2f3438", "Concrete": "#9aa1a6", "Paper": "#f4f1e8",
+               "Night": "#0b0f14"}
 
 READABLE_PAIRS = [
     (TEXT, WINDOW), (TEXT, SURFACE), (TEXT, BUTTON), (TEXT, over(WINDOW, GLASS_HOVER_ALPHA)),
@@ -73,7 +87,7 @@ READABLE_PAIRS = [
     (SECONDARY_TEXT, WINDOW), (SECONDARY_TEXT, SURFACE), (SECONDARY_TEXT, BUTTON), (DISABLED_TEXT, WINDOW),
     (TEXT, PANEL), (TEXT, BUTTON_HOVER), (TEXT, ACCENT_HOVER), (TEXT, DANGER_SURFACE),
     (SECONDARY_TEXT, PANEL), (SECONDARY_TEXT, BUTTON_HOVER), (DISABLED_TEXT, SURFACE),
-    (DISABLED_TEXT, PANEL), (DISABLED_TEXT, BUTTON), (ACCENT_EDGE, PANEL), (DANGER, PANEL),
+    (DISABLED_TEXT, PANEL), (DISABLED_TEXT, BUTTON), (ACCENT_EDGE, PANEL), (DANGER, PANEL), (MAP_LABEL, GRASS),
     *((colour, WINDOW) for colour in STATUS.values()), *((colour, SURFACE) for colour in STATUS.values()),
 ]
 
@@ -144,13 +158,18 @@ QTableView, QTreeView, QListView {{ background: {SURFACE}; alternate-background-
     selection-background-color: {BANNER}; selection-color: {TEXT}; }}
 QTableView {{ gridline-color: {DIVIDER}; }}
 /* A clear selected navigation tile; each tab keeps the same dimensions in all states. */
-QTabWidget::pane {{ border: none; }}
+QTabWidget::pane {{ border: none; margin-top: 8px; }}  /* room between a tab row and its page */
 QTabBar {{ background: transparent; }}
 QTabBar::tab {{ background: {SURFACE}; color: {SECONDARY_TEXT}; border: 1px solid {DIVIDER};
-                border-radius: {RADIUS_SMALL}px; padding: 6px 10px; margin: 2px; }}
+                border-radius: {RADIUS_SMALL}px; padding: 6px 12px; margin: 2px; }}
 QTabBar::tab:selected {{ background: {BANNER}; border-color: {ACCENT_EDGE}; color: {TEXT}; }}
 QTabBar::tab:hover:!selected {{ background: {BUTTON_HOVER}; border-color: {BORDER}; color: {TEXT}; }}
-QTabBar#iconTabs::tab {{ width: 20px; }}  /* icon-only tabs: no room kept for a name; main.py centres the icon */
+QTabBar#iconTabs::tab {{ width: 20px; padding: 6px 10px; }}  /* icon-only tabs: no room kept for a name; main.py centres the icon */
+/* Tabs laid out as buttons (od_matrix.DemandTabs: rows of three), drawn as the tab tiles above. */
+QPushButton[role="tab"] {{ background: {SURFACE}; color: {SECONDARY_TEXT}; border: 1px solid {DIVIDER};
+                           border-radius: {RADIUS_SMALL}px; padding: 6px 8px; }}
+QPushButton[role="tab"]:checked {{ background: {BANNER}; border-color: {ACCENT_EDGE}; color: {TEXT}; }}
+QPushButton[role="tab"]:hover:!checked {{ background: {BUTTON_HOVER}; border-color: {BORDER}; color: {TEXT}; }}
 /* The row's ends line up with the content edges: the first tile flush left, the last flush right. */
 QTabBar::tab:first {{ margin-left: 0; }}
 QTabBar::tab:last {{ margin-right: 0; }}

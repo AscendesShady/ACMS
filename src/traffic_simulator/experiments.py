@@ -21,7 +21,9 @@ compare network variants across seeds. The AI Mode tools run_simulation and run_
 from __future__ import annotations
 
 import re
+import shutil
 import statistics
+import tempfile
 import time
 from collections import Counter, defaultdict
 from copy import deepcopy
@@ -33,7 +35,6 @@ from statistics import stdev
 
 from . import stats
 from .results import MINUTE_COLUMNS, SAMPLE_S, RunRecorder, clock
-from .daily_profile import PEAK_QUARTER
 from .simulation import CRITICAL_GAP_S, DT, RING_TIMEGAP_S, Simulation
 from .xlsx import write_xlsx
 
@@ -313,13 +314,13 @@ def condition_summary(runs: list[dict], scenarios: list[str], conditions: list[d
                 best = name
         table[condition["name"]] = {"means": means, "winner": best,
                                     "regret": {name: abs(value - known[best]) for name, value in known.items()}}
-    total = sum(c["weight"] for c in conditions if c["name"] in table)
     designs = []
     for name in scenarios:
         regrets = [row["regret"][name] for row in table.values() if name in row["regret"]]
         weighted = [(c["weight"], table[c["name"]]["means"][name]) for c in conditions
                     if c["name"] in table and table[c["name"]]["means"].get(name) is not None]
-        designs.append({"design": name, "weighted_mean": sum(w * v for w, v in weighted) / total if weighted else None,
+        total = sum(w for w, _ in weighted)  # the weights of the conditions this design has a mean under
+        designs.append({"design": name, "weighted_mean": sum(w * v for w, v in weighted) / total if total else None,
                         "worst_regret": max(regrets) if regrets else None,
                         "wins": sum(1 for row in table.values() if row["winner"] == name)})
     robust = min((d for d in designs if d["worst_regret"] is not None), key=lambda d: d["worst_regret"], default=None)
@@ -489,17 +490,33 @@ def busiest_hour(demand: list) -> int | None:
     return max(range(24), key=lambda h: sum(Simulation.rate(pair, h * 3600) for pair in demand))
 
 
+def hold_windows(demand) -> tuple[int, int | None]:
+    """Where `holds`' judged windows start, in seconds: the last one's, and the busiest quarter's (None when every
+    pair's hour is even)."""
+    last = HOLD_MINUTES * 60 - HOLD_WINDOW_MINUTES * 60
+    if not any(max(getattr(pair, "quarters", ()) or (0.25,)) > 0.25 + 1e-9 for pair in demand):
+        return last, None
+    rates = [sum((pair.hourly or 0.0) * (getattr(pair, "quarters", ()) or (0.25,) * 4)[quarter] for pair in demand)
+             for quarter in range(4)]
+    return last, (rates.index(max(rates)) or 4) * 15 * 60
+
+
+def hold_minutes(demand) -> int:
+    """How long `holds` runs this demand: to the end of its later window."""
+    return max(start for start in hold_windows(demand) if start is not None) // 60 + HOLD_WINDOW_MINUTES
+
+
 def holds(network, demand, modes, seed: int, override=None, progress=None, cancelled=lambda: False) -> dict:
     """One HOLD_MINUTES headless run: whether vehicles pile up (see HOLD_BUILD_UP) and by how much. Where some
-    pair's hour is uneven (a peak-hour factor or quarters), its busiest quarter (PEAK_QUARTER) is judged too: the
-    last window alone came after it and saw the queue it built draining (PHF 0.7 sized to X 0.85 ran its peak
-    quarter at X 1.21 and passed; HCM sizes on V/PHF)."""
+    pair's hour is uneven (a peak-hour factor or quarters), the network's busiest quarter (the pairs' veh/h in each
+    added up) is judged too, the run going on to its end: the last window alone came before it, or after it and saw
+    the queue it built draining (PHF 0.7 sized to X 0.85 ran its peak quarter at X 1.21 and passed; HCM sizes on
+    V/PHF). The hour's first quarter is judged in the second hour (in the first the network fills from empty)."""
     simulation = Simulation(deepcopy(network), demand, modes, seed=seed)
     simulation.signal_override = override
-    end = HOLD_MINUTES * 60
-    windows = [end - HOLD_WINDOW_MINUTES * 60]  # where each judged window starts (each lasts HOLD_WINDOW_MINUTES)
-    if any(max(getattr(pair, "quarters", ()) or (0.25,)) > 0.25 + 1e-9 for pair in demand):
-        windows.insert(0, PEAK_QUARTER * 15 * 60)
+    last, peak = hold_windows(demand)  # where each judged window starts (each lasts HOLD_WINDOW_MINUTES)
+    windows = sorted({last} | ({peak} if peak is not None else set()))
+    end = windows[-1] + HOLD_WINDOW_MINUTES * 60
     marks: dict = {}  # window start -> (in network, spawned) then, and at its end
 
     def in_network() -> int:
@@ -516,20 +533,19 @@ def holds(network, demand, modes, seed: int, override=None, progress=None, cance
             progress(simulation.time)
     if len(marks) < len(windows) or any(after is None for _, after in marks.values()):  # stopped early
         return {"holds": None}
-    judged = []
+    judged = {}
     for start in windows:
         (before, spawned_before), (after, spawned_after) = marks[start]
-        if start != windows[-1] and spawned_before:  # the peak quarter: arrivals rise into it, so more vehicles are on
+        if start == peak and spawned_before:  # the peak quarter: arrivals rise into it, so more vehicles are on
             # the road at once without any queue (Little's law, N = λT): expect the count to rise with the rate
             rate = (spawned_after - spawned_before) / (HOLD_WINDOW_MINUTES * 60) / (spawned_before / start)
             before *= max(1.0, rate)
         piled = after - before
-        judged.append((piled / max(spawned_after - spawned_before, 1), piled))
-    build_up, piled = judged[-1]
-    found = {"holds": all(b <= HOLD_BUILD_UP or p < HOLD_MIN_PILE for b, p in judged), "build_up": round(build_up, 3),
-             "in_network": in_network()}
-    if len(judged) > 1:
-        found["peak_quarter_build_up"] = round(judged[0][0], 3)
+        judged[start] = (piled / max(spawned_after - spawned_before, 1), piled)
+    found = {"holds": all(b <= HOLD_BUILD_UP or p < HOLD_MIN_PILE for b, p in judged.values()),
+             "build_up": round(judged[last][0], 3), "in_network": in_network()}
+    if peak is not None:
+        found["peak_quarter_build_up"] = round(judged[peak][0], 3)
     return found
 
 
@@ -607,8 +623,13 @@ def parameter_sensitivity(network, demand, modes, seeds: list[int], duration_s: 
                 progress(f"Seed {seed}: run {index + 1} of {len(runs)}"
                          + (f" ({name} × {factor:g})" if name else " (as it is)"))
             run_modes, params = varied(modes, name, factor)
-            _, recorder = run_headless(network, demand, run_modes, seed, duration_s, cancelled=cancelled, params=params,
-                                       recorder=RunRecorder(network, run_modes, measure_from_s=measure_from_s))
+            folder = Path(tempfile.mkdtemp(prefix="acms-sensitivity-"))  # kept to its KPIs: nothing left to recover
+            try:
+                _, recorder = run_headless(network, demand, run_modes, seed, duration_s, cancelled=cancelled,
+                                           params=params, recorder=RunRecorder(network, run_modes, folder=folder / "run",
+                                                                               measure_from_s=measure_from_s))
+            finally:
+                shutil.rmtree(folder, ignore_errors=True)
             if cancelled():
                 return None
             kpis = recorder.kpis()
@@ -715,7 +736,7 @@ def analyse_run(kpis: dict, every: bool = False) -> dict:
     times = [trip[3] for trip in trips if trip[3] > 0]
     reliability = {"trips": len(times)}
     if len(times) >= 2:
-        mean, sd = sum(times) / len(times), stdev(times)
+        mean, sd = statistics.fmean(times), stdev(times)
         reliability.update(mean_s=round(mean, 1), sd_s=round(sd, 1), cv=round(sd / mean, 3),
                            median_s=round(stats.percentile(times, 50), 1), p85_s=round(stats.percentile(times, 85), 1),
                            p95_s=round(stats.percentile(times, 95), 1),
@@ -744,25 +765,27 @@ def analyse_run(kpis: dict, every: bool = False) -> dict:
                 for origin in origins}
     queues = []
     samples = observed["samples"]
-    for road_id, counts in observed["queues"].items():
+    for link_id, counts in observed["queues"].items():  # each direction of a road (a link), metres a lane of it
         rank, seen, q95 = 0.95 * samples, samples - sum(counts.values()), 0.0  # zeros: the samples with no queue
         for metres in sorted(counts, key=float):
             if seen >= rank:
                 break
             seen += counts[metres]
             q95 = float(metres)
+        road_id = link_id.rstrip("<>")
         length = observed["roads"].get(road_id, {}).get("length_m") or 0
         if q95 > 0 and length:
-            queues.append({"road": road_id, "queue_p95_m": q95, "length_m": length, "ratio": round(q95 / length, 2),
-                           "spills_back": q95 >= length})
+            queues.append({"link": link_id, "road": road_id, "queue_p95_m": q95, "length_m": length,
+                           "ratio": round(q95 / length, 2), "spills_back": q95 >= length})
     gini = stats.gini(row["flow_vph"] for row in kpis["roads"])
     return {"reliability": reliability, "steady_state": steady, "arrivals_per_minute": arrivals,
             "queues_p95": sorted(queues, key=lambda row: -row["ratio"])[:None if every else 10],
             "flow_gini": None if gini is None else round(gini, 3), "bus_stops": bus_stops(observed),
             "bus_passengers": bus_passengers(observed),
-            "notes": ["Free-flow time is trip time less delay against the speed limit, so slow types (bikes) read high.",
+            "notes": ["Free-flow time is trip time less delay against each vehicle's own free speed (a bike's own, "
+                      "not the limit).",
                       "Arrivals are vehicles first seen on the road: queued entry evens them out (reads regular).",
-                      "Queues are metres a lane on a road, both directions of a two-way road together.",
+                      "Queues are metres a lane in each direction of a road (a link), over that direction's lanes.",
                       "Batch means: the steady state after the warm-up; a lag-1 autocorrelation far from 0 means the "
                       "batches are too short to trust the interval."]}
 
@@ -828,9 +851,10 @@ def headway_cv(observed: dict) -> float | None:
 
 
 def series(kpis: dict, what: str, road: str | None = None, interval_min: int = 1) -> list[float]:
-    """A run's values per interval: the network's throughput (veh/h), mean_speed (km/h), on_road and queued
-    (per-minute rows); a road's flow (veh/h, both directions, at its detectors) or speed (space-mean km/h);
-    or trip_time (mean seconds of the trips arriving in it). Whole intervals only."""
+    """A run's values per interval, from the end of its warm-up: the network's throughput (veh/h), mean_speed
+    (km/h), on_road and queued (per-minute rows); a road's flow (veh/h, both directions, at its detectors) or speed
+    (space-mean km/h); or trip_time (mean seconds of the trips arriving in it). Whole intervals only. An interval
+    with no trip arriving (trip_time) or no vehicle passing (speed) has no value: refused, not read as 0."""
     observed = kpis["observed"]
     rows = observed.get("minute_rows", [])
     if interval_min < 1:
@@ -838,27 +862,34 @@ def series(kpis: dict, what: str, road: str | None = None, interval_min: int = 1
     networkwide = {"throughput": "Throughput (veh/h)", "mean_speed": "Mean speed (km/h)",
                    "on_road": "Vehicles on the road", "queued": "Queued now (veh)"}
     span = interval_min * 60
-    count = int(observed.get("observed_s", kpis["time_s"]) // span)
+    start = observed.get("observed_from_s", kpis.get("measure_from_s", 0.0))  # measured from the warm-up's end
+    count = int(observed.get("observed_s", kpis["time_s"] - start) // span)
     if what in networkwide:
         column = MINUTE_COLUMNS.index(networkwide[what])
-        values = [row[column] for row in rows]
+        values = [row[column] for row in rows if row[0] - 60 >= start - 1e-6]  # the minutes after the warm-up
         return [statistics.fmean(values[i * interval_min:(i + 1) * interval_min]) for i in range(len(values) // interval_min)]
+    buckets: dict = defaultdict(list)
     if what == "trip_time":
-        buckets: dict = defaultdict(list)
         for trip in observed["trips"]:
-            buckets[int(trip[5] // span)].append(trip[3])
-        return [statistics.fmean(buckets[i]) if buckets[i] else 0.0 for i in range(int(kpis["time_s"] // span))]
-    if what not in ("flow", "speed"):
+            buckets[int((trip[5] - start) // span)].append(trip[3])
+        values = [statistics.fmean(buckets[i]) if buckets[i] else None for i in range(count)]
+    elif what not in ("flow", "speed"):
         raise ValueError("what is throughput, mean_speed, on_road, queued, trip_time, or a road's flow or speed.")
-    passages = [p for p in observed.get("passages", []) if p[0] == road]
-    if not road or road not in {info["road"] for info in observed.get("links", {}).values()}:
-        raise ValueError(f"The run has no road called {road!r} (give road for flow or speed).")
-    buckets = defaultdict(list)
-    for passage in passages:
-        buckets[int((passage[3] - observed.get("observed_from_s", 0.0)) // span)].append(passage[4])  # after a warm-up
-    if what == "flow":
-        return [len(buckets[i]) * 3600 / span for i in range(count)]
-    return [len(buckets[i]) / sum(1 / v for v in buckets[i]) * 3.6 if buckets[i] else 0.0 for i in range(count)]
+    else:
+        passages = [p for p in observed.get("passages", []) if p[0] == road]
+        if not road or road not in {info["road"] for info in observed.get("links", {}).values()}:
+            raise ValueError(f"The run has no road called {road!r} (give road for flow or speed).")
+        for passage in passages:
+            buckets[int((passage[3] - start) // span)].append(passage[4])
+        if what == "flow":
+            return [len(buckets[i]) * 3600 / span for i in range(count)]
+        values = [len(buckets[i]) / sum(1 / v for v in buckets[i]) * 3.6 if buckets[i] else None for i in range(count)]
+    empty = [str(i + 1) for i, value in enumerate(values) if value is None]
+    if empty:
+        raise ValueError(f"No {'trip arrived' if what == 'trip_time' else 'vehicle passed'} in interval"
+                         f"{'s' if len(empty) > 1 else ''} {', '.join(empty[:8])} of {interval_min} min (counted from "
+                         "the end of the warm-up): give a longer interval_min.")
+    return values
 
 
 def detectors(kpis: dict, road: str | None = None, limit: int = 12) -> dict:
@@ -871,6 +902,7 @@ def detectors(kpis: dict, road: str | None = None, limit: int = 12) -> dict:
     p90–91, p124–125)."""
     observed = kpis["observed"]
     seconds = observed.get("observed_s") or kpis["time_s"]
+    start = observed.get("observed_from_s", 0.0)  # its minutes counted from the end of a warm-up
     by_link: dict = defaultdict(list)
     for passage in observed.get("passages", []):
         if road is None or passage[0] == road:
@@ -891,7 +923,7 @@ def detectors(kpis: dict, road: str | None = None, limit: int = 12) -> dict:
                "space_mean_kmh": round(sms, 1) if sms else None,
                "occupancy_percent": round(100 * sum(p[5] / p[4] for p in found if p[4] > 0.05) / (seconds * len(lanes)), 1),
                "density_veh_km": round(flow / sms, 1) if sms else None,
-               "counts_per_minute": stats.dispersion([sum(1 for p in found if int(p[3] // 60) == m)
+               "counts_per_minute": stats.dispersion([sum(1 for p in found if int((p[3] - start) // 60) == m)
                                                       for m in range(int(seconds // 60))])}
         if len(speeds) >= 2:
             row.update(v15_kmh=round(stats.percentile(speeds, 15), 1), v50_kmh=round(stats.percentile(speeds, 50), 1),
@@ -947,8 +979,9 @@ CONFLICT_TTC_S, SEVERE_TTC_S, SEVERE_DRAC = 1.5, 1.0, 3.35  # a severe conflict:
 
 
 def safety(kpis: dict, ttc_s: float = CONFLICT_TTC_S, every: bool = False) -> dict:
-    """Rear-end conflicts (TTC < 1.5 s, simulation.CONFLICT_TTC_S) as a safety surrogate: per road, counts,
-    severe ones and the rate per million vehicle-km; a safety performance function fitted across roads,
+    """Rear-end conflicts (TTC < 1.5 s, CONFLICT_TTC_S here, of those the simulation records under its own 3 s) as a
+    safety surrogate: per road, counts, severe ones and the rate per million vehicle-km; a safety performance
+    function fitted across roads,
     ln E[conflicts] = ln(km) + b0 + b1·ln(flow) (Poisson, with the NB2 α when overdispersed; Washington et al.
     p631–662), and the roads ranked by their Empirical Bayes excess over it (Hauer; Safer Roads p148–149)."""
     observed = kpis["observed"]
@@ -1163,7 +1196,7 @@ def averaged(runs: list[dict]) -> list[dict]:
         means = {}
         for key in dict.fromkeys(key for run in group for key in run["measures"]):
             values = [run["measures"][key] for run in group if isinstance(run["measures"].get(key), (int, float))]
-            means[key] = sum(values) / len(values) if values else None
+            means[key] = statistics.fmean(values) if values else None
         merged.append({"scenario": scenario, "seed": seed, "repeats": len(group), "measures": means})
     return merged
 
@@ -1305,10 +1338,12 @@ def _analysis_sheets(kpis: dict, observed: dict, sheets: list) -> None:
                          d.get("verdict")] for o, d in analysed["arrivals_per_minute"].items()],
                        "Vehicles first seen a minute at each origin against Poisson (index of dispersion, chi-square)."])
     if analysed["queues_p95"]:
-        sheets.append(["Queues (95th pct)", [["Road", "95th percentile queue a lane (m)", "Length (m)", "Share of length",
-                                             "Spills back"]] +
-                       [[q["road"], q["queue_p95_m"], q["length_m"], q["ratio"], q["spills_back"]] for q in analysed["queues_p95"]],
-                       "Each road's 95th-percentile queue against its length (storage), spillback where it reaches it."])
+        sheets.append(["Queues (95th pct)", [["Link", "Road", "95th percentile queue a lane (m)", "Length (m)",
+                                             "Share of length", "Spills back"]] +
+                       [[q["link"], q["road"], q["queue_p95_m"], q["length_m"], q["ratio"], q["spills_back"]]
+                        for q in analysed["queues_p95"]],
+                       "Each direction of each road (a link): its 95th-percentile queue a lane against the road's length "
+                       "(storage), spillback where it reaches it."])
     if analysed["bus_stops"]:
         columns = ["stop", "direction", "line", "type", "arrivals", "mean_headway_min", "sd_min", "scheduled_min", "cv",
                    "los", "expected_wait_min"]
@@ -1361,7 +1396,8 @@ def _analysis_sheets(kpis: dict, observed: dict, sheets: list) -> None:
         rows = [["Time (s)", "Road", "Link", "Type", "Behind", "Speed (km/h)", "Least TTC (s)", "Most DRAC (m/s²)"]]
         rows += [[e["t"], e["road"], e["link"], e["type"], e["leader_type"], e["speed_kmh"], round(e["ttc_min"], 2),
                   round(e["drac_max"], 2)] for e in conflicts[:ANALYSIS_ROWS]]
-        sheets.append(["Conflicts", rows, f"Every rear-end conflict (time to collision under 3 s), {len(conflicts)} in all"
+        sheets.append(["Conflicts", rows, f"Every rear-end conflict (time to collision under {CONFLICT_TTC_S:g} s), "
+                                          f"{len(conflicts)} in all"
                                           + (f", the first {ANALYSIS_ROWS} listed" if len(conflicts) > ANALYSIS_ROWS else "") + "."])
         found = safety(kpis, every=True)
         rows = [["Road", "Conflicts", "Severe", "Flow (veh/h)", "Vehicle-km", "Per million veh-km", "Expected",

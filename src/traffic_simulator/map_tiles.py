@@ -16,6 +16,7 @@ request a second, results cached, and only a search the user asks for (never as 
 
 from __future__ import annotations
 
+import http.client
 import json
 import threading
 import time
@@ -24,6 +25,8 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from math import atan, cos, degrees, exp, floor, log, log2, pi, radians, sin, tan
 from pathlib import Path
+
+from .results import write_whole
 
 EARTH_RADIUS_M = 6378137.0  # Web Mercator's sphere
 MAX_LATITUDE = 85.05112878  # Web Mercator's edge
@@ -34,7 +37,10 @@ TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
 USER_AGENT = "ACMS/0.1 (Agentic Context-Aware Mobility System; road network editor)"
 ATTRIBUTION = "© OpenStreetMap contributors"
 FRESH_S = 7 * 24 * 3600  # a cached tile is used this long before it is fetched again
+KEEP_S = 30 * 24 * 3600  # a tile not fetched again for this long is deleted (the cache would only grow)
 DOWNLOADS = 2  # at a time
+DOWNLOAD_S = 20  # a tile's or a search's whole answer, seconds
+DOWNLOAD_MAX_BYTES = 4_000_000  # a tile is tens of kB, a search's answer a few
 SEARCH_URL = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit={limit}&q={query}"
 SEARCH_LIMIT = 5  # places offered for one search
 SEARCH_GAP_S = 1.0  # Nominatim's policy: at most one request a second
@@ -109,10 +115,50 @@ class Frame:
             z -= 1
 
 
+def fetch(request: urllib.request.Request, seconds: float, most_bytes: int) -> bytes:
+    """The whole answer to `request`, else OSError: refused, offline, cut short (http.client's own errors too), longer
+    than `seconds` in all or more than `most_bytes` (urlopen's timeout is each read's, so a server sending a byte at a
+    time would hold the thread for ever)."""
+    deadline, pieces, size = time.monotonic() + seconds, [], 0
+    try:
+        with urllib.request.urlopen(request, timeout=seconds) as response:
+            while piece := response.read1(65536):
+                size += len(piece)
+                if size > most_bytes:
+                    raise OSError(f"the answer ran past {most_bytes:,} bytes")
+                if time.monotonic() > deadline:
+                    raise OSError(f"the answer took longer than {seconds:g} s")
+                pieces.append(piece)
+    except http.client.HTTPException as exc:
+        raise OSError(f"the answer was cut short ({type(exc).__name__})") from exc
+    return b"".join(pieces)
+
+
 def _download(url: str) -> bytes:
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=20) as response:
-        return response.read()
+    return fetch(urllib.request.Request(url, headers={"User-Agent": USER_AGENT}), DOWNLOAD_S, DOWNLOAD_MAX_BYTES)
+
+
+def prune(folder: Path, keep_s: float) -> None:
+    """Delete the files in `folder`, and below, not written for `keep_s` seconds: a cache would otherwise only grow."""
+    oldest = time.time() - keep_s
+    for path in Path(folder).rglob("*"):
+        try:
+            if path.is_file() and path.stat().st_mtime < oldest:
+                path.unlink()
+        except OSError:
+            pass  # in use, or gone already
+
+
+_search_lock = threading.Lock()
+_searched = [-SEARCH_GAP_S]  # when the last Nominatim request went, time.monotonic()
+
+
+def search_turn() -> None:
+    """Wait for Nominatim's turn: one request a second from the whole app (the place search and the assistant's
+    place_map alike)."""
+    with _search_lock:  # held while waiting: requests queue up here
+        time.sleep(max(0.0, _searched[0] + SEARCH_GAP_S - time.monotonic()))
+        _searched[0] = time.monotonic()
 
 
 class TileStore:
@@ -126,6 +172,7 @@ class TileStore:
         self._asked: set[tuple[int, int, int]] = set()
         self._failed: dict[tuple[int, int, int], float] = {}  # tile -> when, so a bad one isn't asked every frame
         self._lock = threading.Lock()
+        self._pool.submit(prune, self.folder, KEEP_S)
 
     def path(self, z: int, x: int, y: int) -> Path:
         return self.folder / str(z) / str(x) / f"{y}.png"
@@ -144,6 +191,15 @@ class TileStore:
         self._ask(z, x, y)
         return data
 
+    def discard(self, z: int, x: int, y: int) -> None:
+        """A tile on disk that can't be decoded (damaged, or torn by an older version's write): deleted, and
+        fetched again."""
+        try:
+            self.path(z, x, y).unlink(missing_ok=True)
+        except OSError:
+            pass
+        self._ask(z, x, y)
+
     def _ask(self, z: int, x: int, y: int) -> None:
         key = (z, x, y)
         with self._lock:
@@ -155,10 +211,7 @@ class TileStore:
     def _fetch(self, key: tuple[int, int, int]) -> None:
         z, x, y = key
         try:
-            data = self.download(TILE_URL.format(z=z, x=x, y=y))
-            path = self.path(z, x, y)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(data)
+            write_whole(self.path(z, x, y), self.download(TILE_URL.format(z=z, x=x, y=y)))
             self.ready(z, x, y)
         except Exception:  # offline, refused, a full disk: tried again in a minute
             with self._lock:
@@ -182,7 +235,6 @@ class PlaceSearch:
         self.ready, self.download = ready or (lambda query, found: None), download
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="osm search")
         self._found: dict[str, list[tuple[str, float, float]]] = {}
-        self._last = -SEARCH_GAP_S  # when the last request went, time.monotonic()
 
     def search(self, query: str) -> bool:
         """Look a place up; False for an empty query."""
@@ -196,15 +248,14 @@ class PlaceSearch:
         return True
 
     def _fetch(self, query: str) -> None:
-        time.sleep(max(0.0, self._last + SEARCH_GAP_S - time.monotonic()))  # one thread: requests queue up here
-        self._last = time.monotonic()
+        search_turn()
         try:
             places = json.loads(self.download(SEARCH_URL.format(limit=SEARCH_LIMIT, query=urllib.parse.quote(query))))
             found = [(str(place["display_name"]), float(place["lat"]), float(place["lon"])) for place in places]
         except OSError as exc:
             self.ready(query, f"Couldn't reach the place search ({exc}).")
             return
-        except (ValueError, KeyError, TypeError):
+        except Exception:  # noqa: BLE001 - whatever came, the search ends saying so (never "Searching..." for ever)
             self.ready(query, "The place search sent an answer that couldn't be read.")
             return
         found = [place for place in found if abs(place[1]) <= MAX_LATITUDE and abs(place[2]) <= 180][:SEARCH_LIMIT]

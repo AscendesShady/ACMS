@@ -17,15 +17,26 @@
 - **Vehicle assets:** `VEHICLE_PAINTS` holds twelve body paints (its first eight are the categorical type
   palette); `VEHICLE_INKS` holds glass, trim, lamps, red/blue markings and white equipment. They are non-text
   map details. The Colour chooser uses labelled choices; type identity never relies on random paint alone.
-- **Metro:** `METRO_LINE` is the track/livery fuchsia; `METRO_STOP` is the flat station marker's pale fill.
+- **MRT:** `METRO_LINE` is the track/livery fuchsia; `METRO_STOP` is the flat station marker's pale fill.
   `METRO_INKS` supplies concrete, livery, rails, glazing, train body, canopy, undercarriage and a muted yellow
   tactile platform edge. These are non-text scenery materials.
 - **Pedestrian paving:** `FOOTPATH` is warm reddish-brown brick; `FOOTPATH_SHADE` and `FOOTPATH_MORTAR` provide
   a second brick tone and quiet joints. `PAVING_SELECTED` preserves the yellow selected-path fill. The detailed
   herringbone pattern uses metre dimensions and fades to the base tint at overview zoom. `WALKER` is yellow.
 - **Shut cells:** `BLOCKED_CELL` hatched with `BLOCKED_HATCH`: an OD grid's cell that takes no value (its
-  diagonal; a metro pair no ride joins), non-text.
+  diagonal; an MRT pair no ride joins), non-text.
+- **OD panel editors:** `HANDLE_EDGE` (a handle's rim, and a fixed handle's grey fill), `HANDLE_FILL` (a handle)
+  and `CURVE_GRID` (the daily curve's grid lines); the hourly share bars are `ACCENT` subdued. Non-text.
 - **Cycle lane:** `CYCLE_LANE`, the green of painted cycle lanes, a non-text surface beside the carriageway.
+- **Road map** (network_scene, non-text): `GRASS` (the scene's background, and the first of `MAP_COLOURS`, the
+  plain backgrounds offered), `ROAD_SURFACE`, `LANE_LINE`, `ROAD_PAINT` (arrows, exit markers), `YELLOW_PAINT`
+  (centre dividers, bus bays), `STOP_LINE`, `ZEBRA_STRIPE`, `PARAPET`, `MAP_SELECTED` (a selected junction's, end's or
+  bay's outline; a selected road is `PAVING_SELECTED`), `JUNCTION`/`JUNCTION_EDGE`, `ISLAND`/`MINI_ISLAND`,
+  `ENTRY_MARKER`, `MARKER_EDGE`, `VEHICLE_OUTLINE`, the signal lamps `SIGNAL_GREEN`/`SIGNAL_AMBER`/`SIGNAL_RED` in a
+  `SIGNAL_BODY` housing ringed `SIGNAL_RIM`, `DETECTOR` and `BUILDING_ROOF`. `MAP_LABEL`, the map's names and ids, is
+  text: its pair over `GRASS` is in `READABLE_PAIRS`.
+- **Lane signal:** `LANE_SIGNAL_LIT` (its flashing green) and `LANE_SIGNAL_UNLIT` (dark), DEVL's square lane signal's
+  lamp in a `SIGNAL_BODY` head rimmed `SIGNAL_RIM`; non-text map details.
 - **Building materials:** `BUILDING_PAINTS` gives each institution kind a wall and roof paint; glazing,
   signage and trim reuse vehicle material ink tokens. These are non-text scenery materials, under a fixed
   matte light. Contact shadows reuse `SHADOW` with translucency.
@@ -40,7 +51,9 @@
   divider, hover feedback and keyboard outline.
 - **Navigation and data:** sidebar icon tabs keep their order, accessible names and equal widths, filling
   the row with each icon centred and no base line under them (layout_conventions.md);
-  selection uses a blue surface and light border. Text tabs share the same style. Tables, lists, menus and the
+  selection uses a blue surface and light border. Text tabs share the same style, 12 px padding (icon tabs 10, so seven fill the row),
+  their page 8 px below the row (`QTabWidget::pane`); `QPushButton[role="tab"]` draws a button row as tab tiles
+  (the Demand Generator's tabs, three to a row). Tables, lists, menus and the
   status bar use the same semantic tokens. Inputs preserve text selection and focus visibility.
 - **Click feedback:** `ClickFlash`, installed only once per application by `apply_theme`, keeps buttons
   `PRESSED` for `FLASH_MS` (250 ms) after release; primary buttons use `BANNER`. It never consumes the click.

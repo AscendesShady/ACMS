@@ -50,19 +50,11 @@ from PySide6.QtWidgets import (
 )
 
 # Absolute imports so this file also runs directly as a script (IDE "Run").
-from traffic_simulator.config import (
-    DEFAULT_DRIVING_SIDE,
-    DEFAULT_HORIZONTAL_CORRIDORS,
-    DEFAULT_LANE_CHANGING,
-    DEFAULT_LANES_PER_DIRECTION,
-    DEFAULT_SPEED_LIMIT_KMH,
-    DEFAULT_VERTICAL_CORRIDORS,
-)
 from traffic_simulator.ai_mode import AIModePanel
 from traffic_simulator.background import BackgroundPainter, BackgroundPanel, map_frame
 from traffic_simulator.extensions import ExtensionsPanel
 from traffic_simulator.activity import ActivityLog
-from traffic_simulator.clock import STEP_MS, SimulationClock, clock_text
+from traffic_simulator.clock import STEP_MS, SimulationClock
 from traffic_simulator import (accessibility, analysis, assistant, design_checks, experiments, network_tools, results,
                                scenario, stats, weaving)
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
@@ -70,7 +62,7 @@ from traffic_simulator.lane_graph import Graph, path_size_logit
 from traffic_simulator.simulation import DT, PairDemand, Runner, Simulation
 from traffic_simulator.metro import METRO, loads as metro_loads, places as metro_places
 from traffic_simulator.geometry import nearest_along, point_along
-from traffic_simulator.walking import footpath_join
+from traffic_simulator.walking import footpath_join, walk_pairs
 from traffic_simulator.history import History
 from traffic_simulator.institutions import hourly_people, place, run_demand
 from traffic_simulator.institutions import shares as institution_shares
@@ -89,7 +81,7 @@ from traffic_simulator.network_generator import generate_network
 from traffic_simulator.network_io import MAX_SEED, load_network, save_network, saved_conversation, saved_project
 from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
 from traffic_simulator.network_tools import build_edge, delete_objects, edge_crossings
-from traffic_simulator.daily_profile import DailyProfile, quarter_shares
+from traffic_simulator.daily_profile import DailyProfile, from_record, profile_record, quarter_shares
 from traffic_simulator.demand import ODCell, pair_demand
 from traffic_simulator.od_matrix import (MetroMatrix, ModeSplitDialog, ODCellPanel, ODMatrix, PedestrianMatrix,
                                         SpawnMatrix)
@@ -176,6 +168,9 @@ TAB_ICONS = {"Create Network": "\ue800", "Edit Network": "\ue70f", "Mode Behavio
              "Demand Generator": "\ue80a", "AI Mode": "\ue99a", "View Summary": "\ue9d2",
              "Extensions": "\uea86"}  # map, pencil, car, table, robot, chart, puzzle
 TAB_ICON_PX = 20
+# The grid a new window starts with, and the Create Network tab's settings for new roads
+DEFAULT_HORIZONTAL_CORRIDORS, DEFAULT_VERTICAL_CORRIDORS = 3, 4
+DEFAULT_DRIVING_SIDE, DEFAULT_SPEED_LIMIT_KMH, DEFAULT_LANES_PER_DIRECTION, DEFAULT_LANE_CHANGING = "left", 50, 2, True
 RUN_SEED = 42  # a Run's seed unless the Seed box says otherwise: the same inputs and seed repeat exactly
 MAX_AT_ONCE = 8  # a batch's runs going at once, at most (TSP keeps the state of twice as many)
 HEADLESS_WAIT_S = 30.0  # a headless test's deadline for each agent answer (Batch Run sets its own): missed, the plan
@@ -204,7 +199,7 @@ def emergency_report(simulation) -> dict:
               round(trip["arrived_s"] - trip["dispatched_s"], 1) if trip["arrived_s"] is not None else ""] for trip in trips]
     return {"sheets": [("Emergency vehicles", rows, "Each emergency vehicle dispatched: its trip and travel time.")],
             "measures": {"emergency_trips": len(trips), "emergency_arrived": len(done),
-                         "emergency_trip_s": round(sum(done) / len(done), 1) if done else None}}
+                         "emergency_trip_s": round(statistics.fmean(done), 1) if done else None}}
 
 
 def _rounded(value, digits: int = 3):
@@ -238,6 +233,7 @@ class MainWindow(QMainWindow):
         self.clock = SimulationClock()  # Run / Pause / Play / Stop; the traffic and extensions follow it
         self.runner: Runner | None = None  # the current run: its physics on its own thread
         self.recorder: results.RunRecorder | None = None  # its results, kept in a temporary folder as it goes
+        self._replaced: list = []  # the run's earlier signal overrides (ticking swaps them): their reports are its too
         self.network_path: str | None = None  # the network's file, once saved or loaded (for a run's record)
         self.last_results: Path | None = None  # the last run's workbook, and its figures for View Summary
         self.last_kpis: dict | None = None
@@ -346,7 +342,7 @@ class MainWindow(QMainWindow):
         self.speed_limit_combo.setCurrentText(f"{DEFAULT_SPEED_LIMIT_KMH:g} km/h")
         self.speed_limit_combo.setToolTip("Speed limit of new roads")
         self.lanes_spin = QSpinBox()
-        self.lanes_spin.setRange(1, 6)
+        self.lanes_spin.setRange(1, 12)  # as a road's own (the Edit tab, set_road)
         self.lanes_spin.setValue(DEFAULT_LANES_PER_DIRECTION)
         self.lanes_spin.setToolTip("Lanes of new roads")
         self.lane_changing_check = QCheckBox("Allowed")
@@ -357,7 +353,7 @@ class MainWindow(QMainWindow):
         form.addRow("Lanes per direction", self.lanes_spin)
         form.addRow("Lane changing", self.lane_changing_check)
         self.signal_method_combo = QComboBox()  # the network's default; demand retimes them at Run
-        for label, method in TIMING_METHODS:
+        for label, method in TIMING_METHODS[:-1]:  # not Manual: a new junction has no windows yet
             self.signal_method_combo.addItem(label, method)
         self.signal_method_combo.setToolTip("Timing of new signals")
         form.addRow("Signal timing", self.signal_method_combo)
@@ -408,19 +404,15 @@ class MainWindow(QMainWindow):
         # Input Grid: one toggle, first in the map's corner and in the grid's, so it stays under the mouse.
         self.grid_toggles = []
         for _ in range(2):
-            toggle = icon_button(0xE80A, "Input Grid")
-            toggle.setCheckable(True)
+            toggle = icon_button(0xE80A, "Input Grid", checkable=True)
             toggle.toggled.connect(self.show_grid)
             self.grid_toggles.append(toggle)
-        self.power_button = icon_button(0xE8BE, "Power Saver")  # a leaf
-        self.power_button.setCheckable(True)
+        self.power_button = icon_button(0xE8BE, "Power Saver", checkable=True)  # a leaf
         self.power_button.toggled.connect(self._power_saver)
-        self.isometric_button = icon_button(0xE809, "3D View")  # native TiltUp glyph, including Windows 10
-        self.isometric_button.setCheckable(True)
+        self.isometric_button = icon_button(0xE809, "3D View", checkable=True)  # native TiltUp glyph, Windows 10 too
         self.isometric_button.toggled.connect(self.view.set_isometric)
         self.view.projection_changed.connect(self.isometric_button.setChecked)
-        self.buildings_button = icon_button(0xEC06, "Show Buildings")  # native CityNext glyph
-        self.buildings_button.setCheckable(True)
+        self.buildings_button = icon_button(0xEC06, "Show Buildings", checkable=True)  # native CityNext glyph
         self.buildings_button.setChecked(self.scene.buildings_visible)
         self.buildings_button.toggled.connect(self.scene.set_buildings_visible)
         self.scene.buildings_changed.connect(self.buildings_button.setChecked)
@@ -434,15 +426,13 @@ class MainWindow(QMainWindow):
 
         edit_tab = QWidget()
         edit_layout = QVBoxLayout(edit_tab)
-        roads_page = QWidget()  # Edit Network's own tabs: Roads (junctions and roads) and Metro (rail lines)
+        roads_page = QWidget()  # Edit Network's own tabs: Roads (junctions and roads) and MRT (rail lines)
         roads_layout = QVBoxLayout(roads_page)
         roads_layout.setContentsMargins(0, 0, 0, 0)
         tools = QGroupBox("Add to Network")
         tools_layout = QVBoxLayout(tools)
-        self.add_node_button = styled_button("Add Node", tooltip="Place a new junction")
-        self.add_node_button.setCheckable(True)
-        self.add_edge_button = styled_button("Add Edge", tooltip="Draw a new road")
-        self.add_edge_button.setCheckable(True)
+        self.add_node_button = styled_button("Add Node", tooltip="Place a new junction", checkable=True)
+        self.add_edge_button = styled_button("Add Edge", tooltip="Draw a new road", checkable=True)
         add_buttons = QHBoxLayout()
         add_buttons.addWidget(self.add_node_button)
         add_buttons.addWidget(self.add_edge_button)
@@ -460,10 +450,10 @@ class MainWindow(QMainWindow):
         metro_page = QWidget()
         metro_layout = QVBoxLayout(metro_page)
         metro_layout.setContentsMargins(0, 0, 0, 0)
-        metro_box = QGroupBox("Metro Rail")
+        metro_box = QGroupBox("MRT Lines")
         metro_row = QHBoxLayout(metro_box)
-        self.metro_button = icon_button(0xE7C0, "Start deployment")  # a train: each click a stop, right-click ends
-        self.metro_button.setCheckable(True)
+        # A train: each click a stop, right-click ends
+        self.metro_button = icon_button(0xE7C0, "Start deployment", checkable=True)
         metro_row.addWidget(self.metro_button)
         self.metro_summary = hint_label()  # its lines, stops and track
         metro_row.addWidget(self.metro_summary, 1)
@@ -475,10 +465,9 @@ class MainWindow(QMainWindow):
         crossings_box = QGroupBox("Crossings")
         crossings_layout = QVBoxLayout(crossings_box)
         crossing_buttons = QHBoxLayout()
-        self.zebra_button = styled_button("Add Zebra", tooltip="Click a road: zebra crossing")
-        self.overbridge_button = styled_button("Add Overbridge", tooltip="Click a road: footbridge")
+        self.zebra_button = styled_button("Add Zebra", tooltip="Click a road: zebra crossing", checkable=True)
+        self.overbridge_button = styled_button("Add Overbridge", tooltip="Click a road: footbridge", checkable=True)
         for button in (self.zebra_button, self.overbridge_button):
-            button.setCheckable(True)
             crossing_buttons.addWidget(button)
         crossings_layout.addLayout(crossing_buttons)
         crossings_layout.addWidget(hint_label(
@@ -488,7 +477,7 @@ class MainWindow(QMainWindow):
         walk_layout.addWidget(crossings_box)
         walk_layout.addStretch(1)
         self.edit_tabs.addTab(roads_page, "Roads")
-        self.edit_tabs.addTab(metro_page, "Metro")
+        self.edit_tabs.addTab(metro_page, "MRT")
         self.edit_tabs.addTab(walk_page, "Pedestrian")
         edit_layout.addWidget(self.edit_tabs)
         self.metro_line: str | None = None  # the line a deployment is extending
@@ -580,11 +569,13 @@ class MainWindow(QMainWindow):
         self.workspace = QStackedWidget()
         self.workspace.addWidget(self.view)
         self.workspace.addWidget(self.od_matrix)
-        self.metro_matrix = MetroMatrix()  # Demand Generator → Metro: the metro's own OD matrix
+        self.metro_matrix = MetroMatrix()  # Demand Generator → MRT: the metro's own OD matrix
         self.workspace.addWidget(self.metro_matrix)
-        self.walk_matrix = PedestrianMatrix()  # Demand Generator → Pedestrians: people walking between ends
+        self.walk_matrix = PedestrianMatrix()  # Demand Generator → Pedestrian OD: people walking between ends
         self.workspace.addWidget(self.walk_matrix)
-        self.spawn_matrix = SpawnMatrix()  # Demand Generator → Pedestrian spawn points: between the points placed
+        self.spawn_matrix = SpawnMatrix()  # Demand Generator → Deploy Pedestrian: between the points placed
+        for kind, matrix in (("metro", self.metro_matrix), ("walk", self.walk_matrix), ("spawn", self.spawn_matrix)):
+            self.od_panel.add_side(kind, matrix.side)  # their day curves in the sidebar, as Vehicle OD's editor
         self.workspace.addWidget(self.spawn_matrix)
         layout.addWidget(self.workspace, 1)
         self.setCentralWidget(root)
@@ -650,7 +641,7 @@ class MainWindow(QMainWindow):
             if self.icon_font:
                 action.setIcon(glyph_icon(chr(glyph), self.icon_font, 14))
         bar.addActions([self.run_action, self.play_action, self.pause_action, self.stop_action])
-        self.clock_label = hint_label(clock_text(0))
+        self.clock_label = hint_label(results.clock(0))
         self.clock_label.setProperty("role", "clock")
         self.clock_label.setProperty("activity_skip", True)  # it ticks all the time: Watch my edits leaves it out
         self.clock_label.setWordWrap(False)
@@ -693,6 +684,7 @@ class MainWindow(QMainWindow):
         if self.icon_font:
             self.watch_action.setIcon(glyph_icon(chr(0xE7B3), self.icon_font, 14))  # an eye
         self.watch_action.toggled.connect(self._watch)
+        self.activity.failed.connect(self._watch_failed)
         bar.addAction(self.watch_action)
         edge = QWidget()
         edge.setFixedWidth(8)  # keeps the last icon clear of the window edge
@@ -713,7 +705,8 @@ class MainWindow(QMainWindow):
         # Its own copy: an edit stops the run, but only after it has changed the network, and the run's workbook
         # describes the network and types it drove (the physics thread never reads one half-edited)
         network, modes = deepcopy(self.network), deepcopy(self.vehicle_modes.modes)
-        simulation = Simulation(network, demand, modes, seed=self.seed_box.value())
+        simulation = Simulation(network, demand, modes, seed=self.seed_box.value(),
+                                walkers=walk_pairs(network, modes, self.od_matrix.mode == "daily"))  # one switch for all
         notes = []
         webster = [plan["cycle_s"] for plan in simulation.signal_plans.values() if plan["method"] == "webster"]
         if webster:
@@ -772,8 +765,8 @@ class MainWindow(QMainWindow):
         loop, timer = QEventLoop(), QTimer()
 
         def poll():
-            self.statusBar().showMessage(f"{what}: {state['progress']} (Stop ends it)")
-            self._show_headless()
+            shown = self._show_headless()
+            self.statusBar().showMessage(f"{what}: {state['progress']}{f' · {shown}' if shown else ''} (Stop ends it)")
             self.extensions.report_failures()  # a run's override raised: switched off, saying why
             if state["done"]:
                 loop.quit()
@@ -795,7 +788,7 @@ class MainWindow(QMainWindow):
         if self.runner is None:
             self.scene.show_frame(1.0, None)  # the test's vehicles leave the map
         self.clock_label.setToolTip("Simulation time")
-        self.clock_label.setText(clock_text(self.clock.time_s))
+        self.clock_label.setText(results.clock(self.clock.time_s))
         if self._close_after_test:
             QTimer.singleShot(0, self.close)  # after the caller has had its result
         if state["error"] is not None:
@@ -816,21 +809,22 @@ class MainWindow(QMainWindow):
             action.setEnabled(not busy)
             action.setToolTip(" ".join(f"Busy: {busy}".split()[:5]) if busy else tip)
 
-    def _show_headless(self) -> None:
+    def _show_headless(self) -> str:
         """While a test runs headless: the menu bar's clock shows its run's simulated time (the least advanced of
-        those going side by side), its tooltip each run by name ("Never preempt (baseline), seed 1: 00:12:34 of 00:30:00")."""
+        those going side by side), its tooltip saying so in five words; that run by name, for the status bar
+        ("Never preempt (baseline), seed 1: 00:12:34 of 00:30:00"), or "" with none going."""
         with self._headless_lock:
             going = list(self._headless.items())
         if not going:
-            return
-        label, (seconds, _) = min(going, key=lambda item: item[1][0])
-        self.clock_label.setText(clock_text(seconds))
+            return ""
+        label, (seconds, of) = min(going, key=lambda item: item[1][0])
+        self.clock_label.setText(results.clock(seconds))
         with self._headless_lock:
             frame = self._headless_frames.get(label) if self.show_runs else None
         if frame is not self.scene.frame:  # the same run the clock shows, drawn as a live run is (or none)
             self.scene.show_frame(1.0, frame)
-        self.clock_label.setToolTip("\n".join(f"{label}: {results.clock(t)} of {results.clock(of)}"
-                                              for label, (t, of) in going))
+        self.clock_label.setToolTip("Slowest test run's time")
+        return f"{label}: {results.clock(seconds)} of {results.clock(of)}"
 
     def _headless_seconds(self) -> float:
         """The simulated seconds the headless runs going have done so far, together."""
@@ -956,7 +950,6 @@ class MainWindow(QMainWindow):
         the Seed box's seed, the ticked extensions): the share of `pairs`' demand that holds, the whole of it
         or found by bisection (experiments.largest_holding), and a report. None: not checked. Raises
         ValueError if none tried holds."""
-        minutes = experiments.HOLD_MINUTES
         if self.runner is not None or self._testing:
             return None, {"checked": False, "note": "Not checked in a run: one is going. Stop it, then check with "
                                                     "run_simulation."}
@@ -964,17 +957,20 @@ class MainWindow(QMainWindow):
         demand = experiments.at_busiest_hour(self._pair_demand())
         network, modes = deepcopy(self.network), deepcopy(self.vehicle_modes.modes)
         override = self.extensions.signal_override(agent=self._waiting_agent())
+        ran = [experiments.hold_minutes(demand)]  # how long each share's check runs (its busiest quarter can move)
 
         def check(share, progress, cancelled):
             sized = [replace(pair, hourly=pair.hourly * share) if (pair.origin, pair.destination) in scope else pair
                      for pair in demand]
+            minutes = experiments.hold_minutes(sized)
+            ran.append(minutes)
             return experiments.holds_by_majority(  # a borderline verdict confirmed on two more seeds
                 lambda s: experiments.holds(network, sized, modes, s, override, cancelled=cancelled, progress=lambda t: progress(
                     f"{share:.0%} of the demand, seed {s}, {results.clock(t)} of {results.clock(minutes * 60)}")), seed)
 
         share, tried = self._in_background(lambda progress, cancelled: experiments.largest_holding(
             lambda s: check(s, progress, cancelled)), "Checking the demand in a run")
-        report = {"simulated_min": minutes, "seed": seed, "tried": [
+        report = {"simulated_min": max(ran), "seed": seed, "tried": [
             {"share": f"{s:.0%}", "held": r["holds"], "build_up": r.get("build_up")} for s, r in tried]}
         if share is None:
             return None, {**report, "checked": False, "note": "Stopped by the user: not checked."}
@@ -1081,7 +1077,7 @@ class MainWindow(QMainWindow):
             return self._weaving_los(args)
         if tool == "metro_report":
             if not self.network.metro_lines:
-                raise ValueError("No metro lines: deploy one first (Edit Network > Metro).")
+                raise ValueError("No MRT lines: deploy one first (Edit Network > MRT).")
             return self._metro_report()
         if tool == "accessibility_report":
             measured = None
@@ -1112,10 +1108,12 @@ class MainWindow(QMainWindow):
                                             for origin, destination, every, after in (dispatch.module.fleet() if dispatch else [])]}
         if tool == "schedule_emergency":
             return self._schedule_emergency(args, check_only)
-        if tool == "replay_run":
-            path = Path(str(args.get("path") or ""))
-            if not path.is_file():
-                raise ValueError(f"No workbook at {path}: give the path of a batch run's workbook (.xlsx).")
+        if tool == "replay_run":  # a workbook in the results folder (a name alone: there); whether a file is
+            given, folder = str(args.get("path") or ""), self.results_folder.resolve()  # anywhere else isn't told
+            path = (folder / given).resolve()
+            if not path.is_relative_to(folder) or not path.is_file():
+                raise ValueError(f"No workbook at {given} in the results folder ({folder}): give the path of a batch "
+                                 "run's workbook (.xlsx).")
             return {"ok": True} if check_only else self.replay_run(path)
         if tool == "start_batch":
             batch = self._extension("batch_run")
@@ -1231,6 +1229,9 @@ class MainWindow(QMainWindow):
             return {"ok": True, "preview": scenario.describe(spec, steps, assumptions)}
         done: list[dict] = []
         self._building = True
+        editors = (self.workspace, self.create_tab, self.edit_tab, self.behavior_tab, self.demand_tab)
+        for editor in editors:  # the map, grids and editing tabs wait: an edit during a step's test would join the build
+            editor.setEnabled(False)
         try:
             for step in steps:
                 try:
@@ -1245,6 +1246,8 @@ class MainWindow(QMainWindow):
                         break  # nothing after it can work
         finally:
             self._building = False
+            for editor in editors:
+                editor.setEnabled(True)
             self._ai_edited("generate_grid" if any(s["tool"] in ("generate_grid", "network_from_background") and s.get("ok")
                                                    for s in done) else "build_scenario")
         files = [s["result"]["file"] for s in done if s.get("ok") and isinstance(s.get("result"), dict)
@@ -1548,8 +1551,9 @@ class MainWindow(QMainWindow):
         if check_only:
             return {"ok": True}
         key, higher = self.OBJECTIVES[objective]
-        plans = Simulation(deepcopy(self.network), demand, modes).signal_plans
-        nodes = {node_id: self.network.nodes[node_id] for node_id in junctions}
+        base = deepcopy(self.network)  # the search's own copy: an edit meanwhile never reaches its thread
+        plans = Simulation(deepcopy(base), demand, modes).signal_plans
+        nodes = {node_id: base.nodes[node_id] for node_id in junctions}
         rng, override = random.Random(seeds[0]), self.extensions.signal_override(agent=self._waiting_agent())
 
         def bounds(node):
@@ -1581,8 +1585,8 @@ class MainWindow(QMainWindow):
         def score(genome, progress, cancelled, label):
             token = repr([[round(g, 1) for g in gene] for gene in genome])
             if token not in cache:
-                network = experiments.scenario_network(self.network, experiments.Scenario("candidate", changes(genome)),
-                                                       network_tools.SCENARIO_TOOLS) if genome else deepcopy(self.network)
+                network = experiments.scenario_network(base, experiments.Scenario("candidate", changes(genome)),
+                                                       network_tools.SCENARIO_TOOLS) if genome else deepcopy(base)
                 per_seed = {}
                 for seed in seeds:
                     if cancelled():
@@ -1590,7 +1594,7 @@ class MainWindow(QMainWindow):
                     per_seed[seed] = self._quick_run(network, demand, modes, seed, duration * 60, override, progress,
                                                      cancelled, f"{label}, seed {seed}").get(key)
                 values = [v for v in per_seed.values() if v is not None]
-                mean = sum(values) / len(values) if values else None
+                mean = statistics.fmean(values) if values else None
                 cache[token] = None if mean is None else (-mean if higher else mean)
                 values_of[token] = per_seed
             return cache[token]
@@ -2451,8 +2455,10 @@ class MainWindow(QMainWindow):
         return results.input_sheets(self.network, demand, self.vehicle_modes.modes, dict(simulation.signal_plans))
 
     def _apply_hooks(self) -> None:
-        """An extension that overrides signals was ticked or unticked: the run follows at once."""
+        """An extension that overrides signals was ticked or unticked: the run follows at once (the ones it had
+        still report in its workbook, with any that were dropped)."""
         if self.runner is not None:
+            self._replaced.append(self.runner.simulation.signal_override)
             self.runner.simulation.signal_override = self.extensions.signal_override()
 
     def _ask_agent(self, question, choice: dict | None = None):
@@ -2563,6 +2569,11 @@ class MainWindow(QMainWindow):
             path = self.activity.stop()
             if path is not None:
                 self.statusBar().showMessage(f"Saved what you did to {path}", 8000)
+
+    def _watch_failed(self, why: str) -> None:
+        """The activity log couldn't write (a full disk): it went off; the eye goes off and says why, once."""
+        self.watch_action.setChecked(False)
+        self.statusBar().showMessage(why, 15000)
 
     def _log_edits(self) -> None:
         """While watching: each undo step's changes, a line each (_state_changes)."""
@@ -2907,8 +2918,9 @@ class MainWindow(QMainWindow):
 
     def _schedule_emergency(self, args: dict, check_only: bool = False) -> dict:
         """The assistant's schedule_emergency: the Dispatch Emergency Vehicle tab's schedules replaced (set_fleet),
-        each checked first (an end or junction each, a route between them, every or after 0-120 min, not both);
-        with dispatch_now also sent into the live run (dispatch_emergency). ValueError: why not, nothing changed."""
+        each checked first (an end or junction each, a route between them, every or after 0-120 min, not both),
+        the extension ticked (its tab is used only while ticked, as Test DEVL ticks it); with dispatch_now also sent
+        into the live run (dispatch_emergency). ValueError: why not, nothing changed."""
         dispatch = self._extension("dispatch_emergency")
         if dispatch is None:
             raise ValueError("The Dispatch Emergency Vehicle extension didn't load: see the Extensions tab.")
@@ -2939,6 +2951,7 @@ class MainWindow(QMainWindow):
             self.dispatch_emergency(origin, destination, every, check_only=True)  # no run: refused here
         if check_only:
             return {"ok": True}
+        self._tick_extension("dispatch_emergency")
         dispatch.module.set_fleet(fleet)
         for origin, destination, every, after in fleet if now else []:
             self.dispatch_emergency(origin, destination, every, after_s=after * 60)
@@ -3045,6 +3058,7 @@ class MainWindow(QMainWindow):
             return
         self._cancel = True  # and a test the assistant is running
         self._stop_runner()  # the physics thread ends with the window
+        self.clock.pause()  # and the clock: no frames, draw() or algorithm() after it
         self.background_painter.close()  # and the map's tile downloads
         super().closeEvent(event)
 
@@ -3052,16 +3066,17 @@ class MainWindow(QMainWindow):
         """End the run, whatever ended it (Stop, a new Run, a change to the network, closing, its physics failing):
         its results become a workbook in the results folder."""
         if self.runner is not None:
-            runner, recorder = self.runner, self.recorder
-            self.runner, self.recorder = None, None
-            self._end_run(runner, recorder)
+            runner, recorder, replaced = self.runner, self.recorder, self._replaced
+            self.runner, self.recorder, self._replaced = None, None, []
+            self._end_run(runner, recorder, replaced)
 
-    def _end_run(self, runner, recorder) -> None:
+    def _end_run(self, runner, recorder, replaced: list = ()) -> None:
         """_stop_runner's run, finished once its physics thread has ended: a step still going (a slow hook) is
-        asked again shortly, the window carrying on meanwhile (closing then leaves it to results.recover)."""
+        asked again shortly, the window carrying on meanwhile (closing then leaves it to results.recover).
+        `replaced`: the overrides it had before its last (_apply_hooks), reported with it."""
         if not runner.stop(0.5):
             self.statusBar().showMessage("Stopping the run: its last step is still going.")
-            QTimer.singleShot(200, self, lambda: self._end_run(runner, recorder))
+            QTimer.singleShot(200, self, lambda: self._end_run(runner, recorder, replaced))
             return
         self.extensions.report_failures()  # one that raised in the run's last steps too
         simulation = runner.simulation
@@ -3069,7 +3084,7 @@ class MainWindow(QMainWindow):
             self.last_kpis = None
 
             def extras() -> None:
-                recorder.add_sheets(self.extensions.reports(simulation.signal_override))  # TSP: its sheet, every decision
+                recorder.add_sheets(self.extensions.reports([*replaced, simulation.signal_override]))  # TSP: every decision
                 self.last_kpis = self._observed_kpis(simulation, recorder)
                 recorder.add_analysis(experiments.analysis_sheets(self.last_kpis))
 
@@ -3078,6 +3093,7 @@ class MainWindow(QMainWindow):
             except Exception as exc:  # noqa: BLE001 - never in the way of Stop or closing; results.recover tries again
                 self.statusBar().showMessage(f"Couldn't save the run's results: {exc}", 15000)
                 return
+            self.extensions.report_failures()  # and one whose report() raised
             if path is not None:
                 self.last_results = path
                 incomplete = f" (incomplete: {recorder.error})" if recorder.error else ""
@@ -3096,11 +3112,14 @@ class MainWindow(QMainWindow):
                                               "Excel workbook (*.xlsx)")
         if not path:
             return
+        if recorder is None and Path(path).resolve() == self.last_results.resolve():  # the dialog's own suggestion
+            self.statusBar().showMessage(f"The last run's workbook is already saved there: {path}", 8000)
+            return
         try:
             if recorder is not None:
                 if self.runner is not None:
                     try:  # TSP's figures so far: its sheet, the agent's decisions, latency and tokens
-                        recorder.add_sheets(self.extensions.reports(self.runner.simulation.signal_override))
+                        recorder.add_sheets(self.extensions.reports([*self._replaced, self.runner.simulation.signal_override]))
                     except RuntimeError:  # the run changed them while they were read: export without
                         pass
                     for _ in range(3):  # what it has observed so far, analysed (read while the physics carries on)
@@ -3112,7 +3131,7 @@ class MainWindow(QMainWindow):
                             continue
                 recorder.export(path)
             else:
-                shutil.copyfile(self.last_results, path)
+                results.write_whole(path, Path(self.last_results).read_bytes())  # a full disk keeps the old file
         except OSError as exc:
             QMessageBox.critical(self, "Export failed", str(exc))
             return
@@ -3255,12 +3274,12 @@ class MainWindow(QMainWindow):
                 f"Behind: running at {runner.speed_now:.0f}×" if behind else "Simulation time")
             self.clock_label.setStyleSheet(f"color: {STATUS['waiting']};" if behind else "")
         if not self._testing:  # a headless test's runs have the clock meanwhile (_show_headless)
-            self.clock_label.setText(clock_text(seconds))
+            self.clock_label.setText(results.clock(seconds))
 
     def _power_saver(self, on: bool) -> None:
         """Power Saver: the map draws a run 30 times a second instead of 60, and on a GPU without multisampling.
         The physics is untouched (it never waits for drawing)."""
-        self.clock.set_step_ms(2 * STEP_MS if on else STEP_MS)
+        self.clock.timer.setInterval(2 * STEP_MS if on else STEP_MS)  # each step covers the time since the last
         self.view.set_power_saver(on)
 
     def _traffic(self, args: dict) -> dict:
@@ -3390,6 +3409,7 @@ class MainWindow(QMainWindow):
         self.institution_panel.delete_requested.connect(self._delete_institution)
         self.institution_panel.split_requested.connect(self._open_mode_split)
         self.institution_panel.height_requested.connect(self._set_institution_height)
+        self.institution_panel.demand_requested.connect(self._set_institution_demand)
         self.scene.placement_changed.connect(lambda: self.institution_panel.show_step(self.scene.placing))
         self.scene.placed.connect(self._place_institution)
         self.properties.drag_button.toggled.connect(self.toggle_drag)
@@ -3490,7 +3510,7 @@ class MainWindow(QMainWindow):
                                          "removes it.")
         elif kind == "spawn":  # placed again, or deleted
             self.properties.show_object("", None)
-            self.statusBar().showMessage(f"Spawn point {identifier} selected: Delete removes it and the walking to and "
+            self.statusBar().showMessage(f"Deploy point {identifier} selected: Delete removes it and the walking to and "
                                          "from it.")
         elif kind == "crossing":  # as a path: placed again, or deleted
             self.properties.show_object("", None)
@@ -3712,7 +3732,7 @@ class MainWindow(QMainWindow):
         elif kind == "spawn":
             self.network.delete_spawn_point(identifier)
             self.select("", "")
-            self.statusBar().showMessage(f"{self._network_summary()} • Deleted spawn point {identifier}. Ctrl+Z brings it "
+            self.statusBar().showMessage(f"{self._network_summary()} • Deleted deploy point {identifier}. Ctrl+Z brings it "
                                          "back.")
             self._commit()
         elif kind == "crossing":
@@ -3751,7 +3771,7 @@ class MainWindow(QMainWindow):
         self._refresh_summary()
 
     def show_grid(self, on: bool) -> None:
-        """The main area shows the input grid (the OD matrix; the metro's, with Demand on Metro) or the network; both
+        """The main area shows the input grid (the OD matrix; the metro's, with Demand on MRT) or the network; both
         toggles follow."""
         for toggle in self.grid_toggles:
             toggle.setChecked(on)
@@ -3761,6 +3781,7 @@ class MainWindow(QMainWindow):
         own = {"metro": self.metro_matrix, "walk": self.walk_matrix,
                "spawn": self.spawn_matrix}.get(kind)  # the metro's, the walkers' or the spawn points' grid
         if own is not None:
+            own.daily = self.od_matrix.mode == "daily"  # the Demand switch, as for every tab
             own.show_network(self.network)
         self.workspace.setCurrentWidget(own or (self.od_matrix if on else self.view))
         self._refresh_grid()
@@ -3826,12 +3847,12 @@ class MainWindow(QMainWindow):
             if service is not None:
                 for name, value in service.items():
                     setattr(line, name, value)
-                self.statusBar().showMessage(f"{self._network_summary()} • Metro {summary}, a train every "
+                self.statusBar().showMessage(f"{self._network_summary()} • MRT {summary}, a train every "
                                              f"{line.headway_min:g} min, accepted")
                 self._commit()
             else:
                 self.network.delete_metro_line(line.id)
-                self.statusBar().showMessage(f"{self._network_summary()} • Metro {line.id} deleted")
+                self.statusBar().showMessage(f"{self._network_summary()} • MRT {line.id} deleted")
         self.metro_line, self.scene.metro_pending = None, None
         self.scene.metro_deploying = checked
         self.scene.rebuild()
@@ -3931,9 +3952,9 @@ class MainWindow(QMainWindow):
         """The finished line: accepted with its service (headway, speed, carriages a train and passengers a carriage,
         fare: assumed values until changed, METRO_SERVICE) as final, never edited after; or deleted (None)."""
         dialog = QDialog(self)
-        dialog.setWindowTitle("Finish metro line")
+        dialog.setWindowTitle("Finish MRT line")
         layout = QVBoxLayout(dialog)
-        layout.addWidget(QLabel(f"Metro {summary}. Accept it as final, or delete it?"))
+        layout.addWidget(QLabel(f"MRT {summary}. Accept it as final, or delete it?"))
         note = hint_label("Assumed service: set this line's own.")
         layout.addWidget(note)
         form, boxes = QFormLayout(), {}
@@ -3964,7 +3985,7 @@ class MainWindow(QMainWindow):
         network = self.network
         lines = len(network.metro_lines)
         if not lines:
-            self.metro_summary.setText("No metro lines yet")
+            self.metro_summary.setText("No MRT lines yet")
             return
         km = sum(network.metro_length_m(line_id) for line_id in network.metro_lines) / 1000
         text = [f"{lines} line{'s' * (lines != 1)}, {len(network.metro_stops)} stops, {km:.2f} km of track"]
@@ -3978,19 +3999,22 @@ class MainWindow(QMainWindow):
 
     def _metro_report(self) -> dict:
         """metro_report: the metro's passengers at the design hour (the hour the most ride), on their lines
-        (metro.loads): its own OD matrix (Network.metro_demand, the same every hour) and each building's metro riders,
+        (metro.loads): its own OD matrix (Network.metro_demand, the same every hour; daily, metro_daily by each pair's
+        curve) and each building's metro riders,
         its metro share of the people arriving and leaving, between its door station and its catchment's stations in
         equal shares (metro.places), as its trips go."""
         network, by_hour = self.network, []  # (board, alight, passengers each hour)
-        for pair, people in network.metro_demand.items():
+        daily = self.od_matrix.mode == "daily"
+        for pair, people in (network.metro_daily if daily else network.metro_demand).items():
             board, alight = pair.split("->")
-            by_hour.append((board, alight, [people] * 24))
+            by_hour.append((board, alight, [people["people"] * share for share in from_record(people["curve"]).shares()]
+                            if daily else [people] * 24))
         for item in network.institutions.values():
             share = institution_shares(item).get(METRO, 0.0) / 100
             entrance, stations = metro_places(network, item)
             if not share or not stations:
                 continue
-            arrive, leave = hourly_people(item)
+            arrive, leave = hourly_people(item, daily)
             for station in stations:
                 by_hour.append((station, entrance, [people * share / len(stations) for people in arrive]))
                 by_hour.append((entrance, station, [people * share / len(stations) for people in leave]))
@@ -4027,6 +4051,9 @@ class MainWindow(QMainWindow):
         self.horizontal_spin.setValue(network.horizontal_corridors)
         self.vertical_spin.setValue(network.vertical_corridors)
         self.driving_side.set_value(network.driving_side)
+        roads = (self.speed_limit_combo, self.lanes_spin, self.lane_changing_check, self.signal_method_combo)
+        for box in roads:  # the Roads settings shown as the network has them, never written back (no edit, no step)
+            box.blockSignals(True)
         speed_index = self.speed_limit_combo.findData(network.default_speed_limit_kmh)
         if speed_index < 0:
             value = network.default_speed_limit_kmh
@@ -4035,7 +4062,12 @@ class MainWindow(QMainWindow):
         self.speed_limit_combo.setCurrentIndex(speed_index)
         self.lanes_spin.setValue(network.default_lanes_per_direction)
         self.lane_changing_check.setChecked(network.default_lane_changing)
-        self.signal_method_combo.setCurrentIndex(max(0, self.signal_method_combo.findData(network.default_signal_method)))
+        if self.signal_method_combo.findData(network.default_signal_method) < 0:  # Manual, from a file or the assistant
+            self.signal_method_combo.addItem(dict((method, label) for label, method in TIMING_METHODS).get(
+                network.default_signal_method, network.default_signal_method), network.default_signal_method)
+        self.signal_method_combo.setCurrentIndex(self.signal_method_combo.findData(network.default_signal_method))
+        for box in roads:
+            box.blockSignals(False)
         self.background_panel.show_background(network.background)
         self.statusBar().showMessage(self._network_summary())
         self.tab_changed()  # refreshes the OD matrix if it is open
@@ -4101,22 +4133,25 @@ class MainWindow(QMainWindow):
         self._commit(None if added else ("bus_stop", stop_id))
 
     def _demand_chosen(self, kind: str) -> None:
-        """The Demand drop-down: Institutions shows the map to place buildings on; hourly or daily, the grid."""
+        """A Demand tab (or the Hourly/Daily switch): Institutions shows the map to place buildings on; the others,
+        their grid."""
+        self._show_metro_summary()  # its riders follow the switch
+        self._show_saved()  # and the switch is saved with the project
         if kind != "institutions":
             self.institution_panel.end_placing()
-        if kind == "spawn" and not self.network.spawn_points:  # none yet: straight to placing them
-            self.od_panel.place_spawn_button.setChecked(True)
+        else:
+            self.scene.set_buildings_visible(True)  # hidden by default: the buildings being placed show
         if self.tabs.currentWidget() is self.demand_tab:
             self.show_grid(kind != "institutions" and not self.od_panel.place_spawn_button.isChecked())
 
     def _placing_spawn_points(self, on: bool) -> None:
-        """Place Spawn Points: on, every left click on the map is a spawn point (the map shows); off (a right-click,
+        """Place Deploy Points: on, every left click on the map is a spawn point (the map shows); off (a right-click,
         Esc, another tab or demand), their grid shows."""
         self.scene.spawn_placing = on
         self.view.set_tool_cursor(Qt.CursorShape.CrossCursor if on else Qt.CursorShape.ArrowCursor)
         if self.tabs.currentWidget() is self.demand_tab and self.od_panel.demand.currentData() == "spawn":
             self.show_grid(not on)
-        self._show_hint(f"Click the map for spawn point S{len(self.network.spawn_points) + 1}; right-click finishes."
+        self._show_hint(f"Click the map for deploy point S{len(self.network.spawn_points) + 1}; right-click finishes."
                         if on else None)
 
     def spawn_clicked(self, x: float, y: float) -> None:
@@ -4127,7 +4162,7 @@ class MainWindow(QMainWindow):
         except ValueError as exc:
             self._show_hint(str(exc))
             return
-        self.statusBar().showMessage(f"{self._network_summary()} • Added spawn point {point.id}")
+        self.statusBar().showMessage(f"{self._network_summary()} • Added deploy point {point.id}")
         self._commit()
         self.scene.rebuild()  # it shows at once, joined to its footpath
         joins = footpath_join(self.network, x, y)
@@ -4138,8 +4173,8 @@ class MainWindow(QMainWindow):
     def _cell_clicked(self, *_) -> None:
         """A grid cell clicked from another tab (the Input Grid toggle): its editor is the Demand
         Generator's, so that tab opens, on the grid's hourly or daily demand."""
-        if self.od_panel.demand.currentData() in ("institutions", "metro", "walk", "spawn"):
-            self.od_panel.demand.setCurrentIndex(self.od_panel.demand.findData(self.od_matrix.mode))
+        if self.od_panel.demand.currentData() != "vehicles":
+            self.od_panel.demand.setCurrentIndex(self.od_panel.demand.findData("vehicles"))
         if self.tabs.currentWidget() is not self.demand_tab:
             selection = [(index.row(), index.column()) for index in self.od_matrix.table.selectedIndexes()]
             self.tabs.setCurrentWidget(self.demand_tab)  # leaving the other tab cleared the selection: put it back
@@ -4185,6 +4220,20 @@ class MainWindow(QMainWindow):
         self.scene.rebuild()
         self.institution_panel.show_selected(self.network, item)
         self._commit(("institution_height", identifier), stop_run=False)
+
+    def _set_institution_demand(self, identifier: str, field: str, value: dict, part: str | None) -> None:
+        """Its people an hour or its day's curves (Demand Generator → Institutions): validated first; a burst of edits
+        to one is one undo step."""
+        item = self.network.institutions.get(identifier)
+        if item is None:
+            return
+        if problem := institution_problem(replace(item, **{field: value})):
+            self.statusBar().showMessage(problem, 8000)
+            return
+        setattr(item, field, value)
+        if field == "per_hour" or not value:  # typed, or back to its shift: its figures again (a curve shows its own)
+            self.institution_panel.show_selected(self.network, item)
+        self._commit(("institution_demand", identifier, field, part) if part else None)
 
     def _institution_split(self, args: dict, check_only: bool, who: str = "the assistant") -> dict:
         """institution_mode_split (and the Mode split window's Apply): each institution's logit split
@@ -4420,13 +4469,18 @@ class MainWindow(QMainWindow):
                                          "timings stay as worked out at Run.", 8000)
 
     def _commit(self, merge_key: object = None, stop_run: bool = True) -> None:
-        """Call when an action finishes; the state before it becomes an undo step."""
+        """Call when an action finishes; the state before it becomes an undo step. Nothing changed
+        (a re-click, a drag that didn't move): nothing happens, and a run carries on."""
+        self.od_matrix.prune(self.network.approach_nodes)  # a deleted end's demand goes with it (or a file's unknown end's)
+        snapshot = None if self._building else self._snapshot()
+        if snapshot is not None and snapshot == self.history.current:
+            return
         if self.runner is not None and stop_run:  # a run drives the network and vehicle types as they were
             self._stop_run("The network or vehicle types changed, so the run stopped. Press Run to start again.")
         if self._building:  # the build commits once when it ends
             self._refresh_grid()
             return
-        if self.history.commit(self._snapshot(), merge_key):
+        if self.history.commit(snapshot, merge_key):
             self._show_metro_summary()  # riders come and go with demand and buildings' splits as well as lines
             self._refresh_grid()  # the assistant may add or remove an end while the grid shows
             self._refresh_undo_actions()
@@ -4438,17 +4492,28 @@ class MainWindow(QMainWindow):
         self.undo_action.setEnabled(bool(self.history.undo_stack))
         self.redo_action.setEnabled(bool(self.history.redo_stack))
 
+    def _wait_for_build(self) -> bool:
+        """True (saying so) while a Scenario Builder build goes on: it is one undo step, made when it ends."""
+        if self._building:
+            self.statusBar().showMessage("Building the scenario: undo or redo once it has finished.", 5000)
+        return self._building
+
     def undo(self) -> None:
+        if self._wait_for_build():
+            return
         if self.metro_button.isChecked():  # deploying: the unfinished line isn't an undo step yet; it goes alone
             if self.metro_line in self.network.metro_lines:
                 self.network.delete_metro_line(self.metro_line)
             self.metro_line = None
             self.metro_button.setChecked(False)
-            self.statusBar().showMessage("The unfinished metro line was taken back.")
+            self.statusBar().showMessage("The unfinished MRT line was taken back.")
             return
         self._restore(self.history.undo(), "Undone. Ctrl+Y redoes it.", "Nothing to undo.")
 
     def redo(self) -> None:
+        if self._wait_for_build():
+            return
+        self._end_modes_except(None)  # a metro line being deployed ends first: accepted, it is a new step (no redo)
         self._restore(self.history.redo(), "Redone.", "Nothing to redo.")
 
     def _restore(self, state: tuple | None, done: str, nothing: str) -> None:
@@ -4511,8 +4576,7 @@ class MainWindow(QMainWindow):
                   "pattern": cell.pattern, "split": list(cell.split),
                   **({"quarters": list(cell.quarters)} if cell.quarters else {}),
                   **({"drops": [list(point) for point in cell.drops]} if cell.drops else {}),
-                  "profile": {"kind": cell.profile.kind, "points": [list(point) for point in cell.profile.points],
-                              "coefficients": list(cell.profile.coefficients)}}
+                  "profile": profile_record(cell.profile)}
                  for (origin, destination), cell in self.od_matrix.cells.items()
                  if cell.flow is not None or cell.daily is not None]
         return {"demand": {"shown": self.od_matrix.mode, "pairs": pairs},
@@ -4521,10 +4585,11 @@ class MainWindow(QMainWindow):
                 "run": {"seed": self.seed_box.value(), "speed": float(self.speed_combo.currentData())}}
 
     def _save_marker(self) -> tuple:
-        return self.history.current, self.seed_box.value(), self.speed_combo.currentIndex()
+        return self.history.current, self.seed_box.value(), self.speed_combo.currentIndex(), self.od_matrix.mode
 
     def unsaved(self) -> bool:
-        """Changed since last saved or opened: another undo state (edits, demand, types), seed or speed."""
+        """Changed since last saved or opened: another undo state (edits, demand, types), seed, speed or the
+        Hourly/Daily switch (a Run uses the demand it shows)."""
         now = self._save_marker()
         return now[0] is not self._saved[0] or now[1:] != self._saved[1:]
 
@@ -4587,9 +4652,8 @@ class MainWindow(QMainWindow):
                 if len(pair["split"]) != len(modes):
                     raise ValueError(f"Demand {pair['origin']}->{pair['destination']}: its split doesn't match the "
                                      f"{len(modes)} vehicle types.")
-                shape = pair.get("profile") or {}
-                profile = DailyProfile(shape["kind"], [tuple(point) for point in shape["points"]],
-                                       list(shape.get("coefficients", []))) if shape else DailyProfile()
+                shape = pair.get("profile")
+                profile = from_record(shape) if shape else DailyProfile()
                 cells[(pair["origin"], pair["destination"])] = ODCell(pair.get("flow"), pair.get("daily"), profile,
                                                                       pair.get("pattern", "Random"), tuple(pair["split"]),
                                                                       quarter_shares(pair.get("quarters") or [1] * 4),

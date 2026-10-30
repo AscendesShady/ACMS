@@ -209,7 +209,8 @@ def test_invariants_name_what_a_run_with_an_agent_broke():
                                     {"Emergency3": 45.0}}}
     broken = {b["invariant"]: b for b in analysis.invariants(starved, {"agent_errors": 2})}
     assert set(broken) == {"no arm starved", "emergency vehicles keep moving", "the agent answers"}
-    assert "350 s without a green" in broken["no arm starved"]["evidence"] and "1,1" in broken["no arm starved"]["where"]
+    # 40 arrived, none crossed: held from its last green, at 400 s, to the end
+    assert "200 s on red" in broken["no arm starved"]["evidence"] and "1,1" in broken["no arm starved"]["where"]
     quiet = {**kept, "observed": {**kept["observed"], "arrivals": {"a>": (0, 0)}, "green_starts": {}}}
     assert analysis.invariants(quiet) == []  # an arm nobody came to isn't starved
 
@@ -233,6 +234,46 @@ def test_resilience_triangle():
         assert "measure is one of" in str(exc)
     else:
         raise AssertionError("an unknown measure is refused")
+
+
+def test_level_of_service_periods_start_where_the_warm_up_ends():
+    """Observed from 15 min for 30: the periods are 15-30 and 30-45 (5 s of delay a vehicle, then 30 s: A then C),
+    not 0-15 (empty, the warm-up's) and 15-30 with 30-45 dropped."""
+    traversals = [("a", t, 15.0, "Car", f"Car{t}", 10.0) for t in range(900, 1800, 60)]
+    traversals += [("a", t, 40.0, "Car", f"Car{t}", 10.0) for t in range(1800, 2640, 60)]
+    observed = {"links": {"a": {"road": "a", "to": "1,1", "free_s": 10.0, "length_m": 200.0}},
+                "controls": {"1,1": "signalised"}, "traversal_log": traversals, "observed_s": 1800,
+                "observed_from_s": 900}
+    assert analysis.junction_los({"observed": observed, "time_s": 2700})["periods"]["los"]["1,1"] == ["A", "C"]
+
+
+def test_starving_is_red_time_with_traffic_waiting_not_time_between_greens():
+    """Greens 300 s apart are no starvation when the arm rested on green, or a car waited 60 s of a long cycle's red;
+    a car that reached the stop line at 100 s, after the last one crossed at 90 s, and waited for the 350 s green is."""
+    flowing = minute_rows([{"Vehicles on the road": 20, "Arrived this minute": 10, "Mean speed (km/h)": 30}] * 10)
+
+    def kpis(traversals, crossings, arrived):
+        return {"time_s": 600, "spawned": 100, "on_road": 20, "observed": {
+            "observed_s": 600, "minute_rows": flowing, "links": {"a>": {"to": "1,1", "free_s": 10.0}},
+            "arrivals": {"a>": (arrived, 0)}, "green_starts": {"a>": [50, 350]},
+            "traversal_log": [("a>", entered, took, "Car", f"v{entered}", None) for entered, took in traversals],
+            "stop_lines": [("1,1", "a>", 0, t, False, 50, "Car", "through") for t in crossings]}}
+
+    resting = kpis([(60, 15), (200, 15), (330, 14)], [74, 214, 343], 3)  # green from 50 s to 340 s: no one waits
+    assert analysis.invariants(resting) == []
+    long_red = kpis([(60, 15), (280, 85)], [74, 364], 2)  # red from 280 s; the car waits from 290 s to 350 s
+    assert analysis.invariants(long_red) == []
+    starved = kpis([(60, 35), (90, 270)], [90, 359], 2)
+    found = analysis.invariants(starved)
+    assert [b["invariant"] for b in found] == ["no arm starved"] and "250 s" in found[0]["evidence"], found
+    stuck = kpis([(60, 15)], [74], 2)  # one still waiting at the end, nothing crossed since 350 s
+    assert "250 s" in analysis.invariants(stuck)[0]["evidence"]
+
+
+def test_a_signal_whose_cycle_is_all_lost_time_still_gets_its_causes():
+    causes = analysis._causes({"method": "fixed", "cycle_s": 8}, [{"approach": "a>", "v_c": 1.3, "flow_vph": 400}],
+                              None, None)
+    assert causes[0]["cause"] == "greens don't match demand" and "1.30" in causes[0]["why"]
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ for), each kind drawn (colour, PNG, a PDF page, the map), and the Create tab's s
 (placing the map, undo, a run carrying on, Generate keeping it). No test reaches the internet.
 Run with `python tests/test_background.py` (or the test monitor)."""
 
+import http.client
 import json
 import os
 import tempfile
@@ -109,14 +110,17 @@ def test_tiles_are_fetched_once_kept_and_refreshed_when_stale():
     sent = {}
 
     class Response:
+        left = b"tile"
+
         def __enter__(self):
             return self
 
         def __exit__(self, *_):
             return False
 
-        def read(self):
-            return b"tile"
+        def read1(self, size=-1):  # read a piece at a time (map_tiles.fetch: against a deadline and a size cap)
+            piece, self.left = self.left, b""
+            return piece
 
     def urlopen(request, timeout):
         sent.update(request.header_items())
@@ -128,6 +132,44 @@ def test_tiles_are_fetched_once_kept_and_refreshed_when_stale():
     finally:
         urllib.request.urlopen = real
     assert sent.get("User-agent") == map_tiles.USER_AGENT  # identifies the app, as the OSM policy asks
+
+
+def test_a_tile_cut_short_or_unreadable_is_fetched_again_and_long_unused_tiles_go():
+    asked = []
+
+    def download(url):
+        asked.append(url)
+        return png("#3366cc")
+
+    def torn(path, data):  # a full disk: part of it written, then the error
+        with open(path, "wb") as file:
+            file.write(data[:len(data) // 3])
+        raise OSError(28, "No space left on device")
+
+    with tempfile.TemporaryDirectory() as folder:
+        unused, recent = Path(folder) / "3" / "1" / "1.png", Path(folder) / "3" / "1" / "2.png"
+        unused.parent.mkdir(parents=True)
+        for path in (unused, recent):
+            path.write_bytes(png("#3366cc"))
+        old = time.time() - map_tiles.KEEP_S - 60
+        os.utime(unused, (old, old))
+        real, Path.write_bytes = Path.write_bytes, torn
+        try:
+            painter = BackgroundPainter(Path(folder), download=download)
+            assert painter._tile(15, 100, 200) is None
+            painter.tiles._pool.shutdown(wait=True)
+        finally:
+            Path.write_bytes = real
+        tile = painter.tiles.path(15, 100, 200)
+        assert len(asked) == 1 and not tile.exists() and not list(Path(folder).rglob("*.part"))  # no torn tile
+        assert not unused.exists() and recent.exists()  # untouched for KEEP_S: deleted
+        tile.write_bytes(png("#3366cc")[:500])  # a tile on disk that can't be decoded (written by an older version)
+        painter.tiles._failed.clear()
+        painter.tiles._pool = __import__("concurrent.futures").futures.ThreadPoolExecutor(max_workers=2)
+        assert painter._tile(15, 100, 200) is None  # not shown: deleted, and fetched again
+        painter.tiles._pool.shutdown(wait=True)
+        assert len(asked) == 2 and painter._tile(15, 100, 200) is not None
+        painter.close()
 
 
 def draw(painter_, background, rect=QRectF(0, 0, 100, 100), pixels_per_metre=1.0) -> QImage:
@@ -224,6 +266,13 @@ def test_the_create_tab_sets_the_background_as_one_undo_step_each():
         assert laid.kind == "image" and abs(laid.width_m - bounds.width()) < 1e-6  # as wide as the network
         assert abs(laid.x_m + laid.width_m / 2 - bounds.center().x()) < 1e-6  # and centred on it
         assert not panel.use_image(str(Path(folder) / "missing.png")) and window.network.background.kind == "image"
+        opened = []  # a network share: refused before it is opened (no connection to that computer), saying why
+        panel.painter.image = lambda background: opened.append(background.image)
+        try:
+            assert not panel.use_image("\\\\server\\share\\aerial.jpg") and not opened
+        finally:
+            del panel.painter.image
+        assert "network share" in panel.file_label.text() and window.network.background.image == str(picture)
         assert panel.tool == "scale"  # a new image asks for its scale first
         panel.cancel_tool()  # skipped: as laid
         assert panel.tool is None and abs(window.network.background.width_m - bounds.width()) < 1e-6
@@ -685,6 +734,31 @@ def test_place_search_follows_nominatims_usage_policy():
     search.close()
 
 
+def test_the_place_search_always_answers_and_shares_one_request_a_second_with_the_assistant():
+    from traffic_simulator import network_tools
+    from traffic_simulator.map_tiles import SEARCH_GAP_S, PlaceSearch
+
+    asked, answers = [], []
+
+    def download(url):
+        asked.append(time.monotonic())
+        if "Cut" in url:
+            raise http.client.IncompleteRead(b"[")  # the answer cut short: http.client's own error
+        return _nominatim(url)
+
+    search = PlaceSearch(ready=lambda query, found: answers.append((query, found)), download=download)
+    search.search("Cut short")
+    assert _wait(lambda: len(answers) == 1, 5) and "couldn't be read" in answers[0][1]  # not "Searching..." for ever
+    real, network_tools.place_download = network_tools.place_download, download
+    network_tools._PREPARED.clear()
+    try:
+        assert network_tools._places("Dhaka")[0][0] == "Dhaka, Bangladesh"  # the assistant's place_map, straight after
+    finally:
+        network_tools.place_download = real
+    assert asked[1] - asked[0] >= SEARCH_GAP_S - 0.01  # one clock for the whole app: Nominatim's one a second
+    search.close()
+
+
 def test_a_place_found_by_name_goes_under_the_networks_centre():
     from PySide6.QtCore import Qt
     from PySide6.QtTest import QTest
@@ -750,9 +824,13 @@ def test_an_image_loads_once_whichever_thread_asks():
                 thread.start()
             for thread in threads:
                 thread.join()
+            assert len(rendered) == 1 and len(got) == 4 and all(image is got[0] for image in got)
+            for page in range(2, 6):  # paged through: each decoded page goes when the next comes
+                painter.image(replace(background, page=page))
+            painter.image(background)
+            assert len(rendered) == 6 and painter._image[0][1] == background.page  # the first was let go: only the page shown is held
         finally:
             module._pdf_page = render
-        assert len(rendered) == 1 and len(got) == 4 and all(image is got[0] for image in got)
 
 
 if __name__ == "__main__":

@@ -367,6 +367,26 @@ def test_a_pairs_departures_ignore_changes_elsewhere():
     assert any(mode == "Bus" for _, mode, _ in alone)  # its timetable too
 
 
+def test_an_institutions_pair_draws_apart_from_the_matrix_pair_with_its_ends():
+    # An institution's trips (timetabled=False) between the same two nodes as a matrix pair: their streams are their
+    # own, so adding them leaves the matrix pair's departures and drivers as they were (they shared them, and shifted them)
+    def departures(institution: bool):
+        demand = [pair("1W", "1E", 600, split=(0, 100, 0))]
+        if institution:
+            demand.append(PairDemand("1W", "1E", 400, None, [], "Poisson", (0, 100, 0), timetabled=False))
+        simulation, seen = Simulation(generate_network(1, 1), demand, MODES, seed=5), set()
+
+        def record(sim, before, states):
+            seen.update((round(v.depart_s, 6), round(v.speed_factor, 6))
+                        for v in [*sim.vehicles, *(v for queue in sim.pending.values() for v in queue)])
+
+        run(simulation, 300, record)
+        return seen
+
+    alone, beside = departures(False), departures(True)
+    assert len(alone) > 30 and alone <= beside and len(beside) > len(alone), (len(alone), len(alone & beside))
+
+
 def test_daily_demand_follows_its_curve():
     network = generate_network(2, 2)
     shares = [0.0] * 24
@@ -413,6 +433,18 @@ def test_demand_changes_reach_a_run_under_way():
     assert abs(len(new) - 1200 * (1800 - 660) / 3600) < 60  # the new pair at its flow, buses included
     assert 3 <= sum(mode == "Bus" for _, mode, _ in new) <= 4  # its own timetable: a bus every 5 min
     assert simulation.unreachable == ["1N->9X"] and simulation.signal_plans["1,1"]["method"] == "webster"
+
+
+def test_impatience_is_left_behind_at_the_junction_where_it_built_up():
+    # A driver impatient at one junction (waiting in a lane its turn isn't made from) took wrong-lane turns at every
+    # junction after it: impatience grew and was never reset. It goes once the vehicle drives into the junction.
+    simulation = Simulation(generate_network(1, 3), [pair("1W", "1E", 300, split=(0, 100, 0))], MODES, seed=2)
+    run(simulation, 60)
+    vehicle = next(v for v in simulation.vehicles if isinstance(v.segment, Lane) and v.leg == 0)
+    vehicle.impatience_s = 100.0
+    while vehicle in simulation.vehicles and vehicle.leg == 0:
+        simulation.step()
+    assert vehicle.leg == 1 and vehicle.impatience_s == 0.0, (vehicle.leg, vehicle.impatience_s)
 
 
 def test_traffic_obeys_signals_and_never_overlaps():
@@ -551,6 +583,33 @@ def test_bikes_keep_to_a_cycle_lane_and_cars_never_use_one():
     assert all(lane is not cycle for link in simulation.graph.links.values() for lane in link.lanes)  # never offered
 
 
+def test_bikes_in_a_cycle_lane_call_their_green_and_count_for_max_pressure():
+    # A cycle lane's bikes are detected like any lane's vehicles: under actuated control the side road's bikes waited
+    # 676 s for a green their detectors never called (Webster: 5 s), and max-pressure didn't count them
+    from traffic_simulator.mode_behavior import VehicleModes
+
+    modes = VehicleModes().modes
+    names = [mode.name for mode in modes]
+    car, bike = [0] * len(modes), [0] * len(modes)
+    car[names.index("Car")], bike[names.index("Bike")] = 100, 100
+    for method, most in (("actuated", 30.0), ("max_pressure", 30.0)):
+        network = generate_network(1, 1)
+        for road in network.all_roads():
+            road.cycle_lanes = list(road.arrival_ends())
+        network.node("1,1").signal_method = method
+        network.validate()
+        demand = [PairDemand("1W", "1E", 300, None, [], "Poisson", tuple(car)),
+                  PairDemand("1S", "1N", 30, None, [], "Poisson", tuple(bike))]
+        simulation, worst, bikes = Simulation(network, demand, modes, seed=1), 0.0, set()
+        simulation.time_to_teleport_s = 0
+        while simulation.time < 900:
+            simulation.step()
+            for vehicle in simulation.vehicles:
+                if vehicle.cycles:
+                    worst, _ = max(worst, vehicle.waiting_s), bikes.add(vehicle.id)
+        assert len(bikes) >= 4 and worst < most, (method, len(bikes), worst)
+
+
 def test_pedestrians_walk_their_way_at_their_own_speed_and_leave_the_traffic_as_it_was():
     # SUMO's NonInteracting model: each walker along its shortest walk at its own speed all the way; its own draws,
     # so the vehicles of the same run are exactly as without them
@@ -642,6 +701,35 @@ def test_traffic_stops_for_walkers_on_a_zebra_and_walkers_wait_for_gaps_and_cars
     assert zebra._may_cross(walker, on_zebra._replace(kind="gap"))  # standing short of it: no threat
 
 
+def test_bikes_take_the_route_with_more_cycle_lane_and_cars_the_fastest():
+    # Two routes alike for a car; a cyclist takes the one more of it on cycle lanes (Graph.bike_route,
+    # CYCLE_LANE_TIME_FACTOR); with no cycle lanes anywhere, a bike's route is a car's
+    from traffic_simulator.lane_graph import Graph
+    from traffic_simulator.mode_behavior import VehicleModes
+
+    network = generate_network(3, 3)
+    plain = Graph(network)
+    assert all(plain.bike_route(o, d) == plain.route(o, d) for o in network.approach_nodes for d in network.approach_nodes
+               if o != d)
+    for index, road in enumerate(sorted(network.all_roads(), key=lambda road: road.id)):
+        if index % 2:
+            road.cycle_lanes = list(road.arrival_ends())
+    graph = Graph(network)
+    on_lanes = lambda path: sum(link.length for link in path if link.cycle is not None)  # noqa: E731
+    length = lambda path: sum(link.length for link in path)  # noqa: E731
+    car, bike = graph.route("1E", "2W"), graph.bike_route("1E", "2W")
+    assert [link.id for link in car] != [link.id for link in bike] and abs(length(car) - length(bike)) < 1e-6
+    assert on_lanes(bike) > on_lanes(car)  # as long, more of it on cycle lanes
+    simulation = Simulation(network, [PairDemand("1E", "2W", 600, None, [], "Random", (0, 50, 50))],
+                            VehicleModes().modes, seed=1)
+    routes = {}
+    while simulation.time < 300:
+        simulation.step()
+        for vehicle in simulation.vehicles:
+            routes.setdefault(vehicle.cycles, set()).add(tuple(link.id for link in vehicle.route))
+    assert routes[True] == {tuple(link.id for link in bike)} and routes[False] == {tuple(link.id for link in car)}
+
+
 def test_a_vehicle_stuck_for_the_teleport_time_jumps_on_along_its_route():
     # A gridlock's cycle (Dhanmondi: three queues each waiting on the next) froze whole runs; as SUMO does after
     # time-to-teleport, the front vehicle stuck that long leaves the road and waits to enter its route's next link
@@ -666,6 +754,96 @@ def test_a_vehicle_stuck_for_the_teleport_time_jumps_on_along_its_route():
     while vehicle not in simulation.vehicles:
         simulation.step()
     assert vehicle.segment.link is vehicle.route[leg + 1] and vehicle.inserted_s == inserted  # its trip keeps its start
+
+
+def test_a_lane_shorter_than_a_car_between_two_signals_still_carries_traffic():
+    # Two signalised junctions 6 m apart (3.4 m of lane between the stop lines, less than a car and its gap): an empty
+    # lane takes a car, its tail still in the junction behind, as SUMO lets a vehicle be longer than its lane. Nothing
+    # used to cross for good, and a car teleported onto that lane waited off the road for ever.
+    network = Network()
+    a, b = network.add_node(0, 0), network.add_node(6, 0)
+    network.add_road(a.id, b.id)
+    west, east = network.add_end(a.id, -200, 0), network.add_end(b.id, 206, 0)
+    simulation = Simulation(network, [pair(west.id, east.id, 600, split=(0, 100, 0))], MODES, seed=1)
+    middle = simulation.graph.links[f"{a.id}-{b.id}>"].lanes[0]
+    assert middle.length < 5.0 + 2.5
+    run(simulation, 300)
+    assert simulation.arrived > 20 and simulation.teleports == 0 and simulation.collisions == 0
+    first = simulation.graph.route(west.id, east.id)[0]
+    car = None
+    while car is None:  # the front car before the first signal, made to teleport onto the short lane
+        simulation.step()
+        car = next((lane.vehicles[-1] for lane in first.lanes if lane.vehicles), None)
+    car.waiting_s, until = TIME_TO_TELEPORT_S, simulation.time + 60
+    simulation._teleport_jammed()
+    assert car in simulation.pending[middle.link.id]
+    while car not in simulation.vehicles and simulation.time < until:
+        simulation.step()
+    assert car in simulation.vehicles  # put on as soon as the lane is empty
+
+
+def test_a_fast_car_slows_only_for_a_junction_it_must_stop_at():
+    # Beyond the 150 m look-ahead a junction was a stop line: a 130 km/h car (no dawdling, speed factor 1) slowed to
+    # 118 km/h before every straight-on uncontrolled node. It looks as far as it needs to stop, so it keeps its speed
+    # through them, and still stops for a red at signals.
+    car = VehicleMode("Car", PALETTE[1], sigma=0.0, speed_dev=0.0)
+    for control in ("uncontrolled", "signalised"):
+        network = generate_network(1, 3, default_spacing=800.0)
+        for road in network.all_roads():
+            road.speed_limit_kmh = 130
+        for node in ("1,1", "2,1", "3,1"):
+            network.node(node).control = control
+        demand = [PairDemand("1W", "1E", 120, None, [], "Poisson", (100,))]
+        simulation, crossed, slowest = Simulation(network, demand, [car], seed=1), set(), float("inf")
+
+        def check(sim, before, states):
+            nonlocal slowest
+            for vehicle in sim.vehicles:
+                if isinstance(vehicle.segment, Lane) and vehicle.s > 300 and vehicle.leg > 0:
+                    slowest = min(slowest, vehicle.speed * 3.6)
+                if isinstance(vehicle.segment, Turn) and not isinstance(before.get(vehicle.id), Turn):
+                    crossed.add(states.get((vehicle.segment.node, vehicle.segment.lane_in.link.road)))
+
+        run(simulation, 400, check)
+        if control == "uncontrolled":
+            assert slowest > 129.5, slowest
+        else:
+            assert slowest < 20 and "G" in crossed and "R" not in crossed, (slowest, crossed)
+
+
+def test_a_vehicle_crossing_a_junction_sees_a_red_at_the_end_of_a_short_next_link():
+    # Signals 40 m apart (22 m of lane between them): a car crossing the first junction didn't see the second's red until
+    # it was on that lane, too close to stop, and was held at the line from 11 to 16 m/s in one step
+    network = generate_network(1, 2, default_spacing=40.0)
+    for node in network.nodes.values():
+        node.signal_method, node.green_times_s = "fixed", [30.0, 30.0]
+    demand = [pair("1W", "1E", 500, "Random", (0, 100, 0)), pair("1E", "1W", 500, "Random", (0, 100, 0))]
+    simulation = Simulation(network, demand, MODES, seed=3)
+    hardest = 0.0
+    while simulation.time < 900:
+        before = {vehicle.id: vehicle.speed for vehicle in simulation.vehicles}
+        simulation.step()
+        hardest = max([hardest] + [(before[vehicle.id] - vehicle.speed) / simulation.dt
+                                   for vehicle in simulation.vehicles if vehicle.id in before])
+    assert simulation.arrived > 100 and hardest <= MODES[1].emergency_decel + 1e-6, hardest  # never past emergency braking
+
+
+def test_a_vehicle_too_near_its_stop_line_to_stop_keeps_its_lane():
+    # The audit's max-pressure grid: a car granted its turn changed lanes 0.9 m before the line at 14 m/s, into a lane
+    # whose turn wasn't granted, was held there at once (14 to 0 in a step) and hit by the car behind
+    network = generate_network(2, 3, default_spacing=250.0, signal_method="max_pressure")
+    network.node("1,2").control = "roundabout"
+    ends = sorted(network.approach_nodes)
+    demand = [pair(o, d, 150, split=(5, 90, 5)) for o in ends for d in ends if o != d][:40]
+    simulation = Simulation(network, demand, MODES, seed=7)
+    late = 0
+    while simulation.time < 240:
+        committed = {vehicle for vehicle in simulation.vehicles if vehicle.may_enter and isinstance(vehicle.segment, Lane)}
+        simulation.step()
+        late += sum(vehicle.changed_lane_s == simulation.time - simulation.dt and vehicle in committed
+                    and vehicle.segment.length - vehicle.s < vehicle.speed ** 2 / (2 * vehicle.decel)
+                    for vehicle in simulation.vehicles if isinstance(vehicle.segment, Lane))
+    assert late == 0 and simulation.collisions == 0, (late, dict(simulation.collision_kinds))
 
 
 def test_the_major_road_of_an_uncontrolled_junction_is_the_higher_class():
@@ -705,6 +883,21 @@ def test_two_phase_signals_detour_offside_turns_by_a_u_turn():
         ("1S", "1,1"), ("1,1", "1,2"), ("1,2", "1,1"), ("1,1", "1W")]
     network.node("1,1").signal_phases, network.node("1,1").green_times_s = 4, [20.0] * 4
     assert nodes("1S", "1E", network)[:2] == [("1S", "1,1"), ("1,1", "2,1")]  # its own phase: turns right
+
+
+def test_a_skewed_two_phase_signal_splits_its_phases_by_its_own_roads():
+    # The screen's axes put two roads crossing at 60° (20° and 40° off east-west), two crossing at 40° and a side road
+    # 40° off its main road in one phase, green together; the junction's own roads split them, the more east-west first.
+    from traffic_simulator.lane_graph import Graph
+    for angles, phases in (((20, 140, 200, 320), [{20, 200}, {140, 320}]), ((0, 40, 180, 220), [{0, 180}, {40, 220}]),
+                           ((0, 40, 180), [{0, 180}, {40}]), ((90, 0, 270, 180), [{0, 180}, {90, 270}])):
+        network = Network()
+        centre = network.add_node(0.0, 0.0)
+        road_at = {network.add_end(centre.id, 300 * cos(a * pi / 180), 300 * sin(a * pi / 180)).id: a for a in angles}
+        graph = Graph(network)
+        signal = graph.signals[centre.id]
+        assert [{road_at[graph.links[link].road] for link in group} for group, _ in signal.phases] == phases, angles
+        assert graph._two_phase(centre.id)
 
 
 def test_path_size_logit_shares_routes():
@@ -884,6 +1077,43 @@ def test_webster_times_signals_from_the_demand():
     assert signal.state(east_west, plan["greens_s"][0] + 0.1) == "Y"
     assert simulation.signal_plans["2,2"]["greens_s"] == [40.0, 20.0]
     assert simulation.frame().records()["signal_plans"]["1,1"] == plan  # an AI can read the plans too
+
+
+def test_signal_countdowns_reach_the_map_clocks():
+    from PySide6.QtGui import QImage, QPainter
+    from traffic_simulator.network_scene import NetworkGraphicsScene, projection_transform
+
+    network = generate_network(3, 4)
+    network.node("1,1").signal_method = "fixed"
+    network.node("1,1").green_times_s = [40.0, 20.0]
+    simulation = Simulation(network, [pair("1W", "1E", 600)], MODES)
+    signal = simulation.graph.signals["1,1"]
+    east_west, north_south = next(iter(signal.phases[0][0])), next(iter(signal.phases[1][0]))
+    green, amber, span = 40.0, signal.amber, signal.span
+    t = signal.offset + 10
+    assert abs(signal.remaining(east_west, t) - (green - 10)) < 1e-6  # green: until it ends
+    assert abs(signal.remaining(east_west, t + green - 10 + 0.5) - (amber - 0.5)) < 1e-6  # amber: until it ends
+    assert abs(signal.remaining(north_south, t) - (green - 10 + span)) < 1e-6  # red: until its phase's green
+    assert abs(signal.remaining(east_west, t + green - 10 + amber + 0.1) - (span - amber - 0.1 + 20 + span)) < 1e-6
+    frame = simulation.frame()
+    assert set(frame.countdowns) == set(frame.signals) and all(left > 0 for left in frame.countdowns.values())
+
+    scene = NetworkGraphicsScene()
+    scene.network = network
+    scene.rebuild()
+    clock = scene.signal_clocks[next(iter(frame.signals))]
+    assert clock.reading is None  # nothing runs: blank
+    scene.show_frame(1.0, frame)
+    key = next(iter(frame.signals))
+    assert scene.signal_clocks[key].reading[1] == frame.signals[key]
+    for isometric in (False, True):  # paints, upright, in 2D and 2.5D
+        scene.isometric = isometric
+        image = QImage(200, 200, QImage.Format.Format_ARGB32)
+        painter = QPainter(image)
+        painter.setWorldTransform(projection_transform(isometric, 20))
+        clock = scene.signal_clocks[key]
+        clock.paint(painter, None)
+        painter.end()
 
 
 def test_the_window_runs_and_stops_the_traffic():
@@ -1192,7 +1422,7 @@ def test_a_lane_obeys_its_own_signal_and_an_emergency_vehicle_keeps_to_the_kerbs
                     kept.add(segment.index)
         assert crossed == {0}, (side, crossed)  # only the lane given green went through
         assert kept == {0}, (side, kept)  # the emergency vehicles kept to it before each signal
-        assert all(index == 0 and state == "G" for (_, _, index), state in simulation.lane_states().items())
+        assert all(index == 0 and state == "G" for (_, index), state in simulation._lane_states.items())
         assert any(trip["arrived_s"] for trip in simulation.emergency_trips.values())
 
 
@@ -1353,6 +1583,26 @@ def test_a_ramp_meter_holds_its_ramp_back_by_alinea_or_a_fixed_rate():
         assert "isn't an on-ramp" in str(exc)
     else:
         raise AssertionError("a ramp into a signal is refused")
+
+
+def test_a_fork_keeps_the_passengers_waiting_at_each_stop():
+    # Waiting passengers were kept by the bay object's id, which a fork's copy doesn't share: its next bus at each stop
+    # took on everyone since the run began (a dwell about 13 times too long), skewing a rollout's look-ahead
+    modes = [VehicleMode("Bus", PALETTE[0], length_m=12.0, width_m=2.5, max_speed_kmh=85, accel=1.2, decel=4.0,
+                         headway_min=5, timetabled=True), VehicleMode("Car", PALETTE[1])]
+    network = generate_network(1, 2)
+    stop = network.add_bus_stop(next(iter(network.roads.values())).id)
+    stop.boarding_per_h, stop.alighting_percent = 120.0, 10.0
+    demand = [pair("1W", "1E", 200, split=(5, 95)), pair("1E", "1W", 200, split=(5, 95))]
+    simulation = Simulation(network, demand, modes, seed=1)
+    while simulation.time < 900:
+        simulation.step()
+    assert simulation._waiting  # a bus has called
+    fork = simulation.fork()
+    for _ in range(int(900 / simulation.dt)):
+        simulation.step()
+        fork.step()
+    assert [(v.id, v.s, v.load) for v in simulation.vehicles] == [(v.id, v.s, v.load) for v in fork.vehicles]
 
 
 def test_a_fork_runs_on_alone_and_a_rollout_compares_actions():

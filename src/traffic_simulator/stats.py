@@ -211,7 +211,7 @@ def reliability(trips) -> dict:
     if not pairs:
         return {"tti": None, "pti": None, "bi": None}
     ratios = [t / f for t, f in pairs]
-    p95, mean = percentile(ratios, 95), sum(ratios) / len(ratios)
+    p95, mean = percentile(ratios, 95), statistics.fmean(ratios)
     return {"tti": round(mean, 3), "pti": round(p95, 3),
             "bi": round((p95 - mean) / mean, 3)}
 
@@ -564,12 +564,6 @@ def gini(values) -> float | None:
     if not n or not total:
         return None
     return sum((2 * i - n + 1) * v for i, v in enumerate(values)) / (n * total)
-
-
-def t_sf(t: float, df: float) -> float:
-    """P(T_df > t), one-sided."""
-    half = t_p(abs(t), df) / 2
-    return half if t > 0 else 1.0 - half
 
 
 def normal_sf(z: float) -> float:

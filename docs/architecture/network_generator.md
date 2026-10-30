@@ -5,4 +5,5 @@
   - Places junctions at `column × spacing, row × spacing`, each timed by `signal_method` (one of
     `SIGNAL_METHODS`, kept as the network's `default_signal_method`), and connects neighbours with two-way roads.
   - Adds boundary ends: E/W on every row, N/S on every column, each `max(0.48 × spacing, 180 m)` long.
-- `add_boundary_approaches(network)` also rebuilds missing ends for old files.
+- `add_boundary_approaches(network)` also rebuilds the ends of a file from before ends were saved (none where a
+  grid junction was deleted).

@@ -6,11 +6,14 @@ controls, one undo step; and in the window, each as one undo step.
 Run with `python tests/test_background_network.py` (or the test monitor)."""
 
 import hashlib
+import http.client
 import json
 import os
 from copy import deepcopy
 import tempfile
+import threading
 import time
+import urllib.request
 from math import hypot
 from pathlib import Path
 
@@ -20,7 +23,7 @@ from PySide6.QtGui import QColor, QImage, QPainter  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from traffic_simulator import background_network, network_tools as tools  # noqa: E402
-from traffic_simulator.map_tiles import Frame  # noqa: E402
+from traffic_simulator.map_tiles import Frame, mercator  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
@@ -44,7 +47,8 @@ def on_the_map():
 def overpass(at) -> dict:
     """A small town: a primary road east-west (4 lanes, 30 mph) with a signal 20 m before its junction
     with a one-way residential street coming south from the north edge, a roundabout to the north-east
-    joined to it and to the east edge, and a bridge over the main road."""
+    joined to it and to the east edge, and a bridge over the main road on a loop back to it (a road joined
+    to nothing would be left out: no car could drive it)."""
     nodes, ways, number = [], [], [0]
 
     def node(dx, dy, **tags):
@@ -59,13 +63,16 @@ def overpass(at) -> dict:
     west, signal, middle, east_1, east = node(-500, 0), node(-20, 0, highway="traffic_signals"), node(0, 0), node(100, 0), node(500, 0)
     zebra = node(115, 0, highway="traffic_signals", traffic_signals="crossing")  # a pedestrian crossing's signal
     node(95, 8, highway="traffic_signals", traffic_signals="blinker")  # flashing amber
-    way([west, node(-100, 0), signal, middle, east_1, zebra, east], highway="primary", lanes="4", maxspeed="30 mph")
+    bend = node(-100, 0)
+    way([west, bend, signal, middle, east_1, zebra, east], highway="primary", lanes="4", maxspeed="30 mph")
     way([node(0, -500), middle, node(0, 200)], highway="residential", oneway="yes")  # southbound, a dead end
     ring = [node(220, -150), node(200, -130), node(180, -150), node(200, -170)]
     way(ring + ring[:1], highway="tertiary", junction="roundabout")
     way([east_1, ring[2]], highway="tertiary")
     way([ring[0], node(500, -150)], highway="tertiary")
-    way([node(-200, -100), node(-200, 100)], highway="residential", bridge="yes")  # over the main road
+    over, back = node(-200, -100), node(-200, 100)
+    way([over, back], highway="residential", bridge="yes")  # over the main road
+    way([back, bend, over], highway="residential")  # joined to it both sides
     way([node(-250, 50), node(-260, 60)], highway="footway")  # not a road for cars: left out
     return {"elements": nodes + ways}
 
@@ -151,8 +158,13 @@ def test_the_maps_footways_sidewalks_crossings_and_cycle_lanes_come_in_too():
     document = {"elements": nodes + ways}
 
     real, background_network.post = background_network.post, lambda url, data: json.dumps(document).encode()
-    try:
-        result = tools.run_tool(network, "network_from_background", {"width_m": 600, "height_m": 600})
+    try:  # by default nothing for walkers comes in: no walkways, crossings or paths, unless asked (2026-10-30)
+        plain = deepcopy(network)
+        bare = tools.run_tool(plain, "network_from_background", {"width_m": 600, "height_m": 600})
+        assert not any(road.footpaths for road in plain.all_roads()) and not plain.pedestrian_crossings
+        assert not plain.walkways and bare["pedestrians"]["roads_with_footpaths"] == 0
+        result = tools.run_tool(network, "network_from_background", {"width_m": 600, "height_m": 600,
+                                                                       "footpaths": "tagged"})
     finally:
         background_network.post = real
     network.validate()
@@ -244,6 +256,62 @@ def test_a_dual_carriageway_crossing_is_one_junction():
     assert len(middle) == 1, [(node.id, round(node.x - cx), round(node.y - cy)) for node in middle]
 
 
+def test_only_roads_a_car_can_drive_end_to_end_are_kept_with_lanes_in_range():
+    # A secondary road east-west (no lanes tag: 1 a direction) and a primary road north-south (lanes=8: 4); a one-way
+    # street from the east-west road into a dead end (a trap: cars get in, never out); a one-way street in from the
+    # north edge (an entry: kept); a road just cutting the north-east corner, joined to nothing (cut off).
+    network, (cx, cy), at = on_the_map()
+    nodes, ways, number = [], [], [0]
+
+    def node(dx, dy):
+        number[0] += 1
+        lat, lon = at(dx, dy)
+        nodes.append({"type": "node", "id": number[0], "lat": lat, "lon": lon})
+        return number[0]
+
+    def way(refs, **tags):
+        ways.append({"type": "way", "id": 1000 + len(ways), "nodes": refs, "tags": tags})
+
+    middle, branch, entry = node(0, 0), node(100, 0), node(-150, 0)
+    way([node(-500, 0), entry, middle, branch, node(500, 0)], highway="secondary")
+    way([node(0, -500), middle, node(0, 500)], highway="primary", lanes="8")
+    way([branch, node(100, 150)], highway="residential", oneway="yes")  # into a dead end
+    way([node(-150, -500), entry], highway="residential", oneway="yes")  # in from the north edge
+    way([node(150, -400), node(400, -150)], highway="residential")  # across the corner
+    document = {"elements": nodes + ways}
+
+    real, background_network.post = background_network.post, lambda url, data: json.dumps(document).encode()
+    try:
+        plain = tools.run_tool(deepcopy(network), "network_from_background", {"width_m": 600, "height_m": 600})
+        result = tools.run_tool(network, "network_from_background", {"width_m": 600, "height_m": 600,
+                                                                     "main_lanes": [2, 3], "local_lanes": "1"})
+    finally:
+        background_network.post = real
+    network.validate()
+    assert plain["roads_by_lanes_per_direction"] == {1: 5, 4: 2}  # as tagged or the class default
+    assert result["streets_left_out"] == 2 and "every OD pair has a route" in result["streets_left_out_why"]
+    assert not [n for n in network.all_nodes() if hypot(n.x - cx - 100, n.y - cy - 150) < 30]  # the trap went
+    assert not [n for n in network.all_nodes() if n.x - cx > 200 and n.y - cy < -200]  # and the corner road
+    lanes = {road.road_type: road.lanes_per_direction for road in network.all_roads()}
+    assert lanes == {"secondary": 2, "primary": 3, "residential": 1}  # held within [2, 3] and [1, 1]
+    assert result["lanes_held"] == {"main_lanes": [2, 3], "local_lanes": [1, 1]} and "lanes_held" not in plain
+    north = [end for end in network.approach_nodes.values() if abs(end.x - cx + 150) < 1]
+    assert len(north) == 1 and network.approach_roads[north[0].id].from_node == north[0].id  # the entry stays, in only
+    origins = [road.from_node for road in network.approach_roads.values()
+               if road.from_node in network.approach_nodes or road.direction == "two-way"]
+    destinations = [road.to_node for road in network.approach_roads.values() if road.to_node in network.approach_nodes] + \
+        [road.from_node for road in network.approach_roads.values()
+         if road.from_node in network.approach_nodes and road.direction == "two-way"]
+    routes = tools.route_lengths(network, origins)
+    assert all(d in routes[o] for o in origins for d in destinations)  # every OD pair has a route
+    try:
+        tools.run_tool(network, "network_from_background", {"main_lanes": [3, 2]})
+    except tools.ToolError as exc:
+        assert "[fewest, most] lanes per direction" in str(exc)
+    else:
+        raise AssertionError("a range upside down must be refused")
+
+
 def test_busy_overpass_servers_are_tried_again_after_a_pause():
     tried, waited = [], []
 
@@ -277,6 +345,172 @@ def test_busy_overpass_servers_are_tried_again_after_a_pause():
         background_network.post, background_network.time.sleep = real, sleep
         background_network.OSM_FRESH_DAYS = 0
     assert waited == [background_network.OVERPASS_RETRY_S] * 3  # one pause before each second round
+
+
+def test_an_error_page_overpasss_own_timeout_or_a_cut_answer_tries_the_next_server_and_is_never_kept():
+    timed_out = json.dumps({"elements": [], "remark": 'runtime error: Query timed out in "query" at line 1 after 36 '
+                                                      'seconds.'}).encode()  # Overpass's partial answer
+    answers = [b"<html><body>rate_limited</body></html>", timed_out, b'{"elements": [']  # each server's
+    tried = []
+
+    def post(url, data):
+        tried.append(url)
+        return answers[background_network.OVERPASS_URLS.index(url)]
+
+    real, sleep = background_network.post, background_network.time.sleep
+    background_network.post, background_network.time.sleep = post, lambda seconds: None
+    background_network.OSM_FRESH_DAYS = 7
+    kept = background_network.OSM_CACHE / f"{hashlib.sha256(b'busy area').hexdigest()[:32]}.json"
+    try:
+        try:
+            background_network.fetch_osm("busy area")
+        except ValueError as exc:  # no road data from any: each server's reason said
+            assert "runtime error" in str(exc) and "each tried twice" in str(exc), exc
+        else:
+            raise AssertionError("an error page, Overpass's own timeout and a cut answer are no road data")
+        assert len(tried) == 2 * len(background_network.OVERPASS_URLS) and not kept.exists()  # none stopped the rest
+        answers[2] = json.dumps({"elements": [{"type": "node", "id": 1, "lat": 0.0, "lon": 0.0}]}).encode()
+        tried.clear()
+        assert background_network.fetch_osm("busy area")["elements"][0]["id"] == 1 and len(tried) == 3
+        assert kept.exists()  # road data: kept
+    finally:
+        background_network.post, background_network.time.sleep = real, sleep
+        background_network.OSM_FRESH_DAYS = 0
+
+
+def test_a_download_cut_short_dripping_or_endless_is_given_up_as_that_servers_failure():
+    class Answer:  # urlopen's: `count` pieces `pause` s apart, then the end, or `cut` raised
+        def __init__(self, piece, count, pause=0.0, cut=None):
+            self.piece, self.count, self.pause, self.cut = piece, count, pause, cut
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def read1(self, size=-1):
+            if not self.count:
+                if self.cut:
+                    raise self.cut
+                return b""
+            self.count -= 1
+            time.sleep(self.pause)
+            return self.piece
+
+        def read(self, size=-1):
+            return b"".join(iter(self.read1, b""))
+
+    real = urllib.request.urlopen, background_network.OVERPASS_TIMEOUT_S, background_network.OVERPASS_MAX_BYTES
+    background_network.OVERPASS_TIMEOUT_S, background_network.OVERPASS_MAX_BYTES = 0.3, 100_000
+    try:
+        for answer, what in ((Answer(b" ", 40, 0.05), "a byte at a time for 2 s"), (Answer(b" " * 50_000, 10), "500 kB"),
+                             (Answer(b'{"elements": [', 1, cut=http.client.IncompleteRead(b"")), "cut short")):
+            urllib.request.urlopen = lambda request, timeout: answer
+            started = time.monotonic()
+            try:
+                background_network.post("https://overpass.example/api/interpreter", b"data")
+            except OSError:  # a server's failure: fetch_osm tries the next
+                assert time.monotonic() - started < 1.0, what
+            else:
+                raise AssertionError(f"{what}: should be given up")
+    finally:
+        urllib.request.urlopen, background_network.OVERPASS_TIMEOUT_S, background_network.OVERPASS_MAX_BYTES = real
+
+
+def test_the_road_data_kept_is_written_whole_and_long_unused_copies_go():
+    kept = background_network.OSM_CACHE / f"{hashlib.sha256(b'whole').hexdigest()[:32]}.json"
+    kept.write_text(json.dumps({"elements": [{"type": "node", "id": 7}]}), encoding="utf-8")  # last week's copy
+    week = time.time() - 7 * 86400
+    os.utime(kept, (week, week))
+    unused = background_network.OSM_CACHE / "another-area.json"
+    unused.write_text("{}", encoding="utf-8")
+    old = time.time() - (background_network.OSM_KEEP_DAYS + 1) * 86400
+    os.utime(unused, (old, old))
+
+    def torn(path, data, *args, **kwargs):  # a full disk: part of it written, then the error
+        with open(path, "wb" if isinstance(data, bytes) else "w") as file:
+            file.write(data[:len(data) // 2])
+        raise OSError(28, "No space left on device")
+
+    real = background_network.post, Path.write_bytes, Path.write_text
+    background_network.post = lambda url, data: json.dumps({"elements": []}).encode()
+    Path.write_bytes = Path.write_text = torn
+    try:
+        assert background_network.fetch_osm("whole") == {"elements": []}  # the answer, though it couldn't be kept
+    finally:
+        Path.write_bytes, Path.write_text = real[1:]
+    try:
+        assert json.loads(kept.read_text(encoding="utf-8"))["elements"][0]["id"] == 7  # the old copy whole
+        assert not list(background_network.OSM_CACHE.glob("*.part")) and unused.exists()
+        assert background_network.fetch_osm("whole") == {"elements": []}
+    finally:
+        background_network.post = real[0]
+    assert json.loads(kept.read_text(encoding="utf-8")) == {"elements": []} and not unused.exists()  # unused: gone
+
+
+def test_a_one_way_street_of_one_lane_has_one_lane():
+    network, (cx, cy), at = on_the_map()
+    frame = Frame(*LONDON, cx, cy)
+    points = {1: (-400, 0), 2: (-150, 0), 3: (0, 0), 4: (150, 0), 5: (400, 0), 6: (-150, -400), 7: (-150, 400),
+              8: (0, -400), 9: (0, 400), 10: (150, -400), 11: (150, 400)}  # each way out past the area's edge
+    elements = [{"type": "node", "id": key, "lat": at(*xy)[0], "lon": at(*xy)[1]} for key, xy in points.items()]
+    elements += [{"type": "way", "id": 100, "nodes": [1, 2, 3, 4, 5], "tags": {"highway": "residential"}},
+                 {"type": "way", "id": 101, "nodes": [6, 2, 7], "tags": {"highway": "residential", "oneway": "yes",
+                                                                         "lanes": "1"}},
+                 {"type": "way", "id": 102, "nodes": [8, 3, 9], "tags": {"highway": "primary", "oneway": "-1"}},
+                 {"type": "way", "id": 103, "nodes": [10, 4, 11], "tags": {"highway": "residential", "oneway": "yes",
+                                                                           "lanes": "2"}}]
+    graph = background_network.osm_graph({"elements": elements}, lambda lat, lon: frame.to_scene(*mercator(lat, lon)),
+                                         (cx - 300, cy - 300, cx + 300, cy + 300))
+    built = background_network.build(network, graph)
+    built.validate()
+
+    def lanes(dx):  # the one-way roads `dx` east of the centre
+        return {road.lanes for road in built.all_roads() if road.direction == "one-way"
+                and all(abs(x - cx - dx) < 1 for x, _ in built.road_points(road))}
+
+    assert lanes(-150) == {1} and lanes(0) == {1} and lanes(150) == {2}  # lanes=1, its class's one (none tagged), 2
+    assert {road.lanes for road in built.all_roads() if road.direction == "two-way"} == {2}
+
+
+def test_the_roads_are_fetched_on_the_models_thread_however_it_spells_the_arguments():
+    network, _, at = on_the_map()
+    threads = []
+
+    def post(url, data):
+        threads.append(threading.current_thread().name)
+        return json.dumps(overpass(at)).encode()
+
+    def ask(name, args) -> list:  # prepare on the model's thread, then the check on this (the UI) thread
+        threads.clear()
+        tools._PREPARED.clear()
+        worker = threading.Thread(target=tools.prepare, args=(network, name, dict(args)), name="model")
+        worker.start()
+        worker.join()
+        try:
+            tools.run_tool(deepcopy(network), name, dict(args))
+        except tools.ToolError:
+            pass  # a failure: reported, not fetched again
+        return threads
+
+    real = background_network.post, tools.place_download
+    background_network.post = post
+    tools.place_download = lambda url: (threads.append(threading.current_thread().name), json.dumps(
+        [{"display_name": "Dhaka, Bangladesh", "lat": "23.8103", "lon": "90.4125"}]).encode())[1]
+    try:
+        for args in ({"road_classes": "Main"}, {"road_class": "main"}, {"Width_m": 600}):
+            assert ask("network_from_background", args) == ["model"], args
+        assert ask("place_map", {"place": ["Dhaka"]}) == ["model"]  # a one-item list: the place it names
+
+        def broken(url, data):  # a failure of any kind is kept for the check too
+            threads.append(threading.current_thread().name)
+            raise RecursionError("maximum recursion depth exceeded while decoding a JSON array")
+
+        background_network.post = broken
+        assert ask("network_from_background", {}) == ["model"]
+    finally:
+        background_network.post, tools.place_download = real
 
 
 def test_an_images_roads_are_traced_from_its_pixels():

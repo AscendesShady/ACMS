@@ -5,6 +5,8 @@
     through every point and never overshoots between them, so it can't dip below zero on its own.
   - `kind="poly"`: `level = a0 + a1·t + … + an·tⁿ` with `t = hour / 24`, degree 2–6. Negative
     parts count as zero.
+- `from_record(record)` (`profile_record`'s data back) refuses a curve that isn't one: points need hours 0–24
+  strictly in order (two at one hour would divide by zero in `pchip`), levels not below zero.
 - `level(hour)`, `hourly_levels()` (average level per hour) and `shares()` (each hour's share of
   the day; they sum to 1, or are even if the curve is zero all day).
 - `as_polynomial(degree)`: a least-squares fit of the current curve (`fit_polynomial`: normal

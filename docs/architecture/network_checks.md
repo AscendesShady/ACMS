@@ -15,8 +15,9 @@ Each finding names the object, what the rule asks and what is there; every rule 
   listed to keep clear.
 - **Intersection sight** (§9.5.3, Case B1): at junctions without signals, the major road (fastest, then most
   lanes); along it b = 0.278·V·t_g (Eq 9-1; the book's example, 100 km/h and 7.5 s, gives 208.5 m) with t_g from
-  Table 9-6 (car 7.5 s, single-unit truck 9.5, combination truck 11.5; 0.5 s or 0.7 s more a lane crossed beyond
-  one) for the largest vehicle type; the triangle from the junction, the minor road's decision point (4.4 m back
+  Table 9-6 (car 7.5 s, single-unit truck 9.5, combination truck 11.5; 0.5 s or 0.7 s more a lane crossed from the
+  near side beyond one: the major road's lanes each way, so 2 + 2 lanes give a car 8.0 s) for the largest vehicle
+  type; the triangle from the junction, the minor road's decision point (4.4 m back
   from the major road's edge) and the point b along the major road, each side, each minor road. A building whose
   square footprint enters a triangle blocks it.
 - **Turning paths** (§2.8, Table 2-5b): every junction turn the simulation drives (its lane-centre curve, not ring
@@ -46,7 +47,8 @@ Each finding names the object, what the rule asks and what is there; every rule 
   road at most 1.5 radii long. View Summary's **Design check** shows it.
 - `network_indices(network)`: graph indices (Rodrigue, *The Geography of Transport Systems*): vertices, edges,
   components, cyclomatic μ, α, β, γ, the diameter in links, degrees, the detour index between boundary ends and
-  Shimbel accessibility. A run's workbook carries them.
+  Shimbel accessibility (km to every other junction; one that can't reach them all is infinitely far, so least
+  accessible, shown as None). A run's workbook carries them.
 - Helpers the assistant's tools share: `roads_at` (a junction's roads), `tightest` (a road's sharpest curvature),
   `route_lengths` (shortest metres from each source, one-way roads kept). View Summary and the workbook read these
   without loading network_tools; the tools of the same names call them.
@@ -62,10 +64,14 @@ measured link traversal times (3 or more traversals) when the tool is given a ru
 - From each junction: the opportunities within each time budget (cumulative, default 15 and 30 min), Hansen's
   potential accessibility to jobs A_i = Σ W_j·exp(−β·t_ij) (β 0.1 a minute by default), and the minutes to the
   nearest hospital and school.
-- For the residents (Residential buildings, at their doors): the people-weighted means, the least-served
-  buildings, and the Gini of jobs access weighted by residents (`weighted_gini`).
+- For the residents (Residential buildings, at their doors): the people-weighted means (minutes to the nearest
+  hospital or school over those who reach one, with the share who can't beside it, `cut_off_from_hospital_percent`
+  and `..._school_percent`, when there is one to reach), the least-served buildings, and the Gini of jobs access
+  weighted by residents (`weighted_gini`).
 - `close_road`: the same with that road closed and each residents' measure's loss in percent (Taylor, Vulnerability
-  Analysis for Transportation: accessibility loss); minutes to the nearest school and hospital before and after.
+  Analysis for Transportation: accessibility loss); minutes to the nearest school and hospital before and after
+  over the same residents (those who reach one both times), and the share of residents the closure cuts off from
+  it (`residents_cut_off_percent`), so a closure that strands the far residents doesn't read as shorter trips.
 
 ## Vulnerability (network_tools.py, tool `critical_links`)
 

@@ -108,6 +108,27 @@ def test_each_new_stop_goes_where_its_bay_is_clear_of_the_others():
     assert network == before
 
 
+def test_a_bay_keeps_clear_of_crossings_turn_pockets_and_other_bays():
+    network = generate_network(1, 2)
+    network.road(ROAD).footpaths = ["left", "right"]
+    network.add_crossing(ROAD, 250.0)  # mid-road, where the first stop would go
+    stop = network.add_bus_stop(ROAD)
+    assert abs(stop.distance_m - 250.0) >= BAY_LENGTH_M / 2 + 2  # placed clear of it instead
+    other = network.add_bus_stop(ROAD)
+    network.validate()
+    before = deepcopy(network)
+    assert not network.move_bus_stop(stop.id, 250.0)  # onto the crossing: refused, nothing changed
+    assert not network.move_bus_stop(other.id, stop.distance_m + 10.0)  # onto another stop's bay
+    assert network == before and network.move_bus_stop(stop.id, stop.distance_m + 1.0)
+    network = generate_network(1, 2)
+    road = network.road(ROAD)
+    road.pockets = {road.to_node: {"lanes": 1, "length_m": 60.0, "side": "offside"}}
+    stop = network.add_bus_stop(ROAD, "forward")
+    before = deepcopy(network)
+    assert not network.move_bus_stop(stop.id, 440.0) and network == before  # beside the pocket
+    network.validate()
+
+
 def test_bus_stops_are_saved_loaded_and_checked():
     network = generate_network(1, 2)
     network.add_bus_stop(ROAD, "backward")

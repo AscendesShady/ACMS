@@ -24,6 +24,30 @@ def test_keys_come_from_the_environment():
         del os.environ["VTS_TEST_KEY"]
 
 
+def test_a_key_holding_a_line_break_is_left_out_and_never_echoed():
+    """A key with a line break or other control character inside can't go in a request header, and http.client's
+    error quotes the header: the scan leaves it out (naming it), and a request with one never shows the key."""
+    os.environ["VTS_TEST_KEY"] = "xai-SECRET\nabc"
+    refused = []
+    try:
+        assert scan_keys(["VTS_TEST_KEY"], refused) == {} and refused == ["VTS_TEST_KEY"]
+    finally:
+        del os.environ["VTS_TEST_KEY"]
+    restore = _serve_providers()
+    try:
+        for ask in (lambda: assistant.list_models("grok", "xai-SECRET\nabc"),
+                    lambda: assistant.list_models("gemini", "AIza-SECRET\r\nabc"),
+                    lambda: assistant.chat("grok", "grok-4.3", [{"role": "user", "content": "hi"}], "xai-SECRET\nabc")):
+            try:
+                ask()
+            except assistant.AssistantError as exc:
+                assert "SECRET" not in str(exc) and "line break" in str(exc), str(exc)
+            else:
+                raise AssertionError("a key that can't be sent was sent")
+    finally:
+        restore()
+
+
 class _Tags(BaseHTTPRequestHandler):
     def do_GET(self):
         body = json.dumps({"models": [{"name": "phi3:3.8b"}, {"name": "llama3:latest", "capabilities": ["completion"]},
@@ -59,7 +83,8 @@ class _Providers(BaseHTTPRequestHandler):
     """Streams like xAI (/xai, server-sent events), Gemini (/gemini, server-sent events) and
     Ollama (/api, one JSON per line). With tools offered and no tool result yet, each asks for
     the describe tool; otherwise it answers "hi <provider>" in two pieces. System 1 (Jev's /jev/systemone,
-    Ollama's /v1/systemone): each noul is P(yes) 0.8 when the state mentions a bus, else 0.1."""
+    Ollama's /v1/systemone): each noul is P(yes) 0.8 when the state mentions a bus, else 0.1; each choice weighs
+    an option the state names three times the others."""
     seen = []  # (path, headers, body); headers match case-insensitively
 
     def _stream(self, events, sse=True):
@@ -102,7 +127,8 @@ class _Providers(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps({
                 "model": "jev-1.13.0" if self.path.startswith("/jev/") else body["model"],
-                "answers": {name: {"type": "noul", "noul": yes} for name in body["questions"]},
+                "answers": {name: {"type": "noul", "noul": yes} if question["type"] == "noul" else _choice(question, body["state"])
+                            for name, question in body["questions"].items()},
                 "usage": {"input_tokens": 12, "output_tokens": 0}}).encode())
             return
         if self.path.startswith("/xai/"):
@@ -148,6 +174,13 @@ class _Providers(BaseHTTPRequestHandler):
 
     def log_message(self, *args):
         pass
+
+
+def _choice(question: dict, state: str) -> dict:
+    weights = {label: 3 if label in state else 1 for label in question["criteria"]}
+    probabilities = {label: weight / sum(weights.values()) for label, weight in weights.items()}
+    return {"type": "choice", "choice": max(probabilities, key=probabilities.get), "probabilities": probabilities,
+            "confidence": 0.4}
 
 
 def _serve_providers():
@@ -473,6 +506,33 @@ def test_a_refused_call_is_tried_again_once_when_reminded():
     assert sum("was refused" in (m.get("content") or "") for m in messages if m["role"] == "user") == 1  # once only
 
 
+def test_an_answer_going_round_in_circles_ends_and_a_dismissed_change_is_not_proposed_again():
+    # qwen3.5 4B: list_roads 4 times running while its update_roads failed, to the round limit
+    calls = lambda *names: {"role": "assistant", "content": "", "tool_calls": [  # noqa: E731
+        {"id": str(i), "name": name, "arguments": {}} for i, name in enumerate(names)]}
+    ran = []
+
+    def converse(*replies, result=lambda call: {"ok": True}):
+        script = iter(replies)
+        saved, assistant.stream_chat = assistant.stream_chat, lambda *args, **kwargs: next(script)
+        try:
+            return assistant.converse("local", "m", [{"role": "user", "content": "x"}], "",
+                                      [{"name": "list_roads"}, {"name": "update_roads"}], None,
+                                      lambda call: (ran.append(call["name"]), result(call))[1], edits={"update_roads"})
+        finally:
+            assistant.stream_chat = saved
+
+    messages = converse(calls("list_roads"), calls("list_roads"), calls("list_roads"), calls("list_roads"))
+    assert ran == ["list_roads"] and "kept repeating" in messages[-1]["content"]  # run once; the 2nd repeat ends it
+    ran.clear()  # after an edit a read has news: run again
+    converse(calls("list_roads"), calls("update_roads"), calls("list_roads"), {"role": "assistant", "content": "ok"})
+    assert ran == ["list_roads", "update_roads", "list_roads"]
+    ran.clear()  # the user's Dismiss is their answer: not proposed again in this answer
+    messages = converse(calls("update_roads"), calls("update_roads"), {"role": "assistant", "content": "Left as is."},
+                        result=lambda call: {"declined": "The user skipped this change."})
+    assert ran == ["update_roads"] and '"error_type":"dismissed"' in messages[-2]["content"]
+
+
 def test_a_change_claimed_with_no_tool_run_is_questioned_then_noted():
     sent = []
 
@@ -492,6 +552,12 @@ def test_a_change_claimed_with_no_tool_run_is_questioned_then_noted():
     assert messages[-1]["content"] == "Sorry: I didn't change anything; say which roads."  # owned up: no note
     sent.clear()
     assert converse("There are 16 junctions.")[-1]["content"] == "There are 16 junctions." and len(sent) == 1
+    # a next step said, then the turn ended (grok-4.7 after place_map): reminded once, then its answer stands
+    sent.clear()
+    messages = converse("Map is under Dhanmondi. Building the streets from it next.", "I can't: say the area.")
+    assert sent[-1] == assistant.PROMISED and messages[-1]["content"] == "I can't: say the area."
+    sent.clear()
+    assert converse("Next, you could run a simulation.")[-1]["content"].startswith("Next,") and len(sent) == 1
 
 
 def test_tools_a_plan_adds_after_an_edit_ran_are_not_pushed():
@@ -566,6 +632,61 @@ def test_a_long_conversation_is_cut_to_fit_the_context_window():
     cut = assistant.fit(huge, 8000)
     assert len(cut) == len(huge) and cut[3]["content"].endswith(assistant.CUT)
     assert sum(assistant._chars(m) for m in cut) <= 8000 * assistant.CHARS_PER_TOKEN
+
+
+def test_the_apps_reminders_stay_in_the_answer_they_nudge():
+    """NUDGE, RETRY, CLAIMED and FOLLOW_THROUGH go as user messages but start no exchange: the answer's own results
+    stay whole after two reminders, and over budget the real request is kept, not only the last reminder."""
+    system = {"role": "system", "content": "s" * 3000}
+    answer = [{"role": "user", "content": "list the roads"},
+              {"role": "assistant", "content": "", "tool_calls": [{"id": "c1", "name": "list_roads", "arguments": {}}]},
+              {"role": "tool", "id": "c1", "name": "list_roads", "content": "r" * 9000},
+              {"role": "user", "content": assistant.NUDGE}, {"role": "assistant", "content": "Plan: describe"},
+              {"role": "user", "content": assistant.FOLLOW_THROUGH.format("describe")},
+              {"role": "assistant", "content": "done"}, {"role": "user", "content": assistant.CLAIMED}]
+    light = assistant.fit([system, *answer], 100000)
+    assert [m["content"] for m in light if m["role"] == "tool"] == ["r" * 9000]  # not stubbed, with room to spare
+    tight = assistant.fit([system, *answer], 2000)
+    assert tight[1]["content"] == "list the roads" and tight[-1]["content"] == assistant.CLAIMED
+    assert [m["role"] for m in tight] == ["system", *(m["role"] for m in answer)]  # the result cut, not the request
+    assert tight[3]["content"].endswith(assistant.CUT)
+
+
+def test_the_trim_and_ollamas_window_use_one_rate():
+    """A local model whose tokenizer counts more tokens than 3 characters each: the request (tools included) is
+    trimmed at its rate, so it fits the num_ctx sent; at 3.0 it ran past it, and Ollama cut the system prompt."""
+    restore = _serve_providers()
+    saved = dict(assistant._CHARS_PER_TOKEN_SEEN)
+    try:
+        assistant._CHARS_PER_TOKEN_SEEN["dense"] = 2.4
+        tools = network_tools.tool_specs()[:10]  # the tools offered: a few, as find_tools leaves them
+        messages = [{"role": "system", "content": "s" * 3000}] + [m for n in range(30) for m in (
+            {"role": "user", "content": f"ask {n}"}, {"role": "assistant", "content": "a" * 8000})] + [
+            {"role": "user", "content": "latest"}]
+        assistant.stream_chat("local", "dense", messages, tools=tools)
+        body = _Providers.seen[-1][2]
+        sent = sum(assistant._chars(m) for m in body["messages"]) + len(json.dumps(tools))
+        assert sent / 2.4 + assistant.REPLY_TOKENS <= body["options"]["num_ctx"], (sent, body["options"])
+        assert body["messages"][0]["content"].startswith("s" * 3000) and body["messages"][-1]["content"] == "latest"
+    finally:
+        assistant._CHARS_PER_TOKEN_SEEN.clear()
+        assistant._CHARS_PER_TOKEN_SEEN.update(saved)
+        restore()
+
+
+def test_a_tool_result_cut_to_fit_still_goes_to_gemini():
+    """A result `fit` cut is no longer JSON; Gemini takes each result as an object, so the cut text goes as it is
+    (it failed every later round of the answer as an unexpected error)."""
+    result = json.dumps({"rows": [{"road": f"{n},1-{n},2", "lanes": 2} for n in range(3000)]})
+    messages = [{"role": "system", "content": "s"}, {"role": "user", "content": "list the roads"},
+                {"role": "assistant", "content": "", "tool_calls": [{"id": "c1", "name": "list_roads", "arguments": {}}]},
+                {"role": "tool", "id": "c1", "name": "list_roads", "content": result}]
+    cut = assistant.fit(messages, 8000)
+    assert cut[3]["content"].endswith(assistant.CUT)
+    sent = assistant._gemini_request(cut, None)["contents"][-1]["parts"][0]["functionResponse"]["response"]["result"]
+    assert sent == cut[3]["content"]
+    whole = assistant._gemini_request(messages, None)["contents"][-1]["parts"][0]["functionResponse"]
+    assert whole["response"]["result"] == json.loads(result)  # a whole result still goes as JSON
 
 
 def test_tool_calls_round_trip_for_each_provider():
@@ -755,6 +876,78 @@ def test_system_1_answers_the_signal_agent():
         restore()
 
 
+def test_system_1_decides_a_question_of_your_own():
+    """System 1's own question, as Laya Decision Studio asks it: Grab context fills Context from the open project
+    (network, signals grouped by plan, OD demand, selection); Decide refuses an incomplete form or no System 1, then
+    shows each answer's probability: Choice in the options' order, Ranking sorted, Bool as true and false. One
+    question at a time: Enter while one is out asks nothing, and the reply keeps the kind it was asked as."""
+    os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+    from PySide6.QtWidgets import QApplication, QPushButton
+
+    from traffic_simulator.main import MainWindow
+
+    restore = _serve_providers()
+    app = QApplication.instance() or QApplication([])
+    window = MainWindow()
+    panel = window.ai_mode
+
+    def decided(*, then=lambda: None) -> str:
+        panel.decide()
+        then()
+        deadline = time.monotonic() + 5
+        while not panel.decide_button.isEnabled() and time.monotonic() < deadline:
+            app.processEvents()
+            time.sleep(0.01)
+        return panel.decide_result.text()
+
+    try:
+        panel.rescan()
+        window._od_command("set_od_demand", {"pairs": ["1W->1E"], "demand": "hourly", "value": 300})
+        panel.grab_context()
+        context = panel.decide_context.toPlainText()
+        assert context.startswith("Network: 3 horizontal x 4 vertical corridors") and context.count("Signals ") == 1
+        assert "Signals 1,3 2,3" in context and "webster, 2 phases, cycle 40-120 s." in context
+        assert "OD demand (veh/h): 300 in all over 1 of" in context and "busiest 1W->1E 300." in context
+        assert decided() == "Write a question and its context first."  # no question yet
+        panel.decide_question.setText("Which method suits 2,2?")
+        panel.decide_type.setCurrentText("Choice")
+        assert panel.decide_options.isVisibleTo(panel) is not panel.decide_bool.isVisibleTo(panel)
+        options = panel.decide_options
+        assert len(options.rows) == 2 and options.options() == []  # two blank rows, as a new form question has
+        options.rows[0][1].setText("fixed")
+        options.rows[1][1].setText("webster")
+        options.rows[1][2].setText("Webster's formula")
+        options.add_button.click()  # + Add option: a third row
+        options.rows[2][1].setText("Fixed")
+        assert decided() == "Give 2 to 26 options, each label different."
+        options.rows[2][1].setText("scoot")
+        assert options.options() == [("fixed", ""), ("webster", "Webster's formula"), ("scoot", "")]
+        options.add_button.click()
+        options.rows[3][0].findChildren(QPushButton)[0].click()  # x removes the blank fourth
+        assert len(options.rows) == 3
+        assert decided() == "Pick a System 1 under Use first."
+        panel.system_1.setCurrentIndex(panel.system_1.findData("laya:421m-english-bf16"))
+        panel.system_1.activated.emit(panel.system_1.currentIndex())
+        assert decided() == "<b>webster</b><br>fixed: 20%<br>webster: 60%<br>scoot: 20%<br>Concentration 0.40"
+        asked = _Providers.seen[-1][2]
+        assert asked["state"] == context and asked["questions"]["decision"] == {
+            "type": "choice", "instructions": "Which method suits 2,2?",
+            "criteria": {"fixed": None, "webster": "Webster's formula", "scoot": None}}
+        panel.decide_type.setCurrentText("Ranking")
+        asked = len(_Providers.seen)
+        assert decided(then=lambda: (panel.decide(), panel.decide_type.setCurrentText("Choice"))) ==             "<b>webster</b><br>1. webster: 60%<br>2. fixed: 20%<br>3. scoot: 20%<br>Concentration 0.40"
+        assert len(_Providers.seen) == asked + 1  # the second Decide, while the first was out, asked nothing
+        panel.decide_type.setCurrentText("Bool")
+        panel.decide_context.setPlainText("A bus waits at 2,2.")
+        assert [name.text() for _, name, _ in panel.decide_bool.rows] == ["True", "False"]  # fixed answers
+        panel.decide_bool.rows[0][2].setText("Give it priority")
+        assert decided() == "<b>True</b><br>True: 80%<br>False: 20%"
+        assert _Providers.seen[-1][2]["questions"]["decision"]["criteria"] == {"true": "Give it priority", "false": "No"}
+    finally:
+        window.close()
+        restore()
+
+
 def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
     """The window's batch with TSP ticked, paced at 60x and never pausing: every seed × agent, each run's workbook
     named by seed and model with its TSP sheets and its telemetry feed beside it, and the batch's comparing each
@@ -799,7 +992,8 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
                 raise AssertionError("a batch with no model, or one not found, must be refused before it runs")
         chosen = ["Never preempt (baseline)", "Always preempt (baseline)", "System 1: Jev", "System 2: llama3:latest"]
         started = time.monotonic()  # the models only: the baseline always runs, first
-        done = window.run_batch([1, 2], 3, 1, agents=chosen[2:], deadline_s=5, speed=60, at_once=4, test_tsp=True)
+        # a 15 s deadline (250 ms real at 60x): a scripted answer takes about 80 ms alone and twice that under a full suite
+        done = window.run_batch([1, 2], 3, 1, agents=chosen[2:], deadline_s=15, speed=60, at_once=4, test_tsp=True)
         took = time.monotonic() - started
         # 3 s a run at 60x, side by side; Jev's two and llama's two one after another: about 6 s, not 18
         assert 2 * 3 * 0.9 <= took < 6 * 3 * 0.8, took
@@ -836,7 +1030,7 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
         figures = {row[0]: row[1] for row in jev["TSP"][1:] if len(row) > 1 and row[0]}
         assert figures["Bus requests"] > 0 and figures["Priority given (TRUE)"] > 0 and figures["Model"] == "jev-1.13.0"
         run = {row[0]: row[1] for row in jev["Run"][1:]}
-        assert run["Decision deadline (simulated s)"] == 5 and run["Pace (simulated s a real s)"] == 60
+        assert run["Decision deadline (simulated s)"] == 15 and run["Pace (simulated s a real s)"] == 60
         decided = [row for row in jev["Agent decisions"][1:] if str(row[7]).startswith("TRUE")]
         read = jev["Agent decisions"][0].index("Telemetry read")
         assert decided and json.loads(decided[0][read])["schema"] == "acms-tsp-telemetry/1"  # what Jev read
@@ -997,6 +1191,378 @@ def test_a_tool_call_queued_before_stop_never_runs():
     app.processEvents()
     assert request.done.is_set() and request.result == {"error": "Stopped by the user."}  # answered, not run
     window.close()
+
+
+class _Scripted(BaseHTTPRequestHandler):
+    """Streams like xAI: `script(body)` gives each reply's events; every request's body is kept in `seen`."""
+    script, seen = None, []
+
+    def do_GET(self):  # the models list
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(json.dumps({"data": [{"id": "grok-4.3"}]}).encode())
+
+    def do_POST(self):
+        body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+        _Scripted.seen.append(body)
+        self.send_response(200)
+        self.end_headers()
+        for event in _Scripted.script(body):
+            self.wfile.write(f"data: {json.dumps(event)}\n\n".encode())
+        self.wfile.write(b"data: [DONE]\n\n")
+
+    def log_message(self, *args):
+        pass
+
+
+def _said(text: str) -> list:
+    return [{"choices": [{"delta": {"content": text}}]}]
+
+
+def _calls(name: str, arguments: dict) -> list:
+    return [{"choices": [{"delta": {"tool_calls": [{"index": 0, "id": "c1", "function": {
+        "name": name, "arguments": json.dumps(arguments)}}]}}]}]
+
+
+def _grok_panel(script=lambda body: _said("ok")):
+    """A bare AI Mode panel on a 3 x 3 grid, Grok started against `_Scripted` running `script`: (app, panel,
+    network, undo)."""
+    os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+    from PySide6.QtWidgets import QApplication
+
+    from traffic_simulator import ai_mode
+    from traffic_simulator.network_generator import generate_network
+
+    server = HTTPServer(("127.0.0.1", 0), _Scripted)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{server.server_address[1]}"
+    saved = assistant.XAI_URL, ai_mode.scan_keys, os.environ.get("OLLAMA_HOST")
+    assistant.XAI_URL, os.environ["OLLAMA_HOST"] = f"{base}/xai", base
+    ai_mode.scan_keys = lambda names, refused=None: {"GROK_API_KEY": "k"}
+    _Scripted.script, _Scripted.seen = staticmethod(script), []
+    app = QApplication.instance() or QApplication([])
+    network = generate_network(3, 3)
+    panel = ai_mode.AIModePanel()
+    panel.attach(network=lambda: network, selection=lambda: {"selected": "", "ids": []}, show=lambda id_: {},
+                 edited=lambda tool: None, od=lambda *args, **kwargs: {})
+
+    def undo():
+        panel._disconnect()
+        server.shutdown()
+        server.server_close()
+        assistant.XAI_URL, ai_mode.scan_keys = saved[:2]
+        if saved[2] is None:
+            os.environ.pop("OLLAMA_HOST", None)
+        else:
+            os.environ["OLLAMA_HOST"] = saved[2]
+
+    panel.provider.setCurrentIndex(panel.provider.findData("grok"))
+    panel._choose()
+    _settle(app, lambda: panel.api_model.currentData() == "grok-4.3")
+    panel.start()
+    _settle(app, lambda: panel.prompt.isEnabled() and not panel._running)
+    return app, panel, network, undo
+
+
+def _settle(app, condition, limit=10.0):
+    start = time.time()
+    while not condition() and time.time() - start < limit:
+        app.processEvents()
+        time.sleep(0.01)
+    assert condition(), "timed out"
+
+
+def test_a_tool_call_that_raises_is_refused_never_left_waiting():
+    """Whatever a call's arguments or the window's callbacks raise on the UI thread, the waiting worker gets an error
+    to read: a slot's exception is only printed by Qt, and the answer waited until Stop."""
+    from traffic_simulator.ai_mode import _ToolRequest
+
+    app, panel, network, undo = _grok_panel()
+    try:
+        def broken(*args, **kwargs):
+            raise TypeError("'int' object is not iterable")
+
+        panel._host.od = panel._host.selection = broken
+        road = next(iter(network.roads))
+        for name, arguments in (("update_roads", {"roads": [{"road": road, "speed_limit_kmh": 30}]}),  # qwen3.5 4B's
+                                ("add_junction", {"x": {}}),  # refused by normalise, then its journal line
+                                ("add_spawn_points", {"points": -1}),
+                                ("set_od_demand", {"pairs": ["1W->1E"], "value": 5}),  # its check raises
+                                ("get_selection", {})):  # a read that raises
+            request = _ToolRequest({"id": "c", "name": name, "arguments": arguments})
+            panel._tool_requested(panel._session, panel._turn, request)
+            assert request.done.is_set() and "error" in request.result and panel._pending is None, name
+        assert "Bad arguments for set_od_demand" in panel.journal[-2]["outcome"]  # refused before asking, saying why
+    finally:
+        undo()
+
+
+def test_the_models_words_show_as_text_on_the_approval_card_and_in_the_chat():
+    """A place, a name or a plan the model wrote goes into rich text (the approval card) and Markdown (the chat)
+    escaped: its markup shows as the characters it is, never as formatting or an image."""
+    from traffic_simulator.ai_mode import _ToolRequest
+
+    app, panel, network, undo = _grok_panel()
+    try:
+        panel._host.runs = lambda name, args, check_only=False: {
+            "ok": True, "preview": "1. Build <b>Evil</b> & co<br><i>Assumed: a 3x3 grid</i>"}
+        request = _ToolRequest({"id": "c", "name": "build_scenario",
+                                "arguments": {"intent": "build", "place": "<img src=x> town"}})
+        panel._tool_requested(panel._session, panel._turn, request)
+        card = panel.proposal_text.text()
+        assert panel._pending is request and "&lt;img src=x&gt; town" in card and "<img" not in card, card
+        assert "Evil &amp; co<br>Assumed: a 3x3 grid" in card, card  # the plan's lines kept, as text
+        panel._settle_pending({"error": "Skipped."})
+        panel._say("Grok", "<b>bold</b> and **strong**")
+        assert "<b>bold</b> and strong" in panel.transcript.toPlainText()  # HTML in a reply: text; Markdown: kept
+    finally:
+        undo()
+
+
+def test_the_worker_reads_the_network_and_writes_the_record_on_the_ui_thread():
+    """While the user edits on the UI thread, the model's thread reads the open network (prepare's copy, repair_ends)
+    and adds to the step's record only through the UI thread."""
+    def script(body):  # find_tools, then network_summary, then its answer
+        results = sum(message["role"] == "tool" for message in body["messages"])
+        return [_calls("find_tools", {"need": "demand"}), _calls("network_summary", {}), _said("ok")][min(results, 2)]
+
+    app, panel, network, undo = _grok_panel(script)
+    threads, real_repair, real_record, real_snapshot = [], network_tools.repair_ends, panel._record_call, panel._snapshot
+    reads = set(network_tools.PREPARE_READS)
+    network_tools.PREPARE_READS.add("network_summary")  # its prepare takes a copy of the network, as the map's does
+    network_tools.repair_ends = lambda *args: threads.append(("repair", threading.current_thread())) or real_repair(*args)
+    panel._record_call = lambda *args, **kwargs: threads.append(("record", threading.current_thread())) or \
+        real_record(*args, **kwargs)
+    panel._snapshot = lambda: threads.append(("copy", threading.current_thread())) or real_snapshot()
+    try:
+        panel.prompt.setText("how much demand is there?")
+        panel.send()
+        _settle(app, lambda: not panel._running)
+        kinds = {kind for kind, _ in threads}
+        assert {"repair", "record", "copy"} <= kinds, threads
+        assert all(thread is threading.main_thread() for _, thread in threads), threads
+    finally:
+        network_tools.repair_ends = real_repair
+        network_tools.PREPARE_READS.clear()
+        network_tools.PREPARE_READS.update(reads)
+        undo()
+
+
+def test_rescan_asks_ollama_off_the_ui_thread():
+    """Rescan PC and the panel's start ask Ollama on a thread (a second's timeout each when it isn't running): the
+    keys are offered at once, Ollama's models when the thread's lists arrive (relay.scanned)."""
+    from traffic_simulator import ai_mode
+
+    asked, release = [], threading.Event()
+    saved = ai_mode.ollama_models, ai_mode.scan_keys
+
+    def slow(capability=None, **kwargs):
+        asked.append(threading.current_thread())
+        release.wait(5)
+        return ["laya:421m"] if capability == "decision" else ["llama3:latest"]
+    ai_mode.ollama_models, ai_mode.scan_keys = slow, lambda names, refused=None: {"GROK_API_KEY": "k"}
+    os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+    from PySide6.QtWidgets import QApplication
+    app = QApplication.instance() or QApplication([])
+    try:
+        panel = ai_mode.AIModePanel()  # returns at once, Ollama still answering
+        assert panel.provider.findData("grok") > 0 and panel.provider.findData("local") < 0
+        release.set()
+        _settle(app, lambda: panel.provider.findData("local") > 0)
+        assert [panel.local_models.itemText(i) for i in range(panel.local_models.count())] == ["llama3:latest"]
+        assert panel.system_1.findData("laya:421m") > 0
+        assert asked and all(thread is not threading.main_thread() for thread in asked)
+    finally:
+        release.set()
+        ai_mode.ollama_models, ai_mode.scan_keys = saved
+
+
+def test_an_answer_ending_as_a_project_loads_the_chat_clears_or_stop_is_pressed_is_left_out():
+    """An answer whose result is still on its way to the UI thread when another project's conversation is loaded,
+    the chat cleared or Stop pressed counts as stopped: it never overwrites the conversation there now."""
+    from PySide6.QtWidgets import QMessageBox
+
+    app, panel, network, undo = _grok_panel(lambda body: _said("Old project's answer."))
+    try:
+        for how in ("restore", "clear", "stop"):
+            running = set(threading.enumerate())
+            panel.prompt.setText("about the OLD project")
+            panel.send()
+            for worker in set(threading.enumerate()) - running:  # done: its result queued, not yet delivered
+                while worker.ident is None:  # still starting
+                    time.sleep(0.01)
+                worker.join(10)
+            if how == "restore":
+                panel.restore_conversation({"messages": [{"role": "user", "content": "NEW question"},
+                                                         {"role": "assistant", "content": "NEW answer"}],
+                                            "transcript": [["You", "NEW question"]]})
+            elif how == "clear":
+                answer = QMessageBox.question
+                QMessageBox.question = lambda *args: QMessageBox.StandardButton.Yes
+                try:
+                    panel.clear_conversation()
+                finally:
+                    QMessageBox.question = answer
+            else:
+                panel.stop()
+            kept = list(panel.history)
+            _settle(app, lambda: not panel._running)
+            assert panel.history == kept and "Old project's answer." not in json.dumps(panel.history), how
+            assert panel.prompt.isEnabled() and panel._shown[-1][1].startswith("Stopped."), how
+    finally:
+        undo()
+
+
+def test_a_warm_up_carries_on_when_the_chat_clears_or_a_project_loads():
+    """Clearing the conversation or loading a project doesn't change which model is warming up: it finishes and the
+    prompt opens with it set (cancelled, the prompt opened with no model)."""
+    from PySide6.QtWidgets import QMessageBox
+
+    def slow(body):
+        if not body.get("tools"):  # the warm-up
+            time.sleep(0.5)
+        return _said("Read them.")
+
+    app, panel, network, undo = _grok_panel()
+    _Scripted.script = staticmethod(slow)
+    try:
+        for how in ("clear", "restore"):
+            asked = len(_Scripted.seen)
+            panel.start()  # Restart: warming up again
+            _settle(app, lambda: len(_Scripted.seen) > asked)  # its request on its way
+            if how == "clear":
+                answer = QMessageBox.question
+                QMessageBox.question = lambda *args: QMessageBox.StandardButton.Yes
+                try:
+                    panel.clear_conversation()
+                finally:
+                    QMessageBox.question = answer
+            else:
+                panel.restore_conversation({"messages": [{"role": "user", "content": "NEW question"},
+                                                         {"role": "assistant", "content": "NEW answer"}]})
+            _settle(app, lambda: not panel._running)
+            assert panel._model == "grok-4.3" and panel.prompt.isEnabled(), how
+            assert panel.status_line == "Grok is ready (grok-4.3)", (how, panel.status_line)
+    finally:
+        undo()
+
+
+def test_a_change_applied_in_an_answer_that_fails_or_is_stopped_is_told_next_time():
+    """An edit applied in an answer that then fails, or is stopped, leaves the conversation with the rest of that
+    answer: the next message's editor update tells the model of it, so it never believes the network unchanged."""
+    asked = {}
+
+    def script(body):
+        last = body["messages"][-1]
+        if not body.get("tools") or "what now?" in str(last.get("content")):
+            return _said("ok")
+        if last["role"] == "tool":
+            return [{"error": {"message": "server overloaded"}}]  # the request after the change fails
+        return _calls("update_roads", {"roads": [asked["road"]], "speed_limit_kmh": asked["speed"]})
+
+    app, panel, network, undo = _grok_panel(script)
+    asked["road"] = road = next(iter(network.roads))
+    try:
+        for how, speed in (("fails", 20), ("stopped", 30)):
+            asked["speed"] = speed
+            panel.prompt.setText(f"slow road {road}")
+            panel.send()
+            _settle(app, lambda: panel._pending is not None)
+            panel._decide(True)
+            if how == "stopped":
+                panel.stop()
+            _settle(app, lambda: not panel._running)
+            assert network.road(road).speed_limit_kmh == speed
+            other = [r for r in network.roads if r != road][speed // 10]
+            network.road(other).speed_limit_kmh = speed + 5  # the user's own change, after
+            panel.prompt.setText("what now?")
+            panel.send()
+            _settle(app, lambda: not panel._running)
+            told = [m["content"] for m in _Scripted.seen[-1]["messages"] if m["role"] == "user"][-1]
+            assert f"Road {road}: speed" in told and f"→ {speed}" in told, (how, told)
+            # its own applied edit is told as its own, not the user's; the user's change as the user's
+            own, _, users = told.partition("The user changed the network since your last reply:")
+            assert "still stand" in own and f"Road {road}: speed" in own and f"Road {road}:" not in users, (how, told)
+            assert f"Road {other}: speed" in users, (how, told)
+    finally:
+        undo()
+
+
+def test_an_answer_to_the_assistants_question_keeps_the_requests_tools():
+    """"dhanmondi, dhaka bangladesh" answering "which city?" has no words of its own for the map's tools: the request
+    before it gives them, so the roads can still be built (qwen3.5 4B placed the map and stopped, 2026-10-30)."""
+    app, panel, network, undo = _grok_panel()
+    try:
+        for said in ("create map of dhanmondi roads", "dhanmondi, dhaka bangladesh"):
+            panel.prompt.setText(said)
+            panel.send()
+            _settle(app, lambda: not panel._running)
+        offered = {tool["function"]["name"] for tool in _Scripted.seen[-1].get("tools") or []}
+        assert {"place_map", "network_from_background"} <= offered, offered
+    finally:
+        undo()
+
+
+def test_a_long_session_keeps_its_lists_bounded():
+    """The journal, the record and the history (saved with the project) keep their last KEEP entries; the history
+    drops whole exchanges, from a user's message, so every tool call kept keeps its result."""
+    from traffic_simulator import ai_mode
+
+    app, panel, network, undo = _grok_panel()
+    try:
+        keep = ai_mode.KEEP
+        for _ in range(keep + 5):
+            panel.log("network_summary", {}, "read")
+        panel._note_plan({"goal": "a short network"})
+        assert len(panel.journal) == keep and panel.journal[-1]["kind"] == "plan"
+
+        def exchange(n):
+            return [{"role": "user", "content": f"ask {n}"},
+                    {"role": "assistant", "content": "", "tool_calls": [{"id": f"c{n}", "name": "list_roads", "arguments": {}}]},
+                    {"role": "tool", "id": f"c{n}", "name": "list_roads", "content": "{}"},
+                    {"role": "assistant", "content": f"answer {n}"}]
+
+        last = keep // 4 + 2
+        messages = [{"role": "system", "content": "s"}, *(m for n in range(last + 1) for m in exchange(n))]
+        panel._finished(panel._session, panel._turn, "answer", (messages, panel._tools), None)
+        assert len(panel.history) <= keep and panel.history[0]["role"] == "user"
+        assert panel.history[-1]["content"] == f"answer {last}" and len(panel.record) == keep
+    finally:
+        undo()
+
+
+def test_export_history_swaps_the_file_in_whole():
+    """Export History writes beside the file it saves and swaps it in: a write that fails (a full disk) keeps the
+    file there was, and leaves nothing beside it."""
+    import tempfile
+    from pathlib import Path
+
+    from PySide6.QtWidgets import QFileDialog
+
+    from traffic_simulator import ai_mode
+
+    app, panel, network, undo = _grok_panel()
+    folder = Path(tempfile.mkdtemp())
+    target = folder / "chat.md"
+    target.write_text("old", encoding="utf-8")
+    choose, replace = QFileDialog.getSaveFileName, ai_mode.os.replace
+    try:
+        panel._say("You", "hello")
+        QFileDialog.getSaveFileName = lambda *args: (str(target), "Markdown (*.md)")
+
+        def full(*args):
+            raise OSError("disk full")
+
+        ai_mode.os.replace = full
+        panel.export_history()
+        assert target.read_text(encoding="utf-8") == "old" and list(folder.iterdir()) == [target]
+        assert panel._shown[-1][0] == "Error" and "disk full" in panel._shown[-1][1]
+        ai_mode.os.replace = replace
+        panel.export_history()
+        assert "## Chat" in target.read_text(encoding="utf-8") and list(folder.iterdir()) == [target]
+    finally:
+        QFileDialog.getSaveFileName, ai_mode.os.replace = choose, replace
+        undo()
 
 
 def test_system_2_shares_edits_and_keeps_the_conversation():

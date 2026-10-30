@@ -58,7 +58,8 @@ def test_buildings_visibility_defaults_to_shown_and_does_not_edit_the_network():
     view.fit_network()
     frame = Frame(10, (), {}, 0, 0)
     scene.show_frame(.4, frame)  # exercise visibility with the still layer cached during a run
-    assert scene.buildings_visible
+    assert not scene.buildings_visible  # off by default
+    scene.set_buildings_visible(True)
     bounds, transform = scene.sceneRect(), view.transform()
     centre = view.mapToScene(view.viewport().rect().center())
     assert scene._building_items and all(item.isVisible() for item in scene._building_items)
@@ -199,10 +200,14 @@ def test_window_colour_undo_and_buildings_button_are_wired():
         assert not window.vehicle_modes.modes[1].random_colour
         window.redo()
         assert window.vehicle_modes.modes[1].random_colour
+        assert not window.scene.buildings_visible and not window.buildings_button.isChecked()  # off by default
         window.buildings_button.click()
-        assert not window.scene.buildings_visible
-        window.scene.set_buildings_visible(True)
-        assert window.buildings_button.isChecked()
+        assert window.scene.buildings_visible
+        window.scene.set_buildings_visible(False)
+        assert not window.buildings_button.isChecked()
+        window.tabs.setCurrentWidget(window.demand_tab)
+        window.od_panel.demand.setCurrentIndex(window.od_panel.demand.findData("institutions"))
+        assert window.scene.buildings_visible and window.buildings_button.isChecked()  # placing shows them
     finally:
         window.close()
 
@@ -518,6 +523,7 @@ def test_height_controls_save_undo_and_keep_the_running_clock_camera_and_footpri
             assert window.network.institutions[item.id].height_m is None and window.runner is runner
             window.redo()
             assert window.network.institutions[item.id].height_m==21. and window.runner is runner
+            window.scene.set_buildings_visible(True)
             window.buildings_button.click()
             assert not any(i.isVisible() for i in window.scene._building_items)
         finally:

@@ -17,8 +17,8 @@ simulated seconds with the run's Frame. From each sample it adds up:
 - vehicles generated but still waiting to enter (spawned − arrived − on the road) times the time: the
   entry wait, kept apart from the delay of those on the road;
 - per road: vehicles entering it (a vehicle seen on it after another road), vehicle-seconds and
-  vehicle-metres on it, and its queue: the vehicles on it slower than QUEUE_KMH, as a count and as
-  a length per lane (their lengths plus 2.5 m gaps, over its lanes per direction);
+  vehicle-metres on it, and its queue: the vehicles on it slower than QUEUE_KMH, as a count and, in each
+  direction (a link), as a length per lane (their lengths plus 2.5 m gaps, over that direction's lanes);
 - per simulated minute: a row of the network's figures (on the road, arrivals, throughput, people
   carried, mean speed, queued vehicles, delay, distance).
 Every minute the rows are appended to the folder's CSV files and the running totals rewritten
@@ -27,8 +27,11 @@ into the .xlsx (Summary, Per minute, Roads, By type, Trips, and the sheets the r
 reported, `add_sheets`), named by when it started, its seed and the AI model that decided (`file_name`),
 and `recover` does that for folders a crash left behind. Passengers are vehicles × each type's `occupancy` (vehicle.VehicleMode),
 an assumption the workbook states. Sample-based, apart from trip times: a road crossed between two samples isn't
-counted as entered. `measure_from_s` (a warm-up, default 0): the figures and trips count only after it (trips that
-entered the road in it are left out); the per-minute rows and spawned and arrived totals cover the whole run.
+counted as entered. `measure_from_s` (a warm-up, default 0): the figures count only after it, over the time since
+(throughput and the people carried: every vehicle arriving after it; trips that entered the road in it are left out
+of the trip means); the per-minute rows and spawned and arrived totals cover the whole run. A run stopped in its
+warm-up has nothing measured: its rates and means are None. meta.json and the GeoJSON are written whole
+(`write_whole`); workbooks of runs started in the same second are numbered (`unused_path`), recovered ones too.
 """
 
 from __future__ import annotations
@@ -86,13 +89,14 @@ def level_of_service(percent_of_free_flow: float | None) -> str | None:
 
 
 def road_record(network, road) -> dict:
-    """What a road is, for the workbook and its GeoJSON: its ends, length, lanes, limit, direction, type, width,
-    tightest curve and the speed that curve allows, whether it is a boundary road, an overpass."""
+    """What a road is, for the workbook and its GeoJSON: its ends, length, lanes each way (a one-way road's all),
+    limit, direction, type, width, tightest curve and the speed that curve allows, whether it is a boundary road, an
+    overpass."""
     from .interchanges import curve_speed_kmh  # noqa: PLC0415 - results stays light to import
 
     tightest = max((abs(kappa) for kappa in road.curvature), default=0.0)
     return {"from": road.from_node, "to": road.to_node, "length_m": round(road.length_m, 1),
-            "lanes": road.lanes_per_direction, "limit_kmh": road.speed_limit_kmh, "direction": road.direction,
+            "lanes": road.lanes_each_way, "limit_kmh": road.speed_limit_kmh, "direction": road.direction,
             "type": road.road_type, "width_m": round(road.width_m, 1), "boundary": road.id in network.approach_roads,
             "overpass": road.overpass, "tightest_radius_m": round(1 / tightest, 1) if tightest else None,
             "curve_kmh": curve_speed_kmh(1 / tightest) if tightest else None}
@@ -109,6 +113,36 @@ def file_name(started: datetime, recovered: bool = False, seed: int | None = Non
 def clock(seconds: float) -> str:
     whole = int(seconds)
     return f"{whole // 3600:02d}:{whole // 60 % 60:02d}:{whole % 60:02d}"
+
+
+def write_whole(path, data: str | bytes) -> None:
+    """`data` (text as UTF-8) to `path` whole or not at all: to a .part beside it, then os.replace (a write torn by a
+    crash or a full disk leaves the file as it was, and no .part behind). The app's one way to write a file."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    part = path.with_name(f"{path.name}.{threading.get_ident()}.part")  # a thread's own
+    try:
+        if isinstance(data, str):
+            part.write_text(data, encoding="utf-8")
+        else:
+            part.write_bytes(data)
+        os.replace(part, path)
+    except OSError:
+        part.unlink(missing_ok=True)
+        raise
+
+
+def unused_path(results: Path, name: str) -> Path:
+    """`name` in `results`, numbered "(2)", "(3)"… when taken (runs started in the same second, an experiment's or two
+    crashed ones), and taken at once (touched) so a run finishing alongside numbers its own."""
+    with _naming:
+        path = Path(results) / name
+        count = 1
+        while path.exists():
+            count += 1
+            path = path.with_name(f"{name[:-5]} ({count}).xlsx")
+        path.touch()
+        return path
 
 
 class RunRecorder:
@@ -144,7 +178,7 @@ class RunRecorder:
                        "trip_wait_s": 0.0, "people_delay_s": 0.0, "queued_sum": 0, "free_delay_s": 0.0,
                        "trip_free_delay_s": 0.0, "person_delay_s": 0.0, "entry_wait_s": 0.0, "waiting": 0,
                        "system_trip_s": 0.0, "measure_from_s": float(measure_from_s), "spawned_before": 0,
-                       "arrived_before": 0}
+                       "arrived_before": 0, "trip_people": 0.0}  # people: every arrival's; trip_people: the trips'
         self._minute = self._fresh_minute()
         self._trips: list[list] = []  # waiting to be appended
         self._walks: list[list] = []  # pedestrians' walks (WALK_COLUMNS), likewise
@@ -168,7 +202,7 @@ class RunRecorder:
                 "nodes": {node.id: [round(node.x, 2), round(node.y, 2), node.control if node.id in network.nodes else "end"]
                           for node in network.all_nodes()},
                 "georef": georeference(network)}
-        (self.folder / "meta.json").write_text(json.dumps(meta, indent=1, default=str), encoding="utf-8")
+        write_whole(self.folder / "meta.json", json.dumps(meta, indent=1, default=str))
         with open(self.folder / "minutes.csv", "w", newline="", encoding="utf-8") as file:
             csv.writer(file).writerow(MINUTE_COLUMNS)
         with open(self.folder / "trips.csv", "w", newline="", encoding="utf-8") as file:
@@ -249,8 +283,9 @@ class RunRecorder:
                     link["vehicle_s"] += dt
                     link["vehicle_m"] += metres
                     link["delay_s"] += lost
-                if vehicle.speed * 3.6 < QUEUE_KMH:
-                    queued_at.setdefault(vehicle.road, []).append(vehicle.length_m + GAP_M)
+                if vehicle.speed * 3.6 < QUEUE_KMH:  # queued: in its direction of the road (a link) where its lane says
+                    arrow = next((arrow for arrow in "><" if f"{vehicle.road}{arrow}" in place), "")
+                    queued_at.setdefault(vehicle.road + arrow, []).append(vehicle.length_m + GAP_M)
                 totals["vehicle_s"] += dt
                 totals["vehicle_m"] += metres
                 totals["delay_s"] += lost
@@ -263,8 +298,12 @@ class RunRecorder:
                 first, kind, origin, destination, metres, lost, _, waited, _, own, people = self._alive.pop(vehicle_id)
                 # Exact (Frame.exits); a frame without them: from when it was first and last seen
                 _, requested, inserted, exited = exits.get(vehicle_id) or (vehicle_id, first, first, frame.time)
+                by = totals["by_type"].setdefault(kind, {"trips": 0, "people": 0.0, "trip_s": 0.0, "delay_s": 0.0})
+                totals["people"] += people  # carried: every arrival, as throughput counts them
+                by["people"] += people
+                minute["people"] += people
                 if inserted < totals["measure_from_s"]:
-                    continue  # on the road in the warm-up: not measured
+                    continue  # on the road in the warm-up: its trip not measured
                 trip, system = exited - inserted, exited - requested
                 self._trips.append([vehicle_id, kind, origin, destination, round(inserted, 1), round(exited, 1),
                                     round(trip, 1), round(metres, 1), round(lost, 1), round(waited, 1), people,
@@ -274,14 +313,11 @@ class RunRecorder:
                 totals["trip_s"] += trip
                 totals["system_trip_s"] = totals.get("system_trip_s", 0.0) + system
                 totals["trip_delay_s"] += lost
-                totals["people"] += people
+                totals["trip_people"] += people
                 totals["trip_wait_s"] += waited
                 totals["people_delay_s"] += lost * people
                 totals["trip_free_delay_s"] += own
-                minute["people"] += people
-                by = totals["by_type"].setdefault(kind, {"trips": 0, "people": 0.0, "trip_s": 0.0, "delay_s": 0.0})
                 by["trips"] += 1
-                by["people"] += people
                 by["trip_s"] += trip
                 by["delay_s"] += lost
                 by["wait_s"] = by.get("wait_s", 0.0) + waited
@@ -305,15 +341,21 @@ class RunRecorder:
             waiting = max(frame.spawned - frame.arrived - len(frame.vehicles), 0)
             totals["entry_wait_s"] += waiting * dt
             queued = sum(len(lengths) for lengths in queued_at.values())
+            on_road: Counter = Counter()  # road -> its vehicles queued, both ways
+            for link_id, lengths in queued_at.items():
+                road = self._road.get(link_id.rstrip("<>"))
+                if road is None:
+                    continue  # on a turn
+                metres = sum(lengths) / max(self.roads[link_id.rstrip("<>")]["lanes"], 1)  # over that direction's lanes
+                road["queue_m_max"] = max(road["queue_m_max"], metres)
+                self.queues[link_id][round(metres)] += 1
+                on_road[link_id.rstrip("<>")] += len(lengths)
             for road_id, road in self._road.items():
-                lengths = queued_at.get(road_id, ())
-                road["queue_sum"] += len(lengths)
-                road["queue_max"] = max(road["queue_max"], len(lengths))
-                road["queue_m_max"] = max(road["queue_m_max"], sum(lengths) / max(self.roads[road_id]["lanes"], 1))
-                if lengths:
-                    self.queues[road_id][round(sum(lengths) / max(self.roads[road_id]["lanes"], 1))] += 1
+                road["queue_sum"] += on_road[road_id]
+                road["queue_max"] = max(road["queue_max"], on_road[road_id])
+                if on_road[road_id]:
                     by_minute = self._road_minute.setdefault(road_id, [0, 0.0, 0.0, 0, 0.0])
-                    by_minute[3] = max(by_minute[3], len(lengths))
+                    by_minute[3] = max(by_minute[3], on_road[road_id])
             minute["arrived"] += max(frame.arrived - totals["arrived"], 0)
             minute["queued_max"] = max(minute["queued_max"], queued)
             totals["queued_sum"] += queued
@@ -337,38 +379,40 @@ class RunRecorder:
         self.trip_log, self.queues = [], defaultdict(Counter)
 
     def _write_minute(self, now: float) -> None:
+        self.minute_rows.append(self._append_minute(self.folder, now))
+        self._road_minute, self._minute_start = {}, now
+        self._trips, self._walks = [], []
+        self._minute = self._fresh_minute()
+        self._save_totals(self.folder)
+
+    def _append_minute(self, folder: Path, now: float) -> list:
+        """The minute so far to `folder`'s files as a row, its rates over the time it covers (a whole minute, or the
+        part one at the end), leaving the minute's sums as they are. Returns the Per minute row."""
         totals, minute = self.totals, self._minute
+        span = max(now - self._minute_start, 1e-9)
         speed = minute["vehicle_m"] / minute["vehicle_s"] * 3.6 if minute["vehicle_s"] else 0.0
         row = [round(now, 1), clock(now), totals["on_road"], totals["spawned"], totals["arrived"], minute["arrived"],
-               minute["arrived"] * 60, minute["people"], round(minute["people"] * 60, 1), round(speed, 1),
-               totals["queued_now"], minute["queued_max"], round(minute["delay_s"] / 3600, 3),
+               round(minute["arrived"] * 3600 / span), minute["people"], round(minute["people"] * 3600 / span, 1),
+               round(speed, 1), totals["queued_now"], minute["queued_max"], round(minute["delay_s"] / 3600, 3),
                round(minute["vehicle_m"] / 1000, 3)]
-        self.minute_rows.append(row)
-        with open(self.folder / "minutes.csv", "a", newline="", encoding="utf-8") as file:
+        with open(folder / "minutes.csv", "a", newline="", encoding="utf-8") as file:
             csv.writer(file).writerow(row)
-        with open(self.folder / "trips.csv", "a", newline="", encoding="utf-8") as file:
+        with open(folder / "trips.csv", "a", newline="", encoding="utf-8") as file:
             csv.writer(file).writerows(self._trips)
         if self._walks:  # a run with pedestrians: walks.csv beside trips.csv
-            new = not (self.folder / "walks.csv").exists()
-            with open(self.folder / "walks.csv", "a", newline="", encoding="utf-8") as file:
+            new = not (folder / "walks.csv").exists()
+            with open(folder / "walks.csv", "a", newline="", encoding="utf-8") as file:
                 csv.writer(file).writerows(([WALK_COLUMNS] if new else []) + self._walks)
-            self._walks = []
-        span = max(now - self._minute_start, 1e-9)  # a whole minute, or the part one at the end
         rows = [[round(now, 1), clock(now), road, entered, round(entered * 3600 / span),
                  round(metres / seconds * 3.6, 1) if seconds else None, queued, round(late / 3600, 3)]
                 for road, (entered, seconds, metres, queued, late) in sorted(self._road_minute.items())]
-        with open(self.folder / "roads_minutes.csv", "a", newline="", encoding="utf-8") as file:
+        with open(folder / "roads_minutes.csv", "a", newline="", encoding="utf-8") as file:
             csv.writer(file).writerows(rows)
-        self._road_minute, self._minute_start = {}, now
-        self._trips = []
-        self._minute = self._fresh_minute()
-        self._save_totals()
+        return row
 
-    def _save_totals(self) -> None:
+    def _save_totals(self, folder: Path) -> None:
         state = {"totals": self.totals, "roads": self._road, "links": self._link, "saved": time.time()}
-        part = self.folder / "totals.part"
-        part.write_text(json.dumps(state), encoding="utf-8")
-        part.replace(self.folder / "totals.json")
+        write_whole(folder / "totals.json", json.dumps(state))
 
     def kpis(self) -> dict:
         """The run's figures so far (any thread)."""
@@ -396,29 +440,36 @@ class RunRecorder:
         their files (name, text: TSP's telemetry.jsonl) beside it, named after it."""
         sheets = [[name, rows, what] for report in reports for name, rows, what in report.get("sheets", [])]
         with self._lock:
-            (self.folder / "extra.json").write_text(json.dumps(sheets, default=str), encoding="utf-8")
+            write_whole(self.folder / "extra.json", json.dumps(sheets, default=str))
             files = self.folder / "files"
             for report in reports:
                 for name, text in report.get("files", []):
                     files.mkdir(exist_ok=True)
-                    (files / Path(name).name).write_text(text, encoding="utf-8")
+                    write_whole(files / Path(name).name, text)
 
     def add_analysis(self, sheets: list) -> None:
         """The statistics of what the run observed (experiments.analysis_sheets: detectors, link travel times,
         queue discharge, conflicts, bus headways, reliability…): sheets of its workbook, after the extensions'."""
         with self._lock:
-            (self.folder / "analysis.json").write_text(json.dumps(sheets, default=str), encoding="utf-8")
+            write_whole(self.folder / "analysis.json", json.dumps(sheets, default=str))
 
     def _files_beside(self, path: Path) -> None:
-        """The extensions' files beside the workbook at `path`: "<its name> telemetry.jsonl"."""
+        """The extensions' files beside the workbook at `path`: "<its name> telemetry.jsonl", each copied whole."""
         for found in sorted((self.folder / "files").glob("*")):
-            shutil.copyfile(found, path.with_name(f"{path.stem} {found.name}"))
+            if found.suffix != ".part":  # a write torn by a crash
+                write_whole(path.with_name(f"{path.stem} {found.name}"), found.read_bytes())
 
     def export(self, path: str | Path) -> Path:
-        """The workbook of the run so far, now (the run carries on), and its extensions' files beside it."""
-        with self._lock:
-            self._flush()
-            path = workbook(self.folder, path)
+        """The workbook of the run so far, now (the run carries on), and its extensions' files beside it. The minute
+        under way goes in it as a row of its own, from a copy of the folder: the run's minute series (minute_rows,
+        minutes.csv) keeps whole minutes."""
+        with self._lock, tempfile.TemporaryDirectory() as scratch:
+            copy = Path(scratch) / "run"
+            shutil.copytree(self.folder, copy, ignore=shutil.ignore_patterns("live.lock", "*.part"))
+            if self.totals["samples"] and self.totals["time_s"] - self._minute_start > 1e-6:
+                self._append_minute(copy, self.totals["time_s"])
+                self._save_totals(copy)
+            path = workbook(copy, path)
             self._files_beside(path)
             return path
 
@@ -441,16 +492,13 @@ class RunRecorder:
             if self.error:
                 meta = json.loads((self.folder / "meta.json").read_text(encoding="utf-8"))
                 meta["run"].append(["Incomplete", self.error])
-                (self.folder / "meta.json").write_text(json.dumps(meta, indent=1, default=str), encoding="utf-8")
-            name = file_name(self.started, seed=self.seed, model=self.model)
-            with _naming:
-                path = Path(results) / name
-                count = 1
-                while path.exists():  # runs started in the same second (an experiment's): numbered, none overwritten
-                    count += 1
-                    path = path.with_name(f"{name[:-5]} ({count}).xlsx")
-                path.touch()  # taken: a run finishing alongside numbers its own
-            path = workbook(self.folder, path)
+                write_whole(self.folder / "meta.json", json.dumps(meta, indent=1, default=str))
+            taken = unused_path(results, file_name(self.started, seed=self.seed, model=self.model))
+            try:
+                path = workbook(self.folder, taken)
+            except BaseException:
+                taken.unlink(missing_ok=True)  # the name taken, not left empty (the folder stays, for recover)
+                raise
             self._files_beside(path)
         shutil.rmtree(self.folder, ignore_errors=True)
         return path
@@ -461,13 +509,18 @@ def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
     warm_up = totals.get("measure_from_s", 0.0)
     seconds = totals["time_s"] - warm_up  # measured
     hours = seconds / 3600
-    per_hour = (lambda value: value / hours) if hours > 0 else (lambda value: 0.0)
+    if hours <= 0:  # nothing measured yet (stopped in its warm-up: its sums so far are the warm-up's)
+        kept = ("time_s", "measure_from_s", "spawned", "arrived", "on_road", "waiting", "queued_now")
+        totals = {**dict.fromkeys(totals, 0), "by_type": {}, "arrived_before": totals["arrived"],
+                  **{key: totals[key] for key in kept if key in totals}}
+        road_totals = {}
+    per_hour = (lambda value: round(value / hours)) if hours > 0 else (lambda value: None)
     rows = []
     for road_id, road in road_totals.items():
         info = roads.get(road_id, {})
-        rows.append({"road": road_id, "flow_vph": round(per_hour(road["entered"])),
+        rows.append({"road": road_id, "flow_vph": per_hour(road["entered"]),
                      "speed_kmh": round(road["vehicle_m"] / road["vehicle_s"] * 3.6, 1) if road["vehicle_s"] else None,
-                     "density_veh_km": round(road["vehicle_s"] / max(seconds, 1e-9) / max(info.get("length_m", 1) / 1000, 1e-6), 2),
+                     "density_veh_km": round(road["vehicle_s"] / seconds / max(info.get("length_m", 1) / 1000, 1e-6), 2),
                      "queue_max": int(road["queue_max"]),
                      "queue_mean": round(road["queue_sum"] / max(totals["samples"], 1), 2),
                      "queue_m_max": round(road["queue_m_max"], 1), "delay_veh_h": round(road["delay_s"] / 3600, 3),
@@ -475,7 +528,8 @@ def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
                      "entered": int(road["entered"])})
     longest = max(rows, key=lambda row: (row["queue_max"], row["queue_m_max"]), default=None)
     trips, people, samples = totals["trips"], totals["people"], totals["samples"]
-    people_delay = totals.get("people_delay_s", 0.0)  # (a crashed run's older totals lack the newer figures)
+    trip_people = totals.get("trip_people", people)  # (a crashed run's older totals lack the newer figures)
+    people_delay = totals.get("people_delay_s", 0.0)
     entry_wait = totals.get("entry_wait_s", 0.0)
     spawned, unfinished = totals["spawned"], totals["on_road"] + totals.get("waiting", 0)
     return {
@@ -484,8 +538,8 @@ def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
         # Of the vehicles spawned in the whole run: arrived, and still on the road or waiting to enter
         "completion_rate": round(totals["arrived"] / spawned, 3) if spawned else None,
         "unfinished_share": round(unfinished / spawned, 3) if spawned else None,
-        "throughput_vph": round(per_hour(totals["arrived"] - totals.get("arrived_before", 0))),
-        "people": round(totals["people"], 1), "people_per_h": round(per_hour(totals["people"])),
+        "throughput_vph": per_hour(totals["arrived"] - totals.get("arrived_before", 0)),
+        "people": round(people, 1), "people_per_h": per_hour(people),
         "mean_speed_kmh": round(totals["vehicle_m"] / totals["vehicle_s"] * 3.6, 1) if totals["vehicle_s"] else None,
         "vehicle_km": round(totals["vehicle_m"] / 1000, 2), "vehicle_h": round(totals["vehicle_s"] / 3600, 2),
         "delay_veh_h": round(totals["delay_s"] / 3600, 2),
@@ -499,14 +553,14 @@ def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
         "mean_trip_delay_vs_free_speed_s": round(totals.get("trip_free_delay_s", 0.0) / trips, 1) if trips else None,
         "mean_wait_s": round(totals.get("trip_wait_s", 0.0) / trips, 1) if trips else None,
         "people_delay_h": round(people_delay / 3600, 2),
-        "mean_person_delay_s": round(people_delay / people, 1) if people else None,
+        "mean_person_delay_s": round(people_delay / trip_people, 1) if trip_people else None,
         "person_delay_on_board_h": round(totals.get("person_delay_s", 0.0) / 3600, 2),
         "queued_mean": round(totals.get("queued_sum", 0) / samples, 1) if samples else None,
         "queued_now": totals["queued_now"], "queued_max": totals["queued_max"],
         "longest_queue": longest if longest and longest["queue_max"] else None,
         "roads": sorted(rows, key=lambda row: -row["flow_vph"]),
         "by_type": {kind: {"trips": by["trips"], "people": round(by["people"], 1),
-                           "people_per_h": round(per_hour(by["people"])),
+                           "people_per_h": per_hour(by["people"]),
                            "mean_trip_s": round(by["trip_s"] / by["trips"], 1) if by["trips"] else None,
                            "mean_delay_s": round(by["delay_s"] / by["trips"], 1) if by["trips"] else None,
                            "mean_wait_s": round(by.get("wait_s", 0.0) / by["trips"], 1) if by["trips"] else None,
@@ -525,7 +579,7 @@ def _walk_figures(totals: dict, per_hour) -> dict:
     walks = totals.get("walk_trips", 0)
     if not walks and not totals.get("crossings"):
         return {}
-    return {"walk_trips": walks, "walkers_per_h": round(per_hour(walks)),
+    return {"walk_trips": walks, "walkers_per_h": per_hour(walks),
             "mean_walk_s": round(totals.get("walk_s", 0.0) / walks, 1) if walks else None,
             "mean_walk_speed_kmh": round(totals.get("walk_m", 0.0) / totals["walk_s"] * 3.6, 2)
             if totals.get("walk_s") else None,
@@ -591,7 +645,7 @@ def workbook(folder: Path, path: str | Path) -> Path:
                 "(on the road + waiting to enter at the end) ÷ spawned: trips the means below leave out"],
                ["Measured from", clock(figures["measure_from_s"]), "h:m:s",
                 "the warm-up before it is left out of the figures below (not of the counts above or Per minute)"],
-               ["Throughput", figures["throughput_vph"], "veh/h", "arrived ÷ simulated hours"],
+               ["Throughput", figures["throughput_vph"], "veh/h", "arrived ÷ measured hours"],
                ["People carried", figures["people"], "people",
                 "arrived vehicles × the people on board (a bus's simulated load, else its type's occupancy)"],
                ["Passenger throughput", figures["people_per_h"], "people/h", ""],
@@ -616,7 +670,8 @@ def workbook(folder: Path, path: str | Path) -> Path:
                ["Mean wait per trip", figures["mean_wait_s"], "s",
                 f"time at or below {WAIT_MPS:g} m/s, not at a bus stop (SUMO's waitingTime)"],
                ["Passenger delay", figures["people_delay_h"], "person·h", "each completed trip's delay × its people"],
-               ["Mean delay per passenger", figures["mean_person_delay_s"], "s", "passenger delay ÷ people carried"],
+               ["Mean delay per passenger", figures["mean_person_delay_s"], "s",
+                "passenger delay ÷ the people on the completed trips measured"],
                ["Person delay on board", figures["person_delay_on_board_h"], "person·h",
                 "each sample's delay against own free speed × the people on board then, unfinished trips too"],
                ["Mean queued at once", figures["queued_mean"], "veh", "whole network, over the samples"],
@@ -639,7 +694,7 @@ def workbook(folder: Path, path: str | Path) -> Path:
         walking.append(("Crossings", [CROSSING_COLUMNS] + [
             [row["crossing"], row["kind"], row["walkers"], row["mean_wait_s"], row["vehicles_held_s"]]
             for row in figures["crossings"]]))
-    road_rows = [["Road", "From", "To", "Length (m)", "Lanes per direction", "Speed limit (km/h)", "Entered (veh)",
+    road_rows = [["Road", "From", "To", "Length (m)", "Lanes each way", "Speed limit (km/h)", "Entered (veh)",
                   "Flow (veh/h)", "Mean speed (km/h)", "Density (veh/km)", "Most queued (veh)", "Mean queued (veh)",
                   "Longest queue a lane (m)", "Delay (veh·h)"]]
     for row in figures["roads"]:
@@ -657,7 +712,7 @@ def workbook(folder: Path, path: str | Path) -> Path:
     run = [["Setting", "Value"], *meta.get("run", []), ["Simulated", clock(figures["time_s"])],
            ["Measured from", clock(figures["measure_from_s"])],
            ["Workbook written", datetime.now().isoformat(timespec="seconds")]]
-    conditions = road_conditions(roads, (state or {}).get("links", {}), figures["time_s"])
+    conditions = road_conditions(roads, (state or {}).get("links", {}), figures["time_s"] - figures["measure_from_s"])
     reported = [(name, rows) for name, rows, _ in extra] + [(name, rows) for name, rows, _ in analysis]
     path = write_xlsx(path, [("Read me", read_me(meta, [(name, what) for name, _, what in extra + analysis])),
                              ("Summary", summary), ("Run", run),
@@ -679,9 +734,12 @@ CONDITION_COLUMNS = ["Link", "Road", "From", "To", "Road type", "Length (m)", "L
 
 
 def road_conditions(roads: dict, links: dict, seconds: float) -> list[list]:
-    """Each direction of each road over the run: flow, speed against the limit, its level of service
-    (LOS_SPEED), travel time against free flow, density and delay."""
+    """Each direction of each road over the `seconds` measured (the links' sums start at the warm-up's end): flow,
+    speed against the limit, its level of service (LOS_SPEED), travel time against free flow, density and delay.
+    Nothing measured (stopped in the warm-up): the header alone."""
     rows = [CONDITION_COLUMNS]
+    if seconds <= 0:
+        return rows
     hours = seconds / 3600
     for link_id, link in sorted(links.items()):
         road_id, forward = link_id[:-1], link_id.endswith(">")
@@ -692,14 +750,14 @@ def road_conditions(roads: dict, links: dict, seconds: float) -> list[list]:
         percent = 100 * speed / max(info["limit_kmh"], 1) if speed is not None else None
         travel = info["length_m"] / (speed / 3.6) if speed else None
         free = info["length_m"] / (max(info["limit_kmh"], 1) / 3.6)
-        flow = link["entered"] / hours if hours else 0.0
+        flow = link["entered"] / hours
         rows.append([link_id, road_id, info["from"] if forward else info["to"], info["to"] if forward else info["from"],
                      info.get("type"), info["length_m"], info["lanes"], info["limit_kmh"], link["entered"], round(flow),
                      round(flow / max(info["lanes"], 1)), None if speed is None else round(speed, 1),
                      None if percent is None else round(percent, 1), level_of_service(percent),
                      None if travel is None else round(travel, 1), round(free, 1),
                      None if travel is None else round(travel / free, 2),
-                     round(link["vehicle_s"] / max(seconds, 1e-9) / max(info["length_m"] / 1000, 1e-6), 2),
+                     round(link["vehicle_s"] / seconds / max(info["length_m"] / 1000, 1e-6), 2),
                      round(link["delay_s"] / 3600, 3), round(link["delay_s"] / link["entered"], 1) if link["entered"] else None])
     return rows
 
@@ -755,7 +813,7 @@ def write_geojson(path: Path, name: str, roads: dict, geometry: dict, nodes: dic
                 "acms_coordinates": "WGS84 longitude, latitude" if frame else
                 "local metres east and north of the scene origin (no map placed)", "features": features}
     path = Path(path)
-    path.write_text(json.dumps(document), encoding="utf-8")
+    write_whole(path, json.dumps(document))
     return path
 
 
@@ -793,19 +851,25 @@ def recover(results: Path, root: Path = RUNS) -> list[Path]:
             continue
         if lock_held(folder / "live.lock"):
             continue  # another ACMS's run, still going
+        path = None
         try:
             meta = json.loads((folder / "meta.json").read_text(encoding="utf-8"))
-            made.append(workbook(folder, Path(results) / file_name(datetime.fromisoformat(meta["started"]), True,
-                                                                   meta.get("seed"), meta.get("model") or "")))
+            path = unused_path(results, file_name(datetime.fromisoformat(meta["started"]), True, meta.get("seed"),
+                                                  meta.get("model") or ""))  # numbered as finish() numbers its own
+            made.append(workbook(folder, path))
         except (OSError, ValueError, KeyError):
+            if path is not None:
+                path.unlink(missing_ok=True)  # the name taken, not left empty
             continue
         shutil.rmtree(folder, ignore_errors=True)
     return made
 
 # --- What went into the run: the workbook's input sheets, for whoever checks it -------------------
 
-def _clock_h(hours: float) -> str:
-    return f"{int(hours):02d}:{round(hours % 1 * 60):02d}"
+def clock_h(hours: float) -> str:
+    """Hours of the day as "HH:MM", rounded to the minute."""
+    minutes = round(hours * 60)
+    return f"{minutes // 60:02d}:{minutes % 60:02d}"
 
 
 def input_sheets(network, demand, modes, plans: dict) -> list[tuple[str, list[list]]]:
@@ -878,7 +942,7 @@ def input_sheets(network, demand, modes, plans: dict) -> list[tuple[str, list[li
     buildings = [["Institution", "Kind", "x (m)", "y (m)", "Area (m²)", "Circle of influence (m)", "People",
                   "Employees", "Shift", "By car (%)"]]
     buildings += [[item.id, item.kind, round(item.x, 2), round(item.y, 2), item.area_m2, round(item.radius_m, 2),
-                   item.people, item.employees, f"{_clock_h(item.shift_start_h)}-{_clock_h(item.shift_end_h)}",
+                   item.people, item.employees, f"{clock_h(item.shift_start_h)}-{clock_h(item.shift_end_h)}",
                    item.car_share] for item in network.institutions.values()]
     return [("City", city_sheet(network)), ("Junctions", junctions),
             ("Road network", roads), ("Boundary ends", ends), ("Demand", pairs), ("Vehicle types", kinds),
@@ -911,7 +975,7 @@ def city_sheet(network) -> list[list]:
     """The network as a whole, its style: where it is, its extent, how much road of each kind, speed and width,
     how its junctions are controlled, how dense and connected it is (graph indices; Rodrigue, The Geography of
     Transport Systems), its roundabouts, curves, bus stops and buildings, and its route choice."""
-    from statistics import median  # noqa: PLC0415
+    from statistics import fmean, median  # noqa: PLC0415
 
     from .design_checks import network_indices  # noqa: PLC0415 - results stays light to import
     from .roundabouts import design_roundabout  # noqa: PLC0415
@@ -936,8 +1000,7 @@ def city_sheet(network) -> list[list]:
     inner = list(network.roads.values())
     all_roads = list(network.all_roads())
     km = sum(road.length_m for road in all_roads) / 1000
-    lane_km = sum(road.length_m * road.lanes_per_direction * (2 if road.direction == "two-way" else 1)
-                  for road in all_roads) / 1000
+    lane_km = sum(road.length_m * road.lanes for road in all_roads) / 1000
     add("Junctions", len(network.nodes))
     for control in ("signalised", "roundabout", "uncontrolled"):
         count = sum(node.control == control for node in network.nodes.values())
@@ -955,13 +1018,13 @@ def city_sheet(network) -> list[list]:
         "of road length")
     if inner:
         lengths = sorted(road.length_m for road in inner)
-        add("Mean road length (block)", round(sum(lengths) / len(lengths), 1), "m", f"median {median(lengths):.1f} m")
+        add("Mean road length (block)", round(fmean(lengths), 1), "m", f"median {median(lengths):.1f} m")
     if area:
         add("Junction density", round(len(network.nodes) / area, 1), "per km²", "over the extent")
         add("Road density", round(km / area, 2), "km per km²", "over the extent")
     for label, key in (("Road length by type", lambda r: r.road_type), ("Road length by speed limit (km/h)",
                                                                           lambda r: f"{r.speed_limit_kmh:g}"),
-                       ("Road length by lanes each way", lambda r: str(r.lanes_per_direction))):
+                       ("Road length by lanes each way", lambda r: str(r.lanes_each_way))):
         totals = defaultdict(float)
         for road in all_roads:
             totals[key(road)] += road.length_m / 1000
@@ -976,7 +1039,7 @@ def city_sheet(network) -> list[list]:
             sum(record["curve_kmh"] and record["limit_kmh"] > record["curve_kmh"] for record in records))
     round_ = [design_roundabout(network, n.id).inscribed_diameter_m for n in network.nodes.values() if n.control == "roundabout"]
     if round_:
-        add("Roundabout diameters", f"{min(round_):.0f}-{max(round_):.0f}", "m", f"mean {sum(round_) / len(round_):.0f} m")
+        add("Roundabout diameters", f"{min(round_):.0f}-{max(round_):.0f}", "m", f"mean {fmean(round_):.0f} m")
     add("Interchanges", len(network.interchanges), "", ", ".join(sorted(network.interchanges)))
     add("Overpasses", sum(road.overpass for road in all_roads))
     add("Bus stops", len(network.bus_stops))
@@ -1032,8 +1095,8 @@ DEFINITIONS = [
     ("System travel time (s)", "off its last lane − its requested departure: the trip time plus its wait to enter"),
     ("Completion rate", "vehicles arrived ÷ spawned; 1 − it, the unfinished share, is still on the road or waiting to "
                         "enter (the trip means count completed trips only)"),
-    ("People (people/h)", "completed trips × the people on board (a bus's simulated load, else its type's occupancy) "
-                          "÷ simulated hours"),
+    ("People (people/h)", "vehicles that completed their trip × the people on board (a bus's simulated load, else its "
+                          "type's occupancy) ÷ simulated hours (both after Measured from, as Throughput)"),
     ("Mean speed (km/h)", "distance driven ÷ time on the road, over every vehicle (space-mean speed)"),
     ("Delay (veh·h)", "Σ over vehicles and samples of dt × max(0, 1 − speed ÷ the road's speed limit): road-limit time "
                       "loss, the same limit for every vehicle (a bicycle at its own 20 km/h loses time on a 50 km/h road)"),
@@ -1048,10 +1111,11 @@ DEFINITIONS = [
                  "tripinfo waitingTime)"),
     ("Passenger delay (person·h)", "Σ over completed trips of the trip's delay × the people on board as it arrived"),
     ("Queued (veh)", f"vehicles slower than {QUEUE_KMH:g} km/h at a sample"),
-    ("Queue length a lane (m)", f"Σ (vehicle length + {GAP_M:g} m) of a road's queued vehicles ÷ its lanes per direction"),
-    ("Flow on a road (veh/h)", "vehicles seen on it after another road ÷ simulated hours (a road crossed between two "
-                               "samples is missed)"),
-    ("Density (veh/km)", "vehicle-seconds on the road ÷ simulated seconds ÷ its length in km"),
+    ("Queue length a lane (m)", f"Σ (vehicle length + {GAP_M:g} m) of the vehicles queued in one direction of a road ÷ "
+                                "that direction's lanes; a road's longest: its longer direction's"),
+    ("Flow on a road (veh/h)", "vehicles entering it ÷ simulated hours after Measured from (each direction's on Road "
+                               "conditions)"),
+    ("Density (veh/km)", "vehicle-seconds on the road ÷ simulated seconds after Measured from ÷ its length in km"),
     ("Level of service", "a road direction's mean speed as a share of its speed limit (free flow): A over 85 %, B over "
                          "67 %, C over 50 %, D over 40 %, E over 30 %, F at or below (HCM 2010 urban street segments)"),
     ("Travel time index", "travel time ÷ free-flow time (length ÷ speed limit)"),

@@ -7,20 +7,23 @@
   1.80 s over 86 queues; the audit's 1.3 s was an earlier measurement): SUMO's startupDelay can't reach 2.0 s
   without pulling the saturation flow below field values (drivers re-halting as they creep off). Capacity is
   optimistic by 0.2 s a phase, under 1 % at a 60 s cycle.
-- Results: editing each vehicle type's occupancy in the tab (assumed), per-junction and per-signal KPIs in a run's
+- Results: per-junction and per-signal KPIs in a run's
   workbook (junction_los and diagnose_signal give them for the assistant's headless runs only), a vehicle class set in the tab (the assistant's `update_vehicle_type` sets it), a warm-up set for a live Run (only the assistant's run_simulation and run_experiment take one) and counts on roads
   crossed between two samples; Batch Run compares agents deciding TSP (or plain runs), not network variants (the
   assistant's `run_experiment` does those); a live run has no decision deadline (a batch's Decide within); a batch's runs share one process, so many at once at a fast pace fall behind the clock (the pace achieved is
-  recorded and said), and plain (non-TSP) batches go one at a time; a replay needs the run's network and demand open (it reads only the seed, the simulated time and the feed); telemetry is TSP's only;
+  recorded and said), and plain (non-TSP) batches go one at a time; a replay needs the run's network and demand open (it reads only the seed, the simulated time and the feed); telemetry is TSP's and DEVL's only;
   pedestrians crowding each other (SUMO's NonInteracting walkers) or seen by traffic outside a zebra (at a gap the
   walker judges the gap; no collision between walkers and vehicles is checked), pedestrian signals (a signalised
   junction's arms are crossed in gaps, as anywhere: no walk phase), gradual (sublane) lane changes, editing each type's behaviour in Mode Behavior.
+- Cycling's choice and routes weigh cycle lanes by one assumed factor (0.7 of a minute in mixed traffic), not by
+  the traffic beside the cyclist, turns or slopes (Broach et al. 2012's other terms); a road counts as laned for
+  mode choice if either way has one.
 - Cycle lanes are one fixed width (1.5 m), bicycles only (not mopeds), the road's whole length (none ending short of
-- Walking: footpaths are one fixed width (2 m), the road's whole length; a path's ends are road nodes (none part way along a footpath); zebras go part way along a road (none on a junction's arm); platoons crossing together (HCM Eq 18-18 to 18-20) aren't modelled, and crossing figures aren't warm-up aware; from OpenStreetMap, a footway reaching fewer than two road nodes, a crossing at a junction's arm and a crossing's signals don't come in, and cycle lanes come in for every direction whichever side is tagged.
   a junction, no advanced stop line or bike box, no two-stage offside turn: a bike turns across from the cycle lane
   as a car turns from the kerb); between junctions bikes and cars never meet (no bus crossing it into a bay, no car
-  crossing it to park); loop detectors, actuated signals and Webster's flows leave its bikes out; the assistant
-  sets them only both ways (update_roads cycle_lanes).
+  crossing it to park); Webster's flows and ramp-meter loops leave its bikes out (actuated, SCATS, SCOOT and
+  max-pressure count them).
+- Walking: footpaths are one fixed width (2 m), the road's whole length; a path's ends are road nodes (none part way along a footpath); zebras go part way along a road (none on a junction's arm); platoons crossing together (HCM Eq 18-18 to 18-20) aren't modelled, and crossing figures aren't warm-up aware; from OpenStreetMap, a footway reaching fewer than two road nodes, a crossing at a junction's arm and a crossing's signals don't come in, and cycle lanes come in for every direction whichever side is tagged.
 - Lateral position (opt-in, `Simulation(lateral=True)`; simulation.md) is SL2015 at its smallest: no vehicle
   straddles two lanes or rides between them, only filtering types (motorcycle, moped, bicycle) move sideways (cars,
   buses and the rest keep to their lane's kerb side, so a car can't pass a cyclist within a lane), lane changes are
@@ -123,11 +126,11 @@
   typed "ramp" (interchanges and slip roads; an OpenStreetMap motorway link isn't typed so). Two-sided weaves, offside
   ramps, Chapter 25's ramp junctions (merge and diverge alone) and the weaving length measured gore to gore (here node
   to node) aren't built.
-- Metro rail: its own network and OD matrix, drawn on by institutions (metro.md), but no trains run in the
+- MRT rail: its own network and OD matrix, drawn on by institutions (metro.md), but no trains run in the
   simulation (riders just leave the roads), a trip changes lines at most once, at an interchange (a station where
   lines were merged; none to buses; demand between stations no such ride joins can't be entered), walks to a station are straight-line, not along the roads, its loads are at one
   design hour (the OD matrix the same every hour; no crowding feeding back into the choice), and car trips to
-  stations (park-and-ride, drop-offs) aren't made. Road OD pairs never take the metro, by design. An accepted line is final by design (accept or delete
+  stations (park-and-ride, drop-offs) aren't made. Road OD pairs never take the MRT, by design. An accepted line is final by design (accept or delete
   when it is finished; no later edits); undo still takes it back. Lines don't branch or join end to end;
   two crossing lines share only their interchange station. A curve is short straight viaduct pieces in 2.5D.
 - Design and accessibility checks: acceleration and deceleration lane lengths, grades and access within 50 m of a
@@ -137,6 +140,4 @@
 
 - Prompt campaign: automatic crash recovery is not implemented; an existing ledger prevents resubmission. Automatic Apply of actual validated cards is implemented for the user-authorized campaign. See `prompt_campaign.md`.
 
-- Campaign live update still requires one manual Extensions reload and tick when the external desktop helper is unavailable. Future approval cards are automatic after activation.
-
-The campaign does not retry or roll back partially applied failed tools. Only a uniquely identified unresolved Apply callback after a deadline halt supports live recovery; other crash/timeout states remain manual.
+- The campaign does not retry or roll back partially applied failed tools; crash and timeout states are recovered by hand.

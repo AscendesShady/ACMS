@@ -13,8 +13,9 @@ network untouched.
 
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
-from math import ceil, cos, floor, hypot, radians, sin
+from math import ceil, cos, dist, floor, hypot, radians, sin
 
 from .geometry import distance_to_segment, point_along, polyline_length
 from .models import LANE_WIDTH_M, Network, Node
@@ -201,7 +202,7 @@ def _transition(start: tuple[float, float], heading: tuple[float, float],
     quarter circle; longer handles bunch the turning into the middle, and a longer
     start handle hugs the freeway like a real taper).
     Each segment carries the curve's exact curvature at its middle."""
-    chord = hypot(end[0] - start[0], end[1] - start[1])
+    chord = dist(start, end)
     h0, h1 = hypot(*heading), hypot(*end_heading)
     k0, k1 = pull * chord, (pull if end_pull is None else end_pull) * chord
     p0 = start
@@ -272,6 +273,19 @@ def _centre(network: Network, hub: str | None, legs: list[str]) -> tuple[float, 
     joined = {node for road in network.roads.values() if hub in (road.from_node, road.to_node)
               for node in (road.from_node, road.to_node)}
     return (network.nodes[hub].x, network.nodes[hub].y) if set(legs) <= joined else None
+
+
+def _keep_if_valid(network: Network, trial: Network) -> None:
+    """Take what was built on `trial`, a copy of `network`, only if it validates: a refusal (ValueError) leaves the
+    network untouched. Its dicts (roads, nodes...) stay the same objects, refilled: a caller holding one sees the build."""
+    trial.validate()
+    for key, value in vars(trial).items():
+        mine = getattr(network, key)
+        if isinstance(mine, dict) and isinstance(value, dict):
+            mine.clear()
+            mine.update(value)
+        else:
+            setattr(network, key, value)
 
 
 def _remove(network: Network, roads: list[str], hub: str | None) -> None:
@@ -395,6 +409,7 @@ def build_trumpet(network: Network, freeway: tuple[str, str], stem: str,
         near = +1, so curvature takes the same sign as the flip (-near)."""
         return [(*local(x, y), -near * kappa) for piece in pieces for x, y, kappa in piece]
 
+    original, network = network, deepcopy(network)  # built on a copy, kept if it validates (_keep_if_valid)
     if replace:
         _remove(network, existing, hub)
     build = _Builder(network, "TR", frame)
@@ -425,7 +440,7 @@ def build_trumpet(network: Network, freeway: tuple[str, str], stem: str,
                     (-sin(radians(join)), cos(radians(join))), pull),
         _arc(rho, -depth, ring, join, 360),
         _arc(merge, -depth, depth, 180, 90)))
-    network.validate()
+    _keep_if_valid(original, network)
     return build.name
 
 
@@ -455,6 +470,7 @@ def build_diamond(network: Network, freeway: tuple[str, str], crossroad: tuple[s
         raise ValueError(f"Not enough room for a {name} here: choose junctions further apart.")
     keep = _keep_sign(network, frame)  # side of the carriageway heading +x
 
+    original, network = network, deepcopy(network)  # built on a copy, kept if it validates (_keep_if_valid)
     if replace:
         _remove(network, existing, hub)
     build = _Builder(network, "SP" if single_point else "DI", frame)
@@ -502,7 +518,7 @@ def build_diamond(network: Network, freeway: tuple[str, str], crossroad: tuple[s
         build.ramp([own, after])  # ...and re-enters after it
         build.ramp([after, other])  # -x traffic, mirrored
         build.ramp([other, before])
-    network.validate()
+    _keep_if_valid(original, network)
     return build.name
 
 
@@ -535,6 +551,7 @@ def build_slip_road(network: Network, first: str, second: str, single_lane: bool
     lines = [_away(network, road, junction)[0] for road in (arrive, leave)]
     _, start, end, pieces = _plan_slip(network, junction, (arrive, leave), lines, single_lane, {arrive.id, leave.id})
 
+    original, network = network, deepcopy(network)  # built on a copy, kept if it validates (_keep_if_valid)
     ends = []
     for road, (x, y) in ((arrive, start), (leave, end)):
         node = network.add_node(x, y)
@@ -544,6 +561,7 @@ def build_slip_road(network: Network, first: str, second: str, single_lane: bool
     slip = network.add_road(*ends)
     slip.lanes_per_direction, slip.direction, slip.road_type, slip.single_lane = 1, "one-way", "ramp", single_lane
     _lay_slip(network, slip, pieces, min(arrive.speed_limit_kmh, leave.speed_limit_kmh))
+    _keep_if_valid(original, network)  # e.g. a turn pocket left on a stub too short for it
     return slip.id
 
 
@@ -655,7 +673,7 @@ def _recut(network: Network, node_id: str, junction: str, inner, outer, line, be
     to the outer road's far end), re-cutting the two roads either side of it there."""
     walked = 0.0
     for i, (p, q) in enumerate(zip(line, line[1:])):
-        segment = hypot(q[0] - p[0], q[1] - p[1])
+        segment = dist(p, q)
         if walked + segment >= setback:
             break
         walked += segment

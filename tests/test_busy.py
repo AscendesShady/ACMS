@@ -10,7 +10,7 @@ import time
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtCore import QTimer  # noqa: E402
-from PySide6.QtWidgets import QApplication, QCheckBox, QLabel, QLineEdit, QPushButton  # noqa: E402
+from PySide6.QtWidgets import QApplication, QCheckBox, QLabel, QLineEdit, QMessageBox, QPushButton  # noqa: E402
 
 from traffic_simulator.main import MainWindow  # noqa: E402
 
@@ -104,6 +104,55 @@ def test_stop_during_an_applied_edit_leaves_the_assistant_ready():
     assert request.record["decision"] == "applied"  # it was applied, and the record says so
     assert panel._pending is later and not later.done.is_set()  # the new question's card isn't answered with it
     assert "thinking" not in (panel._busy_text or "")
+    main.close()
+
+
+def test_optimising_signals_scores_the_network_as_it_was_when_asked():
+    from traffic_simulator.simulation import PairDemand
+
+    main = window()
+    ends = sorted(main.network.approach_nodes)
+    demand = [PairDemand(ends[0], ends[-1], 600.0, None, [], "Random", (100,) + (0,) * (len(main.vehicle_modes.modes) - 1))]
+    main._pair_demand = lambda: list(demand)
+    roads, scored = len(main.network.roads), []
+    main._quick_run = lambda network, *args, **kwargs: scored.append(len(network.roads)) or {"delay_veh_h": 1.0}
+    real = main._in_background
+
+    def in_background(work, what):  # the user deletes a junction as the search starts
+        main.select("node", sorted(main.network.nodes)[-1])
+        main.properties.delete_node()
+        return real(work, what)
+
+    main._in_background = in_background
+    asked, QMessageBox.question = QMessageBox.question, lambda *args: QMessageBox.StandardButton.Yes
+    try:
+        main._runs_command("optimise_signals", {"junctions": ["1,1"], "population": 4, "generations": 1, "seeds": "1",
+                                                "duration_min": 5})
+    finally:
+        QMessageBox.question = asked
+    assert len(main.network.roads) < roads and scored and set(scored) == {roads}  # every candidate on the same one
+    main.close()
+
+
+def test_undo_redo_and_edits_wait_for_a_scenario_build():
+    main = window()
+    main.add_node_button.setChecked(True)
+    main.canvas_clicked("", "", 3000.0, 3000.0)  # something to undo
+    main.add_node_button.setChecked(False)
+    nodes, seen = len(main.network.nodes), []
+
+    def step(tool, args):  # Ctrl+Z and Ctrl+Y pressed while the build's step (its test) goes on
+        main.undo()
+        main.redo()
+        seen.append((len(main.network.nodes), main.workspace.isEnabled(), main.edit_tab.isEnabled()))
+        raise ValueError("ended here")
+
+    main._scenario_step = step
+    main._runs_command("build_scenario", {"grid": "2x2", "traffic": "light", "minutes": 5})
+    assert seen and set(seen) == {(nodes, False, False)}  # nothing undone mid-build; the map and editors wait
+    assert main.workspace.isEnabled() and main.edit_tab.isEnabled()
+    main.undo()
+    assert len(main.network.nodes) == nodes - 1  # after it, undo as before
     main.close()
 
 

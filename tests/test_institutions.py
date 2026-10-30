@@ -6,6 +6,7 @@ Run with `python tests/test_institutions.py` (or the test monitor)."""
 import os
 import tempfile
 from copy import deepcopy
+from dataclasses import replace
 from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -366,6 +367,73 @@ def test_its_walkers_walk_from_the_catchment_to_the_building_and_back():
     assert simulation.walk_spawned and not simulation.walk_unreachable
     ends = {tuple(walker.points[-1]) for walker in simulation.walkers}
     assert (school.x, school.y) in ends  # on to the building, past its door
+
+
+def test_cycling_is_a_bikes_choice_and_cycle_lanes_draw_people_to_it():
+    from traffic_simulator.lane_graph import CYCLE_LANE_TIME_FACTOR
+
+    network, modes = generate_network(3, 4), VehicleModes().modes
+    bike = next(mode for mode in modes if mode.vehicle_class == "bicycle")
+    assert tools.default_alternative(bike) == {"mode": bike.name, "out_of_vehicle_min": 1.0, "cost_per_km": 0.0}
+    car = next(mode for mode in modes if mode.name == "Car")
+    assert tools.default_alternative(car)["cost_per_km"] == 15.0  # a car's as before
+    school = _school(network)
+    before, info = tools.institution_split(network, school, modes, {})
+    again, _ = tools.institution_split(network, school, modes, {})
+    assert before == again  # no cycle lanes: nothing to change
+    for road in network.all_roads():
+        road.cycle_lanes = list(road.arrival_ends())
+    laned, _ = tools.institution_split(network, school, modes, {})
+    assert laned["Bike"] > before["Bike"] and laned["Car"] < before["Car"]  # cycle lanes everywhere: more cycle
+    assert 0 < CYCLE_LANE_TIME_FACTOR < 1
+
+
+
+def test_its_day_follows_its_own_curves_and_its_hour_what_is_typed():
+    from traffic_simulator.daily_profile import DailyProfile, profile_record
+    from traffic_simulator.main import MainWindow
+
+    network, modes = generate_network(3, 4), VehicleModes().modes
+    school = _school(network)
+    arrive, leave = hourly_people(school)
+    evening = profile_record(DailyProfile("points", [(0.0, 0.0), (17.0, 0.0), (18.0, 1.0), (24.0, 0.0)]))
+    school.curves = {"arrive": evening}  # Daily: its arrivals by the curve, as many a day; departures by its shift
+    curved, kept = hourly_people(school)
+    assert abs(sum(curved) - sum(arrive)) < 1e-6 and curved[8] < 1 and curved[18] > arrive[18] and kept == leave
+    assert hourly_people(school, daily=False) == (arrive, leave)  # Hourly: its curves don't apply
+    school.per_hour = {"arrive": 120.0, "leave": 80.0}  # Hourly: people an hour, shared as its groups share the day
+    typed, _ = hourly_people(school, daily=False)
+    assert all(abs(people - 120) < 1e-9 for people in typed)
+    hourly, _ = run_demand(network, modes, daily=False)
+    arriving = sum(pair.hourly for pair in hourly if pair.destination == door(network, school))
+    staff, pupils = 120 * 50 / 650 * 0.3 / COMMUTE_OCCUPANCY, (120 + 80) * 600 / 650 * 0.3 / 1.5  # each car drives on
+    assert abs(arriving - (staff + pupils)) < 1e-6
+    for bad, words in (({"curves": {"lunch": evening}}, "\"arrive\" and \"leave\""),
+                       ({"per_hour": {"leave": -5.0}}, "people an hour"),
+                       ({"curves": {"leave": {"kind": "poly", "points": [], "coefficients": [1]}}}, "polynomial")):
+        assert words in institution_problem(replace(school, **bad)), bad
+    school.per_hour = {"arrive": 120.0}
+
+    window = MainWindow()  # the panel: the switch shows its people an hour, or its two curves
+    window.install_network(network)
+    window._commit()
+    panel = window.institution_panel
+    window.od_panel.demand.setCurrentIndex(window.od_panel.demand.findData("institutions"))
+    item = window.network.institutions[school.id]
+    panel.show_selected(window.network, item)
+    assert panel.per_hour["arrive"].value() == 120 and panel.per_hour["leave"].value() == -1  # "—": its busiest hour
+    panel.per_hour["leave"].setValue(80)
+    assert item.per_hour == {"arrive": 120.0, "leave": 80.0}
+    window.od_panel.period.group.button(1).click()  # Daily
+    assert panel.daily and panel.days["arrive"].profile.points[1][0] == 17.0  # its own curve
+    assert panel.days["leave"].profile.points[16][0] == 15.5  # from its shift: a point each hour, 15:00-16:00 the top
+    panel.days["leave"].reset.click()  # the weekday's shape
+    assert item.curves["leave"] == profile_record(DailyProfile())
+    panel.shift_button.click()  # back to its shift
+    assert item.curves == {}
+    window.undo()
+    assert set(window.network.institutions[school.id].curves) == {"arrive", "leave"}  # each edit an undo step
+    window.close()
 
 
 if __name__ == "__main__":

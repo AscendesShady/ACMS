@@ -1,12 +1,13 @@
 # CONTEXT: reference material
 
 Layer 3. Stable material that sets the rules and facts: read it as constraints, don't edit it while doing a task.
-Back to routing: [../CONTEXT.md](../CONTEXT.md). The books, papers, SUMO notes and PDFs are not in git
+Back to routing: [../CONTEXT.md](../CONTEXT.md). The books, papers, SUMO notes, the SUMO checkout and PDFs are not in git
 (`.gitignore`); everything else here is.
 
 | Path | What it is | Read it when |
 |---|---|---|
 | `ui-ux-design-rulebook.md` | The UI rules every control and window follows | adding or changing any control, dialog or panel |
+| `sumo/` | The SUMO source checkout (eclipse-sumo/sumo, its own git repository; 1.9 GB) the notes were taken from | checking a note against SUMO's code (`src/microsim/`), never copying it in |
 | `reverse_engineering/` | Study notes on SUMO (no SUMO code): car following, lane changing, junctions, signals | before changing `vehicle.py` or `simulation.py`; start at `00_PROJECT_OVERVIEW.md` and `07_ALGORITHM_INDEX.md` |
 | `transportation_engineering_books/` | Textbooks (HCM-style methods, signal timing, roundabouts, statistics) | citing a method in `docs/architecture/sources.md`; their text is in `pdf_text/` here |
 | `transportation_engineering_papers/` | Papers (AgentSUMO, ChatSUMO, …) | the AI Mode design and the research pipeline |

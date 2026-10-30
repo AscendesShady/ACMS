@@ -7,9 +7,9 @@ or a run's measured link times),
   shops within each time budget;
 - potential accessibility (Hansen 1959): A_i = Σ_j W_j · exp(−β · t_ij), β per minute;
 and for the residents (the Residential buildings, at their door junction): the people-weighted means, the minutes to
-the nearest hospital and school, and how evenly jobs access is shared (Gini, weighted by residents). With a road
-closed, the same again and each measure's loss (Taylor, Vulnerability Analysis for Transportation: accessibility
-loss).
+the nearest hospital and school (over those who reach one, the share cut off beside it), and how evenly jobs access
+is shared (Gini, weighted by residents). With a road closed, the same again and each measure's loss (Taylor,
+Vulnerability Analysis for Transportation: accessibility loss), the minutes over the same residents before and after.
 """
 
 from __future__ import annotations
@@ -99,12 +99,16 @@ def measures(network: Network, measured: dict | None = None, budgets=(15, 30), b
     if total:
         for key in rows[next(iter(rows))]:
             known = [(rows[at][key], people) for _, at, people in residents if rows[at][key] is not None]
-            if known:
+            if known:  # minutes to the nearest: over the residents who reach one (the rest's share beside it)
                 summary[key] = round(sum(v * w for v, w in known) / sum(w for _, w in known), 2)
+        for kind, name in (("hospitals", "hospital"), ("school places", "school")):
+            if any(found[kind] for found in places.values()):
+                cut = sum(people for _, at, people in residents if rows[at][f"minutes_to_nearest_{name}"] is None)
+                summary[f"cut_off_from_{name}_percent"] = round(100 * cut / total, 1)
         gini = weighted_gini([(rows[at]["potential_jobs"], people) for _, at, people in residents])
         summary["jobs_access_gini"] = None if gini is None else round(gini, 3)
     worst = sorted(residents, key=lambda item: rows[item[1]]["potential_jobs"])[:5]
-    return {"by_junction": rows, "residents": total, "residents_mean": summary,
+    return {"by_junction": rows, "residents": total, "residents_mean": summary, "homes": residents,
             "least_served": [{"building": name, "door": at, "residents": people,
                               "potential_jobs": round(rows[at]["potential_jobs"], 1),
                               f"jobs_within_{budgets[0]}_min": rows[at][f"jobs_within_{budgets[0]}_min"]}
@@ -138,14 +142,22 @@ def report(network: Network, measured: dict | None = None, budgets=(15, 30), bet
     if close_road is not None:
         after = measures(network, measured, budgets, beta, closed=close_road)
         loss = {}
+        then, now_rows = found["by_junction"], after["by_junction"]
         for key, before in found["residents_mean"].items():
             now = after["residents_mean"].get(key)
             if isinstance(before, (int, float)) and isinstance(now, (int, float)) and before and "minutes" not in key \
-                    and key != "jobs_access_gini":
+                    and key != "jobs_access_gini" and "cut_off" not in key:
                 loss[key] = round(100 * (before - now) / before, 1)
-            elif "minutes" in key:
-                loss[key] = {"before": before, "after": now}
+            elif "minutes" in key:  # over the same residents: those who reach one both times; those cut off apart
+                both = [(then[at][key], now_rows[at][key], people) for _, at, people in found["homes"]
+                        if then[at][key] is not None and now_rows[at][key] is not None]
+                weight, cut = sum(people for *_, people in both), sum(
+                    people for _, at, people in found["homes"] if then[at][key] is not None and now_rows[at][key] is None)
+                loss[key] = {"before": round(sum(b * w for b, _, w in both) / weight, 2) if weight else None,
+                             "after": round(sum(a * w for _, a, w in both) / weight, 2) if weight else None,
+                             "residents_cut_off_percent": round(100 * cut / found["residents"], 1)}
         answer["closing"] = {"road": close_road, "loss_percent": loss,
                              "note": "Percent of the residents' access lost with the road closed (free flow: the "
-                                     "detour's longer times); minutes to the nearest school and hospital before and after."}
+                                     "detour's longer times); minutes to the nearest school and hospital before and after "
+                                     "over the residents who reach one both times, and the share it cuts off."}
     return answer

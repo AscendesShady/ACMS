@@ -43,6 +43,32 @@ def test_the_slider_splits_between_any_number_of_types():
     assert slider.split() == (25, 25, 25, 25) and len(panel.mode_shares) == 4
 
 
+def test_a_click_on_a_types_zone_that_slips_moves_no_handle():
+    from PySide6.QtCore import QPointF, Qt
+    from PySide6.QtGui import QMouseEvent
+
+    slider = ODCellPanel(ODMatrix(VehicleModes())).modes
+    slider.resize(220, 30)
+    slider.set_split((10, 85, 5))
+    clicked = []
+    slider.type_clicked.connect(clicked.append)
+    y = slider.TRACK_TOP + slider.TRACK_HEIGHT / 2
+
+    def mouse(kind, x, buttons):
+        point = QPointF(x, y)
+        QApplication.sendEvent(slider, QMouseEvent(kind, point, slider.mapToGlobal(point), Qt.MouseButton.LeftButton,
+                                                   buttons, Qt.KeyboardModifier.NoModifier))
+
+    car = slider._x(50)
+    mouse(QMouseEvent.Type.MouseButtonPress, car, Qt.MouseButton.LeftButton)
+    mouse(QMouseEvent.Type.MouseMove, car - 30, Qt.MouseButton.LeftButton)  # the hand slips mid-click
+    mouse(QMouseEvent.Type.MouseButtonRelease, car - 30, Qt.MouseButton.NoButton)
+    assert clicked == [1] and slider.split() == (10, 85, 5)  # Car picked; no handle followed the slip
+    mouse(QMouseEvent.Type.MouseButtonPress, slider._x(10), Qt.MouseButton.LeftButton)  # on Bus|Car's handle
+    mouse(QMouseEvent.Type.MouseMove, slider._x(20), Qt.MouseButton.LeftButton)
+    assert slider.split() == (20, 75, 5)  # a drag that started on a handle still moves it
+
+
 def test_types_are_renamed_added_and_deleted_everywhere():
     modes = VehicleModes()
     matrix = ODMatrix(modes)
