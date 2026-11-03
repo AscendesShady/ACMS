@@ -40,7 +40,7 @@ from .results import clock_h
 from .interchanges import (build_diamond, build_slip_road, build_trumpet, curve_speed_kmh, fit_slip_roads, guess_stem,
                            pair_legs)
 from . import map_tiles
-from .map_tiles import Frame, mercator
+from .map_tiles import ZONE_DEFAULT_M, ZONE_M, Frame, mercator
 from .models import BUS_STOP_DIRECTIONS, MAX_BOARDING_PER_H, SIGNAL_METHODS, Network, Road
 from .network_generator import generate_network
 from .roundabouts import MAX_ENTRY_LANES, design_roundabout
@@ -720,10 +720,12 @@ TOOLS = [
                            ("junctions",))},
     {"name": "place_map", "edits": True,
      "description": "Put OpenStreetMap under the network: a `place` found by name (Nominatim; the first match), or "
-                    "lat and lon; rotation_deg turns the map. That place goes under the network's centre; then "
-                    "network_from_background can build its roads.",
+                    "lat and lon; rotation_deg turns the map. That place goes under the network's centre with a work "
+                    "zone round it, width_m x height_m (100-20000; one alone a square; 1200 x 1200 by default), the "
+                    "area the view keeps to; then network_from_background builds that zone's roads.",
      "parameters": _object({"place": {"type": "string"}, "lat": {"type": "number"}, "lon": {"type": "number"},
-                            "rotation_deg": {"type": "number"}})},
+                            "rotation_deg": {"type": "number"}, "width_m": {"type": "number"},
+                            "height_m": {"type": "number"}})},
     {"name": "add_bus_stop", "edits": True,
      "description": "Add a bus stop (a bay beside the kerb) on a road: direction forward (from -> to), backward or "
                     "both; dwell_s how long buses stand (20 by default). With passengers (boarding_per_h arriving to "
@@ -930,8 +932,8 @@ TOOLS = [
                             "seed": {"type": "integer"}, "radius_m": {"type": "number"}}, ("count",))},
     {"name": "network_from_background", "edits": True,
      "description": "Replace the whole network (undoable) with the roads of the background. Map: OpenStreetMap's "
-                    "road data (not the picture) for width_m x height_m round the network's centre (default "
-                    "1200 x 1200, at most 4000), with lanes, speed limits, one-way streets, roundabouts and "
+                    "road data (not the picture) for the map's work zone (or width_m x height_m round its centre, "
+                    "200-4000; a bigger zone is read 4000 m a side), with lanes, speed limits, one-way streets, roundabouts and "
                     "bridges as mapped, and junctions signalised where OSM has a junction signal (a pedestrian "
                     "crossing's, an emergency or a flashing signal leaves a priority junction; OSM holds no signal "
                     "timings, so each starts on Webster); road_classes 'main' (motorways to secondary roads) or 'all' (down to "
@@ -1087,9 +1089,10 @@ SKILLS = {
              "the user named it, a city or country only if they gave one (never a guessed one: the search finds "
              "it), then network_from_background (never a grid in its place), footpaths "
              "'none' (no walkways, crossings or paths) unless the user's words ask for them ('tagged' as mapped, "
-             "'all' every road); never ask about them or offer them. Leave width_m, "
-             "height_m and road_classes out for a neighbourhood, old town or downtown (1200 m, every street); give "
-             "them only for a size the user names (\"3 km\": 3000, road_classes 'main' past 2500). Lanes the user "
+             "'all' every road); never ask about them or offer them. place_map sets the work zone and "
+             "network_from_background builds it: leave width_m, height_m and road_classes out of both for a "
+             "neighbourhood, old town or downtown (1200 m, every street); for a size the user names give it to "
+             "place_map (\"3 km\": width_m 3000), road_classes 'main' past 2500. Lanes the user "
              "gives go in that call: \"main roads 2 to 3 lanes\" -> main_lanes [2, 3], \"side streets single lane\" -> "
              "local_lanes [1, 1]; it holds every road in them, so change no roads after. It keeps only roads a car can "
              "drive between the ends, so every OD pair has a route: report its junctions, roads, "
@@ -1533,7 +1536,22 @@ def network_summary(network: Network) -> dict:
         "institutions": len(network.institutions),
         "extent_m": {"x": [round(min(x for x, _ in points)), round(max(x for x, _ in points))],
                      "y": [round(min(y for _, y in points)), round(max(y for _, y in points))]} if points else None,
+        "background": _background_summary(network.background),
     }
+
+
+def _background_summary(background) -> str:
+    """What the network is drawn over, as network_summary gives it: the map's place and its work zone (the area
+    the view keeps to, network_from_background's), an image, or a colour."""
+    if background.kind == "image":
+        return f"the image {Path(background.image).name}, {background.width_m:g} m wide"
+    if background.kind != "map":
+        return "a plain colour: no map yet (place_map puts one under it)"
+    if not background.zone:
+        return f"OpenStreetMap at {background.lat:.5f}, {background.lon:.5f}, no work zone (place_map sets one)"
+    x, y, width, height = background.zone
+    return (f"OpenStreetMap at {background.lat:.5f}, {background.lon:.5f}; work zone {width:.0f} x {height:.0f} m, "
+            f"x {x:.0f} to {x + width:.0f}, y {y:.0f} to {y + height:.0f}")
 
 
 def list_roads(network: Network, node: str = "", direction: str = "") -> dict:
@@ -1870,6 +1888,7 @@ def generate_grid(network: Network, horizontal=None, vertical=None, spacing_m=No
     walkways = footpaths is not None and _bool(footpaths)
     for road in fresh.all_roads() if walkways else ():  # pedestrian walkways on both sides
         road.footpaths = list(FOOTPATH_SIDES["both"])
+    keep_background(network, fresh)  # as the Generate button: the map, its place and work zone kept
     vars(network).update(vars(fresh))  # same object: the window keeps its reference
     return {"generated": f"{vertical} x {horizontal} grid ({vertical} columns, {horizontal} rows)",
             "junctions": len(network.nodes),
@@ -1979,6 +1998,26 @@ def _centre(network: Network) -> tuple[float, float]:
     return (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
 
 
+def _sides(width_m, height_m) -> tuple[float, float]:
+    """An area's width_m x height_m as given; one side alone makes a square."""
+    width = float(width_m) if width_m is not None else float(height_m)
+    return width, float(height_m) if height_m is not None else width
+
+
+def keep_background(old: Network, fresh: Network) -> None:
+    """A new network (a grid generated, by the user or the assistant) keeps the backdrop the old one was drawn
+    over; over the map, the place under the old network's centre goes under the new one's, its work zone with it."""
+    background = old.background
+    if background.kind == "map":
+        (ox, oy), (nx, ny) = _centre(old), _centre(fresh)
+        background.lat, background.lon = Frame(background.lat, background.lon, background.anchor_x, background.anchor_y,
+                                               background.map_rotation_deg).to_wgs84(ox, oy)
+        background.anchor_x, background.anchor_y = nx, ny
+        if background.zone:
+            background.zone[:2] = [background.zone[0] + nx - ox, background.zone[1] + ny - oy]
+    fresh.background = background
+
+
 def _cached(key, make):
     """make()'s value, kept by key; a failure (of any kind: then a ValueError) is kept a minute, so a check and its
     change don't ask twice."""
@@ -2000,18 +2039,32 @@ def _cached(key, make):
     return value
 
 
-def _background_graph(network: Network, road_classes="all", width_m=1200.0, height_m=1200.0, road_colour=None,
+def _background_graph(network: Network, road_classes="all", width_m=None, height_m=None, road_colour=None,
                       colour_tolerance=40.0, resolution_m=2.0) -> tuple:
-    """The background's roads as a background_network.Graph, and what they came from."""
+    """The background's roads as a background_network.Graph, and what they came from. Over the map: its work zone
+    (as much of it as one read takes, 4,000 m a side), or `width_m` × `height_m` round the zone's centre; without a
+    zone, 1,200 m square round the network's centre."""
     background = network.background
     if background.kind == "map":
         classes = background_network.LEVELS.get(str(road_classes))
         if classes is None:
             raise ValueError("road_classes must be 'main' or 'all'.")
-        width, height = float(width_m), float(height_m)
+        zone, given = background.zone, width_m is not None or height_m is not None
+        if given:
+            width, height = _sides(width_m, height_m)
+        else:
+            width, height = (min(max(side, 200.0), 4000.0) for side in zone[2:]) if zone else (1200.0, 1200.0)
         if not (200 <= width <= 4000 and 200 <= height <= 4000):
             raise ValueError("width_m and height_m must be 200 to 4000 m.")
-        cx, cy = _centre(network)
+        cx, cy = (zone[0] + zone[2] / 2, zone[1] + zone[3] / 2) if zone else _centre(network)
+        if not zone:
+            where = f"{width:g} x {height:g} m round the network's centre"
+        elif (width, height) == (zone[2], zone[3]):
+            where = "the work zone"
+        else:
+            where = f"{width:g} x {height:g} m round the work zone's centre"
+            if not given:  # the zone itself is out of one read's reach
+                where += f" (the zone is {zone[2]:g} x {zone[3]:g} m; a read takes 200 to 4000 m a side)"
         rect = (cx - width / 2, cy - height / 2, cx + width / 2, cy + height / 2)
         frame = Frame(background.lat, background.lon, background.anchor_x, background.anchor_y, background.map_rotation_deg)
         corners = [frame.to_wgs84(x, y) for x in (rect[0], rect[2]) for y in (rect[1], rect[3])]
@@ -2020,8 +2073,7 @@ def _background_graph(network: Network, road_classes="all", width_m=1200.0, heig
         document = _cached(("osm", query), lambda: background_network.fetch_osm(query))
         graph = background_network.osm_graph(document, lambda lat, lon: frame.to_scene(*mercator(lat, lon)), rect)
         copy = f" (a copy kept from {document['cached_at']}: {document.get('cached_why', '')})"             if document.get("cached_at") else ""
-        return graph, (f"OpenStreetMap road data, {road_classes} roads, {width:g} x {height:g} m round the network's "
-                       f"centre{copy}")
+        return graph, f"OpenStreetMap road data, {road_classes} roads, {where}{copy}"
     if background.kind == "image":
         if not re.fullmatch(r"#[0-9a-fA-F]{6}", str(road_colour or "")):
             raise ValueError("Say the colour of the roads on the image: road_colour like '#ffffff'. Ask the user if "
@@ -2055,7 +2107,7 @@ def _lane_range(key: str, value) -> tuple[int, int] | None:
     return int(numbers[0]), int(numbers[-1])
 
 
-def network_from_background(network: Network, road_classes="all", width_m=1200.0, height_m=1200.0, road_colour=None,
+def network_from_background(network: Network, road_classes="all", width_m=None, height_m=None, road_colour=None,
                             colour_tolerance=40.0, resolution_m=2.0, footpaths="none", main_lanes=None,
                             local_lanes=None) -> dict:
     lanes = {kind: held for kind, held in (("main", _lane_range("main_lanes", main_lanes)),
@@ -2486,7 +2538,13 @@ def _places(query: str) -> list:
     return _cached(("place", query.lower()), fetch)
 
 
-def place_map(network: Network, place=None, lat=None, lon=None, rotation_deg=None) -> dict:
+def place_map(network: Network, place=None, lat=None, lon=None, rotation_deg=None, width_m=None, height_m=None) -> dict:
+    """The map under the network, the place at its centre, and its work zone round it, as the user's Confirm makes
+    one: `width_m` × `height_m` (ZONE_M; one alone, a square; neither, ZONE_DEFAULT_M square)."""
+    given = width_m is not None or height_m is not None
+    width, height = _sides(width_m, height_m) if given else (ZONE_DEFAULT_M, ZONE_DEFAULT_M)
+    if not (ZONE_M[0] <= width <= ZONE_M[1] and ZONE_M[0] <= height <= ZONE_M[1]):
+        raise ValueError(f"width_m and height_m (the work zone) must be {ZONE_M[0]:g} to {ZONE_M[1]:g} m.")
     if place:
         found = _places(place)
         if not found:
@@ -2498,12 +2556,14 @@ def place_map(network: Network, place=None, lat=None, lon=None, rotation_deg=Non
         name = f"{float(lat):.6f}, {float(lon):.6f}"
     background = network.background
     background.kind, background.lat, background.lon = "map", float(lat), float(lon)
-    background.anchor_x, background.anchor_y = _centre(network)
+    background.anchor_x, background.anchor_y = cx, cy = _centre(network)
+    background.zone = [cx - width / 2, cy - height / 2, width, height]
     if rotation_deg is not None:
         background.map_rotation_deg = float(rotation_deg)
-    return {"placed": name, "lat": background.lat, "lon": background.lon,
-            "note": "That place is under the network's centre. Next, to use its roads: network_from_background with no "
-                    "arguments (it reads this map; it takes no place)."}
+    return {"placed": name, "lat": background.lat, "lon": background.lon, "work_zone_m": [width, height],
+            "note": f"That place is under the network's centre, with a {width:g} x {height:g} m work zone round it (the "
+                    "view keeps to it). Next, to use its roads: network_from_background with no arguments (it reads "
+                    "this map and builds its work zone; it takes no place)."}
 
 
 def _passengers_problem(boarding_per_h, alighting_percent) -> str | None:
@@ -3770,7 +3830,8 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
         back = after.background
         lines.append("Background now " + (
             f"the OpenStreetMap map at {back.lat:.5f}, {back.lon:.5f}"
-            + (f", turned {back.map_rotation_deg:g}°" if back.map_rotation_deg else "") if back.kind == "map" else
+            + (f", turned {back.map_rotation_deg:g}°" if back.map_rotation_deg else "")
+            + (f", work zone {back.zone[2]:.0f} x {back.zone[3]:.0f} m" if back.zone else "") if back.kind == "map" else
             f"the image {Path(back.image).name}, {back.width_m:g} m wide" if back.kind == "image" else
             f"the colour {back.colour}"))
     if len(lines) > limit:
@@ -3830,6 +3891,16 @@ def explain_error(message: str, network: Network | None = None) -> dict:
         if close:
             answer["did_you_mean"] = close
     return answer
+
+
+def _area(args: dict) -> str:
+    """A call's width_m x height_m as the tools take it ("" when neither is given), for its card."""
+    if args.get("width_m") is None and args.get("height_m") is None:
+        return ""
+    try:
+        return "{:g} × {:g} m".format(*_sides(args.get("width_m"), args.get("height_m")))
+    except (TypeError, ValueError):
+        return f"{args.get('width_m')} × {args.get('height_m')} m"
 
 
 def describe_call(name: str, args: dict) -> str:
@@ -3947,7 +4018,8 @@ def _call_line(name: str, a: dict) -> str:
             (f", times from {a['from_run']}" if a.get("from_run") else "")
     if name == "place_map":
         where = a.get("place") or f"{a.get('lat')}, {a.get('lon')}"
-        return f"Put the map of {where} under the network"
+        size = f", work zone {_area(a) or f'{ZONE_DEFAULT_M:g} × {ZONE_DEFAULT_M:g} m'}"
+        return f"Put the map of {where} under the network{size}"
     if name == "add_bus_stop":
         return f"Add a bus stop on {a.get('road')} ({a.get('direction', 'both')})"
     if name == "add_crossing":
@@ -3991,8 +4063,9 @@ def _call_line(name: str, a: dict) -> str:
         return f"Set the mode split of {which} by logit{calibrated}"
     if name == "network_from_background":
         what = (f"the image's {a['road_colour']} roads" if a.get("road_colour") else
-                f"OpenStreetMap's {a.get('road_classes') or 'all'} roads, "
-                f"{float(a.get('width_m') or 1200):g} × {float(a.get('height_m') or 1200):g} m round its centre")
+                f"OpenStreetMap's {a.get('road_classes') or 'all'} roads, " + (
+                    f"{_area(a)} round the work zone's centre" if _area(a) else
+                    "in the map's work zone (1200 × 1200 m round the network's centre without one)"))
         return f"Replace the whole network with {what}"
     if name == "generate_demand":
         which = "the pairs " + ", ".join(_ids(a["pairs"])[:4]) if a.get("pairs") else every_pair()

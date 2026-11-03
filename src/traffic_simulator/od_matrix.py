@@ -2010,6 +2010,9 @@ class InstitutionPanel(QWidget):
             row.addWidget(button)
             self.kind_buttons[name] = button
         row.addStretch(1)
+        # Show Buildings: footprints and labels on the map; demand is the same either way (the window wires it)
+        self.buildings_button = icon_button(0xEC06, "Show Buildings", checkable=True)  # native CityNext glyph
+        row.addWidget(self.buildings_button)
         layout.addLayout(row)
         self.empty_hint = hint_label("Pick a building to place it. Click one on the map to see its circle of influence.")
         layout.addWidget(self.empty_hint)

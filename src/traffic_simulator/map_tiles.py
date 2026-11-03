@@ -44,6 +44,8 @@ DOWNLOAD_MAX_BYTES = 4_000_000  # a tile is tens of kB, a search's answer a few
 SEARCH_URL = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit={limit}&q={query}"
 SEARCH_LIMIT = 5  # places offered for one search
 SEARCH_GAP_S = 1.0  # Nominatim's policy: at most one request a second
+ZONE_M = (100.0, 20_000.0)  # a map's work zone's sides, metres on the ground: from a street to a city
+ZONE_DEFAULT_M = 1200.0  # a place's work zone (and the ground a place found is framed by) at least
 
 
 def mercator(lat: float, lon: float) -> tuple[float, float]:
@@ -224,34 +226,48 @@ class TileStore:
         self._pool.shutdown(wait=False, cancel_futures=True)
 
 
+def span_m(place: dict) -> float:
+    """The larger side, in metres on the ground, of a Nominatim place's bounding box ([south, north, west, east]);
+    0 without one."""
+    try:
+        south, north, west, east = (float(value) for value in place["boundingbox"])
+    except (KeyError, TypeError, ValueError):
+        return 0.0
+    middle = radians(max(-MAX_LATITUDE, min(MAX_LATITUDE, (south + north) / 2)))
+    return EARTH_RADIUS_M * max(radians(north - south), radians(east - west) * cos(middle))
+
+
 class PlaceSearch:
     """Place names to WGS84 points with OSM's Nominatim, one search at a time on its own thread.
-    `ready(query, found)` is called from that thread: `found` is a list of (name, lat, lon), best
-    first (places beyond Web Mercator's ±85° left out), or a message saying why it failed. A query
-    already answered comes from the cache at once. `download` (url -> bytes) stands in for the
-    network in tests."""
+    `ready(query, found)` is called from that thread: `found` is a list of (name, lat, lon, span_m), best
+    first (span_m: the larger side of its bounding box on the ground, to frame it; places beyond Web
+    Mercator's ±85° left out), or a message saying why it failed. A country (ISO 3166 code) keeps the
+    search inside it. A query already answered comes from the cache at once. `download` (url -> bytes)
+    stands in for the network in tests."""
 
     def __init__(self, ready=None, download=_download) -> None:
         self.ready, self.download = ready or (lambda query, found: None), download
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="osm search")
-        self._found: dict[str, list[tuple[str, float, float]]] = {}
+        self._found: dict[tuple[str, str], list[tuple[str, float, float, float]]] = {}
 
-    def search(self, query: str) -> bool:
-        """Look a place up; False for an empty query."""
-        query = " ".join(query.split())
+    def search(self, query: str, country: str = "") -> bool:
+        """Look a place up, within a country if one is given; False for an empty query."""
+        query, key = " ".join(query.split()), (" ".join(query.split()).lower(), country.lower())
         if not query:
             return False
-        if query.lower() in self._found:
-            self.ready(query, self._found[query.lower()])
+        if key in self._found:
+            self.ready(query, self._found[key])
         else:
-            self._pool.submit(self._fetch, query)
+            self._pool.submit(self._fetch, query, key[1])
         return True
 
-    def _fetch(self, query: str) -> None:
+    def _fetch(self, query: str, country: str) -> None:
         search_turn()
         try:
-            places = json.loads(self.download(SEARCH_URL.format(limit=SEARCH_LIMIT, query=urllib.parse.quote(query))))
-            found = [(str(place["display_name"]), float(place["lat"]), float(place["lon"])) for place in places]
+            url = SEARCH_URL.format(limit=SEARCH_LIMIT, query=urllib.parse.quote(query))
+            places = json.loads(self.download(url + (f"&countrycodes={country}" if country else "")))
+            found = [(str(place["display_name"]), float(place["lat"]), float(place["lon"]), span_m(place))
+                     for place in places]
         except OSError as exc:
             self.ready(query, f"Couldn't reach the place search ({exc}).")
             return
@@ -259,7 +275,7 @@ class PlaceSearch:
             self.ready(query, "The place search sent an answer that couldn't be read.")
             return
         found = [place for place in found if abs(place[1]) <= MAX_LATITUDE and abs(place[2]) <= 180][:SEARCH_LIMIT]
-        self._found[query.lower()] = found
+        self._found[(query.lower(), country)] = found
         self.ready(query, found)
 
     def close(self) -> None:

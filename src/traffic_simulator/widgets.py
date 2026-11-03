@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QRadioButton,
     QSizePolicy,
+    QStackedWidget,
     QStyle,
     QStyleOptionComboBox,
     QStylePainter,
@@ -126,7 +127,18 @@ class OpenPageTabs(QTabWidget):
         if page is None:
             return hint
         tallest = max(size(self.widget(index)).height() for index in range(self.count()))
-        return QSize(hint.width(), hint.height() - tallest + size(page).height())
+        return QSize(hint.width(), self._at_least(hint.height() - tallest + size(page).height(), size(page).height()))
+
+    def _at_least(self, height: int, page: int) -> int:
+        """Never less than the open page and what the tabs lay out round it (the tab row and the pane's frame, as
+        measured once laid out): Qt's hint counts the row as overlapping the frame, 4 px here, so a page of a fixed
+        height got that much less and its rows were squeezed into each other."""
+        stack = self.findChild(QStackedWidget)
+        if self.isVisible() and stack is not None and stack.height() > 0:
+            chrome = self.height() - stack.height()
+        else:
+            chrome = self.tabBar().sizeHint().height() if not self.tabBar().isHidden() else 0
+        return max(height, chrome + page)
 
     def sizeHint(self) -> QSize:  # type intentionally inherited from Qt
         return self._open_page(super().sizeHint(), QWidget.sizeHint)
@@ -141,7 +153,8 @@ class OpenPageTabs(QTabWidget):
         inner = width - max(self.width() - page.width(), 0) if page.width() else width  # the pages' width
         tallest = max(max(self.widget(index).heightForWidth(inner) for index in range(self.count())), 0)
         mine = page.heightForWidth(inner)
-        return total - tallest + (mine if mine >= 0 else page.minimumSizeHint().height())
+        mine = mine if mine >= 0 else page.minimumSizeHint().height()
+        return self._at_least(total - tallest + mine, mine)
 
 
 
@@ -190,6 +203,7 @@ class ChoiceButtons(QWidget):
         super().__init__()
         layout = QVBoxLayout(self) if vertical else QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4 if vertical else 14)  # side by side, each label clear of the next option's dot
         self.values = [value for _, value in options]
         self.group = QButtonGroup(self)
         for index, (label, _) in enumerate(options):

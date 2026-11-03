@@ -143,7 +143,12 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   `--gpu` additionally checks actual framebuffer silhouettes/open gaps, random paints and solid coplanar bus
   windows against raster, one upload across camera changes, and depth independent of instance order. Negative
   controls replace meshes with bricks or remove glazing depth bias and must fail these regressions.
-- `test_selection.py`: a line meeting a box (through it, from inside, across a corner, passing by);
+- `test_selection.py`: Add Node placing node after node (each selected, still placing, the dashed distance from
+  the last to the mouse, no undo step meanwhile, Ctrl+Z taking the last back, a right-click keeping them as one
+  step; Esc's Cancel going on, Discard leaving nothing and no step, Save keeping them; Esc with none placed
+  asking nothing; a Delete meanwhile taking the chain into its step, a new chain's Ctrl+Z only its own node,
+  Save keeping and saving them, closing keeping them so it asks); the Edge type choice clear of the buttons above it and its options of each other;
+  a line meeting a box (through it, from inside, across a corner, passing by);
   a window taking only the junction inside it and a crossing box its four roads too, a bus stop's bay
   by window and by crossing, and everything boxed deleted to an empty, valid network; an MRT line
   taken by a crossing box touching it and a window round its whole track (not one over part), outlined,
@@ -312,8 +317,10 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   project, its undo history and its saved state unchanged; no eye for a plain colour).
 - `test_background.py` (no test reaches the internet; a stand-in answers for Nominatim): place search by
   its usage policy (the tiles' User-Agent, the URL, the pole left out, the cache, nothing found, an
-  unreadable answer, offline, at least a second between requests) and in the window (one place under the
-  network's centre during Choose Location, three in a menu and one picked, nothing found moving nothing);
+  unreadable answer, offline, at least a second between requests, a country's code and its bounding box's span)
+  and in the window (a country typed and Enter: asked within its code and framed by its box; a place within it
+  under the box at once, framed 1.2 km; none chosen: anywhere, three in the place list and one picked, nothing found
+  moving nothing, Confirm keeping it);
   the scene true to scale round its georeference
   (1 km east and south on the ground), tile names against OSM's standard formula at four zooms, the zoom
   whose pixels match the screen's, a huge area falling to a coarser zoom; the tile store fetching once,
@@ -321,19 +328,31 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   User-Agent; a tile write cut short by a full disk leaving no tile, one that can't be decoded deleted and fetched
   again, tiles unused for `KEEP_S` deleted; the place search answering an answer cut short, and the assistant's
   lookup straight after it waiting a second; each kind drawn (a colour, a PNG with its proportions kept, a PDF's first and second
-  pages, the map once its tiles arrive); the background saved, loaded and validated; and in the window:
-  a swatch, the map placed at the network's centre, undo and redo, an image laid as wide as the network
+  pages, the map once its tiles arrive); the background saved, loaded and validated (a work zone of three
+  numbers, a zero side or NaN refused); and in the window:
+  leaving the map or an image asking first (No keeping it, Yes starting the new kind afresh with only the colour,
+  undo bringing the map back), a swatch, the map placed at the network's centre through its work zone, undo and redo, an image laid as wide as the network
   and centred, an unreadable file refused, one on a network share refused before it is opened, the view scrolling over the image, a run carrying on through
   a background change and its undo, Generate keeping the background; Lock (the tools and fields off,
   Move refused, undone), Measure through the view's mouse events (the line following the mouse, the
   distance, the network not clicked), Set Scale (the first point staying put, the line exactly its true
   length, the width scaled, still locked, the reference kept in image pixels, one undo step) and the
   reference noting its new length once the width is typed, Measure over a colour without Set Scale;
-  Choose Location first when the map is chosen (the network hidden, the tabs, Generate and the grid
-  toggle off, Use This Location in place of Move, the outline and cross; a drag moving the place under
-  the cross by its ground distance, the wheel zooming about the cross; Use This Location georeferencing
-  it at the network's centre; the globe and Esc keeping the place it had; a bigger grid generated with the
-  place under its centre; Map chosen again and Esc giving the colour back); Set Scale first for a new
+  the work zone first when the map is chosen (the network hidden, the tabs, Generate and the grid toggle off,
+  the bar in the corner controls' place, Move hidden; the whole world across the view and Confirm off; a left
+  drag, a right-drag pan and the wheel changing nothing before Locate Work Zone, the scene pinned to the
+  network's centre; Go framing 1.2 km; with Locate on, a drag moving the place under the box by its ground
+  distance and the wheel zooming about it, too small a box refused; Confirm making the zone what the box
+  covered, centred on the network, georeferenced there, the scene the zone and the junctions, the view
+  fitting the zone and zooming out no further than they fill it; undo taking the whole setup back; Change
+  Work Zone framing the zone it has and Esc keeping it; a bigger grid generated with the place and zone
+  under its centre; a colour freeing the view; Map chosen again and Esc giving the colour back); a work zone kept
+  only once confirmed (the section off while choosing; nothing in the history before Confirm; F and R leaving the
+  zoom alone before Locate; undo while choosing putting the setup back, then undoing the step before it, and redo;
+  Save while choosing writing the background from before; an answer to no current search dropped; a country chosen
+  again from the cache, framed, one request in all; Go keeping the ground the box covers at 60°; dragged over the
+  antimeridian, the longitude wrapped, leaving the box moving nothing, the zone confirmed and valid; Set Scale then
+  the map, the scene still pinned, Esc back to the image); Set Scale first for a new
   image (the network hidden, the length asked after the second click, a cancel asking again, 50 m laid
   made 100 m, one undo step) and skipped with Esc;
   the lock and reference saved, loaded and validated; the two-point fit recovering a
@@ -372,7 +391,10 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   `tools/preview_ui.py --output reports/ui-preview --width 1280 --height 800` captures all seven tabs and both
   AI pages, plus JSON layout measurements, using CPU/offscreen Qt. On Windows it locates the installed font
   directory explicitly. This does not verify native Windows window chrome or the OpenGL renderer.
-- `test_create_tab.py`: the two sections opening and closing (Generate Network open at start, road settings,
+- `test_create_tab.py`: Hide Background among the map's corner controls only over an image or the map (the bar
+  growing to take it, unticked again over a colour, an image's hide undone by the map and by a setup step) and
+  Show Buildings in Demand → Institutions (shown when it opens, an untick kept through Hourly/Daily); the driving side
+  under Universal Attributes; the two sections opening and closing (Generate Network open at start, road settings,
   signal timing and grid size in it); the chosen signal timing kept as the network's default, reaching a new
   junction and every junction of a generated grid, undo restoring it; idle signal lamps lit by the phases a run
   would use (roads crossing at 60°: the 20° and 200° arms green, not all four); the driving
@@ -615,6 +637,14 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   and the assistant's demand tools working the same controls. They select the pairs, set values,
   pattern, shares, points and polynomial; naming no pairs means every pair. Each tool call is one undo step, and refusals change nothing.
 - `test_od_matrix.py` also, the demand rules without Qt: demand.py loads no PySide6; a bus every 10 minutes fixed at 1 % of 600 veh/h and the rest 80:10 (88/11); a pair with both an hourly flow and trips a day fixed against the trips in a daily run (1/94/5, as daily-only) and the flow in an hourly one; a pair read from "1W-1E"; a value rounded and a pattern matched; the read-out's hourly and daily maps; a run's pair demand leaving out an end no longer on the network.
+- `test_background_network.py`: the assistant's place_map setting a work zone (1,200 m square, one side alone a square, a
+  size given, 1,200 m again with none whatever it had, one out of range refused with nothing changed;
+  describe_call's card giving the sizes the tools use; network_summary saying so),
+  network_from_background reading exactly the zone's box by default and a 6 x 5 km zone 4 km round its centre
+  (`source` saying so), and generate_grid keeping the map with the place and zone under the new centre.
+  `test_background.py`: the assistant's place_map shown as after Confirm (the scene the zone, the view fitted,
+  the Work zone row, one undo step); an answer arriving mid-setup cancelling it first, its place kept and in the
+  history; a study's place planned with its area as the work zone and the same area built.
 - `test_background_network.py`: a stand-in Overpass answer (a primary road, 4 lanes, 30 mph, a signal 20 m
   before a junction with a one-way street coming in from the edge, a roundabout ring, a bridge, a
   footway, a pedestrian crossing's signal and a flashing amber beside another junction) made into a

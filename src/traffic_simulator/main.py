@@ -21,7 +21,8 @@ from dataclasses import asdict, replace
 from itertools import accumulate
 from types import SimpleNamespace
 
-from PySide6.QtCore import QBuffer, QEvent, QEventLoop, QIODevice, QPoint, QRectF, QSize, QStandardPaths, Qt, QTimer
+from PySide6.QtCore import (QBuffer, QEvent, QEventLoop, QIODevice, QPoint, QRectF, QSize, QStandardPaths, Qt, QThread,
+                            QTimer)
 from PySide6.QtGui import QAction, QFontDatabase, QGuiApplication, QImage, QKeySequence, QPainter, QShortcut
 from PySide6.QtWidgets import (
     QApplication,
@@ -33,7 +34,6 @@ from PySide6.QtWidgets import (
     QFileDialog,
     QFormLayout,
     QFrame,
-    QGraphicsView,
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -166,7 +166,8 @@ def ask_interchange(parent: QWidget, kind: str, network: Network, nodes: list[st
 # Without either font, tabs show their names.
 TAB_ICONS = {"Create Network": "\ue800", "Edit Network": "\ue70f", "Mode Behavior": "\ue804",
              "Demand Generator": "\ue80a", "AI Mode": "\ue99a", "View Summary": "\ue9d2",
-             "Extensions": "\uea86"}  # map, pencil, car, table, robot, chart, puzzle
+             "Extensions": "\uea86", "Universal Attributes": "\ue909"}  # map, pencil, car, table, robot, chart, puzzle,
+# globe
 TAB_ICON_PX = 20
 # The grid a new window starts with, and the Create Network tab's settings for new roads
 DEFAULT_HORIZONTAL_CORRIDORS, DEFAULT_VERTICAL_CORRIDORS = 3, 4
@@ -263,7 +264,8 @@ class MainWindow(QMainWindow):
         self.background_painter = BackgroundPainter()
         self.view.background = self.background_painter
         self.background_painter.tile_ready.connect(self.view.redraw)
-        self.scene.extent = lambda rect: self.background_painter.extent(self.network.background, rect)
+        self.scene.extent = lambda rect: self.background_painter.extent(
+            self.network.background, rect, self._junction_bounds(), self.scene.network_rect)
         network_tools.image_mask = self.background_painter.road_mask  # network_from_background reads images with it
         self.properties = PropertiesPanel()
         self.properties.set_network(self.network)
@@ -332,10 +334,6 @@ class MainWindow(QMainWindow):
         roads = QWidget()
         form = QFormLayout(roads)
         form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.FieldsStayAtSizeHint)
-        self.driving_side = ChoiceButtons([("Left-hand", "left"), ("Right-hand", "right")])
-        self.driving_side.set_value(DEFAULT_DRIVING_SIDE)
-        self.driving_side.setToolTip("Side traffic keeps to")
-
         self.speed_limit_combo = QComboBox()
         for speed in (20, 30, 40, 50, 60, 70, 80, 100, 120):
             self.speed_limit_combo.addItem(f"{speed} km/h", speed)
@@ -348,7 +346,6 @@ class MainWindow(QMainWindow):
         self.lane_changing_check = QCheckBox("Allowed")
         self.lane_changing_check.setChecked(DEFAULT_LANE_CHANGING)
         self.lane_changing_check.setToolTip("Lane changes on new roads")
-        form.addRow("Driving side", self.driving_side)
         form.addRow("Speed limit", self.speed_limit_combo)
         form.addRow("Lanes per direction", self.lanes_spin)
         form.addRow("Lane changing", self.lane_changing_check)
@@ -375,6 +372,10 @@ class MainWindow(QMainWindow):
         self.background_panel = BackgroundPanel(self.background_painter)
         self.background_panel.attach(network=lambda: self.network, bounds=self._junction_bounds)
         self.background_panel.redraw = self.view.redraw
+        self.background_panel.view = self.view  # the work zone is framed on it, its bar over the map
+        self.view.set_top(self.background_panel.bar)
+        self.view.zoomed.connect(self.background_panel.show_zone)
+        self.view.zoom_range = self._zoom_range
         self.scene.background_tool = self.background_panel  # its Move and Two Points take the map's clicks
         self.create_tab = create_tab
         self.background_panel.show_background(self.network.background)
@@ -412,15 +413,13 @@ class MainWindow(QMainWindow):
         self.isometric_button = icon_button(0xE809, "3D View", checkable=True)  # native TiltUp glyph, Windows 10 too
         self.isometric_button.toggled.connect(self.view.set_isometric)
         self.view.projection_changed.connect(self.isometric_button.setChecked)
-        self.buildings_button = icon_button(0xEC06, "Show Buildings", checkable=True)  # native CityNext glyph
-        self.buildings_button.setChecked(self.scene.buildings_visible)
-        self.buildings_button.toggled.connect(self.scene.set_buildings_visible)
-        self.scene.buildings_changed.connect(self.buildings_button.setChecked)
         self.map_controls += ("\n3D View: orthographic isometric camera, 45 degree yaw, 35.3 degree elevation, zero roll"
                               "\nIn 3D View, selection boxes follow the world grid. Zoom never changes simulation speed.")
-        self.map_controls += "\nShow Buildings: display institution footprints and labels; demand is unchanged."
-        for button in (self.grid_toggles[0], self.isometric_button, self.buildings_button, self.power_button,
-                       self.fit_button, self.reset_button, self.help_button):
+        self.map_controls += ("\nHide Background (the eye, over an image or the map): the roads alone; nothing saved "
+                              "changes.")
+        # Hide Background sits here, on the map it hides, and shows only over an image or the map (the panel says)
+        for button in (self.grid_toggles[0], self.isometric_button, self.background_panel.hide_button,
+                       self.power_button, self.fit_button, self.reset_button, self.help_button):
             row.addWidget(button)
         self.view.set_corner(corner)
 
@@ -443,7 +442,7 @@ class MainWindow(QMainWindow):
         )
         self.edge_type_row = QWidget()  # only while Add Edge is active
         edge_form = QFormLayout(self.edge_type_row)
-        edge_form.setContentsMargins(0, 0, 0, 0)
+        edge_form.setContentsMargins(0, 6, 0, 2)  # clear of the buttons above: the radio dots stood against them
         edge_form.addRow("Edge type", self.edge_kind)
         tools_layout.addWidget(self.edge_type_row)
         roads_layout.addWidget(tools)
@@ -481,6 +480,8 @@ class MainWindow(QMainWindow):
         self.edit_tabs.addTab(walk_page, "Pedestrian")
         edit_layout.addWidget(self.edit_tabs)
         self.metro_line: str | None = None  # the line a deployment is extending
+        self.node_chain: list[str] = []  # Add Node's nodes placed since it started: not an undo step until it ends
+        self._demand_kind = ""  # the Demand tab last chosen (Institutions shows the buildings when it opens)
         self.mode_hint = hint_label()  # next-step banner, shown only while a tool is active
         self.mode_hint.setProperty("role", "banner")
         edit_layout.addWidget(self.mode_hint)
@@ -494,6 +495,10 @@ class MainWindow(QMainWindow):
         self.od_matrix = ODMatrix(self.vehicle_modes)
         self.od_panel = ODCellPanel(self.od_matrix)
         self.institution_panel = self.od_panel.institutions  # Demand → Institutions: buildings placed on the map
+        self.buildings_button = self.institution_panel.buildings_button  # Show Buildings: with the buildings
+        self.buildings_button.setChecked(self.scene.buildings_visible)
+        self.buildings_button.toggled.connect(self.scene.set_buildings_visible)
+        self.scene.buildings_changed.connect(self.buildings_button.setChecked)
         # generate_demand's gravity model measures routes on the open network
         self.od_panel.planner = lambda pairs, args, values=None, shares=None: network_tools.demand_plan(
             self.network, pairs, args, values, shares)
@@ -543,6 +548,26 @@ class MainWindow(QMainWindow):
         self.extensions.latest_frame = lambda: self.runner.frame if self.runner is not None else None
         self.extensions.hooks_changed.connect(self._apply_hooks)
         self.tabs.addTab(self.extensions, "Extensions")
+        # Universal Attributes: what holds for the whole network, whichever way it was made (generated, drawn,
+        # from a map or the assistant), so not under Generate Network.
+        universal_tab = QWidget()
+        universal_layout = QVBoxLayout(universal_tab)
+        traffic = QGroupBox("Traffic")
+        traffic_layout = QVBoxLayout(traffic)
+        traffic_form = QFormLayout()
+        traffic_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.FieldsStayAtSizeHint)
+        self.driving_side = ChoiceButtons([("Left-hand", "left"), ("Right-hand", "right")])
+        self.driving_side.set_value(DEFAULT_DRIVING_SIDE)
+        self.driving_side.setToolTip("Side traffic keeps to")
+        traffic_form.addRow("Driving side", self.driving_side)
+        traffic_layout.addLayout(traffic_form)
+        traffic_layout.addWidget(hint_label(  # under the form: a wrapped row of a form is clipped
+            "The whole network at once: lanes, turns and signals mirror to the other side, and new roads and grids "
+            "follow it."))
+        universal_layout.addWidget(traffic)
+        universal_layout.addStretch(1)
+        self.universal_tab = universal_tab
+        self.tabs.addTab(universal_tab, "Universal Attributes")
         for index in range(self.tabs.count()):  # every page lines up with the tab row's edges
             self.tabs.widget(index).layout().setContentsMargins(0, 8, 0, 0)
         # Tabs are icons: hovering one names it, and the open tab's name heads the sidebar.
@@ -3395,6 +3420,7 @@ class MainWindow(QMainWindow):
         self.scene.metro_clicked.connect(self.metro_clicked)
         self.scene.metro_aiming.connect(self._metro_ghost)
         self.view.right_clicked.connect(lambda: self.metro_button.setChecked(False))  # ends a deployment
+        self.view.right_clicked.connect(lambda: self.add_node_button.setChecked(False))  # keeps the nodes placed
         self.properties.footpath_preview.connect(self.scene.preview_footpaths)
         for button in (self.zebra_button, self.overbridge_button):
             button.toggled.connect(lambda checked, button=button: self._crossing_tool(button, checked))
@@ -3430,7 +3456,7 @@ class MainWindow(QMainWindow):
         self.ai_mode.indicator.connect(self._show_ai_status)
         self.ai_mode.indicator.connect(self._refresh_summary)  # AI Usage follows each request
         self.ai_status.linkActivated.connect(self._open_system_2)
-        self.ai_mode.attach(network=lambda: self.network, selection=self._selection_info,
+        self.ai_mode.attach(network=self._assistant_network, selection=self._selection_info,
                             show=self._show_on_map, edited=self._ai_edited, od=self._od_command,
                             traffic=self._traffic, types=self._types_command, runs=self._runs_command,
                             state=lambda: self._snapshot() if self.extensions.wants("log") else None,
@@ -3460,7 +3486,12 @@ class MainWindow(QMainWindow):
         """Cursor and hint banner follow whichever canvas tool is active."""
         cross = Qt.CursorShape.CrossCursor
         if self.add_node_button.isChecked():
-            cursor, hint = cross, "Click empty space on the map to place the new node. Esc cancels."
+            cursor = cross
+            hint = ("Click empty space to place a node, then keep clicking for more; a dashed line gives the distance "
+                    "from the last. Right-click keeps them; Esc asks to keep or discard."
+                    if not self.node_chain else
+                    f"{len(self.node_chain)} placed, {self.node_chain[-1]} last: click for the next. Right-click keeps "
+                    "them; Esc asks to keep or discard; Ctrl+Z takes the last back.")
         elif self.add_edge_button.isChecked():
             cursor = cross
             if self.edge_start is None:
@@ -3598,11 +3629,12 @@ class MainWindow(QMainWindow):
             if kind == "node":
                 self._show_hint(f"{identifier} is already there. Click empty space for the new node.")
                 return
-            self.add_node_button.setChecked(False)
-            node = self.network.add_node(x, y)
+            node = self.network.add_node(x, y)  # one of a chain: kept (one undo step) or discarded when it ends
+            self.node_chain.append(node.id)
+            self.background_painter.guide = None  # until the mouse moves on towards the next
             self.select("node", node.id)
-            self.statusBar().showMessage(self._network_summary() + f" • Added {node.id}")
-            self._commit()
+            self._refresh_mode()
+            self.statusBar().showMessage(self._network_summary() + f" • Placed {node.id}")
             return
         if not self.add_edge_button.isChecked():
             if additive and kind == "node":
@@ -3666,7 +3698,7 @@ class MainWindow(QMainWindow):
     def cancel(self) -> None:
         """Esc: leave the active tool, or clear the selection when no tool is active."""
         if self.background_panel.tool is not None:
-            self.background_panel.cancel_tool()
+            self.background_panel.end_tool()
             return
         if self.scene.placing is not None:
             self.institution_panel.end_placing()
@@ -3676,6 +3708,18 @@ class MainWindow(QMainWindow):
             return
         if self.tabs.currentWidget() is self.demand_tab and self.od_matrix.selected_pairs():
             self.od_matrix.clear_selection()  # the OD Pair editor goes with it
+            return
+        if self.add_node_button.isChecked() and self.node_chain:  # nodes placed: keep them, or discard them?
+            count = len(self.node_chain)
+            answer = QMessageBox.question(
+                self, "Placed nodes", f"Keep the {count} node{'s' if count > 1 else ''} placed "
+                f"({', '.join(self.node_chain)})? Discard takes {'them all' if count > 1 else 'it'} away.",
+                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
+                QMessageBox.StandardButton.Save)
+            if answer == QMessageBox.StandardButton.Cancel:
+                return  # placing goes on
+            self._finish_nodes(keep=answer == QMessageBox.StandardButton.Save)
+            self.add_node_button.setChecked(False)
             return
         tools = (self.add_node_button, self.add_edge_button, self.properties.drag_button, self.metro_button)
         if any(button.isChecked() for button in tools):
@@ -3829,9 +3873,31 @@ class MainWindow(QMainWindow):
         return sorted(origins, key=order), sorted(destinations, key=order)
 
     def toggle_add_node(self, checked: bool) -> None:
+        """Add Node: each click on empty map places a node, selected, and a dashed line from it to the mouse gives the
+        distance to the next. Ended (the button, a right-click, another tool or tab) the nodes are kept, one undo
+        step; Esc asks first (`cancel`), and discarding takes them all away."""
         if checked:
             self._end_modes_except(self.add_node_button)
+        else:
+            self._finish_nodes(keep=True)
         self._refresh_mode()
+
+    def _finish_nodes(self, keep: bool) -> None:
+        chain, self.node_chain = self.node_chain, []
+        self.background_painter.guide = None
+        self.view.redraw()
+        if not chain:
+            return
+        if keep:
+            self.statusBar().showMessage(f"{self._network_summary()} • Added {len(chain)} node"
+                                         f"{'s' if len(chain) > 1 else ''}: {', '.join(chain)}")
+            self._commit()
+            return
+        for node_id in chain:
+            self.network.delete_node(node_id)
+        self.select("", "")
+        self.statusBar().showMessage(f"{self._network_summary()} • Discarded {len(chain)} placed node"
+                                     f"{'s' if len(chain) > 1 else ''}.")
 
     def toggle_metro(self, checked: bool) -> None:
         """Start deployment: every map click a metro stop, the second making a new line and each one after it
@@ -4044,6 +4110,7 @@ class MainWindow(QMainWindow):
         self._refresh_mode()
 
     def install_network(self, network: Network, fit: bool = True) -> None:
+        self.background_panel.end_tool()  # on the old network: an unconfirmed work zone never reaches the new one
         self._end_modes_except(None)
         self.network = network
         self.scene.set_network(network)
@@ -4113,12 +4180,7 @@ class MainWindow(QMainWindow):
         except ValueError as exc:
             QMessageBox.warning(self, "Cannot generate network", str(exc))
             return
-        background = self.network.background  # a new grid keeps the backdrop it is drawn over
-        if background.kind == "map":  # and the place under the old network's centre goes under its centre
-            old, new = self._junction_bounds().center(), self._junction_bounds(network).center()
-            background.lat, background.lon = map_frame(background).to_wgs84(old.x(), old.y())
-            background.anchor_x, background.anchor_y = new.x(), new.y()
-        network.background = background
+        network_tools.keep_background(self.network, network)  # the map's place and work zone under its centre
         self.install_network(network)
         self._commit()
 
@@ -4139,8 +4201,9 @@ class MainWindow(QMainWindow):
         self._show_saved()  # and the switch is saved with the project
         if kind != "institutions":
             self.institution_panel.end_placing()
-        else:
-            self.scene.set_buildings_visible(True)  # hidden by default: the buildings being placed show
+        elif self._demand_kind != "institutions":  # opened: the buildings being placed show (hidden by default); the
+            self.scene.set_buildings_visible(True)  # Hourly/Daily switch re-sends it and leaves Show Buildings alone
+        self._demand_kind = kind
         if self.tabs.currentWidget() is self.demand_tab:
             self.show_grid(kind != "institutions" and not self.od_panel.place_spawn_button.isChecked())
 
@@ -4299,31 +4362,51 @@ class MainWindow(QMainWindow):
     def _show_background(self) -> None:
         self.background_panel.show_background(self.network.background)
         self.scene.rebuild()  # what the view may scroll over follows the image or map
+        self.view.clamp_zoom()  # a work zone just chosen or undone: never zoomed out past it
         self.view.redraw()
         self.pointer.setVisible(self.network.background.kind == "map")
 
     def _background_tool(self, tool: object) -> None:
         """A background tool started or ended: the map's cursor says which; the Edit tab's tools end.
-        Choose Location (the map) and Set Scale (a new image) come first: the network is hidden and the
-        tabs and the other Create sections wait until they end; the wheel zooms about the view's centre,
-        where the network's centre is, while choosing a place."""
+        The map's work zone and Set Scale (a new image) come first: the network is hidden and the tabs and
+        the other Create sections wait until they end. While the work zone is chosen the view is seen from
+        above, its corner controls give way to the zone's bar, and the scene is pinned to the network's
+        centre (BackgroundPainter.extent), under the box; after it, the view fits the zone."""
         if tool is not None:
             self._end_modes_except(None)
-        setup = tool in ("locate", "scale")
-        was_locating = self.view.transformationAnchor() == QGraphicsView.ViewportAnchor.AnchorViewCenter
-        self.scene.set_hidden(setup)
+        setup, zone = tool in ("zone", "scale"), tool == "zone"
+        corner = self.fit_button.parentWidget()
+        was_zone = corner.isHidden()
+        if zone:
+            self.view.set_isometric(False)  # the box frames the ground
+        if self.scene.hidden == setup:
+            self.scene.rebuild()  # already hidden (Set Scale, then the map): what it scrolls over still follows the tool
+        else:
+            self.scene.set_hidden(setup)
         self.tabs.tabBar().setEnabled(not setup)
         for section in (self.generate_section, self.grid_toggles[0]):
             section.setEnabled(not setup)
-        self.view.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorViewCenter if tool == "locate"
-                                          else QGraphicsView.ViewportAnchor.AnchorUnderMouse)
-        if tool == "locate":
-            self.view.centerOn(self._junction_bounds().center())
-        elif was_locating:
-            QTimer.singleShot(0, self.view.fit_network)  # back from looking round the map: the network in view
-        self.view.set_tool_cursor(Qt.CursorShape.SizeAllCursor if tool in ("move", "locate") else
+        corner.setVisible(not zone)
+        if was_zone and not zone:  # the work zone chosen (or back to what it was): it, or the network, in view
+            background = self.network.background
+            if background.kind == "map" and background.zone:
+                QTimer.singleShot(0, lambda: self.view.fit_rect(QRectF(*background.zone)))
+            else:
+                QTimer.singleShot(0, self.view.fit_network)
+        self.pointer.setVisible(self.network.background.kind == "map")
+        self.view.set_tool_cursor(Qt.CursorShape.SizeAllCursor if tool == "move" else
                                   Qt.CursorShape.CrossCursor if tool in ("align", "measure", "scale")
                                   else Qt.CursorShape.ArrowCursor)
+
+    def _zoom_range(self) -> tuple[float, float] | None:
+        """How far the wheel zooms (NetworkView.zoom_range): while the work zone is chosen, as its bar allows;
+        over a map with one, never out past the zone (with any junction beyond it) filling the view."""
+        if self.background_panel.tool == "zone":
+            return self.background_panel.zoom_range()
+        background = self.network.background
+        if background.kind == "map" and background.zone:
+            return min(self.view.fit_scale(self.scene.sceneRect()), 100.0), 100.0
+        return 0.0005, 100.0
 
     def _show_pointer(self, x: float, y: float) -> None:
         """The mouse's latitude and longitude, while the map shows; Measure's line follows it, as does a metro
@@ -4331,6 +4414,10 @@ class MainWindow(QMainWindow):
         self.background_panel.hover(x, y)
         if self.scene.metro_deploying and self.scene._metro_press is None:  # (an aim drag draws its own)
             self._metro_ghost(x, y)
+        if self.add_node_button.isChecked() and self.node_chain and self.node_chain[-1] in self.network.nodes:
+            last = self.network.nodes[self.node_chain[-1]]  # placing nodes: the distance from the last to the next
+            self.background_painter.guide = (last.x, last.y, x, y, f"{math.hypot(x - last.x, y - last.y):.1f} m")
+            self.view.redraw()
         background = self.network.background
         if background.kind == "map":
             lat, lon = map_frame(background).to_wgs84(x, y)
@@ -4338,12 +4425,9 @@ class MainWindow(QMainWindow):
 
     def _background_changed(self, key: object) -> None:
         """The background changed (the Create tab's section): redrawn, one undo step; a run carries
-        on, as it drives the roads, not their backdrop. A place just entered is shown."""
+        on, as it drives the roads, not their backdrop."""
         self._show_background()
-        if key == "place":
-            background = self.network.background
-            self.view.centerOn(background.anchor_x, background.anchor_y)
-        self._commit(key if key != "place" else ("background", "place"), stop_run=False)
+        self._commit(key, stop_run=False)
 
     def model_updated(self, note: str = "Model updated") -> None:
         if self.multi_nodes:
@@ -4436,11 +4520,22 @@ class MainWindow(QMainWindow):
                 "note": "Each starts with 0 % of every OD pair's trips (a timetabled one has its headway's share); "
                         "set shares with set_od_demand's mode_split." + (" " + stopped if stopped else "")}
 
+    def _assistant_network(self) -> Network:
+        """The network as the assistant reads and edits it. A work zone being chosen when an answer arrives is
+        cancelled first: the assistant never works on a half-made background, nor is its change put back by the
+        setup's own undo of itself (only from the GUI thread, where the assistant's tools run)."""
+        if self.background_panel.tool == "zone" and QThread.currentThread() is self.thread():
+            self.background_panel.end_tool()
+        return self.network
+
     def _ai_edited(self, tool: str) -> None:
         """The assistant changed the network: redraw, and make it one undo step."""
         if tool in ("generate_grid", "network_from_background"):  # a whole new network: the Create tab too, in view
             self.install_network(self.network)
             self._commit()
+        elif tool == "place_map":  # as the user's Confirm: the map and its work zone shown, the view on the zone
+            self._background_changed(("background", "zone"))
+            self.view.fit_rect(QRectF(*self.network.background.zone))
         elif tool in ("deploy_institutions", "place_institution"):  # buildings only: a run carries on
             self.scene.rebuild()
             self.statusBar().showMessage(f"{self._network_summary()} • Institutions placed by the assistant "
@@ -4470,7 +4565,12 @@ class MainWindow(QMainWindow):
 
     def _commit(self, merge_key: object = None, stop_run: bool = True) -> None:
         """Call when an action finishes; the state before it becomes an undo step. Nothing changed
-        (a re-click, a drag that didn't move): nothing happens, and a run carries on."""
+        (a re-click, a drag that didn't move): nothing happens, and a run carries on. Nodes being placed go into
+        whatever step this is (an edit of the one selected, Delete, the assistant): kept now, they are no longer the
+        chain's to discard or take back, and Add Node, still on, starts a new chain."""
+        if getattr(self, "node_chain", None):
+            self.node_chain = []
+            self.background_painter.guide = None
         self.od_matrix.prune(self.network.approach_nodes)  # a deleted end's demand goes with it (or a file's unknown end's)
         snapshot = None if self._building else self._snapshot()
         if snapshot is not None and snapshot == self.history.current:
@@ -4508,6 +4608,14 @@ class MainWindow(QMainWindow):
             self.metro_button.setChecked(False)
             self.statusBar().showMessage("The unfinished MRT line was taken back.")
             return
+        if self.add_node_button.isChecked() and self.node_chain:  # placing nodes: not a step yet; the last goes back
+            last = self.node_chain.pop()
+            self.network.delete_node(last)
+            self.background_painter.guide = None
+            self.select("node", self.node_chain[-1]) if self.node_chain else self.select("", "")
+            self._refresh_mode()
+            self.statusBar().showMessage(f"{last} taken back.")
+            return
         self._restore(self.history.undo(), "Undone. Ctrl+Y redoes it.", "Nothing to undo.")
 
     def redo(self) -> None:
@@ -4520,6 +4628,7 @@ class MainWindow(QMainWindow):
         if state is None:
             self.statusBar().showMessage(nothing, 3000)
             return
+        self.background_panel.end_tool()  # an unconfirmed work zone is put back first, on the network it was made on
         network, cells, (modes, default_split) = deepcopy(state)  # the history keeps its own copy untouched
         # Only the demand differs: a run carries on with it, as with any demand edit.
         # Only the demand, or the background, differs: a run carries on with it.
@@ -4602,7 +4711,11 @@ class MainWindow(QMainWindow):
         self.setWindowModified(self.unsaved())
 
     def save_file(self, as_new: bool = False) -> bool:
-        """Save the project (to its file; asking where the first time or for Save As). True once saved."""
+        """Save the project (to its file; asking where the first time or for Save As). True once saved. A work zone
+        being chosen is cancelled first: only a confirmed one is part of the project; nodes being placed are kept first
+        (one step), so what is saved is in the history and the title's * is right."""
+        self.background_panel.end_tool()
+        self.add_node_button.setChecked(False)
         path = self.network_path if self.network_path and not as_new else None
         if path is None:
             start = self.network_path or str(Path.home() / "Documents" / "project.json")
@@ -4620,7 +4733,9 @@ class MainWindow(QMainWindow):
         return True
 
     def _may_discard(self) -> bool:
-        """Before closing or opening another project: save, discard or stay (unsaved changes only)."""
+        """Before closing or opening another project: save, discard or stay (unsaved changes only). Nodes being
+        placed are kept first (one step), so they count as changes."""
+        self.add_node_button.setChecked(False)
         if not self._ask_to_save or not self.unsaved():
             return True
         answer = QMessageBox.question(

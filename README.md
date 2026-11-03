@@ -45,7 +45,7 @@ The editor also starts with `.venv\Scripts\acms.exe` or
   In **Mode Behavior**, click a type and choose its **Colour**. **Random** gives each vehicle stable varied paint
   throughout the run; the choice is saved with the project and supports Undo. Demand charts keep the type colour.
   Choose paint before Run: like other vehicle-type edits, changing it stops an active run.
-- **Show Buildings:** the city icon beside 3D View hides/shows placed institutions, their labels and selected
+- **Show Buildings:** the city icon in Demand Generator → Institutions hides/shows placed institutions, their labels and selected
   catchments. It changes visibility only: institutions and their demand remain. Placement previews still show
   while you add a building. Buildings start hidden; this display choice lasts for the session.
 - **Overhead MRT:** 3D View raises MRT lines onto viaducts with piers and station platforms/canopies.
@@ -80,8 +80,18 @@ The editor also starts with `.venv\Scripts\acms.exe` or
   Walkers in a bridge corridor are lifted for display; simulation positions and walking times stay unchanged.
   **Slip roads** (Ctrl+click two roads that meet, then **Add Slip Road**) curve smoothly out of and back into their roads, sized so they
   are quicker than the junction they bypass.
-- **Background:** once you've drawn the roads over a map or plan, **Hide Background** (the eye beside Lock in
-  Create → Background) hides it to show the roads alone; press it again to bring it back. It changes nothing saved.
+- **Work zone:** choosing **Map** (Create → Own Network) shows the world map under a blue box. In the bar over the
+  map pick a **Country** and a **Place** (or type the latitude and longitude and Go), press **Locate Work Zone** to
+  drag and zoom the map until the box frames your area, then **Confirm**. From then on the view stays on that zone:
+  it can't be panned or zoomed out past it. The globe beside Work zone changes it; Esc cancels.
+- **Background:** once you've drawn the roads over a map or plan, **Hide Background** (the eye among the map's
+  own buttons, top right, shown only over a map or image) hides it to show the roads alone; press it again to bring
+  it back. It changes nothing saved. Switching from a map or image to another kind asks first, then starts afresh
+  (Ctrl+Z brings the old one back).
+- **Add Node:** click empty map to place a node, then keep clicking for more; a dashed line from the last node
+  shows the distance to the next. Right-click keeps them (one undo step), Esc asks to keep or discard them, and
+  Ctrl+Z takes the last one back while placing.
+- **Universal Attributes** (the globe tab): Left- or right-hand driving, for the whole network.
 - **Demand:** an OD pair's hourly flow can take a **PHF** (peak-hour factor, 0.25–1): the hour's busiest
   quarter runs at the flow ÷ PHF. The assistant can also set four 15-minute counts.
 - **Drop-offs:** not every trip runs entry to exit. Click a vehicle type's zone in the pair's **Modes** bar: a

@@ -3,6 +3,8 @@ right to left: a crossing box takes whatever it touches), and deleting what it t
 Run with `python tests/test_selection.py` (or the test monitor)."""
 
 import os
+import tempfile
+from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -12,6 +14,7 @@ from PySide6.QtWidgets import QApplication, QMessageBox  # noqa: E402
 
 from traffic_simulator.geometry import polyline_meets_box  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
+from traffic_simulator.network_io import load_network  # noqa: E402
 from traffic_simulator.network_tools import delete_objects  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
@@ -94,6 +97,98 @@ def test_the_map_selects_by_box_and_deletes_what_it_took():
     nodes = len(window.network.nodes)
     drag((380, 380), (620, 620))
     assert window.group == [] and len(window.network.nodes) == nodes + 1
+    window.close()
+
+
+def test_add_node_places_one_node_after_another_until_they_are_kept_or_discarded():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    nodes, steps = len(window.network.nodes), len(window.history.undo_stack)
+    window.add_node_button.setChecked(True)
+    window.canvas_clicked("", "", 3000.0, 3000.0)
+    assert window.add_node_button.isChecked() and window.node_chain == ["N1"]  # still placing, the node selected
+    assert window.scene.selection == ("node", "N1")
+    window._show_pointer(3300.0, 3400.0)  # on towards the next: a dashed line from the last gives the distance
+    assert window.background_painter.guide == (3000.0, 3000.0, 3300.0, 3400.0, "500.0 m")
+    window.canvas_clicked("", "", 3300.0, 3400.0)
+    assert window.node_chain == ["N1", "N2"] and window.scene.selection == ("node", "N2")
+    assert window.background_painter.guide is None and len(window.history.undo_stack) == steps  # nothing kept yet
+    window._show_pointer(3300.0, 3500.0)
+    assert window.background_painter.guide[:2] == (3300.0, 3400.0)  # from the latest node now
+    window.undo()  # Ctrl+Z takes the last one back, and placing goes on
+    assert window.node_chain == ["N1"] and "N2" not in window.network.nodes and window.add_node_button.isChecked()
+    window.canvas_clicked("", "", 3600.0, 3000.0)
+    window.view.right_clicked.emit()  # a right-click keeps them, as one undo step
+    assert not window.add_node_button.isChecked() and window.node_chain == []
+    assert len(window.network.nodes) == nodes + 2 and len(window.history.undo_stack) == steps + 1
+    assert window.background_painter.guide is None
+    window.undo()
+    assert len(window.network.nodes) == nodes
+
+    real = QMessageBox.question  # Esc asks: Cancel goes on placing, Discard takes them away, Save keeps them
+    asked = []
+    try:
+        for answer in (QMessageBox.StandardButton.Cancel, QMessageBox.StandardButton.Discard,
+                       QMessageBox.StandardButton.Save):
+            if not window.add_node_button.isChecked():
+                window.add_node_button.setChecked(True)
+                window.canvas_clicked("", "", 3000.0, 3000.0)
+            QMessageBox.question = lambda *args, answer=answer: asked.append(args[2]) or answer
+            window.cancel()
+            if answer == QMessageBox.StandardButton.Cancel:
+                assert window.add_node_button.isChecked() and window.node_chain == ["N1"]
+            else:
+                kept = answer == QMessageBox.StandardButton.Save
+                assert not window.add_node_button.isChecked() and ("N1" in window.network.nodes) == kept
+                assert len(window.history.undo_stack) == steps + kept  # discarded: no step at all
+    finally:
+        QMessageBox.question = real
+    assert asked[0].startswith("Keep the 1 node placed (N1)?")
+    window.add_node_button.setChecked(True)  # none placed: Esc just ends it, nothing asked
+    window.cancel()
+    assert not window.add_node_button.isChecked() and len(asked) == 3
+
+    # a step made meanwhile (the node just placed deleted from the panel) takes the chain in: nothing stale is left
+    window.add_node_button.setChecked(True)
+    for x in (3000.0, 3300.0):
+        window.canvas_clicked("", "", x, 3000.0)
+    steps = len(window.history.undo_stack)
+    window.network.delete_node(window.node_chain[-1])
+    window._commit()  # as the Delete button does
+    assert window.node_chain == [] and window.background_painter.guide is None
+    assert len(window.history.undo_stack) == steps + 1 and window.add_node_button.isChecked()
+    window.canvas_clicked("", "", 3600.0, 3000.0)  # a new chain: Ctrl+Z takes back only its own node
+    placed = window.node_chain[-1]
+    window.undo()
+    assert placed not in window.network.nodes and "N1" in window.network.nodes
+    window.canvas_clicked("", "", 3900.0, 3000.0)  # Save keeps the nodes first, so they are saved and in the history
+    placed = window.node_chain[-1]
+    with tempfile.TemporaryDirectory() as folder:
+        window.network_path = str(Path(folder) / "nodes.json")
+        assert window.save_file() and not window.add_node_button.isChecked() and not window.unsaved()
+        assert placed in load_network(Path(folder) / "nodes.json").nodes
+    window.add_node_button.setChecked(True)  # closing (or opening another) keeps them first, so it asks to save
+    window.canvas_clicked("", "", 4200.0, 3000.0)
+    window._ask_to_save = False
+    assert window._may_discard() and not window.add_node_button.isChecked() and window.unsaved()
+    window.close()
+
+
+def test_the_edge_type_choice_sits_clear_of_the_buttons_above_it():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window.resize(1400, 900)
+    window.show()
+    window.tabs.setCurrentWidget(window.edit_tab)
+    window.add_edge_button.setChecked(True)
+    for _ in range(3):
+        APP.processEvents()
+    above = window.add_edge_button.mapTo(window, window.add_edge_button.rect().bottomLeft()).y()
+    connection, end = (window.edge_kind.group.button(index) for index in range(2))
+    assert connection.mapTo(window, connection.rect().topLeft()).y() > above + 2  # below the buttons, not on them
+    assert connection.geometry().right() + 8 < end.geometry().left()  # "Connection" clear of End's dot
     window.close()
 
 

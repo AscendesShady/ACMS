@@ -1887,6 +1887,7 @@ class NetworkView(QGraphicsView):
     pointed = Signal(float, float)  # the mouse moved over the map, to this scene point (metres)
     projection_changed = Signal(bool)
     right_clicked = Signal()  # a right press and release that didn't pan (finishes a metro deployment)
+    zoomed = Signal()  # the wheel zoomed, or the view was resized: what it shows changed size
 
     def __init__(self, scene: NetworkGraphicsScene) -> None:
         super().__init__(scene)
@@ -1914,7 +1915,11 @@ class NetworkView(QGraphicsView):
         self.setDragMode(QGraphicsView.DragMode.NoDrag)
         self.viewport().setMouseTracking(True)  # moves without a button too: the map's position readout
         self.background = None  # background.BackgroundPainter: the network's background, behind the scene
+        # How far the wheel zooms, (fewest, most) pixels a metre; None: not at all (the window sets it: a map's
+        # work zone fills the view at the most zoomed out)
+        self.zoom_range = lambda: (0.0005, 100.0)
         self._corner: QWidget | None = None
+        self._top: QWidget | None = None
         # During a run the background and the still network are drawn once and kept (scene.cache_still).
         scene.still_cached_changed.connect(lambda on: self.setCacheMode(
             QGraphicsView.CacheModeFlag.CacheBackground if on else QGraphicsView.CacheModeFlag.CacheNone))
@@ -1931,7 +1936,8 @@ class NetworkView(QGraphicsView):
         # Editing a static map: scroll a padded viewport image while dragging, as a tile renderer would.
         # Live runs and active placement/measurement tools keep their ordinary, continuously updated drawing.
         background_tool = self.background is not None and (
-            self.background.marks or self.background.line is not None or self.background.outline is not None)
+            self.background.marks or self.background.line is not None or self.background.framing is not None
+            or self.background.guide is not None)
         if (not self._panning or self._pan_moved < RIGHT_CLICK_PX or scene.frame is not None
                 or background_tool or scene.hidden or scene.placing or scene.metro_deploying or scene.spawn_placing):
             self._clear_pan_image()
@@ -2021,6 +2027,7 @@ class NetworkView(QGraphicsView):
             self.translate(correction.x(), correction.y())
         finally:
             self.setTransformationAnchor(anchor)
+        self.clamp_zoom()  # tilted, a work zone's diamond needs a different fit
         self.redraw()
         self.projection_changed.emit(on)
 
@@ -2029,18 +2036,33 @@ class NetworkView(QGraphicsView):
         widget.setParent(self)
         self._corner = widget
         widget.show()
-        self._place_corner()
+        self.place_overlays()
+
+    def set_top(self, widget: QWidget) -> None:
+        """A bar kept over the map's top centre (the work zone's, shown while it is chosen)."""
+        widget.setParent(self)
+        self._top = widget
+        self.place_overlays()
 
     def resizeEvent(self, event) -> None:  # type intentionally inherited from Qt
         self._clear_pan_image()
         super().resizeEvent(event)
-        self._place_corner()
+        self.place_overlays()
+        self.clamp_zoom()
+        self.zoomed.emit()
 
-    def _place_corner(self) -> None:
+    def place_overlays(self) -> None:
+        """The corner controls top right; the top bar centred above, as tall as its wrapped text needs."""
+        area = self.viewport().geometry()
         if self._corner is not None:
             self._corner.adjustSize()
-            area = self.viewport().geometry()
             self._corner.move(area.right() - self._corner.width() - 8, area.top() + 8)
+        if self._top is not None:
+            width = min(self._top.maximumWidth(), area.width() - 16)
+            height = self._top.heightForWidth(width)
+            self._top.resize(width, height if height > 0 else self._top.sizeHint().height())
+            self._top.move(area.left() + (area.width() - width) // 2, area.top() + 8)
+            self._top.raise_()
 
     def drawBackground(self, painter: QPainter, rect: QRectF) -> None:  # type intentionally inherited from Qt
         network = self.scene().network
@@ -2055,7 +2077,7 @@ class NetworkView(QGraphicsView):
         super().drawForeground(painter, rect)
         network = self.scene().network
         if self.background is not None and network is not None:
-            self.background.paint_marks(painter, network.background)
+            self.background.paint_marks(painter, network.background, QRectF(self.viewport().rect()))
             if network.background.kind == "map" and not self._pan_recording:
                 self.background.paint_attribution(painter, QRectF(self.viewport().rect()))
 
@@ -2070,9 +2092,10 @@ class NetworkView(QGraphicsView):
             event.accept()
             return
         factor = 1.18 if event.angleDelta().y() > 0 else 1 / 1.18
-        current = self.projection_scale()
-        if 0.0005 < current * factor < 100.0:
+        current, limits = self.projection_scale(), self.zoom_range()
+        if limits is not None and (current * factor <= limits[1] if factor > 1 else current * factor >= limits[0]):
             self.scale(factor, factor)
+            self.zoomed.emit()
         event.accept()
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
@@ -2111,24 +2134,43 @@ class NetworkView(QGraphicsView):
             return
         super().mouseReleaseEvent(event)
 
-    def fit_network(self) -> None:
-        rect = self.scene().network_rect
-        if rect.isNull():
-            return
-        # Margin in screen pixels: labels keep a fixed pixel size, so a margin
-        # in metres would clip them on large networks.
-        margin = 90
+    def fit_scale(self, rect: QRectF, margin: int = 0) -> float:
+        """Pixels a metre that show all of `rect`, `margin` screen pixels in from each side."""
         view = self.viewport().rect()
         projected = projection_transform(self.isometric).mapRect(rect)
-        scale = min((view.width() - 2 * margin) / projected.width(),
-                    (view.height() - 2 * margin) / projected.height())
-        if scale > 0:
-            self.setTransform(projection_transform(self.isometric, scale))
-            self.centerOn(rect.center())
+        return min((view.width() - 2 * margin) / max(projected.width(), 1e-9),
+                   (view.height() - 2 * margin) / max(projected.height(), 1e-9))
+
+    def fit_network(self) -> None:
+        # Margin in screen pixels: labels keep a fixed pixel size, so a margin
+        # in metres would clip them on large networks.
+        self.fit_rect(self.scene().network_rect, 90)
+
+    def fit_rect(self, rect: QRectF, margin: int = 0) -> None:
+        """Show all of `rect` (edge to edge by default: a map's work zone), within `zoom_range` (none: the zoom
+        isn't the user's to change, as before Locate Work Zone)."""
+        limits, scale = self.zoom_range(), self.fit_scale(rect, margin)
+        if rect.isNull() or limits is None or scale <= 0:
+            return
+        self.setTransform(projection_transform(self.isometric, min(max(scale, limits[0]), limits[1])))
+        self.centerOn(rect.center())
+        self.zoomed.emit()
 
     def reset_view(self) -> None:
-        self.setTransform(projection_transform(self.isometric))
+        limits = self.zoom_range()  # one pixel a metre, unless a work zone would no longer fill the view
+        if limits is None:
+            return
+        self.setTransform(projection_transform(self.isometric, min(max(1.0, limits[0]), limits[1])))
         self.centerOn(self.scene().sceneRect().center())
+        self.zoomed.emit()
+
+    def clamp_zoom(self) -> None:
+        """Back within `zoom_range` when its limits moved (a work zone chosen, the view resized or tilted)."""
+        limits, scale = self.zoom_range(), self.projection_scale()
+        if limits is not None and not limits[0] <= scale <= limits[1]:
+            centre = self.mapToScene(self.viewport().rect().center())
+            self.setTransform(projection_transform(self.isometric, min(max(scale, limits[0]), limits[1])))
+            self.centerOn(centre)
 
     ARROWS = {Qt.Key.Key_Left: (-1, 0), Qt.Key.Key_Right: (1, 0), Qt.Key.Key_Up: (0, -1), Qt.Key.Key_Down: (0, 1)}
 

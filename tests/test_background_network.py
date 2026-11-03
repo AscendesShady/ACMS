@@ -128,6 +128,67 @@ def test_the_maps_roads_come_from_openstreetmap_data():
     network.validate()  # overridden by hand (or the assistant): an ordinary signalised junction, Webster to start
 
 
+def test_the_assistant_places_the_map_with_a_work_zone_builds_that_zone_and_keeps_it_on_a_new_grid():
+    network = generate_network(3, 4)
+    tools._PREPARED.clear()
+    cx, cy = tools._centre(network)
+    assert "no map yet" in tools.network_summary(network)["background"]
+    result = tools.run_tool(network, "place_map", {"lat": LONDON[0], "lon": LONDON[1]})  # as the user's Confirm
+    background = network.background
+    assert background.kind == "map" and background.zone == [cx - 600, cy - 600, 1200, 1200]
+    assert result["work_zone_m"] == [1200, 1200] and "work zone" in result["note"]
+    assert any("work zone" in line for line in result["changed"])
+    tools.run_tool(network, "place_map", {"lat": LONDON[0], "lon": LONDON[1], "width_m": 900})  # one side: a square
+    assert background.zone == [cx - 450, cy - 450, 900, 900]  # and the approval card says what the tools do:
+    assert tools.describe_call("place_map", {"place": "Paris", "height_m": 900}).endswith("work zone 900 × 900 m")
+    assert tools.describe_call("network_from_background", {"width_m": 700}).endswith(
+        "700 × 700 m round the work zone's centre")
+    tools.run_tool(network, "place_map", {"lat": LONDON[0], "lon": LONDON[1], "width_m": 800, "height_m": 500})
+    assert background.zone == [cx - 400, cy - 250, 800, 500]
+    again = deepcopy(network)  # no size: 1200 m square whatever it had (nothing hidden in the default)
+    tools.run_tool(again, "place_map", {"lat": 48.8566, "lon": 2.3522})
+    assert again.background.zone == [cx - 600, cy - 600, 1200, 1200]
+    for size in ({"width_m": 50}, {"height_m": 30_000}):  # out of a work zone's range: refused, nothing changed
+        try:
+            tools.run_tool(network, "place_map", {"lat": 48.8566, "lon": 2.3522, **size})
+        except tools.ToolError as exc:
+            assert "100 to 20000" in str(exc)
+        else:
+            raise AssertionError(f"{size} must be refused")
+    assert network.background.zone == [cx - 400, cy - 250, 800, 500] and network.background.lat == LONDON[0]
+    tools.run_tool(network, "place_map", {"place": "", "lat": 48.8566, "lon": 2.3522, "width_m": 800, "height_m": 500})
+    background = network.background
+    assert background.zone == [cx - 400, cy - 250, 800, 500] and background.lat == 48.8566
+    assert "work zone 800 x 500 m" in tools.network_summary(network)["background"]
+
+    frame = Frame(background.lat, background.lon, cx, cy)
+    asked = []
+    real_query, real_post = background_network.overpass_query, background_network.post
+    background_network.overpass_query = lambda *box: asked.append(box[:4]) or real_query(*box)
+    background_network.post = lambda url, data: json.dumps(overpass(lambda dx, dy: frame.to_wgs84(cx + dx, cy + dy))).encode()
+    try:
+        result = tools.run_tool(deepcopy(network), "network_from_background", {})  # no size: the work zone
+        bigger = deepcopy(network)
+        bigger.background.zone = [cx - 3000, cy - 2500, 6000, 5000]
+        clipped = tools.run_tool(bigger, "network_from_background", {})  # more than one read: 4000 m round it
+    finally:
+        background_network.overpass_query, background_network.post = real_query, real_post
+    corners = [frame.to_wgs84(x, y) for x in (cx - 400, cx + 400) for y in (cy - 250, cy + 250)]
+    south, west = min(lat for lat, _ in corners), min(lon for _, lon in corners)
+    north, east = max(lat for lat, _ in corners), max(lon for _, lon in corners)
+    assert all(abs(a - b) < 1e-9 for a, b in zip(asked[0], (south, west, north, east)))
+    assert result["source"].endswith("the work zone") and "the zone is 6000 x 5000 m" in clipped["source"]
+    assert abs(Frame(*asked[1][:2], 0, 0).to_scene(*mercator(*asked[1][2:]))[0] - 4000) < 5  # 4000 m across
+
+    place = Frame(background.lat, background.lon, cx, cy).to_wgs84(cx, cy)
+    tools.run_tool(network, "generate_grid", {"horizontal": 5, "vertical": 6})  # a new grid: the map kept, as the
+    nx, ny = tools._centre(network)                                              # Generate button keeps it
+    background = network.background
+    assert background.kind == "map" and (nx, ny) != (cx, cy) and background.zone == [nx - 400, ny - 250, 800, 500]
+    lat, lon = Frame(background.lat, background.lon, background.anchor_x, background.anchor_y).to_wgs84(nx, ny)
+    assert abs(lat - place[0]) < 1e-9 and abs(lon - place[1]) < 1e-9
+
+
 def test_the_maps_footways_sidewalks_crossings_and_cycle_lanes_come_in_too():
     # A main road east-west with sidewalks both sides and a cycle lane; a one-way street mapped against its node order
     # (oneway=-1) with a sidewalk on its way's left; a zebra mid-block and one at the junction; a footbridge over the

@@ -144,8 +144,9 @@ def plan(spec: dict) -> list[dict]:
         steps.append({"tool": tool, "args": args, "why": why})
 
     if spec.get("place"):
-        step("place_map", {"place": spec["place"]}, f"Find {spec['place']} on the map")
-        metres = spec["area_km"] * 1000
+        metres = spec["area_km"] * 1000  # the study area is the map's work zone, and its roads are the zone's
+        step("place_map", {"place": spec["place"], "width_m": metres, "height_m": metres},
+             f"Find {spec['place']} on the map")
         step("network_from_background", {"width_m": metres, "height_m": metres,
                                           "road_classes": "main" if spec["area_km"] > 2 else "all"},
              "Build its roads from OpenStreetMap")

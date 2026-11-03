@@ -38,12 +38,14 @@ def test_the_sections_open_and_close():
     sections = (window.generate_section, window.own_section)
     assert [section.body.isVisibleTo(window) for section in sections] == [True, False]
     # Generate Network: the road settings, the signals' timing, the horizontal and vertical roads, then Generate
-    assert all(box.isVisibleTo(window) for box in (window.driving_side, window.signal_method_combo, window.horizontal_spin,
-                                                   window.vertical_spin, window.generate_button))
+    assert all(box.isVisibleTo(window) for box in (window.speed_limit_combo, window.signal_method_combo,
+                                                   window.horizontal_spin, window.vertical_spin, window.generate_button))
     window.own_section.header.click()  # Own Network: the background
     assert window.background_panel.kind.isVisibleTo(window)
     window.generate_section.header.click()
-    assert not window.driving_side.isVisibleTo(window) and not window.generate_section.header.isChecked()
+    assert not window.speed_limit_combo.isVisibleTo(window) and not window.generate_section.header.isChecked()
+    # the driving side holds for the whole network however it was made: Universal Attributes, not Generate
+    assert window.driving_side.window() is window and window.universal_tab.isAncestorOf(window.driving_side)
     window.close()
 
 
@@ -174,6 +176,37 @@ def test_the_map_controls_sit_in_its_corner():
     window.reset_button.click()
     assert view.transform().m11() == 1.0
     assert "Drag over empty map" in window.map_controls and window.help_button.toolTip() == "Map Controls"
+    # Hide Background is the map's: among these, and only over an image or the map (nothing to hide over a colour)
+    hide, background = window.background_panel.hide_button, window.network.background
+    assert hide.parentWidget() is corner and not hide.isVisible() and background.kind == "colour"
+    width = corner.width()
+    background.kind = "map"
+    window._show_background()
+    assert hide.isVisible() and corner.width() > width  # the corner bar grew to take it
+    hide.click()
+    assert window.background_painter.hidden
+    background.kind = "colour"
+    window._show_background()
+    assert not hide.isVisible() and not window.background_painter.hidden  # shown again whenever one comes back
+    background.kind = "image"  # hidden over an image, then the map: shown, so its work zone is framed over it
+    window._show_background()
+    hide.click()
+    background.kind = "map"
+    window._show_background()
+    assert hide.isVisible() and not hide.isChecked() and not window.background_painter.hidden
+    hide.click()
+    window.background_panel.start_tool("zone")  # a setup step looks at the background: shown for it
+    assert not window.background_painter.hidden
+    window.background_panel.end_tool()
+    # Show Buildings belongs with the buildings: Demand Generator > Institutions, not the map's corner
+    assert window.institution_panel.isAncestorOf(window.buildings_button) and not corner.isAncestorOf(
+        window.buildings_button)
+    window.tabs.setCurrentWidget(window.demand_tab)
+    window.od_panel.demand.setCurrentIndex(window.od_panel.demand.findData("institutions"))
+    assert window.buildings_button.isChecked() and window.scene.buildings_visible  # opened: the buildings show
+    window.buildings_button.click()  # hidden by hand: the Hourly/Daily switch beside it leaves that alone
+    window.od_panel.period.group.button(1).click()
+    assert not window.buildings_button.isChecked() and not window.scene.buildings_visible
     window.close()
 
 

@@ -161,7 +161,7 @@ def test_the_window_orders_tabs_and_undoes_type_changes():
     window = MainWindow()
     names = [window.tabs.tabToolTip(i) for i in range(window.tabs.count())]  # hovering a tab names it
     assert names == ["Create Network", "Edit Network", "Mode Behavior", "Demand Generator", "AI Mode", "View Summary",
-                     "Extensions"]
+                     "Extensions", "Universal Attributes"]
     if not window.tabs.tabIcon(0).isNull():  # icons need Windows' icon font
         window.tabs.setCurrentIndex(3)  # the tabs are icons; the open one's name heads the sidebar
         assert not any(window.tabs.tabText(i) for i in range(window.tabs.count()))

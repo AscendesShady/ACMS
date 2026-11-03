@@ -108,7 +108,8 @@
     back as {"error", "error_type", "suggested_fix"}, and for an unknown id `did_you_mean`, the network's nearest
     ids by spelling (network_checks.md), so a model can correct the call without guessing.
   - **Read tools** run straight away:
-    - `network_summary`, `list_roads`, `list_junctions`.
+    - `network_summary` (with `background`: the map's place and work zone, its size and x/y range, or "a plain
+      colour: no map yet"), `list_roads`, `list_junctions`.
     - `describe`: any junction, end or road, including its roundabout design and safe curve speed.
     - `analyse_network`, a design check covering:
       - validity and disconnected parts;
@@ -241,7 +242,8 @@
       at a junction, `single_lane` or two; `build_slip_road`), `set_end_flows` (one end a call;
       only generate_demand reads end flows: a Run spawns from the OD matrix), `generate_grid` (blocks 20–2,000 m,
       `GRID_SPACING_M`: asked for a 50 x 50 km city of 3 x 3 junctions, models built 12.5 and 50 km blocks;
-      `footpaths` true: pedestrian walkways on both sides of every road, else none).
+      `footpaths` true: pedestrian walkways on both sides of every road, else none; the backdrop kept as the
+      Generate button keeps it, `keep_background`: the map's place and work zone moved under the new centre).
     - `set_signal_timing`: signalised junctions' method (`SIGNAL_METHODS`), phases, fixed greens, manual
       `windows` by arm name (N/E/S/W or road id -> [first, last] s; given alone they mean manual) and `amber_s`, cycle
       limits, target saturation and stop weight, checked by `validate()`; a junction not signalised is refused.
@@ -287,15 +289,22 @@
       `observed_percent` calibrates the constants (Train 2009 §2.8). Sets `mode_shares` (and `car_share` to Car's)
       as one undo step; returns the shares, the constants, the people and vehicles a day, each origin's km and shares.
     - `place_map`: the map's place, by name (Nominatim, throttled to a request a second and cached, fetched in
-      `prepare`) or latitude and longitude, under the network's centre, and its turn.
+      `prepare`) or latitude and longitude, under the network's centre, and its turn; with a work zone round it, as
+      the user's Confirm makes one (`width_m` × `height_m`, `map_tiles.ZONE_M` 100–20,000 m, one alone a square;
+      neither, 1,200 m square). The window shows it as after Confirm (`MainWindow._ai_edited`: the view fits the
+      zone). An answer arriving while the user is choosing a work zone cancels that setup first
+      (`MainWindow._assistant_network`, the network the assistant reads and edits through), so it never works on
+      a half-made map nor has its change put back by the setup's Esc.
     - `deploy_institutions`: `count` (1–50) buildings of the `kinds` asked (all by default) at random spots of
       clear ground within the network's extent (`institutions.footprint_problem`, as when placing by hand),
       each with its kind's usual figures and a catchment reaching its 4 nearest junctions or ends (+10 m) unless
       `radius_m`; all or none ("only 3 of 5 found clear ground"). The same `seed` gives the same layout.
       Buildings only: a run carries on.
     - `network_from_background`: replaces the whole network (undoable, like `generate_grid`) with the
-      background's roads (background_network.py): over the map, OpenStreetMap's road data for `width_m` ×
-      `height_m` (200–4,000 m, 1,200 by default) round the network's centre, `road_classes` main or all; over
+      background's roads (background_network.py): over the map, OpenStreetMap's road data for its work zone (a
+      bigger one read 4,000 m a side round its centre, and `source` says so), or `width_m` × `height_m` (200–4,000 m, one alone a square)
+      round the zone's centre; a map without a zone (older files), 1,200 m square round the network's centre;
+      `road_classes` main or all; over
       an image, the pixels of `road_colour` (required: the model is told to ask the user) within
       `colour_tolerance`, traced at `resolution_m`; `footpaths` none (the default: nothing for walkers), tagged or all, the
       latter two with the map's zebras, footbridges and paths; cycle lanes as mapped (`add_walking`, counted under `pedestrians`). Settings, driving
@@ -465,7 +474,8 @@
     medium traffic, 30 min, 3 seeds, the busiest road or every junction as a what-if's target) and lists
     problems that stop the build (a place and a grid, a grid over 20, a speed limit with no value, a signal
     timing with no method, a timetable with no bus type…) before anything runs.
-  - `plan(spec)` orders the steps as a study takes them: place_map and network_from_background, or
+  - `plan(spec)` orders the steps as a study takes them: place_map (its `area_km` the work zone) and
+    network_from_background (that same area), or
     generate_grid; set_junction_control; set_signal_timing; update_vehicle_type (the bus's headway);
     generate_demand (by degree of saturation, checked in a run, or a total; mean_trip_km) and
     shape_daily_curve; choose_modes; assign_routes; run_simulation and analyse_run; the reports
@@ -686,7 +696,7 @@
     `network_tools.describe_changes`, which compares the network then and now (bus stops added,
     moved or re-pointed, and deleted; an institution moved, its circle, figures, mode split or curves changed; a
     road curved or straightened, a reversal or a moved end not counted as a reshape; the background, e.g. the map
-    `place_map` put under it, included). It also carries what's selected on the map.
+    `place_map` put under it and its work zone, included). It also carries what's selected on the map.
   - The transcript notes what was shared. The assistant's own edits are not reported back to it.
   - **Conversation as state.**
     - The conversation belongs to the project, not to one model. Switching models keeps it:

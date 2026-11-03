@@ -385,6 +385,9 @@ class Background:
     # Set Scale's reference line on the image: [x1, y1, x2, y2] in image pixels, then its true length in
     # metres. Empty: none. It moves with the image.
     reference: list[float] = field(default_factory=list)
+    # The map's work zone, [x, y, width, height] in scene metres: the area chosen on the map, which the view
+    # keeps to. Empty: none chosen (older files).
+    zone: list[float] = field(default_factory=list)
 
 
 def route_choice_problem(choice) -> str | None:
@@ -1372,6 +1375,9 @@ class Network:
                 and bg.reference[4] > 0 and bg.reference[:2] != bg.reference[2:4]):
             raise ValueError("The background's lock must be true or false, and its reference line two different "
                              "image points and a positive length.")
+        if bg.zone and not (len(bg.zone) == 4 and all(finite(value) for value in bg.zone)
+                            and bg.zone[2] > 0 and bg.zone[3] > 0):
+            raise ValueError("The background's work zone must be [x, y, width, height] in metres, its sides positive.")
         for name, axis in self.interchanges.items():
             if not (isinstance(axis, list) and len(axis) == 4 and all(finite(value) for value in axis)
                     and abs(hypot(axis[2], axis[3]) - 1) < 1e-6):

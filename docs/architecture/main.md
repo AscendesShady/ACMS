@@ -5,9 +5,7 @@
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
     properties, spacing and typography differ; tab order, controls, actions and signal connections are shared.
   - **Create Network:** two `Collapsible` sections, fields at their natural size:
-    - **Generate Network** (open at start): Driving side, applied to the whole network at once
-      (`set_driving_side`: interchanges mirrored, the scene redrawn, one undo step, a run stopped,
-      the status bar naming the interchanges); Speed limit, Lanes per direction and Lane changing, kept on the
+    - **Generate Network** (open at start): Speed limit, Lanes per direction and Lane changing, kept on the
       network as the defaults new roads get (a generated grid, Add Edge, interchanges), one undo step
       each (`_set_default`), the roads already there and a run untouched; Signal timing (Webster, TRANSYT,
       Synchro, SCATS, SCOOT, Fixed time), the network's `default_signal_method`, kept the same way: the method a
@@ -19,8 +17,9 @@
     - **Own Network:** the background to draw a network over (see background.py).
   - **Map controls** over the map's top-right corner (`NetworkView.set_corner`): Input Grid (only while
     Demand Generator is open), 3D View (checkable, `isometric_button`: an orthographic isometric view,
-    same world geometry, frame, time, centre and zoom; off returns to top-down), Show Buildings (the city
-    glyph, `buildings_button`: session visibility of institution footprints/labels/catchments, off until ticked or Demand → Institutions opens, demand unchanged),
+    same world geometry, frame, time, centre and zoom; off returns to top-down), Hide Background (the eye,
+    `BackgroundPanel.hide_button`, only over an image or the map: the roads alone, only the view; unticked when the
+    background changes kind or a setup step (work zone, Set Scale) starts, the bar resized to it, `NetworkView.place_overlays`),
     Power Saver (a leaf, checkable, `_power_saver`: the clock steps every 32 ms
     instead of 16, so a run draws 30 frames a second, and on a GPU the map drops multisampling; the physics
     is untouched; not remembered between sessions), Fit
@@ -69,7 +68,15 @@
     then takes back the unfinished line alone.
     An accepted line is selected with a selection box, as roads are (a window round its whole track, a crossing box
     touching it: "1 MRT line selected", outlined); Delete removes it and its stations, one undo step.
-  - **Edit Network → Roads:** Add Node, Add Edge (Connection or End) and the selection editor. Ctrl+click adds a
+  - **Edit Network → Roads:** Add Node, Add Edge (Connection or End) and the selection editor. Add Node places
+    nodes one after another (`node_chain`): each click on empty map a node, selected, and while the mouse moves on a
+    dashed line from the last node gives the distance to the next (`BackgroundPainter.guide`, from `_show_pointer`).
+    They are not an undo step until the chain ends: the button again, a right-click, another tool or tab keep them as
+    one step (`_finish_nodes`); Esc asks Save (keep), Discard (all taken away, no step) or Cancel (go on placing);
+    Ctrl+Z meanwhile takes the last one back. Esc with none placed just ends it. A step made meanwhile (the node
+    just placed edited or deleted, the assistant) takes them in (`_commit` empties the chain: nothing stale is
+    left to discard or take back); Save, Open and closing keep them first, so they are saved and asked about. The Edge type row stands clear
+    of the buttons above it (`OpenPageTabs` gives the open page its full height: Qt's hint was 4 px short). Ctrl+click adds a
     road to the selection or takes it out (`_toggle_road`); two roads meeting at a junction show Add Slip
     Road beside Delete Selected; its menu picks Single lane or Two lanes (`add_slip_road`: `build_slip_road`,
     the slip selected, one undo step).
@@ -91,6 +98,10 @@
   - **AI Mode:** keys and the System 2 chat; the status bar always shows which model is connected.
   - **View Summary:** the project at a glance, rebuilt whenever the tab opens or the project
     changes while it's open.
+  - **Universal Attributes** (last, a globe; `universal_tab`): what holds for the whole network however it was
+    made. Traffic: Driving side, applied to the whole network at once (`set_driving_side`: interchanges mirrored,
+    the scene redrawn, one undo step, a run stopped, the status bar naming the interchanges), and the side new
+    roads and grids follow.
   - **Extensions:** switch drop-in features from `extensions/` on and off (see extensions.py). The window's
     services for them (`app`): `run_batch` (`test_tsp`, `test_devl`: the emergency fleet in each run with DEVL's
     override, TSP and DEVL each with their own signal agent, its Emergency vehicles sheet, `emergency_report`; `devl_agents` deciding its lanes, every TSP agent with every DEVL

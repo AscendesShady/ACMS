@@ -214,7 +214,8 @@ def test_each_kind_of_background_is_drawn():
 
 def test_the_background_is_saved_loaded_and_checked():
     network = generate_network(1, 2)
-    network.background = Background(kind="map", lat=-33.8688, lon=151.2093, anchor_x=250.0, opacity=0.6)
+    network.background = Background(kind="map", lat=-33.8688, lon=151.2093, anchor_x=250.0, opacity=0.6,
+                                    zone=[-350.0, -400.0, 1200.0, 900.0])
     with tempfile.TemporaryDirectory() as folder:
         save_network(network, Path(folder) / "sydney.json")
         assert load_network(Path(folder) / "sydney.json").background == network.background
@@ -224,7 +225,8 @@ def test_the_background_is_saved_loaded_and_checked():
         assert load_network(Path(folder) / "plan.json").background == network.background
     for bad in (Background(kind="satellite"), Background(colour="green"), Background(lat=89.0), Background(opacity=2.0),
                 Background(locked="yes"), Background(reference=[1.0, 2.0, 3.0]), Background(reference=[1, 1, 1, 1, 5]),
-                Background(reference=[0, 0, 1, 1, 0])):
+                Background(reference=[0, 0, 1, 1, 0]), Background(zone=[0, 0, 100]), Background(zone=[0, 0, 0, 100]),
+                Background(zone=[0, 0, float("nan"), 100])):
         network.background = bad
         try:
             network.validate()
@@ -243,14 +245,16 @@ def test_the_create_tab_sets_the_background_as_one_undo_step_each():
     assert network.background.kind == "colour" and panel.opacity.isHidden()
     panel.swatches.buttons()[3].click()  # Concrete
     assert network.background.colour == "#9aa1a6"
+    panel.kind.group.button(2).click()  # the map: its work zone first, nothing kept until Confirm
     panel.lat.setValue(-37.8136)
     panel.lon.setValue(144.9631)
-    panel.place_map()  # Melbourne under the network's centre
+    panel.go_button.click()  # Melbourne under the box, which is on the network's centre
+    panel.confirm_button.click()
     centre = window._junction_bounds().center()
     background = window.network.background
-    assert (background.kind, background.lat, background.lon) == ("map", -37.8136, 144.9631)
-    assert (background.anchor_x, background.anchor_y) == (centre.x(), centre.y())
-    assert panel.place_row.isVisibleTo(panel) and not panel.image_rows[0][0].isVisibleTo(panel)
+    assert (background.kind, round(background.lat, 6), round(background.lon, 6)) == ("map", -37.8136, 144.9631)
+    assert (background.anchor_x, background.anchor_y) == (centre.x(), centre.y()) and background.zone
+    assert panel.map_rows[0][1].isVisibleTo(panel) and not panel.image_rows[0][0].isVisibleTo(panel)
     frame = Frame(background.lat, background.lon, background.anchor_x, background.anchor_y)
     assert abs(frame.to_wgs84(centre.x(), centre.y())[0] + 37.8136) < 1e-9
     window.undo()  # back to Concrete
@@ -274,7 +278,7 @@ def test_the_create_tab_sets_the_background_as_one_undo_step_each():
             del panel.painter.image
         assert "network share" in panel.file_label.text() and window.network.background.image == str(picture)
         assert panel.tool == "scale"  # a new image asks for its scale first
-        panel.cancel_tool()  # skipped: as laid
+        panel.end_tool()  # skipped: as laid
         assert panel.tool is None and abs(window.network.background.width_m - bounds.width()) < 1e-6
         rect = window.scene.sceneRect()
         assert rect.contains(window.background_painter.image_rect(laid))  # the view can scroll over it
@@ -401,9 +405,7 @@ def test_the_tools_line_the_background_up_and_the_readout_follows_the_mouse():
     assert "must differ" in panel.step.text() and panel.tool == "align"
     panel.end_tool()
 
-    panel.lat.setValue(LONDON[0])
-    panel.lon.setValue(LONDON[1])
-    panel.place_map()
+    _map_at(window, *LONDON)
     assert window.pointer.isVisibleTo(window)
     centre = window._junction_bounds().center()
     spot = view.mapFromScene(QPointF(centre.x() + 300, centre.y()))
@@ -422,12 +424,13 @@ def test_the_tools_line_the_background_up_and_the_readout_follows_the_mouse():
     QTest.mouseMove(view.viewport(), start + QPoint(0, 50))
     QTest.mouseRelease(view.viewport(), Qt.MouseButton.LeftButton, pos=start + QPoint(0, 50))
     assert abs(window.network.background.anchor_y - centre.y() - 100) < 2.5
-    # the boxes show the point now under the centre: with north to the right, 100 m west of before
-    assert abs(ground_m((panel.lat.value(), panel.lon.value()), LONDON) - 100) < 5 and panel.lon.value() < LONDON[1]
+    # the point now under the centre: with north to the right, 100 m west of before
+    under = map_frame(window.network.background).to_wgs84(centre.x(), centre.y())
+    assert abs(ground_m(under, LONDON) - 100) < 5 and under[1] < LONDON[1]
     window.tabs.setCurrentWidget(window.edit_tab)  # leaving the tab ends the tool
     assert panel.tool is None
     panel.swatches.buttons()[0].click()
-    panel.kind.group.button(0).click()  # a colour: no readout
+    assert _switch(panel, 0)  # a colour: no readout
     assert not window.pointer.isVisibleTo(window)
     window.close()
     window.background_painter.tiles._pool.shutdown(wait=True)  # its downloads done before the folder goes
@@ -538,7 +541,8 @@ def test_lock_pins_the_background_and_measure_sets_an_image_to_scale():
     assert window.network.background.reference and \
         painter.reference_line(window.network.background)[4] == "Reference 170.00 m, now 340.00 m"
 
-    panel.kind.group.button(0).click()  # over a colour: Measure still works, Set Scale doesn't show
+    assert "image and its scale will be discarded" in _switch(panel, 0)[0]  # over a colour: Measure still works,
+    assert not window.network.background.image  # Set Scale doesn't show, and the image is gone
     assert panel.measure_button.isVisibleTo(panel) and not panel.lock_button.isVisibleTo(panel)
     assert panel.swatches_row.isVisibleTo(panel) and not panel.move_button.isVisibleTo(panel)
     panel.measure_button.click()
@@ -568,72 +572,157 @@ def _window_on_tiles():
     return window, tiles
 
 
+def _switch(panel, index, answer=True):
+    """Choose a kind of background; leaving an image or the map asks first, answered Yes or No: what it asked."""
+    from PySide6.QtWidgets import QMessageBox
+
+    asked, real = [], QMessageBox.question
+    QMessageBox.question = lambda *args: asked.append(args[2]) or (
+        QMessageBox.StandardButton.Yes if answer else QMessageBox.StandardButton.No)
+    try:
+        panel.kind.group.button(index).click()
+    finally:
+        QMessageBox.question = real
+    return asked
+
+
+def _map_at(window, lat, lon):
+    """The map under the network, (lat, lon) at its centre, as one edit (no work zone: the tools' tests)."""
+    background, centre = window.network.background, window._junction_bounds().center()
+    background.kind, background.lat, background.lon = "map", lat, lon
+    background.anchor_x, background.anchor_y = centre.x(), centre.y()
+    window._background_changed(("background", "place"))
+    window.view.centerOn(centre)
+
+
 def _close(window, tiles):
     window.close()
     window.background_painter.tiles._pool.shutdown(wait=True)
     tiles.cleanup()
 
 
-def test_choosing_the_map_starts_by_finding_the_networks_place():
+def _drag(view, start, by, button=None):
+    from PySide6.QtCore import Qt
+    from PySide6.QtTest import QTest
+
+    button = button or Qt.MouseButton.LeftButton
+    QTest.mousePress(view.viewport(), button, pos=start)
+    QTest.mouseMove(view.viewport(), start + by)
+    QTest.mouseRelease(view.viewport(), button, pos=start + by)
+
+
+def _wheel(view, notches):
     from PySide6.QtCore import QPoint, Qt
     from PySide6.QtGui import QWheelEvent
+
+    middle = view.viewport().rect().center()
+    for _ in range(abs(notches)):
+        QApplication.sendEvent(view.viewport(), QWheelEvent(
+            QPointF(middle), QPointF(view.viewport().mapToGlobal(middle)), QPoint(), QPoint(0, 120 if notches > 0 else -120),
+            Qt.MouseButton.NoButton, Qt.KeyboardModifier.NoModifier, Qt.ScrollPhase.NoScrollPhase, False))
+
+
+def test_choosing_the_map_starts_with_its_work_zone_and_the_view_keeps_to_it():
+    from PySide6.QtCore import QPoint, Qt
     from PySide6.QtTest import QTest
 
     from traffic_simulator.background import map_frame
 
     window, tiles = _window_on_tiles()
     panel, view, scene, painter = window.background_panel, window.view, window.scene, window.background_painter
-    panel.kind.group.button(2).click()  # Map: its place comes first
-    assert panel.tool == "locate" and panel.step.text().startswith("Find the network's place")
+    corner = window.fit_button.parentWidget()
+    panel.kind.group.button(2).click()  # Map: its work zone comes first
+    assert panel.tool == "zone" and panel.bar.isVisible() and corner.isHidden()  # the bar in the corner's place
     assert not any(item.isVisible() for item in scene.items())  # the network is out of the way
     assert not window.tabs.tabBar().isEnabled() and not window.generate_section.isEnabled()
-    assert not window.grid_toggles[0].isEnabled()  # nothing else meanwhile
-    assert panel.use_button.isVisibleTo(panel) and not panel.move_button.isVisibleTo(panel)
-    bounds = window._junction_bounds()
-    centre = bounds.center()
-    assert painter.outline == bounds and painter.marks[-1] == (centre.x(), centre.y(), "Network centre")
-
-    before = (panel.lat.value(), panel.lon.value())
-    start = view.mapFromScene(centre)
-    QTest.mousePress(view.viewport(), Qt.MouseButton.LeftButton, pos=start)
-    QTest.mouseMove(view.viewport(), start + QPoint(-200, 0))
-    QTest.mouseRelease(view.viewport(), Qt.MouseButton.LeftButton, pos=start + QPoint(-200, 0))
-    # dragged 200 px west at 0.5 px a metre: the place under the cross is 400 m east of before
-    assert abs(ground_m((panel.lat.value(), panel.lon.value()), before) - 400) < 10 and panel.lon.value() > before[1]
-    assert not any(item.isVisible() for item in scene.items())  # still hidden after the redraw
-    corner = QPoint(40, 40)
-    wheel = QWheelEvent(QPointF(corner), QPointF(view.viewport().mapToGlobal(corner)), QPoint(), QPoint(0, -120),
-                        Qt.MouseButton.NoButton, Qt.KeyboardModifier.NoModifier, Qt.ScrollPhase.NoScrollPhase, False)
-    QApplication.sendEvent(view.viewport(), wheel)
-    assert view.transform().m11() < 0.5 and (view.mapFromScene(centre) - start).manhattanLength() <= 2  # about the cross
-
-    chosen = (panel.lat.value(), panel.lon.value())
-    panel.use_button.click()
+    assert not window.grid_toggles[0].isEnabled() and not panel.move_button.isVisibleTo(panel)
+    # the whole world across the view, under a box fixed on screen: far too big for a work zone
     background = window.network.background
-    assert panel.tool is None and any(item.isVisible() for item in scene.items()) and window.tabs.tabBar().isEnabled()
-    assert (background.anchor_x, background.anchor_y) == (centre.x(), centre.y())  # georeferenced right there
-    assert (round(background.lat, 6), round(background.lon, 6)) == chosen and not panel.use_button.isVisibleTo(panel)
+    world = 2 * pi * map_tiles.EARTH_RADIUS_M * map_frame(background).scale
+    assert abs(view.projection_scale() * world - view.viewport().width()) < 1
+    assert min(panel._zone_m()) > 1e6 and not panel.confirm_button.isEnabled() and "Zoom in" in panel.zone_note.text()
+    assert painter.framing.endswith("km")  # the box's size, drawn on it
 
-    panel.locate_button.click()  # again, then Esc: the place it had
-    placed = replace(background)
-    start = view.mapFromScene(centre)
-    QTest.mousePress(view.viewport(), Qt.MouseButton.LeftButton, pos=start)
-    QTest.mouseMove(view.viewport(), start + QPoint(0, 90))
-    QTest.mouseRelease(view.viewport(), Qt.MouseButton.LeftButton, pos=start + QPoint(0, 90))
+    # Nothing the mouse does loses it: the scene is the network's centre alone, so the view can't pan off it,
+    # and until Locate Work Zone the map neither moves nor zooms
+    centre, middle = window._junction_bounds().center(), view.viewport().rect().center()
+    assert scene.sceneRect().center() == centre and scene.sceneRect().width() == 1
+    before, scale = (background.anchor_x, background.anchor_y), view.projection_scale()
+    _drag(view, middle, QPoint(-200, 0))
+    _drag(view, middle, QPoint(150, 90), Qt.MouseButton.RightButton)
+    _wheel(view, 3)
+    assert (background.anchor_x, background.anchor_y) == before and view.projection_scale() == scale
+    assert (view.mapFromScene(centre) - middle).manhattanLength() <= 1
+
+    panel.lat.setValue(LONDON[0])  # coordinates: Go puts them under the box, framed 1.2 km
+    panel.lon.setValue(LONDON[1])
+    panel.go_button.click()
+    assert abs(min(panel._zone_m()) - 1200) < 1 and panel.confirm_button.isEnabled()
+    panel.locate_button.click()  # now the mouse moves the map under the box
+    scale = view.projection_scale()
+    _drag(view, middle, QPoint(-200, 0))
+    under = (panel.lat.value(), panel.lon.value())  # the bar follows: 200 px west, the place under the box east
+    assert abs(ground_m(under, LONDON) - 200 / scale) < 0.01 * 200 / scale and under[1] > LONDON[1]
+    width = panel._zone_m()[0]
+    _wheel(view, -1)  # and the wheel zooms it, about the box
+    assert abs(panel._zone_m()[0] / width - 1.18) < 1e-6 and (view.mapFromScene(centre) - middle).manhattanLength() <= 1
+    _wheel(view, 22)  # in to a street: too small, and Confirm waits
+    assert min(panel._zone_m()) < 100 and not panel.confirm_button.isEnabled()
+    _wheel(view, -22)
+    assert panel.confirm_button.isEnabled()
+
+    width, height = panel._zone_m()  # Confirm: what the box covers, centred on the network, true to scale there
+    panel.confirm_button.click()
+    APP.processEvents()  # the view fits the zone once the tool has ended
+    background = window.network.background
+    assert panel.tool is None and not panel.bar.isVisible() and not corner.isHidden()
+    assert any(item.isVisible() for item in scene.items()) and window.tabs.tabBar().isEnabled()
+    assert (background.anchor_x, background.anchor_y) == (centre.x(), centre.y())
+    assert all(abs(a - b) < 1e-6 for a, b in zip(background.zone, (centre.x() - width / 2, centre.y() - height / 2,
+                                                                    width, height)))
+    assert (round(background.lat, 6), round(background.lon, 6)) == tuple(round(value, 6) for value in under)
+    assert panel.zone_label.text().startswith(f"{width / 1000:.2f} km × ")
+    zone = QRectF(*background.zone)
+    # the view scrolls over the zone alone (with whatever is drawn outside it), and shows the zone whole
+    assert scene.sceneRect() == zone.united(scene.network_rect)
+    assert scene.sceneRect().contains(window._junction_bounds())
+    assert abs(view.projection_scale() - view.fit_scale(zone)) < 1e-6
+    fitted = view.fit_scale(scene.sceneRect())
+    _wheel(view, -10)  # zooming out stops with all of that filling the view
+    assert fitted - 1e-9 <= view.projection_scale() < fitted * 1.18
+    _wheel(view, 2)
+    assert view.projection_scale() > fitted * 1.18
+
+    window.undo()  # the whole setup was one step
+    assert window.network.background.kind == "colour" and not window.network.background.zone
+    window.redo()
+    placed = deepcopy(window.network.background)
+    panel.zone_button.click()  # Change Work Zone starts on the zone it has; Esc keeps it
+    assert panel.tool == "zone" and abs(panel._zone_m()[0] - placed.zone[2]) < 0.01 * placed.zone[2]
+    panel.locate_button.click()
+    _drag(view, middle, QPoint(0, 90))
     assert window.network.background != placed
     QTest.keyClick(window, Qt.Key.Key_Escape)
     assert panel.tool is None and window.network.background == placed and window.tabs.tabBar().isEnabled()
 
-    window.horizontal_spin.setValue(5)  # a bigger grid: the chosen place stays under its centre
+    window.horizontal_spin.setValue(5)  # a bigger grid: the place and its zone move under its centre
     window.generate_button.click()
-    middle = window._junction_bounds().center()
-    assert middle != centre
-    lat, lon = map_frame(window.network.background).to_wgs84(middle.x(), middle.y())
+    middle_m = window._junction_bounds().center()
+    assert middle_m != centre and QRectF(*window.network.background.zone).center() == middle_m
+    lat, lon = map_frame(window.network.background).to_wgs84(middle_m.x(), middle_m.y())
     assert abs(lat - placed.lat) < 1e-9 and abs(lon - placed.lon) < 1e-9
 
-    panel.kind.group.button(0).click()  # a colour; then the map again and Esc: the colour back
+    zone = list(window.network.background.zone)  # leaving the map asks first: No keeps it as it is
+    assert "map and its work zone will be discarded" in _switch(panel, 0, answer=False)[0]
+    assert window.network.background.kind == "map" and window.network.background.zone == zone
+    colour = window.network.background.colour
+    assert _switch(panel, 0)  # Yes: a colour, started afresh (only the colour kept), and the view free again
+    assert window.network.background == Background(colour=colour) and window._zoom_range() == (0.0005, 100.0)
+    window.undo()  # the discarded map comes back with undo
+    assert window.network.background.zone == zone
+    assert _switch(panel, 0)  # the map again and Esc: the colour back
     panel.kind.group.button(2).click()
-    assert panel.tool == "locate"
+    assert panel.tool == "zone"
     QTest.keyClick(window, Qt.Key.Key_Escape)
     assert window.network.background.kind == "colour" and panel.kind.value() == "colour"
     _close(window, tiles)
@@ -692,6 +781,8 @@ PLACES = {  # a stand-in for Nominatim: query -> its answer
                     for state, lat, lon in (("Illinois", "39.7990", "-89.6440"), ("Missouri", "37.2090", "-93.2923"),
                                             ("Massachusetts", "42.1015", "-72.5898"))],
     "Atlantis": [],
+    "Bangladesh": [{"display_name": "Bangladesh", "lat": "23.6943", "lon": "90.3444",
+                    "boundingbox": ["20.74", "26.63", "88.01", "92.67"]}],
 }
 
 
@@ -720,15 +811,21 @@ def test_place_search_follows_nominatims_usage_policy():
     assert not search.search("   ") and not asked  # nothing to look up
     assert search.search("  Dhaka  ")
     assert _wait(lambda: len(answers) == 1)
-    assert answers[0] == ("Dhaka", [("Dhaka, Bangladesh", 23.8103, 90.4125)])  # the pole left out
+    assert answers[0] == ("Dhaka", [("Dhaka, Bangladesh", 23.8103, 90.4125, 0.0)])  # the pole left out; no box
     url = asked[0][1]
     assert url.startswith("https://nominatim.openstreetmap.org/search?") and "format=jsonv2" in url and "q=Dhaka" in url
+    assert "countrycodes" not in url
     search.search("dhaka")  # asked before: from the cache, at once, not sent again
     assert answers[1] == ("dhaka", answers[0][1]) and len(asked) == 1
     for query in ("Atlantis", "broken", "offline"):
         search.search(query)
     assert _wait(lambda: len(answers) == 5, 10)
     assert answers[2] == ("Atlantis", []) and "couldn't be read" in answers[3][1] and "Couldn't reach" in answers[4][1]
+    search.search("Bangladesh", "BD")  # within a country: asked of Nominatim, and its bounding box measured
+    assert _wait(lambda: len(answers) == 6) and "countrycodes=bd" in asked[-1][1]
+    name, lat, lon, span = answers[5][1][0]
+    south, north = 20.74, 26.63  # its box: 5.89° of latitude, the larger side
+    assert name == "Bangladesh" and abs(span - ground_m((south, lon), (north, lon))) < 1000
     gaps = [later - earlier for (earlier, _), (later, _) in zip(asked, asked[1:])]
     assert all(gap >= SEARCH_GAP_S - 0.01 for gap in gaps), gaps  # never more than one request a second
     search.close()
@@ -759,40 +856,160 @@ def test_the_place_search_always_answers_and_shares_one_request_a_second_with_th
     search.close()
 
 
-def test_a_place_found_by_name_goes_under_the_networks_centre():
+def test_a_country_and_a_place_found_by_name_go_under_the_box():
     from PySide6.QtCore import Qt
     from PySide6.QtTest import QTest
 
     window, tiles = _window_on_tiles()
     panel = window.background_panel
-    panel.painter.places.download = _nominatim
-    assert not panel.search.isVisibleTo(panel)  # a colour: no place to find
-    panel.kind.group.button(2).click()  # the map, and Choose Location
-    assert panel.search.isVisibleTo(panel) and panel.search.isEnabled() and panel.tool == "locate"
+    asked = []
+    panel.painter.places.download = lambda url: asked.append(url) or _nominatim(url)
+    assert not panel.bar.isVisible()  # a colour: no place to find
+    panel.kind.group.button(2).click()  # the map, and its work zone
+    assert panel.bar.isVisible() and panel.place.isEnabled() and panel.tool == "zone"
     centre = window._junction_bounds().center()
-    panel.search.setText("Dhaka")
-    QTest.keyClick(panel.search, Qt.Key.Key_Return)
-    assert panel.search_note.text().startswith("Searching for “Dhaka”")
-    assert _wait(lambda: "Nominatim" in panel.search_note.text())  # one place: gone there at once
+
+    panel.country.lineEdit().setText("Bangladesh")  # chosen from the list (typed and Enter, or picked)
+    QTest.keyClick(panel.country.lineEdit(), Qt.Key.Key_Return)
+    assert panel.search_note.text().startswith("Finding Bangladesh")
+    assert _wait(lambda: not panel.search_note.text())  # gone there, framed: its box's 656 km across the box
     background = window.network.background
+    assert (round(background.lat, 4), round(background.lon, 4)) == (23.6943, 90.3444)
+    assert abs(min(panel._zone_m()) - 655_700) < 2000 and "countrycodes=bd" in asked[-1]
+
+    panel.place.setEditText("Dhaka")  # a place: within that country; one found, gone to at once, 1.2 km
+    QTest.keyClick(panel.place.lineEdit(), Qt.Key.Key_Return)
+    assert _wait(lambda: "Nominatim" in panel.search_note.text()) and "countrycodes=bd" in asked[-1]
     assert (round(background.lat, 4), round(background.lon, 4)) == (23.8103, 90.4125)
-    assert (background.anchor_x, background.anchor_y) == (centre.x(), centre.y()) and panel.tool == "locate"
-    assert panel.search_note.text().startswith("Dhaka, Bangladesh") and panel.search_note.isVisibleTo(panel)
+    assert (background.anchor_x, background.anchor_y) == (centre.x(), centre.y()) and panel.tool == "zone"
+    assert abs(min(panel._zone_m()) - 1200) < 1 and panel.search_note.text().startswith("Dhaka, Bangladesh")
 
-    panel.search.setText("Springfield")  # three: offered in a menu under the box
-    QTest.keyClick(panel.search, Qt.Key.Key_Return)
-    assert _wait(lambda: len(panel.results.actions()) == 3)
+    panel.country.lineEdit().clear()  # no country: anywhere
+    panel.place.setEditText("Springfield")  # three: offered in the place list
+    QTest.keyClick(panel.place.lineEdit(), Qt.Key.Key_Return)
+    assert _wait(lambda: panel.place.count() == 3) and "countrycodes" not in asked[-1]
     assert panel.search_note.text().startswith("3 places match") and window.network.background.lat == background.lat
-    panel.results.actions()[1].trigger()  # Missouri
+    panel.place.hidePopup()
+    panel.place.activated.emit(1)  # Missouri
     assert (round(window.network.background.lat, 4), round(window.network.background.lon, 4)) == (37.209, -93.2923)
-    panel.results.hide()
 
-    panel.search.setText("Atlantis")
-    QTest.keyClick(panel.search, Qt.Key.Key_Return)
+    panel.place.setEditText("Atlantis")
+    QTest.keyClick(panel.place.lineEdit(), Qt.Key.Key_Return)
     assert _wait(lambda: panel.search_note.text().startswith("Nothing found"))
     assert round(window.network.background.lat, 4) == 37.209  # nothing moved
-    panel.use_button.click()  # Springfield, Missouri it is
+    panel.confirm_button.click()  # Springfield, Missouri it is
     assert panel.tool is None and round(window.network.background.lat, 4) == 37.209
+    _close(window, tiles)
+
+
+def test_a_work_zone_is_kept_only_once_confirmed_and_the_bar_tracks_the_box():
+    from PySide6.QtCore import QPoint, Qt
+    from PySide6.QtTest import QTest
+
+    window, tiles = _window_on_tiles()
+    panel, view, scene = window.background_panel, window.view, window.scene
+    asked = []
+    panel.painter.places.download = lambda url: asked.append(url) or _nominatim(url)
+    middle = view.viewport().rect().center()
+
+    def go(lat, lon):
+        panel.lat.setValue(lat)
+        panel.lon.setValue(lon)
+        panel.go_button.click()
+
+    panel.swatches.buttons()[3].click()  # Concrete: a step to undo
+    kept = window.history.current
+    panel.kind.group.button(2).click()  # while choosing, the section is off: the bar is the only way in or out
+    assert panel.tool == "zone" and not panel.isEnabled() and panel.bar.isEnabled()
+    go(*LONDON)
+    assert window.network.background.kind == "map" and window.history.current == kept  # nothing kept yet
+    scale = view.projection_scale()
+    QTest.keyClick(view, Qt.Key.Key_F)  # Fit and Reset leave the zoom alone before Locate Work Zone
+    QTest.keyClick(view, Qt.Key.Key_R)
+    assert view.projection_scale() == scale
+    window.undo()  # undo while choosing: the setup put back, then the step before it undone
+    assert panel.tool is None and window.network.background == Background()
+    window.redo()
+    assert (window.network.background.kind, window.network.background.colour) == ("colour", "#9aa1a6")
+
+    panel.kind.group.button(2).click()  # Save while choosing: the setup cancelled first, never written
+    go(*LONDON)
+    with tempfile.TemporaryDirectory() as folder:
+        window.network_path = str(Path(folder) / "project.json")
+        assert window.save_file()
+        assert load_network(Path(folder) / "project.json").background.kind == "colour" and panel.tool is None
+
+    panel.kind.group.button(2).click()
+    background = window.network.background
+    panel.show_found("Dhaka", [("Dhaka, Bangladesh", 23.8103, 90.4125, 0.0)])  # an answer nobody asked for now
+    assert round(background.lat, 4) != 23.8103
+    for _ in range(2):  # a country chosen again comes from the cache, at once, and is framed all the same
+        panel.country.lineEdit().setText("Bangladesh")
+        QTest.keyClick(panel.country.lineEdit(), Qt.Key.Key_Return)
+        assert _wait(lambda: not panel.search_note.text()) and (round(background.lat, 4), round(background.lon, 4)) \
+            == (23.6943, 90.3444)
+        go(0.0, 0.0)
+    assert len(asked) == 1
+
+    covered = min(panel._zone_m())  # Go keeps the ground the box covers, at any latitude
+    assert abs(covered - 1200) < 1
+    go(60.0, 10.0)
+    assert abs(min(panel._zone_m()) - covered) < 0.01 * covered
+
+    go(0.0, 179.999)  # dragged over the antimeridian: the bar still says where the box is
+    panel.locate_button.click()
+    _drag(view, middle, QPoint(-300, 0))
+    assert -180 <= panel.lon.value() < -179.99
+    anchor = (background.anchor_x, background.anchor_y)
+    panel._place_if_moved()  # leaving a box unchanged moves nothing
+    assert (background.anchor_x, background.anchor_y) == anchor
+    panel.confirm_button.click()
+    window.network.validate()
+    assert panel.tool is None and -180 <= window.network.background.lon < -179.99
+
+    with tempfile.TemporaryDirectory() as folder:  # Set Scale, then the map: pinned to the network's centre all the same
+        picture = Path(folder) / "plan.png"
+        image = QImage(300, 200, QImage.Format.Format_RGB32)
+        image.fill(QColor("#888888"))
+        image.save(str(picture))
+        assert panel.use_image(str(picture)) and panel.tool == "scale"
+        assert _switch(panel, 2)
+        assert panel.tool == "zone" and scene.sceneRect().width() == 1
+        QTest.keyClick(window, Qt.Key.Key_Escape)
+        assert panel.tool is None and window.network.background.kind == "image"
+    _close(window, tiles)
+
+
+def test_the_assistants_map_shows_with_its_work_zone_as_the_users_confirm_does():
+    from traffic_simulator import network_tools
+
+    window, tiles = _window_on_tiles()
+    view, scene, panel = window.view, window.scene, window.background_panel
+    network_tools.run_tool(window.network, "place_map", {"lat": LONDON[0], "lon": LONDON[1]})
+    window._ai_edited("place_map")
+    zone = QRectF(*window.network.background.zone)
+    assert scene.sceneRect() == zone.united(scene.network_rect) and window._zoom_range()[0] > 0.0005  # kept to it
+    assert abs(view.projection_scale() - view.fit_scale(zone)) < 1e-6  # in view, as after Confirm
+    assert panel.zone_label.text().startswith("1.20 km × 1.20 km at 51.50720°")
+    window.undo()  # one step
+    assert window.network.background.kind == "colour"
+
+    # an answer arriving while the user chooses a work zone: the setup is cancelled first, so the assistant never
+    # works on a half-made map, nor is its change put back by the setup's Esc
+    panel.kind.group.button(2).click()
+    panel.lat.setValue(48.8566)
+    panel.lon.setValue(2.3522)
+    panel.go_button.click()
+    network_tools.run_tool(window._assistant_network(), "place_map", {"lat": LONDON[0], "lon": LONDON[1]})
+    window._ai_edited("place_map")
+    assert panel.tool is None and window.network.background.lat == LONDON[0]
+    assert window.history.current[0].background == window.network.background
+    from traffic_simulator import scenario  # a study's place: its area is the work zone, and the zone is built
+    spec, _, problems = scenario.prepare({"place": "Dhanmondi", "area_km": 3},
+                                         {"has_network": False, "has_demand": False, "bus_type": "Bus"})
+    steps = {step["tool"]: step["args"] for step in scenario.plan(spec)}
+    assert not problems
+    assert steps["place_map"]["width_m"] == steps["network_from_background"]["width_m"] == 3000
     _close(window, tiles)
 
 
