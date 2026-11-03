@@ -4,7 +4,7 @@
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
     properties, spacing and typography differ; tab order, controls, actions and signal connections are shared.
-  - **Create Network:** two `Collapsible` sections, fields at their natural size:
+  - **Create Network:** three `Collapsible` sections, fields at their natural size:
     - **Generate Network** (open at start): Speed limit, Lanes per direction and Lane changing, kept on the
       network as the defaults new roads get (a generated grid, Add Edge, interchanges), one undo step
       each (`_set_default`), the roads already there and a run untouched; Signal timing (Webster, TRANSYT,
@@ -98,7 +98,7 @@
   - **AI Mode:** keys and the System 2 chat; the status bar always shows which model is connected.
   - **View Summary:** the project at a glance, rebuilt whenever the tab opens or the project
     changes while it's open.
-  - **Universal Attributes** (last, a globe; `universal_tab`): what holds for the whole network however it was
+  - **Create Network → Universal Attributes** (its third section, `universal_section`): what holds for the whole network however it was
     made. Traffic: Driving side, applied to the whole network at once (`set_driving_side`: interchanges mirrored,
     the scene redrawn, one undo step, a run stopped, the status bar naming the interchanges), and the side new
     roads and grids follow.
@@ -117,7 +117,10 @@
     name heads the sidebar beside "ACMS" on the brand's baseline (`page_title`, `_name_open_tab`). Without either
     font the tabs show their names.
   - The sidebar is as wide as its tab row or its widest page needs (each page's minimum width), plus
-    its margins and scrollbar, and no wider (about 417 px with Segoe UI: the Extensions page's rows are as wide as their settings,
+    its margins and scrollbar, and no wider, measured again whenever its contents re-lay out (`_fit_sidebar` on
+    the sidebar's LayoutRequest: a row shown later, label columns aligned, another screen's fonts; once at start it
+    had cut a 125 % laptop's sidebar off at its right edge), never past half as wide again as it first fitted (a
+    very long vehicle type name in a label that doesn't wrap is clipped rather than pushing the map off screen) (about 417 px with Segoe UI: the Extensions page's rows are as wide as their settings,
     open or folded), so the map gets the rest. The tab row spans the sidebar
     (document mode, expanding tabs), and every page's margins line up with its edges.
 - **Canvas tools:** Add Node, Add Edge, Drag to Adjust and MRT deployment are mutually exclusive.

@@ -41,7 +41,10 @@ items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLO
     the pocket's lanes too, where the lanes are there.
   - Overpasses draw above the roads below them (`OVERPASS_LIFT`) with parapets over each crossing.
 - **Nodes:**
-  - Signalised and roundabout junctions get a box or the true-size roundabout.
+  - Signalised and roundabout junctions get a box or the true-size roundabout. The box is the convex hull
+    (`geometry.convex_hull`) of each road's end, its two kerbs at the node and 0.64 of the widest road out along it
+    (so an L bend's roads are covered to the node too), so it
+    meets every road square on at whatever angle they come in (a grid crossing: a square, corners chamfered).
   - Uncontrolled nodes draw as plain carriageway (a joint disc).
   - Signal heads sit on the near-side kerb at each arriving stop line (`signal_lamps`). While a run
     goes they show its live states (`show_signals`: green, amber, red); otherwise the first phase's arms green and the rest red, split by the junction's own

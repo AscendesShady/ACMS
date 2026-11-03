@@ -1693,7 +1693,7 @@ def test_lateral_position_off_leaves_every_run_as_it_was():
     # The run's every position, speed and count, bit for bit, as before lateral position existed (the digest was taken
     # then); change it only for a deliberate change to the default model. On, with no type filtering, the traffic is the
     # same too (only drawn at its lane's kerb side).
-    before = "cca0bc19915d235be4f51df6b1df07cf64cb0cebc6bc86a9248ba090bd58acf6"  # 2026-10-18: turn floors, U-turn rate, minimum cycle, SUMO amber rule
+    before = "084458d91c7c118befbe70e5e1be4d865f347ef07fd97d7b6945ecc9e52dc39f"  # 2026-11-03: poses front to rear, body-width conflicts
     assert _lateral_fingerprint() == _lateral_fingerprint(lateral=False) == before
     plain = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))], [MODES[0], MODES[1], MOTO], seed=3)
     still = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))],
@@ -1752,6 +1752,73 @@ def test_motorcycles_filter_past_a_red_queue_to_the_stop_line_and_leave_first():
         assert sideways <= MAX_SPEED_LAT * DT + 1e-9 and (sideways > 0) == lateral
     assert order[False][-3:] == ["Moto5", "Moto6", "Moto7"]
     assert set(order[True][:5]) >= {"Moto5", "Moto6", "Moto7"} and "Moto5" in order[True][:2], order[True]
+
+
+def _bodies_overlap(a, b, shrink=0.15) -> bool:
+    """Whether two vehicles' bodies (rectangles round their poses, `shrink` metres in from each side) overlap."""
+    def corners(v):
+        half_l, half_w = v.length_m / 2 - shrink, v.width_m / 2 - shrink
+        return [(v.x + v.ux * p - v.uy * q, v.y + v.uy * p + v.ux * q)
+                for p, q in ((half_l, half_w), (half_l, -half_w), (-half_l, -half_w), (-half_l, half_w))]
+    ca, cb = corners(a), corners(b)
+    for v in (a, b):
+        for ax, ay in ((v.ux, v.uy), (-v.uy, v.ux)):
+            pa, pb = [x * ax + y * ay for x, y in ca], [x * ax + y * ay for x, y in cb]
+            if max(pa) <= min(pb) or max(pb) <= min(pa):
+                return False
+    return True
+
+
+def test_vehicles_through_a_skewed_junction_never_overlap():
+    """Roads meeting at odd angles (a drawn network's): two turns whose centre lines never cross but pass within a
+    vehicle's width conflict at their closest approach (SUMO's conflicts on lanes widened by their widths), and a
+    vehicle starting a turn lies from its rear on the lane to its front on the turn (it had been drawn already swung
+    across the next lane). At a signalised T no two bodies overlap; at a give-way crossing no two turning ones do."""
+    for drop, control, flow in (("1S", "signalised", 200), (None, "uncontrolled", 80)):
+        network = generate_network(1, 1)
+        node = network.nodes["1,1"]
+        node.control = control
+        for end, angle in zip(list(network.approach_nodes.values()), (20, 200, 300, 120)):
+            end.x, end.y = node.x + 200 * cos(angle * pi / 180), node.y + 200 * sin(angle * pi / 180)
+        if drop:
+            network.delete_road(drop)
+        network.synchronize_road_lengths()
+        ends = list(network.approach_nodes)
+        simulation = Simulation(network, [pair(o, d, flow) for o in ends for d in ends if o != d], MODES, seed=3)
+        overlaps = set()
+        while simulation.time < 900:
+            simulation.step()
+            vehicles = [v for v in simulation.frame().vehicles if drop or v.place.startswith("junction")]
+            overlaps |= {(a.place, b.place) for i, a in enumerate(vehicles) for b in vehicles[i + 1:]
+                         if abs(a.x - b.x) < 15 and abs(a.y - b.y) < 15 and _bodies_overlap(a, b)}
+        assert simulation.arrived > 150 and not overlaps, (control, simulation.arrived, overlaps)
+
+
+def test_body_width_conflicts_leave_neighbours_and_slip_road_tapers_alone():
+    """Lanes from one road into one road run side by side (a cycle lane's centre 2.5 m from the kerb lane's had made
+    bike and car foes, jamming give-way grids); an imported slip road ("motorway_link") is a ramp like a drawn one: no
+    conflict at its taper's node only for brushing (its lanes overlap the road's beyond the node anyway)."""
+    from traffic_simulator.interchanges import build_diamond
+    from traffic_simulator.lane_graph import Graph
+
+    network = generate_network(1, 1)
+    for road in network.all_roads():
+        road.cycle_lanes = list(road.arrival_ends())
+    graph = Graph(network)
+    assert not [(turn.name, other.name) for link in graph.arriving["1,1"] for turn in link.all_turns()
+                for other, *_ in turn.conflicts if turn.lane_in.link is other.lane_in.link
+                and turn.lane_out.link is other.lane_out.link and turn.lane_out is not other.lane_out]
+    network = generate_network(3, 4)
+    build_diamond(network, ("1,2", "3,2"), ("2,3", "2,1"))
+    ramps = [road for road in network.all_roads() if road.road_type == "ramp"]
+    for road in ramps:
+        road.road_type = "motorway_link"
+    graph = Graph(network)
+    tapers = {node for road in ramps for node in (road.from_node, road.to_node)
+              if node in network.nodes and network.nodes[node].control == "uncontrolled"}
+    assert tapers and not [(turn.name, other.name) for node in tapers for link in graph.arriving[node]
+                           for turn in link.all_turns() for other, *_ in turn.conflicts
+                           if turn.lane_out is not other.lane_out and Graph._meeting(turn, other, False) is None]
 
 
 def test_side_by_side_in_a_lane_is_no_collision_and_overlapping_is():

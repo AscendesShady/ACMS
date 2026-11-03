@@ -91,7 +91,7 @@ The editor also starts with `.venv\Scripts\acms.exe` or
 - **Add Node:** click empty map to place a node, then keep clicking for more; a dashed line from the last node
   shows the distance to the next. Right-click keeps them (one undo step), Esc asks to keep or discard them, and
   Ctrl+Z takes the last one back while placing.
-- **Universal Attributes** (the globe tab): Left- or right-hand driving, for the whole network.
+- **Universal Attributes** (Create Network's third section): Left- or right-hand driving, for the whole network.
 - **Demand:** an OD pair's hourly flow can take a **PHF** (peak-hour factor, 0.25–1): the hour's busiest
   quarter runs at the flow ÷ PHF. The assistant can also set four 15-minute counts.
 - **Drop-offs:** not every trip runs entry to exit. Click a vehicle type's zone in the pair's **Modes** bar: a

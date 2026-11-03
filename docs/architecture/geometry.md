@@ -11,6 +11,9 @@
 - `distance_to_segment(p, a, b)`.
 - `nearest_along(points, p)`: how far along the polyline its nearest point to p is (a dragged bus
   stop, a bay's middle on its lane).
+- `closest_approach(a, b)`: (gap, along a, along b) where two polylines that don't cross come nearest (two turns
+  whose vehicles would brush, lane_graph's body-width conflicts).
+- `convex_hull(points)`: Andrew's monotone chain (a junction box round its roads' mouths).
 - `rail_leg(track, x, y, radius, max_turn, platform_m, transition_m, heading)`: an MRT leg from a track's last
   point (a station) laid out as a railway is: straight on for half a platform, a bend (`_bend`: a clothoid transition,
   curvature rising evenly to 1 / radius, the circular arc, a transition back; transitions shortened on a small turn so

@@ -106,6 +106,42 @@ def nearest_along(points: list[Point], point: Point) -> float:
     return best
 
 
+def convex_hull(points: list[Point]) -> list[Point]:
+    """The smallest convex polygon round the points, clockwise on screen (y down) from the leftmost
+    (Andrew's monotone chain), e.g. a junction's box round the mouths of its roads."""
+    points = sorted(set(points))
+    if len(points) < 3:
+        return points
+
+    def half(chain):
+        kept: list[Point] = []
+        for p in chain:
+            while len(kept) >= 2 and ((kept[-1][0] - kept[-2][0]) * (p[1] - kept[-2][1])
+                                      - (kept[-1][1] - kept[-2][1]) * (p[0] - kept[-2][0])) <= 0:
+                kept.pop()
+            kept.append(p)
+        return kept[:-1]
+    return half(points) + half(points[::-1])
+
+
+def closest_approach(a: list[Point], b: list[Point]) -> tuple[float, float, float]:
+    """(gap, metres along a, metres along b) where two polylines that don't cross come nearest each other: at a
+    vertex of one or the other, so each vertex is tried against the other line. E.g. two turns through a junction
+    whose centre lines never cross but whose vehicles would brush."""
+    best = (float("inf"), 0.0, 0.0)
+    for one, other, flip in ((a, b, False), (b, a, True)):
+        walked = 0.0
+        for index, (px, py) in enumerate(one):
+            if index:
+                walked += hypot(px - one[index - 1][0], py - one[index - 1][1])
+            along = nearest_along(other, (px, py))
+            x, y = point_along(other, along)[:2]
+            gap = hypot(px - x, py - y)
+            if gap < best[0]:
+                best = (gap, along, walked) if flip else (gap, walked, along)
+    return best
+
+
 def sub_polyline(points: list[Point], start: float, end: float) -> list[Point]:
     """The piece of the polyline from `start` to `end` metres along it (clamped to its ends),
     e.g. a lane cut back to the stop lines at both of its junctions."""

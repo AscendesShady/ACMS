@@ -4,7 +4,10 @@ Structured like SUMO's step (references/reverse_engineering/simulation/simulatio
 seconds (`DT` = 0.5 s; a headless run may ask for 0.25 or 0.1 s, `Simulation(step_s=…)` from `STEP_LENGTHS_S`, to
 check its results don't depend on the step; the clock is kept exact), it plans every vehicle's speed from the state
 at the start of the step, moves them, lets them change lanes, then inserts new vehicles; poses are then updated for
-drawing. `step_method` (`STEP_METHODS`) is how a move follows the speeds: `"euler"`, SUMO's default and the app's,
+drawing (`_pose`: a vehicle whose rear is still on the lane or turn it came from (or, longer than that turn, on the lane
+before it) lies from that rear to its front,
+SUMO's angle from front and back positions, MSVehicle::computeAngle; clamped onto its new turn it had been drawn
+already swung across the next lane). `step_method` (`STEP_METHODS`) is how a move follows the speeds: `"euler"`, SUMO's default and the app's,
 s += v′·Δt at the new speed; `"ballistic"` (opt-in, SUMO's `--step-method.ballistic`), s += (v + v′)/2·Δt, and a
 vehicle braking to a stop within the step (a next speed below zero, vehicle.md) goes only as far as it takes to
 stop, v²·Δt/2(v − v′), with Krauss's safe speed in its ballistic form. Each step a vehicle brakes harder than its
@@ -108,8 +111,14 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     road's other carriageway (no offside turns: a diamond's on-ramp had joined the opposite carriageway across the
     freeway) nor turns back on a road of `RAMP_UTURN_MAX_KMH` (80 km/h) or more: a freeway has no median opening, while
     an arterial's slip-road junction keeps the median U-turn a two-phase signal's detour needs.
-  - Conflicts: where two turns' paths cross (`segment_hit`) or merge into one lane, with who gives
-    way: a U-turn to everything else (on the same green); an offside turn to oncoming traffic on the
+  - Conflicts: where two turns' paths cross (`segment_hit`) or merge into one lane, or, where their centre lines
+    never cross but pass nearer than `BODY_WIDTH_M` (2.5 m, two buses side by side: opposite turns passing each
+    other, a turn swept across the next lane at a skewed junction), at their closest approach
+    (`geometry.closest_approach`), SUMO's netconvert conflicts on lanes widened by their widths
+    (NBEdge::firstIntersection); a cycle lane's turn needs only (2.5 + `BIKE_BODY_M` 0.7) / 2 m beside another (its
+    centre is 2.5 m from the kerb lane's: at 2.5 bikes and cars became foes and jammed give-way grids); never two
+    lanes from one road into one road (neighbours side by side), nor at a ramp junction (a ramp or an imported
+    "*_link"), whose taper's lanes overlap the road's beyond the node anyway. With who gives way: a U-turn to everything else (on the same green); an offside turn to oncoming traffic on the
     same green; a minor arm of an uncontrolled junction to the major road (`_major_arms`: the two arms of the
     highest road class, `ROAD_PRIORITY` as SUMO's netconvert ranks OSM types, the most nearly in line among them;
     a grid's roads are one class, so in line), and a minor offside turn also to the other minor arm's straight and

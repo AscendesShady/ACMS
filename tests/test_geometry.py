@@ -3,6 +3,7 @@
 from math import hypot, isclose
 
 from traffic_simulator.geometry import (
+    convex_hull,
     distance_to_segment,
     nearest_along,
     offset_polyline,
@@ -40,6 +41,13 @@ def test_crossings_and_distances():
     assert segment_hit(0, 0, 10, 0, 10, 0, 10, 5) is None  # touching at an end is not a crossing
     assert isclose(distance_to_segment((5, 3), (0, 0), (10, 0)), 3)
     assert isclose(distance_to_segment((13, 4), (0, 0), (10, 0)), hypot(3, 4))
+
+
+def test_a_hull_keeps_only_the_outer_corners():
+    square = [(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0)]
+    hull = convex_hull(square + [(5.0, 5.0), (5.0, 0.0), (0.0, 0.0)])  # inside, on an edge, repeated
+    assert sorted(hull) == sorted(square) and hull[0] == (0.0, 0.0)
+    assert convex_hull([(1.0, 1.0), (2.0, 2.0)]) == [(1.0, 1.0), (2.0, 2.0)]
 
 
 if __name__ == "__main__":

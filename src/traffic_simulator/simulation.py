@@ -70,7 +70,7 @@ from collections.abc import Mapping
 from types import MappingProxyType, SimpleNamespace
 from typing import NamedTuple
 from itertools import accumulate, count
-from math import atan2, ceil, floor, inf, pi, sqrt
+from math import atan2, ceil, floor, hypot, inf, pi, sqrt
 
 from .geometry import point_along, polyline_length
 # The lane graph; its other names are imported from here too, as before it had a module of its own
@@ -1972,8 +1972,29 @@ class Simulation:
             exits.popleft()
 
     def _pose(self, vehicle: Vehicle) -> tuple[float, float, float, float]:
-        pose = point_along(vehicle.segment.points, max(vehicle.s - vehicle.length_m / 2, 0.0))
-        if vehicle.lat_m and not isinstance(vehicle.segment, Bay):  # lateral runs: off the centre line, towards (-uy, ux)
+        """Its body's centre and heading (x, y, ux, uy). A rear still on the lane or turn it came from is placed there,
+        and the body lies from rear to front, SUMO's vehicle angle (MSVehicle::computeAngle, front to back position):
+        clamped onto its new turn or lane it was drawn already swung round across the next lane, brushing the car
+        beside it at every junction."""
+        segment, rear_s = vehicle.segment, vehicle.s - vehicle.length_m
+        before = None
+        if rear_s < 0 and isinstance(segment, Turn):
+            before = segment.lane_in
+        elif rear_s < 0 and vehicle.came_from is not None and segment is vehicle.came_from.lane_out:
+            before = vehicle.came_from
+        if before is None:
+            pose = point_along(segment.points, max(vehicle.s - vehicle.length_m / 2, 0.0))
+        else:
+            front_x, front_y = point_along(segment.points, vehicle.s)[:2]
+            rear = before.length + rear_s
+            if rear < 0 and before is vehicle.came_from:  # longer than the turn: its rear still on the turn's lane in
+                before = before.lane_in
+                rear += before.length
+            rear_x, rear_y = point_along(before.points, rear)[:2]  # ponytail: clamped beyond one segment back
+            span = hypot(front_x - rear_x, front_y - rear_y)
+            ux, uy = point_along(segment.points, 0.0)[2:] if span < 1e-6 else                 ((front_x - rear_x) / span, (front_y - rear_y) / span)
+            pose = ((front_x + rear_x) / 2, (front_y + rear_y) / 2, ux, uy)
+        if vehicle.lat_m and not isinstance(segment, Bay):  # lateral runs: off the centre line, towards (-uy, ux)
             x, y, ux, uy = pose
             return x - uy * vehicle.lat_m, y + ux * vehicle.lat_m, ux, uy
         return pose

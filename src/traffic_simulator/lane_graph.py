@@ -13,7 +13,8 @@ from dataclasses import dataclass, field
 from itertools import combinations, count
 from math import atan2, cos, dist, hypot, log, pi, sin, sqrt
 
-from .geometry import bezier, nearest_along, offset_polyline, point_along, polyline_length, segment_hit, sub_polyline
+from .geometry import (bezier, closest_approach, nearest_along, offset_polyline, point_along, polyline_length,
+                       segment_hit, sub_polyline)
 from .interchanges import curve_speed_kmh
 from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, LANE_WIDTH_M, POCKET_TAPER_M, Network,
                      bay_depth, lane_end_inset)
@@ -28,6 +29,11 @@ from .stats import logit
 # capacity with nothing to give way to, about HCM 6's yield entry (3600 / t_f with t_f 2.61 s: 1,380 veh/h, as
 # Eq 22-1); kept at the line's 1,974 veh/h it was twice HCM's at light major flows (audit 2026-10-13, M3).
 GIVE_WAY_KMH = 17.0
+# Two turns whose centre lines pass closer than this conflict though they never cross: SUMO's netconvert finds
+# internal-lane conflicts on the lanes' shapes widened by their widths (NBEdge::firstIntersection), not their centre
+# lines. 2.5 m: two of the widest vehicles (a bus, 2.5 m) side by side would touch, centre to centre, nearer than that.
+BODY_WIDTH_M = 2.5
+BIKE_BODY_M = 0.7  # a cyclist's width (SUMO's bicycle vType 0.65 m, rounded up)
 STORAGE_M_PER_VEHICLE = 7.5  # a queued car and its gap (5 m and 2.5 m): a lane of L metres holds L / 7.5 (storage_ratio)
 # Side friction for a turn at a junction (AASHTO Green Book, low-speed turning roadways and intersection curves:
 # about 0.32-0.38 at 20-30 km/h): v = sqrt(127 f R) km/h, no superelevation
@@ -730,11 +736,18 @@ class Graph:
         turns = [turn for link in self.arriving[node_id] for turn in link.all_turns()]
         signal = self.signals.get(node_id)
         major = self._major_arms(node_id) if node.control == "uncontrolled" else set()
+        # Not where a ramp leaves or joins a road along it (a slip road's or an interchange's taper): there its lanes
+        # overlap the road's for metres either side of the node, which no junction conflict can keep apart, and
+        # conflicts at the node alone only made the ramp a detour nobody took.
+        # ponytail: tapers still overlap; a lane-level diverge and merge is the fix
+        bodies = not (node.control == "uncontrolled" and any(  # an imported slip road: an OSM "*_link"
+            (kind := self.network.road(link.road).road_type) == "ramp" or kind.endswith("_link")
+            for link in (*self.arriving[node_id], *self.leaving[node_id])))
         for first in turns:
             for second in turns:
                 if first.lane_in is second.lane_in:
                     continue  # the same lane splitting to different exits: no conflict
-                spot = self._meeting(first, second)
+                spot = self._meeting(first, second, bodies)
                 if spot is None:
                     continue
                 same_green = signal is not None and \
@@ -778,8 +791,10 @@ class Graph:
         return {link.id for link in self.links.values() if link.road in pair and node_id in (link.start, link.end)}
 
     @staticmethod
-    def _meeting(first: Turn, second: Turn) -> tuple[float, float] | None:
-        """(metres along each) where two turns cross, or merge into the same lane."""
+    def _meeting(first: Turn, second: Turn, bodies: bool = True) -> tuple[float, float] | None:
+        """(metres along each) where two turns cross, or merge into the same lane; or, `bodies`, where their centre
+        lines never cross but come within BODY_WIDTH_M (opposite turns passing each other, a turn swept across the next
+        lane at a skewed junction), where they come nearest: their vehicles would brush there."""
         if first.lane_out is second.lane_out:
             return first.length, second.length
         walked_a = 0.0
@@ -792,7 +807,18 @@ class Graph:
                             walked_b + hit[1] * hypot(dx - cx, dy - cy))
                 walked_b += hypot(dx - cx, dy - cy)
             walked_a += hypot(bx - ax, by - ay)
-        return None
+        if not bodies or (first.lane_in.link is second.lane_in.link and first.lane_out.link is second.lane_out.link):
+            return None  # (lanes from one road into one road run side by side: neighbours, never foes)
+        # A bike's lane (a cycle lane, index -1) needs only a bike's half width beside a bus's: its centre is 2.5 m
+        # from the kerb lane's, so at BODY_WIDTH_M the pair conflicted, or not, by float noise and jammed junctions
+        limit = BODY_WIDTH_M if min(first.lane_in.index, second.lane_in.index) >= 0 else (BODY_WIDTH_M + BIKE_BODY_M) / 2
+        boxes = [(min(x for x, _ in turn.points), min(y for _, y in turn.points),
+                  max(x for x, _ in turn.points), max(y for _, y in turn.points)) for turn in (first, second)]
+        (left, top, right, bottom), (left_2, top_2, right_2, bottom_2) = boxes
+        if left > right_2 + limit or left_2 > right + limit or top > bottom_2 + limit or top_2 > bottom + limit:
+            return None  # too far apart to brush: not worth the closer look
+        gap, here, there = closest_approach(first.points, second.points)
+        return (here, there) if gap < limit else None
 
     def assign(self, rates: dict) -> tuple[dict, dict]:
         """Every pair's veh/h ({(origin, destination): veh/h}) on its fastest route: (veh/h arriving at each

@@ -30,7 +30,7 @@ from PySide6.QtWidgets import (
 )
 
 from . import asset_mesh, building_assets, gpu, metro_assets, vehicle_assets
-from .geometry import nearest_along, offset_polyline, point_along, polyline_length, sub_polyline
+from .geometry import convex_hull, nearest_along, offset_polyline, point_along, polyline_length, sub_polyline
 from .lane_graph import two_phases
 from .institutions import KINDS, Placement, links
 from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, CYCLE_LANE_M, FOOTPATH_M, LANE_WIDTH_M,
@@ -1473,7 +1473,19 @@ class NetworkGraphicsScene(QGraphicsScene):
             self.addItem(island)
         else:
             rect = QRectF(node.x - diameter / 2, node.y - diameter / 2, diameter, diameter)
-            item = QGraphicsRectItem(rect)
+            # A junction's box takes the shape its roads meet in: round each road's end (its kerbs from the node out
+            # to its mouth, half the box out along it), so it turns and narrows with them rather than sitting square
+            # across them, and covers each road's flat end at the node even where they all come from one side.
+            half, mouths = diameter / 2, []
+            for ux, uy, road in arms:
+                for side in (-1, 1):
+                    kerb_x, kerb_y = -uy * side * road.width_m / 2, ux * side * road.width_m / 2
+                    mouths += [(node.x + kerb_x, node.y + kerb_y),
+                               (node.x + ux * half + kerb_x, node.y + uy * half + kerb_y)]
+            if node.control == "uncontrolled" or len(arms) < 2:
+                item = QGraphicsRectItem(rect)
+            else:
+                item = QGraphicsPolygonItem(QPolygonF([QPointF(x, y) for x, y in convex_hull(mouths)]))
             if node.control == "signalised":
                 arriving = [(ux, uy, road) for ux, uy, road in arms
                             if road.direction == "two-way" or road.to_node == node.id]  # traffic arrives here

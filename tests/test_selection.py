@@ -659,6 +659,52 @@ def test_a_redraw_while_a_selection_box_is_dragged_ends_the_box():
     assert scene._band is None and not boxed  # no error, and that box selects nothing
 
 
+def test_a_junction_box_takes_the_shape_its_roads_meet_in():
+    """Roads meeting at odd angles: the box is not a square across them but meets each road's kerbs square on,
+    so no road pokes out of a corner and no corner juts into the grass."""
+    from math import cos, hypot, radians, sin
+
+    from PySide6.QtWidgets import QGraphicsPolygonItem
+
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+
+    network = generate_network(1, 1)
+    node = network.nodes["1,1"]
+    for end, angle in zip(network.approach_nodes.values(), (20, 200, 300, 120)):
+        end.x, end.y = node.x + 200 * cos(radians(angle)), node.y + 200 * sin(radians(angle))
+    network.synchronize_road_lengths()
+    scene = NetworkGraphicsScene(network)
+    scene.rebuild()
+    box = next(item for item in scene.items() if item.data(0) == ("node", "1,1"))
+    assert isinstance(box, QGraphicsPolygonItem)
+    corners = [(point.x() - node.x, point.y() - node.y) for point in box.polygon()]
+    half = max(road.width_m for road in network.all_roads()) * 1.28 / 2
+    for road in network.all_roads():
+        far = network.approach_nodes[road.to_node if road.from_node == "1,1" else road.from_node]
+        length = hypot(far.x - node.x, far.y - node.y)
+        ux, uy = (far.x - node.x) / length, (far.y - node.y) / length
+        for side in (-1, 1):  # both kerbs at the road's mouth are corners of the box
+            kerb = (ux * half - uy * side * road.width_m / 2, uy * half + ux * side * road.width_m / 2)
+            assert min(hypot(x - kerb[0], y - kerb[1]) for x, y in corners) < 1e-6, road.id
+    # An L bend (two roads from one side): the box still covers each road's whole end, node to mouth, kerb to kerb
+    network.delete_road(next(road.id for road in network.all_roads() if "1S" in (road.from_node, road.to_node)))
+    network.delete_road(next(road.id for road in network.all_roads() if "1N" in (road.from_node, road.to_node)))
+    for end, angle in zip(network.approach_nodes.values(), (0, 90)):
+        end.x, end.y = node.x + 200 * cos(radians(angle)), node.y + 200 * sin(radians(angle))
+    network.synchronize_road_lengths()
+    scene.rebuild()
+    box = next(item for item in scene.items() if item.data(0) == ("node", "1,1"))
+    for road in network.all_roads():
+        far = network.approach_nodes[road.to_node if road.from_node == "1,1" else road.from_node]
+        length = hypot(far.x - node.x, far.y - node.y)
+        ux, uy = (far.x - node.x) / length, (far.y - node.y) / length
+        for along in (0.5, half / 2, half - 0.5):
+            for across in (-0.45, 0.0, 0.45):
+                x = node.x + ux * along - uy * across * road.width_m
+                y = node.y + uy * along + ux * across * road.width_m
+                assert box.polygon().containsPoint(QPointF(x, y), Qt.FillRule.OddEvenFill), (road.id, along, across)
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

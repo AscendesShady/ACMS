@@ -85,7 +85,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   junction's; counts (lanes, phases, a PDF page, an MRT line's carriages) refused unless whole numbers; a file
   saved with a byte order mark opening (network, project and conversation); a background image on a network
   share (`\\server\share`, `//server/share`, `\\?\UNC\...`) refused by validate and by Open.
-- `test_geometry.py`: polyline primitives, including the nearest point along a line.
+- `test_geometry.py`: polyline primitives, including the nearest point along a line and a hull keeping only its
+  outer corners.
 - Overlap and ordering fixes, each test failing on the old code: `test_project.py` (Open starts its own undo
   history), `test_simulation.py` (a live run drives its own copy: an edit that stops it leaves its results
   describing the network it ran), `test_mode_behavior.py` (Undo with a name half typed, the window active:
@@ -143,6 +144,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   `--gpu` additionally checks actual framebuffer silhouettes/open gaps, random paints and solid coplanar bus
   windows against raster, one upload across camera changes, and depth independent of instance order. Negative
   controls replace meshes with bricks or remove glazing depth bias and must fail these regressions.
+- `test_selection.py`: a junction box at roads meeting at odd angles meeting each road's kerbs square on (a
+  polygon, both kerbs at each mouth its corners), and at an L bend covering each road's end from the node out.
 - `test_selection.py`: Add Node placing node after node (each selected, still placing, the dashed distance from
   the last to the mouse, no undo step meanwhile, Ctrl+Z taking the last back, a right-click keeping them as one
   step; Esc's Cancel going on, Discard leaving nothing and no step, Save keeping them; Esc with none placed
@@ -391,10 +394,16 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   `tools/preview_ui.py --output reports/ui-preview --width 1280 --height 800` captures all seven tabs and both
   AI pages, plus JSON layout measurements, using CPU/offscreen Qt. On Windows it locates the installed font
   directory explicitly. This does not verify native Windows window chrome or the OpenGL renderer.
+- `test_create_tab.py`: the sidebar fitting its pages beside the scroll bar and widening when a page grows (it had
+  been measured once), but no further than half as wide again as it first fitted.
+- `test_simulation.py`: at a skewed signalised T no two vehicle bodies overlapping, at a skewed give-way crossing no
+  two turning ones (each failing on the old code: centre-line-only conflicts, poses clamped onto the new turn); no
+  conflict between a road's side-by-side lanes into one road (a cycle lane beside the kerb lane) nor, for brushing
+  only, at an imported slip road's ("motorway_link") taper.
 - `test_create_tab.py`: Hide Background among the map's corner controls only over an image or the map (the bar
   growing to take it, unticked again over a colour, an image's hide undone by the map and by a setup step) and
   Show Buildings in Demand → Institutions (shown when it opens, an untick kept through Hourly/Daily); the driving side
-  under Universal Attributes; the two sections opening and closing (Generate Network open at start, road settings,
+  in its own Universal Attributes section, closed at start; the sections opening and closing (Generate Network open at start, road settings,
   signal timing and grid size in it); the chosen signal timing kept as the network's default, reaching a new
   junction and every junction of a generated grid, undo restoring it; idle signal lamps lit by the phases a run
   would use (roads crossing at 60°: the 20° and 200° arms green, not all four); the driving

@@ -166,8 +166,7 @@ def ask_interchange(parent: QWidget, kind: str, network: Network, nodes: list[st
 # Without either font, tabs show their names.
 TAB_ICONS = {"Create Network": "\ue800", "Edit Network": "\ue70f", "Mode Behavior": "\ue804",
              "Demand Generator": "\ue80a", "AI Mode": "\ue99a", "View Summary": "\ue9d2",
-             "Extensions": "\uea86", "Universal Attributes": "\ue909"}  # map, pencil, car, table, robot, chart, puzzle,
-# globe
+             "Extensions": "\uea86"}  # map, pencil, car, table, robot, chart, puzzle
 TAB_ICON_PX = 20
 # The grid a new window starts with, and the Create Network tab's settings for new roads
 DEFAULT_HORIZONTAL_CORRIDORS, DEFAULT_VERTICAL_CORRIDORS = 3, 4
@@ -326,8 +325,8 @@ class MainWindow(QMainWindow):
         side_layout.addLayout(title_row)
         side_layout.addWidget(hint_label("Build and refine networks. Distances in metres."))
 
-        # Two sections that open and close: Generate Network (driving side for the whole network, what new
-        # roads and signals get, and a grid of them) and a network of your own over a colour, image or map.
+        # Three sections that open and close: Generate Network (what new roads and signals get, and a grid of
+        # them), a network of your own over a colour, image or map, and Universal Attributes (driving side).
         create_tab = QWidget()
         create_layout = QVBoxLayout(create_tab)
         create_layout.setSpacing(6)
@@ -381,6 +380,22 @@ class MainWindow(QMainWindow):
         self.background_panel.show_background(self.network.background)
         self.own_section = Collapsible("Own Network", self.background_panel, tooltip="Draw over a background")
         create_layout.addWidget(self.own_section)
+        # Universal Attributes: what holds for the whole network, whichever way it was made (generated, drawn,
+        # from a map or the assistant), so not under Generate Network.
+        universal = QWidget()
+        universal_layout = QVBoxLayout(universal)
+        universal_form = QFormLayout()
+        universal_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.FieldsStayAtSizeHint)
+        self.driving_side = ChoiceButtons([("Left-hand", "left"), ("Right-hand", "right")])
+        self.driving_side.set_value(DEFAULT_DRIVING_SIDE)
+        self.driving_side.setToolTip("Side traffic keeps to")
+        universal_form.addRow("Driving side", self.driving_side)
+        universal_layout.addLayout(universal_form)
+        universal_layout.addWidget(hint_label(  # under the form: a wrapped row of a form is clipped
+            "The whole network at once: lanes, turns and signals mirror to the other side, and new roads and grids "
+            "follow it."))
+        self.universal_section = Collapsible("Universal Attributes", universal, tooltip="Whole-network settings")
+        create_layout.addWidget(self.universal_section)
         create_layout.addStretch(1)
 
         # The map's own controls, over its top-right corner: fit, reset, and the mouse and keys.
@@ -548,26 +563,6 @@ class MainWindow(QMainWindow):
         self.extensions.latest_frame = lambda: self.runner.frame if self.runner is not None else None
         self.extensions.hooks_changed.connect(self._apply_hooks)
         self.tabs.addTab(self.extensions, "Extensions")
-        # Universal Attributes: what holds for the whole network, whichever way it was made (generated, drawn,
-        # from a map or the assistant), so not under Generate Network.
-        universal_tab = QWidget()
-        universal_layout = QVBoxLayout(universal_tab)
-        traffic = QGroupBox("Traffic")
-        traffic_layout = QVBoxLayout(traffic)
-        traffic_form = QFormLayout()
-        traffic_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.FieldsStayAtSizeHint)
-        self.driving_side = ChoiceButtons([("Left-hand", "left"), ("Right-hand", "right")])
-        self.driving_side.set_value(DEFAULT_DRIVING_SIDE)
-        self.driving_side.setToolTip("Side traffic keeps to")
-        traffic_form.addRow("Driving side", self.driving_side)
-        traffic_layout.addLayout(traffic_form)
-        traffic_layout.addWidget(hint_label(  # under the form: a wrapped row of a form is clipped
-            "The whole network at once: lanes, turns and signals mirror to the other side, and new roads and grids "
-            "follow it."))
-        universal_layout.addWidget(traffic)
-        universal_layout.addStretch(1)
-        self.universal_tab = universal_tab
-        self.tabs.addTab(universal_tab, "Universal Attributes")
         for index in range(self.tabs.count()):  # every page lines up with the tab row's edges
             self.tabs.widget(index).layout().setContentsMargins(0, 8, 0, 0)
         # Tabs are icons: hovering one names it, and the open tab's name heads the sidebar.
@@ -604,14 +599,13 @@ class MainWindow(QMainWindow):
         self.workspace.addWidget(self.spawn_matrix)
         layout.addWidget(self.workspace, 1)
         self.setCentralWidget(root)
-        # Wide enough for the tab row and the widest page, plus the sidebar's margins and scrollbar. Measured
-        # only now that the tabs sit inside the window and use the stylesheet's font.
+        # Wide enough for the tab row and the widest page (_fit_sidebar). The row is measured only now that the
+        # tabs sit inside the window and use the stylesheet's font, before centring pads its tiles.
         bar.ensurePolished()
-        margins = side_layout.contentsMargins()
-        pages = max(self.tabs.widget(index).minimumSizeHint().width() for index in range(self.tabs.count()))
-        side_width = max(bar.sizeHint().width(), pages) + margins.left() + margins.right() +             side_scroll.verticalScrollBar().sizeHint().width() + 4
-        side_scroll.setMinimumWidth(side_width)
-        side_scroll.setMaximumWidth(side_width)
+        self.side_scroll = side_scroll
+        self._tab_row, self._side_cap = bar.sizeHint().width(), None
+        self._fit_sidebar()
+        sidebar.installEventFilter(self)  # fitted again whenever what it holds needs another width
         self._tab_side = 10  # the tiles' side padding as theme.py sets it (QTabBar::tab), until centred
         bar.installEventFilter(self)  # only now: centring pads the tiles, and the width above reads the row's hint
         # One label column per tab, so every section's fields start on the same line.
@@ -3340,10 +3334,34 @@ class MainWindow(QMainWindow):
             self.activity.log("tab", self.page_title.text())
 
     def eventFilter(self, watched, event) -> bool:  # type intentionally inherited from Qt
-        """The icon tab row resized (the sidebar's scroll bar came or went): its icons centred again."""
+        """The icon tab row resized (the sidebar's scroll bar came or went): its icons centred again. The
+        sidebar's contents re-laid out (a row shown, label columns aligned, another screen's fonts): fitted again."""
         if event.type() == QEvent.Type.Resize and watched is self.tabs.tabBar():
             self._centre_tab_icons()
+        elif event.type() == QEvent.Type.LayoutRequest and watched is self.side_scroll.widget():
+            self._fit_sidebar()
         return super().eventFilter(watched, event)
+
+    def _fit_sidebar(self) -> None:
+        """The sidebar exactly as wide as the tab row or its widest page needs with a scroll bar beside them, so
+        nothing in it is cut off at its right edge on any screen, scrolling or not. Measured again whenever its
+        contents change, never just once: a row shown later (a map's) or a label column aligned can widen a page."""
+        scroll = self.side_scroll
+        scroll.ensurePolished()  # the stylesheet's frame and scroll bar, not the style's defaults
+        scroll.verticalScrollBar().ensurePolished()
+        inner = scroll.widget()
+        margins = inner.layout().contentsMargins()
+        chrome = 2 * scroll.frameWidth() + scroll.verticalScrollBar().sizeHint().width()
+        row = self._tab_row + margins.left() + margins.right()
+        need = max(row, inner.minimumSizeHint().width())
+        # Never past half as wide again as it first fitted: a very long name in a label that doesn't wrap (a vehicle
+        # type's, from the assistant or a project) is clipped rather than taking the map and the window off screen
+        if self._side_cap is None:
+            self._side_cap = need * 3 // 2
+        width = min(need, self._side_cap) + chrome
+        if width != scroll.minimumWidth():
+            scroll.setMinimumWidth(width)
+            scroll.setMaximumWidth(width)
 
     def _centre_tab_icons(self) -> None:
         """The tiles share the row edge to edge (expanding); a tab's icon sits at the start of its text, so equal

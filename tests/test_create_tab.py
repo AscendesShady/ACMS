@@ -44,8 +44,10 @@ def test_the_sections_open_and_close():
     assert window.background_panel.kind.isVisibleTo(window)
     window.generate_section.header.click()
     assert not window.speed_limit_combo.isVisibleTo(window) and not window.generate_section.header.isChecked()
-    # the driving side holds for the whole network however it was made: Universal Attributes, not Generate
-    assert window.driving_side.window() is window and window.universal_tab.isAncestorOf(window.driving_side)
+    # the driving side holds for the whole network however it was made: its own section, not Generate
+    assert window.universal_section.isAncestorOf(window.driving_side) and not window.driving_side.isVisibleTo(window)
+    window.universal_section.header.click()
+    assert window.driving_side.isVisibleTo(window)
     window.close()
 
 
@@ -225,6 +227,31 @@ def test_no_tab_makes_the_sidebar_scroll_in_the_default_window():
             settle()
             assert not scroll.verticalScrollBar().isVisible(), (window.tab_names[index], page)
             assert scroll.widget().height() <= scroll.viewport().height() + 1
+    window.close()
+
+
+def test_the_sidebar_widens_to_whatever_its_pages_come_to_need():
+    """Measured once at start, a row shown later (or another screen's fonts) cut the sidebar off at its right edge
+    on a 125 % laptop. Each page fits beside the scroll bar too, and a page grown wider widens the sidebar."""
+    from PySide6.QtWidgets import QPushButton
+
+    window = window_with()
+    window.resize(1280, 400)  # short: the taller pages scroll
+    scroll = window.findChild(QScrollArea)
+    for index in range(window.tabs.count()):
+        window.tabs.setCurrentIndex(index)
+        settle()
+        assert scroll.widget().minimumSizeHint().width() <= scroll.viewport().width(), window.tab_names[index]
+    window.tabs.setCurrentIndex(0)
+    wide = QPushButton("A very wide row that no sidebar was ever measured for at all")
+    wide.setMinimumWidth(scroll.viewport().width() + 120)
+    window.create_tab.layout().addWidget(wide)
+    settle()
+    assert wide.geometry().right() <= scroll.viewport().width() and scroll.horizontalScrollBar().maximum() == 0
+    fitted = scroll.width()
+    wide.setMinimumWidth(5000)  # a vehicle type's very long name in a label that doesn't wrap: clipped, not the map
+    settle()
+    assert fitted <= scroll.width() <= window._side_cap + 40 and window.view.width() > 300
     window.close()
 
 
