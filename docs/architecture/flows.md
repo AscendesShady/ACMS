@@ -1,6 +1,6 @@
 # 5. Main flows
 
-1. **Start:** `run.py` → `main()`.
+1. **Start:** `launch.bat` (or `python -m traffic_simulator.main`) → `main()`.
    - It generates the default grid (`main.py`'s `DEFAULT_*`: 3 × 4 corridors, left-hand, 50 km/h, 2 lanes), builds the
      window and applies the theme.
    - The first undo snapshot is taken.

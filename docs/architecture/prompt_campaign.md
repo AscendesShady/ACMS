@@ -43,6 +43,6 @@ submits an actual document prompt to a real model. No simulator behavior changes
 
 ## Running it
 
-The CLI sets `AA_UseDesktopOpenGL` before creating QApplication, matching the normal `run.py` graphics startup. A user-requested full restart begins a new ledger and preserves the abandoned campaign logs.
+The CLI sets `AA_UseDesktopOpenGL` before creating QApplication, matching the normal `main()` graphics startup. A user-requested full restart begins a new ledger and preserves the abandoned campaign logs.
 
 The driver halts immediately if Apply returns without a result outside a running headless test. A halted campaign needs reconciliation before it goes on.

@@ -2,7 +2,8 @@
 
 **ACMS** (Agentic Context-Aware Mobility System): a PySide6 road-network editor with a SUMO-style microscopic
 traffic simulation and an in-app AI assistant. Windows, PowerShell, Python 3.12 in `.venv`
-(`.venv\Scripts\python.exe -m pip install -e .` once; `.venv\Scripts\python.exe run.py` opens it).
+(`launch.bat` sets it up and opens it; by hand, `.venv\Scripts\python.exe -m pip install -e .` once, then
+`.venv\Scripts\python.exe -m traffic_simulator.main`).
 
 **Next: [CONTEXT.md](CONTEXT.md)** (Layer 1). It routes your task to numbered stages under `stages/`. Do them in
 order; at each, load only the files its Inputs table lists and write what its Outputs say.

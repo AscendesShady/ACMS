@@ -1,4 +1,4 @@
-"""Test monitor: python run_monitor.py
+r"""Test monitor: .venv\Scripts\python.exe tools\run_monitor.py
 
 Runs every test_* function in tests/test_*.py in a fresh Python process (so
 Run Again always tests your latest code) and shows live progress: a bar,
@@ -32,7 +32,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-TESTS_DIR = Path(__file__).resolve().parent / "tests"
+TESTS_DIR = Path(__file__).resolve().parent.parent / "tests"
 COLORS = {state: QColor(colour) for state, colour in STATUS.items()}  # readable on the grey theme
 
 

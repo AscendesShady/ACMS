@@ -1,4 +1,4 @@
-# run_monitor.py
+# tools/run_monitor.py
 
 Runs every `test_*` function in `tests/test_*.py` in a child process and streams
 JSON-lines progress. It shows a progress bar, each test's status and time, and the

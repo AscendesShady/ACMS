@@ -12,25 +12,31 @@
 - `references/` — reference material kept on this PC (books, papers, SUMO notes; only the UI rulebook is in git).
   `reports/` — audits, campaign logs and agent records, also kept on this PC only.
 
-## Setup
+## Setup and run
+
+Download the folder and double-click **`launch.bat`** (Windows 10 or 11, internet the first time). The first time, it
+finds Python 3.10 or newer (none: it installs Python 3.12 for this user with winget, no administrator needed), makes
+`.venv` and installs ACMS there (a few minutes: PySide6 is large); after that it just opens ACMS. A moved or freshly
+cloned folder installs again.
+
+By hand:
 
 ```powershell
 C:\Python312\python.exe -m venv .venv
 .venv\Scripts\python.exe -m pip install -e .
 ```
 
-## Run
+## Run (developers)
 
 ```powershell
-.venv\Scripts\python.exe run.py          # network editor
-.venv\Scripts\python.exe run_monitor.py  # test monitor: live progress, Run Again
+.venv\Scripts\python.exe -m traffic_simulator.main   # network editor (what launch.bat opens)
+.venv\Scripts\python.exe tools\run_monitor.py        # test monitor: live progress, Run Again
 .venv\Scripts\python.exe tools\run_test.py tests\test_simulation.py webster   # just the matching tests, timed
 .venv\Scripts\python.exe tools\run_test.py --all -j 4    # every test file, 4 at a time
 .venv\Scripts\python.exe tools\preview_ui.py --output reports/ui-preview  # desktop screenshots and layout record
 ```
 
-The editor also starts with `.venv\Scripts\acms.exe` or
-`python -m traffic_simulator.main`.
+The editor also starts with `.venv\Scripts\acms.exe`.
 
 ## Building and running a network
 

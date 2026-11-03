@@ -229,7 +229,7 @@ def main():
     from PySide6.QtWidgets import QApplication
     from traffic_simulator.main import MainWindow
     from traffic_simulator.theme import apply_theme
-    # Match run.py's graphics initialization before any Qt application exists.
+    # Match main()'s graphics initialization before any Qt application exists.
     QApplication.setAttribute(Qt.ApplicationAttribute.AA_UseDesktopOpenGL)
     app = QApplication(sys.argv)
     app.setApplicationName('ACMS')

@@ -53,11 +53,11 @@ Full list: [capabilities.md](docs/architecture/capabilities.md); placeholders: [
 ```
 AGENTS.md, CONTEXT.md      Coding agents: Layer 0 (what always holds) and 1 (which stages)
 stages/                    Numbered stage contracts (code, campaign, research), each with its output/
-run.py, run_monitor.py     The editor; the test monitor window
+launch.bat                 Sets up .venv the first time, then opens the editor
 src/traffic_simulator/     The modules (map below)        tests/       Plain assert tests
 extensions/                Drop-in features               docs/        Module docs, sources, tests
 references/                UI rulebook, SUMO notes, books, theory
-tools/                     Prompt campaign; tools/run_test.py (quick, timed tests)
+tools/                     Prompt campaign; run_test.py (quick, timed tests); run_monitor.py (test window)
 reports/, references/       On this PC only (git keeps the UI rulebook); research/: book mining
 ```
 
