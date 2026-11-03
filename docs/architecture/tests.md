@@ -146,6 +146,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `t
   controls replace meshes with bricks or remove glazing depth bias and must fail these regressions.
 - `test_selection.py`: a junction box at roads meeting at odd angles meeting each road's kerbs square on (a
   polygon, both kerbs at each mouth its corners), and at an L bend covering each road's end from the node out.
+- `test_selection.py`: Add Node through the view itself, on an empty map and over the grid, each node where the
+  mouse was and still under it after.
 - `test_selection.py`: Add Node placing node after node (each selected, still placing, the dashed distance from
   the last to the mouse, no undo step meanwhile, Ctrl+Z taking the last back, a right-click keeping them as one
   step; Esc's Cancel going on, Discard leaving nothing and no step, Save keeping them; Esc with none placed

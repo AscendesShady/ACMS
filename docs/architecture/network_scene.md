@@ -190,7 +190,9 @@ items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLO
 - `set_power_saver(on)` (the Power Saver button): on a GPU, a new `QOpenGLWidget` viewport without
   multisampling (or with 4× again); QPainter's antialiasing still smooths edges. The vehicles' shader is
   rebuilt in the new context. Raster viewports have no multisampling to drop.
-- Wheel changes orthographic scale at the cursor; right or middle drag pans. Background tiles choose detail
+- Wheel changes orthographic scale at the cursor; right or middle drag pans (the arrows too); no scroll bars: coming
+  and going as the scene's area changed, they resized the map and moved everything on it. A rebuild that changes the
+  area keeps each view centred on what it showed (Qt keeps scroll values, not the centre). Background tiles choose detail
   from that scale rather than one rotated matrix coefficient; images and maps share the ground transform.
 - While dragging a static editor map, `paintEvent` scrolls a viewport image with 192 px overscan. It refreshes
   at the overscan edge, after rebuild/resize/zoom/projection changes, and discards the image on release.

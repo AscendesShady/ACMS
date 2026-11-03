@@ -100,6 +100,39 @@ def test_the_map_selects_by_box_and_deletes_what_it_took():
     window.close()
 
 
+def test_add_node_puts_each_node_under_the_mouse_and_the_map_stays_still():
+    """On an empty map the scene's area was the first node's few metres, smaller than the view: Qt centred it, so the
+    node jumped to the middle; scroll bars coming as the area grew moved the map too. Clicked through the view itself,
+    each node is where the mouse was, still under it after, on an empty map and over the grid."""
+    from PySide6.QtCore import QPoint
+
+    from traffic_simulator.main import MainWindow
+
+    for empty in (True, False):
+        window = MainWindow()
+        window.resize(1400, 900)
+        window.show()
+        if empty:
+            for road in list(window.network.roads) + list(window.network.approach_roads):
+                window.network.delete_road(road)
+            for node in list(window.network.nodes):
+                window.network.delete_node(node)
+            window.install_network(window.network)
+        QApplication.processEvents()
+        view = window.view
+        window.tabs.setCurrentWidget(window.edit_tab)
+        window.add_node_button.setChecked(True)
+        QApplication.processEvents()
+        for point in (QPoint(200, 150), QPoint(500, 400), QPoint(650, 220), QPoint(120, 700)):
+            aim = view.mapToScene(point)
+            QTest.mouseClick(view.viewport(), Qt.MouseButton.LeftButton, pos=point)
+            QApplication.processEvents()
+            node = window.network.nodes[window.node_chain[-1]]
+            assert abs(node.x - aim.x()) < 1e-6 and abs(node.y - aim.y()) < 1e-6, (empty, point)
+            assert view.mapFromScene(node.x, node.y) == point, (empty, point, view.mapFromScene(node.x, node.y))
+        window.close()
+
+
 def test_add_node_places_one_node_after_another_until_they_are_kept_or_discarded():
     from traffic_simulator.main import MainWindow
 

@@ -263,8 +263,7 @@ class MainWindow(QMainWindow):
         self.background_painter = BackgroundPainter()
         self.view.background = self.background_painter
         self.background_painter.tile_ready.connect(self.view.redraw)
-        self.scene.extent = lambda rect: self.background_painter.extent(
-            self.network.background, rect, self._junction_bounds(), self.scene.network_rect)
+        self.scene.extent = self._extent
         network_tools.image_mask = self.background_painter.road_mask  # network_from_background reads images with it
         self.properties = PropertiesPanel()
         self.properties.set_network(self.network)
@@ -4415,6 +4414,19 @@ class MainWindow(QMainWindow):
         self.view.set_tool_cursor(Qt.CursorShape.SizeAllCursor if tool == "move" else
                                   Qt.CursorShape.CrossCursor if tool in ("align", "measure", "scale")
                                   else Qt.CursorShape.ArrowCursor)
+
+    def _extent(self, rect: QRectF) -> QRectF:
+        """What the view may scroll over (BackgroundPainter.extent). Over a colour or an image, what it shows now as
+        well, so a redraw never moves it: a small network's area, smaller than the view, was centred in it, and the
+        first node placed on an empty map jumped to the middle (a map keeps its work zone's limits)."""
+        background = self.network.background
+        area = self.background_painter.extent(background, rect, self._junction_bounds(), self.scene.network_rect)
+        if background.kind != "map" and self.background_painter.framing is None:
+            shown = self.view.mapToScene(self.view.viewport().rect()).boundingRect()
+            # half a view round it: clear of the scroll range's ends, where rounding nudged the view a pixel a redraw
+            area = area.united(shown.adjusted(-shown.width() / 2, -shown.height() / 2, shown.width() / 2,
+                                              shown.height() / 2))
+        return area
 
     def _zoom_range(self) -> tuple[float, float] | None:
         """How far the wheel zooms (NetworkView.zoom_range): while the work zone is chosen, as its bar allows;

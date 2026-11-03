@@ -852,7 +852,13 @@ class NetworkGraphicsScene(QGraphicsScene):
             bounds = QRectF(-100, -100, 200, 200)
         self.network_rect = bounds  # what Fit Network fits (the vehicle layer covers the whole scene)
         rect = bounds.adjusted(-margin, -margin, margin, margin)
-        self.setSceneRect(self.extent(rect) if self.extent else rect)  # with the background's image or map
+        area = self.extent(rect) if self.extent else rect  # with the background's image or map
+        if area != self.sceneRect():  # each view stays on what it showed (Qt keeps its scroll values, not its centre)
+            centres = [(view, view.viewportTransform().inverted()[0].map(QRectF(view.viewport().rect()).center()))
+                       for view in self.views()]
+            self.setSceneRect(area)
+            for view, centre in centres:
+                view.centerOn(centre)
         self.project_building_labels()
         self._settle(self.items())  # extensions' items come later (redrawn): they never join the still layer
         self.vehicle_layer = VehicleLayer(self)
@@ -1925,6 +1931,10 @@ class NetworkView(QGraphicsView):
         self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorViewCenter)
         self.setDragMode(QGraphicsView.DragMode.NoDrag)
+        # Panned by dragging, the arrows and the wheel: scroll bars coming and going as the scene's area changed
+        # resized the map, moving everything on it (a node placed was no longer under the mouse)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.viewport().setMouseTracking(True)  # moves without a button too: the map's position readout
         self.background = None  # background.BackgroundPainter: the network's background, behind the scene
         # How far the wheel zooms, (fewest, most) pixels a metre; None: not at all (the window sets it: a map's

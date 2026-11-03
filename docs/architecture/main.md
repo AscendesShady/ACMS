@@ -116,6 +116,9 @@
     the row's own hint so the sidebar never widens from it); hovering a tab shows its name, and the open tab's
     name heads the sidebar beside "ACMS" on the brand's baseline (`page_title`, `_name_open_tab`). Without either
     font the tabs show their names.
+  - The map's area (`_extent`, the scene's `extent`): `BackgroundPainter.extent`, and over a colour or an image what
+    the view shows with half a view round it, so a redraw never moves it (an empty map's area was the first node's
+    few metres: Qt centred it, and the node jumped to the middle).
   - The sidebar is as wide as its tab row or its widest page needs (each page's minimum width), plus
     its margins and scrollbar, and no wider, measured again whenever its contents re-lay out (`_fit_sidebar` on
     the sidebar's LayoutRequest: a row shown later, label columns aligned, another screen's fonts; once at start it
