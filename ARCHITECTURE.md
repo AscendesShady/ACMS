@@ -22,6 +22,7 @@ experiment takes scenarios × seeds × minutes. Answer in a few lines.
 | how a module works | `docs/architecture/<module>.md` (map in §2) |
 | a typical flow (Run, Save, an AI step) | `docs/architecture/flows.md` |
 | setup, keys, controls | `README.md` |
+| what a tab, button or click does, and where files go | [what-happens-where.md](docs/what-happens-where.md) |
 
 ## 1. Capabilities (placeholders in brackets)
 

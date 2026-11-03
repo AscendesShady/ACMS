@@ -47,8 +47,11 @@ items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLO
     meets every road square on at whatever angle they come in (a grid crossing: a square, corners chamfered).
   - Uncontrolled nodes draw as plain carriageway (a joint disc).
   - Signal heads sit on the near-side kerb at each arriving stop line (`signal_lamps`). While a run
-    goes they show its live states (`show_signals`: green, amber, red); otherwise the first phase's arms green and the rest red, split by the junction's own
-    roads as a run splits them (`lane_graph.two_phases`).
+    goes they show its live states (`show_signals`: green, amber, red); otherwise phase A's arms green and the rest
+    red. Just upstream of each, its phase letter (screen-sized, `lane_graph.phase_letters`: A goes first; two
+    phases AA BB by the junction's own roads, four A B C D round it, manual arms sharing a window one letter), the
+    names the timing editor uses. Editing a junction's phases, method or windows draws it again
+    (`main._signal_edited`).
     Beside each, off the kerb, a `SignalClock` (`signal_clocks`, `show_clocks`): a seven-segment countdown of the
     whole seconds to its next change (`Frame.countdowns`) in the signal's colour, blank while nothing runs. It is
     painted upright on screen at map scale (it grows with zoom), above the traffic; in 2.5D on a 2.5 m pole.

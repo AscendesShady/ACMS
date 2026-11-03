@@ -124,7 +124,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     a grid's roads are one class, so in line), and a minor offside turn also to the other minor arm's straight and
     kerb movements (HCM 2000's ranks: rank 4 gives way to rank 3; first-come before). An imported trunk no longer gives way to a residential lane that
     happens to line up better: on Dhanmondi that had gridlocked the network.
-  - `Signal`: a signalised junction's phases in turn, each green followed by its amber and all-red
+  - `Signal`: a signalised junction's phases in turn (grouped by `phase_groups`, which `phase_letters` names A, B…
+    for the map and the editor), each green followed by its amber and all-red
     (`signal_timing.clearance` from its fastest approach and its width: 3.3 s and 2.0 s on the default grid). Two phases
     by the junction's own roads, not the screen's axes (`lane_graph.two_phases`): its most nearly opposite pair of arms
     sets one road's line (their bisector), the arm furthest off it the other's, and each arm goes with the line it runs

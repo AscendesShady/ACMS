@@ -24,7 +24,9 @@
     a message.
   - Signalised shows phases (2/4), the timing method dropdown (Webster, TRANSYT, Synchro, SCATS,
     SCOOT, Fixed time, Manual) and a green time per phase, editable for Fixed
-    time only. Manual hides the phases and greens and shows a row per arm (`MANUAL_ROWS`, 6 at most: N, E, S, W
+    time only, each named by the letter its heads show on the map and its arms ("Phase A green (E, W)":
+    `lane_graph.phase_letters`). Manual's rows say each arm's letter too ("A · N"; arms given one window share it,
+    refreshed on Apply). Manual hides the phases and greens and shows a row per arm (`MANUAL_ROWS`, 6 at most: N, E, S, W
     from `signal_arms`): its first and last second ("none": always red) and, worked out as you type, its green
     and red; Set amber (unticked: 3 s; ticked: 3–6 s); and Apply Timing, enabled when the entries differ from the
     junction's, which applies them only if `validate()` takes them (else a warning says why, nothing changed).

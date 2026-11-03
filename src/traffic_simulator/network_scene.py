@@ -31,7 +31,7 @@ from PySide6.QtWidgets import (
 
 from . import asset_mesh, building_assets, gpu, metro_assets, vehicle_assets
 from .geometry import convex_hull, nearest_along, offset_polyline, point_along, polyline_length, sub_polyline
-from .lane_graph import two_phases
+from .lane_graph import phase_letters
 from .institutions import KINDS, Placement, links
 from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, CYCLE_LANE_M, FOOTPATH_M, LANE_WIDTH_M,
                      POCKET_TAPER_M, BusStop, Institution, Network, Node, Road, bay_depth, stop_line_inset)
@@ -1495,10 +1495,11 @@ class NetworkGraphicsScene(QGraphicsScene):
             if node.control == "signalised":
                 arriving = [(ux, uy, road) for ux, uy, road in arms
                             if road.direction == "two-way" or road.to_node == node.id]  # traffic arrives here
-                # While nothing runs: the first phase's arms green, the rest red, split as a run splits them
-                first = set(two_phases({road.id: (ux, uy) for ux, uy, road in arriving})[0]) if arriving else set()
+                # Each head's phase letter (A goes first: AA BB with two phases, A B C D with four, a manual
+                # timing's shared windows sharing one), and while nothing runs phase A's arms green, the rest red
+                letters = phase_letters(self.network, node.id)
                 for ux, uy, road in arriving:
-                    self._draw_signal(node, ux, uy, road, diameter / 2, road.id in first)
+                    self._draw_signal(node, ux, uy, road, diameter / 2, letters.get(road.id, ""))
                 if node.signal_method in ADAPTIVE:
                     self._draw_detectors(node, roads)
         selected = self.selection == ("node", node.id) or node.id in self.multi_nodes or ("node", node.id) in self.group
@@ -1558,8 +1559,10 @@ class NetworkGraphicsScene(QGraphicsScene):
                 self.addItem(loop)
 
     def _draw_signal(self, node: Node, ux: float, uy: float, road: Road,
-                     junction_half: float, green: bool) -> None:
-        """Signal head on the nearside kerb of an incoming arm, at its stop line; `green`: lit while nothing runs."""
+                     junction_half: float, letter: str) -> None:
+        """Signal head on the nearside kerb of an incoming arm, at its stop line, with its phase letter just upstream
+        of it (the timing editor's names); phase A's are lit green while nothing runs."""
+        green = letter == "A"
         width = road.width_m
         # Keep the head clear of the junction box when the stop line is close to it.
         inset = max(stop_line_inset(width, self.network.road_geometry_length(road)),  # type: ignore[union-attr]
@@ -1586,6 +1589,8 @@ class NetworkGraphicsScene(QGraphicsScene):
         clock = SignalClock(self, cx - uy * CLOCK_OFFSET_M * side, cy + ux * CLOCK_OFFSET_M * side)  # off the kerb
         self.addItem(clock)
         self.signal_clocks[(node.id, road.id)] = clock
+        if letter:  # upstream of the head, along the arm: clear of the clock beside it and of the junction
+            self._add_label(letter, cx, cy, ux, uy, pixels=14).setToolTip(f"Phase {letter}")
 
     def _draw_end(self, road: Road) -> None:
         """Boundary end: entry (supply) and exit (demand) markers on their own lanes.

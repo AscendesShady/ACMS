@@ -88,6 +88,55 @@ def test_idle_signal_lamps_light_the_phases_a_run_would():
     assert green == {20, 200}
 
 
+def test_each_signal_head_shows_its_phase_letter_as_a_run_groups_them():
+    """Letters at the heads (A goes first) name the phases as a run serves them, and the timing editor uses them:
+    two phases AA BB by the junction's own roads, four A B C D round it, manual arms sharing a window one letter. On
+    a skewed junction too, and the map follows the panel's edits."""
+    from math import cos, pi, sin
+
+    from PySide6.QtWidgets import QGraphicsTextItem
+
+    from traffic_simulator.lane_graph import PHASE_LETTERS, Graph, phase_letters
+
+    network = generate_network(1, 1)
+    node = network.nodes["1,1"]
+    for end, angle in zip(list(network.approach_nodes.values()), (20, 200, 300, 120)):
+        end.x, end.y = node.x + 200 * cos(angle * pi / 180), node.y + 200 * sin(angle * pi / 180)
+    network.synchronize_road_lengths()
+    roads = sorted(road.id for road in network.all_roads())
+    for phases, method, windows in ((2, "webster", None), (4, "fixed", None),
+                                    (4, "manual", [[1, 30], [31, 60], [1, 30], [61, 90]])):
+        node.signal_phases, node.signal_method = phases, method
+        if windows:
+            node.manual_greens_s = dict(zip(roads, windows))
+        letters = phase_letters(network, "1,1")
+        signal = Graph(network).signals["1,1"]
+        assert {link.split(">")[0].split("<")[0]: PHASE_LETTERS[phase] for link, phase in signal.phase_of.items()} \
+            == letters, (phases, method)
+        assert sorted(set(letters.values())) == list(PHASE_LETTERS[:len(signal.phases)])
+    assert letters[roads[0]] == letters[roads[2]] and len(set(letters.values())) == 3  # a shared window, one letter
+
+    window = window_with(generate_network(2, 2))
+
+    def shown(node_id):
+        here = window.network.nodes[node_id]
+        return sorted(item.toPlainText() for item in window.scene.items() if isinstance(item, QGraphicsTextItem)
+                      and item.toolTip().startswith("Phase ") and abs(item.pos().x() - here.x) < 40
+                      and abs(item.pos().y() - here.y) < 40)
+
+    assert shown("1,1") == ["A", "A", "B", "B"]
+    window.canvas_clicked("node", "1,1")
+    window.properties.phases.set_value(4)
+    window.properties.apply_phases()
+    assert shown("1,1") == ["A", "B", "C", "D"]  # redrawn with the edit
+    labels = [label.text() for label, _ in window.properties.green_times if label.isVisibleTo(window.properties)]
+    assert labels == ["Phase A green (N)", "Phase B green (E)", "Phase C green (S)", "Phase D green (W)"]
+    window.properties.timing_method.setCurrentIndex(window.properties.timing_method.findData("manual"))
+    rows = [row[0].text() for row in window.properties.manual_rows if row[0].isVisibleTo(window.properties)]
+    assert rows == ["A · N", "B · E", "C · S", "D · W"]
+    window.close()
+
+
 def test_the_driving_side_flips_the_whole_network_at_once():
     from traffic_simulator.interchanges import build_trumpet
 

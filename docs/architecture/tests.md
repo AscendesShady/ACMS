@@ -396,6 +396,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `t
   `tools/preview_ui.py --output reports/ui-preview --width 1280 --height 800` captures all seven tabs and both
   AI pages, plus JSON layout measurements, using CPU/offscreen Qt. On Windows it locates the installed font
   directory explicitly. This does not verify native Windows window chrome or the OpenGL renderer.
+- `test_create_tab.py`: each signal head's phase letter as a run groups the arms (two phases, four, manual windows
+  shared, on a skewed junction), redrawn when the panel changes the phases, and the editor's phase and row labels.
 - `test_create_tab.py`: the sidebar fitting its pages beside the scroll bar and widening when a page grows (it had
   been measured once), but no further than half as wide again as it first fitted.
 - `test_simulation.py`: at a skewed signalised T no two vehicle bodies overlapping, at a skewed give-way crossing no

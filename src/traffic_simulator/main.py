@@ -3460,6 +3460,7 @@ class MainWindow(QMainWindow):
         self.properties.network_changed.connect(self.model_updated)
         self.properties.interchange_requested.connect(self.build_interchange)
         self.properties.edited.connect(self._commit)
+        self.properties.edited.connect(self._signal_edited)
         self.background_panel.changed.connect(self._background_changed)
         self.background_panel.tool_changed.connect(self._background_tool)
         self.view.pointed.connect(self._show_pointer)
@@ -4414,6 +4415,12 @@ class MainWindow(QMainWindow):
         self.view.set_tool_cursor(Qt.CursorShape.SizeAllCursor if tool == "move" else
                                   Qt.CursorShape.CrossCursor if tool in ("align", "measure", "scale")
                                   else Qt.CursorShape.ArrowCursor)
+
+    def _signal_edited(self, key: object) -> None:
+        """A junction's phases, timing method or manual windows changed (the properties panel): its heads drawn again,
+        their phase letters and idle lamps as the arms now group, and an adaptive method's detectors."""
+        if isinstance(key, tuple) and key[0] in ("phases", "method", "manual"):
+            self.scene._redraw([("node", key[1])])
 
     def _extent(self, rect: QRectF) -> QRectF:
         """What the view may scroll over (BackgroundPainter.extent). Over a colour or an image, what it shows now as

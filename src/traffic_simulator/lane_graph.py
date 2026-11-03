@@ -209,16 +209,10 @@ class Signal:
             amber = node.amber_s
         self.amber, self.all_red, self.span = amber, all_red, amber + all_red
         # arms: arriving link id -> unit vector from the junction out along that arm
+        groups = phase_groups(node, arms, windows)
         if windows is not None:
-            order = sorted(set(windows.values()))
-            groups = [[link for link in windows if windows[link] == window] for window in order]
-            greens = [end - start - amber for start, end in order]
-        elif node.signal_phases == 2:
-            groups = two_phases(arms)
+            greens = [end - start - amber for start, end in sorted(set(windows.values()))]
         else:
-            groups = [[link] for link in sorted(arms, key=lambda link: atan2(arms[link][1], arms[link][0]))]
-        if windows is None:
-            groups = [group for group in groups if group]
             greens = node.green_times_s or [30.0]
         self.phases = [(set(group), max(1.0, greens[i % len(greens)])) for i, group in enumerate(groups)]
         self.phase_of = {link: i for i, (group, _) in enumerate(self.phases) for link in group}
@@ -328,6 +322,37 @@ def two_phases(arms: dict[str, tuple[float, float]]) -> list[list[str]]:
     groups = [[link for link in links if along(link, first) >= along(link, second)],
               [link for link in links if along(link, first) < along(link, second)]]
     return groups if abs(first[0]) >= abs(second[0]) else groups[::-1]
+
+
+PHASE_LETTERS = "ABCDEFGHIJKL"  # a signal's phases as the map and its editor name them: A goes first
+
+
+def phase_groups(node, arms: dict, windows: dict | None = None) -> list[list]:
+    """A signal's phases in order, each the arms that go together (`arms`: each arm's key -> unit vector out along it).
+    Manual (`windows`: key -> its window of the cycle): arms with the same window, the earliest first; an arm with none
+    is in no phase. Two phases: by the junction's own roads (two_phases). Otherwise each arm on its own, round the
+    junction."""
+    if windows is not None:
+        return [[key for key in windows if windows[key] == window] for window in sorted(set(windows.values()))]
+    if node.signal_phases == 2:
+        return [group for group in two_phases(arms) if group]
+    return [[key] for key in sorted(arms, key=lambda key: atan2(arms[key][1], arms[key][0]))]
+
+
+def phase_letters(network, node_id: str) -> dict[str, str]:
+    """Each arm's phase letter at a signalised junction (road id -> "A", "B"...: PHASE_LETTERS), as a run groups
+    them (phase_groups), so the map and the timing editor say which signal goes when. An arm in no phase (a manual
+    arm with no window) has none."""
+    node, arms = network.node(node_id), {}
+    for road in network.all_roads():
+        if node_id in road.arrival_ends():
+            points = network.road_points(road)
+            (ax, ay), (bx, by) = (points[-1], points[-2]) if road.to_node == node_id else (points[0], points[1])
+            length = hypot(bx - ax, by - ay) or 1.0
+            arms[road.id] = ((bx - ax) / length, (by - ay) / length)
+    windows = {road: tuple(window) for road, window in node.manual_greens_s.items() if road in arms}         if node.signal_method == "manual" else None
+    return {road: PHASE_LETTERS[index % len(PHASE_LETTERS)]
+            for index, group in enumerate(phase_groups(node, arms, windows)) for road in group}
 
 
 def _unit(points: list, at_end: bool) -> tuple[float, float]:

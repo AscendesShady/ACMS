@@ -23,6 +23,7 @@ from PySide6.QtWidgets import (
 )
 
 from .interchanges import fit_slip_roads
+from .lane_graph import PHASE_LETTERS, phase_letters
 from .models import (MANUAL_AMBER_RANGE_S, MANUAL_AMBER_S, MANUAL_CYCLE_MAX_S, MAX_BOARDING_PER_H, MAX_DWELL_S,
                      POCKET_LENGTH_M, BusStop, Network, Node, Road)
 from .roundabouts import design_roundabout
@@ -273,7 +274,7 @@ class PropertiesPanel(QWidget):
             self.timing_settings[label] = (widget, methods)
         self.green_times = []
         for phase in range(4):
-            label = QLabel(f"Phase {phase + 1} green")
+            label = QLabel(f"Phase {PHASE_LETTERS[phase]} green")  # the letters the map shows at its heads
             green = QDoubleSpinBox()
             green.setRange(5.0, 180.0)
             green.setDecimals(0)
@@ -750,6 +751,11 @@ class PropertiesPanel(QWidget):
         if manual:
             self._show_manual(node)
         self.phases.set_value(node.signal_phases)
+        # Each phase by its letter on the map (lane_graph.phase_letters) and the arms that go in it
+        letters, names = phase_letters(self.network, node.id), self._arm_names(node)
+        for phase, (label, _) in enumerate(self.green_times):
+            arms = ", ".join(names[road].split()[0] for road in names if letters.get(road) == PHASE_LETTERS[phase])
+            label.setText(f"Phase {PHASE_LETTERS[phase]} green" + (f" ({arms})" if arms else ""))
         self.timing_method.blockSignals(True)
         self.timing_method.setCurrentIndex(max(0, self.timing_method.findData(node.signal_method)))
         self.timing_method.blockSignals(False)
@@ -842,17 +848,22 @@ class PropertiesPanel(QWidget):
                 self._show_signal(self.selected)
             self.edited.emit(("timing", self.selected.id, name))
 
+    def _arm_names(self, node: Node) -> dict[str, str]:
+        """Each arm's compass name (Network.signal_arms), clockwise from north."""
+        return {road: name for road, name, _ in self.network.signal_arms(node.id)}
+
     def _show_manual(self, node: Node) -> None:
         """One row per arm (MANUAL_ROWS at most): its name, first and last second, and its red; then the amber."""
         arms = self.network.signal_arms(node.id)[:MANUAL_ROWS]
         self.manual_roads = [road for road, _, _ in arms]
+        letters = phase_letters(self.network, node.id)  # the map's letter at each head: one window, one letter
         for row, widgets in enumerate(self.manual_rows):
             for widget in widgets:
                 widget.setVisible(row < len(arms))
             if row < len(arms):
                 road, name, _ = arms[row]
                 window = node.manual_greens_s.get(road)
-                widgets[0].setText(name)
+                widgets[0].setText(f"{letters[road]} · {name}" if road in letters else name)
                 for spin, value in ((widgets[1], window[0] if window else 1), (widgets[2], window[1] if window else 0)):
                     spin.blockSignals(True)
                     spin.setValue(int(value))
@@ -903,7 +914,7 @@ class PropertiesPanel(QWidget):
             node.manual_greens_s, node.amber_s = before
             QMessageBox.warning(self, "Cannot use this timing", str(exc))
             return
-        self._manual_changed()
+        self._show_signal(node)  # the rows' letters, as the windows now group the arms
         self.edited.emit(("manual", node.id))
 
     def apply_green(self, phase: int, seconds: float) -> None:

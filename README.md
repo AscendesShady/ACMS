@@ -5,6 +5,8 @@
 - `src/traffic_simulator/` — application and domain implementation.
 - `ARCHITECTURE.md` — the index: capabilities, layout, conventions and a map of every module. The in-app
   assistant reads it with every request, so it stays short.
+- [`docs/what-happens-where.md`](docs/what-happens-where.md) — the window part by part: what each tab, button and
+  click does, which code does it, what a run does from start to finish, and where every file is saved.
 - `docs/architecture/` — each module in full, plus flows, sources, tests and what isn't built yet.
 - `AGENTS.md`, `CONTEXT.md` and `stages/` — for coding agents (Interpretable Context Methodology): what always
   holds, which stages a task takes, and for each numbered stage what to read, run and write to its `output/`.
@@ -94,10 +96,17 @@ The editor also starts with `.venv\Scripts\acms.exe`.
   own buttons, top right, shown only over a map or image) hides it to show the roads alone; press it again to bring
   it back. It changes nothing saved. Switching from a map or image to another kind asks first, then starts afresh
   (Ctrl+Z brings the old one back).
-- **Add Node:** click empty map to place a node, then keep clicking for more; a dashed line from the last node
-  shows the distance to the next. Right-click keeps them (one undo step), Esc asks to keep or discard them, and
+- **Add Node:** click empty map to place a node exactly where you click, then keep clicking for more (the map stays
+  still); a dashed line from the last node shows the distance to the next. Right-click keeps them (one undo step), Esc asks to keep or discard them, and
   Ctrl+Z takes the last one back while placing.
 - **Universal Attributes** (Create Network's third section): Left- or right-hand driving, for the whole network.
+- **Signal phases:** every signal head on the map shows its phase letter, A going first: with two phases the arms
+  of one road read **A A** and the other **B B**; with four, **A B C D** round the junction; under Manual, arms
+  given the same window share a letter. The junction's editor uses the same names ("Phase A green (E, W)", Manual
+  rows "A · N"), so you can see which signal each setting times.
+- **Junctions:** a junction's box takes the shape its roads meet in, at any angle. Turns that pass within a
+  vehicle's width of each other give way as crossing ones do, and vehicles are drawn from rear to front through a
+  turn, so they don't run into each other at skewed junctions.
 - **Demand:** an OD pair's hourly flow can take a **PHF** (peak-hour factor, 0.25–1): the hour's busiest
   quarter runs at the flow ÷ PHF. The assistant can also set four 15-minute counts.
 - **Drop-offs:** not every trip runs entry to exit. Click a vehicle type's zone in the pair's **Modes** bar: a
