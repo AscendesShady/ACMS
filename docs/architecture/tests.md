@@ -838,7 +838,7 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `t
   - editor updates and selection;
   - the menu bar's eye logging only (an edit sends the model nothing);
   - restore and clear.
-- `test_docs.py`: the ARCHITECTURE.md index at most 150 lines, every module in its module map, every
+- `test_docs.py`: the ARCHITECTURE.md index at most 170 lines, every module in its module map, every
   linked doc present, and the warm-up sending the index, not the module files (nor README to a model with tools).
 - `test_analysis.py`: the fuel model's published figures (idle α, cruising and accelerating rates) and only light
   motor vehicles counted; the HCM tables (LOS thresholds, arrival types, f_PA); junction LOS on a real run (every

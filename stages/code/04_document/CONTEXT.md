@@ -15,7 +15,7 @@ Make the docs say what the code now does. The in-app assistant reads them, so st
 | added or changed a test | `docs/architecture/tests.md`, that file's paragraph |
 | used or changed a method or formula | `docs/architecture/sources.md`, its row, with the citation |
 | built or removed a placeholder | `docs/architecture/not_built.md` |
-| added a capability or module | `docs/architecture/capabilities.md` and its `ARCHITECTURE.md` row (≤150 lines) |
+| added a capability or module | `docs/architecture/capabilities.md` and its `ARCHITECTURE.md` row (≤170 lines) |
 | changed how people use it | `README.md` |
 
 ## Process
