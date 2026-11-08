@@ -27,7 +27,7 @@ for how to use each feature, the [README](../README.md).
 |---|---|---|
 | **File** menu | Open Project…, Save Project, Save Project As…: one validated JSON file (network, demand, vehicle types, background). | `main.py` (`_build_menu`), `network_io.py` |
 | **Edit** menu | Undo (Ctrl+Z), Redo (Ctrl+Y / Ctrl+Shift+Z). Every finished action is one step. | `main.py` (`_commit`, `undo`), `history.py` |
-| **Run bar** (top right) | Run starts a run from the network and demand as they are; Play/Pause; Stop ends it and writes its workbook; the clock; speed 1–60×; Seed (same seed, same run); Export a workbook now; Watch my edits. | `main.py` (`_build_sim_bar`), `clock.py`, `simulation.Runner`, `results.py`, `activity.py` |
+| **Run bar** (top right) | Run starts a run from the network and demand as they are; Play/Pause; Stop ends it and writes its workbook; the clock; speed 1–60×; Seed (same seed, same run); Export a workbook now; Watch my edits. | `main.py` (`_build_sim_bar`), `clock.py`, `runner.Runner`, `results.py`, `activity.py` |
 | **Sidebar** | The tabs below; it widens to fit what its open page needs (never more than half again its first width). | `main.py` (`_fit_sidebar`), `widgets.py` |
 | **Map** | The network to scale (metres), drawn over its background; clicks select and edit. Turns into the OD matrix while Demand Generator shows its grid. | `network_scene.py`, `background.py`, `gpu.py` |
 | **Map controls** (map's top right) | Input Grid (Demand Generator only), 3D View, Hide Background (over an image or map), Power Saver, Fit Network, Reset View, Map Controls (mouse and keys). | `main.py`, `network_scene.NetworkView` |
@@ -113,7 +113,7 @@ What the map draws, all to scale:
    - Gap acceptance, with yielding where turns conflict.
    - Bus stops, walkers and closures.
 
-   **Code:** `simulation.py` (`Simulation`, `Runner`), `vehicle.py`, `walking.py`.
+   **Code:** `simulation.py` (`Simulation`), `runner.py` (`Runner`), `vehicle.py`, `walking.py`.
 4. Every 5 simulated seconds a frame is sampled: flows, speeds, queues, delay and trips.
    **Code:** `results.Recorder`.
 5. The map draws each frame without ever holding the physics up. **Code:** `network_scene.py`, `gpu.py`.
