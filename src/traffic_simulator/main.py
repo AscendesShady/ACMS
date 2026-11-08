@@ -81,7 +81,7 @@ from traffic_simulator.network_io import (MAX_SEED, load_network, project_parts,
                                          saved_conversation, saved_project)
 from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
 from traffic_simulator.network_tools import build_edge, delete_objects, edge_crossings
-from traffic_simulator.demand import pair_demand
+from traffic_simulator.demand import od_ends, pair_demand
 from traffic_simulator.od_matrix import (MetroMatrix, ModeSplitDialog, ODCellPanel, ODMatrix, PedestrianMatrix,
                                         SpawnMatrix)
 from traffic_simulator.properties_panel import PropertiesPanel, describe_group, TIMING_METHODS
@@ -3343,23 +3343,9 @@ class MainWindow(QMainWindow):
             self.summary.refresh()
 
     def _od_ends(self) -> tuple[list[str], list[str]]:
-        """Boundary ends traffic can enter from (origins) and leave by (destinations).
+        """Boundary ends traffic can enter from (origins) and leave by (destinations): demand.od_ends.
         A one-way boundary road only works one way round."""
-        origins, destinations = [], []
-        for road in self.network.approach_roads.values():
-            end = road.from_node if road.from_node in self.network.approach_nodes else road.to_node
-            inbound = road.from_node == end
-            if road.direction == "two-way" or inbound:
-                origins.append(end)
-            if road.direction == "two-way" or not inbound:
-                destinations.append(end)
-
-        def order(end: str) -> tuple:  # compass sides N, E, S, W, then number
-            try:
-                return ("NESW".index(end[-1]), float(end[:-1]), end)
-            except ValueError:
-                return (4, 0.0, end)  # older files' names, e.g. "A_W_1"
-        return sorted(origins, key=order), sorted(destinations, key=order)
+        return od_ends(self.network)
 
     def toggle_add_node(self, checked: bool) -> None:
         """Add Node: each click on empty map places a node, selected, and a dashed line from it to the mouse gives the

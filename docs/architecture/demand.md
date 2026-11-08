@@ -27,3 +27,5 @@
 od_matrix.py's `ODCellPanel.command` still carries out each demand tool by working its own controls (the user
 sees the values arrive; the whole tool is one undo step); it reads, checks and reports through these functions.
 mode_behavior.py still offers the split helpers, and od_matrix.py `ODCell` and `UNITS`, as before.
+`od_ends(network)` (cut from `MainWindow._od_ends`, still its name on the window): the boundary ends that are
+origins and destinations, in compass order; a one-way end works one way round.

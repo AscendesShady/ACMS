@@ -12,7 +12,7 @@ from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from traffic_simulator.daily_profile import WEEKDAY  # noqa: E402
-from traffic_simulator.demand import shares_from  # noqa: E402
+from traffic_simulator.demand import od_ends, shares_from  # noqa: E402
 from traffic_simulator.od_matrix import ODCellPanel, ODMatrix  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
@@ -35,6 +35,17 @@ def daily(panel):
 
 def hourly(panel):
     panel.period.group.button(0).click()
+
+
+def test_od_ends_need_no_window_and_a_one_way_end_works_one_way():
+    from dataclasses import replace
+    from traffic_simulator.network_generator import generate_network
+    network = generate_network(2, 2)
+    assert od_ends(network) == (['1N', '2N', '1E', '2E', '1S', '2S', '1W', '2W'],) * 2  # compass order
+    road = network.approach_roads['2W']  # it runs from its end in: an origin only
+    network.approach_roads['2W'] = replace(road, direction='one-way')
+    origins, destinations = od_ends(network)
+    assert '2W' in origins and '2W' not in destinations
 
 
 def test_a_demand_cut_by_its_check_leads_with_what_was_kept():

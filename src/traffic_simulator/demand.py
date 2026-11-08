@@ -377,6 +377,26 @@ def read_od(cells: dict, origins: list[str], destinations: list[str], shown: str
             "usual": usual, "different": {pair: values for pair, values in different.items() if values}}
 
 
+def od_ends(network) -> tuple[list[str], list[str]]:
+    """Boundary ends traffic can enter from (origins) and leave by (destinations).
+    A one-way boundary road only works one way round."""
+    origins, destinations = [], []
+    for road in network.approach_roads.values():
+        end = road.from_node if road.from_node in network.approach_nodes else road.to_node
+        inbound = road.from_node == end
+        if road.direction == "two-way" or inbound:
+            origins.append(end)
+        if road.direction == "two-way" or not inbound:
+            destinations.append(end)
+
+    def order(end: str) -> tuple:  # compass sides N, E, S, W, then number
+        try:
+            return ("NESW".index(end[-1]), float(end[:-1]), end)
+        except ValueError:
+            return (4, 0.0, end)  # older files' names, e.g. "A_W_1"
+    return sorted(origins, key=order), sorted(destinations, key=order)
+
+
 def pair_demand(cells: dict, origins: list[str], destinations: list[str], mode: str,
                 per_hour: dict[int, float]) -> list:
     """Every OD pair with demand of the kind `mode` ("hourly" or "daily") between these ends, as a run's
