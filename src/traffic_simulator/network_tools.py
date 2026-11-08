@@ -16,20 +16,18 @@ change the user approves agree.
 from __future__ import annotations
 
 import ast
-import heapq
 import json
 import random
 import re
 import time
-from collections import Counter, defaultdict
+from collections import Counter
 from copy import deepcopy
-from math import ceil, hypot, isfinite
+from math import ceil, isfinite
 
 from . import background_network
 from .daily_profile import ARRIVAL_PATTERNS
 from .design_checks import analyse_network, network_indices
-from .design_checks import route_lengths  # noqa: F401 - re-exported
-from .geometry import distance_to_segment
+from .design_checks import critical_links_plan, cut_elements, route_lengths  # noqa: F401 - re-exported
 from .institutions import footprint_problem, place, shares
 from .models import CROSSING_KINDS
 from .metro import WALK_KMH  # noqa: F401 - re-exported
@@ -338,49 +336,6 @@ def place_map(network: Network, place=None, lat=None, lon=None, rotation_deg=Non
                     "this map and builds its work zone; it takes no place)."}
 
 
-def _area_closure(network: Network, flows: dict, ahead: dict, area: dict) -> dict:
-    """critical_links' area closure: the roads touching the circle closed together; extra veh-h and veh/h cut off."""
-    try:
-        x, y, radius = float(area["x"]), float(area["y"]), float(area["radius_m"])
-    except (KeyError, TypeError, ValueError):
-        raise ValueError("area is {\"x\": metres, \"y\": metres, \"radius_m\": metres}.") from None
-    if not 10 <= radius <= 5000:
-        raise ValueError("area radius_m must be 10 to 5000.")
-    closed = {road.id for road in network.all_roads()
-              if any(hypot(px - x, py - y) <= radius for px, py in network.road_points(road))
-              or any(distance_to_segment((x, y), a, b) <= radius
-                     for a, b in zip(network.road_points(road), network.road_points(road)[1:]))}
-    if not closed:
-        raise ValueError("No road touches that circle.")
-
-    def times(origin, shut):
-        best, todo = {origin: 0.0}, [(0.0, origin)]
-        while todo:
-            spent, here = heapq.heappop(todo)
-            if spent > best[here]:
-                continue
-            for there, step, road_id in ahead[here]:
-                if road_id not in shut and spent + step < best.get(there, float("inf")):
-                    best[there] = spent + step
-                    heapq.heappush(todo, (spent + step, there))
-        return best
-
-    extra = lost = 0.0
-    for origin in {o for o, _ in flows}:
-        before, after = times(origin, set()), times(origin, closed)
-        for (o, d), q in flows.items():
-            if o != origin or d not in before:
-                continue
-            if d in after:
-                extra += q * (after[d] - before[d]) / 3600
-            else:
-                lost += q
-    return {"area": {"x": x, "y": y, "radius_m": radius}, "roads_closed": sorted(closed),
-            "extra_veh_h_per_h": round(extra, 2), "cut_off_vph": round(lost),
-            "note": "Every road touching the circle closed at once, the demand re-routed at free flow (static). Test it "
-                    "in a run with incidents on those roads (run_experiment)."}
-
-
 def cluster_conditions(network: Network, days, k=None, seed=1) -> dict:  # noqa: ARG001 - the tools' signature
     """Travel conditions from observed days (FHWA Toolbox III 2019, p26–31): attributes normalised 0–1 (eq. 1),
     k-means, k by the within/between variance ratio unless given; per cluster its size, weight, centroid in the
@@ -415,142 +370,6 @@ def cluster_conditions(network: Network, days, k=None, seed=1) -> dict:  # noqa:
     return {"k": len(clusters), "attributes": features, "clusters": sorted(clusters, key=lambda c: -c["size"]),
             "note": "Test each cluster's representative day as a scenario (e.g. demand_scale from its volume against the "
                     "baseline's) and weight its results by weight (FHWA Toolbox III, p91)."}
-
-
-def cut_elements(network: Network) -> dict:
-    """The network's single points of failure (Tarjan's bridges and articulation points on the undirected road
-    graph; Taylor, Vulnerability Analysis for Transportation, Ch 3): the roads and junctions whose loss splits it,
-    and what each cuts off (the junctions and boundary ends left on the smaller side)."""
-    around: dict = defaultdict(list)
-    for road in network.all_roads():
-        around[road.from_node].append((road.to_node, road.id))
-        around[road.to_node].append((road.from_node, road.id))
-    order, low, bridges, joints, counter = {}, {}, [], set(), [0]
-
-    def visit(root: str) -> None:  # iterative depth-first search (no recursion limit on big networks)
-        order[root] = low[root] = counter[0]
-        counter[0] += 1
-        stack, children = [(root, None, iter(around[root]))], {root: 0}
-        while stack:
-            node, via, edges = stack[-1]
-            advanced = False
-            for there, road in edges:
-                if road == via:
-                    continue
-                if there not in order:
-                    order[there] = low[there] = counter[0]
-                    counter[0] += 1
-                    children[node] = children.get(node, 0) + 1
-                    stack.append((there, road, iter(around[there])))
-                    advanced = True
-                    break
-                low[node] = min(low[node], order[there])
-            if advanced:
-                continue
-            stack.pop()
-            if stack:
-                parent = stack[-1][0]
-                low[parent] = min(low[parent], low[node])
-                if low[node] > order[parent]:
-                    bridges.append(via)
-                if parent != root and low[node] >= order[parent]:
-                    joints.add(parent)
-        if children.get(root, 0) > 1:
-            joints.add(root)
-
-    for node in [node.id for node in network.all_nodes()]:
-        if node not in order:
-            visit(node)
-
-    def cut_off(closed_road=None, closed_node=None) -> list[str]:
-        nodes = [node.id for node in network.all_nodes() if node.id != closed_node]
-        seen, parts = set(), []
-        for start in nodes:
-            if start in seen:
-                continue
-            part, todo = {start}, [start]
-            while todo:
-                for there, road in around[todo.pop()]:
-                    if road != closed_road and there != closed_node and there not in part:
-                        part.add(there)
-                        todo.append(there)
-            seen |= part
-            parts.append(part)
-        main = max(parts, key=len)  # all that is split away from the main part
-        return sorted(node for part in parts if part is not main for node in part)
-
-    real = [road for road in bridges if road not in network.approach_roads]  # an end's own road always is one
-    junctions = []
-    for node in sorted(joints):
-        cut = cut_off(closed_node=node) if node in network.nodes else []
-        if any(other in network.nodes for other in cut):  # more than its own boundary ends
-            junctions.append({"junction": node, "cuts_off": cut[:12]})
-    return {"bridge_roads": [{"road": road, "cuts_off": cut_off(closed_road=road)[:12]} for road in real],
-            "cut_junctions": junctions,
-            "note": "Bridge roads and cut junctions split the network when lost; a junction cutting off only its own "
-                    "boundary ends isn't listed (every edge junction does)."}
-
-
-def critical_links_plan(network: Network, flows: dict, limit: int = 10, area: dict | None = None) -> dict:
-    """Vulnerability by closing each used road in turn (Taylor, Vulnerability Analysis for Transportation,
-    p107–112, p204): each OD pair's free-flow time at the speed limits (one-way roads kept) with and without the
-    road; the extra vehicle-hours an hour, Σ q·Δt, and the veh/h cut off. Then the single points of failure
-    (cut_elements). `area` {"x", "y", "radius_m"}: every road touching that circle closed at once instead (a flood,
-    a fire, an event: Taylor Ch 6, area-wide disruption)."""
-    ahead = defaultdict(list)
-    for road in network.all_roads():
-        seconds = road.length_m / max(road.speed_limit_kmh, 1) * 3.6
-        ahead[road.from_node].append((road.to_node, seconds, road.id))
-        if road.direction == "two-way":
-            ahead[road.to_node].append((road.from_node, seconds, road.id))
-
-    def tree(origin, closed=None):
-        best, via, todo = {origin: 0.0}, {}, [(0.0, origin)]
-        while todo:
-            spent, here = heapq.heappop(todo)
-            if spent > best[here]:
-                continue
-            for there, step, road_id in ahead[here]:
-                if road_id != closed and spent + step < best.get(there, float("inf")):
-                    best[there], via[there] = spent + step, (here, road_id)
-                    heapq.heappush(todo, (spent + step, there))
-        return best, via
-
-    flows = {pair: q for pair, q in flows.items() if q > 0}
-    if not flows:
-        raise ValueError("There's no demand to route: enter some first.")
-    if area is not None:
-        return _area_closure(network, flows, ahead, area)
-    base, used = {}, defaultdict(list)
-    for origin in {o for o, _ in flows}:
-        best, via = tree(origin)
-        for (o, d), q in flows.items():
-            if o == origin and d in best:
-                base[(o, d)] = best[d]
-                node = d
-                while node != o:
-                    node, road_id = via[node]
-                    used[road_id].append((o, d))
-    rows = []
-    for road_id, pairs in used.items():
-        if road_id in network.approach_roads:  # an end's own road: closing it only cuts that end off
-            continue
-        extra = lost = 0.0
-        for origin in {o for o, _ in pairs}:
-            best, _ = tree(origin, road_id)
-            for o, d in pairs:
-                if o != origin:
-                    continue
-                if d in best:
-                    extra += flows[(o, d)] * (best[d] - base[(o, d)]) / 3600
-                else:
-                    lost += flows[(o, d)]
-        rows.append({"road": road_id, "pairs_using": len(pairs), "extra_veh_h_per_h": round(extra, 2),
-                     "cut_off_vph": round(lost)})
-    rows.sort(key=lambda row: (-row["cut_off_vph"], -row["extra_veh_h_per_h"]))
-    return {"roads_tested": len(rows), "critical": rows[:max(1, min(_int(limit), 50))], **cut_elements(network),
-            "note": "Free-flow times at the speed limits, no congestion; boundary roads left out (closing one only "
-                    "cuts off its end). Test the worst with run_experiment, a scenario deleting the road (delete_objects)."}
 
 
 _FUNCTIONS = {function.__name__: function for function in (

@@ -2,7 +2,8 @@
 
 Both are core modules (no Qt). They read the network (and, for accessibility, optionally a run's measured link
 times); the assistant reaches them through `design_audit` and `accessibility_report` (`MainWindow._runs_command`).
-Vulnerability helpers live in network_tools.py: `cut_elements` and `critical_links_plan`'s area closure.
+Vulnerability lives in design_checks.py too (moved from network_tools.py, which re-exports it): `cut_elements`,
+`critical_links_plan` and its area closure `_area_closure`.
 
 ## design_checks.py (tool `design_audit`)
 
@@ -73,7 +74,7 @@ measured link traversal times (3 or more traversals) when the tool is given a ru
   over the same residents (those who reach one both times), and the share of residents the closure cuts off from
   it (`residents_cut_off_percent`), so a closure that strands the far residents doesn't read as shorter trips.
 
-## Vulnerability (network_tools.py, tool `critical_links`)
+## Vulnerability (design_checks.py, tool `critical_links`)
 
 - `critical_links_plan` (unchanged): each used road closed in turn at free flow, the extra vehicle-hours and demand
   cut off; now also `cut_elements`.
