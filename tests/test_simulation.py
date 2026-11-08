@@ -1878,6 +1878,13 @@ def test_the_lane_graph_needs_no_simulation():
                for pair in ends)
 
 
+def test_the_runner_needs_no_qt_or_physics():
+    """runner.py paces any Simulation it is given: importing it loads neither Qt nor simulation.py."""
+    loaded = subprocess.run([sys.executable, "-c", "import sys, traffic_simulator.runner; print(sorted(sys.modules))"],
+                            capture_output=True, text=True, timeout=60, check=True).stdout
+    assert "PySide6" not in loaded and "traffic_simulator.simulation" not in loaded
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

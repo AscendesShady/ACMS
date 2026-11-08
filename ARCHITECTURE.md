@@ -90,7 +90,8 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | building_assets.py | Metre-height institution structures and assumed defaults | no |
 | metro_assets.py | Display-only overhead viaducts along the track, stations and parked train previews | no |
 | lane_graph.py | Lane graph: links, lanes, turns, bays, signals, routes, capacities | no |
-| simulation.py | Signals, junctions, lane changes, demand, Runner thread, over the lane graph | no |
+| simulation.py | Signals, junctions, lane changes, demand, over the lane graph | no |
+| runner.py | Runner: the physics thread, paced to the wall clock, publishing frames (→ simulation.md) | no |
 | signal_agent.py | TRUE/FALSE answers for signal overrides (→ simulation.md) | no |
 | signal_timing.py | Webster, TRANSYT, Synchro, SCATS, SCOOT, clearance | no |
 | transit_signal_priority.py | TSP controller at one junction (→ extensions.md) | no |

@@ -465,6 +465,7 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   adaptive signals nor a reader changes another's, and its default plans are read-only. `Frame.records(road,
   limit)` gives it as plain data, its plans copied again (the assistant's `read_traffic`; a vehicle off its lane's
   centre line also has `lateral_m`).
+- **runner.py** holds `Runner` (moved out of simulation.py, which still imports it as `simulation.Runner`).
 - **`Runner(simulation, speed, recorder)`**: a `results.RunRecorder` is sampled on the physics thread every
   `sample_s` simulated seconds (after the step that reaches it), so a busy screen never costs a sample; one
   that raises is dropped with its `error` and the traffic carries on.
