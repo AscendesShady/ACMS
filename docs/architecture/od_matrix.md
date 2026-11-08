@@ -134,6 +134,8 @@ pair editor builds (`ModeSplitSlider`, `DayCurve` and its `CurveEditor`, `DropSl
   `quarters` (four 15-minute counts or shares) for hourly demand, refused for daily; its result and
   read_od_matrix give each hourly pair's `peak_hour_factor` and `quarters`. Saved with the project (network_io) and in the undo
   history.
+- metro_matrix.py holds the three people grids below (`MetroMatrix` and its `SpawnMatrix`, `PedestrianMatrix`) with
+  `_BlockedDelegate` and `_paint_blocked`; od_matrix.py re-exports them.
 - `SpawnMatrix` (Demand → **Spawn**, `spawn_box`): `MetroMatrix`'s grid over the deploy points
   (S1, S2... in number order), any two different, each cell `Network.spawn_demand`'s people an hour (daily:
   `spawn_daily`); the panel's **Place Deploy Points** (`place_spawn_button`, checkable) places more on the map
