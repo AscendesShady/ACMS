@@ -75,7 +75,8 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | network_scene.py | Top-down/orthographic 2.5D network, map clicks and drags | Qt |
 | properties_panel.py | Editor for the selected road, node or end | Qt |
 | widgets.py | Shared buttons, hints, sections, tabs, choices and tick lists | Qt |
-| od_matrix.py | OD matrix grid, cell, curve and drop-off editors, Institutions panel, MRT OD matrix | Qt |
+| od_matrix.py | OD matrix grid, cell editor, Institutions panel, MRT OD matrix | Qt |
+| demand_controls.py | Mode-split slider, day curve and its editor, drop-off slider (→ od_matrix.md) | Qt |
 | demand.py | OD cells, mode-split arithmetic, demand tools' rules, a run's pair demand | no |
 | institutions.py | Buildings' doors, catchments, trips and modes | no |
 | walking.py | Footpaths, paths and crossings as a walking network, cheapest walks, a run's walkers (→ walking.md) | no |

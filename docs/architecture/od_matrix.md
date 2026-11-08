@@ -1,7 +1,8 @@
 # od_matrix.py: demand (Qt)
 
 The grid and editors over the cells; the cells' type and rules (`ODCell`, the split arithmetic, the demand
-tools' argument checks and read-out, a run's pair demand) are demand.py's (demand.md).
+tools' argument checks and read-out, a run's pair demand) are demand.py's (demand.md). The painted controls the
+pair editor builds (`ModeSplitSlider`, `DayCurve` and its `CurveEditor`, `DropSlider`) are in demand_controls.py.
 
 - `ODMatrix`: rows are origins and columns destinations (boundary ends that can take
   traffic in or out; one-way ends only one way).
