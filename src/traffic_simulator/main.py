@@ -21,7 +21,7 @@ from dataclasses import asdict, replace
 from itertools import accumulate
 from types import SimpleNamespace
 
-from PySide6.QtCore import (QBuffer, QEvent, QEventLoop, QIODevice, QPoint, QRectF, QSize, QStandardPaths, Qt, QThread,
+from PySide6.QtCore import (QBuffer, QEvent, QIODevice, QPoint, QRectF, QSize, QStandardPaths, Qt, QThread,
                             QTimer)
 from PySide6.QtGui import QAction, QFontDatabase, QGuiApplication, QImage, QKeySequence, QPainter, QShortcut
 from PySide6.QtWidgets import (
@@ -54,15 +54,16 @@ from traffic_simulator.ai_mode import AIModePanel
 from traffic_simulator.background import BackgroundPainter, BackgroundPanel, map_frame
 from traffic_simulator.extensions import ExtensionsPanel
 from traffic_simulator.activity import ActivityLog
-from traffic_simulator.clock import STEP_MS, SimulationClock
+from traffic_simulator.clock import SimulationClock
 from traffic_simulator import (accessibility, analysis, assistant, design_checks, experiments, network_tools, results,
                                run_reports, scenario, searches, stats, weaving)
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
 from traffic_simulator.lane_graph import Graph
-from traffic_simulator.simulation import DT, PairDemand, Runner, Simulation
+from traffic_simulator.main_runs import RunsMixin
+from traffic_simulator.simulation import PairDemand, Runner, Simulation
 from traffic_simulator.metro import METRO
 from traffic_simulator.geometry import nearest_along, point_along
-from traffic_simulator.walking import footpath_join, walk_pairs
+from traffic_simulator.walking import footpath_join
 from traffic_simulator.history import History
 from traffic_simulator.institutions import metro_report, place, run_demand
 from traffic_simulator.interchanges import (
@@ -86,7 +87,7 @@ from traffic_simulator.od_matrix import (MetroMatrix, ModeSplitDialog, ODCellPan
                                         SpawnMatrix)
 from traffic_simulator.properties_panel import PropertiesPanel, describe_group, TIMING_METHODS
 from traffic_simulator.summary import SummaryPanel
-from traffic_simulator.theme import STATUS, apply_theme, float_glass
+from traffic_simulator.theme import apply_theme, float_glass
 from traffic_simulator.widgets import (ICON_FONTS, ChoiceButtons, Collapsible, OpenPageTabs, align_form_labels,
                                        glyph_icon, hint_label, icon_button, styled_button)
 from traffic_simulator.xlsx import read_xlsx
@@ -173,7 +174,6 @@ RUN_SEED = 42  # a Run's seed unless the Seed box says otherwise: the same input
 MAX_AT_ONCE = 8  # a batch's runs going at once, at most (TSP keeps the state of twice as many)
 HEADLESS_WAIT_S = 30.0  # a headless test's deadline for each agent answer (Batch Run sets its own): missed, the plan
 TITLE = "ACMS — Agentic Context-Aware Mobility System"
-LIVE_OBSERVED = 400_000  # a live run keeps its latest passages, conflicts and stop-line crossings for the analysis
 
 
 def _rounded(value, digits: int = 3):
@@ -188,7 +188,7 @@ def _rounded(value, digits: int = 3):
 
 
 
-class MainWindow(QMainWindow):
+class MainWindow(RunsMixin, QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle(f"Untitled[*] — {TITLE}")
@@ -686,219 +686,6 @@ class MainWindow(QMainWindow):
         clock.state_changed.connect(self._show_clock_state)
         self._show_clock_state(False)
 
-    def _run(self) -> None:
-        """Run: a fresh simulation of the network and demand as they are now, from 00:00:00, its
-        physics on its own thread in step with the wall clock (simulation.Runner)."""
-        if self._testing:  # Run and Play are off meanwhile; this catches any other way in
-            self.statusBar().showMessage(f"{self.busy()} is going on: Stop ends it, then Run.", 8000)
-            return
-        self._stop_runner()
-        demand = self._pair_demand()
-        # Its own copy: an edit stops the run, but only after it has changed the network, and the run's workbook
-        # describes the network and types it drove (the physics thread never reads one half-edited)
-        network, modes = deepcopy(self.network), deepcopy(self.vehicle_modes.modes)
-        simulation = Simulation(network, demand, modes, seed=self.seed_box.value(),
-                                walkers=walk_pairs(network, modes, self.od_matrix.mode == "daily"))  # one switch for all
-        notes = []
-        webster = [plan["cycle_s"] for plan in simulation.signal_plans.values() if plan["method"] == "webster"]
-        if webster:
-            notes.append(f"Webster timing from the demand at {len(webster)} junction{'s' if len(webster) > 1 else ''}: "
-                         f"cycles {min(webster):g}–{max(webster):g} s.")
-        groups = {plan["method"]: plan for plan in simulation.signal_plans.values() if "group" in plan}
-        for method, plan in groups.items():
-            name = {"transyt": "TRANSYT", "synchro": "Synchro", "scats": "SCATS", "scoot": "SCOOT"}[method]
-            adapts = " to start, adapting from its detectors" if method in ("scats", "scoot") else ""
-            notes.append(f"{name}: {plan['group']} junctions on a {plan['cycle_s']:g} s cycle{adapts}.")
-        self.properties.show_plans(dict(simulation.signal_plans))
-        if not simulation.demand:
-            notes.append("No demand yet: enter flows in the Demand Generator. The signals run meanwhile.")
-        notes += self._institution_notes
-        if simulation.unreachable:
-            notes.append(f"No route for {', '.join(simulation.unreachable[:5])}: those pairs spawn nothing.")
-        model, warning = self._deciding()
-        if warning:
-            notes.append(warning)
-        if notes:
-            self.statusBar().showMessage(" ".join(notes), 8000)
-        self.signal_agent.reset()
-        simulation.observe(keep=LIVE_OBSERVED)  # detectors, link times, conflicts…: for the workbook's analysis sheets
-        simulation.signal_override = self.extensions.signal_override()  # None unless TSP is ticked
-        self.recorder = results.RunRecorder(network, modes,
-                                            name=f"{len(simulation.demand)} OD pairs with demand",
-                                            inputs=self._run_inputs(simulation, demand), seed=self.seed_box.value(),
-                                            model=model, run=self._run_settings(simulation, extra=[
-                                                ("AI model deciding TSP", model)]))
-        self.runner = Runner(simulation, float(self.speed_combo.currentData()), recorder=self.recorder)
-        self.runner.play()
-        self.clock.run()
-
-    def _stop_pressed(self) -> None:
-        self._cancel = True  # a headless test stops at its next step
-        self._stop_run()
-
-    def _in_background(self, work, what: str):
-        """Run work(progress, cancelled) on its own thread, the window kept alive (a local event loop) and
-        the status bar saying how far it is; Stop cancels it. Returns its result, or raises its error."""
-        if self.runner is not None or self._testing:  # never two at once, whichever way it was asked for
-            raise ValueError(f"{self.busy()} is going on: stop it first (the menu bar's Stop).")
-        state = {"done": False, "result": None, "error": None, "progress": ""}
-        self._cancel, self._testing, self._busy_what = False, True, what
-        self._show_busy()
-
-        def target():
-            try:
-                state["result"] = work(lambda text: state.__setitem__("progress", text), lambda: self._cancel)
-            except Exception as exc:  # noqa: BLE001 - handed back to the caller
-                state["error"] = exc
-            finally:
-                state["done"] = True
-
-        threading.Thread(target=target, name="network test", daemon=True).start()
-        loop, timer = QEventLoop(), QTimer()
-
-        def poll():
-            shown = self._show_headless()
-            self.statusBar().showMessage(f"{what}: {state['progress']}{f' · {shown}' if shown else ''} (Stop ends it)")
-            self.extensions.report_failures()  # a run's override raised: switched off, saying why
-            if state["done"]:
-                loop.quit()
-
-        timer.timeout.connect(poll)
-        timer.start(100)
-        loop.exec()
-        timer.stop()
-        self._testing, self._busy_what = False, ""
-        self._show_busy()
-        self.statusBar().clearMessage()
-        failed = self.extensions.report_failures()
-        if failed:  # the runs went on without it from then: their workbooks' Extensions dropped sheet says so
-            self.statusBar().showMessage(f"{', '.join(failed)} raised during {what.lower()} and was switched off: "
-                                         "see the Extensions tab.", 15000)
-        with self._headless_lock:
-            self._headless.clear()
-            self._headless_frames.clear()
-        if self.runner is None:
-            self.scene.show_frame(1.0, None)  # the test's vehicles leave the map
-        self.clock_label.setToolTip("Simulation time")
-        self.clock_label.setText(results.clock(self.clock.time_s))
-        if self._close_after_test:
-            QTimer.singleShot(0, self.close)  # after the caller has had its result
-        if state["error"] is not None:
-            raise state["error"]
-        return state["result"]
-
-    def busy(self) -> str:
-        """What is using the simulator ("Batch run", "A live run"), or "" when nothing: for a control that
-        would start another (Batch Run's Start), so it can say why it waits."""
-        if self._testing:
-            return self._busy_what
-        return "A live run" if self.runner is not None else ""
-
-    def _show_busy(self) -> None:
-        """While a test runs, Run and Play wait, their tooltips naming it (the status bar says how far it is)."""
-        busy = self._busy_what if self._testing else ""
-        for action, tip in ((self.run_action, "Run from 00:00:00"), (self.play_action, "Play")):
-            action.setEnabled(not busy)
-            action.setToolTip(" ".join(f"Busy: {busy}".split()[:5]) if busy else tip)
-
-    def _show_headless(self) -> str:
-        """While a test runs headless: the menu bar's clock shows its run's simulated time (the least advanced of
-        those going side by side), its tooltip saying so in five words; that run by name, for the status bar
-        ("Never preempt (baseline), seed 1: 00:12:34 of 00:30:00"), or "" with none going."""
-        with self._headless_lock:
-            going = list(self._headless.items())
-        if not going:
-            return ""
-        label, (seconds, of) = min(going, key=lambda item: item[1][0])
-        self.clock_label.setText(results.clock(seconds))
-        with self._headless_lock:
-            frame = self._headless_frames.get(label) if self.show_runs else None
-        if frame is not self.scene.frame:  # the same run the clock shows, drawn as a live run is (or none)
-            self.scene.show_frame(1.0, frame)
-        self.clock_label.setToolTip("Slowest test run's time")
-        return f"{label}: {results.clock(seconds)} of {results.clock(of)}"
-
-    def _headless_seconds(self) -> float:
-        """The simulated seconds the headless runs going have done so far, together."""
-        with self._headless_lock:
-            return sum(t for t, _ in self._headless.values())
-
-    def _one_run(self, network, demand, modes, seed, duration_s, override, settings, extra_inputs, label, progress, cancelled,
-                 folder: Path | None = None, model: str = "", speed: float | None = None, dispatches=(),
-                 incidents=(), weather: str = "clear", meters=(), measure_from_s: float = 0.0, lateral: bool = False):
-        """One headless run on the worker thread: its recorder, its workbook (named by its seed and `model`, the AI
-        deciding TSP; its extensions' reports in it); (kpis, path, simulated seconds). kpis["reported"]: their figures.
-        `speed`: in step with the wall clock at this pace (a batch's), else as fast as the CPU allows. `dispatches`:
-        emergency vehicles sent at the start (their trips: the Emergency vehicles sheet)."""
-        made = {}
-        for agent in ((override.agent.values() if isinstance(override.agent, dict) else [override.agent])
-                      if override is not None else []):
-            if hasattr(agent, "reset"):
-                agent.reset()  # its own run's answers only
-
-        def recorder_for(simulation):
-            made["simulation"] = simulation  # so a run that raises still ends in a workbook
-            made["recorder"] = results.RunRecorder(
-                network, modes, name=label, run=settings, seed=seed, model=model, measure_from_s=measure_from_s,
-                inputs=results.input_sheets(network, demand, modes, dict(simulation.signal_plans)) + extra_inputs)
-            return made["recorder"]
-
-        def stepped_to(t: float) -> None:  # the menu bar's clock follows it (_show_headless)
-            with self._headless_lock:
-                self._headless[label] = (t, duration_s)
-            progress(f"{label}, {results.clock(t)} of {results.clock(duration_s)}")
-
-        drawn = [0.0]
-
-        def framed(simulation) -> None:  # on the run's thread: a frame for the map, while it shows runs
-            now = time.monotonic()
-            if not self.show_runs or now - drawn[0] < 0.1:
-                return
-            drawn[0] = now
-            frame = simulation.frame()
-            with self._headless_lock:
-                self._headless_frames[label] = frame
-
-        began = time.monotonic()
-        try:
-            simulation, recorder = experiments.run_headless(
-                network, demand, modes, seed, duration_s, override, recorder_for, progress=stepped_to,
-                cancelled=cancelled, observe=True, speed=speed, dispatches=dispatches, incidents=incidents,
-                weather=weather, meters=meters, on_frame=framed, lateral=lateral)
-        except BaseException as exc:  # it raised: what it recorded is still its workbook; the error goes on up
-            if "recorder" in made:
-                self._end_recording(made["recorder"], made["simulation"], folder or self.results_folder, lambda: None,
-                                    f"The run stopped: {exc!r}")
-            raise
-        finally:
-            with self._headless_lock:
-                self._headless.pop(label, None)
-                self._headless_frames.pop(label, None)
-        stepped = time.monotonic()
-        kpis = {}
-
-        def extras() -> None:
-            kpis.update(self._observed_kpis(simulation, recorder))
-            recorder.add_analysis(experiments.analysis_sheets(kpis))
-            reports = self.extensions.reports(override)  # TSP's and DEVL's: their sheets, every decision, the agents' figures
-            if dispatches:
-                reports.append(experiments.emergency_report(simulation))
-            recorder.add_sheets(reports)
-            kpis["reported"] = {key: value for report in reports for key, value in report.get("measures", {}).items()}
-            kpis["decision_sheets"] = {name: rows for report in reports for name, rows, *_ in report.get("sheets", [])
-                                       if "decisions" in name.lower()}  # each agent decision (read_decisions)
-
-        path, failed = self._end_recording(recorder, simulation, folder or self.results_folder, extras)
-        if failed is not None:
-            raise failed  # its workbook is written, without what failed
-        if speed:  # under the pace asked: the CPU fell behind the clock (an answer's latency then cost less)
-            kpis["reported"]["pace_achieved"] = round(simulation.time / max(stepped - began, 1e-9), 2)
-        return kpis, path, simulation.time
-
-    _observed_kpis = staticmethod(experiments.observed_kpis)  # in experiments; tests replace them on the window
-    _end_recording = staticmethod(experiments.end_recording)
-    _quick_run = staticmethod(experiments.quick_run)
-
     def _check_demand(self, pairs: list) -> tuple[float | None, dict]:
         """The Demand Generator's demand, just sized to a degree of saturation, run headless (its busiest hour,
         the Seed box's seed, the ticked extensions): the share of `pairs`' demand that holds, the whole of it
@@ -941,11 +728,6 @@ class MainWindow(QMainWindow):
                 f"At that size the simulation jammed (vehicles piled up), so {share:.0%} of it is kept: the largest "
                 "share that held. The capacity model's saturation figures are for the size before this check.")
         return share, {**report, "checked": True, "kept": f"{share:.0%}", "note": note}
-
-    def _journal_sheet(self) -> list:
-        rows = [["Time", "Kind", "Tool", "What", "Arguments", "Outcome"]]
-        rows += [[e["time"], e["kind"], e["tool"], e["what"], e["arguments"], e["outcome"]] for e in self.ai_mode.journal]
-        return [("Planning journal", rows)]
 
     def _runs_command(self, tool: str, args: dict, check_only: bool = False) -> dict:
         """AI Mode's network-testing tools: headless runs and experiments, their results, the extensions."""
@@ -1888,43 +1670,6 @@ class MainWindow(QMainWindow):
 
     LEAD_FIGURES = run_reports.LEAD_FIGURES  # an experiment's answer leads with (run_reports.compact)
 
-    def _run_settings(self, simulation: Simulation | None, seed: int | None = None, network=None,
-                      extra: list | None = None) -> list[tuple[str, object]]:
-        """A run's settings, for its workbook: enough for someone else to repeat and check it."""
-        network = network or self.network
-        seed = self.seed_box.value() if seed is None else seed
-        background = network.background
-        where = {"colour": f"colour {background.colour}", "map": f"OpenStreetMap at {background.lat:.6f}, "
-                 f"{background.lon:.6f} (under ({background.anchor_x:.1f}, {background.anchor_y:.1f}) m), turned "
-                 f"{background.map_rotation_deg:g}°", "image": f"image {background.image}, {background.width_m:g} m wide"}
-        rows = [("Application", "ACMS (Agentic Context-Aware Mobility System) 0.1.0"),
-                ("Run started", time.strftime("%Y-%m-%d %H:%M:%S")),
-                ("Random seed", seed), ("Time step (s)", simulation.dt if simulation else DT),
-                ("Step method", simulation.step_method if simulation else "euler"),
-                *((("Lateral position (sublane)", "on" if simulation.lateral else "off"),) if simulation else ()),
-                ("Sampled every (s)", results.SAMPLE_S),
-                ("Speed (simulated s a real s)", float(self.speed_combo.currentData())),
-                ("Demand used", "daily (trips/day, by each pair's curve)" if self.od_matrix.mode == "daily" else "hourly (veh/h)"),
-                *((("OD pairs with demand", len(simulation.demand)),
-                   ("Pairs with no route", ", ".join(simulation.unreachable) or "none")) if simulation else ()),
-                ("Network file", str(self.network_path) if self.network_path else "not saved"),
-                ("Network", f"{len(network.nodes)} junctions, {len(network.roads)} roads, "
-                            f"{len(network.approach_nodes)} boundary ends"),
-                ("Driving side", network.driving_side), ("Background", where.get(background.kind, background.kind)),
-                ("Queued below (km/h)", results.QUEUE_KMH)]
-        rows += [(f"Extension: {name}", state) for name, state in self.extensions.settings()]
-        return rows + list(extra or [])
-
-    def _run_inputs(self, simulation: Simulation, demand) -> list:
-        return results.input_sheets(self.network, demand, self.vehicle_modes.modes, dict(simulation.signal_plans))
-
-    def _apply_hooks(self) -> None:
-        """An extension that overrides signals was ticked or unticked: the run follows at once (the ones it had
-        still report in its workbook, with any that were dropped)."""
-        if self.runner is not None:
-            self._replaced.append(self.runner.simulation.signal_override)
-            self.runner.simulation.signal_override = self.extensions.signal_override()
-
     def _ask_agent(self, question, choice: dict | None = None):
         """The signal agent's question (runs in its thread). TSP's ({"system": "1" | "2", ...}: System 1's state and
         typed question, or System 2's messages) goes to that system: `choice` names the model (a batch run's agent),
@@ -2046,18 +1791,6 @@ class MainWindow(QMainWindow):
             for line in network_tools.state_changes(self._activity_seen, now):
                 self.activity.log("edit", line)
             self._activity_seen = now
-
-    def _override_seed(self, overridden: bool) -> None:
-        """The menu bar's Seed box, or "Overridden" in its place while Batch Run (whose seeds a batch uses) is ticked."""
-        self._seed_box_action.setVisible(not overridden)
-        self._seed_overridden_action.setVisible(overridden)
-
-    def _show_runs_on_map(self, on: bool) -> None:
-        """Batch Run's Show runs on map: a headless test's run drawn on the map as it goes (the one the clock
-        shows), or not (the map shows the network alone and the runs go a little faster)."""
-        self.show_runs = bool(on)
-        if not on and self.runner is None:
-            self.scene.show_frame(1.0, None)
 
     def _tick_extension(self, stem: str) -> bool:
         """Tick the extension from extensions/<stem>.py in the Extensions tab (Batch Run's Test DEVL ticks Dispatch
@@ -2491,26 +2224,6 @@ class MainWindow(QMainWindow):
                        if isinstance(value, float) and again.get(figure) != value]
         return {"file": str(replayed), "same": not differences, "differences": differences}
 
-    def _play(self) -> None:
-        if self.runner is None:
-            self._run()
-            return
-        self.runner.play()
-        self.clock.play()
-
-    def _pause(self) -> None:
-        if self.runner is not None:
-            self.runner.pause()  # returns with its last step published
-        self.clock.pause()
-        self._frame(self.clock.time_s)  # clock, map and data all show that last step
-
-    def _set_speed(self) -> None:
-        self._show_saved()
-        speed = float(self.speed_combo.currentData())
-        self.clock.speed = speed
-        if self.runner is not None:
-            self.runner.set_speed(speed)
-
     def closeEvent(self, event) -> None:  # type intentionally inherited from Qt
         if not self._close_after_test and not self._may_discard():
             event.ignore()
@@ -2525,81 +2238,6 @@ class MainWindow(QMainWindow):
         self.clock.pause()  # and the clock: no frames, draw() or algorithm() after it
         self.background_painter.close()  # and the map's tile downloads
         super().closeEvent(event)
-
-    def _stop_runner(self) -> None:
-        """End the run, whatever ended it (Stop, a new Run, a change to the network, closing, its physics failing):
-        its results become a workbook in the results folder."""
-        if self.runner is not None:
-            runner, recorder, replaced = self.runner, self.recorder, self._replaced
-            self.runner, self.recorder, self._replaced = None, None, []
-            self._end_run(runner, recorder, replaced)
-
-    def _end_run(self, runner, recorder, replaced: list = ()) -> None:
-        """_stop_runner's run, finished once its physics thread has ended: a step still going (a slow hook) is
-        asked again shortly, the window carrying on meanwhile (closing then leaves it to results.recover).
-        `replaced`: the overrides it had before its last (_apply_hooks), reported with it."""
-        if not runner.stop(0.5):
-            self.statusBar().showMessage("Stopping the run: its last step is still going.")
-            QTimer.singleShot(200, self, lambda: self._end_run(runner, recorder, replaced))
-            return
-        self.extensions.report_failures()  # one that raised in the run's last steps too
-        simulation = runner.simulation
-        if recorder is not None:
-            self.last_kpis = None
-
-            def extras() -> None:
-                recorder.add_sheets(self.extensions.reports([*replaced, simulation.signal_override]))  # TSP: every decision
-                self.last_kpis = self._observed_kpis(simulation, recorder)
-                recorder.add_analysis(experiments.analysis_sheets(self.last_kpis))
-
-            try:
-                path, _ = self._end_recording(recorder, simulation, self.results_folder, extras, runner.error)
-            except Exception as exc:  # noqa: BLE001 - never in the way of Stop or closing; results.recover tries again
-                self.statusBar().showMessage(f"Couldn't save the run's results: {exc}", 15000)
-                return
-            self.extensions.report_failures()  # and one whose report() raised
-            if path is not None:
-                self.last_results = path
-                incomplete = f" (incomplete: {recorder.error})" if recorder.error else ""
-                self.statusBar().showMessage(f"The run's results are saved{incomplete}: {path}", 15000)
-        self._refresh_summary()
-
-    def _export(self) -> None:
-        """Export: a workbook of the run so far (it carries on), or of the last run."""
-        if self.recorder is None and self.last_results is None:
-            self._export_network()
-            return
-        recorder = self.recorder
-        name = results.file_name(recorder.started, seed=recorder.seed, model=recorder.model) if recorder is not None \
-            else self.last_results.name
-        path, _ = QFileDialog.getSaveFileName(self, "Export Results", str(self.results_folder / name),
-                                              "Excel workbook (*.xlsx)")
-        if not path:
-            return
-        if recorder is None and Path(path).resolve() == self.last_results.resolve():  # the dialog's own suggestion
-            self.statusBar().showMessage(f"The last run's workbook is already saved there: {path}", 8000)
-            return
-        try:
-            if recorder is not None:
-                if self.runner is not None:
-                    try:  # TSP's figures so far: its sheet, the agent's decisions, latency and tokens
-                        recorder.add_sheets(self.extensions.reports([*self._replaced, self.runner.simulation.signal_override]))
-                    except RuntimeError:  # the run changed them while they were read: export without
-                        pass
-                    for _ in range(3):  # what it has observed so far, analysed (read while the physics carries on)
-                        try:
-                            recorder.add_analysis(experiments.analysis_sheets(
-                                self._observed_kpis(self.runner.simulation, recorder)))
-                            break
-                        except RuntimeError:
-                            continue
-                recorder.export(path)
-            else:
-                results.write_whole(path, Path(self.last_results).read_bytes())  # a full disk keeps the old file
-        except OSError as exc:
-            QMessageBox.critical(self, "Export failed", str(exc))
-            return
-        self.statusBar().showMessage(f"Exported {path}", 8000)
 
     # --- The Research Log: each AI Mode step, for an extension's log() --------------------------
 
@@ -2647,84 +2285,6 @@ class MainWindow(QMainWindow):
         matrix.grab().save(buffer, "PNG")
         return bytes(buffer.data())
 
-    def _export_network(self) -> None:
-        """Export with no run yet: the network for analysis (its City sheet, junctions, roads with their geometry
-        and curves, ends, demand, vehicle types, bus stops, institutions) and its GeoJSON beside it."""
-        name = f"ACMS network {time.strftime('%Y-%m-%d %H-%M-%S')}.xlsx"
-        path, _ = QFileDialog.getSaveFileName(self, "Export Network", str(self.results_folder / name),
-                                              "Excel workbook (*.xlsx)")
-        if not path:
-            return
-        try:
-            results.network_workbook(path, self.network, self._pair_demand(), self.vehicle_modes.modes,
-                                     self._run_settings(None))
-        except OSError as exc:
-            QMessageBox.critical(self, "Export failed", str(exc))
-            return
-        self.statusBar().showMessage(f"Exported the network (no run yet): {path} and its .geojson", 8000)
-
-    def _results(self) -> dict | None:
-        """View Summary's Results page: the run going on, or the last one."""
-        if self.recorder is not None:
-            return {"kpis": self.recorder.kpis(), "running": True, "file": "", "error": self.recorder.error}
-        if self.last_kpis is not None:
-            return {"kpis": self.last_kpis, "running": False, "file": str(self.last_results or ""), "error": ""}
-        return None
-
-    def _stop_run(self, note: str = "") -> None:
-        """Stop: end the run, clear its vehicles and put the clock back to 00:00:00."""
-        self._stop_runner()
-        self.clock.stop()
-        self.scene.show_frame(1.0, None)
-        if note:
-            self.statusBar().showMessage(note, 8000)
-
-    def _frame(self, seconds: float) -> None:
-        """Each display frame: draw the run's latest published frame. The physics never waits for
-        this; frames it published in between are skipped. The clock shows the physics' time."""
-        runner = self.runner
-        if runner is not None:
-            self.extensions.report_failures()  # an override raised in the physics thread: switched off, saying why
-            if runner.error:  # the physics raised: the run ends there, its workbook saying why (_end_run)
-                self._stop_run()
-                return
-            frame = runner.frame
-            seconds = frame.time
-            self.clock.hold(seconds)
-            alpha = min(max((runner.target() - frame.time) / DT, 0.0), 1.0) if runner.running else 1.0
-            behind = runner.running and runner.target() - frame.time > 2 * DT
-            now = time.monotonic()
-            # Behind: draw at most 10 frames a second, so drawing takes less time from the physics.
-            if not behind or now - self._drawn_at >= 0.1:
-                self.scene.show_frame(alpha, frame)
-                self._drawn_at = now
-            self.properties.show_plans(frame.plans)  # SCATS and SCOOT change theirs as they go
-            self.clock_label.setToolTip(
-                f"Behind: running at {runner.speed_now:.0f}×" if behind else "Simulation time")
-            self.clock_label.setStyleSheet(f"color: {STATUS['waiting']};" if behind else "")
-        if not self._testing:  # a headless test's runs have the clock meanwhile (_show_headless)
-            self.clock_label.setText(results.clock(seconds))
-
-    def _power_saver(self, on: bool) -> None:
-        """Power Saver: the map draws a run 30 times a second instead of 60, and on a GPU without multisampling.
-        The physics is untouched (it never waits for drawing)."""
-        self.clock.timer.setInterval(2 * STEP_MS if on else STEP_MS)  # each step covers the time since the last
-        self.view.set_power_saver(on)
-
-    def _traffic(self, args: dict) -> dict:
-        """The live run for the assistant (read_traffic): its latest published frame."""
-        if self.runner is None:
-            return {"error": "No live run is going (the user presses Run, ▷ ↻ in the menu bar corner, to start one). "
-                             "run_simulation's runs are headless: read them with read_results or analyse_run."}
-        road = str(args.get("road") or "") or None
-        known = {*self.network.roads, *self.network.approach_roads, *self.network.nodes, *self.network.approach_nodes}
-        if road and road not in known:  # a wrong id once matched nothing and said so only as "matching 0"
-            own = network_tools._road_from_other_end(self.network, road)
-            if own is None:
-                return network_tools.explain_error(f"Unknown id '{road}'.", self.network)
-            road = own
-        return self.runner.frame.records(road, int(args.get("limit") or 100))
-
     def _pair_demand(self) -> list[PairDemand]:
         """Every OD pair with demand of the kind the Demand Generator shows, for a run, and the institutions'
         trips (institutions.run_demand: catchment to door and back; its notes in `_institution_notes`)."""
@@ -2733,10 +2293,6 @@ class MainWindow(QMainWindow):
         institutions, self._institution_notes = run_demand(self.network, self.vehicle_modes.modes, matrix.mode == "daily")
         return pair_demand(matrix.cells, matrix.origins, matrix.destinations, matrix.mode,
                            matrix.vehicle_modes.vehicles_per_hour()) + institutions
-
-    def _show_clock_state(self, running: bool) -> None:
-        self.pause_action.setVisible(running)
-        self.play_action.setVisible(not running)
 
     def _name_open_tab(self, current: int) -> None:
         self.page_title.setText(self.tab_names[current] if current >= 0 else "")

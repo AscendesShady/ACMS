@@ -1,5 +1,9 @@
 # main.py: the main window (Qt)
 
+- **Mixins** (plain classes before `QMainWindow` in `MainWindow`'s bases; all state still made in `__init__`):
+  `main_runs.py` (`RunsMixin`) holds the run bar's methods, moved verbatim: `_run`, `_stop_pressed`,
+  `_in_background`, `busy`, `_one_run`, `_play`/`_pause`/`_stop_run`/`_stop_runner`/`_end_run`, `_frame`,
+  `_export`, `_run_settings`, `_traffic` and their helpers, and `LIVE_OBSERVED`.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
