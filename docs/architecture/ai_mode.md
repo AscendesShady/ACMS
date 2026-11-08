@@ -96,7 +96,9 @@
     roads, junctions and signals (`network_summary`, `describe`, `read_source`, `add_road`, `update_roads`,
     `delete_objects`, `build_edge`, `set_signal_timing`, ...); `people_tools.py` those for institutions,
     pedestrians, metro lines and bus stops (`place_institution`, `deploy_institutions`, `set_pedestrian_demand`,
-    `add_metro_line`, `add_bus_stop`, ...). A new tool is its schema in `tool_schemas.TOOLS`, its function in a
+    `add_metro_line`, `add_bus_stop`, ...); `demand_plans.py` the demand numbers the OD panel applies
+    (`demand_plan`, `scale_plan`, `calibration_plan`, `mode_plan`, `institution_split`, `LOGIT_DEFAULTS`,
+    `STORAGE_LIMIT`). A new tool is its schema in `tool_schemas.TOOLS`, its function in a
     tool module and its `network_tools._FUNCTIONS` entry (or the window's handler).
   - **Arguments first** (`network_tools.normalise`, in `AIModePanel._tool_requested` for every tool and in
     `run_tool`): what small models send is read in the shapes the schema gives (a close misspelling or a

@@ -124,6 +124,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | tool_reports.py | Calls, changes and refusals in words: describe_call, describe_changes, explain_error (→ ai_mode.md) | no |
 | road_tools.py | The tools on roads, junctions and signals: list, describe, add, update, delete (→ ai_mode.md) | no |
 | people_tools.py | The tools for institutions, pedestrians, metro lines and bus stops (→ ai_mode.md) | no |
+| demand_plans.py | Demand numbers: gravity sizing, scaling, count calibration, logit mode choice (→ ai_mode.md) | no |
 
 ## 3. Conventions
 
