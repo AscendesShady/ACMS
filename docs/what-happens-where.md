@@ -100,7 +100,7 @@ What the map draws, all to scale:
   phases, A B C D with four).
 - **Vehicles during a run:** drawn from rear to front across a junction, so they never appear to cut across a lane.
 
-**Code:** `network_scene.py` (`_draw_node`, `_draw_signal`, `VehicleLayer`).
+**Code:** `network_scene.py` (`_draw_node`, `_draw_signal`), `vehicle_layer.py` (`VehicleLayer`).
 
 ## A run, start to finish
 

@@ -8,6 +8,7 @@ order (`stackBefore`), the rest untouched. A rebuild also ends a selection box b
 items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLOW_PAINT`, `MAP_SELECTED`, ...).
 `scene_items.py` holds the standalone items (`PavingItem`, `MetroItem`, `SignalClock`, `OverbridgeItem`,
 `BuildingItem`, `_FaceDrawing`) and `projection_transform`/`projection_lift`; `network_scene` re-exports them.
+`vehicle_layer.py` holds `VehicleLayer`, `_vehicle_faces`, `_pedestrian_faces` and `HEADING_STEP_DEG`.
 - **Roads:** a path the carriageway's width wide.
   - Lane lines: dashed 3 m / 9 m where lane changing is allowed, solid where not.
   - Two-way roads get a yellow centre divider; one-way roads have none and show an ahead

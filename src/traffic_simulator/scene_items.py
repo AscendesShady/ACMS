@@ -294,7 +294,7 @@ class OverbridgeItem(QGraphicsPolygonItem):
         for _, colour, polygon in self.polygons:
             painter.setBrush(colour)
             painter.drawPolygon(polygon)
-        if self.owner.frame is not None:
+        if self.owner.frame is not None:  # walkers on the deck: vehicle_layer.VehicleLayer._paint_walkers
             self.owner.vehicle_layer._paint_walkers(painter, self.owner.frame, self.owner.frame_alpha,
                                                     projection_lift(), self)
 
