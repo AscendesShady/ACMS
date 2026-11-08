@@ -78,6 +78,8 @@ from .lane_graph import (BAY_OFFSET_M, BAY_SPEED, GIVE_WAY_KMH, JUNCTION_TURN_FR
                          JUNCTION_TURN_MIN_KMH, PRIORITY_CAPACITY_VPH, RAMP_UTURN_MAX_KMH, ROAD_PRIORITY,
                          ROUNDABOUT_ENTRY_VPH, ROUTE_PENALTY, STORAGE_M_PER_VEHICLE, TURN_SATURATION_VPH, Bay, Graph,
                          Lane, Link, Signal, Turn, measured_capacity, path_size_logit)
+# A run's pair demand lives in demand.py; imported from here too, as before
+from .demand import PairDemand  # noqa: F401
 from .models import BAY_ENTRY_M, LANE_WIDTH_M, Network
 from .signal_timing import (ACTUATED, ADAPTIVE, COORDINATED, DETECTOR_GAP_S, MIN_GREEN_S,
                             OPTIMISE_TRIALS, ActuatedJunction, MaxPressureJunction,
@@ -203,24 +205,6 @@ class Meter:
 def _closer(best: tuple | None, found: tuple | None) -> tuple | None:
     """Whichever leader (free gap, speed, braking) is nearer; None counts as none."""
     return found if best is None or (found is not None and found[0] < best[0]) else best
-
-
-@dataclass
-class PairDemand:
-    """One OD pair's demand, as the Demand Generator shows it (the split with timetabled
-    types already fixed by their headways)."""
-    origin: str
-    destination: str
-    hourly: float | None  # veh/h, when the matrix shows hourly demand
-    daily: float | None  # trips per day, when it shows daily demand...
-    shares: list  # ...spread over the 24 hours in these shares
-    pattern: str
-    split: tuple
-    timetabled: bool = True  # timetabled types (buses) run on it; False for an institution's trips (their riders
-    # take the network's buses)
-    quarters: tuple = ()  # hourly demand only: each 15 minutes' share of the hour (daily_profile.quarter_shares); ()
-    # even
-    drops: tuple = ()  # trips ending part way: (type index, share of the trip's length, %) (demand.ODCell.drops)
 
 
 @dataclass(eq=False)

@@ -39,7 +39,7 @@ Each building is a zone of the four-step model: generation, distribution, mode s
   buses),
   each type's share of them, and mode names no type has. A school's pupils are `escorted`: each car that brings or
   fetches one drives on again, so its pupils' vehicles go both ways at the start and at the end.
-- **To a Run.** `run_demand(network, modes, daily)`: each building's trips as `simulation.PairDemand`s:
+- **To a Run.** `run_demand(network, modes, daily)`: each building's trips as `demand.PairDemand`s:
   catchment → door arriving, door → catchment leaving, each pair `timetabled=False` (no timetable of its own).
   Daily: the trips a day spread in the building's own hourly profile. Hourly: each pair's flow in the design
   hour, the hour when all institutions together make the most vehicle trips (said in the notes). Notes also

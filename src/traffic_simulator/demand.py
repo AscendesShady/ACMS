@@ -377,11 +377,28 @@ def read_od(cells: dict, origins: list[str], destinations: list[str], shown: str
             "usual": usual, "different": {pair: values for pair, values in different.items() if values}}
 
 
+@dataclass
+class PairDemand:
+    """One OD pair's demand, as the Demand Generator shows it (the split with timetabled
+    types already fixed by their headways)."""
+    origin: str
+    destination: str
+    hourly: float | None  # veh/h, when the matrix shows hourly demand
+    daily: float | None  # trips per day, when it shows daily demand...
+    shares: list  # ...spread over the 24 hours in these shares
+    pattern: str
+    split: tuple
+    timetabled: bool = True  # timetabled types (buses) run on it; False for an institution's trips (their riders
+    # take the network's buses)
+    quarters: tuple = ()  # hourly demand only: each 15 minutes' share of the hour (daily_profile.quarter_shares); ()
+    # even
+    drops: tuple = ()  # trips ending part way: (type index, share of the trip's length, %) (demand.ODCell.drops)
+
+
 def pair_demand(cells: dict, origins: list[str], destinations: list[str], mode: str,
                 per_hour: dict[int, float]) -> list:
     """Every OD pair with demand of the kind `mode` ("hourly" or "daily") between these ends, as a run's
-    simulation.PairDemand (the split in effect, a daily pair's hourly shares, an hourly pair's quarters)."""
-    from .simulation import PairDemand  # noqa: PLC0415 - the simulation's type
+    demand.PairDemand (the split in effect, a daily pair's hourly shares, an hourly pair's quarters)."""
     daily = mode == "daily"
     return [PairDemand(origin, destination, None if daily else cell.flow, cell.daily if daily else None,
                        cell.profile.shares() if daily else [], cell.pattern, split_of(cell, per_hour, mode),

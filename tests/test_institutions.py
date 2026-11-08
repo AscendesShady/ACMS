@@ -4,6 +4,8 @@ them, placing one by tool and on the real map RTS-style, and the Mode split wind
 Run with `python tests/test_institutions.py` (or the test monitor)."""
 
 import os
+import subprocess
+import sys
 import tempfile
 from copy import deepcopy
 from dataclasses import replace
@@ -434,6 +436,15 @@ def test_its_day_follows_its_own_curves_and_its_hour_what_is_typed():
     window.undo()
     assert set(window.network.institutions[school.id].curves) == {"arrive", "leave"}  # each edit an undo step
     window.close()
+
+
+def test_its_run_demand_needs_no_physics():
+    """run_demand builds demand.PairDemand records without loading the physics module (simulation.py)."""
+    code = ("import sys; from traffic_simulator.institutions import run_demand; "
+            "from traffic_simulator.models import Network; run_demand(Network(), [], True); "
+            "print('traffic_simulator.simulation' in sys.modules)")
+    loaded = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=60, check=True)
+    assert loaded.stdout.strip() == "False", loaded.stdout
 
 
 if __name__ == "__main__":
