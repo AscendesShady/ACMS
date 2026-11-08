@@ -14,6 +14,8 @@
   window's `tests` dict): `read_results`, `compare_runs`, `analyse_run`, `junction_analysis`, `resilience`,
   `regress`, `power_analysis`, `benefit_cost`, `rank_scenarios`, `read_decisions`, `run_test`, `figure_key`,
   `factorial`, `compact` and `LEAD_FIGURES` (still `MainWindow.LEAD_FIGURES`).
+- Cut from `main.py` too: `observed_kpis`, `end_recording` and `quick_run` (still `MainWindow._observed_kpis`,
+  `_end_recording`, `_quick_run`), `emergency_report` and `AGENT_TIMING`.
 - **Simulated time and AI agents.** A run's results depend on the seed and inputs, not on how fast it is stepped,
   except for an AI agent's thinking time (TSP's and DEVL's signal agent, `signal_agent.SignalAgent`):
   - Unpaced headless tests (run_simulation, run_experiment, build_scenario, optimise_signals, assign_routes, the
@@ -24,7 +26,7 @@
     answers (fresher telemetry replacing waiting questions, withdrawn requests) is not what a live run sees.
   - A paced batch (`speed`) never pauses: an answer costs latency × pace in simulated time and counts only within
     the batch's deadline (simulated seconds); questions keep coming while the model thinks.
-  - So an unpaced test shows an agent's effect at 1× only. Its result says so (`agent_timing`, `main.AGENT_TIMING`:
+  - So an unpaced test shows an agent's effect at 1× only. Its result says so (`agent_timing`, `experiments.AGENT_TIMING`:
     run_simulation, run_experiment and its workbook's Read me, optimise_signals, the Scenario Builder's report)
     whenever an extension that may ask an agent was ticked (for run_experiment: named in one of its scenarios'
     `extensions`, the only ones an experiment applies, whatever the Extensions tab has ticked); Batch Run tests
@@ -70,7 +72,7 @@
   Simulation's, set through `run_headless(params=…)`; `varied`) at ×(1 ± `SENSITIVITY_STEP`, 0.1), on the same seeds;
   per parameter and `SENSITIVITY_MEASURES` figure, the central-difference elasticity (Y₊ − Y₋) / (2·step·Y₀), mean over
   the seeds with its 95 % interval (FHWA Traffic Analysis Toolbox III's calibration step). None if stopped. Each
-  run records to a folder of its own under the system temp, removed after (as `MainWindow._quick_run`'s), so none
+  run records to a folder of its own under the system temp, removed after (as `quick_run`'s), so none
   is left for `results.recover`. AI Mode's
   parameter_sensitivity (`MainWindow._parameter_sensitivity`: the open network and demand, 1 to 5 seeds, default the
   run seed and the next, 20 simulated minutes, in the background).
@@ -79,7 +81,7 @@
   (`MainWindow._runs_command`, see AI Mode); a run's workbook names are numbered when two start in the
   same second (`RunRecorder.finish`).
 - Headless runs for the assistant are observed (`run_headless(observe=True)`, simulation.observe), and the
-  window keeps the observations with the KPIs (`MainWindow._observed_kpis`; `conflicts` = events under
+  window keeps the observations with the KPIs (`observed_kpis`; `conflicts` = events under
   `CONFLICT_TTC_S` 1.5 s, an experiment measure). `compare` also gives, with 3 or more scenarios, an ANOVA per
   figure (`stats.anova`: randomized block with the seeds as blocks), Wilcoxon's signed-rank p beside each
   paired difference, and for mean speed the power model's crash change (`speed_risk`).

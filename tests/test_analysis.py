@@ -18,7 +18,7 @@ _RUN = {}
 
 def signalised_run() -> dict:
     """A 3 × 3 grid, every junction signalised (Webster), 20 simulated minutes of busy demand: its KPIs with what it
-    observed, as MainWindow._observed_kpis joins them."""
+    observed, as experiments.observed_kpis joins them."""
     if not _RUN:
         network = generate_network(3, 3)
         for node in network.nodes.values():

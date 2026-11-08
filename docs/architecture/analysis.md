@@ -1,7 +1,7 @@
 # analysis.py and emissions.py: what a run's observations say
 
 Both are core modules (no Qt). They read a headless run's KPIs with what it observed (`kpis["observed"]`:
-`RunRecorder.observed()` joined with `Simulation.observations()` by `MainWindow._observed_kpis`), so the
+`RunRecorder.observed()` joined with `Simulation.observations()` by `experiments.observed_kpis`), so the
 assistant's tools can ask any run of the session (`read_results` lists them).
 
 ## What a run observes for them (simulation.py, `observe()`)

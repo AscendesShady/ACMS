@@ -104,7 +104,7 @@
     roads and grids follow.
   - **Extensions:** switch drop-in features from `extensions/` on and off (see extensions.py). The window's
     services for them (`app`): `run_batch` (`test_tsp`, `test_devl`: the emergency fleet in each run with DEVL's
-    override, TSP and DEVL each with their own signal agent, its Emergency vehicles sheet, `emergency_report`; `devl_agents` deciding its lanes, every TSP agent with every DEVL
+    override, TSP and DEVL each with their own signal agent, its Emergency vehicles sheet, `experiments.emergency_report`; `devl_agents` deciding its lanes, every TSP agent with every DEVL
     agent when both are tested, paced whenever a model answers), `replay_run`, `tsp_batch` and `devl_batch` (the TSP
     and DEVL tabs' batch settings, `_agent_plan`: the model picked, else the one on in AI Mode for its System),
     `dispatch_emergency(origin, destination, every_min, check_only, after_s)`

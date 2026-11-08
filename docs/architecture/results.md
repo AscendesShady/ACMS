@@ -117,10 +117,10 @@
   inputs, Settings, and its GeoJSON). A run's end (`MainWindow._stop_runner`) and each headless run
   (`_one_run`) add the extensions' reports (`ExtensionsPanel.reports`; a live run's from every set of overrides it
   was handed, ticking swapping them, `MainWindow._replaced`) and the analysis sheets
-  (`add_analysis`) before the workbook is written (`MainWindow._end_recording`). Every run that ends, however
+  (`add_analysis`) before the workbook is written (`experiments.end_recording`). Every run that ends, however
   it ends (stopped, cancelled, its physics or its extras raising), writes its workbook: the extras as far as
   they go, what failed in its Incomplete row and the status bar; a headless run's error then goes on up to
-  its caller. `_quick_run` (a search's KPIs) keeps none, by design.
+  its caller. `experiments.quick_run` (a search's KPIs) keeps none, by design.
 - **Everything for analysis** (every run, the user's live ones too):
   - **Road conditions**: each direction of each road (link: "road>" from its from-node, "road<" back, from the
     lane in each sample's `place`), its flow, flow a lane (over that direction's lanes), mean speed and its share of the limit, level of service

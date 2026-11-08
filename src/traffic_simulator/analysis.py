@@ -1,7 +1,7 @@
 """What a headless run's observations say about junctions, signals, the run's health, a disruption and fuel (no Qt).
 
 Each function reads a run's KPIs with what it observed (`kpis["observed"]`: results.RunRecorder.observed() and
-Simulation.observations(), as MainWindow._observed_kpis joins them), so the assistant's tools can ask any run of
+Simulation.observations(), as experiments.observed_kpis joins them), so the assistant's tools can ask any run of
 the session:
 - `junction_los`: control delay per approach and junction, graded A–F by the HCM 2000 (Exhibit 16-2 for signals,
   17-2 / 17-22 for give-way and stop control), per 15-minute period too; a roundabout entry's capacity, simulated

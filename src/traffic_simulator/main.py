@@ -175,31 +175,7 @@ RUN_SEED = 42  # a Run's seed unless the Seed box says otherwise: the same input
 MAX_AT_ONCE = 8  # a batch's runs going at once, at most (TSP keeps the state of twice as many)
 HEADLESS_WAIT_S = 30.0  # a headless test's deadline for each agent answer (Batch Run sets its own): missed, the plan
 TITLE = "ACMS — Agentic Context-Aware Mobility System"
-
-
-
-# What a headless test with an extension that may ask an AI agent (TSP, DEVL) says about the agent's timing
-AGENT_TIMING = ("Extensions that may ask an AI agent were ticked in this test. A headless test pauses for each answer, "
-                "and the decision takes effect after the model's real latency in simulated time, as if the run went at "
-                "1x; no new questions arise while the run is paused. To test the agent at another pace, with traffic "
-                "moving on while it thinks, use a paced Batch Run.")
 LIVE_OBSERVED = 400_000  # a live run keeps its latest passages, conflicts and stop-line crossings for the analysis
-
-
-
-def emergency_report(simulation) -> dict:
-    """A run's Emergency vehicles sheet (Test DEVL): each emergency vehicle's trip (from, to, dispatched, arrived,
-    travel time); measures emergency_trips, emergency_arrived and emergency_trip_s (mean). The lanes DEVL cleared
-    for them are in its own sheets."""
-    trips = list(simulation.emergency_trips.values())
-    done = [trip["arrived_s"] - trip["dispatched_s"] for trip in trips if trip["arrived_s"] is not None]
-    rows = [["Vehicle", "From", "To", "Dispatched", "Arrived", "Travel time (s)"]]
-    rows += [[trip["id"], trip["from"], trip["to"], results.clock(trip["dispatched_s"]),
-              results.clock(trip["arrived_s"]) if trip["arrived_s"] is not None else "on the road",
-              round(trip["arrived_s"] - trip["dispatched_s"], 1) if trip["arrived_s"] is not None else ""] for trip in trips]
-    return {"sheets": [("Emergency vehicles", rows, "Each emergency vehicle dispatched: its trip and travel time.")],
-            "measures": {"emergency_trips": len(trips), "emergency_arrived": len(done),
-                         "emergency_trip_s": round(statistics.fmean(done), 1) if done else None}}
 
 
 def _rounded(value, digits: int = 3):
@@ -908,7 +884,7 @@ class MainWindow(QMainWindow):
             recorder.add_analysis(experiments.analysis_sheets(kpis))
             reports = self.extensions.reports(override)  # TSP's and DEVL's: their sheets, every decision, the agents' figures
             if dispatches:
-                reports.append(emergency_report(simulation))
+                reports.append(experiments.emergency_report(simulation))
             recorder.add_sheets(reports)
             kpis["reported"] = {key: value for report in reports for key, value in report.get("measures", {}).items()}
             kpis["decision_sheets"] = {name: rows for report in reports for name, rows, *_ in report.get("sheets", [])
@@ -921,47 +897,9 @@ class MainWindow(QMainWindow):
             kpis["reported"]["pace_achieved"] = round(simulation.time / max(stepped - began, 1e-9), 2)
         return kpis, path, simulation.time
 
-    @staticmethod
-    def _observed_kpis(simulation, recorder) -> dict:
-        """A headless run's KPIs with what it observed (the analysis tools read it) and its conflict count."""
-        kpis = recorder.kpis()
-        kpis["observed"] = {**recorder.observed(), **simulation.observations()}
-        kpis["conflicts"] = sum(event["ttc_min"] < experiments.CONFLICT_TTC_S for event in kpis["observed"].get("conflicts", []))
-        kpis["co2_kg"] = analysis.co2_kg(kpis)
-        kpis["bus_headway_cv"] = experiments.headway_cv(kpis["observed"])
-        return kpis
-
-    @staticmethod
-    def _end_recording(recorder, simulation, folder: Path, extras, why: str = ""):
-        """A run's workbook in `folder`, however the run ended: the part-sample since its last one and `extras()`
-        (its reports and analysis) as far as they go, what went wrong (`why`, their error) on its Run sheet, and
-        the recorder always finished. (Its path, None if it simulated nothing; the error extras raised, or None.)"""
-        failed = None
-        try:
-            if simulation is not None and simulation.time > recorder.totals["time_s"]:
-                recorder.sample(simulation.frame())
-            extras()
-        except Exception as exc:  # noqa: BLE001 - whatever else failed, what the run recorded is written
-            failed = exc
-        recorder.error = "; ".join(filter(None, [recorder.error, why, failed and f"Its extras failed: {failed!r}"]))
-        folder.mkdir(parents=True, exist_ok=True)
-        return recorder.finish(folder), failed
-
-    def _quick_run(self, network, demand, modes, seed, duration_s, override, progress, cancelled, label,
-                   **conditions) -> dict:
-        """A headless run kept to its KPIs (no workbook), for searches with many runs. `conditions`: run_headless's
-        dispatches, incidents, weather, meters."""
-        folder = Path(tempfile.mkdtemp(prefix="acms-search-"))
-        try:
-            recorder = results.RunRecorder(network, modes, folder=folder / "run")
-            simulation, _ = experiments.run_headless(
-                network, demand, modes, seed, duration_s, override, recorder, observe=True, cancelled=cancelled,
-                progress=lambda t: progress(f"{label}, {results.clock(t)} of {results.clock(duration_s)}"), **conditions)
-            if simulation.time > recorder.totals["time_s"]:
-                recorder.sample(simulation.frame())
-            return self._observed_kpis(simulation, recorder)
-        finally:
-            shutil.rmtree(folder, ignore_errors=True)
+    _observed_kpis = staticmethod(experiments.observed_kpis)  # in experiments; tests replace them on the window
+    _end_recording = staticmethod(experiments.end_recording)
+    _quick_run = staticmethod(experiments.quick_run)
 
     def _check_demand(self, pairs: list) -> tuple[float | None, dict]:
         """The Demand Generator's demand, just sized to a degree of saturation, run headless (its busiest hour,
@@ -1169,7 +1107,7 @@ class MainWindow(QMainWindow):
                 self.last_results, self.last_kpis = path, kpis
             self._refresh_summary()
             answer = {"run": run_id, "seed": seed, "simulated": results.clock(simulated), "file": str(path or ""),
-                      **experiments.headline(kpis), **({"agent_timing": AGENT_TIMING} if override is not None else {})}
+                      **experiments.headline(kpis), **({"agent_timing": experiments.AGENT_TIMING} if override is not None else {})}
             health = analysis.run_health(kpis)  # a broken run said at once, with what to do (ChatSUMO's recovery loop)
             answer["health"] = "fine" if health["healthy"] else health["problems"]
             if peak_hour is not None:
@@ -1592,7 +1530,7 @@ class MainWindow(QMainWindow):
                 "apply_with": [{"tool": "set_signal_timing", "args": a} for a in apply], "history": history,
                 "note": "Apply only if the difference is clear and better; check with run_experiment on new seeds "
                         "(the search fits these seeds). The open network is unchanged.",
-                **({"agent_timing": AGENT_TIMING} if override is not None else {})}
+                **({"agent_timing": experiments.AGENT_TIMING} if override is not None else {})}
 
     def _weaving_los(self, args: dict) -> dict:
         """weaving_los: the HCM 2000 Ch 24 on every weaving segment, its movements from the demand (the busiest hour,
@@ -1979,7 +1917,7 @@ class MainWindow(QMainWindow):
         inputs = results.input_sheets(networks[0], demand, modes, {})
         self.results_folder.mkdir(parents=True, exist_ok=True)
         if any(override is not None for override in overrides):
-            experiment["agent_timing"] = AGENT_TIMING  # in its Read me, its answer and the Scenario Builder's report
+            experiment["agent_timing"] = experiments.AGENT_TIMING  # in its Read me, its answer and the Scenario Builder's report
         path = experiments.experiment_workbook(self.results_folder / experiments.experiment_name(started), experiment,
                                                inputs, self.ai_mode.journal)
         self.tests[experiment_id] = {"id": experiment_id, "kind": "experiment", "what": experiment["question"] or
@@ -1987,7 +1925,7 @@ class MainWindow(QMainWindow):
         experiment["objective"] = label
         shown = run_reports.compact(experiment["comparison"], label)
         answer = {"experiment": experiment_id, "file": str(path), "runs": len(runs), "of": total, "objective": label,
-                  **({"agent_timing": AGENT_TIMING} if experiment.get("agent_timing") else {}),
+                  **({"agent_timing": experiments.AGENT_TIMING} if experiment.get("agent_timing") else {}),
                   "comparison": shown}
         if len(shown) < len(experiment["comparison"]):
             answer["more"] = (f"{len(experiment['comparison']) - len(shown)} more rows (every figure, each vehicle "

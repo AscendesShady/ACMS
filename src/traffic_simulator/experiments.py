@@ -33,7 +33,7 @@ from math import log, sqrt
 from pathlib import Path
 from statistics import stdev
 
-from . import stats
+from . import analysis, stats
 from .results import MINUTE_COLUMNS, SAMPLE_S, RunRecorder, clock
 from .simulation import CRITICAL_GAP_S, DT, RING_TIMEGAP_S, Simulation
 from .xlsx import write_xlsx
@@ -76,7 +76,7 @@ AGENT_MEASURES = [("tsp_requests", "Bus requests", "requests", None), ("tsp_true
                   ("tsp_off_plan_s", "Time off the plan", "s", None),
                   ("agent_agrees_estimate", "Decisions agreeing with the person-delay estimate", "%", None),
                   ("tsp_back_to_plan_s", "Back to the plan after the bus, mean", "s", False),
-                  # Test DEVL: its emergency vehicles (main.emergency_report) and DEVL's own figures
+                  # Test DEVL: its emergency vehicles (emergency_report) and DEVL's own figures
                   ("emergency_trips", "Emergency vehicles dispatched", "vehicles", None),
                   ("emergency_arrived", "Emergency vehicles arrived", "vehicles", True),
                   ("emergency_trip_s", "Emergency travel time, mean (dispatch to arrival)", "s", False),
@@ -465,6 +465,74 @@ def run_headless(network, demand, modes, seed: int, duration_s: float, override=
         if on_frame is not None:
             on_frame(simulation)
     return simulation, recorder
+
+
+
+def observed_kpis(simulation, recorder) -> dict:
+    """A headless run's KPIs with what it observed (the analysis tools read it) and its conflict count."""
+    kpis = recorder.kpis()
+    kpis["observed"] = {**recorder.observed(), **simulation.observations()}
+    kpis["conflicts"] = sum(event["ttc_min"] < CONFLICT_TTC_S for event in kpis["observed"].get("conflicts", []))
+    kpis["co2_kg"] = analysis.co2_kg(kpis)
+    kpis["bus_headway_cv"] = headway_cv(kpis["observed"])
+    return kpis
+
+
+def end_recording(recorder, simulation, folder: Path, extras, why: str = ""):
+    """A run's workbook in `folder`, however the run ended: the part-sample since its last one and `extras()`
+    (its reports and analysis) as far as they go, what went wrong (`why`, their error) on its Run sheet, and
+    the recorder always finished. (Its path, None if it simulated nothing; the error extras raised, or None.)"""
+    failed = None
+    try:
+        if simulation is not None and simulation.time > recorder.totals["time_s"]:
+            recorder.sample(simulation.frame())
+        extras()
+    except Exception as exc:  # noqa: BLE001 - whatever else failed, what the run recorded is written
+        failed = exc
+    recorder.error = "; ".join(filter(None, [recorder.error, why, failed and f"Its extras failed: {failed!r}"]))
+    folder.mkdir(parents=True, exist_ok=True)
+    return recorder.finish(folder), failed
+
+
+def quick_run(network, demand, modes, seed, duration_s, override, progress, cancelled, label,
+              **conditions) -> dict:
+    """A headless run kept to its KPIs (no workbook), for searches with many runs. `conditions`: run_headless's
+    dispatches, incidents, weather, meters."""
+    folder = Path(tempfile.mkdtemp(prefix="acms-search-"))
+    try:
+        recorder = RunRecorder(network, modes, folder=folder / "run")
+        simulation, _ = run_headless(
+            network, demand, modes, seed, duration_s, override, recorder, observe=True, cancelled=cancelled,
+            progress=lambda t: progress(f"{label}, {clock(t)} of {clock(duration_s)}"), **conditions)
+        if simulation.time > recorder.totals["time_s"]:
+            recorder.sample(simulation.frame())
+        return observed_kpis(simulation, recorder)
+    finally:
+        shutil.rmtree(folder, ignore_errors=True)
+
+
+
+def emergency_report(simulation) -> dict:
+    """A run's Emergency vehicles sheet (Test DEVL): each emergency vehicle's trip (from, to, dispatched, arrived,
+    travel time); measures emergency_trips, emergency_arrived and emergency_trip_s (mean). The lanes DEVL cleared
+    for them are in its own sheets."""
+    trips = list(simulation.emergency_trips.values())
+    done = [trip["arrived_s"] - trip["dispatched_s"] for trip in trips if trip["arrived_s"] is not None]
+    rows = [["Vehicle", "From", "To", "Dispatched", "Arrived", "Travel time (s)"]]
+    rows += [[trip["id"], trip["from"], trip["to"], clock(trip["dispatched_s"]),
+              clock(trip["arrived_s"]) if trip["arrived_s"] is not None else "on the road",
+              round(trip["arrived_s"] - trip["dispatched_s"], 1) if trip["arrived_s"] is not None else ""] for trip in trips]
+    return {"sheets": [("Emergency vehicles", rows, "Each emergency vehicle dispatched: its trip and travel time.")],
+            "measures": {"emergency_trips": len(trips), "emergency_arrived": len(done),
+                         "emergency_trip_s": round(statistics.fmean(done), 1) if done else None}}
+
+
+
+# What a headless test with an extension that may ask an AI agent (TSP, DEVL) says about the agent's timing
+AGENT_TIMING = ("Extensions that may ask an AI agent were ticked in this test. A headless test pauses for each answer, "
+                "and the decision takes effect after the model's real latency in simulated time, as if the run went at "
+                "1x; no new questions arise while the run is paused. To test the agent at another pace, with traffic "
+                "moving on while it thinks, use a paced Batch Run.")
 
 
 # Does the network hold a demand? One headless run this long; it holds unless, over the last part, the

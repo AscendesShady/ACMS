@@ -561,7 +561,7 @@ def test_run_statistics_calibration_and_mode_choice():
 
 
 def test_a_test_with_an_agent_says_its_timing_is_as_at_1x():
-    from traffic_simulator.main import AGENT_TIMING
+    from traffic_simulator.experiments import AGENT_TIMING
 
     window = window_with_demand(300)
     plain = window._runs_command("run_simulation", {"duration_min": 1, "seed": 1})
