@@ -73,7 +73,7 @@ class VehicleLayer(QGraphicsItem):
 
     OUTLINE = QColor(VEHICLE_OUTLINE)
 
-    def __init__(self, scene: NetworkGraphicsScene) -> None:
+    def __init__(self, scene: NetworkGraphicsScene) -> None:  # noqa: F821 (network_scene's, named only as a string)
         super().__init__()
         self._scene = scene
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemUsesExtendedStyleOption)
