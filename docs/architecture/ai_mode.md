@@ -697,6 +697,8 @@
     moved or re-pointed, and deleted; an institution moved, its circle, figures, mode split or curves changed; a
     road curved or straightened, a reversal or a moved end not counted as a reshape; the background, e.g. the map
     `place_map` put under it and its work zone, included). It also carries what's selected on the map.
+    `network_tools.state_changes` (cut from `MainWindow._state_changes`) adds the OD matrix and vehicle types to it
+    for Watch my edits and the Research Log.
   - The transcript notes what was shared. The assistant's own edits are not reported back to it.
   - **Conversation as state.**
     - The conversation belongs to the project, not to one model. Switching models keeps it:

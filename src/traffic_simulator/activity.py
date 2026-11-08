@@ -3,7 +3,7 @@
 While it is on, every button click (and whether a tick box is now on), menu choice and shortcut (the window's
 actions), drop-down choice, slider position, text or number entered (its final value, when the field loses focus
 or Enter is pressed, not every key), tab opened, map click (in metres) and map selection, and each undo step's
-changes (the network, demand and vehicle types: MainWindow._state_changes) goes to `activity.csv` in a dated folder,
+changes (the network, demand and vehicle types: network_tools.state_changes) goes to `activity.csv` in a dated folder,
 `ACMS activity <date time>`, in the results folder, a line at a time (a crash loses nothing), with the time, the seconds since it began, the
 kind, where (the open tab, or a dialog's title), what (the control's name: its text, form label, placeholder or
 tooltip) and the value. A click or a choice also logs everything it changed besides itself, from the window's

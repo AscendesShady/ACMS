@@ -2102,10 +2102,10 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage(why, 15000)
 
     def _log_edits(self) -> None:
-        """While watching: each undo step's changes, a line each (_state_changes)."""
+        """While watching: each undo step's changes, a line each (network_tools.state_changes)."""
         if self.activity.on:
             now = self._snapshot()
-            for line in self._state_changes(self._activity_seen, now):
+            for line in network_tools.state_changes(self._activity_seen, now):
                 self.activity.log("edit", line)
             self._activity_seen = now
 
@@ -2674,7 +2674,7 @@ class MainWindow(QMainWindow):
         if not self.extensions.wants("log"):
             return
         now = self._snapshot()
-        event["changes"] = self._state_changes(before, now) if before is not None else []
+        event["changes"] = network_tools.state_changes(before, now) if before is not None else []
         if before is not None and network_tools.describe_changes(before[0], now[0], limit=1):
             event["map_png"] = self._map_png()
         if before is not None and before[1] != now[1]:
@@ -2684,41 +2684,6 @@ class MainWindow(QMainWindow):
         event["network"] = self._network_summary()
         event["activity"] = self.activity.take() if self.activity.on else []  # what the user did since the last step
         self.extensions.log(event)
-
-    def _state_changes(self, before: tuple, after: tuple) -> list[str]:
-        """What changed between two of the window's states (_snapshot): the network (describe_changes), the
-        OD matrix pair by pair, and the vehicle types, one line each."""
-        lines = network_tools.describe_changes(before[0], after[0], limit=1000)
-        old, new = before[1], after[1]
-        for pair in sorted(set(old) | set(new)):
-            a, b = old.get(pair), new.get(pair)
-            what = []
-            for key, label, unit in (("flow", "hourly", "veh/h"), ("daily", "daily", "trips/day")):
-                x, y = getattr(a, key, None), getattr(b, key, None)
-                if x != y:
-                    what.append(f"{label} {x if x is not None else 'none'} → {y if y is not None else 'none'} {unit}")
-            if a is not None and b is not None:
-                if a.pattern != b.pattern:
-                    what.append(f"arrivals {a.pattern} → {b.pattern}")
-                if tuple(a.split) != tuple(b.split):
-                    what.append(f"split {list(a.split)} → {list(b.split)} %")
-                if a.profile != b.profile:
-                    what.append("daily curve reshaped")
-                if a.drops != b.drops:
-                    what.append("drop-offs changed")
-            if what:
-                lines.append(f"Demand {pair[0]}->{pair[1]}: " + ", ".join(what))
-        old_types, new_types = {m.name: asdict(m) for m in before[2][0]}, {m.name: asdict(m) for m in after[2][0]}
-        lines += [f"Vehicle type {name} added" for name in new_types if name not in old_types]
-        lines += [f"Vehicle type {name} removed" for name in old_types if name not in new_types]
-        for name in old_types.keys() & new_types.keys():
-            what = [f"{key} {old_types[name][key]} → {value}" for key, value in new_types[name].items()
-                    if old_types[name].get(key) != value]
-            if what:
-                lines.append(f"Vehicle type {name}: " + ", ".join(what))
-        if tuple(before[2][1]) != tuple(after[2][1]):
-            lines.append(f"Default split {list(before[2][1])} → {list(after[2][1])} %")
-        return lines
 
     def _map_png(self) -> bytes:
         """The map as the user sees it now (the view's area: the network, its background, the selection), as PNG."""

@@ -24,7 +24,7 @@
     download included; compute counts both), `messages` (the model's, thinking included), `reply`, `error`,
     `usage` (each model request's tokens and seconds, `assistant.USAGE`, those tagged with this step's start by
     `assistant.USAGE_TAG`: not another thread's that ended meanwhile), `changes` (the step's changes to the
-    network, demand and vehicle types, `MainWindow._state_changes`), `map_png` (the map view as it is after it,
+    network, demand and vehicle types, `network_tools.state_changes`), `map_png` (the map view as it is after it,
     `_map_png`; only when the network changed), `demand_png` (the OD matrix after it, `_demand_png`; only when the
     demand changed), `results_folder`, `project_file` and `network`. The window takes the state before a step and builds
     the event only while a ticked extension defines `log` (`ExtensionsPanel.wants`).
