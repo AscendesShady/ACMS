@@ -115,6 +115,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | history.py | Snapshot undo/redo | no |
 | theme.py | Desktop workspace theme, native control states, floating glass bars and contrast pairs | Qt |
 | main.py | Main window: tabs, tools, dialogs, file menu | Qt |
+| run_reports.py | Answers on this session's finished runs and experiments (→ experiments.md) | no |
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |
 | assistant.py | Grok, Gemini, Ollama back end; context budget; System 1 (→ ai_mode.md) | no |
 | network_tools.py | The assistant's tools (→ ai_mode.md) | no |

@@ -10,6 +10,10 @@
   a batch with TSP), a
   `results.RunRecorder` (or a function making one from the Simulation, for its signal plans) sampled every
   `SAMPLE_S`, so its figures match a live run's with that seed; returns the Simulation and the recorder.
+- **run_reports.py** (no Qt, cut from `MainWindow`): AI Mode's answers on the session's finished tests (the
+  window's `tests` dict): `read_results`, `compare_runs`, `analyse_run`, `junction_analysis`, `resilience`,
+  `regress`, `power_analysis`, `benefit_cost`, `rank_scenarios`, `read_decisions`, `run_test`, `figure_key`,
+  `factorial`, `compact` and `LEAD_FIGURES` (still `MainWindow.LEAD_FIGURES`).
 - **Simulated time and AI agents.** A run's results depend on the seed and inputs, not on how fast it is stepped,
   except for an AI agent's thinking time (TSP's and DEVL's signal agent, `signal_agent.SignalAgent`):
   - Unpaced headless tests (run_simulation, run_experiment, build_scenario, optimise_signals, assign_routes, the
@@ -171,7 +175,7 @@
   mean (over the conditions that design has a mean under, by their weights), the worst regret and the robust choice (the least worst regret), and whether the winner changes.
 - **Factorial designs** (run_experiment's `factors`, `factorial`): 1 to 3 factors with 2 or more labelled levels
   (each with changes, demand_scale, extensions, weather, incidents, meters), every combination a scenario named
-  "factor=level, ..." (12 at most); with two factors `MainWindow._factorial` gives the two-way ANOVA
+  "factor=level, ..." (12 at most); with two factors `run_reports.factorial` gives the two-way ANOVA
   (`stats.two_way_anova`: main effects and interaction, seeds as replicates) on the objective, per condition.
 - `MEASURES` also has `co2_kg` (cars and vans, analysis.co2_kg), `bus_headway_cv` (`headway_cv`: lower is more
   regular) and `vehicle_km`; `OPTIONAL_MEASURES` (conflicts, CO2, headway cv) are left out of runs that didn't

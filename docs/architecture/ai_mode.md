@@ -423,11 +423,11 @@
       density, LOS and capacity from the demand, a run's own speed and density beside them; words like weave,
       ramp, freeway, merge offer it), `diagnose_signal` (one signal's flow ratios, v/c, arrival type, HCM delay
       against simulated, causes worst first with the tool to fix each), `check_run_health`, `emissions_report`,
-      `resilience` (a disrupted run against the same seed's undisrupted one), `power_analysis` (`_power_analysis`:
+      `resilience` (a disrupted run against the same seed's undisrupted one), `power_analysis` (`run_reports.power_analysis`:
       seeds for 80 and 90 % power, the smallest detectable difference, a power curve, from an experiment or sd and
       difference), `rank_scenarios` (all pairs: ANOVA, Friedman, paired differences with Bonferroni and Wilcoxon,
       compact letters), `read_decisions` (an agent's decisions in a run with their outcome, telemetry and
-      person-delay estimate), `benefit_cost` (`_benefit_cost`: a scenario against the baseline in money, NPV and
+      person-delay estimate), `benefit_cost` (`run_reports.benefit_cost`: a scenario against the baseline in money, NPV and
       BCR at 3.5, 4 and 7 %, the BCR's range over the seeds; everyone's delay, on board finished or not
       (`person_delay_on_board_h`) and waiting to enter (`entry_wait_veh_h` × the run's occupancy), over the hours
       measured after the warm-up; a `caution` when the scenario completes over 5 % more or fewer trips); `analyse_safety` takes `speed_change_kmh` (the power
@@ -617,10 +617,10 @@
     pair and the matrix total; read_od_matrix's totals; read_traffic refusing unknown roads, with the matching
     vehicles' mean speed and stops; the run headline's completion rate, unfinished percent and warm-up;
     daily demand tested at its busiest hour (`demand_simulated`), not from midnight; an experiment's answer
-    leading with its objective and four lead figures with units (`LEAD_FIGURES`; the rest counted in `more`),
+    leading with its objective and four lead figures with units (`run_reports.LEAD_FIGURES`; the rest counted in `more`),
     `interval_level` for the per-row confidence and "not told apart" for a difference that isn't clear;
     analysis tools refusing "the latest" when the latest test is an experiment; scenarios under conditions
-    compared with their own condition's baseline (`_baseline_of`); start_batch seeds a list. A second round:
+    compared with their own condition's baseline (`run_reports.baseline_of`); start_batch seeds a list. A second round:
     degree_of_saturation given as a level word ("busy") read as its figure, and a level word said again beside a
     degree given left out (`_level_read`); update_roads given a road's two junctions ["2,2", "3,2"] reads that road
     (`read_as`); "list_junctions" or "list_roads" in place of ids means all; delete_objects of the two junctions of
