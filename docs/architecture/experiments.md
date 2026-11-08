@@ -14,6 +14,8 @@
   window's `tests` dict): `read_results`, `compare_runs`, `analyse_run`, `junction_analysis`, `resilience`,
   `regress`, `power_analysis`, `benefit_cost`, `rank_scenarios`, `read_decisions`, `run_test`, `figure_key`,
   `factorial`, `compact` and `LEAD_FIGURES` (still `MainWindow.LEAD_FIGURES`).
+- **searches.py** (no Qt, cut from `MainWindow`): `equilibrium` (route choice by successive averages, given the
+  window's `_quick_run` as `quick_run`) and `trip_times` (each pair's trip times, for `_equilibrate_demand`).
 - Cut from `main.py` too: `observed_kpis`, `end_recording` and `quick_run` (still `MainWindow._observed_kpis`,
   `_end_recording`, `_quick_run`), `emergency_report` and `AGENT_TIMING`.
 - **Simulated time and AI agents.** A run's results depend on the seed and inputs, not on how fast it is stepped,

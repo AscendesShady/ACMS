@@ -56,9 +56,9 @@ from traffic_simulator.extensions import ExtensionsPanel
 from traffic_simulator.activity import ActivityLog
 from traffic_simulator.clock import STEP_MS, SimulationClock
 from traffic_simulator import (accessibility, analysis, assistant, design_checks, experiments, network_tools, results,
-                               run_reports, scenario, stats, weaving)
+                               run_reports, scenario, searches, stats, weaving)
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
-from traffic_simulator.lane_graph import Graph, path_size_logit
+from traffic_simulator.lane_graph import Graph
 from traffic_simulator.simulation import DT, PairDemand, Runner, Simulation
 from traffic_simulator.metro import METRO
 from traffic_simulator.geometry import nearest_along, point_along
@@ -1312,8 +1312,9 @@ class MainWindow(QMainWindow):
         override = self.extensions.signal_override(agent=self._waiting_agent())
         network, before = deepcopy(self.network), self._snapshot()
         choice, history = self._in_background(
-            lambda progress, cancelled: self._equilibrium(network, demand, modes, seed, duration, iterations, choice,
-                                                          override, progress, cancelled, until_gap), "Assigning routes")
+            lambda progress, cancelled: searches.equilibrium(network, demand, modes, seed, duration, iterations, choice,
+                                                             override, progress, cancelled, until_gap,
+                                                             quick_run=self._quick_run), "Assigning routes")
         if self._snapshot() != before:  # edited, undone or another project opened while it ran
             raise ValueError("The network or demand changed while routes were assigned, so nothing was applied: "
                              "assign them again.")
@@ -1332,62 +1333,6 @@ class MainWindow(QMainWindow):
                 "note": "Every run now draws each vehicle's route by these shares (saved with the network; Ctrl+Z "
                         "undoes it). The relative gap is the share of the flow off its logit share: towards 0, the routes are settling "
                         "(stochastic user equilibrium)."}
-
-    def _equilibrium(self, network, demand, modes, seed, duration, iterations, choice, override, progress, cancelled,
-                     until_gap=None, label="Route choice") -> tuple[dict, list]:
-        """Route choice towards equilibrium by the method of successive averages over headless runs (Handbook of
-        Transportation Science p391-392): each iteration runs with the link times so far, measures each link's
-        traversal time and moves the times 1/n of the way to it, every run on the same seed (common random numbers:
-        a new seed each time kept the gap at 0.05-0.09 by noise alone). The relative gap is the share of the flow off
-        its logit share at the times just measured (½Σ|P − P_logit|, 0 at stochastic user equilibrium); the time spent
-        over that on the fastest route (`excess_cost`) has a positive floor under logit choice, so it never falls to 0.
-        `until_gap` stops it once the gap is that low. Returns (route choice, each iteration's figures). `network` is
-        changed (its route_choice)."""
-        choice = deepcopy(choice)
-        rates = {(pair.origin, pair.destination): pair.hourly for pair in experiments.at_busiest_hour(demand)}
-        history = []
-        for n in range(1, iterations + 1):
-            if cancelled():
-                break
-            network.route_choice = deepcopy(choice)
-            kpis = self._quick_run(network, demand, modes, seed, duration * 60, override, progress, cancelled,
-                                   f"{label}, iteration {n} of {iterations}")
-            observed = kpis["observed"]
-            measured = {link: mean for link, (count, mean) in observed["traversals"].items() if count >= 3}
-            old = {link: choice["link_times_s"].get(link, info["free_s"]) for link, info in observed["links"].items()}
-            new = dict(choice["link_times_s"])
-            for link, mean in measured.items():
-                new[link] = round(old[link] + (mean - old[link]) / n, 2)
-            graph = Graph(network)  # the routes drivers took, by the times so far
-            # Each move's own time (the link and that move's junction delay, counted once: Graph.move_time)
-            turns = deepcopy(choice.get("turn_times_s", {}))
-            for link, moves in observed.get("turn_traversals", {}).items():
-                for after, (count, mean) in moves.items():
-                    if count >= 3:
-                        was = graph.move_time(graph.links[link], graph.links[after])
-                        turns.setdefault(link, {})[after] = round(was + (mean - was) / n, 2)
-            network.route_choice = {**choice, "link_times_s": new, "turn_times_s": turns}
-            priced = Graph(network)
-            spent = best = off = total = 0.0
-            theta = float(choice.get("theta_per_min", 0.5))
-            for pair, q in rates.items():
-                options = graph.route_shares(*pair)
-                costs = [priced.path_time(path) for _, path in options]
-                if costs:
-                    spent += q * sum(share * cost for (share, _), cost in zip(options, costs))
-                    best += q * min(costs)
-                    aims = path_size_logit([path for _, path in options], costs, theta)
-                    off += q * sum(abs(share - aim) for (share, _), aim in zip(options, aims)) / 2
-                    total += q
-            gap = round(off / total, 4) if total else None
-            history.append({"iteration": n, "seed": seed, "mean_trip_s": kpis["mean_trip_s"],
-                            "delay_veh_h": kpis["delay_veh_h"], "links_measured": len(measured), "relative_gap": gap,
-                            "excess_cost": round((spent - best) / best, 4) if best else None})
-            choice["link_times_s"], choice["turn_times_s"] = new, turns
-            if until_gap is not None and gap is not None and gap <= until_gap:
-                break
-        network.route_choice = choice
-        return choice, history
 
     OBJECTIVES = {"delay": ("delay_veh_h", False), "trip_delay": ("mean_trip_delay_s", False),
                   "throughput": ("throughput_vph", True), "conflicts": ("conflicts", False)}
@@ -1576,13 +1521,7 @@ class MainWindow(QMainWindow):
         reference = run_reports.run_test(self.tests, str(args["reference"]))
         if self.runner is not None or self._testing:
             raise ValueError("A run is going on: stop it first.")
-        def times(observed) -> dict:  # each pair's trip times, the unfinished ones' so far too
-            found: dict = defaultdict(list)
-            for origin, destination, _kind, trip, *_ in [*observed["trips"], *observed.get("unfinished", [])]:
-                found[(origin, destination)].append(trip)
-            return found
-
-        before = times(reference["kpis"]["observed"])
+        before = searches.trip_times(reference["kpis"]["observed"])
         reference_s = {pair: statistics.fmean(found) for pair, found in before.items() if len(found) >= 2}
         if not any(pair in reference_s for pair in flows):
             raise ValueError(f"{reference['id']} has no trips of these pairs (2 or more each): run the reference again.")
@@ -1602,7 +1541,7 @@ class MainWindow(QMainWindow):
                           PairDemand(pair[0], pair[1], value, None, [], "Random", (100,)) for pair, value in q.items()]
                 kpis = self._quick_run(network, demand, modes, seed, duration * 60, override, progress, cancelled,
                                        f"Elastic demand, iteration {n} of {iterations}")
-                now, moved, gap = times(kpis["observed"]), 0.0, 0.0
+                now, moved, gap = searches.trip_times(kpis["observed"]), 0.0, 0.0
                 for pair, base in flows.items():
                     if pair in reference_s and len(now.get(pair, ())) >= 2:
                         target = base * (statistics.fmean(now[pair]) / reference_s[pair]) ** elasticity
@@ -1874,10 +1813,11 @@ class MainWindow(QMainWindow):
                 if scenario.assign_routes:  # its route choice found first (once a scenario), then every seed uses it
                     if scenario.name not in assigned:
                         found = deepcopy(network)
-                        self._equilibrium(found, experiments.scaled(demand, scenario.demand_scale), modes, seeds[0],
-                                          min(duration, 30), scenario.assign_routes["iterations"],
-                                          {"theta_per_min": 0.5, "routes": 3, "link_times_s": {}}, override, progress,
-                                          cancelled, scenario.assign_routes["until_gap"], f"{scenario.name}: routes")
+                        searches.equilibrium(found, experiments.scaled(demand, scenario.demand_scale), modes, seeds[0],
+                                             min(duration, 30), scenario.assign_routes["iterations"],
+                                             {"theta_per_min": 0.5, "routes": 3, "link_times_s": {}}, override,
+                                             progress, cancelled, scenario.assign_routes["until_gap"],
+                                             f"{scenario.name}: routes", quick_run=self._quick_run)
                         assigned[scenario.name] = found
                     network = assigned[scenario.name]
                 kpis, path, simulated = self._one_run(

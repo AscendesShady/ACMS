@@ -409,7 +409,7 @@
       a copy taken when it starts, so an edit meanwhile never reaches the search; returns the `set_signal_timing`
       to apply and changes nothing). Both pass the signal agent's waiting form, as
       the other headless runs do. `assign_routes` takes `until_gap` (stop once the relative gap, the share of flow off its logit share, is under it;
-      `MainWindow._equilibrium`, shared with run_experiment's scenarios).
+      `searches.equilibrium`, shared with run_experiment's scenarios).
     - `run_simulation` and run_experiment's scenarios also take `incidents`, `weather`, `random_incidents`,
       `meters`, `assign_routes` and `lateral` (lateral position and filtering, said on the workbook's Run sheet;
       experiments.md, Conditions); run_experiment also `conditions` (every design
