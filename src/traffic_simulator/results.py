@@ -49,6 +49,7 @@ from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
 
+from .files import write_whole  # noqa: F401 - also results.write_whole (main.py, extensions/research_log.py)
 from .stats import reliability
 from .xlsx import write_xlsx
 
@@ -113,23 +114,6 @@ def file_name(started: datetime, recovered: bool = False, seed: int | None = Non
 def clock(seconds: float) -> str:
     whole = int(seconds)
     return f"{whole // 3600:02d}:{whole // 60 % 60:02d}:{whole % 60:02d}"
-
-
-def write_whole(path, data: str | bytes) -> None:
-    """`data` (text as UTF-8) to `path` whole or not at all: to a .part beside it, then os.replace (a write torn by a
-    crash or a full disk leaves the file as it was, and no .part behind). The app's one way to write a file."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    part = path.with_name(f"{path.name}.{threading.get_ident()}.part")  # a thread's own
-    try:
-        if isinstance(data, str):
-            part.write_text(data, encoding="utf-8")
-        else:
-            part.write_bytes(data)
-        os.replace(part, path)
-    except OSError:
-        part.unlink(missing_ok=True)
-        raise
 
 
 def unused_path(results: Path, name: str) -> Path:

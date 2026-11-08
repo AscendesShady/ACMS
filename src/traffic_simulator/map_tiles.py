@@ -26,7 +26,7 @@ from concurrent.futures import ThreadPoolExecutor
 from math import atan, cos, degrees, exp, floor, log, log2, pi, radians, sin, tan
 from pathlib import Path
 
-from .results import write_whole
+from .files import write_whole
 
 EARTH_RADIUS_M = 6378137.0  # Web Mercator's sphere
 MAX_LATITUDE = 85.05112878  # Web Mercator's edge

@@ -1,5 +1,6 @@
 # results.py and xlsx.py: a run's KPIs and its workbook (no Qt)
 
+- **files.py** holds `write_whole` (moved out of results.py, which still imports it as `results.write_whole`).
 - **`RunRecorder(network, modes)`**, made at each Run (`MainWindow._run`), keeps its working folder under the
   temp folder (`RUNS`, `ACMS runs/run <date time>`). `sample(frame)` (the physics thread, every `SAMPLE_S`
   5 s) adds, per vehicle, the distance (speed × dt), delay (dt · max(0, 1 − v / its road's limit)) and

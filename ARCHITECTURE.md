@@ -99,6 +99,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | agent_choice.py | Who decides an extension's TRUE/FALSE (→ extensions.md) | Qt |
 | gpu.py | OpenGL map renderer, instanced vehicles | Qt |
 | results.py | A run's KPIs and workbook | no |
+| files.py | Write a file whole or not at all (→ results.md) | no |
 | xlsx.py | Minimal .xlsx writer/reader (→ results.md) | no |
 | experiments.py | Headless runs, scenarios, experiments over seeds | no |
 | stats.py | Tests, ANOVA, regression, logit, smoothing (→ experiments.md) | no |

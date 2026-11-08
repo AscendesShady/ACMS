@@ -35,7 +35,7 @@ from PySide6.QtWidgets import (QComboBox, QFormLayout, QHBoxLayout, QLabel, QLin
 
 from traffic_simulator import assistant, network_tools, theme
 from traffic_simulator.assistant import AssistantError, Cancelled, ToolsUnsupported, ollama_models  # noqa: F401
-from traffic_simulator.results import write_whole
+from traffic_simulator.files import write_whole
 from traffic_simulator.widgets import OpenPageTabs, hint_label, icon_button, set_glyph, styled_button
 
 PROVIDERS = {"grok": "Grok (xAI)", "gemini": "Gemini (Google)", "local": "Local (Ollama)"}
