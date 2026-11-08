@@ -63,7 +63,7 @@ The vehicle types (up to 8): rename, add, delete, colour, timetables. **Code:** 
 | Hourly / Daily | Whether the matrices hold veh/h or trips a day (with a day curve). | `od_matrix.py`, `daily_profile.py` |
 | **Vehicle OD** | The OD matrix: veh/h between boundary ends; a cell's pair editor sets its arrival pattern, mode split, PHF and drop-offs. | `od_matrix.py`, `demand.py` |
 | **Pedestrian OD**, **Deploy Pedestrian** | People walking between ends, or between points you place. | `metro_matrix.py`, `walking.py` |
-| **Institutions** | Place homes, schools, offices…: each building's catchment, mode split and height; Show Buildings. | `od_matrix.InstitutionPanel`, `institutions.py` |
+| **Institutions** | Place homes, schools, offices…: each building's catchment, mode split and height; Show Buildings. | `institution_panel.InstitutionPanel`, `institutions.py` |
 | **MRT** | Passengers between stations: loads the lines, never changes their schedule. | `metro_matrix.MetroMatrix`, `metro.py` |
 
 ### AI Mode

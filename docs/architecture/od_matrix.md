@@ -82,6 +82,7 @@ pair editor builds (`ModeSplitSlider`, `DayCurve` and its `CurveEditor`, `DropSl
     grid so they fit the sidebar) to the row, the
     column or every empty cell.
   - Clear removes the demand of the kind shown from the selected pairs.
+- institution_panel.py holds `InstitutionPanel` and `ModeSplitDialog` (below); od_matrix.py re-exports them.
 - `InstitutionPanel` (Demand → Institutions): one icon button per building type (`institutions.KINDS`);
   a **Height** box accompanies both placement and selected-building details (total including roof, metres).
   Untouched type defaults remain labelled assumptions and save as None; editing saves an explicit height.
