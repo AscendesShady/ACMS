@@ -60,12 +60,11 @@ from traffic_simulator import (accessibility, analysis, assistant, design_checks
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
 from traffic_simulator.lane_graph import Graph, path_size_logit
 from traffic_simulator.simulation import DT, PairDemand, Runner, Simulation
-from traffic_simulator.metro import METRO, loads as metro_loads, places as metro_places
+from traffic_simulator.metro import METRO
 from traffic_simulator.geometry import nearest_along, point_along
 from traffic_simulator.walking import footpath_join, walk_pairs
 from traffic_simulator.history import History
-from traffic_simulator.institutions import hourly_people, place, run_demand
-from traffic_simulator.institutions import shares as institution_shares
+from traffic_simulator.institutions import metro_report, place, run_demand
 from traffic_simulator.interchanges import (
     build_diamond,
     build_slip_road,
@@ -82,7 +81,6 @@ from traffic_simulator.network_io import (MAX_SEED, load_network, project_parts,
                                          saved_conversation, saved_project)
 from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
 from traffic_simulator.network_tools import build_edge, delete_objects, edge_crossings
-from traffic_simulator.daily_profile import from_record
 from traffic_simulator.demand import pair_demand
 from traffic_simulator.od_matrix import (MetroMatrix, ModeSplitDialog, ODCellPanel, ODMatrix, PedestrianMatrix,
                                         SpawnMatrix)
@@ -3555,32 +3553,8 @@ class MainWindow(QMainWindow):
         self.metro_summary.setText("\n".join(text))
 
     def _metro_report(self) -> dict:
-        """metro_report: the metro's passengers at the design hour (the hour the most ride), on their lines
-        (metro.loads): its own OD matrix (Network.metro_demand, the same every hour; daily, metro_daily by each pair's
-        curve) and each building's metro riders,
-        its metro share of the people arriving and leaving, between its door station and its catchment's stations in
-        equal shares (metro.places), as its trips go."""
-        network, by_hour = self.network, []  # (board, alight, passengers each hour)
-        daily = self.od_matrix.mode == "daily"
-        for pair, people in (network.metro_daily if daily else network.metro_demand).items():
-            board, alight = pair.split("->")
-            by_hour.append((board, alight, [people["people"] * share for share in from_record(people["curve"]).shares()]
-                            if daily else [people] * 24))
-        for item in network.institutions.values():
-            share = institution_shares(item).get(METRO, 0.0) / 100
-            entrance, stations = metro_places(network, item)
-            if not share or not stations:
-                continue
-            arrive, leave = hourly_people(item, daily)
-            for station in stations:
-                by_hour.append((station, entrance, [people * share / len(stations) for people in arrive]))
-                by_hour.append((entrance, station, [people * share / len(stations) for people in leave]))
-        hour = max(range(24), key=lambda h: sum(hours[h] for *_, hours in by_hour)) if by_hour else 8
-        report = metro_loads(network, [(board, alight, hours[hour]) for board, alight, hours in by_hour])
-        return {"design_hour": f"{hour:02d}:00-{hour + 1:02d}:00", **report,
-                "method": "passengers on their line (no transfers), each stop-to-stop segment's load each way against "
-                          "HCM 2000 Eq 27-28's capacity, (60 / headway) trains x carriages x passengers a carriage x "
-                          "PHF 0.75"}
+        """metro_report: the metro's design-hour passengers on their lines (institutions.metro_report)."""
+        return metro_report(self.network, self.od_matrix.mode == "daily")
 
     def toggle_drag(self, checked: bool) -> None:
         self.scene.drag_nodes = []

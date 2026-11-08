@@ -51,3 +51,5 @@ Each building is a zone of the four-step model: generation, distribution, mode s
   only; generation, catchment distribution, mode split and the run demand remain unchanged.
 - `Placement`: the placing steps (`move`, `click`, `grow` by `GROW` 1.15 a wheel step, from the
   building's walls to 3 km; `resize`). The first click starts the circle just past its corners.
+- `metro_report(network, daily)` (cut from `MainWindow._metro_report`; here because metro.py can't import this
+  module): the MRT's design-hour line loads from its OD matrix and buildings' metro riders (metro.md).

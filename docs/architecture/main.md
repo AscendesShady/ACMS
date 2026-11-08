@@ -86,7 +86,7 @@
   - **Demand Generator:** the Hourly/Daily switch, its five tabs and the OD pair editor; the OD matrix (or the
     tab's own grid, `show_grid` passing it the switch's mode) replaces the map when it opens (Input Grid brings the
     map back), except with Institutions chosen: the map, to build on. A Run's walkers follow the switch too
-    (`_run`: `walking.walk_pairs` in its mode), as does the MRT report's design hour (`_metro_report`: daily,
+    (`_run`: `walking.walk_pairs` in its mode), as does the MRT report's design hour (`_metro_report`, `institutions.metro_report`: daily,
     `metro_daily` by each pair's curve). An institution's people an hour or curves (`_set_institution_demand`) are
     validated first and one undo step per box or curve. Placing (`_placing`, `_place_institution`) ends the Edit and background tools; the building
     is one undo step and a run carries on (undoing it too, `_restore`). Esc, another tab or another
