@@ -1,6 +1,6 @@
 # metro.py: the MRT as its own network (no Qt)
 
-Rendering is independent: `metro_assets` and `network_scene.MetroItem` sweep the saved curved track into connected
+Rendering is independent: `metro_assets` and `scene_items.MetroItem` sweep the saved curved track into connected
 decks and rails, curved platforms and labelled parked train previews in 2.5D (assumed heights). Piers are spaced
 by world distance. There are no live train poses or simulated train motion.
 

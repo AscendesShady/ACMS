@@ -73,6 +73,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | interchanges.py | Trumpet, diamond, SPUI, slip roads; curve speed | no |
 | roundabouts.py | Roundabout design (NCHRP 672) | no |
 | network_scene.py | Top-down/orthographic 2.5D network, map clicks and drags | Qt |
+| scene_items.py | Map items in metres: paving, metro, signal clocks, overbridges, buildings; projection (→ network_scene.md) | Qt |
 | properties_panel.py | Editor for the selected road, node or end | Qt |
 | widgets.py | Shared buttons, hints, sections, tabs, choices and tick lists | Qt |
 | od_matrix.py | OD matrix grid, cell, curve and drop-off editors, Institutions panel, MRT OD matrix | Qt |

@@ -6,6 +6,8 @@ object by object (`_draw`: `("road", id)`, `("node", id)`, `("end", boundary roa
 object's items (`addItem`), so `_redraw(keys)` can draw some again alone, each in its old place in the stacking
 order (`stackBefore`), the rest untouched. A rebuild also ends a selection box being dragged (its band went with the
 items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLOW_PAINT`, `MAP_SELECTED`, ...).
+`scene_items.py` holds the standalone items (`PavingItem`, `MetroItem`, `SignalClock`, `OverbridgeItem`,
+`BuildingItem`, `_FaceDrawing`) and `projection_transform`/`projection_lift`; `network_scene` re-exports them.
 - **Roads:** a path the carriageway's width wide.
   - Lane lines: dashed 3 m / 9 m where lane changing is allowed, solid where not.
   - Two-way roads get a yellow centre divider; one-way roads have none and show an ahead
