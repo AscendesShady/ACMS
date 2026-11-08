@@ -119,6 +119,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | assistant.py | Grok, Gemini, Ollama back end; context budget; System 1 (→ ai_mode.md) | no |
 | network_tools.py | The assistant's tools (→ ai_mode.md) | no |
 | tool_schemas.py | Every tool's JSON schema (TOOLS) and the tool-name sets (→ ai_mode.md) | no |
+| tool_args.py | Reading a model's tool arguments: normalise, call repairs, ToolError (→ ai_mode.md) | no |
 
 ## 3. Conventions
 
