@@ -87,6 +87,9 @@
   the app runs it, the result goes back, and the model continues (up to 12 rounds per answer). A call the model
   wrote as text instead of making it (llama3.1 often does: `{"name": "describe", "parameters": {...}}`) is made
   all the same when it names a tool offered and its arguments are an object (`assistant.calls_in_text`).
+  - **Where it lives**: `network_tools` re-exports every name below; `tool_schemas.py` holds `TOOLS`, the
+    `*_TOOLS` name sets and `tool_specs`. A new tool is its schema in `tool_schemas.TOOLS`, its function in a
+    tool module and its `network_tools._FUNCTIONS` entry (or the window's handler).
   - **Arguments first** (`network_tools.normalise`, in `AIModePanel._tool_requested` for every tool and in
     `run_tool`): what small models send is read in the shapes the schema gives (a close misspelling or a
     plural takes the parameter's name, `ends` → `end`; numbers, whole numbers and true/false sent as text
