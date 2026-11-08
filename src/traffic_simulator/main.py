@@ -78,17 +78,17 @@ from traffic_simulator.mode_behavior import ModeBehaviorPanel, VehicleModes
 from traffic_simulator.models import (METRO_MIN_SPACING_M, METRO_SERVICE, MetroCrossing, Network, institution_problem,
                                       route_choice_problem)
 from traffic_simulator.network_generator import generate_network
-from traffic_simulator.network_io import MAX_SEED, load_network, save_network, saved_conversation, saved_project
+from traffic_simulator.network_io import (MAX_SEED, load_network, project_parts, project_record, save_network,
+                                         saved_conversation, saved_project)
 from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
 from traffic_simulator.network_tools import build_edge, delete_objects, edge_crossings
-from traffic_simulator.daily_profile import DailyProfile, from_record, profile_record, quarter_shares
-from traffic_simulator.demand import ODCell, pair_demand
+from traffic_simulator.daily_profile import from_record
+from traffic_simulator.demand import pair_demand
 from traffic_simulator.od_matrix import (MetroMatrix, ModeSplitDialog, ODCellPanel, ODMatrix, PedestrianMatrix,
                                         SpawnMatrix)
 from traffic_simulator.properties_panel import PropertiesPanel, describe_group, TIMING_METHODS
 from traffic_simulator.summary import SummaryPanel
 from traffic_simulator.theme import STATUS, apply_theme, float_glass
-from traffic_simulator.vehicle import VehicleMode
 from traffic_simulator.widgets import (ICON_FONTS, ChoiceButtons, Collapsible, OpenPageTabs, align_form_labels,
                                        glyph_icon, hint_label, icon_button, styled_button)
 from traffic_simulator.xlsx import read_xlsx
@@ -4190,18 +4190,9 @@ class MainWindow(QMainWindow):
         return ends[-1], junctions
 
     def _project(self) -> dict:
-        """The project's parts beyond the network, as plain data for network_io."""
-        pairs = [{"origin": origin, "destination": destination, "flow": cell.flow, "daily": cell.daily,
-                  "pattern": cell.pattern, "split": list(cell.split),
-                  **({"quarters": list(cell.quarters)} if cell.quarters else {}),
-                  **({"drops": [list(point) for point in cell.drops]} if cell.drops else {}),
-                  "profile": profile_record(cell.profile)}
-                 for (origin, destination), cell in self.od_matrix.cells.items()
-                 if cell.flow is not None or cell.daily is not None]
-        return {"demand": {"shown": self.od_matrix.mode, "pairs": pairs},
-                "vehicle_types": {"types": [asdict(mode) for mode in self.vehicle_modes.modes],
-                                  "default_split": list(self.vehicle_modes.default_split)},
-                "run": {"seed": self.seed_box.value(), "speed": float(self.speed_combo.currentData())}}
+        """The project's parts beyond the network, as plain data for network_io (network_io.project_record)."""
+        return project_record(self.od_matrix.cells, self.od_matrix.mode, self.vehicle_modes.modes,
+                              self.vehicle_modes.default_split, self.seed_box.value(), self.speed_combo.currentData())
 
     def _save_marker(self) -> tuple:
         return self.history.current, self.seed_box.value(), self.speed_combo.currentIndex(), self.od_matrix.mode
@@ -4267,23 +4258,7 @@ class MainWindow(QMainWindow):
         try:
             network = load_network(path)
             project = saved_project(path)
-            types = project.get("vehicle_types")
-            # A project saved before `timetabled`: a type with a headway, or named like a bus, is timetabled.
-            modes, default_split = (([VehicleMode(**{"timetabled": bool(record.get("headway_min")) or "bus" in str(record.get("name")).lower(),
-                                                    **record}) for record in types["types"]], tuple(types["default_split"]))
-                                    if types else VehicleModes().state())
-            cells = {}
-            for pair in project.get("demand", {}).get("pairs", []):
-                if len(pair["split"]) != len(modes):
-                    raise ValueError(f"Demand {pair['origin']}->{pair['destination']}: its split doesn't match the "
-                                     f"{len(modes)} vehicle types.")
-                shape = pair.get("profile")
-                profile = from_record(shape) if shape else DailyProfile()
-                cells[(pair["origin"], pair["destination"])] = ODCell(pair.get("flow"), pair.get("daily"), profile,
-                                                                      pair.get("pattern", "Random"), tuple(pair["split"]),
-                                                                      quarter_shares(pair.get("quarters") or [1] * 4),
-                                                                      tuple(sorted((kind, float(at), share) for kind, at, share
-                                                                                   in pair.get("drops", []))))
+            modes, default_split, cells = project_parts(project, lambda: VehicleModes().state())
             conversation = saved_conversation(path)  # read and checked here too, not after the network is in
             if conversation and not all(isinstance(conversation.get(key, []), list) for key in ("messages", "transcript")):
                 raise ValueError("Conversation: its messages and transcript must be lists.")

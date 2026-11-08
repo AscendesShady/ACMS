@@ -1,6 +1,6 @@
 # network_io.py: files
 
-- **Projects**: `save_network(network, path, conversation, project)` with `project` (from `MainWindow._project`)
+- **Projects**: `save_network(network, path, conversation, project)` with `project` (`project_record`, via `MainWindow._project`)
   writes a project file: `format` ({"app": "ACMS project", "version": 2}) and the network as below, plus
   `demand` ({shown, pairs: origin, destination, flow, daily, pattern, split, quarters (hourly
   demand's 15-minute shares; absent: an even hour, as in older files), profile {kind, points, coefficients}}), `vehicle_types` ({types: every VehicleMode field, default_split}) and `run` ({seed,
@@ -9,7 +9,8 @@
   type; pairs of two different ends, once each; flows 0–100,000 veh/h, 0–2,000,000 trips a day; known
   arrival patterns; quarters of four numbers, none negative, some above zero; curves of ordered points or 3–7 coefficients; a seed 0 to 2³¹ − 1 and a positive
   speed); `saved_project(path)` reads and checks them. JSON, not JSON Lines: one nested document read and
-  checked whole (JSON Lines suits appended record streams). `MainWindow.load_file` builds everything first
+  checked whole (JSON Lines suits appended record streams). `project_parts(project, default_types)` turns it back into
+  vehicle types, default split and OD cells (both cut from main.py). `MainWindow.load_file` builds everything first
   (VehicleMode(**record) refuses a setting it doesn't know; the conversation's messages and transcript must be
   lists) and changes nothing on a refusal; then the
   network, the cells, the types, the demand shown, seed and speed, and an undo history of its own (Undo can't
