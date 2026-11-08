@@ -92,7 +92,9 @@
     call repairs `fold_incident`, `drop_strays` and `repair_ends`, `ToolError`, `_ids`, `_bool`);
     `tool_offer.py` picks what a request is offered (`TOOL_GROUPS`, `SKILLS`, `tools_for`, `expand_tools`,
     `contradicts` and the place-name checks); `tool_reports.py` puts calls, changes and refusals into words
-    (`describe_call`, `describe_changes`, `explain_error`, `already_so`). A new tool is its schema in
+    (`describe_call`, `describe_changes`, `explain_error`, `already_so`); `road_tools.py` holds the tools on
+    roads, junctions and signals (`network_summary`, `describe`, `read_source`, `add_road`, `update_roads`,
+    `delete_objects`, `build_edge`, `set_signal_timing`, ...). A new tool is its schema in
     `tool_schemas.TOOLS`, its function in a tool module and its `network_tools._FUNCTIONS` entry (or the window's handler).
   - **Arguments first** (`network_tools.normalise`, in `AIModePanel._tool_requested` for every tool and in
     `run_tool`): what small models send is read in the shapes the schema gives (a close misspelling or a

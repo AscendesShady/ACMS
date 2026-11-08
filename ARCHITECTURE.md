@@ -122,6 +122,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | tool_args.py | Reading a model's tool arguments: normalise, call repairs, ToolError (→ ai_mode.md) | no |
 | tool_offer.py | Which tools and skills a request is offered: tools_for, SKILLS, find_tools (→ ai_mode.md) | no |
 | tool_reports.py | Calls, changes and refusals in words: describe_call, describe_changes, explain_error (→ ai_mode.md) | no |
+| road_tools.py | The tools on roads, junctions and signals: list, describe, add, update, delete (→ ai_mode.md) | no |
 
 ## 3. Conventions
 
