@@ -23,6 +23,9 @@
   `main_edit.py` (`EditMixin`) holds map editing: `select`, `canvas_clicked`, `cancel`, `box_selected`, `delete_group`,
   `delete_selection`, `_refresh_mode`, `_show_hint`, `_network_summary`, `tab_changed`, `model_updated`, the Add Node,
   Add Edge, drag and crossing tools, interchanges, and the module-level dialogs `ask_crossing` and `ask_interchange`.
+  `main_demand.py` (`DemandMixin`) holds the Demand Generator glue: `_pair_demand`, `show_grid`, `_refresh_grid`,
+  `_od_ends`, `spawn_clicked`, `_cell_clicked`, the institution placing and editing (`_place_institution`,
+  `_institution_split`, `_open_mode_split` and their kin), `_demand_changed`, `_hand_demand_to_run`, `_route_along`.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
