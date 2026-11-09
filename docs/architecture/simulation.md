@@ -450,7 +450,7 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   plain text (another extension's yes/no) goes to System 1 when one is chosen (`system_one_true`), else
   System 2's started model, told to reply TRUE or FALSE. With nobody to ask, or on any error, the answer
   is FALSE. Each Run starts with no answers (`reset`). The live agent is handed to every `signal_override`;
-  headless tests and batch runs hand theirs (`MainWindow._waiting_agent`, deadline `HEADLESS_WAIT_S` 30 s or
+  headless tests and batch runs hand theirs (`MainWindow._waiting_agent`, deadline `main_agents.HEADLESS_WAIT_S` 30 s or
   the batch's).
 - **Frames** (`frame()` → `Frame`): the run frozen at one moment: every vehicle's `VehicleState`
   (id, type, colour, size, position, heading, the pose a step earlier, speed, road, lane, turn or bay,

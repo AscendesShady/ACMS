@@ -21,7 +21,7 @@
 - **Simulated time and AI agents.** A run's results depend on the seed and inputs, not on how fast it is stepped,
   except for an AI agent's thinking time (TSP's and DEVL's signal agent, `signal_agent.SignalAgent`):
   - Unpaced headless tests (run_simulation, run_experiment, build_scenario, optimise_signals, assign_routes, the
-    demand check; `MainWindow._waiting_agent`, `wait_s` `HEADLESS_WAIT_S` 30 real s) pause the run for each
+    demand check; `MainWindow._waiting_agent`, `wait_s` `main_agents.HEADLESS_WAIT_S` 30 real s) pause the run for each
     answer, and the decision takes effect at its question's simulated time plus the model's real latency, as if
     the run went at 1× (`agent_transit_signal_priority`, `dynamic_emergency_lane`: "as at 1x"); an answer not in
     within `wait_s` falls back to the plan. No new questions arise while the run is paused, so the queueing of
@@ -131,7 +131,7 @@
   at_once, test_tsp)`): `test_tsp` (Batch Run's Test TSP; None: whether TSP is ticked) runs TSP, ticked in the tab
   or not, `agents` being the models to test; the two baselines, Never preempt (general traffic) and Always preempt, always run too, first. Everything is checked
   first (no run going, demand, at least one model, each found and with its key,
-  1 to `MAX_AT_ONCE` 8 at once), then every agent × seed × time headless (`_in_background`, Stop ends it),
+  1 to `main_agents.MAX_AT_ONCE` 8 at once), then every agent × seed × time headless (`_in_background`, Stop ends it),
   seed by seed: every agent on a seed (and its times) before the next seed, so a batch cut short has every agent
   on the seeds it finished and still compares, pair by pair. The batch's workbook is a checkpoint: rewritten after
   every finished run (written beside it as "… (saving).xlsx" and swapped in whole, so a crash mid-write keeps the

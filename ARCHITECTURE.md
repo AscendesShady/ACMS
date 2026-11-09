@@ -118,6 +118,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | main_runs.py | MainWindow's runs mixin: Run, Stop, headless thread, frames, export; a file split, state in main.py (→ main.md) | Qt |
 | main_scenario.py | MainWindow's Scenario Builder mixin: runs a scenario.py plan as one undo step (→ main.md) | Qt |
 | main_experiments.py | MainWindow's experiments mixin: the assistant's run tools, dispatch and the window side of tests (→ main.md) | Qt |
+| main_agents.py | MainWindow's agents mixin: asking the model, agent tests, Batch Run, replay, emergency dispatch (→ main.md) | Qt |
 | searches.py | Route-choice equilibrium (MSA) over headless runs; trip times for elastic demand (→ experiments.md) | no |
 | run_reports.py | Answers on this session's finished runs and experiments (→ experiments.md) | no |
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |

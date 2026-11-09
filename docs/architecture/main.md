@@ -8,7 +8,10 @@
   `_busiest`, `_buildable`, `_scenario_state` (its `_building` flag stays made in `__init__`). `main_experiments.py`
   (`ExperimentsMixin`) holds the assistant's run tools: `_runs_command`, `_check_demand`, `_assign_routes`,
   `_optimise_signals`, `_weaving_los`, `_equilibrate_demand`, `_preflight`, `_parameter_sensitivity`, `_experiment`,
-  `OBJECTIVES`, `LEAD_FIGURES` and the module-level `_rounded`.
+  `OBJECTIVES`, `LEAD_FIGURES` and the module-level `_rounded`. `main_agents.py` (`AgentsMixin`) holds who decides
+  the signals: `_ask_agent`, `_waiting_agent`, `_compliance`, `_decision_sensitivity`, `run_batch`, `replay_run`,
+  `dispatch_emergency`, `places`, `tsp_batch`/`devl_batch`, `_schedule_emergency` and their helpers, and the
+  constants `MAX_AT_ONCE` and `HEADLESS_WAIT_S`.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
