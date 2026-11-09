@@ -20,6 +20,9 @@
   `_background_tool`, `_extent`, `_zoom_range`, `_show_pointer`, `_background_changed`. `main_metro.py` (`MetroMixin`)
   holds MRT drawing: `toggle_metro`, `metro_clicked`, `_merge_or_discard`, `_metro_ghost`, `_accept_metro_line`,
   `_show_metro_summary`, `_metro_report`.
+  `main_edit.py` (`EditMixin`) holds map editing: `select`, `canvas_clicked`, `cancel`, `box_selected`, `delete_group`,
+  `delete_selection`, `_refresh_mode`, `_show_hint`, `_network_summary`, `tab_changed`, `model_updated`, the Add Node,
+  Add Edge, drag and crossing tools, interchanges, and the module-level dialogs `ask_crossing` and `ask_interchange`.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
