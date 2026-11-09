@@ -12,6 +12,8 @@
   the signals: `_ask_agent`, `_waiting_agent`, `_compliance`, `_decision_sensitivity`, `run_batch`, `replay_run`,
   `dispatch_emergency`, `places`, `tsp_batch`/`devl_batch`, `_schedule_emergency` and their helpers, and the
   constants `MAX_AT_ONCE` and `HEADLESS_WAIT_S`.
+  `main_assistant.py` (`AssistantMixin`) holds AI Mode's hooks: `_selection_info`, `_show_on_map`,
+  `_show_ai_status`, `_open_system_2`, `_od_command`, `_types_command`, `_assistant_network`, `_ai_edited`.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation

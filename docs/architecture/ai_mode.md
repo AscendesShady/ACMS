@@ -720,7 +720,8 @@
   - The dot's colour shows the state. Clicking it opens System 2.
   - It is hidden while Chat with is Off. It is driven by `AIModePanel.indicator` →
     `MainWindow._show_ai_status`.
-- **Main window hooks:** `AIModePanel.attach(network, selection, show, edited)`, wired in `main.py`:
+- **Main window hooks:** `AIModePanel.attach(network, selection, show, edited)`, wired in `main.py`, the callbacks in
+  `main_assistant.py` (`AssistantMixin`):
   - `_selection_info` describes the map selection.
   - `_show_on_map` points an object out.
   - `_ai_edited` redraws and commits the undo step. A new grid refreshes the Create tab and fits the view.
