@@ -5,7 +5,10 @@
   `_in_background`, `busy`, `_one_run`, `_play`/`_pause`/`_stop_run`/`_stop_runner`/`_end_run`, `_frame`,
   `_export`, `_run_settings`, `_traffic` and their helpers, and `LIVE_OBSERVED`. `main_scenario.py`
   (`ScenarioMixin`) holds the Scenario Builder's: `_build_scenario`, `_scenario_step`, `_resolve`, `_recover`,
-  `_busiest`, `_buildable`, `_scenario_state` (its `_building` flag stays made in `__init__`).
+  `_busiest`, `_buildable`, `_scenario_state` (its `_building` flag stays made in `__init__`). `main_experiments.py`
+  (`ExperimentsMixin`) holds the assistant's run tools: `_runs_command`, `_check_demand`, `_assign_routes`,
+  `_optimise_signals`, `_weaving_los`, `_equilibrate_demand`, `_preflight`, `_parameter_sensitivity`, `_experiment`,
+  `OBJECTIVES`, `LEAD_FIGURES` and the module-level `_rounded`.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
