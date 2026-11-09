@@ -28,6 +28,7 @@ from dataclasses import dataclass, field, replace
 from math import hypot, sqrt
 
 from .daily_profile import from_record
+from .demand import PairDemand
 from .geometry import polyline_meets_box
 from .metro import METRO
 from .models import (INSTITUTION_KINDS, MAX_AREA_M2, MAX_INFLUENCE_M, Institution, Network,
@@ -204,13 +205,11 @@ def vehicle_split(item: Institution, modes: list, commute: bool = False) -> tupl
 
 
 def run_demand(network: Network, modes: list, daily: bool) -> tuple[list, list[str]]:
-    """Every institution's trips as OD pairs for a Run (simulation.PairDemand), and notes on what couldn't
+    """Every institution's trips as OD pairs for a Run (demand.PairDemand), and notes on what couldn't
     be: catchment -> door for arrivals, door -> catchment for departures, each catchment junction or end an
     equal share, its split by vehicle type, no buses of its own (`timetabled` False: riders take the
     network's). Daily: the trips a day spread over the day in the building's own hourly profile. Hourly:
     each pair's flow in the design hour, the hour when all institutions together make the most vehicle trips."""
-    from .simulation import PairDemand  # noqa: PLC0415 - the simulation's type
-
     made, notes = _vehicle_rows(network, modes, daily)
     if not made:
         return [], notes

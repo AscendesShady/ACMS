@@ -20,7 +20,7 @@
   Usage Policy: an identifying User-Agent, at most two downloads at a time, each tile cached on disk
   (Qt's cache folder, `osm-tiles/z/x/y.png`) and reused for 7 days, only the tiles in view, a failed
   one not asked again for a minute. `ready` (from the download thread) asks the view to redraw. A tile is written
-  whole (`results.write_whole`, the app's one file writer: a `.part` beside it, then `os.replace`), tiles untouched for `KEEP_S` (30 days) are deleted
+  whole (`files.write_whole`, the app's one file writer: a `.part` beside it, then `os.replace`), tiles untouched for `KEEP_S` (30 days) are deleted
   when a store opens (`prune`, on its download thread), and one on disk that can't be decoded is deleted and
   fetched again (`discard`, from `BackgroundPainter`). Every download (`fetch`: tiles, searches, Overpass) gives up,
   as an OSError, after `DOWNLOAD_S` (20 s) for the whole answer or past `DOWNLOAD_MAX_BYTES` (4 MB), and turns

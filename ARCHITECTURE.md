@@ -96,7 +96,8 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | building_assets.py | Metre-height institution structures and assumed defaults | no |
 | metro_assets.py | Display-only overhead viaducts along the track, stations and parked train previews | no |
 | lane_graph.py | Lane graph: links, lanes, turns, bays, signals, routes, capacities | no |
-| simulation.py | Signals, junctions, lane changes, demand, Runner thread, over the lane graph | no |
+| simulation.py | Signals, junctions, lane changes, demand, over the lane graph | no |
+| runner.py | Runner: the physics thread, paced to the wall clock, publishing frames (→ simulation.md) | no |
 | signal_agent.py | TRUE/FALSE answers for signal overrides (→ simulation.md) | no |
 | signal_timing.py | Webster, TRANSYT, Synchro, SCATS, SCOOT, clearance | no |
 | transit_signal_priority.py | TSP controller at one junction (→ extensions.md) | no |
@@ -104,6 +105,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | agent_choice.py | Who decides an extension's TRUE/FALSE (→ extensions.md) | Qt |
 | gpu.py | OpenGL map renderer, instanced vehicles | Qt |
 | results.py | A run's KPIs and workbook | no |
+| files.py | Write a file whole or not at all (→ results.md) | no |
 | xlsx.py | Minimal .xlsx writer/reader (→ results.md) | no |
 | experiments.py | Headless runs, scenarios, experiments over seeds | no |
 | stats.py | Tests, ANOVA, regression, logit, smoothing (→ experiments.md) | no |

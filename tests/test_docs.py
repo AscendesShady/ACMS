@@ -1,6 +1,8 @@
 """The ARCHITECTURE.md index and docs/architecture/. Run with `python tests/test_docs.py` (or the test monitor)."""
 
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 from traffic_simulator import assistant
@@ -17,6 +19,19 @@ def test_every_module_is_in_the_module_map():
     mapped = set(re.findall(r"^\| ([\w]+\.py) \|", INDEX, re.M))
     modules = {p.name for p in (ROOT / "src" / "traffic_simulator").glob("*.py")} - {"__init__.py"}
     assert modules <= mapped, modules - mapped
+
+
+def test_every_module_marked_no_qt_imports_without_qt():
+    # One interpreter imports them in table order, so an import that only works after another module was imported
+    # first is not caught (a known ceiling); it also checks no module under src imports main.py.
+    plain = re.findall(r"^\| (\w+)\.py \|.*\| no \|$", INDEX, re.M)
+    check = ("import importlib, sys\n"
+             f"for name in {plain!r}:\n"
+             "    importlib.import_module('traffic_simulator.' + name)\n"
+             "    if any(k.startswith('PySide6') for k in sys.modules) or 'traffic_simulator.main' in sys.modules:\n"
+             "        print(name); break\n")
+    loaded = subprocess.run([sys.executable, "-c", check], capture_output=True, text=True, timeout=120, check=True)
+    assert plain and not loaded.stdout.strip(), loaded.stdout
 
 
 def test_every_linked_doc_exists():

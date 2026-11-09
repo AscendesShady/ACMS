@@ -6,7 +6,7 @@
   `map_tiles.fetch`, which also turns http.client's errors, an answer cut short, into OSError). A server fails when
   it can't be reached, is too slow, cuts its answer short, sends what isn't JSON road data (an HTML rate-limit page)
   or reports its own `runtime error` in `remark` (its timeout or memory limit: the elements are partial); such an
-  answer is never kept. Each road answer is kept in `OSM_CACHE` by its query, written whole (`results.write_whole`),
+  answer is never kept. Each road answer is kept in `OSM_CACHE` by its query, written whole (`files.write_whole`),
   copies untouched for `OSM_KEEP_DAYS` (90) deleted then: a copy younger than
   `OSM_FRESH_DAYS` (7) is used without asking any server, an older one when no server answers, either said to be a
   copy, from when and why (`cached_at`, `cached_why`); the app's User-Agent) for every way of the chosen `CLASSES` in the area's
