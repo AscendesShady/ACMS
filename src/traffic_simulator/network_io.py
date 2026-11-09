@@ -19,15 +19,16 @@ from typing import Any
 import re
 from math import ceil, isfinite
 
-from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, quarter_shares
-from .demand import drops_problem
+from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, DailyProfile, from_record, profile_record, quarter_shares
+from .demand import ODCell, drops_problem
 from .metro import METRO
 from .models import (METRO_SERVICE, Background, BusStop, Crossing, Institution, MetroLine, MetroStop, Network, Node,
                      Road, SpawnPoint, Walkway)
-from .vehicle import VEHICLE_CLASSES
+from .vehicle import VEHICLE_CLASSES, VehicleMode
 
 PROJECT_FORMAT = {"app": "ACMS project", "version": 2}
 MAX_SEED = 2**31 - 1
+RUN_SEED = 42  # a Run's seed unless the Seed box says otherwise: the same inputs and seed repeat exactly
 from .network_generator import add_boundary_approaches
 from .files import write_whole
 
@@ -170,6 +171,45 @@ def saved_project(path: str | Path) -> dict:
     if problem:
         raise ValueError(problem)
     return project
+
+
+def project_record(cells: dict, shown: str, modes, default_split, seed: int, speed) -> dict:
+    """The project's parts beyond the network, as plain data (cut from MainWindow._project): the OD matrix's
+    pairs with demand, the vehicle types and the run settings."""
+    pairs = [{"origin": origin, "destination": destination, "flow": cell.flow, "daily": cell.daily,
+              "pattern": cell.pattern, "split": list(cell.split),
+              **({"quarters": list(cell.quarters)} if cell.quarters else {}),
+              **({"drops": [list(point) for point in cell.drops]} if cell.drops else {}),
+              "profile": profile_record(cell.profile)}
+             for (origin, destination), cell in cells.items()
+             if cell.flow is not None or cell.daily is not None]
+    return {"demand": {"shown": shown, "pairs": pairs},
+            "vehicle_types": {"types": [asdict(mode) for mode in modes],
+                              "default_split": list(default_split)},
+            "run": {"seed": seed, "speed": float(speed)}}
+
+
+def project_parts(project: dict, default_types) -> tuple[list, tuple, dict]:
+    """A saved project's vehicle types, default split and OD cells (cut from MainWindow.load_file), each checked:
+    `default_types()` (vehicle types, default split) when it has none. Raises ValueError, TypeError or KeyError."""
+    types = project.get("vehicle_types")
+    # A project saved before `timetabled`: a type with a headway, or named like a bus, is timetabled.
+    modes, default_split = (([VehicleMode(**{"timetabled": bool(record.get("headway_min")) or "bus" in str(record.get("name")).lower(),
+                                            **record}) for record in types["types"]], tuple(types["default_split"]))
+                            if types else default_types())
+    cells = {}
+    for pair in project.get("demand", {}).get("pairs", []):
+        if len(pair["split"]) != len(modes):
+            raise ValueError(f"Demand {pair['origin']}->{pair['destination']}: its split doesn't match the "
+                             f"{len(modes)} vehicle types.")
+        shape = pair.get("profile")
+        profile = from_record(shape) if shape else DailyProfile()
+        cells[(pair["origin"], pair["destination"])] = ODCell(pair.get("flow"), pair.get("daily"), profile,
+                                                              pair.get("pattern", "Random"), tuple(pair["split"]),
+                                                              quarter_shares(pair.get("quarters") or [1] * 4),
+                                                              tuple(sorted((kind, float(at), share) for kind, at, share
+                                                                           in pair.get("drops", []))))
+    return modes, default_split, cells
 
 
 def saved_conversation(path: str | Path) -> dict | None:

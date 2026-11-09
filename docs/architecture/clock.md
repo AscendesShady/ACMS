@@ -47,7 +47,7 @@
   the eye's own on and off once each, as "watch" lines),
   drop-down choice, slider position, entry (a text or number field's final value as it loses focus or Enter is
   pressed; a password "(hidden)"), tab opened, map click (metres) and selection (`select`), and each undo step's
-  changes (`_log_edits`, `_state_changes`, from `_commit` and undo/redo), each with its time, seconds since it
+  changes (`_log_edits`, `network_tools.state_changes`, from `_commit` and undo/redo), each with its time, seconds since it
   began, where (the open tab or a dialog's title), what (the control's text, form label, placeholder or tooltip)
   and value, to `activity.csv` in a dated folder, `ACMS activity <date time>`, in the results folder (as the Research Log's
   and a batch's are), flushed line by line. One gesture seen two

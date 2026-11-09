@@ -1,16 +1,16 @@
 # 5. Main flows
 
 1. **Start:** `launch.bat` (or `python -m traffic_simulator.main`) → `main()`.
-   - It generates the default grid (`main.py`'s `DEFAULT_*`: 3 × 4 corridors, left-hand, 50 km/h, 2 lanes), builds the
+   - It generates the default grid (`main_layout.py`'s `DEFAULT_*`: 3 × 4 corridors, left-hand, 50 km/h, 2 lanes), builds the
      window and applies the theme.
    - The first undo snapshot is taken.
    - The AI panel scans for keys and Ollama models (chat for System 2, decision for System 1).
-2. **Edit a road:** click a road → `scene.clicked` → `MainWindow.canvas_clicked` → `select` →
+2. **Edit a road:** click a road → `scene.clicked` → `MainWindow.canvas_clicked` (`main_edit.py`) → `select` →
    `PropertiesPanel.show_object`.
    - Apply → `network.set_road_length` / field updates / `reverse_road` → `validate()`.
    - Then `network_changed` → `model_updated` → scene rebuild → `_commit` (an undo step).
 3. **Add Edge:** pick the start junction, then the target junction or empty space for an end.
-   - `crossings()` runs on the straight line; if the new road crosses others, `ask_crossing` asks.
+   - `crossings()` runs on the straight line; if the new road crosses others, `main_edit.ask_crossing` asks.
    - Roundabout: `add_node` + `split_road` at each crossing, then chain the roads.
    - Overpass: add the road with `overpass=True`.
 4. **Drag:** select → Drag to Adjust → mouse moves call `move_nodes` (curves follow via

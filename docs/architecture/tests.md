@@ -841,7 +841,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `t
 - `test_docs.py`: the ARCHITECTURE.md index at most 170 lines, every module in its module map, every module marked
   Qt "no" there importing without PySide6 or main.py (one interpreter, in table order), every
   linked doc present, and the warm-up sending the index, not the module files (nor README to a model with tools).
-- `test_analysis.py`: the fuel model's published figures (idle α, cruising and accelerating rates) and only light
+- `test_analysis.py`: run_reports answering on a session's run (LOS, the latest run, resilience refusing one run
+  twice) with no Qt loaded; the fuel model's published figures (idle α, cruising and accelerating rates) and only light
   motor vehicles counted; the HCM tables (LOS thresholds, arrival types, f_PA); junction LOS on a real run (every
   signalised approach graded, delay without the junction's crossing time, 15-minute periods); a roundabout's entries
   with their circulating flow, simulated capacity, v/c and the HCM 6 capacity beside it; a signal's diagnosis

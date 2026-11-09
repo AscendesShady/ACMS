@@ -123,6 +123,19 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | history.py | Snapshot undo/redo | no |
 | theme.py | Desktop workspace theme, native control states, floating glass bars and contrast pairs | Qt |
 | main.py | Main window: tabs, tools, dialogs, file menu | Qt |
+| main_runs.py | MainWindow's runs mixin: Run, Stop, headless thread, frames, export; a file split, state in main.py (→ main.md) | Qt |
+| main_scenario.py | MainWindow's Scenario Builder mixin: runs a scenario.py plan as one undo step (→ main.md) | Qt |
+| main_experiments.py | MainWindow's experiments mixin: the assistant's run tools, dispatch and the window side of tests (→ main.md) | Qt |
+| main_agents.py | MainWindow's agents mixin: asking the model, agent tests, Batch Run, replay, emergency dispatch (→ main.md) | Qt |
+| main_assistant.py | MainWindow's AI Mode mixin: what the assistant sees and does in the window (→ main.md) | Qt |
+| main_project.py | MainWindow's project mixin: undo/redo, the commit that makes a step, Open/Save (→ main.md) | Qt |
+| main_create.py | MainWindow's Create Network mixin: generate, road defaults, install a network, background glue (→ main.md) | Qt |
+| main_metro.py | MainWindow's MRT mixin: deploy a line stop by stop, merge question, leg preview, Finish dialog (→ main.md) | Qt |
+| main_edit.py | MainWindow's map editing mixin: tool modes, selection, Add Node/Edge, crossings, delete (→ main.md) | Qt |
+| main_demand.py | MainWindow's Demand Generator mixin: grids, deploy points, institutions, a run's pair demand (→ main.md) | Qt |
+| main_layout.py | MainWindow's layout mixin: builds the sidebar, tabs, menu and run bar, wires every signal (→ main.md) | Qt |
+| searches.py | Route-choice equilibrium (MSA) over headless runs; trip times for elastic demand (→ experiments.md) | no |
+| run_reports.py | Answers on this session's finished runs and experiments (→ experiments.md) | no |
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |
 | assistant.py | Grok, Gemini, Ollama back end; context budget; System 1 (→ ai_mode.md) | no |
 | network_tools.py | The assistant's tools (→ ai_mode.md) | no |

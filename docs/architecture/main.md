@@ -1,5 +1,35 @@
 # main.py: the main window (Qt)
 
+- **Mixins** (plain classes before `QMainWindow` in `MainWindow`'s bases; all state still made in `__init__`):
+  `main_runs.py` (`RunsMixin`) holds the run bar's methods, moved verbatim: `_run`, `_stop_pressed`,
+  `_in_background`, `busy`, `_one_run`, `_play`/`_pause`/`_stop_run`/`_stop_runner`/`_end_run`, `_frame`,
+  `_export`, `_run_settings`, `_traffic` and their helpers, and `LIVE_OBSERVED`. `main_scenario.py`
+  (`ScenarioMixin`) holds the Scenario Builder's: `_build_scenario`, `_scenario_step`, `_resolve`, `_recover`,
+  `_busiest`, `_buildable`, `_scenario_state` (its `_building` flag stays made in `__init__`). `main_experiments.py`
+  (`ExperimentsMixin`) holds the assistant's run tools: `_runs_command`, `_check_demand`, `_assign_routes`,
+  `_optimise_signals`, `_weaving_los`, `_equilibrate_demand`, `_preflight`, `_parameter_sensitivity`, `_experiment`,
+  `OBJECTIVES`, `LEAD_FIGURES` and the module-level `_rounded`. `main_agents.py` (`AgentsMixin`) holds who decides
+  the signals: `_ask_agent`, `_waiting_agent`, `_compliance`, `_decision_sensitivity`, `run_batch`, `replay_run`,
+  `dispatch_emergency`, `places`, `tsp_batch`/`devl_batch`, `_schedule_emergency` and their helpers, and the
+  constants `MAX_AT_ONCE` and `HEADLESS_WAIT_S`.
+  `main_assistant.py` (`AssistantMixin`) holds AI Mode's hooks: `_selection_info`, `_show_on_map`,
+  `_show_ai_status`, `_open_system_2`, `_od_command`, `_types_command`, `_assistant_network`, `_ai_edited`.
+  `main_project.py` (`ProjectMixin`) holds undo/redo and the project file: `_snapshot`, `_commit`, `undo`, `redo`,
+  `_restore`, `_project`, `unsaved`, `save_file`, `_may_discard`, `load_file` and their helpers, and `TITLE`. `main_create.py` (`CreateMixin`) holds the Create tab and background
+  glue: `install_network`, `set_driving_side`, `_set_default`, `generate`, `_junction_bounds`, `_show_background`,
+  `_background_tool`, `_extent`, `_zoom_range`, `_show_pointer`, `_background_changed`. `main_metro.py` (`MetroMixin`)
+  holds MRT drawing: `toggle_metro`, `metro_clicked`, `_merge_or_discard`, `_metro_ghost`, `_accept_metro_line`,
+  `_show_metro_summary`, `_metro_report`.
+  `main_edit.py` (`EditMixin`) holds map editing: `select`, `canvas_clicked`, `cancel`, `box_selected`, `delete_group`,
+  `delete_selection`, `_refresh_mode`, `_show_hint`, `_network_summary`, `tab_changed`, `model_updated`, the Add Node,
+  Add Edge, drag and crossing tools, interchanges, and the module-level dialogs `ask_crossing` and `ask_interchange`.
+  `main_demand.py` (`DemandMixin`) holds the Demand Generator glue: `_pair_demand`, `show_grid`, `_refresh_grid`,
+  `_od_ends`, `spawn_clicked`, `_cell_clicked`, the institution placing and editing (`_place_institution`,
+  `_institution_split`, `_open_mode_split` and their kin), `_demand_changed`, `_hand_demand_to_run`, `_route_along`.
+  `main_layout.py` (`LayoutMixin`) builds the window: `_build_ui`, `_build_sim_bar`, `_build_menu`, `_connect_signals`,
+  `_name_open_tab`, `_fit_sidebar`, `_centre_tab_icons`, with `TAB_ICONS`, `TAB_ICON_PX` and the `DEFAULT_*` grid
+  settings (`main.py` imports them back for `__init__`). `main.py` keeps `__init__`, `eventFilter`, `closeEvent`,
+  the summary inputs, the Research Log step, the map/demand images and Watch my edits.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
@@ -86,7 +116,7 @@
   - **Demand Generator:** the Hourly/Daily switch, its five tabs and the OD pair editor; the OD matrix (or the
     tab's own grid, `show_grid` passing it the switch's mode) replaces the map when it opens (Input Grid brings the
     map back), except with Institutions chosen: the map, to build on. A Run's walkers follow the switch too
-    (`_run`: `walking.walk_pairs` in its mode), as does the MRT report's design hour (`_metro_report`: daily,
+    (`_run`: `walking.walk_pairs` in its mode), as does the MRT report's design hour (`_metro_report`, `institutions.metro_report`: daily,
     `metro_daily` by each pair's curve). An institution's people an hour or curves (`_set_institution_demand`) are
     validated first and one undo step per box or curve. Placing (`_placing`, `_place_institution`) ends the Edit and background tools; the building
     is one undo step and a run carries on (undoing it too, `_restore`). Esc, another tab or another
@@ -104,13 +134,13 @@
     roads and grids follow.
   - **Extensions:** switch drop-in features from `extensions/` on and off (see extensions.py). The window's
     services for them (`app`): `run_batch` (`test_tsp`, `test_devl`: the emergency fleet in each run with DEVL's
-    override, TSP and DEVL each with their own signal agent, its Emergency vehicles sheet, `emergency_report`; `devl_agents` deciding its lanes, every TSP agent with every DEVL
+    override, TSP and DEVL each with their own signal agent, its Emergency vehicles sheet, `experiments.emergency_report`; `devl_agents` deciding its lanes, every TSP agent with every DEVL
     agent when both are tested, paced whenever a model answers), `replay_run`, `tsp_batch` and `devl_batch` (the TSP
     and DEVL tabs' batch settings, `_agent_plan`: the model picked, else the one on in AI Mode for its System),
     `dispatch_emergency(origin, destination, every_min, check_only, after_s)`
     (into the live run; ValueError with no run, an unknown end or junction, or no route) and `places` (boundary
     ends, then junctions).
-  - Tabs are icons (`TAB_ICONS`: glyphs of Windows' Segoe Fluent Icons, or Segoe MDL2 Assets on
+  - Tabs are icons (`main_layout.TAB_ICONS`: glyphs of Windows' Segoe Fluent Icons, or Segoe MDL2 Assets on
     Windows 10), equal tiles filling the row edge to edge with no base line under them, each icon centred
     (`iconTabs` in theme.py; `_centre_tab_icons` pads the tiles to the row's width whenever it resizes, read off
     the row's own hint so the sidebar never widens from it); hovering a tab shows its name, and the open tab's
@@ -134,7 +164,7 @@
   `network_tools.build_edge`, which the assistant's `add_road` tool shares.
 - **`build_interchange`:** the dialog chooses legs, keep/replace and freeway lanes,
   then calls the builders.
-- **Undo/redo:**
+- **Undo/redo** (`main_project.py`):
   - Each finished action commits a deep-copied snapshot of the network plus the OD cells to
     `History` (`_commit`); one equal to the last committed is no action: no step, and a run carries on.
   - Typing into one field merges into one step.

@@ -2,10 +2,12 @@
 headless run, run health, slow links, resilience, emissions.
 Run with `python tests/test_analysis.py` (or the test monitor)."""
 
+import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
-from traffic_simulator import analysis, emissions, experiments, results
+from traffic_simulator import analysis, emissions, experiments, results, run_reports
 from traffic_simulator.mode_behavior import VehicleMode
 from traffic_simulator.network_generator import generate_network
 from traffic_simulator.results import MINUTE_COLUMNS
@@ -16,7 +18,7 @@ _RUN = {}
 
 def signalised_run() -> dict:
     """A 3 × 3 grid, every junction signalised (Webster), 20 simulated minutes of busy demand: its KPIs with what it
-    observed, as MainWindow._observed_kpis joins them."""
+    observed, as experiments.observed_kpis joins them."""
     if not _RUN:
         network = generate_network(3, 3)
         for node in network.nodes.values():
@@ -274,6 +276,22 @@ def test_a_signal_whose_cycle_is_all_lost_time_still_gets_its_causes():
     causes = analysis._causes({"method": "fixed", "cycle_s": 8}, [{"approach": "a>", "v_c": 1.3, "flow_vph": 400}],
                               None, None)
     assert causes[0]["cause"] == "greens don't match demand" and "1.30" in causes[0]["why"]
+
+
+def test_run_reports_answers_on_a_session_run_without_qt():
+    """run_reports (cut from MainWindow) reads the tests dict: a run's LOS, health, the latest run; no Qt loaded."""
+    loaded = subprocess.run([sys.executable, "-c", "import sys, traffic_simulator.run_reports; print(sorted(sys.modules))"],
+                            capture_output=True, text=True, timeout=60, check=True).stdout
+    assert "PySide6" not in loaded
+    tests = {"R1": {"id": "R1", "kind": "run", "seed": 1, "simulated": "20 min", "kpis": signalised_run()}}
+    assert run_reports.junction_analysis(tests, "junction_los", {})["run"] == "R1"
+    assert run_reports.run_test(tests, "") is tests["R1"]
+    try:
+        run_reports.resilience(tests, {"baseline": "R1", "disrupted": "R1"})
+    except ValueError as exc:
+        assert "two different runs" in str(exc)
+    else:
+        raise AssertionError("one run against itself")
 
 
 if __name__ == "__main__":

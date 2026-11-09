@@ -422,7 +422,7 @@
       a copy taken when it starts, so an edit meanwhile never reaches the search; returns the `set_signal_timing`
       to apply and changes nothing). Both pass the signal agent's waiting form, as
       the other headless runs do. `assign_routes` takes `until_gap` (stop once the relative gap, the share of flow off its logit share, is under it;
-      `MainWindow._equilibrium`, shared with run_experiment's scenarios).
+      `searches.equilibrium`, shared with run_experiment's scenarios).
     - `run_simulation` and run_experiment's scenarios also take `incidents`, `weather`, `random_incidents`,
       `meters`, `assign_routes` and `lateral` (lateral position and filtering, said on the workbook's Run sheet;
       experiments.md, Conditions); run_experiment also `conditions` (every design
@@ -436,11 +436,11 @@
       density, LOS and capacity from the demand, a run's own speed and density beside them; words like weave,
       ramp, freeway, merge offer it), `diagnose_signal` (one signal's flow ratios, v/c, arrival type, HCM delay
       against simulated, causes worst first with the tool to fix each), `check_run_health`, `emissions_report`,
-      `resilience` (a disrupted run against the same seed's undisrupted one), `power_analysis` (`_power_analysis`:
+      `resilience` (a disrupted run against the same seed's undisrupted one), `power_analysis` (`run_reports.power_analysis`:
       seeds for 80 and 90 % power, the smallest detectable difference, a power curve, from an experiment or sd and
       difference), `rank_scenarios` (all pairs: ANOVA, Friedman, paired differences with Bonferroni and Wilcoxon,
       compact letters), `read_decisions` (an agent's decisions in a run with their outcome, telemetry and
-      person-delay estimate), `benefit_cost` (`_benefit_cost`: a scenario against the baseline in money, NPV and
+      person-delay estimate), `benefit_cost` (`run_reports.benefit_cost`: a scenario against the baseline in money, NPV and
       BCR at 3.5, 4 and 7 %, the BCR's range over the seeds; everyone's delay, on board finished or not
       (`person_delay_on_board_h`) and waiting to enter (`entry_wait_veh_h` × the run's occupancy), over the hours
       measured after the warm-up; a `caution` when the scenario completes over 5 % more or fewer trips); `analyse_safety` takes `speed_change_kmh` (the power
@@ -630,10 +630,10 @@
     pair and the matrix total; read_od_matrix's totals; read_traffic refusing unknown roads, with the matching
     vehicles' mean speed and stops; the run headline's completion rate, unfinished percent and warm-up;
     daily demand tested at its busiest hour (`demand_simulated`), not from midnight; an experiment's answer
-    leading with its objective and four lead figures with units (`LEAD_FIGURES`; the rest counted in `more`),
+    leading with its objective and four lead figures with units (`run_reports.LEAD_FIGURES`; the rest counted in `more`),
     `interval_level` for the per-row confidence and "not told apart" for a difference that isn't clear;
     analysis tools refusing "the latest" when the latest test is an experiment; scenarios under conditions
-    compared with their own condition's baseline (`_baseline_of`); start_batch seeds a list. A second round:
+    compared with their own condition's baseline (`run_reports.baseline_of`); start_batch seeds a list. A second round:
     degree_of_saturation given as a level word ("busy") read as its figure, and a level word said again beside a
     degree given left out (`_level_read`); update_roads given a road's two junctions ["2,2", "3,2"] reads that road
     (`read_as`); "list_junctions" or "list_roads" in place of ids means all; delete_objects of the two junctions of
@@ -710,6 +710,8 @@
     moved or re-pointed, and deleted; an institution moved, its circle, figures, mode split or curves changed; a
     road curved or straightened, a reversal or a moved end not counted as a reshape; the background, e.g. the map
     `place_map` put under it and its work zone, included). It also carries what's selected on the map.
+    `tool_reports.state_changes` (cut from `MainWindow._state_changes`; re-exported by `network_tools`) adds the OD matrix and vehicle types to it
+    for Watch my edits and the Research Log.
   - The transcript notes what was shared. The assistant's own edits are not reported back to it.
   - **Conversation as state.**
     - The conversation belongs to the project, not to one model. Switching models keeps it:
@@ -731,7 +733,8 @@
   - The dot's colour shows the state. Clicking it opens System 2.
   - It is hidden while Chat with is Off. It is driven by `AIModePanel.indicator` →
     `MainWindow._show_ai_status`.
-- **Main window hooks:** `AIModePanel.attach(network, selection, show, edited)`, wired in `main.py`:
+- **Main window hooks:** `AIModePanel.attach(network, selection, show, edited)`, wired in `main.py`, the callbacks in
+  `main_assistant.py` (`AssistantMixin`):
   - `_selection_info` describes the map selection.
   - `_show_on_map` points an object out.
   - `_ai_edited` redraws and commits the undo step. A new grid refreshes the Create tab and fits the view.

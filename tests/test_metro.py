@@ -14,6 +14,7 @@ from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from traffic_simulator.daily_profile import DailyProfile, from_record  # noqa: E402
+from traffic_simulator.institutions import metro_report  # noqa: E402
 from traffic_simulator.models import METRO_MIN_SPACING_M, MetroLine  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.network_io import load_network, save_network, saved_project  # noqa: E402
@@ -281,6 +282,7 @@ def test_the_metro_has_its_own_od_matrix_and_the_report_loads_it_with_the_buildi
     building = place(network, "Office", 650.0, 1180.0, 2000, 1000, people=200, employees=300)
     building.mode_shares = {"Car": 60.0, "MRT": 40.0}  # its metro riders between M2 and M1, M3, in equal shares
     report = window._metro_report()
+    assert metro_report(network, False) == report  # the same without a window
     row = next(row for row in report["lines"] if row["line"] == "ML1")
     assert row["riders_per_h"] > 2500 and row["stops"]["M2"]["alighting"] > 0
     window.undo()
@@ -303,7 +305,7 @@ def test_the_metro_has_its_own_od_matrix_and_the_report_loads_it_with_the_buildi
     assert from_record(network.metro_daily["M1->M3"]["curve"]) == evening.as_points()
     assert len(window.history.undo_stack) == steps + 1
     report = window._metro_report()
-    assert report["design_hour"] == "18:00-19:00"  # its curve's busiest hour
+    assert report["design_hour"] == "18:00-19:00" == metro_report(network, True)["design_hour"]  # its curve's busiest hour
     window.close()
 
 

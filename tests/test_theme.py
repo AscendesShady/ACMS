@@ -105,14 +105,15 @@ def test_keyboard_focus_keeps_button_content_and_size_stable():
 
 
 def test_shared_widgets_need_no_properties_panel():
-    """The shared widgets (widgets.py) load without the selection editor or the model, and only main uses the editor."""
+    """The shared widgets (widgets.py) load without the selection editor or the model, and only main (and its main_*.py mixins) uses the editor."""
     loaded = subprocess.run([sys.executable, "-c", "import sys, traffic_simulator.widgets; print(sorted(sys.modules))"],
                             capture_output=True, text=True, timeout=60, check=True).stdout
     assert "traffic_simulator.properties_panel" not in loaded and "traffic_simulator.models" not in loaded
     root = Path(__file__).resolve().parents[1]
     users = [path.relative_to(root).as_posix() for folder in ("src", "extensions", "tools")
              for path in (root / folder).rglob("*.py") if "properties_panel import" in path.read_text(encoding="utf-8")]
-    assert users == ["src/traffic_simulator/main.py"], users
+    assert "src/traffic_simulator/main.py" in users and all(user.startswith("src/traffic_simulator/main")
+                                                            for user in users), users
 
 
 def test_the_window_lines_up():

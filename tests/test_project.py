@@ -14,7 +14,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox  # noqa: E402
 
 from traffic_simulator.network_generator import generate_network  # noqa: E402
-from traffic_simulator.network_io import project_problem, save_network, saved_project  # noqa: E402
+from traffic_simulator.network_io import project_parts, project_problem, project_record, save_network, saved_project  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 
@@ -248,6 +248,28 @@ def test_a_deleted_ends_demand_goes_with_it_and_undo_brings_it_back():
             {"origin": "9E", "destination": "1W", "flow": 500, "split": [10, 85, 5]}]}})  # no end 9E
         assert shown.load_file(str(path)) and not shown.od_matrix.cells  # an unknown end's pair is dropped
     shown.close()
+
+
+def test_project_record_and_parts_round_trip_without_a_window():
+    from traffic_simulator.daily_profile import DailyProfile
+    from traffic_simulator.demand import ODCell
+    from traffic_simulator.vehicle import VehicleMode
+    modes = [VehicleMode(name="Car", colour="#3366ff"), VehicleMode(name="Bus", colour="#ff9900", headway_min=10, timetabled=True)]
+    cells = {("1W", "2E"): ODCell(400, None, DailyProfile(), "Random", (90, 10), (0.2, 0.3, 0.3, 0.2), ((0, 0.5, 20),)),
+             ("2E", "1W"): ODCell()}  # no demand: not saved
+    record = project_record(cells, "hourly", modes, (90, 10), 7, 2)
+    assert record["run"] == {"seed": 7, "speed": 2.0} and len(record["demand"]["pairs"]) == 1
+    read, split, back = project_parts(json.loads(json.dumps(record)), lambda: 1 / 0)  # types saved: no default asked
+    assert [m.name for m in read] == ["Car", "Bus"] and read[1].timetabled and split == (90, 10)
+    assert back == {("1W", "2E"): cells[("1W", "2E")]}
+    assert project_parts({}, lambda: (modes, (90, 10))) == (modes, (90, 10), {})
+    record["demand"]["pairs"][0]["split"] = [100]
+    try:
+        project_parts(record, lambda: 1 / 0)
+    except ValueError as exc:
+        assert "split doesn't match" in str(exc)
+    else:
+        raise AssertionError("a split of the wrong length opened")
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ from math import hypot, sqrt
 from .daily_profile import from_record
 from .demand import PairDemand
 from .geometry import polyline_meets_box
-from .metro import METRO
+from .metro import METRO, loads as metro_loads, places as metro_places
 from .models import (INSTITUTION_KINDS, MAX_AREA_M2, MAX_INFLUENCE_M, Institution, Network,
                      institution_problem)
 from .roundabouts import design_roundabout
@@ -340,3 +340,31 @@ class Placement:
         self.radius_m = min(max(self.radius_m * GROW ** steps, sqrt(self.area_m2) / 2), MAX_INFLUENCE_M)
         self.links = links(network, self.x, self.y, self.radius_m)
         return True
+
+
+def metro_report(network: Network, daily: bool) -> dict:
+    """metro_report (cut from MainWindow._metro_report): the metro's passengers at the design hour (the hour the
+    most ride), on their lines (metro.loads): its own OD matrix (Network.metro_demand, the same every hour; daily, metro_daily by each pair's
+    curve) and each building's metro riders,
+    its metro share of the people arriving and leaving, between its door station and its catchment's stations in
+    equal shares (metro.places), as its trips go."""
+    by_hour = []  # (board, alight, passengers each hour)
+    for pair, people in (network.metro_daily if daily else network.metro_demand).items():
+        board, alight = pair.split("->")
+        by_hour.append((board, alight, [people["people"] * share for share in from_record(people["curve"]).shares()]
+                        if daily else [people] * 24))
+    for item in network.institutions.values():
+        share = shares(item).get(METRO, 0.0) / 100
+        entrance, stations = metro_places(network, item)
+        if not share or not stations:
+            continue
+        arrive, leave = hourly_people(item, daily)
+        for station in stations:
+            by_hour.append((station, entrance, [people * share / len(stations) for people in arrive]))
+            by_hour.append((entrance, station, [people * share / len(stations) for people in leave]))
+    hour = max(range(24), key=lambda h: sum(hours[h] for *_, hours in by_hour)) if by_hour else 8
+    report = metro_loads(network, [(board, alight, hours[hour]) for board, alight, hours in by_hour])
+    return {"design_hour": f"{hour:02d}:00-{hour + 1:02d}:00", **report,
+            "method": "passengers on their line (no transfers), each stop-to-stop segment's load each way against "
+                      "HCM 2000 Eq 27-28's capacity, (60 / headway) trains x carriages x passengers a carriage x "
+                      "PHF 0.75"}

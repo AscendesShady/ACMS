@@ -10,17 +10,25 @@
   a batch with TSP), a
   `results.RunRecorder` (or a function making one from the Simulation, for its signal plans) sampled every
   `SAMPLE_S`, so its figures match a live run's with that seed; returns the Simulation and the recorder.
+- **run_reports.py** (no Qt, cut from `MainWindow`): AI Mode's answers on the session's finished tests (the
+  window's `tests` dict): `read_results`, `compare_runs`, `analyse_run`, `junction_analysis`, `resilience`,
+  `regress`, `power_analysis`, `benefit_cost`, `rank_scenarios`, `read_decisions`, `run_test`, `figure_key`,
+  `factorial`, `compact` and `LEAD_FIGURES` (still `MainWindow.LEAD_FIGURES`).
+- **searches.py** (no Qt, cut from `MainWindow`): `equilibrium` (route choice by successive averages, given the
+  window's `_quick_run` as `quick_run`) and `trip_times` (each pair's trip times, for `_equilibrate_demand`).
+- Cut from `main.py` too: `observed_kpis`, `end_recording` and `quick_run` (still `MainWindow._observed_kpis`,
+  `_end_recording`, `_quick_run`), `emergency_report` and `AGENT_TIMING`.
 - **Simulated time and AI agents.** A run's results depend on the seed and inputs, not on how fast it is stepped,
   except for an AI agent's thinking time (TSP's and DEVL's signal agent, `signal_agent.SignalAgent`):
   - Unpaced headless tests (run_simulation, run_experiment, build_scenario, optimise_signals, assign_routes, the
-    demand check; `MainWindow._waiting_agent`, `wait_s` `HEADLESS_WAIT_S` 30 real s) pause the run for each
+    demand check; `MainWindow._waiting_agent`, `wait_s` `main_agents.HEADLESS_WAIT_S` 30 real s) pause the run for each
     answer, and the decision takes effect at its question's simulated time plus the model's real latency, as if
     the run went at 1× (`agent_transit_signal_priority`, `dynamic_emergency_lane`: "as at 1x"); an answer not in
     within `wait_s` falls back to the plan. No new questions arise while the run is paused, so the queueing of
     answers (fresher telemetry replacing waiting questions, withdrawn requests) is not what a live run sees.
   - A paced batch (`speed`) never pauses: an answer costs latency × pace in simulated time and counts only within
     the batch's deadline (simulated seconds); questions keep coming while the model thinks.
-  - So an unpaced test shows an agent's effect at 1× only. Its result says so (`agent_timing`, `main.AGENT_TIMING`:
+  - So an unpaced test shows an agent's effect at 1× only. Its result says so (`agent_timing`, `experiments.AGENT_TIMING`:
     run_simulation, run_experiment and its workbook's Read me, optimise_signals, the Scenario Builder's report)
     whenever an extension that may ask an agent was ticked (for run_experiment: named in one of its scenarios'
     `extensions`, the only ones an experiment applies, whatever the Extensions tab has ticked); Batch Run tests
@@ -66,7 +74,7 @@
   Simulation's, set through `run_headless(params=…)`; `varied`) at ×(1 ± `SENSITIVITY_STEP`, 0.1), on the same seeds;
   per parameter and `SENSITIVITY_MEASURES` figure, the central-difference elasticity (Y₊ − Y₋) / (2·step·Y₀), mean over
   the seeds with its 95 % interval (FHWA Traffic Analysis Toolbox III's calibration step). None if stopped. Each
-  run records to a folder of its own under the system temp, removed after (as `MainWindow._quick_run`'s), so none
+  run records to a folder of its own under the system temp, removed after (as `quick_run`'s), so none
   is left for `results.recover`. AI Mode's
   parameter_sensitivity (`MainWindow._parameter_sensitivity`: the open network and demand, 1 to 5 seeds, default the
   run seed and the next, 20 simulated minutes, in the background).
@@ -75,7 +83,7 @@
   (`MainWindow._runs_command`, see AI Mode); a run's workbook names are numbered when two start in the
   same second (`RunRecorder.finish`).
 - Headless runs for the assistant are observed (`run_headless(observe=True)`, simulation.observe), and the
-  window keeps the observations with the KPIs (`MainWindow._observed_kpis`; `conflicts` = events under
+  window keeps the observations with the KPIs (`observed_kpis`; `conflicts` = events under
   `CONFLICT_TTC_S` 1.5 s, an experiment measure). `compare` also gives, with 3 or more scenarios, an ANOVA per
   figure (`stats.anova`: randomized block with the seeds as blocks), Wilcoxon's signed-rank p beside each
   paired difference, and for mean speed the power model's crash change (`speed_risk`).
@@ -123,7 +131,7 @@
   at_once, test_tsp)`): `test_tsp` (Batch Run's Test TSP; None: whether TSP is ticked) runs TSP, ticked in the tab
   or not, `agents` being the models to test; the two baselines, Never preempt (general traffic) and Always preempt, always run too, first. Everything is checked
   first (no run going, demand, at least one model, each found and with its key,
-  1 to `MAX_AT_ONCE` 8 at once), then every agent × seed × time headless (`_in_background`, Stop ends it),
+  1 to `main_agents.MAX_AT_ONCE` 8 at once), then every agent × seed × time headless (`_in_background`, Stop ends it),
   seed by seed: every agent on a seed (and its times) before the next seed, so a batch cut short has every agent
   on the seeds it finished and still compares, pair by pair. The batch's workbook is a checkpoint: rewritten after
   every finished run (written beside it as "… (saving).xlsx" and swapped in whole, so a crash mid-write keeps the
@@ -171,7 +179,7 @@
   mean (over the conditions that design has a mean under, by their weights), the worst regret and the robust choice (the least worst regret), and whether the winner changes.
 - **Factorial designs** (run_experiment's `factors`, `factorial`): 1 to 3 factors with 2 or more labelled levels
   (each with changes, demand_scale, extensions, weather, incidents, meters), every combination a scenario named
-  "factor=level, ..." (12 at most); with two factors `MainWindow._factorial` gives the two-way ANOVA
+  "factor=level, ..." (12 at most); with two factors `run_reports.factorial` gives the two-way ANOVA
   (`stats.two_way_anova`: main effects and interaction, seeds as replicates) on the objective, per condition.
 - `MEASURES` also has `co2_kg` (cars and vans, analysis.co2_kg), `bus_headway_cv` (`headway_cv`: lower is more
   regular) and `vehicle_km`; `OPTIONAL_MEASURES` (conflicts, CO2, headway cv) are left out of runs that didn't

@@ -1,12 +1,13 @@
 """Putting the assistant's tool calls, changes and refusals into words (no Qt).
 
-describe_changes (what the user's edits changed), describe_call (one line per call shown for approval) and
+describe_changes (what the user's edits changed), state_changes (the same plus demand and vehicle types), describe_call (one line per call shown for approval) and
 explain_error/already_so (refusals as structured data); moved out of network_tools.py, which re-exports them.
 """
 
 from __future__ import annotations
 
 import re
+from dataclasses import asdict
 from math import hypot
 from pathlib import Path
 
@@ -157,6 +158,42 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
             f"the colour {back.colour}"))
     if len(lines) > limit:
         lines = lines[:limit] + [f"...and {len(lines) - limit} more changes"]
+    return lines
+
+
+def state_changes(before: tuple, after: tuple) -> list[str]:
+    """What changed between two of the window's states (MainWindow._snapshot: (network, OD cells, (vehicle types,
+    default split))): the network (describe_changes), the OD matrix pair by pair, and the vehicle types, one line each."""
+    lines = describe_changes(before[0], after[0], limit=1000)
+    old, new = before[1], after[1]
+    for pair in sorted(set(old) | set(new)):
+        a, b = old.get(pair), new.get(pair)
+        what = []
+        for key, label, unit in (("flow", "hourly", "veh/h"), ("daily", "daily", "trips/day")):
+            x, y = getattr(a, key, None), getattr(b, key, None)
+            if x != y:
+                what.append(f"{label} {x if x is not None else 'none'} → {y if y is not None else 'none'} {unit}")
+        if a is not None and b is not None:
+            if a.pattern != b.pattern:
+                what.append(f"arrivals {a.pattern} → {b.pattern}")
+            if tuple(a.split) != tuple(b.split):
+                what.append(f"split {list(a.split)} → {list(b.split)} %")
+            if a.profile != b.profile:
+                what.append("daily curve reshaped")
+            if a.drops != b.drops:
+                what.append("drop-offs changed")
+        if what:
+            lines.append(f"Demand {pair[0]}->{pair[1]}: " + ", ".join(what))
+    old_types, new_types = {m.name: asdict(m) for m in before[2][0]}, {m.name: asdict(m) for m in after[2][0]}
+    lines += [f"Vehicle type {name} added" for name in new_types if name not in old_types]
+    lines += [f"Vehicle type {name} removed" for name in old_types if name not in new_types]
+    for name in old_types.keys() & new_types.keys():
+        what = [f"{key} {old_types[name][key]} → {value}" for key, value in new_types[name].items()
+                if old_types[name].get(key) != value]
+        if what:
+            lines.append(f"Vehicle type {name}: " + ", ".join(what))
+    if tuple(before[2][1]) != tuple(after[2][1]):
+        lines.append(f"Default split {list(before[2][1])} → {list(after[2][1])} %")
     return lines
 
 

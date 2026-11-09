@@ -45,7 +45,7 @@ from .tool_args import (ALL_IDS, ENDS_ARGS, INCIDENT_FIELDS, LIST_LIMIT, SATURAT
                         drop_strays, fold_incident, normalise, repair_ends, signature)  # re-exported
 from .tool_offer import (CORE_TOOLS, FIND_TOOLS, SKILLS, STUDY_GROUPS, TOOL_GROUPS, contradicts,  # noqa: F401
                          expand_tools, skills_for, tool_groups, tools_for)  # re-exported
-from .tool_reports import already_so, describe_call, describe_changes, explain_error  # noqa: F401
+from .tool_reports import already_so, describe_call, describe_changes, explain_error, state_changes  # noqa: F401
 from .road_tools import (READ_CHARS, READ_LINES, add_boundary_end, add_junction, add_road, add_slip_road,  # noqa: F401
                          build_edge, build_interchange, delete_objects, describe, edge_crossings, list_junctions,
                          list_roads, move_junctions, network_summary, read_source, set_end_flows,

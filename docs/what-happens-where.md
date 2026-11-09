@@ -25,13 +25,13 @@ for how to use each feature, the [README](../README.md).
 
 | Area | What it does | Code |
 |---|---|---|
-| **File** menu | Open Project…, Save Project, Save Project As…: one validated JSON file (network, demand, vehicle types, background). | `main.py` (`_build_menu`), `network_io.py` |
-| **Edit** menu | Undo (Ctrl+Z), Redo (Ctrl+Y / Ctrl+Shift+Z). Every finished action is one step. | `main.py` (`_commit`, `undo`), `history.py` |
-| **Run bar** (top right) | Run starts a run from the network and demand as they are; Play/Pause; Stop ends it and writes its workbook; the clock; speed 1–60×; Seed (same seed, same run); Export a workbook now; Watch my edits. | `main.py` (`_build_sim_bar`), `clock.py`, `runner.Runner`, `results.py`, `activity.py` |
-| **Sidebar** | The tabs below; it widens to fit what its open page needs (never more than half again its first width). | `main.py` (`_fit_sidebar`), `widgets.py` |
+| **File** menu | Open Project…, Save Project, Save Project As…: one validated JSON file (network, demand, vehicle types, background). | `main_layout.py` (`_build_menu`), `network_io.py` |
+| **Edit** menu | Undo (Ctrl+Z), Redo (Ctrl+Y / Ctrl+Shift+Z). Every finished action is one step. | `main_project.py` (`_commit`, `undo`), `history.py` |
+| **Run bar** (top right) | Run starts a run from the network and demand as they are; Play/Pause; Stop ends it and writes its workbook; the clock; speed 1–60×; Seed (same seed, same run); Export a workbook now; Watch my edits. | `main_layout.py` (`_build_sim_bar`), `clock.py`, `runner.Runner`, `results.py`, `activity.py` |
+| **Sidebar** | The tabs below; it widens to fit what its open page needs (never more than half again its first width). | `main_layout.py` (`_fit_sidebar`), `widgets.py` |
 | **Map** | The network to scale (metres), drawn over its background; clicks select and edit. Turns into the OD matrix while Demand Generator shows its grid. | `network_scene.py`, `background.py`, `gpu.py` |
-| **Map controls** (map's top right) | Input Grid (Demand Generator only), 3D View, Hide Background (over an image or map), Power Saver, Fit Network, Reset View, Map Controls (mouse and keys). | `main.py`, `network_view.NetworkView` |
-| **Status bar** | Junctions, roads, ends, supply/demand; the last action; the AI model connected; over a map, the mouse's latitude and longitude. | `main.py` (`_network_summary`, `_show_pointer`) |
+| **Map controls** (map's top right) | Input Grid (Demand Generator only), 3D View, Hide Background (over an image or map), Power Saver, Fit Network, Reset View, Map Controls (mouse and keys). | `main_layout.py`, `network_view.NetworkView` |
+| **Status bar** | Junctions, roads, ends, supply/demand; the last action; the AI model connected; over a map, the mouse's latitude and longitude. | `main_edit.py` (`_network_summary`), `main_create.py` (`_show_pointer`) |
 
 ## The tabs
 
@@ -49,7 +49,7 @@ for how to use each feature, the [README](../README.md).
 |---|---|---|
 | **Roads** | **Add Node**: click to place nodes one after another (each exactly where you click; a dashed line gives the distance to the next; right-click keeps them). **Add Edge**: a road between two junctions (Connection) or out to a boundary end (End); crossings become a roundabout or an overpass. Click anything to edit it below. | `main.canvas_clicked`, `main._build_edge`, `network_tools.build_edge`, `properties_panel.py` |
 | **Selection editor** | A road: lanes, speed, direction, turn pockets, cycle lanes, footpaths. A junction: control (signalised, roundabout, uncontrolled) and signal timing; each phase named by the letter its heads show on the map (Phase A, B…). An end: its flows. Ctrl+click roads or junctions for slip roads and interchanges. | `properties_panel.py`, `interchanges.py`, `roundabouts.py`, `lane_graph.phase_letters` |
-| **MRT** | Start deployment, click stop after stop (curves of 300 m or more), right-click to finish and set its service. | `main.toggle_metro`, `metro.py`, `models.py` |
+| **MRT** | Start deployment, click stop after stop (curves of 300 m or more), right-click to finish and set its service. | `main_metro.toggle_metro`, `metro.py`, `models.py` |
 | **Pedestrian** | Add Zebra, Add Overbridge on a road with footpaths both sides. | `main._place_crossing`, `walking.py` |
 
 ### Mode Behavior

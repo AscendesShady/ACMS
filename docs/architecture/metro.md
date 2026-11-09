@@ -38,7 +38,7 @@ junctions inside it.
   stop-to-stop segment's load each way; a line's riders, passenger-km, busiest segment and its load over
   capacity (HCM 2000 Eq 27-28, P = (3,600 / headway) × carriages a train × passengers a carriage × PHF, `METRO_PHF`
   0.75: the HCM's light-rail value; it leaves off-street rail to the TCQSM, which isn't in the references), over
-  capacity flagged; boardings and alightings a station; passengers no line serves. `MainWindow._metro_report` (tool
+  capacity flagged; boardings and alightings a station; passengers no line serves. `institutions.metro_report` (via `MainWindow._metro_report`; tool
   `metro_report`) gathers them at the design hour, the hour the most ride: the MRT OD matrix (the same every hour)
   and each building's MRT share of the people arriving and leaving, between its door station and its catchment's
   stations in equal shares. The MRT tab's summary shows each line's busiest load against capacity, after every edit.
