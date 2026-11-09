@@ -104,7 +104,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | scenario.py | Scenario Builder plan and report (→ ai_mode.md) | no |
 | analysis.py | Junction LOS, signal diagnosis, health, resilience, fuel | no |
 | emissions.py | Fuel and CO2, Biggs–Akçelik (→ analysis.md) | no |
-| design_checks.py | Design audit, Green Book; connectivity and graph indices (→ network_checks.md) | no |
+| design_checks.py | Design audit, Green Book; connectivity, graph indices and vulnerability (→ network_checks.md) | no |
 | weaving.py | Freeway weaving, HCM 2000 Ch 24 (→ weaving.md) | no |
 | metro.py | The MRT's own network: rides (one change at an interchange), buildings' stations, line loads (→ metro.md) | no |
 | accessibility.py | Cumulative / Hansen accessibility (→ network_checks.md) | no |
@@ -118,6 +118,13 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |
 | assistant.py | Grok, Gemini, Ollama back end; context budget; System 1 (→ ai_mode.md) | no |
 | network_tools.py | The assistant's tools (→ ai_mode.md) | no |
+| tool_schemas.py | Every tool's JSON schema (TOOLS) and the tool-name sets (→ ai_mode.md) | no |
+| tool_args.py | Reading a model's tool arguments: normalise, call repairs, ToolError (→ ai_mode.md) | no |
+| tool_offer.py | Which tools and skills a request is offered: tools_for, SKILLS, find_tools (→ ai_mode.md) | no |
+| tool_reports.py | Calls, changes and refusals in words: describe_call, describe_changes, explain_error (→ ai_mode.md) | no |
+| road_tools.py | The tools on roads, junctions and signals: list, describe, add, update, delete (→ ai_mode.md) | no |
+| people_tools.py | The tools for institutions, pedestrians, metro lines and bus stops (→ ai_mode.md) | no |
+| demand_plans.py | Demand numbers: gravity sizing, scaling, count calibration, logit mode choice (→ ai_mode.md) | no |
 
 ## 3. Conventions
 

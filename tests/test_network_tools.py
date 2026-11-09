@@ -3,7 +3,7 @@
 import json
 from copy import deepcopy
 
-from traffic_simulator import network_tools as tools
+from traffic_simulator import demand_plans, network_tools as tools
 from traffic_simulator.network_generator import generate_network
 
 
@@ -451,11 +451,11 @@ def _x_alone(test):
     """Run `test` with demand sized by the junctions' X alone (no queue storage bound: its own test is in
     test_experiments)."""
     def run():
-        kept, tools.STORAGE_LIMIT = tools.STORAGE_LIMIT, 1e9
+        kept, demand_plans.STORAGE_LIMIT = demand_plans.STORAGE_LIMIT, 1e9
         try:
             test()
         finally:
-            tools.STORAGE_LIMIT = kept
+            demand_plans.STORAGE_LIMIT = kept
     run.__name__, run.__doc__ = test.__name__, test.__doc__
     return run
 

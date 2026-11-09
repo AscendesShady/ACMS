@@ -1,4 +1,4 @@
-"""Network design checks (design_checks.py), accessibility (accessibility.py), vulnerability (network_tools.cut_elements,
+"""Network design checks (design_checks.py), accessibility (accessibility.py), vulnerability (design_checks.cut_elements,
 critical_links' area closure) and the assistant's structured errors (network_tools.explain_error).
 Run with `python tests/test_design_checks.py` (or the test monitor)."""
 

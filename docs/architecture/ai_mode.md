@@ -87,6 +87,19 @@
   the app runs it, the result goes back, and the model continues (up to 12 rounds per answer). A call the model
   wrote as text instead of making it (llama3.1 often does: `{"name": "describe", "parameters": {...}}`) is made
   all the same when it names a tool offered and its arguments are an object (`assistant.calls_in_text`).
+  - **Where it lives**: `network_tools` re-exports every name below; `tool_schemas.py` holds `TOOLS`, the
+    `*_TOOLS` name sets and `tool_specs`; `tool_args.py` reads the arguments (`normalise`, `signature`, the
+    call repairs `fold_incident`, `drop_strays` and `repair_ends`, `ToolError`, `_ids`, `_bool`);
+    `tool_offer.py` picks what a request is offered (`TOOL_GROUPS`, `SKILLS`, `tools_for`, `expand_tools`,
+    `contradicts` and the place-name checks); `tool_reports.py` puts calls, changes and refusals into words
+    (`describe_call`, `describe_changes`, `explain_error`, `already_so`); `road_tools.py` holds the tools on
+    roads, junctions and signals (`network_summary`, `describe`, `read_source`, `add_road`, `update_roads`,
+    `delete_objects`, `build_edge`, `set_signal_timing`, ...); `people_tools.py` those for institutions,
+    pedestrians, metro lines and bus stops (`place_institution`, `deploy_institutions`, `set_pedestrian_demand`,
+    `add_metro_line`, `add_bus_stop`, ...); `demand_plans.py` the demand numbers the OD panel applies
+    (`demand_plan`, `scale_plan`, `calibration_plan`, `mode_plan`, `institution_split`, `LOGIT_DEFAULTS`,
+    `STORAGE_LIMIT`). A new tool is its schema in `tool_schemas.TOOLS`, its function in a
+    tool module and its `network_tools._FUNCTIONS` entry (or the window's handler).
   - **Arguments first** (`network_tools.normalise`, in `AIModePanel._tool_requested` for every tool and in
     `run_tool`): what small models send is read in the shapes the schema gives (a close misspelling or a
     plural takes the parameter's name, `ends` → `end`; numbers, whole numbers and true/false sent as text
