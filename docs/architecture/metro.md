@@ -8,7 +8,7 @@ MRT lines are deployed in Edit Network → MRT (main.md) and stored as `MetroSto
 MRT is apart from the roads: its stations (M1, M2... in the order placed) are points of their own, not road nodes;
 its demand is its own OD matrix (`Network.metro_demand`, station to station, passengers an hour; daily,
 `Network.metro_daily`, passengers a day spread by each pair's curve, as the Demand switch shows; edited in Demand
-Generator → MRT: od_matrix.md's `MetroMatrix`); road OD pairs never turn into MRT trips (choose_modes has no MRT).
+Generator → MRT: metro_matrix.py's `MetroMatrix`, od_matrix.md); road OD pairs never turn into MRT trips (choose_modes has no MRT).
 Only an institution draws on it, from the stations inside its circle of influence, as it draws on the roads from the
 junctions inside it.
 
