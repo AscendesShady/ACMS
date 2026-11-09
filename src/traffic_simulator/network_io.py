@@ -28,6 +28,7 @@ from .vehicle import VEHICLE_CLASSES, VehicleMode
 
 PROJECT_FORMAT = {"app": "ACMS project", "version": 2}
 MAX_SEED = 2**31 - 1
+RUN_SEED = 42  # a Run's seed unless the Seed box says otherwise: the same inputs and seed repeat exactly
 from .network_generator import add_boundary_approaches
 from .results import write_whole
 

@@ -96,7 +96,7 @@
   (`take_lock`: kept open, which Windows won't let another process delete, and `fcntl.flock`ed on POSIX;
   either lets go when the process ends, a crash too), so a second ACMS open at once leaves that run
   alone (`lock_held`).
-- **Seed**: every Run uses the Seed box's value (`main.RUN_SEED`, 42, by default) for its arrivals and drivers, so the same inputs repeat the
+- **Seed**: every Run uses the Seed box's value (`network_io.RUN_SEED`, 42, by default) for its arrivals and drivers, so the same inputs repeat the
   same run; the workbook records it.
 - **`xlsx.write_xlsx(path, sheets)`**: Office Open XML SpreadsheetML by hand (zipfile): numbers as numbers,
   other values as inline strings (escaped, XML's forbidden control characters dropped), a bold frozen
