@@ -6,6 +6,10 @@ object by object (`_draw`: `("road", id)`, `("node", id)`, `("end", boundary roa
 object's items (`addItem`), so `_redraw(keys)` can draw some again alone, each in its old place in the stacking
 order (`stackBefore`), the rest untouched. A rebuild also ends a selection box being dragged (its band went with the
 items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLOW_PAINT`, `MAP_SELECTED`, ...).
+`scene_items.py` holds the standalone items (`PavingItem`, `MetroItem`, `SignalClock`, `OverbridgeItem`,
+`BuildingItem`, `_FaceDrawing`) and `projection_transform`/`projection_lift`; `network_scene` re-exports them.
+`vehicle_layer.py` holds `VehicleLayer`, `_vehicle_faces`, `_pedestrian_faces` and `HEADING_STEP_DEG`.
+`network_view.py` holds `NetworkView` (pan, zoom, keys, OpenGL viewport), `RIGHT_CLICK_PX` and the bus stop nudges.
 - **Roads:** a path the carriageway's width wide.
   - Lane lines: dashed 3 m / 9 m where lane changing is allowed, solid where not.
   - Two-way roads get a yellow centre divider; one-way roads have none and show an ahead
@@ -154,7 +158,7 @@ items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLO
   before. Measured (8 × 8 grid, 1,713 items, RTX 3070, 1600 × 900): 4.7 ms a display frame before, 1.5
   ms cached.
 
-`NetworkView`:
+`NetworkView` (`network_view.py`):
 - **3D View:** an optional orthographic 2.5D camera, off at startup: 45 degree yaw, 35.2643897 degree
   elevation, zero roll. `projection_transform` maps world `(x, y)` metres to
   `(cos(yaw)*x - sin(yaw)*y, sin(elevation)*(sin(yaw)*x + cos(yaw)*y))`, followed by uniform zoom and pan.

@@ -4,7 +4,7 @@
 is a CPU stand-in (Mesa's llvmpipe, which Qt ships as opengl32sw.dll, Windows' GDI Generic or Basic
 Render Driver over Remote Desktop, SwiftShader). The map view takes an OpenGL viewport only on a
 real GPU; otherwise it draws with Qt's raster engine and says so, never with a software OpenGL
-(network_scene.NetworkView, main.main).
+(network_view.NetworkView, main.main).
 
 `VehicleRenderer` draws a run's vehicles in one instanced batch per appearance: each published frame's poses
 go to the GPU once (14 floats a vehicle), and the vertex shader places, turns and interpolates every

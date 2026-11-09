@@ -353,7 +353,7 @@ class BackgroundPanel(QWidget):
         self._network = lambda: None  # set by attach: the network, and where its junctions lie
         self._bounds = lambda: QRectF(0, 0, 1000, 1000)
         self.redraw = lambda: None
-        self.view = None  # the map view (network_scene.NetworkView): the work zone is framed on it
+        self.view = None  # the map view (network_view.NetworkView): the work zone is framed on it
         self.tool: str | None = None
         self._picks: list[QPointF] = []  # the two-point tool's clicks: image pixel, scene point, ...
         self._measure: list[QPointF] = []  # Measure's clicks, scene metres (a second one ends a line)

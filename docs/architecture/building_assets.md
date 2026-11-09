@@ -7,7 +7,7 @@
   every vertex within that footprint and [0, height_m]. Total height includes roofs, penthouses and details.
   Residential structures have hipped roofs; other types have recessed roof/service volumes, with hospital
   signage or a shop awning. Facade bays and storeys use metre-based spacing with bounded detail counts.
-- `network_scene.BuildingItem` paints the original flat footprint in 2D and these shaded opaque faces in
+- `scene_items.BuildingItem` paints the original flat footprint in 2D and these shaded opaque faces in
   orthographic 2.5D, with a small contact shadow. It exposes the footprint/structure for picking, and reserves
   extrusion bounds so camera toggles require no network rebuild. Labels lift with the roof. The existing
   building toggle hides the whole visual, including labels/catchment; records and demand remain.
