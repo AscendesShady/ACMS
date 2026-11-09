@@ -121,6 +121,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | main_agents.py | MainWindow's agents mixin: asking the model, agent tests, Batch Run, replay, emergency dispatch (→ main.md) | Qt |
 | main_assistant.py | MainWindow's AI Mode mixin: what the assistant sees and does in the window (→ main.md) | Qt |
 | main_project.py | MainWindow's project mixin: undo/redo, the commit that makes a step, Open/Save (→ main.md) | Qt |
+| main_create.py | MainWindow's Create Network mixin: generate, road defaults, install a network, background glue (→ main.md) | Qt |
 | searches.py | Route-choice equilibrium (MSA) over headless runs; trip times for elastic demand (→ experiments.md) | no |
 | run_reports.py | Answers on this session's finished runs and experiments (→ experiments.md) | no |
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |

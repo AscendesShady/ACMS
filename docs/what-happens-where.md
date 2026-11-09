@@ -26,12 +26,12 @@ for how to use each feature, the [README](../README.md).
 | Area | What it does | Code |
 |---|---|---|
 | **File** menu | Open Project…, Save Project, Save Project As…: one validated JSON file (network, demand, vehicle types, background). | `main.py` (`_build_menu`), `network_io.py` |
-| **Edit** menu | Undo (Ctrl+Z), Redo (Ctrl+Y / Ctrl+Shift+Z). Every finished action is one step. | `main.py` (`_commit`, `undo`), `history.py` |
+| **Edit** menu | Undo (Ctrl+Z), Redo (Ctrl+Y / Ctrl+Shift+Z). Every finished action is one step. | `main_project.py` (`_commit`, `undo`), `history.py` |
 | **Run bar** (top right) | Run starts a run from the network and demand as they are; Play/Pause; Stop ends it and writes its workbook; the clock; speed 1–60×; Seed (same seed, same run); Export a workbook now; Watch my edits. | `main.py` (`_build_sim_bar`), `clock.py`, `simulation.Runner`, `results.py`, `activity.py` |
 | **Sidebar** | The tabs below; it widens to fit what its open page needs (never more than half again its first width). | `main.py` (`_fit_sidebar`), `widgets.py` |
 | **Map** | The network to scale (metres), drawn over its background; clicks select and edit. Turns into the OD matrix while Demand Generator shows its grid. | `network_scene.py`, `background.py`, `gpu.py` |
 | **Map controls** (map's top right) | Input Grid (Demand Generator only), 3D View, Hide Background (over an image or map), Power Saver, Fit Network, Reset View, Map Controls (mouse and keys). | `main.py`, `network_scene.NetworkView` |
-| **Status bar** | Junctions, roads, ends, supply/demand; the last action; the AI model connected; over a map, the mouse's latitude and longitude. | `main.py` (`_network_summary`, `_show_pointer`) |
+| **Status bar** | Junctions, roads, ends, supply/demand; the last action; the AI model connected; over a map, the mouse's latitude and longitude. | `main.py` (`_network_summary`), `main_create.py` (`_show_pointer`) |
 
 ## The tabs
 
