@@ -26,6 +26,10 @@
   `main_demand.py` (`DemandMixin`) holds the Demand Generator glue: `_pair_demand`, `show_grid`, `_refresh_grid`,
   `_od_ends`, `spawn_clicked`, `_cell_clicked`, the institution placing and editing (`_place_institution`,
   `_institution_split`, `_open_mode_split` and their kin), `_demand_changed`, `_hand_demand_to_run`, `_route_along`.
+  `main_layout.py` (`LayoutMixin`) builds the window: `_build_ui`, `_build_sim_bar`, `_build_menu`, `_connect_signals`,
+  `_name_open_tab`, `_fit_sidebar`, `_centre_tab_icons`, with `TAB_ICONS`, `TAB_ICON_PX` and the `DEFAULT_*` grid
+  settings (`main.py` imports them back for `__init__`). `main.py` keeps `__init__`, `eventFilter`, `closeEvent`,
+  the summary inputs, the Research Log step, the map/demand images and Watch my edits.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
@@ -136,7 +140,7 @@
     `dispatch_emergency(origin, destination, every_min, check_only, after_s)`
     (into the live run; ValueError with no run, an unknown end or junction, or no route) and `places` (boundary
     ends, then junctions).
-  - Tabs are icons (`TAB_ICONS`: glyphs of Windows' Segoe Fluent Icons, or Segoe MDL2 Assets on
+  - Tabs are icons (`main_layout.TAB_ICONS`: glyphs of Windows' Segoe Fluent Icons, or Segoe MDL2 Assets on
     Windows 10), equal tiles filling the row edge to edge with no base line under them, each icon centred
     (`iconTabs` in theme.py; `_centre_tab_icons` pads the tiles to the row's width whenever it resizes, read off
     the row's own hint so the sidebar never widens from it); hovering a tab shows its name, and the open tab's

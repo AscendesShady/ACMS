@@ -125,6 +125,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | main_metro.py | MainWindow's MRT mixin: deploy a line stop by stop, merge question, leg preview, Finish dialog (→ main.md) | Qt |
 | main_edit.py | MainWindow's map editing mixin: tool modes, selection, Add Node/Edge, crossings, delete (→ main.md) | Qt |
 | main_demand.py | MainWindow's Demand Generator mixin: grids, deploy points, institutions, a run's pair demand (→ main.md) | Qt |
+| main_layout.py | MainWindow's layout mixin: builds the sidebar, tabs, menu and run bar, wires every signal (→ main.md) | Qt |
 | searches.py | Route-choice equilibrium (MSA) over headless runs; trip times for elastic demand (→ experiments.md) | no |
 | run_reports.py | Answers on this session's finished runs and experiments (→ experiments.md) | no |
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |
