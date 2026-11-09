@@ -49,7 +49,7 @@ for how to use each feature, the [README](../README.md).
 |---|---|---|
 | **Roads** | **Add Node**: click to place nodes one after another (each exactly where you click; a dashed line gives the distance to the next; right-click keeps them). **Add Edge**: a road between two junctions (Connection) or out to a boundary end (End); crossings become a roundabout or an overpass. Click anything to edit it below. | `main.canvas_clicked`, `main._build_edge`, `network_tools.build_edge`, `properties_panel.py` |
 | **Selection editor** | A road: lanes, speed, direction, turn pockets, cycle lanes, footpaths. A junction: control (signalised, roundabout, uncontrolled) and signal timing; each phase named by the letter its heads show on the map (Phase A, B…). An end: its flows. Ctrl+click roads or junctions for slip roads and interchanges. | `properties_panel.py`, `interchanges.py`, `roundabouts.py`, `lane_graph.phase_letters` |
-| **MRT** | Start deployment, click stop after stop (curves of 300 m or more), right-click to finish and set its service. | `main.toggle_metro`, `metro.py`, `models.py` |
+| **MRT** | Start deployment, click stop after stop (curves of 300 m or more), right-click to finish and set its service. | `main_metro.toggle_metro`, `metro.py`, `models.py` |
 | **Pedestrian** | Add Zebra, Add Overbridge on a road with footpaths both sides. | `main._place_crossing`, `walking.py` |
 
 ### Mode Behavior

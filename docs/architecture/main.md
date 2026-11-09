@@ -17,7 +17,9 @@
   `main_project.py` (`ProjectMixin`) holds undo/redo and the project file: `_snapshot`, `_commit`, `undo`, `redo`,
   `_restore`, `_project`, `unsaved`, `save_file`, `_may_discard`, `load_file` and their helpers, and `TITLE`. `main_create.py` (`CreateMixin`) holds the Create tab and background
   glue: `install_network`, `set_driving_side`, `_set_default`, `generate`, `_junction_bounds`, `_show_background`,
-  `_background_tool`, `_extent`, `_zoom_range`, `_show_pointer`, `_background_changed`.
+  `_background_tool`, `_extent`, `_zoom_range`, `_show_pointer`, `_background_changed`. `main_metro.py` (`MetroMixin`)
+  holds MRT drawing: `toggle_metro`, `metro_clicked`, `_merge_or_discard`, `_metro_ghost`, `_accept_metro_line`,
+  `_show_metro_summary`, `_metro_report`.
 - **Sidebar tabs:**
   - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
     and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
