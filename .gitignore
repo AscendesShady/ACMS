@@ -22,3 +22,5 @@ stages/*/*/output/*
 # Graphitout editor workspace (local state)
 .graphitout/
 .acms-version
+.acms-reinstall
+*.acms-part

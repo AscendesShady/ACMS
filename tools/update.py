@@ -4,7 +4,8 @@ A git clone pulls (fast-forward only, so local commits or edits are never touche
 .acms-version with the newest commit on GitHub and copies the newer files over it, deleting the files the last
 version shipped that the new one no longer has (never a file ACMS didn't ship: your own extension stays).
 No internet: nothing happens. ACMS_NO_UPDATE set (to anything): nothing happens either.
-Exit code 3 means ACMS was updated (and reinstalled), so launch.bat starts again from its new copy.
+Exit code 3 means ACMS was updated (and reinstalled), so launch.bat starts again from its new copy. A reinstall that
+fails leaves .acms-reinstall, so the next launch tries it again (an update's new package would be missing for ever).
 """
 
 from __future__ import annotations
@@ -14,7 +15,6 @@ import os
 import shutil
 import subprocess
 import sys
-import tempfile
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -22,11 +22,16 @@ from pathlib import Path
 REPO = "AscendesShady/ACMS"
 ROOT = Path(__file__).resolve().parent.parent
 VERSION = ROOT / ".acms-version"
+REINSTALL = ROOT / ".acms-reinstall"  # updated, not yet reinstalled: the next launch reinstalls
 UPDATED = 3
+# Files ACMS shipped once and no longer does: deleted by the first update of a folder with no .acms-version yet (a
+# downloaded folder lists nothing before then; an old extension would load for ever, extensions load by folder scan)
+RETIRED = ("extensions/dispatch_emergency.py",)
 
 
 def git_update() -> bool:
-    if not shutil.which("git"):
+    if not shutil.which("git"):  # a clone made with GitHub Desktop, which keeps its git to itself
+        print("Update skipped: this folder is a git clone but git isn't on PATH (https://git-scm.com/download/win).")
         return False
     head = lambda: subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout
     before = head()
@@ -52,16 +57,21 @@ def install_zip(root: Path, sha: str, data: bytes) -> None:
     files it shipped: a file the last version shipped that this one doesn't is deleted (extensions load by folder
     scan, so a removed one would load for ever), and a file ACMS never shipped is never touched."""
     version = root / VERSION.name
-    before = set(version.read_text().splitlines()[1:]) if version.exists() else set()
-    # Extract on the same drive, then os.replace file by file: a full disk never leaves a half-written file
-    with tempfile.TemporaryDirectory(dir=root) as tmp:
-        zipfile.ZipFile(io.BytesIO(data)).extractall(tmp)
-        (top,) = Path(tmp).iterdir()  # GitHub zips hold one folder, ACMS-<sha>
-        shipped = sorted(src.relative_to(top).as_posix() for src in top.rglob("*") if src.is_file())
-        for name in shipped:
+    before = set(version.read_text().splitlines()[1:]) if version.exists() else set(RETIRED)
+    # Each file written beside its place, then os.replace: a full disk never leaves a half-written file, and no path
+    # is longer than the file's own (a temporary folder of ACMS-<sha> would add ~60 characters: Windows' 260 limit)
+    with zipfile.ZipFile(io.BytesIO(data)) as archive:
+        members = [(info, info.filename.split("/", 1)[1]) for info in archive.infolist() if not info.is_dir()]
+        shipped = sorted(name for _, name in members)  # GitHub zips hold one folder, ACMS-<sha>: dropped
+        for info, name in members:
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
-            os.replace(top / name, dest)
+            part = dest.with_name(dest.name + ".acms-part")
+            try:
+                part.write_bytes(archive.read(info))
+                os.replace(part, dest)  # a file open in Word fails here: no version written, the next launch retries
+            finally:
+                part.unlink(missing_ok=True)
     for name in before - set(shipped):
         gone = (root / name).resolve()
         if gone.is_relative_to(root.resolve()):  # the list is ours, but a path is never followed out of the folder
@@ -78,11 +88,16 @@ def main() -> int:
         updated = git_update() if (ROOT / ".git").exists() else zip_update()
     except (OSError, subprocess.TimeoutExpired, zipfile.BadZipFile) as e:  # offline, GitHub down, rate-limited
         print("Update check skipped:", e)
+        updated = False
+    if not updated and not REINSTALL.exists():
         return 0
-    if not updated:
-        return 0
+    REINSTALL.touch()
     print("Updated: installing...")
-    subprocess.run([sys.executable, "-m", "pip", "install", "--disable-pip-version-check", "-q", "-e", str(ROOT)])
+    pip = subprocess.run([sys.executable, "-m", "pip", "install", "--disable-pip-version-check", "-q", "-e", str(ROOT)])
+    if pip.returncode:  # the next launch tries again; files just replaced still restart launch.bat (its new copy)
+        print("Install failed: ACMS opens as it is, and the next launch tries again.")
+        return UPDATED if updated else 0  # a retry that fails opens ACMS: never a restart loop
+    REINSTALL.unlink(missing_ok=True)
     return UPDATED
 
 

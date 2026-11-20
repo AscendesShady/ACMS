@@ -1002,7 +1002,10 @@ The campaign Qt regression injects `KeyError("all")` into an approved scenario e
   generation side by side with the same answer as one by one).
 - `test_update.py`: `tools/update.py`'s `install_zip` from two local zips into a temporary folder (files replaced,
   one the first shipped and the second dropped deleted, the user's own extension left, `.acms-version` the commit
-  and its files; a first update with no list deleting nothing) and `ACMS_NO_UPDATE` making `main` do nothing.
+  and its files; a first update with no list deleting nothing but `RETIRED` files, each file written beside its place
+  so no path is longer than its own, no `.acms-part` left), a failed reinstall marked (`.acms-reinstall`), restarting
+  launch.bat once after an update but never on a retry that fails, and installed at a later launch; and
+  `ACMS_NO_UPDATE` making `main` do nothing.
 - `test_experiments.py`: plain runs side by side in processes (`run_pool`) giving each seed the figures of the same
   run alone, a workbook each though started in the same second, Stop ending them early, and None (make them one
   by one) for jobs that can't be pickled.

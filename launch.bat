@@ -18,8 +18,9 @@ echo Setting up ACMS (first run)...
 %PY% -m venv .venv || goto failed
 
 :check
-rem Newer ACMS on GitHub: update, then start again from the new launch.bat (on one line: cmd reads this file as it runs)
-".venv\Scripts\python.exe" tools\update.py & if errorlevel 3 ("%~f0" %* & exit /b 0)
+rem Newer ACMS on GitHub: update, then start again from the new launch.bat (on one line: cmd reads this file as it
+rem runs; goto finds :restart in the new copy). Exactly 3: a venv whose Python is gone exits 103, never a restart
+".venv\Scripts\python.exe" tools\update.py & if errorlevel 3 if not errorlevel 4 goto restart
 rem Installed, and here: a moved or freshly cloned folder installs again
 ".venv\Scripts\python.exe" -c "import traffic_simulator, pathlib, sys; sys.exit(not pathlib.Path(traffic_simulator.__file__).resolve().is_relative_to(pathlib.Path('src').resolve()))" >nul 2>&1 && goto run
 echo Installing ACMS (downloads PySide6 the first time)...
@@ -27,6 +28,11 @@ echo Installing ACMS (downloads PySide6 the first time)...
 
 :run
 start "" ".venv\Scripts\pythonw.exe" -m traffic_simulator.main %*
+exit /b 0
+
+:restart
+rem Updated: the new launch.bat from the top (%* outside brackets: a ")" in a dropped path can't break a block)
+"%~f0" %*
 exit /b 0
 
 :failed

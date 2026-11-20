@@ -21,7 +21,11 @@ finds Python 3.10 or newer (none: it installs Python 3.12 for this user with win
 `.venv` and installs ACMS there (a few minutes: PySide6 is large); after that it just opens ACMS. A moved or freshly
 cloned folder installs again. Each launch with internet also updates ACMS from GitHub first (`tools/update.py`: a clone
 pulls fast-forward only; a downloaded folder copies the newer files over itself and deletes the ones that version
-no longer has). To stay as you are, set the environment variable `ACMS_NO_UPDATE` (to anything).
+no longer has; a reinstall that fails is tried again at the next launch). No internet, or GitHub busy: ACMS opens
+as it is and the next launch looks again. A clone needs git on PATH to update (GitHub Desktop keeps its own: it
+says so). Copies of ACMS from before the updater (a `launch.bat` with no `tools\update.py` line) can't update
+themselves: download ACMS once more, and from then on every launch updates it. To stay as you are, set the
+environment variable `ACMS_NO_UPDATE` (to anything).
 
 By hand:
 

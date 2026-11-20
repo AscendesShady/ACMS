@@ -38,6 +38,34 @@ def test_a_zip_update_replaces_files_and_deletes_only_what_acms_shipped_before()
     assert sorted(p.name for p in root.iterdir()) == [".acms-version", "README.md", "extensions", "src"]  # no litter
 
 
+def test_a_first_update_deletes_retired_files_and_writes_no_longer_paths_than_its_own():
+    root = Path(tempfile.mkdtemp())
+    (root / "extensions").mkdir()
+    (root / "extensions" / "dispatch_emergency.py").write_text("old")  # shipped once; a folder with no list yet
+    deep = "src/" + "d" * 40 + "/x.py"
+    update.install_zip(root, "c3", archive("c3", {deep: "v", "README.md": "v"}))
+    assert not (root / "extensions" / "dispatch_emergency.py").exists()  # it would load for ever
+    assert (root / deep).read_text() == "v"
+    assert not list(root.rglob("*.acms-part")) and sorted(p.name for p in root.iterdir()) == [".acms-version", "README.md", "extensions", "src"]
+
+
+def test_a_failed_reinstall_is_tried_again_next_launch_without_a_restart_loop():
+    root = Path(tempfile.mkdtemp())
+    kept = update.git_update, update.zip_update, update.subprocess.run, update.REINSTALL, update.ROOT
+    codes = iter([1, 1, 0])  # pip fails after the update, fails again on the retry, then works
+    update.REINSTALL, update.ROOT = root / ".acms-reinstall", root
+    update.subprocess.run = lambda *args, **kwargs: type("Done", (), {"returncode": next(codes)})()
+    try:
+        update.zip_update = lambda: True  # files replaced: launch.bat restarts from its new copy all the same
+        assert update.main() == update.UPDATED and update.REINSTALL.exists()
+        update.zip_update = lambda: False  # the restarted launch: nothing new, the reinstall tried and failed again
+        assert update.main() == 0 and update.REINSTALL.exists()  # ACMS opens: no loop
+        assert update.main() == update.UPDATED and not update.REINSTALL.exists()  # a later launch: installed
+        assert update.main() == 0  # and then nothing to do
+    finally:
+        update.git_update, update.zip_update, update.subprocess.run, update.REINSTALL, update.ROOT = kept
+
+
 def test_acms_no_update_makes_the_updater_do_nothing():
     def never():
         raise AssertionError("it looked for an update")
