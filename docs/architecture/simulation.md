@@ -379,7 +379,11 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   `_lane_reach`), and it may turn from any lane (`reach`'s `any_lane`; `_may_enter` doesn't make it wait in the
   wrong lane). It **obeys red**, unless a lane of its arm is set apart green (DEVL's flashing green: every other
   movement is red then), whichever lane it is in (`_signal_for`). Otherwise it drives as any other vehicle (other
-  traffic doesn't yield to it). `emergency_trips` keeps each one's id, from, to,
+  traffic doesn't yield to it). So too, with the signal override's `kerb_lane_for` naming its class (the Dynamic Bus
+  Lane's "bus"), a bus keeps to the kerbside lane (`Link.pockets[0]`) over the last `BUS_LANE_M` (150 m) before each
+  signalised junction it may turn on from that lane (the intermittent bus lane), from its bay if that is earlier;
+  it turns only where its turn is permitted and obeys its lane's own signal (`_lane_reach`, its key holding whether
+  it keeps to the lane, so ticking DBL mid-run recomputes it). `emergency_trips` keeps each one's id, from, to,
   `dispatched_s` and `arrived_s` (None until it arrives).
   - **Demand during a run** (`set_demand`, `_take_demand`): new demand can be handed over from any
     thread by one reference swap; the physics takes it at the start of its next step, so everything
@@ -427,7 +431,13 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   `box_m`, the distance across it (twice the stop line inset, cached); the cycle (`cycle_s`,
   `cycle_start_s`, `offset_s`; an adaptive plan is moved on to now first); each arm's `lanes` and `kerb_lane` (its
   kerbside lane past a kerb pocket's lanes, `Link.pockets[0]`; 0 without one), and each approaching vehicle's `emergency`; plus the arm's own `planned` state and
-  `approaching` vehicles. It returns the arm's state, or (that, {lane index: the lane's own state}) to set lanes
+  `approaching` vehicles; each arm's `queue_share` (`_queue_share`: its longest lane queue, the queued vehicles
+  slower than 5 km/h with their gaps, over the lane's storage, a turn pocket's from where it opens: the HCM's queue storage ratio); `route_ahead`, the
+  method `route_ahead(vehicle id, junctions=ROUTE_AHEAD_JUNCTIONS)`: the next 2 signalised junctions on a vehicle's
+  route past this one, each with `distance_m` on from here, `queue_share` (the most on the links on the way, on the
+  lanes its route may go on from), the `signal` that road shows now and `priority` (a lane hold renewed within
+  `HOLD_FRESH_S`, 2 s, clearing another arm than this road: "devl" or "dbl"), [] for a vehicle not running (TSP's and DBL's words); and `holds`, the run's `lane_holds`, a dict the overrides keep between steps (the dynamic
+  lanes taking turns at a junction; a rollout's copy starts with its own, empty). It returns the arm's state, or (that, {lane index: the lane's own state}) to set lanes
   apart (DEVL clearing the kerbside lane): `_lane_state` is what a lane's vehicles obey (`_signal_for`: an emergency vehicle also goes on its arm's lane green) (`_may_enter`, and gap
   acceptance against a lane's foes), kept in `_lane_states` ((link, lane index) -> state). With it unset nothing else
   runs: the plans are untouched.
@@ -465,17 +475,38 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   adaptive signals nor a reader changes another's, and its default plans are read-only. `Frame.records(road,
   limit)` gives it as plain data, its plans copied again (the assistant's `read_traffic`; a vehicle off its lane's
   centre line also has `lateral_m`).
-- **runner.py** holds `Runner` (moved out of simulation.py, which still imports it as `simulation.Runner`).
+- **runner.py** holds `Runner` (moved out of simulation.py, which still imports it as `runner.Runner`).
 - **`Runner(simulation, speed, recorder)`**: a `results.RunRecorder` is sampled on the physics thread every
   `sample_s` simulated seconds (after the step that reaches it), so a busy screen never costs a sample; one
   that raises is dropped with its `error` and the traffic carries on.
+- **`ProcessRunner`** (physics_process.py, no Qt): a live run's physics in a process of its own, so a busy run
+  and a busy map don't take turns at one interpreter (2,700 vehicles at 10×, on a thread: the map 4 redraws a
+  second and the run at 5.8×; in a process: 60 and 10.0×). It is `Runner`'s interface. The Simulation is pickled
+  across (the adaptive signals' callbacks are methods and `functools.partial`, the observed records'
+  defaults module functions, so it pickles; 5 MB and 55 ms for 1,500 vehicles) and a `Runner` steps it there;
+  one connection brings back each published frame with the pace, whether it runs, the speed kept, the error and
+  `behind()` as judged there, and each sample for the recorder, which stays here. `simulation` is a stand-in
+  while it runs (the lane graph it started with, `time`, `set_demand` and `dispatch` sent across) and the
+  Simulation itself, as it ended, once `stop` has brought it back, so the window ends a run as it does a
+  thread's. `snapshot()` is a copy of it as it stands (an Export's analysis; `Runner.snapshot` is the live one).
+  A run with an extension deciding stays on a thread (its override is the window's own code and agents:
+  `MainWindow._runner_for`), and ticking one mid-run brings the run home (`come_home`: a `Runner` here carrying
+  on from where it stands, its samples continuing). The window uses it on a real display
+  (`MainWindow.physics_process`); offscreen, where tests reach into the run, a thread unless turned on.
+  `shares_interpreter` (False here, True for `Runner`) tells `_frame` whether drawing less helps the physics.
 - **`Runner`**: runs a Simulation on its own thread, in step with the wall clock × speed: every step
   is computed, in order, whether or not anything is drawn, and the physics never waits for the view.
-  It publishes a fresh frame at most 60 times a second (and the last step when paused); `pause()`
-  returns once the physics is idle with its last step published. `target()` is where simulated time
+  It publishes a fresh frame at most 60 times a second (and the last step when paused, even one taken just
+  before the pause while it slept); `pause()` returns once the physics is idle with its last step published.
+  A recorder's next sample is due from where the Simulation stands (one brought home carries on). `target()` is where simulated time
   should be, from `_pace` (simulated s, wall s, speed): one tuple `set_speed` swaps whole on the UI thread,
   so the physics thread never reads a pace half changed (a jump ahead, then a freeze); `speed_now` is the speed really achieved (only below the chosen speed if the CPU can't
-  keep up at all). A step (or frame) that raises ends the physics with its `error` set (the time and the
+  keep up at all). Time the physics couldn't keep isn't owed: after every step `_keep_pace` drops what it is
+  behind beyond `_owed()` (`LATE_S` 0.25 real seconds at the speed, at least 4 steps), and `set_speed` starts
+  from the simulation's own time (at most a step on), so a lower speed, or lighter traffic, is the pace at the
+  next step (a backlog was once raced through at full tilt, at 1× too). Each swap of `_pace` is under `_pacing`. `behind()`
+  says whether the published frame is later than an on-time one ever is: over two steps old and over
+  `LATE_FRAME_S` (0.1) real seconds at the speed (two steps alone are 17 ms at 60×, the gap between two publishes). A step (or frame) that raises ends the physics with its `error` set (the time and the
   exception; the traceback on stderr): `running` turns False, `play` is refused and `pause`/`stop` return at
   once; the window sees it at its next display frame and ends the run (`MainWindow._end_run`).
   `stop(wait_s)` says whether the physics has ended: False while a step is still going (a slow hook), which

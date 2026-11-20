@@ -67,7 +67,7 @@ def test_diamond_replaces_the_junction_and_exits_on_the_keep_side():
 
 
 def test_a_diamonds_ramps_join_and_leave_only_their_own_carriageway():
-    from traffic_simulator.simulation import Graph
+    from traffic_simulator.lane_graph import Graph
 
     for side in ("left", "right"):
         network = generate_network(3, 4, driving_side=side)
@@ -324,8 +324,10 @@ def test_a_new_driving_side_mirrors_each_interchange_into_that_sides_build():
 
 
 def test_traffic_drives_a_flipped_interchange_as_a_fresh_one():
-    from traffic_simulator.mode_behavior import PALETTE, VehicleMode
-    from traffic_simulator.simulation import PairDemand, Simulation
+    from traffic_simulator.mode_behavior import PALETTE
+    from traffic_simulator.vehicle import VehicleMode
+    from traffic_simulator.simulation import Simulation
+    from traffic_simulator.demand import PairDemand
 
     modes = [VehicleMode("Car", PALETTE[1])]
     pairs = [("2W", "2N"), ("2N", "2E"), ("2E", "2W"), ("2W", "2E"), ("2N", "2W"), ("2E", "2N")]
@@ -350,8 +352,10 @@ def test_traffic_drives_a_flipped_interchange_as_a_fresh_one():
 
 
 def test_a_slip_road_takes_the_kerb_side_turn_from_the_kerbside_lane_only():
-    from traffic_simulator.mode_behavior import PALETTE, VehicleMode
-    from traffic_simulator.simulation import PairDemand, Simulation
+    from traffic_simulator.mode_behavior import PALETTE
+    from traffic_simulator.vehicle import VehicleMode
+    from traffic_simulator.simulation import Simulation
+    from traffic_simulator.demand import PairDemand
 
     # Junction 1,1: 1W comes in from the west, 1,2-1,1 leaves north. Driving on the left that's the
     # kerb-side (left) turn; on the right the kerb side is the other way round.
@@ -425,8 +429,10 @@ def test_a_slip_road_is_refused_without_a_kerb_side_turn_or_room():
 def test_a_slip_road_moves_out_of_a_new_roundabout_and_traffic_flows_through_both():
     from collections import Counter
 
-    from traffic_simulator.mode_behavior import PALETTE, VehicleMode
-    from traffic_simulator.simulation import PairDemand, Simulation
+    from traffic_simulator.mode_behavior import PALETTE
+    from traffic_simulator.vehicle import VehicleMode
+    from traffic_simulator.simulation import Simulation
+    from traffic_simulator.demand import PairDemand
 
     network = generate_network(2, 2)
     slip = build_slip_road(network, "1W", "1,2-1,1")

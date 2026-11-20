@@ -246,9 +246,7 @@ class CheckList(QComboBox):
         super().__init__()
         self.before_open = before_open
         self.setModel(QStandardItemModel(self))
-        # Fusion's menu-like popup ignores maxVisibleItems and runs off the screen: a plain list that scrolls
-        self.setStyleSheet("QComboBox { combobox-popup: 0; }")
-        self.setMaxVisibleItems(self.MAX_SHOWN)
+        self.setMaxVisibleItems(self.MAX_SHOWN)  # a plain list that scrolls (theme.py: combobox-popup: 0)
         self.view().setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.view().viewport().installEventFilter(self)  # after the popup's own filter, so it runs first
 

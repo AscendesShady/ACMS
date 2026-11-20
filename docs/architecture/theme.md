@@ -44,7 +44,11 @@
   banners, tooltips and glass composited over the backdrop (`over`). Tests require at least 4.5:1.
 - **Fusion with an explicit palette:** Windows light/dark settings cannot mix unreadable colours into the UI.
   Spin boxes and combos keep Fusion's arrows; checkboxes and radio buttons keep its checkmark and dot, so the
-  checked state has a shape as well as colour. Their keyboard/disabled behaviour remains native.
+  checked state has a shape as well as colour. Their keyboard/disabled behaviour remains native. Every
+  dropdown's list opens just under its box (`combobox-popup: 0`), not Fusion's menu-style popup, which moved
+  the list so the chosen item covered the box and so opened somewhere different for each choice.
+  A group box's title (QGroupBox, 10.5pt semibold) has 22 px above its frame and 8 px under it, so the title
+  never runs into the frame or the box's first row.
 - **Stable interaction:** button hover/focus/press states retain their size and content bounds. Ordinary and
   primary buttons use the same one-pixel border width when focused. Icon and mini buttons retain their existing
   hit areas and accessible labels. A collapsible section's title remains semibold and left-aligned, with a

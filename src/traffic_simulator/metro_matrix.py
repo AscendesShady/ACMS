@@ -1,5 +1,5 @@
 """The people-between-places grids of the Demand Generator: the MRT OD matrix and its Pedestrian OD and Deploy
-Pedestrian variants, each with its day curve in the sidebar. Moved out of od_matrix.py (which re-exports them).
+Pedestrian variants, each with its day curve in the sidebar.
 """
 
 from __future__ import annotations

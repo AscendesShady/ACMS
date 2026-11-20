@@ -9,7 +9,7 @@ conflicts) should build on these functions rather than on screen coordinates.
 
 from __future__ import annotations
 
-from math import acos, atan2, ceil, cos, hypot, pi, sin
+from math import atan2, cos, hypot, sin
 
 Point = tuple[float, float]
 

@@ -21,6 +21,14 @@ from traffic_simulator.properties_panel import TIMING_METHODS
 class CreateMixin:
     """The Create Network tab and the background glue on the window."""
 
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_commit', '_end_modes_except', '_metro_ghost', '_network_summary', 'add_node_button',
+             'background_painter', 'background_panel', 'driving_side', 'fit_button', 'generate_section',
+             'grid_toggles', 'horizontal_spin', 'lane_changing_check', 'lanes_spin', 'network', 'node_chain',
+             'pointer', 'properties', 'runner', 'scene', 'signal_method_combo', 'speed_limit_combo', 'statusBar',
+             'tab_changed', 'tabs', 'vertical_spin', 'view')
+
     def install_network(self, network: Network, fit: bool = True) -> None:
         self.background_panel.end_tool()  # on the old network: an unconfirmed work zone never reaches the new one
         self._end_modes_except(None)

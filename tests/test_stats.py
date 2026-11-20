@@ -146,8 +146,6 @@ def test_rank_tests_and_all_pairs_match_known_values():
     tied = stats.friedman({"A": {1: 5, 2: 5}, "B": {1: 5, 2: 5}})
     assert tied["p"] == 1.0  # all tied: no difference
     assert stats.friedman({"A": {1: 1}, "B": {1: 2}}) is None  # one seed: nothing to rank on
-    separated = stats.mann_whitney([1, 2, 3, 4, 5], [6, 7, 8, 9, 10])
-    assert separated["u"] == 0 and abs(separated["z"] - 2.507) < 1e-3  # (12.5 - 0.5) / sqrt(25·11/12)
     same = stats.kruskal_wallis({"a": [1, 2, 3], "b": [1, 2, 3]})
     assert same["h"] == 0.0 and same["p"] == 1.0
     assert stats.kruskal_wallis({"a": [1, 2, 3, 4], "b": [5, 6, 7, 8], "c": [9, 10, 11, 12]})["p"] < 0.05

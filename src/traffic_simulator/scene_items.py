@@ -24,6 +24,7 @@ SIGNAL_BODY, SIGNAL_RIM = QColor(theme.SIGNAL_BODY), QColor(theme.SIGNAL_RIM)  #
 CLOCK_DIGIT_W, CLOCK_DIGIT_H, CLOCK_STROKE, CLOCK_PAD = 0.6, 1.0, 0.13, 0.2
 CLOCK_OFFSET_M, CLOCK_POLE_M = 1.7, 2.5
 CLOCK_SEGMENTS = ("abcdef", "bc", "abdeg", "abcdg", "bcfg", "acdfg", "acdefg", "abc", "abcdefg", "abcdfg")
+CLOCK_MIN_PX = 3  # digits under this many pixels tall can't be read: the clock isn't drawn (zoomed out, every one costs)
 BUILDING_COLOR = QColor(BUILDING_ROOF)  # an institution's roof
 VEHICLE_Z = 8  # the vehicle layer: above roads and signals, below labels and end markers
 METRO_STOP_RADIUS_M = 12.0  # a stop's marker on the map
@@ -105,8 +106,8 @@ class PavingItem(QGraphicsPathItem):
 class _FaceDrawing:
     """Compile vector commands once; replay in Qt rather than cross Python for every face on every pan."""
 
-    def __init__(self, faces):
-        self.faces = tuple(faces)
+    def __init__(self, faces=(), draw=None):
+        self.faces, self.draw = tuple(faces), draw  # draw(painter): any commands, in place of the faces
         self.picture, self.hints = None, None
 
     def paint(self, painter, x=0., y=0., turn=0.):
@@ -120,6 +121,8 @@ class _FaceDrawing:
             for colour, polygon in self.faces:
                 record.setBrush(colour)
                 record.drawPolygon(polygon)
+            if self.draw is not None:
+                self.draw(record)
             record.end()
         painter.save()
         painter.translate(x, y)
@@ -184,19 +187,52 @@ class MetroItem(QGraphicsItem):
             painter.drawPath(self.track.translated(projection_lift() * metro_assets.TRACK_M))
 
 
+def _draw_clock(painter, digits: str, state: str) -> None:
+    """A clock's housing and seven-segment digits, in metres, centred on (0, 0): `state`'s colour over the unlit."""
+    width = len(digits) * CLOCK_DIGIT_W + (len(digits) - 1) * CLOCK_STROKE + 2 * CLOCK_PAD
+    height = CLOCK_DIGIT_H + 2 * CLOCK_PAD
+    painter.setPen(QPen(SIGNAL_RIM, 0.08))
+    painter.setBrush(SIGNAL_BODY)
+    painter.drawRoundedRect(QRectF(-width / 2, -height / 2, width, height), 0.15, 0.15)
+    lit = {"G": SIGNAL_GREEN, "Y": SIGNAL_AMBER}.get(state, SIGNAL_RED)
+    unlit = QColor(lit)
+    unlit.setAlphaF(0.12)
+    painter.setPen(Qt.PenStyle.NoPen)
+    w, h, s = CLOCK_DIGIT_W, CLOCK_DIGIT_H, CLOCK_STROKE
+    across, down = w - 2 * s, h / 2 - 1.5 * s
+    segments = {"a": QRectF(s, 0, across, s), "g": QRectF(s, (h - s) / 2, across, s), "d": QRectF(s, h - s, across, s),
+                "f": QRectF(0, s, s, down), "b": QRectF(w - s, s, s, down),
+                "e": QRectF(0, (h + s) / 2, s, down), "c": QRectF(w - s, (h + s) / 2, s, down)}
+    x = -width / 2 + CLOCK_PAD
+    for digit in digits:
+        on = CLOCK_SEGMENTS[int(digit)]
+        for name, rect in segments.items():
+            painter.setBrush(lit if name in on else unlit)
+            painter.drawRect(rect.translated(x, -h / 2))
+        x += w + s
+
+
+@lru_cache(maxsize=512)
+def _clock_face(digits: str, state: str) -> _FaceDrawing:
+    """A reading's drawing, compiled once and replayed in Qt: drawn rectangle by rectangle from Python, 400 clocks
+    took 27 ms of every display frame (a 10 x 10 grid; the vehicles 0.5 ms)."""
+    return _FaceDrawing(draw=lambda painter: _draw_clock(painter, digits, state))
+
+
 class SignalClock(QGraphicsItem):
     """A signal head's countdown, a digital clock beside it: whole seconds until its signal changes, lit in the
     signal's colour over the unlit segments. Drawn upright on screen at the map's scale (it grows as you zoom), so it
-    reads the same in 2D and, standing on a pole, in 2.5D."""
+    reads the same in 2D and, standing on a pole, in 2.5D; not drawn where its digits would be under CLOCK_MIN_PX."""
 
     def __init__(self, owner, x: float, y: float) -> None:
         super().__init__()
         self.owner, self.anchor, self.reading = owner, QPointF(x, y), None  # reading: (seconds, "G"/"Y"/"R")
+        reach = CLOCK_POLE_M * 2 + CLOCK_DIGIT_W * 4  # the 2.5D pole, foreshortened, and three digits' width
+        self._bounds = QRectF(x - reach, y - reach, 2 * reach, 2 * reach)  # asked twice a clock a display frame
         self.setZValue(VEHICLE_Z + 0.5)  # over the traffic, as a label is
 
     def boundingRect(self):
-        reach = CLOCK_POLE_M * 2 + CLOCK_DIGIT_W * 4  # the 2.5D pole, foreshortened, and three digits' width
-        return QRectF(self.anchor.x() - reach, self.anchor.y() - reach, 2 * reach, 2 * reach)
+        return self._bounds
 
     def set_reading(self, reading: tuple[int, str] | None) -> None:
         if reading != self.reading:
@@ -207,37 +243,18 @@ class SignalClock(QGraphicsItem):
         if self.reading is None:
             return
         seconds, state = self.reading
-        digits = str(min(seconds, 999))
         t = painter.worldTransform()
         metre = hypot(t.m11(), t.m21())  # screen units per metre, in 2D and 2.5D alike
+        if metre * CLOCK_DIGIT_H < CLOCK_MIN_PX:
+            return
         ground = t.map(self.anchor)
         top = t.map(self.anchor + projection_lift() * CLOCK_POLE_M) if self.owner.isometric else ground
         painter.save()
         painter.setWorldTransform(QTransform.fromTranslate(top.x(), top.y()).scale(metre, metre))
-        width = len(digits) * CLOCK_DIGIT_W + (len(digits) - 1) * CLOCK_STROKE + 2 * CLOCK_PAD
-        height = CLOCK_DIGIT_H + 2 * CLOCK_PAD
         if self.owner.isometric:  # the pole, from the kerb up to the clock's foot
             painter.setPen(QPen(SIGNAL_RIM, 0.1))
-            painter.drawLine(QPointF(0, (ground.y() - top.y()) / metre), QPointF(0, height / 2))
-        painter.setPen(QPen(SIGNAL_RIM, 0.08))
-        painter.setBrush(SIGNAL_BODY)
-        painter.drawRoundedRect(QRectF(-width / 2, -height / 2, width, height), 0.15, 0.15)
-        lit = {"G": SIGNAL_GREEN, "Y": SIGNAL_AMBER}.get(state, SIGNAL_RED)
-        unlit = QColor(lit)
-        unlit.setAlphaF(0.12)
-        painter.setPen(Qt.PenStyle.NoPen)
-        w, h, s = CLOCK_DIGIT_W, CLOCK_DIGIT_H, CLOCK_STROKE
-        across, down = w - 2 * s, h / 2 - 1.5 * s
-        segments = {"a": QRectF(s, 0, across, s), "g": QRectF(s, (h - s) / 2, across, s), "d": QRectF(s, h - s, across, s),
-                    "f": QRectF(0, s, s, down), "b": QRectF(w - s, s, s, down),
-                    "e": QRectF(0, (h + s) / 2, s, down), "c": QRectF(w - s, (h + s) / 2, s, down)}
-        x = -width / 2 + CLOCK_PAD
-        for digit in digits:
-            on = CLOCK_SEGMENTS[int(digit)]
-            for name, rect in segments.items():
-                painter.setBrush(lit if name in on else unlit)
-                painter.drawRect(rect.translated(x, -h / 2))
-            x += w + s
+            painter.drawLine(QPointF(0, (ground.y() - top.y()) / metre), QPointF(0, CLOCK_DIGIT_H / 2 + CLOCK_PAD))
+        _clock_face(str(min(seconds, 999)), state).paint(painter)
         painter.restore()
 
 

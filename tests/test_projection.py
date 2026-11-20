@@ -13,8 +13,9 @@ from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication, QGraphicsTextItem  # noqa: E402
 
 from traffic_simulator.network_generator import generate_network  # noqa: E402
-from traffic_simulator.network_scene import (ISOMETRIC_ELEVATION_DEG, ISOMETRIC_YAW_DEG, NetworkGraphicsScene,
-                                             NetworkView, projection_lift, projection_transform)  # noqa: E402
+from traffic_simulator.network_scene import NetworkGraphicsScene  # noqa: E402
+from traffic_simulator.network_view import NetworkView  # noqa: E402
+from traffic_simulator.scene_items import ISOMETRIC_ELEVATION_DEG, ISOMETRIC_YAW_DEG, projection_lift, projection_transform  # noqa: E402
 from traffic_simulator.simulation import Frame, VehicleState  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
@@ -300,7 +301,7 @@ def child_gpu():
 
 def test_people_have_metre_scaled_models_and_keep_the_same_interpolated_world_poses():
     from traffic_simulator import asset_mesh
-    from traffic_simulator.network_scene import VehicleLayer
+    from traffic_simulator.vehicle_layer import VehicleLayer
     vertices = [p for f in asset_mesh.pedestrian_mesh() for p in f.vertices]
     assert max(p[2] for p in vertices) == 1.75 and min(p[2] for p in vertices) == 0.
     assert max(p[1] for p in vertices) - min(p[1] for p in vertices) == .6
@@ -311,7 +312,9 @@ def test_people_have_metre_scaled_models_and_keep_the_same_interpolated_world_po
     layer = VehicleLayer(scene)
     class Painter:
         def __init__(self, iso): self.polygons, self.points, self.iso = [], [], iso
-        def worldTransform(self): return projection_transform(self.iso)
+        def worldTransform(self): return projection_transform(self.iso, 4.)  # people from 3 pixels tall
+        raster = QImage(1, 1, QImage.Format.Format_RGB32)  # kept: its engine dies with it
+        def paintEngine(self): return self.raster.paintEngine()  # not an OpenGL painter: the GPU draws nobody
         def setPen(self, value): pass
         def setBrush(self, value): pass
         def drawPolygon(self, points): self.polygons.append(list(points))
@@ -367,7 +370,7 @@ def test_pedestrian_overbridge_has_height_pick_bounds_and_does_not_edit_walks_on
 def paving_image(iso, scale, hardware=None):
     from PySide6.QtCore import QRectF
     from PySide6.QtGui import QPainterPath, QTransform
-    from traffic_simulator.network_scene import PavingItem
+    from traffic_simulator.scene_items import PavingItem
     path = QPainterPath()
     path.addRect(QRectF(-2., -1., 4., 2.))
     item = PavingItem(path)
@@ -399,7 +402,7 @@ def test_brick_paving_keeps_a_warm_colour_at_overview_and_readable_joints_when_z
 
 def test_brick_paving_preserves_world_footpath_hit_shapes_and_running_network_records():
     from traffic_simulator.geometry import point_along
-    from traffic_simulator.network_scene import PavingItem
+    from traffic_simulator.scene_items import PavingItem
     network = generate_network(2, 2)
     road = next(iter(network.roads.values()))
     road.footpaths = ['left', 'right']
@@ -464,7 +467,8 @@ def verify_people_overbridge_hardware():
     from PySide6.QtCore import QRectF
     from PySide6.QtGui import QPolygonF, QTransform
     from traffic_simulator import asset_mesh
-    from traffic_simulator.network_scene import OverbridgeItem, VehicleLayer
+    from traffic_simulator.scene_items import OverbridgeItem
+    from traffic_simulator.vehicle_layer import VehicleLayer
     from test_gpu import _gl_painter
     context, surface, fbo, device = _gl_painter(700, 700)
     scene = NetworkGraphicsScene()

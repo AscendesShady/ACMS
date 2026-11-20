@@ -19,7 +19,7 @@ from traffic_simulator.interchanges import (
     roads_left_at_hub,
 )
 from traffic_simulator.models import Network
-from traffic_simulator.network_tools import build_edge, delete_objects, edge_crossings
+from traffic_simulator.road_tools import build_edge, delete_objects, edge_crossings
 from traffic_simulator.properties_panel import describe_group
 from traffic_simulator.widgets import ChoiceButtons, hint_label
 
@@ -93,6 +93,15 @@ def ask_interchange(parent: QWidget, kind: str, network: Network, nodes: list[st
 
 class EditMixin:
     """Editing the network on the map."""
+
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_commit', '_delete_institution', '_refresh_grid', '_refresh_summary', 'activity', 'add_edge_button',
+             'add_node_button', 'background_painter', 'background_panel', 'create_tab', 'demand_tab', 'edge_kind',
+             'edge_start', 'edge_type_row', 'edit_tab', 'fit_button', 'grid_toggles', 'group', 'history',
+             'institution_panel', 'metro_button', 'metro_line', 'mode_hint', 'multi_nodes', 'network', 'node_chain',
+             'od_matrix', 'od_panel', 'overbridge_button', 'properties', 'scene', 'statusBar', 'tabs', 'view',
+             'zebra_button')
 
     def _network_summary(self) -> str:
         ends = self.network.approach_nodes.values()

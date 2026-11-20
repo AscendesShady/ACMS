@@ -16,7 +16,9 @@ from PySide6.QtWidgets import QApplication  # noqa: E402
 from traffic_simulator import results  # noqa: E402
 from traffic_simulator.mode_behavior import VehicleModes  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
-from traffic_simulator.simulation import DT, PairDemand, Runner, Simulation  # noqa: E402
+from traffic_simulator.simulation import DT, Simulation  # noqa: E402
+from traffic_simulator.demand import PairDemand  # noqa: E402
+from traffic_simulator.runner import Runner  # noqa: E402
 from traffic_simulator.xlsx import read_xlsx, write_xlsx  # noqa: E402,F401 (read_xlsx: other tests import it here)
 
 APP = QApplication.instance() or QApplication([])

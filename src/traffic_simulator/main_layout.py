@@ -30,11 +30,12 @@ from PySide6.QtWidgets import (
 from traffic_simulator.ai_mode import AIModePanel
 from traffic_simulator.background import BackgroundPanel
 from traffic_simulator.extensions import ExtensionsPanel
-from traffic_simulator import network_tools, results, run_reports
+from traffic_simulator import demand_plans, results, run_reports
 from traffic_simulator.signal_agent import SignalAgent
 from traffic_simulator.mode_behavior import ModeBehaviorPanel, VehicleModes
 from traffic_simulator.network_io import MAX_SEED, RUN_SEED
-from traffic_simulator.od_matrix import MetroMatrix, ODCellPanel, ODMatrix, PedestrianMatrix, SpawnMatrix
+from traffic_simulator.od_matrix import ODCellPanel, ODMatrix
+from traffic_simulator.metro_matrix import MetroMatrix, PedestrianMatrix, SpawnMatrix
 from traffic_simulator.properties_panel import TIMING_METHODS
 from traffic_simulator.summary import SummaryPanel
 from traffic_simulator.theme import float_glass
@@ -179,7 +180,6 @@ class LayoutMixin:
         self.help_button.clicked.connect(lambda: QToolTip.showText(
             self.help_button.mapToGlobal(QPoint(0, self.help_button.height())), self.map_controls, self.help_button))
         # Input Grid: one toggle, first in the map's corner and in the grid's, so it stays under the mouse.
-        self.grid_toggles = []
         for _ in range(2):
             toggle = icon_button(0xE80A, "Input Grid", checkable=True)
             toggle.toggled.connect(self.show_grid)
@@ -255,9 +255,6 @@ class LayoutMixin:
         self.edit_tabs.addTab(metro_page, "MRT")
         self.edit_tabs.addTab(walk_page, "Pedestrian")
         edit_layout.addWidget(self.edit_tabs)
-        self.metro_line: str | None = None  # the line a deployment is extending
-        self.node_chain: list[str] = []  # Add Node's nodes placed since it started: not an undo step until it ends
-        self._demand_kind = ""  # the Demand tab last chosen (Institutions shows the buildings when it opens)
         self.mode_hint = hint_label()  # next-step banner, shown only while a tool is active
         self.mode_hint.setProperty("role", "banner")
         edit_layout.addWidget(self.mode_hint)
@@ -276,15 +273,15 @@ class LayoutMixin:
         self.buildings_button.toggled.connect(self.scene.set_buildings_visible)
         self.scene.buildings_changed.connect(self.buildings_button.setChecked)
         # generate_demand's gravity model measures routes on the open network
-        self.od_panel.planner = lambda pairs, args, values=None, shares=None: network_tools.demand_plan(
+        self.od_panel.planner = lambda pairs, args, values=None, shares=None: demand_plans.demand_plan(
             self.network, pairs, args, values, shares)
-        self.od_panel.scaler = lambda values, pairs, args, shares=None: network_tools.scale_plan(
+        self.od_panel.scaler = lambda values, pairs, args, shares=None: demand_plans.scale_plan(
             self.network, values, pairs, args, shares)
         self.od_panel.checker = self._check_demand  # a degree of saturation, checked in a run
-        self.od_panel.calibrator = lambda flows, args: network_tools.calibration_plan(self.network, flows, args)
+        self.od_panel.calibrator = lambda flows, args: demand_plans.calibration_plan(self.network, flows, args)
         self.od_panel.equilibrator = self._equilibrate_demand
         self.od_panel.router = self._route_along  # drop-offs are placed along a pair's fastest route
-        self.od_panel.chooser = lambda pairs, args, values, current=None: network_tools.mode_plan(  # choose_modes
+        self.od_panel.chooser = lambda pairs, args, values, current=None: demand_plans.mode_plan(  # choose_modes
             self.network, pairs, args, self.vehicle_modes.modes, values,
             run_reports.run_test(self.tests, str(args["from_run"]))["kpis"]["observed"]["trips"] if args.get("from_run") else None,
             current)
@@ -313,10 +310,10 @@ class LayoutMixin:
         # The agent signal overrides ask (TSP): System 1 or System 2, in the background (a live run never waits).
         self.signal_agent = SignalAgent(self._ask_agent)
         self.extensions.agent = self.signal_agent
-        # What extensions may use of the window (Batch Run: its runs, and who can decide TSP in them)
+        # What extensions may use of the window (Batch Run: its runs, and who decides each controller in them)
         self.extensions.app = SimpleNamespace(run_batch=self.run_batch, replay_run=self.replay_run,
-                                              agent_options=self.ai_mode.agent_options, tsp_batch=self.tsp_batch,
-                                              devl_batch=self.devl_batch,
+                                              agent_options=self.ai_mode.agent_options,
+                                              controller_plan=self.controller_plan,
                                               dispatch_emergency=self.dispatch_emergency, places=self.places,
                                               tick_extension=self._tick_extension, show_runs=self._show_runs_on_map,
                                               signal_agent=self.signal_agent,  # the live run's, for TSP's map rings
@@ -606,7 +603,6 @@ class LayoutMixin:
         self.scene.bus_stop_moved.connect(self._bus_stop_changed)
         self.od_panel.changed.connect(self._demand_changed)
         # Renamed, added, deleted types; a headway's, PCU's or occupancy's arrow clicks merge into one undo step.
-        self._types_key = None  # while the assistant adds types: one undo step for them all
         self.vehicle_modes.changed.connect(lambda action, index: self._commit(
             self._types_key or ((action, index) if action in ("headway", "pcu", "occupancy") else None)))
         self.ai_mode.indicator.connect(self._show_ai_status)

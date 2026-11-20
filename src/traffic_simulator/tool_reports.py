@@ -1,7 +1,7 @@
 """Putting the assistant's tool calls, changes and refusals into words (no Qt).
 
 describe_changes (what the user's edits changed), state_changes (the same plus demand and vehicle types), describe_call (one line per call shown for approval) and
-explain_error/already_so (refusals as structured data); moved out of network_tools.py, which re-exports them.
+explain_error/already_so (refusals as structured data).
 """
 
 from __future__ import annotations
@@ -351,8 +351,10 @@ def _call_line(name: str, a: dict) -> str:
                            for row in rows if isinstance(row, dict))
         return f"Schedule emergency vehicles: {listed or 'none'}" + (", and send them now" if _bool(a.get("dispatch_now")) else "")
     if name == "start_batch":
-        tests = " and ".join(kind for kind, key in (("TSP", "test_tsp"), ("DEVL", "test_devl")) if _bool(a.get(key)))
-        return f"Start a batch: seeds {a.get('seeds')}, {a.get('duration_min')} min each" + (f", testing {tests}" if tests else "")
+        tests = " and ".join(kind for kind in ("TSP", "DBL", "DEVL") if _bool(a.get(f"test_{kind.lower()}")))
+        default = a.get("compare_default") is None or _bool(a.get("compare_default"))
+        return (f"Start a batch: seeds {a.get('seeds')}, {a.get('duration_min')} min each" + (f", testing {tests}" if tests else "")
+                + (", compared with the default configuration" if default else ""))
     if name == "replay_run":
         return f"Replay the run {a.get('path')}"
     if name == "calibrate_demand":

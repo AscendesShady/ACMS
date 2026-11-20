@@ -124,13 +124,16 @@ QLineEdit, QPlainTextEdit, QTextEdit {{
     padding: 2px 6px; selection-background-color: {ACCENT}; selection-color: {TEXT}; }}
 QLineEdit:focus, QPlainTextEdit:focus, QTextEdit:focus {{ border: 1px solid {ACCENT_EDGE}; }}
 QLineEdit:disabled {{ color: {DISABLED_TEXT}; }}
+/* A dropdown's list opens just under the box: Fusion's menu-style popup moved it so the chosen item covered the box,
+   so it opened in a different place for each choice. */
+QComboBox {{ combobox-popup: 0; }}
 QComboBox QAbstractItemView {{ background: {TOOLTIP}; border: 1px solid {BORDER};
                                selection-background-color: {ACCENT}; outline: 0; }}
 /* Fusion draws real checkmarks and radio dots, including their disabled and keyboard states. */
 QCheckBox, QRadioButton {{ spacing: 6px; }}
 /* Section titles lead each panel: semibold and white, with room above; what is inside
    the section stays at normal weight. */
-QGroupBox {{ font-weight: 600; font-size: 10.5pt; margin-top: 16px; padding-top: 4px; }}
+QGroupBox {{ font-weight: 600; font-size: 10.5pt; margin-top: 22px; padding-top: 8px; }}  /* room for the title over the frame */
 QGroupBox::title {{ subcontrol-origin: margin; left: 0; padding: 0; color: {TEXT}; }}  /* on the sidebar's column */
 QGroupBox QWidget {{ font-weight: 400; font-size: 10pt; }}
 /* A collapsible section's title (widgets.Collapsible): chevron and title on the left, a

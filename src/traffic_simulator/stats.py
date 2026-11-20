@@ -649,23 +649,6 @@ def kruskal_wallis(groups: dict) -> dict | None:
     return {"h": round(h, 3), "df": k - 1, "p": chi2_sf(h, k - 1)}
 
 
-def mann_whitney(a: list[float], b: list[float]) -> dict | None:
-    """Mann–Whitney U of two independent samples, two-sided by the normal approximation with the tie and
-    continuity corrections (Washington et al. §2.5)."""
-    a, b = [v for v in a if v is not None], [v for v in b if v is not None]
-    n1, n2 = len(a), len(b)
-    if n1 < 2 or n2 < 2:
-        return None
-    ranks = _ranks(a + b)
-    u = sum(ranks[:n1]) - n1 * (n1 + 1) / 2
-    n = n1 + n2
-    variance = n1 * n2 / 12 * ((n + 1) - _ties(ranks) / (n * (n - 1)))
-    if variance <= 0:
-        return {"u": u, "p": 1.0}
-    z = (abs(u - n1 * n2 / 2) - 0.5) / sqrt(variance)
-    return {"u": u, "z": round(z, 3), "p": min(1.0, 2 * normal_sf(max(z, 0.0)))}
-
-
 def paired_power(sd: float, difference: float, n: int, alpha: float = 0.05) -> float:
     """Power of the two-sided paired t-test with n pairs to find a true mean difference `difference` when the
     differences' SD is `sd`: exact, P(|T'| > t_crit) for the noncentral t T' = (Z + δ)/S, δ = |difference|·√n/sd,

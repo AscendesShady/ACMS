@@ -30,5 +30,5 @@ order; at each, load only the files its Inputs table lists and write what its Ou
 ## Budget
 
 - Grep, then read only the range found. Never load a whole doc over ~300 lines: `sources.md`, `tests.md`,
-  `ai_mode.md` and `simulation.md` run to 40–66k characters.
+  `ai_mode.md` and `simulation.md` run to 54–110k characters.
 - Test what you touched first (`tools\run_test.py <file> <words>`). Slow test files run in the background.

@@ -1,5 +1,5 @@
-"""Dispatch Emergency Vehicle: send emergency vehicles through the run (see src/traffic_simulator/extensions.py for
-the hooks).
+"""Dispatch Emergency Vehicle, the Dynamic Emergency Vehicle Lane's section (extensions/dynamic_emergency_lane.py
+shows it under its deciders): send emergency vehicles through the run. Qt: the section's rows.
 
 Each schedule is one emergency vehicle, on one row: a tick to select it; From and To, a boundary end (an approach,
 e.g. 1W) or a junction (e.g. 2,1), typed or picked from the list, or drawn at random (the small Random button before
@@ -8,10 +8,12 @@ each); Every (minutes between dispatches, 0: once now) or After (once, that many
 vehicle (`random_emergency`: a delay of up to MAX_DELAY_MIN minutes, from one place to another it can reach, all
 drawn from that seed, so the same seed gives the same one) joins the live run that long after the click. Under the
 rows, Dispatch Selected sends the ticked schedules and Dispatch Fleet every one into the live run
-(app.dispatch_emergency, Simulation.dispatch), after checking them all (one that can't go sends none). Batch Run,
-with Test DEVL ticked, dispatches the fleet at the start of each of its runs (fleet()), and each run's own random emergency vehicle, drawn
-from the run's seed (the same for every agent on that seed), within the run.
+(the window's dispatch_emergency, Simulation.dispatch), after checking them all (one that can't go sends none). Batch
+Run, with Test DEVL ticked, dispatches the fleet at the start of each of its runs (fleet()), and each run's own random
+emergency vehicle, drawn from the run's seed (the same for every agent on that seed), within the run.
 Their vehicles are the project's type called Emergency, else SUMO's emergency class, drawn red.
+`services` gives the window's services (dispatch_emergency, places): DEVL sets it to read its own `app`.
+The rows and the seed are kept in the project file (state, set_state: DEVL's hooks).
 """
 
 import random
@@ -19,18 +21,19 @@ import random
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QCheckBox, QComboBox, QHBoxLayout, QSpinBox, QVBoxLayout, QWidget
 
-from traffic_simulator.widgets import MINI_ICON_PX, hint_label, icon_button, styled_button
-from traffic_simulator.theme import STATUS
-
-NAME = "Dispatch Emergency Vehicle"
-ORDER = 4
+from .widgets import MINI_ICON_PX, hint_label, icon_button, styled_button
+from .theme import STATUS
 
 MAX_EVERY_MIN = 120
 MAX_DELAY_MIN = 10  # a random emergency vehicle comes within this many minutes of its button
 MAX_SEED = 999_999
-app = None  # the window's services (dispatch_emergency, places), set by the Extensions tab
+services = lambda: None  # () -> the window's services (dispatch_emergency, places), or None
 _lines: list = []  # each schedule's (row, tick, From box, To box, Every/After box, minutes box)
 _ui: dict = {}  # the panel's add_line, while it exists (set_fleet)
+
+
+def _app():
+    return services()
 
 
 class Place(QComboBox):
@@ -44,7 +47,7 @@ class Place(QComboBox):
     def showPopup(self) -> None:
         text = self.currentText()
         self.clear()
-        self.addItems(app.places() if app is not None else [])
+        self.addItems(_app().places() if _app() is not None else [])
         self.setCurrentText(text)
         super().showPopup()
 
@@ -85,6 +88,28 @@ def set_fleet(schedules: list[tuple[str, str, int, int]]) -> None:
         minutes.setValue(every or after)
 
 
+def state() -> dict:
+    """The section as the project file keeps it: every schedule (fleet) and the Random Emergency seed."""
+    return {"schedules": [list(schedule) for schedule in fleet()], "seed": _ui["seed"].value() if "seed" in _ui else 1}
+
+
+def set_state(saved: dict, check_only: bool = False) -> None:
+    """A project's schedules and seed (state) back in the rows, each checked first (ValueError says why): From and
+    To, words; Every or After, whole minutes 0 to MAX_EVERY_MIN, not both. Routes are checked when dispatched."""
+    schedules, seed = (saved.get("schedules", []), saved.get("seed", 1)) if isinstance(saved, dict) else (None, None)
+    if not isinstance(schedules, list):
+        raise ValueError("Dispatch Emergency Vehicle: schedules must be a list.")
+    for schedule in schedules:
+        if not (isinstance(schedule, list) and len(schedule) == 4 and all(isinstance(place, str) for place in schedule[:2])
+                and all(type(m) is int and 0 <= m <= MAX_EVERY_MIN for m in schedule[2:]) and not (schedule[2] and schedule[3])):
+            raise ValueError(f"Dispatch Emergency Vehicle: {schedule!r} isn't from, to, every and after minutes.")
+    if not (type(seed) is int and 0 <= seed <= MAX_SEED):
+        raise ValueError(f"Dispatch Emergency Vehicle: its seed must be 0 to {MAX_SEED}.")
+    if not check_only:
+        set_fleet([tuple(schedule) for schedule in schedules])
+        _ui["seed"].setValue(seed)
+
+
 def _schedule(line) -> tuple[str, str, int, int]:
     _, _, start, end, mode, minutes = line
     every = mode.currentIndex() == 0
@@ -106,7 +131,7 @@ def panel():
 
     def send(chosen: list[tuple[str, str, int, int]]) -> None:
         """Dispatch these, after checking them all: one that can't go sends none."""
-        if app is None:
+        if _app() is None:
             say("Dispatching works in the ACMS window.", True)
             return
         if not chosen:
@@ -114,9 +139,9 @@ def panel():
             return
         try:
             for start, end, every, after in chosen:
-                app.dispatch_emergency(start, end, every, check_only=True)
+                _app().dispatch_emergency(start, end, every, check_only=True)
             for start, end, every, after in chosen:
-                app.dispatch_emergency(start, end, every, after_s=after * 60)
+                _app().dispatch_emergency(start, end, every, after_s=after * 60)
         except ValueError as exc:
             say(str(exc), True)
             return
@@ -140,7 +165,7 @@ def panel():
             pick.setIconSize(QSize(MINI_ICON_PX, MINI_ICON_PX))
 
             def draw(_=False, box=box, other=other) -> None:
-                choices = [place for place in (app.places() if app is not None else []) if place != other.currentText()]
+                choices = [place for place in (_app().places() if _app() is not None else []) if place != other.currentText()]
                 if choices:
                     box.setCurrentText(random.choice(choices))
 
@@ -174,17 +199,18 @@ def panel():
     seed.setRange(0, MAX_SEED)
     seed.setValue(1)
     seed.setToolTip("Random emergency seed")
+    _ui["seed"] = seed
     surprise = icon_button(0xE945, "Random Emergency")  # LightningBolt
 
     def send_random() -> None:
         """The seed's emergency vehicle into the live run, at its random time from now."""
-        if app is None:
+        if _app() is None:
             say("Dispatching works in the ACMS window.", True)
             return
         try:
-            start, end, delay = random_emergency(seed.value(), app.places(),
-                                                 lambda a, b: app.dispatch_emergency(a, b, 0, check_only=True))
-            app.dispatch_emergency(start, end, 0, after_s=delay)
+            start, end, delay = random_emergency(seed.value(), _app().places(),
+                                                 lambda a, b: _app().dispatch_emergency(a, b, 0, check_only=True))
+            _app().dispatch_emergency(start, end, 0, after_s=delay)
         except ValueError as exc:
             say(str(exc), True)
             return

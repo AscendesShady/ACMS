@@ -14,9 +14,11 @@ from pathlib import Path
 from PySide6.QtCore import QEventLoop, QTimer
 from PySide6.QtWidgets import QFileDialog, QMessageBox
 
-from traffic_simulator import experiments, network_tools, results
+from traffic_simulator import experiments, results, tool_args, tool_reports
 from traffic_simulator.clock import STEP_MS
-from traffic_simulator.simulation import DT, Runner, Simulation
+from traffic_simulator.simulation import DT, Simulation
+from traffic_simulator.physics_process import ProcessRunner
+from traffic_simulator.runner import Runner
 from traffic_simulator.theme import STATUS
 from traffic_simulator.walking import walk_pairs
 
@@ -25,6 +27,16 @@ LIVE_OBSERVED = 400_000  # a live run keeps its latest passages, conflicts and s
 
 class RunsMixin:
     """Run, Play, Pause, Stop, the headless runs' thread and the run's workbook: MainWindow's run bar."""
+
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_busy_what', '_cancel', '_close_after_test', '_deciding', '_drawn_at', '_headless', '_headless_frames',
+             '_headless_lock', '_institution_notes', '_pair_demand', '_refresh_summary', '_replaced',
+             '_seed_box_action', '_seed_overridden_action', '_show_saved', '_testing', 'ai_mode', 'clock',
+             'clock_label', 'close', 'extensions', 'last_kpis', 'last_results', 'network', 'network_path',
+             'od_matrix', 'pause_action', 'physics_process', 'play_action', 'properties', 'recorder',
+             'results_folder', 'run_action', 'runner', 'scene', 'seed_box', 'show_runs', 'signal_agent',
+             'speed_combo', 'statusBar', 'vehicle_modes', 'view')
 
     def _run(self) -> None:
         """Run: a fresh simulation of the network and demand as they are now, from 00:00:00, its
@@ -68,9 +80,20 @@ class RunsMixin:
                                             inputs=self._run_inputs(simulation, demand), seed=self.seed_box.value(),
                                             model=model, run=self._run_settings(simulation, extra=[
                                                 ("AI model deciding TSP", model)]))
-        self.runner = Runner(simulation, float(self.speed_combo.currentData()), recorder=self.recorder)
+        self.runner = self._runner_for(simulation)
         self.runner.play()
         self.clock.run()
+
+    def _runner_for(self, simulation: Simulation) -> Runner:
+        """The run's physics: in a process of its own, unless an extension decides in the run (its override is this
+        window's own code and agents, and can't go there) or the process won't start; then on a thread here."""
+        speed = float(self.speed_combo.currentData())
+        if self.physics_process and simulation.signal_override is None:
+            try:
+                return ProcessRunner(simulation, speed, recorder=self.recorder)
+            except Exception as exc:  # noqa: BLE001 - whatever stopped it, the run goes as it always did
+                self.statusBar().showMessage(f"The run's physics stays in this window ({exc}).", 8000)
+        return Runner(simulation, speed, recorder=self.recorder)
 
     def _stop_pressed(self) -> None:
         self._cancel = True  # a headless test stops at its next step
@@ -144,7 +167,7 @@ class RunsMixin:
     def _show_headless(self) -> str:
         """While a test runs headless: the menu bar's clock shows its run's simulated time (the least advanced of
         those going side by side), its tooltip saying so in five words; that run by name, for the status bar
-        ("Never preempt (baseline), seed 1: 00:12:34 of 00:30:00"), or "" with none going."""
+        ("Default configuration, seed 1: 00:12:34 of 00:30:00"), or "" with none going."""
         with self._headless_lock:
             going = list(self._headless.items())
         if not going:
@@ -163,6 +186,32 @@ class RunsMixin:
         with self._headless_lock:
             return sum(t for t, _ in self._headless.values())
 
+    def _pooled(self, jobs: list, progress, cancelled, **more) -> list | None:
+        """experiments.run_pool for plain runs (no extension deciding), each on the menu bar's clock and, while Show
+        runs on map is on, on the map, as a thread's run is. None when there are no processes here, or a test has
+        replaced the window's run functions: the caller then makes the runs one by one."""
+        if self._observed_kpis is not experiments.observed_kpis or self._end_recording is not experiments.end_recording \
+                or self._quick_run is not experiments.quick_run:
+            return None
+
+        def watch(label, simulated, of, frame) -> None:
+            with self._headless_lock:
+                if simulated is None:  # it ended
+                    self._headless.pop(label, None)
+                    self._headless_frames.pop(label, None)
+                else:
+                    self._headless[label] = (simulated, of)
+                    if frame is not None:
+                        self._headless_frames[label] = frame
+
+        try:
+            return experiments.run_pool(jobs, progress, cancelled, watch=watch, frames=self.show_runs, **more)
+        finally:
+            with self._headless_lock:
+                for job in jobs:
+                    self._headless.pop(job.get("label"), None)
+                    self._headless_frames.pop(job.get("label"), None)
+
     def _one_run(self, network, demand, modes, seed, duration_s, override, settings, extra_inputs, label, progress, cancelled,
                  folder: Path | None = None, model: str = "", speed: float | None = None, dispatches=(),
                  incidents=(), weather: str = "clear", meters=(), measure_from_s: float = 0.0, lateral: bool = False):
@@ -170,18 +219,10 @@ class RunsMixin:
         deciding TSP; its extensions' reports in it); (kpis, path, simulated seconds). kpis["reported"]: their figures.
         `speed`: in step with the wall clock at this pace (a batch's), else as fast as the CPU allows. `dispatches`:
         emergency vehicles sent at the start (their trips: the Emergency vehicles sheet)."""
-        made = {}
         for agent in ((override.agent.values() if isinstance(override.agent, dict) else [override.agent])
                       if override is not None else []):
             if hasattr(agent, "reset"):
                 agent.reset()  # its own run's answers only
-
-        def recorder_for(simulation):
-            made["simulation"] = simulation  # so a run that raises still ends in a workbook
-            made["recorder"] = results.RunRecorder(
-                network, modes, name=label, run=settings, seed=seed, model=model, measure_from_s=measure_from_s,
-                inputs=results.input_sheets(network, demand, modes, dict(simulation.signal_plans)) + extra_inputs)
-            return made["recorder"]
 
         def stepped_to(t: float) -> None:  # the menu bar's clock follows it (_show_headless)
             with self._headless_lock:
@@ -199,41 +240,24 @@ class RunsMixin:
             with self._headless_lock:
                 self._headless_frames[label] = frame
 
-        began = time.monotonic()
-        try:
-            simulation, recorder = experiments.run_headless(
-                network, demand, modes, seed, duration_s, override, recorder_for, progress=stepped_to,
-                cancelled=cancelled, observe=True, speed=speed, dispatches=dispatches, incidents=incidents,
-                weather=weather, meters=meters, on_frame=framed, lateral=lateral)
-        except BaseException as exc:  # it raised: what it recorded is still its workbook; the error goes on up
-            if "recorder" in made:
-                self._end_recording(made["recorder"], made["simulation"], folder or self.results_folder, lambda: None,
-                                    f"The run stopped: {exc!r}")
-            raise
-        finally:
+        def headless_over() -> None:  # the clock and the map let go of it, before its workbook is written
             with self._headless_lock:
                 self._headless.pop(label, None)
                 self._headless_frames.pop(label, None)
-        stepped = time.monotonic()
-        kpis = {}
 
-        def extras() -> None:
-            kpis.update(self._observed_kpis(simulation, recorder))
-            recorder.add_analysis(experiments.analysis_sheets(kpis))
-            reports = self.extensions.reports(override)  # TSP's and DEVL's: their sheets, every decision, the agents' figures
-            if dispatches:
-                reports.append(experiments.emergency_report(simulation))
-            recorder.add_sheets(reports)
-            kpis["reported"] = {key: value for report in reports for key, value in report.get("measures", {}).items()}
-            kpis["decision_sheets"] = {name: rows for report in reports for name, rows, *_ in report.get("sheets", [])
-                                       if "decisions" in name.lower()}  # each agent decision (read_decisions)
+        def end(*args):
+            headless_over()
+            return self._end_recording(*args)
 
-        path, failed = self._end_recording(recorder, simulation, folder or self.results_folder, extras)
-        if failed is not None:
-            raise failed  # its workbook is written, without what failed
-        if speed:  # under the pace asked: the CPU fell behind the clock (an answer's latency then cost less)
-            kpis["reported"]["pace_achieved"] = round(simulation.time / max(stepped - began, 1e-9), 2)
-        return kpis, path, simulation.time
+        try:  # the run itself is experiments.recorded_run (a pool's process makes a plain one the same way)
+            return experiments.recorded_run(
+                network, demand, modes, seed, duration_s, settings, label, folder or self.results_folder,
+                override=override, extra_inputs=extra_inputs, model=model, speed=speed, dispatches=dispatches,
+                incidents=incidents, weather=weather, meters=meters, measure_from_s=measure_from_s, lateral=lateral,
+                progress=stepped_to, cancelled=cancelled, on_frame=framed,
+                reports=lambda: self.extensions.reports(override), observed=self._observed_kpis, end=end)
+        finally:
+            headless_over()
 
     _observed_kpis = staticmethod(experiments.observed_kpis)  # in experiments; tests replace them on the window
     _end_recording = staticmethod(experiments.end_recording)
@@ -278,8 +302,11 @@ class RunsMixin:
         """An extension that overrides signals was ticked or unticked: the run follows at once (the ones it had
         still report in its workbook, with any that were dropped)."""
         if self.runner is not None:
+            override = self.extensions.signal_override()
+            if override is not None and isinstance(self.runner, ProcessRunner):
+                self.runner = self.runner.come_home()  # an extension decides in it from here: on a thread, here
             self._replaced.append(self.runner.simulation.signal_override)
-            self.runner.simulation.signal_override = self.extensions.signal_override()
+            self.runner.simulation.signal_override = override
 
     def _override_seed(self, overridden: bool) -> None:
         """The menu bar's Seed box, or "Overridden" in its place while Batch Run (whose seeds a batch uses) is ticked."""
@@ -376,7 +403,7 @@ class RunsMixin:
                     for _ in range(3):  # what it has observed so far, analysed (read while the physics carries on)
                         try:
                             recorder.add_analysis(experiments.analysis_sheets(
-                                self._observed_kpis(self.runner.simulation, recorder)))
+                                self._observed_kpis(self.runner.snapshot(), recorder)))
                             break
                         except RuntimeError:
                             continue
@@ -433,16 +460,20 @@ class RunsMixin:
             seconds = frame.time
             self.clock.hold(seconds)
             alpha = min(max((runner.target() - frame.time) / DT, 0.0), 1.0) if runner.running else 1.0
-            behind = runner.running and runner.target() - frame.time > 2 * DT
+            behind = runner.behind()
             now = time.monotonic()
-            # Behind: draw at most 10 frames a second, so drawing takes less time from the physics.
-            if not behind or now - self._drawn_at >= 0.1:
+            # Behind, its physics on a thread here: draw at most 10 frames a second, so drawing takes less time from
+            # it. (In a process of its own, drawing takes nothing from it.)
+            if not (behind and runner.shares_interpreter) or now - self._drawn_at >= 0.1:
                 self.scene.show_frame(alpha, frame)
                 self._drawn_at = now
             self.properties.show_plans(frame.plans)  # SCATS and SCOOT change theirs as they go
-            self.clock_label.setToolTip(
-                f"Behind: running at {runner.speed_now:.0f}×" if behind else "Simulation time")
-            self.clock_label.setStyleSheet(f"color: {STATUS['waiting']};" if behind else "")
+            tip = f"Behind: running at {runner.speed_now:.0f}×" if behind else "Simulation time"
+            colour = f"color: {STATUS['waiting']};" if behind else ""
+            if self.clock_label.toolTip() != tip:  # set when they change: a style sheet set again is worked out again
+                self.clock_label.setToolTip(tip)
+            if self.clock_label.styleSheet() != colour:
+                self.clock_label.setStyleSheet(colour)
         if not self._testing:  # a headless test's runs have the clock meanwhile (_show_headless)
             self.clock_label.setText(results.clock(seconds))
 
@@ -460,9 +491,9 @@ class RunsMixin:
         road = str(args.get("road") or "") or None
         known = {*self.network.roads, *self.network.approach_roads, *self.network.nodes, *self.network.approach_nodes}
         if road and road not in known:  # a wrong id once matched nothing and said so only as "matching 0"
-            own = network_tools._road_from_other_end(self.network, road)
+            own = tool_args._road_from_other_end(self.network, road)
             if own is None:
-                return network_tools.explain_error(f"Unknown id '{road}'.", self.network)
+                return tool_reports.explain_error(f"Unknown id '{road}'.", self.network)
             road = own
         return self.runner.frame.records(road, int(args.get("limit") or 100))
 

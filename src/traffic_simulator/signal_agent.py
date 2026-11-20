@@ -42,7 +42,7 @@ class SignalAgent:
         text) and anything else worth keeping (model, tokens, P(yes)); it raises (or `ask` is None) when no
         model is connected. `wait_s`: decide() waits this long for an answer (unpaced headless runs); None:
         never. `deadline_s`: how long an answer may take to count, in simulated seconds (None: any). `rule`: what
-        an agent with nobody to ask answers, a batch's baselines: False never preempts, True always does, None
+        an agent with nobody to ask answers: False never preempts, True always does, None
         the extension's own (TSP: the plan, DEVL: clear the lane)."""
         self._ask, self.wait_s, self.deadline_s, self.rule = ask, wait_s, deadline_s, rule
         self._lock = threading.Condition()

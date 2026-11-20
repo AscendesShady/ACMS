@@ -19,7 +19,9 @@
 Download the folder and double-click **`launch.bat`** (Windows 10 or 11, internet the first time). The first time, it
 finds Python 3.10 or newer (none: it installs Python 3.12 for this user with winget, no administrator needed), makes
 `.venv` and installs ACMS there (a few minutes: PySide6 is large); after that it just opens ACMS. A moved or freshly
-cloned folder installs again.
+cloned folder installs again. Each launch with internet also updates ACMS from GitHub first (`tools/update.py`: a clone
+pulls fast-forward only; a downloaded folder copies the newer files over itself and deletes the ones that version
+no longer has). To stay as you are, set the environment variable `ACMS_NO_UPDATE` (to anything).
 
 By hand:
 
@@ -27,6 +29,9 @@ By hand:
 C:\Python312\python.exe -m venv .venv
 .venv\Scripts\python.exe -m pip install -e .
 ```
+
+The install is editable on purpose (`-e`): ACMS runs from this folder, where the assistant's docs and `extensions/`
+are found beside `src/`; a wheel alone is not a working install. It takes PySide6 6.11 or newer, below 7.
 
 ## Run (developers)
 
@@ -46,7 +51,8 @@ The editor also starts with `.venv\Scripts\acms.exe`.
   zero roll). Wheel zooms; **F** fits the projected network; **R** resets zoom while keeping the chosen view.
   Roads and vehicles keep their world dimensions and simulation speeds. Motion into the screen naturally looks
   slower through foreshortening. Toggle back at any time without restarting the run. The view choice is not saved
-  in the project file.
+  in the project file (the network, demand, vehicle types, run settings, extensions and their emergency schedules
+  are: one `.json`).
 - **Vehicle styling:** cars have tapered bodies, raised cabins, sloped glass and separate wheels in three
   variants. Bicycles and motorbikes have tyres, open frames, handlebars and riders; buses and vans have distinct
   cabs and windows. Both views use the same low-poly geometry. Physical length and width stay unchanged.
@@ -320,19 +326,24 @@ reliability). A **GeoJSON** of the network and its results is saved beside it fo
 longitude when the map is placed). Before any run, **Export** saves the network alone.
 
 **Batch Run** (Extensions tab) runs every seed × agent × time headless. While it goes, the menu bar's clock shows
-its run's time (hover it for each run by name; Never preempt is the baseline), the status bar how long is left, and the
+its run's time (hover it for each run by name), the status bar how long is left, and the
 map draws that run's vehicles unless you switch off **Show runs on map** (the pin beside Start). Its seeds
-override the menu bar's (which reads **Overridden** while Batch Run is ticked). Tick **Test TSP** (TSP needn't be
-ticked in the tab), then pick any number of **Models** (a dropdown of ticks: Jev, Laya, your Ollama models,
-Grok and Gemini when their keys are saved); each is tested against two baselines,
-**Never preempt** (general traffic: the coordinated plan) and **Always preempt** (every request granted), which
-always run too, seed by seed, so each model sits between the two ends. **Decide within**
-(1–280 simulated s) is each answer's deadline (missed: the plan), and **Pace** (1×, 2×, 5×, 10×) keeps the
-runs where a model decides in step with the clock (the baselines, which wait for no one, run as fast as the
+override the menu bar's (which reads **Overridden** while Batch Run is ticked). It tests the AI controllers. Its rows go
+**Seeds**, **Duration**, **Pace**, **Runs at once**, **Times each**, **Compare with default**, then **Test TSP**,
+**Test DBL** (Dynamic Bus Lane) and **Test DEVL**: tick one or several (none needs ticking in its own tab), and in
+each controller's tab pick any number of **Models** (a dropdown of ticks: Jev, Laya, your Ollama models,
+Grok and Gemini when their keys are saved); with several controllers ticked every combination of their models runs.
+**Compare with default** (on at first) adds the one baseline, the **default configuration**: your network as it is,
+no controller acting, its signals as you set them when making it (Webster's timings from the demand, or values
+entered from a survey); it runs once a seed and every model is compared with it. **Decide within** (in each
+controller's tab, 1–280 simulated s) is each answer's deadline (missed: the plan). **Times each** repeats each
+model's runs (an LLM's answers vary from run to run, so the repeats show by how much; the default always runs the
+same and isn't repeated), and **Pace** (1×, 2×, 5×, 10×) keeps the
+runs where a model decides in step with the clock (the default, which waits for no one, runs as fast as the
 computer allows): they never pause, so a slow model pays for its latency (× the pace). **Runs at once** (1–8)
 sets how many go side by side (never two on one model server, so none waits behind another's questions; each
 run records the pace it kept). Its workbook's **Headline** gives each agent's
-passenger throughput increase and its passenger delay, queue and wait time reductions against Never preempt (Always preempt is listed beside them),
+passenger throughput increase and its passenger delay, queue and wait time reductions against the default configuration,
 with confidence intervals.
 
 Simulated time is the model's own clock (0.5 s a step; the assistant's tests can use 0.25 or 0.1 s): a run's results don't depend on how fast it went, except

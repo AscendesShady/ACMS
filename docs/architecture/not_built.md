@@ -102,7 +102,10 @@
   requests (the stress test, ai_mode.md) but still sometimes writes no Plan: line (then a dropped part of a
   request isn't caught), splits one action into several calls, or runs the same build twice; tool selection is by keywords, so a request in words no group knows gets
   only the core tools until the model calls find_tools; requests in other languages than English aren't grouped.
-- Network testing: runs one after another on one thread (no parallel runs); daily demand tested at the
+- Network testing: plain runs go side by side, a process each (`experiments.run_pool`: experiments, batches
+  with nobody deciding, optimise_signals, parameter_sensitivity); a run with an extension deciding goes on a
+  thread (side by side only in a TSP batch, `at_once`), and assign_routes' iterations one after another (each
+  needs the last); daily demand tested at the
   simulation's speed only; calibration on shortest routes only (assign_routes reaches equilibrium separately) and
   counts on a road both ways together; incidents, work zones and ramp meters aren't drawn on the map; weather is
   one condition for the whole run; a fork's adaptive or actuated signals hold their current greens (TSP's

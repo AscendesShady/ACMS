@@ -8,11 +8,17 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from traffic_simulator import experiments, network_tools, scenario
+from traffic_simulator import experiments, network_tools, scenario, tool_args, tool_schemas
 
 
 class ScenarioMixin:
     """build_scenario on the window: plan, resolve, run, recover."""
+
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_ai_edited', '_building', '_od_command', '_pair_demand', '_runs_command', '_types_command',
+             'behavior_tab', 'create_tab', 'demand_tab', 'edit_tab', 'extensions', 'network', 'tests',
+             'vehicle_modes', 'workspace')
 
     # --- The Scenario Builder: a described scenario, built and tested in one go -----------------------
 
@@ -45,7 +51,7 @@ class ScenarioMixin:
                     resolved = self._resolve(step, done)
                     result = self._scenario_step(step["tool"], resolved)
                     done.append({**step, "args": resolved, "ok": True, "result": result})
-                except (ValueError, network_tools.ToolError, KeyError) as exc:
+                except (ValueError, tool_args.ToolError, KeyError) as exc:
                     fixed = self._recover(step, exc, done, spec)
                     done.append(fixed or {**step, "ok": False, "error": str(exc)})
                     if not fixed and step["tool"] in ("place_map", "network_from_background", "generate_grid",
@@ -68,12 +74,12 @@ class ScenarioMixin:
     def _scenario_step(self, tool: str, args: dict) -> dict:
         """One planned step through the tool's own path (the Demand Generator, Mode Behavior, the run tools,
         or a checked network edit)."""
-        args = network_tools.normalise(tool, args)
-        if tool in network_tools.OD_TOOLS:
+        args = tool_args.normalise(tool, args)
+        if tool in tool_schemas.OD_TOOLS:
             return self._od_command(tool, args)
-        if tool in network_tools.TYPE_TOOLS:
+        if tool in tool_schemas.TYPE_TOOLS:
             return self._types_command(tool, args)
-        if tool in network_tools.RUN_TOOLS:
+        if tool in tool_schemas.RUN_TOOLS:
             return self._runs_command(tool, args)
         network_tools.prepare(self.network, tool, args)
         result = network_tools.run_tool(self.network, tool, args)
@@ -153,7 +159,7 @@ class ScenarioMixin:
             args["total"] = per_end * len(self.network.approach_nodes) * (24 if args.get("demand") == "daily" else 1)
             try:
                 result = self._scenario_step(tool, args)
-            except (ValueError, network_tools.ToolError):
+            except (ValueError, tool_args.ToolError):
                 return None
             result["recovered"] = f"Sized by flow ({per_end} veh/h an end) because {error}"
             return {**step, "args": args, "ok": True, "result": result}
@@ -163,7 +169,7 @@ class ScenarioMixin:
             if kept and len(kept) < len(args["scenarios"]) - 1:
                 try:
                     result = self._scenario_step(tool, {**args, "scenarios": [args["scenarios"][0], *kept]})
-                except (ValueError, network_tools.ToolError):
+                except (ValueError, tool_args.ToolError):
                     return None
                 result["recovered"] = f"Left out what-ifs that couldn't be built ({error})"
                 return {**step, "args": args, "ok": True, "result": result}
@@ -171,7 +177,7 @@ class ScenarioMixin:
 
     def _buildable(self, spec: dict) -> bool:
         try:
-            experiments.scenario_network(self.network, experiments.scenario_from(spec, 0), network_tools.SCENARIO_TOOLS)
+            experiments.scenario_network(self.network, experiments.scenario_from(spec, 0), tool_schemas.SCENARIO_TOOLS)
             self.extensions.overrides_for(spec.get("extensions") or [])
         except ValueError:
             return False

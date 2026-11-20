@@ -24,7 +24,7 @@
     download included; compute counts both), `messages` (the model's, thinking included), `reply`, `error`,
     `usage` (each model request's tokens and seconds, `assistant.USAGE`, those tagged with this step's start by
     `assistant.USAGE_TAG`: not another thread's that ended meanwhile), `changes` (the step's changes to the
-    network, demand and vehicle types, `network_tools.state_changes`), `map_png` (the map view as it is after it,
+    network, demand and vehicle types, `tool_reports.state_changes`), `map_png` (the map view as it is after it,
     `_map_png`; only when the network changed), `demand_png` (the OD matrix after it, `_demand_png`; only when the
     demand changed), `results_folder`, `project_file` and `network`. The window takes the state before a step and builds
     the event only while a ticked extension defines `log` (`ExtensionsPanel.wants`).
@@ -34,8 +34,12 @@
     `ExtensionsPanel.reports(overrides)` calls them with that run's signal agent (a live run's: every set of
     overrides it was handed as boxes were ticked, each extension once); one that raises gives a sheet saying so
     and is switched off (listed like a failed `signal_override`, as it may run on a test's thread).
+  - `state()` and `set_state(state, check_only=False)` (optional, beside one of those): what the extension keeps in
+    the project file beyond its panel's labelled settings (JSON-ready), and putting it back (ValueError says why not;
+    `check_only` changes nothing). DEVL's are its Dispatch Emergency Vehicle schedules and seed; Batch Run's, the
+    minutes of Duration's Other… (the box beside it, which `fields` doesn't reach: it takes a row's first widget).
   - `app` (optional, a module variable): the tab sets it to the window's services, `run_batch`, `replay_run`,
-    `tsp_batch`, `devl_batch`, `agent_options`, `dispatch_emergency`, `places`, `tick_extension` (ticks the
+    `controller_plan` (a controller's tab settings by kind: TSP, DEVL, DBL), `agent_options`, `dispatch_emergency`, `places`, `tick_extension` (ticks the
     extension from `extensions/<stem>.py`), `show_runs` (whether headless test runs are drawn on the map), `signal_agent` and `busy` (what is using the
     simulator, "" when nothing) (`MainWindow`, `AIModePanel`),
     on load and whenever they're given.
@@ -56,6 +60,15 @@
   and as it ends, the status bar then naming them. The run's workbook gets an **Extensions dropped** sheet
   (`reports`, from `SignalOverrides.dropped`): the run went on without it from then, so its figures aren't
   that extension's alone.
+- **Saved with the project**: `project_state()` gives each loaded extension's file, tick, settings by label (as
+  `set_settings` takes them; a dropdown with nothing listed is left out) and `state()`, without listing models
+  afresh (`fields(refresh=False)`). `restore_project_state(saved)` (Open, after the network) lists models once,
+  then sets each setting in its panel's order, each checked just before it is set (a choice before the rows it
+  lists: Decided by, then Model), its controls usable meanwhile (a disabled choice ignores a click); then
+  `set_state`, checked first; the tick last. One that fails (a model this machine lacks, a bad seed, a number too
+  big to read) is left as it is and named, the rest restored. An extension the file names but not loaded here is
+  named, and its record kept: the next Save writes it back. The window's status bar lists them after "Not restored:"; the project still opens. A file
+  with no `extensions` leaves the tab as it is. They are part of the unsaved-changes check.
 - The tab is only the ticks (and the settings of an extension that has them): the files are read when
   the app starts (`reload()`, which a test still calls; its box's tooltip names the folder). No Reload or
   Open Folder button.
@@ -112,8 +125,8 @@
     request's phase until its release): **served** (TRUE, and it held or brought forward the bus's green),
     **not needed** (TRUE, the plan served it), **blocked** (TRUE, no room downstream), **not feasible** (TRUE,
     no extension or early green in time), **refused**, **rejected** (by the guard), **fell back**, **too
-    late**, **withdrawn**, **no answer**, **no LLM** (Never preempt, the baseline: nobody to ask, the plan from the request
-    on, `SignalAgent.asks`; Always preempt's requests are TRUE and go on to served, not needed...): counted in the TSP sheet and given per request in Agent decisions
+    late**, **withdrawn**, **no answer**, **no LLM** (nobody to ask: the plan from the request
+    on, `SignalAgent.asks`; a TRUE rule's requests go on to served, not needed...): counted in the TSP sheet and given per request in Agent decisions
     (with its guard verdict), measures `tsp_served`, `tsp_not_needed`, `tsp_denied`, `agent_rejected`; and
     **off the plan**: the times priority took over, the time off the plan, how long back to the plan took
     after the last bus (mean, most), any not back by the end (`tsp_off_plan_s`, `tsp_back_to_plan_s`).
@@ -148,18 +161,30 @@
   plan, against the plan alone: person-seconds of delay in each, how far its buses get, which it favours;
   approximate, the run untouched). The TSP report and sheet add each decision's estimate and whether the answer
   agreed with it (`agent_agrees_estimate`, an experiment measure). `perturbed(message, change)` gives the
-  telemetry with one fact changed (no_passengers, exit_full, no_cross_queues, arrives_on_green, no_estimate) for
-  AI Mode's decision_sensitivity. Each request (`key_of`: "junction/phase/check-in time") is asked once (`question_for`):
+  telemetry with one fact changed (no_passengers, exit_full, no_cross_queues, arrives_on_green, no_estimate,
+  route_blocked: the next junction on its route a queue reaching back at red) for AI Mode's decision_sensitivity.
+  The telemetry also carries each approach's `queue_share` and the lead bus's `route_ahead` (Simulation.route_ahead:
+  the next 2 signalised junctions on its route, how far on, the longest queue on its road there as a queue storage
+  ratio, the signal that road shows, a lane being cleared there). **Neither system reads the numbers**: `facts(message)`
+  turns them into sentences (`road_words.py`), the same for both: the bus (people on board, distance, arrival),
+  whether it arrives on red or green as the signals stand, its own approach's queue, the cross streets' longest
+  queue and the people queued there, `more_people_on` (more on the bus than waiting across, or not), `exit_lane`
+  (clear, or full so priority can't get it through), each junction ahead (`ahead_1`, `ahead_2`), `route_clear` (not
+  clear where a queue reaches back and its signal isn't green), `route_free` (free of lane clearances, or the junction
+  clearing one, DEVL's or DBL's), the person-delay `estimate` and, with Look ahead on, the `lookahead` verdict. The
+  goal both weigh is **passenger throughput**: people moved through the network. Each request (`key_of`:
+  "junction/phase/check-in time") is asked once (`question_for`):
   - System 1 (AI Mode's System 1: Jev or Laya in Ollama): an encoder reads words well but neither compares numbers nor
-    weighs factors in one yes/no (tried on Laya, see sources.md), so its state is the telemetry's facts in
-    words (`facts`: `exit_lane` clear or full, `more_people_on` bus or cross streets, the bus's passengers
-    against the people queued on the other approaches), each read with one noul (`SYSTEM_1_QUESTIONS`:
-    exit_clear, more_on_bus) in one request; TRUE when both are yes (the lowest P(yes) at 0.5 or more; its Reason gives each). TRUE is permission for
-    the whole approach: the controller holds or brings forward the green only if and when the bus needs it;
+    weighs factors in one yes/no (tried on Laya, see sources.md), so its state is those sentences and four are
+    each read with one noul (`SYSTEM_1_QUESTIONS`: exit_clear, more_on_bus, route_clear, route_free) in one
+    request; TRUE when all are yes (the lowest P(yes) at 0.5 or more; its Reason gives each), so each fact can only
+    refuse more. TRUE is permission for the whole approach: the controller holds or brings forward the green only if
+    and when the bus needs it;
   - System 2: zero-shot and role-based (`SYSTEM_2_ROLE`): told it is the traffic signal engineer
-    supervising TSP at the junction, what the telemetry holds, that it decides once for the bus's approach and
-    the controller acts only if and when the bus needs it, and what to weigh;
-    given the telemetry as JSON, it answers by calling the boolean tool **`decide_tsp(activate, reason)`**
+    supervising TSP at the junction, that its goal is passenger throughput, what the sentences tell, that it decides
+    once for the bus's approach and the controller acts only if and when the bus needs it, and when priority moves
+    nobody (exit full, the road ahead blocked or held); given the sentences ("The situation now:", one a line), it
+    answers by calling the boolean tool **`decide_tsp(activate, reason)`**
     (`DECIDE_TOOL`); a model that can't call tools (`ToolsUnsupported`) replies TRUE or FALSE in words.
   **The guard** (`MainWindow._ask_agent`): only a decision is one: a decide_tsp call whose `activate` is a
   boolean (or the word true or false, as small models send it), or with no call a reply that is a bare TRUE or
@@ -204,27 +229,27 @@
   take over exactly where the plan is; `set_green(seconds)` sets the green running (at least its minimum, no
   credit or debt: a transition back to the plan); `note(t, event)` logs the caller's events (BLOCKED). Its 17
   tests are in `tests/test_transit_signal_priority.py`.
-- **Agent choice** (src/traffic_simulator/agent_choice.py, `AgentChoice`: the rows TSP's and DEVL's panels share):
+- **Agent choice** (src/traffic_simulator/agent_choice.py, `AgentChoice`: the rows TSP's, DEVL's and DBL's panels share):
   **Decided by**, radio buttons, System 1, System 2 or Multiple (`ChoiceButtons`). With System 1 or 2, **Model**, a
   dropdown of that system's models from AI Mode's `agent_options()` (System 1: Jev and Ollama's decision models, as Laya; System 2: every Ollama chat
   model, Grok and Gemini when their keys are on the PC), listed afresh as it opens, the first at first: it answers
   live runs (the question's `choice`, which `MainWindow._ask_agent` uses before AI Mode's own) and a batch's. None
   listed: AI Mode's own choice (System 1's Use, System 2's started model; the window finds it, `_agent_plan`).
   **Multiple** is for Batch Run: **Models**, a dropdown of ticks (`CheckList`, widgets.py: a combo box of
-  checkable items that stays open while ticking and shows what is ticked; a plain list popup, not Fusion's menu-like one, so a long list shows 10 rows and scrolls by its bar or the wheel; a click toggles its row once, on release, the popup never seeing it) listing the same, but for the baselines
-  (Never and Always preempt, which always run); **Decide within**, a slider of 1–280 s (30 s at first: each answer's deadline in
-  simulated seconds; missed, the extension's fallback); **Pace**, radio buttons 1×, 2×, 5×, 10× (simulated seconds a
-  real second: a batch's runs where a model decides keep in step with the wall clock and never pause for an answer,
-  so a model's latency costs pace × its seconds; its baselines run as fast as the CPU allows); **Runs at once** (1–8, 4 at first; never two on one model server); **Times each**
-  (1–100: runs per seed and model, an LLM's answers varying). A live run asks the System chosen last;
+  checkable items that stays open while ticking and shows what is ticked; a plain list popup, not Fusion's menu-like one, so a long list shows 10 rows and scrolls by its bar or the wheel; a click toggles its row once, on release, the popup never seeing it) listing the same models; **Decide within**, a slider of 1–280 s (30 s at first: each answer's deadline in
+  simulated seconds; missed, the extension's fallback). How a batch runs (Pace, Runs at once, Times each) is Batch
+  Run's own, one setting for every controller. A live run asks the System chosen last;
   `model_option()` (DEVL asks it on the physics thread) reads a plain attribute the UI thread sets as the pick or
   the list changes, never the combo box, which the UI thread may be refilling.
-  `batch_settings()`: deadline_s, speed, at_once, times and agents (labels) with their model servers, or `system` when
-  no model is listed to pick. All set by label too (`set_settings`, the assistant's set_extension).
+  `batch_settings()`: deadline_s and agents (labels) with their model servers, or deadline_s and `system` when no
+  model is listed to pick. All set by label too (`set_settings`, the assistant's set_extension).
 - `extensions/dynamic_emergency_lane.py`, **Dynamic Emergency Vehicle Lane (DEVL)** (a collapsible section: who
-  decides, Agent choice above, and a live figures line): a signal override like TSP's, run after it for each arm of
-  each signalised junction every step. Each junction has its own controller (`_Junction`; each run's found by its
-  signal agent, `agent_choice.run_for`, as TSP's), showing the state it is given (the plan, or TSP's) unless it is clearing:
+  decides, Agent choice above, and a live figures line): a signal override like TSP's, run after it (and DBL's) for
+  each arm of each signalised junction every step. The controller is `src/traffic_simulator/dynamic_lane.py`'s (no
+  Qt), which DBL shares: the extension gives it a `Kind` (`KIND`: what it watches for, how it asks, its priority 2)
+  and keeps its runs (`_runs`, `_latest`) and panel. Each junction has its own controller (`dynamic_lane.Junction`;
+  each run's found by its signal agent, `agent_choice.run_for`, as TSP's), showing the state it is given (the plan, or
+  TSP's or DBL's) unless it is clearing:
   - **detection**, like TSP's check-in: an emergency vehicle (dispatched, or a type in `EMERGENCY_TYPES`) on an arm
     within `DETECT_S` (30 s) of the stop line at the arm's speed limit, or held in a queue further out (`in_queue`:
     slower than `QUEUED_KMH` behind a vehicle in its lane), checks in, and stays in until it leaves the arm; its request (key
@@ -235,7 +260,7 @@
     facts in words (`traffic_in_lane`: queued, moving or none; the signal) with one noul, "Is traffic in the
     emergency vehicle's lane?"; System 2 zero-shot and role-based (`SYSTEM_2_ROLE`, the engineer supervising the
     lane) calling **`decide_devl(activate, reason)`** (`DECIDE_TOOL`), TSP's guard (`MainWindow._ask_agent`).
-    Nobody to ask (no signal agent): TRUE, the rule; a batch's baselines: `SignalAgent.rule`, Never preempt FALSE (general traffic), Always preempt TRUE. TSP's answer rules: it counts from when it
+    Nobody to ask (no signal agent): TRUE, the rule (`SignalAgent.rule` sets another: FALSE keeps the plan). TSP's answer rules: it counts from when it
     reaches the controller; past the deadline, FALSE (fell back).
   - **clearance**, on TRUE (`update`, `state`): "to_red", every arm ends its green after its minimum green (as TSP
     never cuts one shorter), then amber, then all-red; "clear", only the **kerbside lane** of the vehicle's arm
@@ -253,9 +278,39 @@
     latency, guard, reason, error), measures `devl_requests`, `devl_true`, `devl_fell_back`, `devl_cleared`,
     `devl_lane_green_s`, `devl_to_green_s`, `devl_latency_s`, and its feed as **devl telemetry.jsonl** beside the
     workbook.
+  - **taking turns** with DBL (`Junction._free`, `_yields`): one lane controller clears a junction at a time, by
+    the run's `holds` (Simulation's `lane_holds`, in the junction view): leaving the plan takes the junction
+    (junction -> (key, priority, when, the arm it clears for)), back at the plan lets it go. A granted request waiting on a lower-priority
+    holder leaves ("want", junction) -> (priority, when); that holder then ends its clearance early (to lane amber),
+    or, still going to red, returns to its plan at all-red with its request kept to try again. A hold or want not
+    renewed for `STALE_S` (2 s: its controller unticked) no longer counts; without `holds` in the view, no turns.
+- `extensions/dynamic_bus_lane.py`, **Dynamic Bus Lane (DBL)** (`ORDER` 2.5: after TSP, before DEVL): DEVL's
+  controller (dynamic_lane.py) for buses, an intermittent bus lane. A **bus** (`is_bus`: its type's vehicle class in
+  `KERB_LANE_FOR`, as TSP tells one) checks in as DEVL's emergency vehicle does; its request (key
+  "dbl/junction/arm/vehicle") is asked once, telemetry schema `acms-dbl-telemetry/1` with `bus` (DEVL's fields plus
+  `people`, its passengers on board), `people_held` (the people approaching on every other lane and arm, whom a
+  clearance holds at red) and `route_ahead` (TSP's: the bus's next signalised junctions), its `Kind.words` set: both
+  systems read `words(message)`, sentences (`road_words.py`): the bus and its signal, the traffic in its lane (queued,
+  moving, empty), the people held, `more_people_on` (more on the bus than held, or not), each junction ahead,
+  `route_clear` and `route_free`. The goal is **passenger throughput**. System 1: four nouls (`SYSTEM_1_QUESTIONS`:
+  in_the_lane "Is traffic in the bus's lane?", more_on_bus, route_clear, route_free), TRUE when all are yes; System 2,
+  the engineer supervising the bus lane, told clearing moves more people when traffic is in the bus's way and the bus
+  carries more than it holds, and nobody when the road ahead is blocked or held, reads them ("The situation now:")
+  and calls **`decide_dbl(activate, reason)`**. DEVL's `Kind` has no `words`: it keeps its JSON telemetry and its
+  one noul. On TRUE, DEVL's clearance for the bus's kerbside lane; priority 1, so a
+  clearance ends early for an emergency vehicle granted at the junction. Ticked, its `KERB_LANE_FOR` ("bus") makes
+  buses keep to the kerbside lane before each signal (Simulation's `BUS_LANE_M`). Its lane signal (`draw`): a square
+  head one further back than DEVL's (`dynamic_lane.heads`), its lamp flashing green while it clears, dark otherwise.
+  `report(agent)`: the **DBL** and **DBL decisions** sheets (DEVL's, plus Check-in to check-out, mean), measures
+  `dbl_requests`, `dbl_true`, `dbl_fell_back`, `dbl_cleared`, `dbl_lane_green_s`, `dbl_to_green_s`, `dbl_latency_s`
+  and `dbl_approach_s` (mean check-in to check-out of the buses that left), and **dbl telemetry.jsonl**.
   The overrides (`SignalOverrides`) pass each the state the one before left and keep the last lanes set; a
-  batch run gives TSP and DEVL each their own signal agent (`agent` a dict by extension name, `agent_of`).
-- `extensions/dispatch_emergency.py`, **Dispatch Emergency Vehicle** (a collapsible section): on top, **Add
+  batch run gives each controller its own signal agent (`agent` a dict by extension name, `agent_of`).
+  `kerb_lane_for`: the vehicle classes the overrides' extensions name in `KERB_LANE_FOR` (DBL's "bus"), which the
+  simulation keeps to the kerbside lane before each signal.
+- **Dispatch Emergency Vehicle**, DEVL's own section (`src/traffic_simulator/emergency_dispatch.py`, Qt: a
+  collapsible section under DEVL's deciders, open at first, usable while DEVL is ticked; DEVL's module has it as
+  `dispatch`, and sets its `services` to read DEVL's `app`): on top, **Add
   Schedule** (+) and **Delete Schedule** (−, removes the ticked rows), with a **seed** box and **Random Emergency** (a
   lightning icon) sending the seed's own emergency vehicle (`random_emergency`: from `Random(seed)`, a delay of 0 to
   `MAX_DELAY_MIN`, 10 min, then two places it can go between) into the live run that long after the click, the same
@@ -267,53 +322,72 @@
   every row into the live run (`app.dispatch_emergency`, MainWindow.dispatch_emergency, Simulation.dispatch), after
   checking them all (one that can't go sends none). A line under it says what was sent, or in red why not (no run,
   nothing ticked, an unknown place, no route). `fleet()` gives the rows, (from, to, every min, after min), for Batch
-  Run's Test DEVL; `set_fleet(schedules)` replaces them as + would add them (the assistant's schedule_emergency, which ticks the
-  extension first, `app.tick_extension`, as Test DEVL does: its tab is used only while ticked).
-- `extensions/batch_run.py`, **Batch Run** (a collapsible section of settings): one headless run per
-  seed (and model, and time). Only time, seeds and two ticks:
+  Run's Test DEVL; `set_fleet(schedules)` replaces them as + would add them (the assistant's schedule_emergency, which
+  ticks DEVL first, `app.tick_extension`, as Test DEVL does: its section is used only while ticked). `state()` and
+  `set_state(state, check_only)` give and restore the rows and seed for the project file (DEVL's hooks), checking
+  each row (two places in words; Every or After 0–120 whole minutes, not both) and the seed (0–999,999) first;
+  routes are checked when dispatched.
+- `extensions/batch_run.py`, **Batch Run** (a collapsible section of settings): tests the AI controllers (TSP,
+  DBL, DEVL) with different models over different seeds and times, headless, and exports the results. One logic for
+  all: every combination of the ticked controllers' models is an agent, run on every seed, Times each times; the
+  default configuration, when compared with, runs once a seed; each run saves its workbook and telemetry, and the
+  batch workbook compares every agent with the default (else with the first agent). Its rows, in order:
   - **Seeds** are typed like pages to print, `45, 34, 1-45` (`parse_seeds`: numbers and ranges,
-    each seed once in the order written, up to 10,000 runs). A line below counts the runs (seeds ×
-    models × times), or says in red what is wrong, and Start Batch waits for a valid choice. It waits too
-    while a live run, a batch or another test is going on (`app.busy()`), the line saying which; Replay a Run
-    with it. The panel looks again once a second while it shows.
+    each seed once in the order written, up to 10,000 runs).
   - **Duration** of each run: 5, 10, 15 or 30 min, 1 hour, or Other… (a minutes box, up to 24 h).
-  - **Test TSP** (a tick box, off at first): runs Transit Signal Priority whether or not it is ticked in the
-    tab, with the TSP tab's choice (`app.tsp_batch`, MainWindow.tsp_batch): its model (System 1 or 2), or Multiple's
-    ticked models, with their Decide within, Pace, Runs at once and Times each. The baselines, **Never preempt** (TSP's
-    controllers with nobody to ask: the coordinated plan, exactly) and **Always preempt** (every bus request
-    TRUE), always run too; every agent is compared with Never preempt, seed by seed, and Always preempt brackets them.
+  - **Pace**, radio buttons 1×, 2×, 5×, 10× (simulated seconds a real second: a batch's runs where a model decides
+    keep in step with the wall clock and never pause for an answer, so a model's latency costs pace × its seconds;
+    the default runs as fast as the CPU allows); **Runs at once** (1–8, 4 at first; never two on one model
+    server); **Times each** (1–100: each model's runs repeated on every seed, as an LLM's answers vary from run to
+    run; the repeats show by how much. The default isn't repeated: a seed always runs it the same). One setting for
+    the whole batch, whichever controllers it tests.
+  - **Compare with default** (a tick, on at first, a line under it saying what the default is): the batch's one
+    baseline, the **default configuration** (`main_agents.DEFAULT`): the network as configured, no controller
+    acting, its signal plans as made with the network (Webster's from the demand, or timings entered from a survey;
+    set where the network is made, not here). It runs first on each seed, once, and every agent is compared with it,
+    seed by seed. Unticked, the models are compared with the first of them.
+  - **Test TSP**, **Test DBL**, **Test DEVL** (tick boxes, off at first, `TESTS`' order): each runs its controller
+    (Transit Signal Priority, Dynamic Bus Lane, Dynamic Emergency Vehicle Lane) whether or not it is ticked in the
+    tab, with its tab's choice (`app.controller_plan(kind)`, MainWindow.controller_plan): its model (System 1 or 2),
+    or Multiple's ticked models, with their Decide within. A ticked test needs a model (none picked: the line says
+    so in red, and Start waits).
   - **While it runs**: the menu bar's clock shows the batch's runs' simulated time (`MainWindow._one_run` records
     each run's time as it steps, once a simulated second, in `_headless`; `_show_headless` shows the least
-    advanced of those going; its tooltip "Slowest test run's time"), and the status bar that run by name (Never
-    preempt (baseline), seed 1: 00:12:34 of 00:30:00), how many are done and about how long is left at the pace so far; the same for an experiment
-    or run_simulation. Afterwards the clock is the live run's again. **Show runs on map** (the pin beside Start,
-    on at first; `app.show_runs` → `MainWindow._show_runs_on_map`): the map draws that same run as it goes, as a
-    live run is drawn: each run's thread takes a frame at most 10 times a real second (`run_headless`'s
-    `on_frame`, `_headless_frames`) and the window shows the one the clock follows; off, or once the batch ends,
-    the map shows the network alone.
-  - **Test DEVL** (a tick box; ticking it ticks the Dispatch Emergency Vehicle extension, `app.tick_extension` →
-    `MainWindow._tick_extension`, so its fleet is there to set): each run dispatches that tab's fleet at its start
-    (`MainWindow._emergency_fleet`: every row checked first; none is fine) and its own **random emergency
+    advanced of those going; its tooltip "Slowest test run's time"), and the status bar that run by name (Default
+    configuration, seed 1: 00:12:34 of 00:30:00), how many are done and about how long is left at the pace so far;
+    the same for an experiment or run_simulation. Afterwards the clock is the live run's again. **Show runs on map**
+    (the pin beside Start, on at first; `app.show_runs` → `MainWindow._show_runs_on_map`): the map draws that same
+    run as it goes, as a live run is drawn: each run's thread takes a frame at most 10 times a real second
+    (`run_headless`'s `on_frame`, `_headless_frames`) and the window shows the one the clock follows; off, or once
+    the batch ends, the map shows the network alone.
+  - **Test DEVL** (ticking it ticks DEVL, `app.tick_extension` → `MainWindow._tick_extension`, so its Dispatch
+    Emergency Vehicle section is there to set): each run, the default's too, dispatches that section's fleet at its
+    start (`MainWindow._emergency_fleet`: every row checked first; none is fine) and its own **random emergency
     vehicle**, drawn from the run's seed (`random_emergency`, its delay within the run: the same for every agent
-    on that seed, so they're compared on the same one; the Run sheet names it) with DEVL's override clearing their lanes, the DEVL
-    tab's choice deciding (`app.devl_batch`; DEVL's two baselines, Never and Always preempt, beside them), with its own signal agent; its
+    on that seed, so they're compared on the same one; the Run sheet names it) with DEVL's override clearing their
+    lanes, the DEVL tab's model deciding (`app.controller_plan("DEVL")`), with its own signal agent; its
     workbook gets an **Emergency vehicles** sheet (`emergency_report`: each emergency vehicle's trip, from, to,
     dispatched, arrived, travel time; "on the road" if it hadn't arrived when the run ended) and DEVL's sheets,
     measures `emergency_trips`, `emergency_arrived`, `emergency_trip_s` (the mean of those that arrived) and DEVL's,
     labelled in the batch's Comparison (`AGENT_MEASURES`: emergency travel time lower is better) and in its
     Headline as the emergency travel time reduction. An emergency vehicle that reaches the end of its route (an
     end, or a junction's stop line) leaves the network then, as any vehicle does (`Simulation._move`).
-  - Both ticked: every TSP agent runs with every DEVL agent ("TSP <model> · DEVL <model>", the two baselines
-    first), the tabs agreeing on Pace, Runs at once and Times each (else it says which differ). With no model picked (or
-    none ticked under Multiple, or none on in AI Mode), a test runs its two baselines alone (Never and Always
-    preempt), as fast as the CPU allows, and the line under the seeds says so.
-  - The line under the seeds counts the runs and their time as a sum: minutes × seeds × agents (with both baselines) ×
-    times = the simulated total; with models answering, divided by the runs at once and the pace ("about …"), each
+  - **Test DBL** ticks nothing: DBL's runs need buses in the demand (none: the batch's answer says so). Each run's
+    workbook gets DBL's sheets, its measures (`dbl_*`, among them `dbl_approach_s`, a bus's check-in to check-out)
+    labelled in the batch's Comparison and in its Headline as the bus approach time reduction.
+  - Several ticked: every model of one runs with every model of the others ("TSP <model> · DBL <model> · DEVL
+    <model>").
+  - The line above Start counts the runs and their time as a sum: the default once a seed, and agents × seeds ×
+    times, = the simulated total; with models answering, divided by the runs at once and the pace ("about …"), each
     model server's runs one after another (said when that makes it longer); plain runs go one at a time as fast as
-    the CPU allows, so under the total. It follows the tabs (read once a second while a test is ticked).
+    the CPU allows, so under the total. In red it says what is wrong (a bad seed list, a test with no model, nothing
+    to run), and Start Batch waits for a valid choice; it waits too while a live run, a batch or another test is
+    going on (`app.busy()`), the line saying which, and Replay a Run with it. It follows the tabs (read once a second
+    while the panel shows) and its own rows at once.
   - **Start Batch** calls `app.run_batch` (MainWindow.run_batch, see main.md) and says where the
-    workbooks went, or in red why it couldn't run. `start(seeds, minutes, test_tsp, test_devl, check_only)` does the
-    same for the assistant's start_batch: checked, then set in the panel (a duration not listed: Other…) and run.
+    workbooks went, or in red why it couldn't run. `start(seeds, minutes, tests, check_only, pace, at_once, times)`
+    (`tests` a list of kinds; pace, at_once and times left out: the panel's) does the same for the assistant's
+    start_batch: checked, then set in the panel (a duration not listed: Other…) and run.
   - **Replay a run** (an icon button beside it): pick a run's workbook; `app.replay_run` (MainWindow.replay_run)
     runs it again from the telemetry feed beside it, each decision as recorded, and the line says whether the
     new workbook's Summary is the same as the original's (else the first figures that differ, and asks
@@ -335,7 +409,7 @@
   own folder, so a step's cost doesn't grow with the session), and each verdict and the session's end
   rewrite both whole from the folder (`_write_tables`). Every rewrite (step.json and session.json by `_write_json`,
   steps.csv and sessions.csv by `_write_csv`, report.html, the .odt) goes to a `.part` beside the file and replaces
-  it (`results.write_whole`, `os.replace`): a full disk cutting one short leaves the old file whole, and the step
+  it (`files.write_whole`, `os.replace`): a full disk cutting one short leaves the old file whole, and the step
   still in every table; once the session
   has ended, `<session folder name>.odt` (`_write_document`, Qt's ODF writer; Word and LibreOffice open it), the whole
   session as one document to read: its facts (times, agent, version, code SHA-256, Python, Qt, OS, verdict), then each

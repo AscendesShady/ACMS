@@ -92,7 +92,7 @@ def test_what_a_click_fills_in_is_logged_too():
     window._ask_to_save = False
     window.show()
     window.tabs.setCurrentWidget(window.extensions)
-    dispatch = window._extension("dispatch_emergency")
+    dispatch = window._extension("dynamic_emergency_lane")  # its Dispatch Emergency Vehicle section
     dispatch.check.setChecked(True)
     APP.processEvents()
     window.watch_action.setChecked(True)
@@ -100,7 +100,7 @@ def test_what_a_click_fills_in_is_logged_too():
     shuffle = next(b for b in dispatch.controls.findChildren(QPushButton) if b.toolTip() == "Random" and b.isVisible())
     QTest.mouseClick(shuffle, Qt.MouseButton.LeftButton)  # a random From: the click, and the place it picked
     APP.processEvents()
-    picked = dispatch.module._lines[0][2].currentText()
+    picked = dispatch.module.dispatch._lines[0][2].currentText()
     surprise = next(b for b in dispatch.controls.findChildren(QPushButton) if b.toolTip() == "Random Emergency")
     QTest.mouseClick(surprise, Qt.MouseButton.LeftButton)  # no run: its message says why
     APP.processEvents()

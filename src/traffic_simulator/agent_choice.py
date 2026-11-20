@@ -1,11 +1,11 @@
-"""Who decides an extension's TRUE/FALSE questions (TSP, DEVL): form rows shared by their panels (Qt).
+"""Who decides an extension's TRUE/FALSE questions (TSP, DEVL, DBL): form rows shared by their panels (Qt).
 
 Decided by: System 1, System 2 or Multiple. With System 1 or 2, **Model** picks which of that system's models
 answers (AI Mode's agent_options: System 1's Jev or Ollama's decision models (Laya); System 2's Ollama models, Grok and Gemini), live runs and
 a batch's alike; none listed: AI Mode's own choice. Multiple is for Batch Run: **Models** (a dropdown of ticks), each
-tested against the baselines (Never, Always preempt), and the batch's **Decide within** (each answer's deadline, simulated s), **Pace**
-(simulated seconds a real second), **Runs at once** and **Times each** (shown under Multiple, used by any batch). A
-live run asks the System chosen last. `batch_settings()` gives Batch Run what to test.
+tested against the default configuration, and **Decide within** (each answer's deadline, simulated s).
+How a batch runs (Pace, Runs at once, Times each) is Batch Run's own, one setting for every controller. A live run
+asks the System chosen last. `batch_settings()` gives Batch Run what to test.
 """
 
 from __future__ import annotations
@@ -13,15 +13,13 @@ from __future__ import annotations
 import threading
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QComboBox, QFormLayout, QHBoxLayout, QLabel, QSlider, QSpinBox
+from PySide6.QtWidgets import QComboBox, QFormLayout, QHBoxLayout, QLabel, QSlider
 
 from .widgets import CheckList, ChoiceButtons
 
 SYSTEMS = (("System 1", "1"), ("System 2", "2"), ("Multiple", "multiple"))
 DEADLINE_S = (1, 280, 30)  # Decide within: least, most, at first (simulated s)
-PACES = (1, 2, 5, 10)  # simulated seconds a real second; an answer's latency costs pace x its seconds
-AT_ONCE = (1, 8, 4)  # Runs at once: least, most, at first
-MAX_TIMES = 100
+PACES = (1, 2, 5, 10)  # Batch Run's Pace: simulated seconds a real second; an answer's latency costs pace x its seconds
 NOBODY = "no agent"  # a run's key when it has no signal agent
 KEEP_RUNS = 16  # runs whose state is kept: twice the most a batch has going at once (8)
 _runs_lock = threading.Lock()  # a batch's runs start side by side
@@ -82,22 +80,12 @@ class AgentChoice:
         within = QHBoxLayout()
         within.addWidget(self.deadline, 1)
         within.addWidget(seconds)
-        self.pace = ChoiceButtons([(f"{factor}×", factor) for factor in PACES])
-        self.pace.setToolTip("Simulated seconds per second")
-        self.at_once = QSpinBox()
-        self.at_once.setRange(*AT_ONCE[:2])
-        self.at_once.setValue(AT_ONCE[2])
-        self.at_once.setToolTip("Runs going side by side")
-        self.times = QSpinBox()
-        self.times.setRange(1, MAX_TIMES)
-        self.times.setToolTip("Runs per seed and model")
         self.form = form
         form.addRow("Decided by", self.choice)
         form.addRow("Model", self.model)
         self._model_row = form.rowCount() - 1
         self._rows = []
-        for label, field in (("Models", self.agents), ("Decide within", within), ("Pace", self.pace),
-                             ("Runs at once", self.at_once), ("Times each", self.times)):
+        for label, field in (("Models", self.agents), ("Decide within", within)):
             form.addRow(label, field)
             self._rows.append(form.rowCount() - 1)
         self.choice.changed.connect(self._show)
@@ -131,11 +119,10 @@ class AgentChoice:
         return self._picked
 
     def batch_settings(self) -> dict:
-        """What Batch Run tests: deadline_s, speed, at_once, times, and agents (labels) with their servers (label ->
-        model server); or, with System 1 or 2 and no model listed to pick, {"system": "1" or "2"} instead of agents
-        (the window finds AI Mode's)."""
-        settings = {"deadline_s": self.deadline.value(), "speed": self.pace.value(), "at_once": self.at_once.value(),
-                    "times": self.times.value()}
+        """What Batch Run tests: deadline_s and agents (labels) with their servers (label -> model server); or, with
+        System 1 or 2 and no model listed to pick, {"system": "1" or "2"} instead of agents (the window finds AI
+        Mode's)."""
+        settings = {"deadline_s": self.deadline.value()}
         if self.choice.value() == "multiple":
             labels = self.agents.ticked()
         elif self.model_option() is not None:

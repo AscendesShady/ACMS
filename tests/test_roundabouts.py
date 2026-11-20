@@ -3,7 +3,9 @@
 from copy import deepcopy
 
 from traffic_simulator.network_generator import generate_network
-from traffic_simulator.network_tools import ToolError, build_edge, run_tool
+from traffic_simulator.network_tools import run_tool
+from traffic_simulator.road_tools import build_edge
+from traffic_simulator.tool_args import ToolError
 from traffic_simulator.roundabouts import CATEGORIES, design_roundabout, fastest_path_speed_kmh
 
 

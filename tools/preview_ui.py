@@ -1,4 +1,4 @@
-"""Capture the real Qt interface without starting traffic or changing a saved project.
+r"""Capture the real Qt interface without starting traffic or changing a saved project.
 
     .venv\Scripts\python.exe tools\preview_ui.py --output reports/ui-preview --width 1280 --height 800
 

@@ -19,12 +19,16 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
+from traffic_simulator.mode_behavior import PALETTE  # noqa: E402
+from traffic_simulator.vehicle import VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.signal_timing import (AMBER_USED_S, SATURATION_PER_LANE_VPH, START_UP_LOST_S, effective,  # noqa: E402
                                              STANDARD_SPACE_S, STOP_LINE_LOOP_M)
-from traffic_simulator.simulation import (DT, FILTER_SPEED, TIME_TO_TELEPORT_S, TURN_SATURATION_VPH, Lane, Loop, PairDemand, Runner,  # noqa: E402
-                                          Simulation, Turn, _clear, arrivals, webster)
+from traffic_simulator.simulation import DT, FILTER_SPEED, TIME_TO_TELEPORT_S, Loop, Simulation, _clear, arrivals
+from traffic_simulator.demand import PairDemand
+from traffic_simulator.lane_graph import TURN_SATURATION_VPH, Lane, Turn
+from traffic_simulator.runner import Runner
+from traffic_simulator.signal_timing import webster
 from traffic_simulator.vehicle import (MAX_SPEED_LAT, VEHICLE_CLASSES, create_vehicle, free_speed, next_speed,  # noqa: E402
                                        safe_speed, secure_gap)
 from traffic_simulator.geometry import polyline_length  # noqa: E402
@@ -903,7 +907,7 @@ def test_a_skewed_two_phase_signal_splits_its_phases_by_its_own_roads():
 def test_path_size_logit_shares_routes():
     from types import SimpleNamespace
 
-    from traffic_simulator.simulation import path_size_logit
+    from traffic_simulator.lane_graph import path_size_logit
 
     a, b, c = (SimpleNamespace(id=name, length=100.0) for name in "abc")
     assert path_size_logit([[a], [b]], [60.0, 60.0], 0.5) == [0.5, 0.5]  # alike: even
@@ -913,7 +917,7 @@ def test_path_size_logit_shares_routes():
 
 
 def test_route_costs_count_junction_delay_once():
-    from traffic_simulator.simulation import PRIORITY_CAPACITY_VPH, Graph
+    from traffic_simulator.lane_graph import PRIORITY_CAPACITY_VPH, Graph
     network = generate_network(3, 3)  # two-phase signals, driving on the left
     network.node("2,2").control = "uncontrolled"
     graph = Graph(network)
@@ -1081,7 +1085,8 @@ def test_webster_times_signals_from_the_demand():
 
 def test_signal_countdowns_reach_the_map_clocks():
     from PySide6.QtGui import QImage, QPainter
-    from traffic_simulator.network_scene import NetworkGraphicsScene, projection_transform
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.scene_items import projection_transform
 
     network = generate_network(3, 4)
     network.node("1,1").signal_method = "fixed"
@@ -1118,17 +1123,23 @@ def test_signal_countdowns_reach_the_map_clocks():
 
 def test_the_window_runs_and_stops_the_traffic():
     from traffic_simulator.main import MainWindow
-    from traffic_simulator.od_matrix import ODCell
+    from traffic_simulator.demand import ODCell
 
     window = MainWindow()
     window.od_matrix.set_ends(*window._od_ends())
     window.od_matrix.cells[("1W", "1E")] = ODCell(flow=900, split=(10, 85, 5))
     window.speed_combo.setCurrentIndex(window.speed_combo.findData(60))
     window.select("node", "1,1")
+    styled, style = [], window.clock_label.setStyleSheet
+    window.clock_label.setStyleSheet = lambda sheet: (styled.append(sheet), style(sheet))[1]
     window.run_action.trigger()
     assert "Last run: cycle" in window.properties.signal_note.text()  # Webster's plan, worked out at Run
     assert not window.properties.green_times[0][1].isEnabled()
     QTest.qWait(1500)  # 1.5 s real at 60x: the physics keeps pace on its own thread
+    # On time at 60x: not "behind" (it was, on most frames), and the clock's colour set only when it changes (it was
+    # set on each of ~90 display frames)
+    assert window.runner.speed_now > 50 and len(styled) <= 8, (window.runner.speed_now, len(styled))
+    del window.clock_label.setStyleSheet
     frame = window.runner.frame
     assert frame.time >= 60 and frame.spawned > 10 and window.scene.frame is not None
     assert abs(window.runner.target() - frame.time) < 6  # in step with the wall clock (0.1 s real), not waiting
@@ -1171,6 +1182,7 @@ def test_the_runner_keeps_real_time_and_publishes_frames():
         held = runner.frame.time
         time.sleep(0.2)
         assert runner.frame.time == held and not runner.running
+        assert held == simulation.time  # the last step's frame (paused while asleep between steps, it was a step old)
         runner.set_speed(60)
         runner.play()
         time.sleep(0.5)
@@ -1182,6 +1194,223 @@ def test_the_runner_keeps_real_time_and_publishes_frames():
     finally:
         runner.stop()
     assert not runner._thread.is_alive()
+
+
+def test_a_runner_that_fell_behind_owes_no_time():
+    # A speed the CPU can't keep (each step made to take 20 ms: 12x at best): the time lost isn't owed. A lower speed
+    # is the pace at once (1x had raced on at full tilt until minutes of backlog were worked off), and at a steady
+    # speed the run is never more than a moment behind where it should be.
+    simulation = Simulation(generate_network(1, 1), [], MODES)
+    step = simulation.step
+    simulation.step = lambda: (time.sleep(0.02), step())[1]
+    runner = Runner(simulation, speed=60)
+    try:
+        runner.play()
+        time.sleep(1.5)
+        assert runner.target() - simulation.time <= runner._owed() + 4.0, runner.target() - simulation.time  # not 70 s
+        assert runner.behind()
+        runner.set_speed(1)
+        time.sleep(0.2)  # the step going on when the speed changed
+        before = simulation.time
+        time.sleep(1.5)
+        assert simulation.time - before <= 2.5, simulation.time - before  # 1.5 s at 1x (it ran 18 s)
+        assert runner.target() - simulation.time <= 1.0
+    finally:
+        runner.stop()
+
+
+def test_a_runner_on_time_at_60x_is_not_behind():
+    # At 60x a frame published 17 ms ago is a simulated second old: that alone had read as "behind" on most display
+    # frames (the map then draws 10 a second and the clock turns amber), with the physics at 60.0x.
+    simulation = Simulation(generate_network(3, 4), [pair("1W", "1E", 900), pair("1S", "3N", 900)], MODES, seed=6)
+    runner = Runner(simulation, speed=60)
+    try:
+        assert not runner.behind()  # not running
+        runner.play()
+        time.sleep(0.5)
+        late = 0
+        for _ in range(100):  # as the window's 16 ms display timer reads it
+            late += runner.behind()
+            time.sleep(0.016)
+        assert late <= 10, late  # 60 of 100 before; a busy PC may hiccup
+        assert runner.speed_now > 50, runner.speed_now
+    finally:
+        runner.stop()
+
+
+def test_a_run_in_a_process_of_its_own_is_the_same_run_and_comes_back_whole():
+    # A thread's physics and the window's drawing take turns at one interpreter (2,700 vehicles at 10x: the map 4
+    # redraws a second, the run at 5.8x). In its own process the Simulation steps as it would here: the same run,
+    # its frames and its recorder's samples sent here, and the Simulation itself back when it stops.
+    from traffic_simulator.physics_process import ProcessRunner
+
+    def made():
+        simulation = Simulation(generate_network(3, 4), [pair("1W", "1E", 900), pair("1S", "3N", 900)], MODES, seed=6)
+        simulation.observe(keep=1000)
+        return simulation
+
+    class Recorder:
+        sample_s, error = 5.0, ""
+
+        def __init__(self):
+            self.times = []
+
+        def sample(self, frame):
+            self.times.append(frame.time)
+
+    simulation, recorder = made(), Recorder()
+    runner = ProcessRunner(simulation, speed=30, recorder=recorder)
+    try:
+        assert not runner.running and runner.simulation.time == 0 and not runner.shares_interpreter
+        runner.play()
+        time.sleep(1.5)
+        assert runner.running and runner.frame.time >= 25 and runner.speed_now > 20 and not runner.behind()
+        assert -0.5 <= runner.target() - runner.frame.time <= 3.0  # by the other side's pace and the one clock
+        assert simulation.time == 0  # this side's Simulation never steps...
+        assert runner.simulation.graph is simulation.graph  # ...its lane graph answers route questions meanwhile
+        runner.set_speed(60)
+        assert runner.speed == 60
+        runner.pause()
+        held = runner.frame.time
+        time.sleep(0.2)
+        assert runner.frame.time == held and not runner.running
+        live = runner.snapshot()  # a copy for an Export's analysis: the run as it stands
+        assert live is not simulation and live.time == held and "passages" in live.observations()
+        runner.play()
+        time.sleep(0.5)
+        assert runner.frame.time >= held + 20
+        assert runner.stop(5.0)
+        ended = runner.simulation
+        assert isinstance(ended, Simulation) and ended.time >= runner.frame.time > held
+        assert recorder.times == [5.0 * k for k in range(1, int(ended.time // 5) + 1)]  # each sample, once, in order
+        here = made()  # the same run made here, to the same moment: the same vehicles where they are
+        while here.time < ended.time - 1e-9:
+            here.step()
+        assert here.frame().vehicles == ended.frame().vehicles and here.arrived == ended.arrived
+    finally:
+        runner.stop(5.0)
+
+
+def test_a_process_run_takes_edits_says_its_errors_and_comes_home_for_an_extension():
+    import pickle
+
+    from traffic_simulator.physics_process import ProcessRunner
+
+    class Recorder:
+        sample_s, error = 5.0, ""
+
+        def __init__(self):
+            self.times = []
+
+        def sample(self, frame):
+            self.times.append(frame.time)
+
+    recorder = Recorder()
+    runner = ProcessRunner(Simulation(generate_network(1, 1), [], MODES), speed=60, recorder=recorder)
+    home = None
+    try:
+        runner.play()
+        runner.simulation.set_demand([pair("1W", "1E", 1800)])  # a demand edit: the run carries on with it
+        runner.simulation.dispatch("1S", "1N")  # an emergency vehicle sent into it
+        try:
+            runner.simulation.dispatch("1S", "1S")
+            raise AssertionError("no route: refused, as it is here")
+        except ValueError as exc:
+            assert "No route" in str(exc)
+        time.sleep(1.0)
+        assert runner.frame.spawned > 10 and runner.snapshot().emergency_trips  # the edit and the dispatch took
+        home = runner.come_home()  # an extension is to decide in the run: its physics on a thread here, carrying on
+        assert isinstance(home, Runner) and home.running and home.simulation is runner.simulation
+        assert home.simulation.time >= runner.frame.time and home.recorder is recorder
+        before = home.simulation.time
+        time.sleep(0.5)
+        assert home.simulation.time >= before + 20
+        home.stop()
+        ended = home.simulation.time  # every sample once, the thread's following the process's with none doubled
+        assert recorder.times == [5.0 * k for k in range(1, int(ended // 5) + 1)], (recorder.times[-3:], ended)
+    finally:
+        runner.stop(5.0)
+        if home is not None:
+            home.stop()
+    broken = Simulation(generate_network(1, 1), [], MODES)
+    broken._loops = [(None, None)]  # its next step raises
+    runner = ProcessRunner(broken, speed=60)
+    try:
+        runner.play()
+        for _ in range(100):
+            if runner.error:
+                break
+            time.sleep(0.05)
+        assert "physics stopped" in runner.error and not runner.running  # said here, as a thread's is
+        assert runner.stop(5.0) and isinstance(runner.simulation, Simulation)  # and it still comes back
+    finally:
+        runner.stop(5.0)
+    decided = Simulation(generate_network(1, 1), [], MODES)
+    decided.signal_override = lambda *args: None  # an extension's: this window's own code can't go there
+    try:
+        ProcessRunner(decided)
+        raise AssertionError("a Simulation with the window's code in it can't be handed over")
+    except (AttributeError, pickle.PicklingError):
+        pass  # the window then makes a Runner (MainWindow._runner_for)
+
+
+def test_the_window_runs_in_a_process_and_brings_the_run_home_when_an_extension_decides():
+    from types import SimpleNamespace
+
+    from traffic_simulator.extensions import Extension
+    from traffic_simulator.main import MainWindow
+    from traffic_simulator.od_matrix import ODCell
+    from traffic_simulator.physics_process import ProcessRunner
+
+    window = MainWindow()
+    window._ask_to_save = False
+    window.results_folder = Path(tempfile.mkdtemp())
+    assert not window.physics_process  # offscreen: on a thread, where the other tests reach into the run
+    window.physics_process = True
+    window.od_matrix.set_ends(*window._od_ends())
+    window.od_matrix.cells[("1W", "1E")] = ODCell(flow=900, split=(10, 85, 5))
+    window.speed_combo.setCurrentIndex(window.speed_combo.findData(60))
+    window.run_action.trigger()
+    runner = window.runner
+    assert isinstance(runner, ProcessRunner)
+    QTest.qWait(1500)
+    frame = runner.frame
+    assert frame.time >= 60 and frame.spawned > 10 and window.scene.frame is not None and runner.speed_now > 50
+    assert window.clock_label.toolTip() == "Simulation time"  # on time: not "Behind"
+    assert window._traffic({"limit": 5})["time_s"] >= 60  # read_traffic: from the frames
+    assert window.recorder.totals["time_s"] >= 55  # its recorder is here, sampled with the frames sent for it
+    window.od_matrix.cells[("1W", "1E")] = ODCell(flow=300, split=(10, 85, 5))
+    window.od_panel.changed.emit(None)  # a demand edit: the run carries on, in its process
+    assert window.runner is runner and not runner.error
+    # An extension that decides in the run is ticked: the run comes home and carries on, on a thread
+    module = SimpleNamespace(NAME="Decides", signal_override=lambda *args: None)
+    decides = Extension(Path("decides.py"), module)
+    window.extensions.extensions.append(decides)
+    window.extensions.rows.addWidget(window.extensions._row(decides))
+    decides.check.setChecked(True)
+    home = window.runner
+    assert isinstance(home, Runner) and home.running and home.simulation.time >= frame.time
+    assert home.simulation.signal_override is not None
+    QTest.qWait(300)
+    decides.check.setChecked(False)
+    window.stop_action.trigger()
+    for _ in range(50):
+        if window.last_kpis is not None:
+            break
+        QTest.qWait(100)
+    assert window.runner is None and "observed" in window.last_kpis and window.last_results.exists()
+    first = window.last_results
+    window.run_action.trigger()  # with none ticked: in a process again, and Stop brings its results back
+    assert isinstance(window.runner, ProcessRunner)
+    QTest.qWait(800)
+    window.last_kpis = None
+    window.stop_action.trigger()
+    for _ in range(50):
+        if window.last_kpis is not None:
+            break
+        QTest.qWait(100)
+    assert window.last_kpis["observed"]["passages"] and window.last_results.exists() and window.last_results != first
+    window.close()
 
 
 def test_the_runner_says_when_its_physics_fails_or_has_not_stopped():
@@ -1227,7 +1456,7 @@ def test_a_frame_shares_no_plan_with_the_run_or_another_frame():
 
 
 def test_give_way_drivers_slow_to_look_and_minor_turns_give_way_by_rank():
-    from traffic_simulator.simulation import GIVE_WAY_KMH, Graph
+    from traffic_simulator.lane_graph import GIVE_WAY_KMH, Graph
 
     graph = Graph(_uncontrolled_crossing())
     major = graph._major_arms("1,1")
@@ -1252,8 +1481,7 @@ def test_junction_saturation_by_control():
     """Degree of saturation at a roundabout (measured entry capacity against the circulating flow), a
     priority junction (against the flows it gives way to) and a signal (lane by lane, turns slower)."""
     from traffic_simulator.signal_timing import KERB_TURN_PER_LANE_VPH
-    from traffic_simulator.simulation import (PRIORITY_CAPACITY_VPH, ROUNDABOUT_ENTRY_VPH, Graph,
-                                              measured_capacity)
+    from traffic_simulator.lane_graph import PRIORITY_CAPACITY_VPH, ROUNDABOUT_ENTRY_VPH, Graph, measured_capacity
 
     assert measured_capacity(ROUNDABOUT_ENTRY_VPH, 0) == 1455 and measured_capacity(ROUNDABOUT_ENTRY_VPH, 300) == 1092.5
     assert measured_capacity(PRIORITY_CAPACITY_VPH, 5000) == 105  # held at the last point beyond the table
@@ -1293,7 +1521,7 @@ def _held_queue(control: str, conflicting: float, lanes: int = 1, minutes: float
     (or circulating) traffic, on a one-junction network, cars only."""
     from math import pi
 
-    from traffic_simulator.simulation import Graph
+    from traffic_simulator.lane_graph import Graph
 
     network = generate_network(1, 1)
     network.node("1,1").control = control
@@ -1329,7 +1557,7 @@ def _held_queue(control: str, conflicting: float, lanes: int = 1, minutes: float
 def test_give_way_capacities_are_calibrated_to_the_simulated_drivers():
     """The measured capacities Graph.saturation sizes demand by, re-measured: a minor arm and a roundabout
     entry held saturated against priority traffic (within 10 %)."""
-    from traffic_simulator.simulation import PRIORITY_CAPACITY_VPH, ROUNDABOUT_ENTRY_VPH, measured_capacity
+    from traffic_simulator.lane_graph import PRIORITY_CAPACITY_VPH, ROUNDABOUT_ENTRY_VPH, measured_capacity
 
     for control, table, conflicting in (("uncontrolled", PRIORITY_CAPACITY_VPH, 400), ("roundabout", ROUNDABOUT_ENTRY_VPH, 400)):
         measured, expected = _held_queue(control, conflicting), measured_capacity(table, conflicting)
@@ -1424,6 +1652,34 @@ def test_a_lane_obeys_its_own_signal_and_an_emergency_vehicle_keeps_to_the_kerbs
         assert kept == {0}, (side, kept)  # the emergency vehicles kept to it before each signal
         assert all(index == 0 and state == "G" for (_, index), state in simulation._lane_states.items())
         assert any(trip["arrived_s"] for trip in simulation.emergency_trips.values())
+
+
+def test_buses_keep_to_the_kerbside_lane_before_a_signal_only_with_a_dynamic_bus_lane():
+    class Passing:  # an override that leaves every signal to its plan, saying which classes keep to the kerbside lane
+        def __init__(self, kerb_lane_for):
+            self.kerb_lane_for = kerb_lane_for
+
+        def __call__(self, node, road, state, context):
+            return state
+
+    for side in ("left", "right"):
+        found = {}
+        for kerb_lane_for in ((), ("bus",)):
+            network = generate_network(1, 3, driving_side=side)  # one road west to east through three signals
+            simulation = Simulation(network, [PairDemand("1W", "1E", 900, None, [], "Poisson", (40, 60, 0))], MODES,
+                                    seed=4)
+            simulation.signal_override = Passing(kerb_lane_for)
+            lanes = [0, 0]  # bus-steps in each lane over the last 100 m before a signal
+            for _ in range(1200):
+                simulation.step()
+                for vehicle in simulation.vehicles:
+                    segment = vehicle.segment
+                    if vehicle.mode == "Bus" and isinstance(segment, Lane) and segment.link.end in simulation.graph.signals \
+                            and segment.length - vehicle.s < 100:
+                        lanes[segment.index] += 1
+            found[kerb_lane_for] = lanes[0] / sum(lanes)
+        assert found[()] < 0.7, (side, found)  # a plain run: buses take either lane
+        assert found[("bus",)] > 0.99, (side, found)  # the Dynamic Bus Lane's: the kerbside lane (a few still merging)
 
 
 def test_an_emergency_vehicle_obeys_red_unless_its_arm_has_a_lane_green():

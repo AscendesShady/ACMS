@@ -93,6 +93,69 @@ def test_a_project_keeps_the_network_demand_types_and_run_settings():
         second.close()
 
 
+def test_a_project_keeps_the_extensions_and_emergency_schedules():
+    first = window()
+    devl, batch = first.extensions.find("DEVL"), first.extensions.find("Batch Run")
+    batch.check.setChecked(True)  # its settings are set while ticked, then it is unticked: restored all the same
+    first.extensions.set_settings(batch, {"Times each": 3, "Pace": "5×", "Duration": "Other…"})
+    batch.module._ui["custom"].setValue(90)  # Other…'s minutes, the box beside Duration
+    batch.check.setChecked(False)
+    devl.check.setChecked(True)
+    schedules = [("1W", "3E", 5, 0), ("2N", "2,1", 0, 4)]
+    devl.module.dispatch.set_fleet(schedules)
+    devl.module.dispatch._ui["seed"].setValue(77)
+    assert first.unsaved()  # extensions count as changes
+    with tempfile.TemporaryDirectory() as folder:
+        path = str(Path(folder) / "emergency.json")
+        first.network_path = path
+        assert first.save_file() and not first.unsaved()
+        document = json.loads(Path(path).read_text(encoding="utf-8"))
+        saved = {one["file"]: one for one in document["extensions"]}
+        assert saved["dynamic_emergency_lane.py"]["ticked"] and not saved["batch_run.py"]["ticked"]
+        assert saved["dynamic_emergency_lane.py"]["state"] == {"schedules": [list(s) for s in schedules], "seed": 77}
+        assert saved["batch_run.py"]["settings"]["Times each"] == 3 and saved["batch_run.py"]["state"] == {"other_min": 90}
+        first.close()
+
+        second = window()  # a fresh tab: one empty schedule, DEVL unticked
+        devl, batch = second.extensions.find("DEVL"), second.extensions.find("Batch Run")
+        assert not devl.on and devl.module.dispatch.fleet() == [("", "", 0, 0)]
+        assert second.load_file(path)
+        assert devl.on and devl.module.dispatch.fleet() == schedules and devl.module.dispatch._ui["seed"].value() == 77
+        fields = second.extensions.fields(batch, refresh=False)
+        assert fields["Times each"].value() == 3 and fields["Pace"].group.checkedButton().text() == "5×"  # a choice too
+        assert fields["Duration"].currentText() == "Other…" and batch.module._ui["custom"].value() == 90
+        assert not batch.on and not batch.controls.isEnabled() and not second.unsaved()
+        second.close()
+
+        # One that can't be restored is named, and the rest still are; the project opens
+        saved["dynamic_emergency_lane.py"]["state"]["seed"] = -1
+        saved["batch_run.py"]["settings"]["Nope"] = 1
+        saved["batch_run.py"]["settings"]["Runs at once"] = 987654321  # written as 1e400, read as infinity: named
+        document["extensions"].append({"file": "elsewhere.py", "ticked": True, "settings": {"Speed": 2}})
+        Path(path).write_text(json.dumps(document).replace("987654321", "1e400"), encoding="utf-8")
+        third = window()
+        devl = third.extensions.find("DEVL")
+        assert third.load_file(path) and devl.on
+        assert devl.module.dispatch.fleet() == [("", "", 0, 0)]  # its state refused whole: as it was
+        message = third.statusBar().currentMessage()
+        assert "Not restored" in message and "seed" in message and "Nope" in message, message
+        assert "Runs at once" in message and "elsewhere.py: not loaded here" in message, message
+        assert third.extensions.fields(third.extensions.find("Batch Run"), refresh=False)["Times each"].value() == 3
+        assert third.save_file()  # an extension not loaded here is written back as it was, not lost
+        assert {"file": "elsewhere.py", "ticked": True, "settings": {"Speed": 2}} in             json.loads(Path(path).read_text(encoding="utf-8"))["extensions"]
+        third.close()
+        saved = {one["file"]: one for one in document["extensions"]}  # the bad file again, for the next check
+
+        document["extensions"] = "everything"  # not a list: refused before anything changes
+        Path(path).write_text(json.dumps(document), encoding="utf-8")
+        real = QMessageBox.critical
+        QMessageBox.critical = lambda *args: None
+        try:
+            assert not window().load_file(path)
+        finally:
+            QMessageBox.critical = real
+
+
 def test_a_bad_project_changes_nothing_and_an_old_network_file_opens():
     shown = window()
     with tempfile.TemporaryDirectory() as folder:

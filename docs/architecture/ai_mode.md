@@ -34,7 +34,7 @@
     only; the dropdown preselects the provider's last started model or the default.
   - Changing the pick lets go of a connected model (`_disconnect`); the conversation stays.
   - **Available Tools** (a wrench icon beside Start, `show_tools`) lists every tool in the transcript
-    from `network_tools.TOOLS`, with its parameters and description: the reads that run at once, then
+    from `tool_schemas.TOOLS`, with its parameters and description: the reads that run at once, then
     the changes that wait for Apply (and, for a model that can't call tools, that it answers from the
     documents). It works before Start and sends nothing; the list isn't saved with the conversation.
   - Nothing is read or prepared until **Start** (`start`). Start then:
@@ -87,7 +87,7 @@
   the app runs it, the result goes back, and the model continues (up to 12 rounds per answer). A call the model
   wrote as text instead of making it (llama3.1 often does: `{"name": "describe", "parameters": {...}}`) is made
   all the same when it names a tool offered and its arguments are an object (`assistant.calls_in_text`).
-  - **Where it lives**: `network_tools` re-exports every name below; `tool_schemas.py` holds `TOOLS`, the
+  - **Where it lives**: `network_tools` holds `run_tool` and the map and grid tools, and re-exports nothing: each name below is imported from its own module; `tool_schemas.py` holds `TOOLS`, the
     `*_TOOLS` name sets and `tool_specs`; `tool_args.py` reads the arguments (`normalise`, `signature`, the
     call repairs `fold_incident`, `drop_strays` and `repair_ends`, `ToolError`, `_ids`, `_bool`);
     `tool_offer.py` picks what a request is offered (`TOOL_GROUPS`, `SKILLS`, `tools_for`, `expand_tools`,
@@ -100,7 +100,7 @@
     (`demand_plan`, `scale_plan`, `calibration_plan`, `mode_plan`, `institution_split`, `LOGIT_DEFAULTS`,
     `STORAGE_LIMIT`). A new tool is its schema in `tool_schemas.TOOLS`, its function in a
     tool module and its `network_tools._FUNCTIONS` entry (or the window's handler).
-  - **Arguments first** (`network_tools.normalise`, in `AIModePanel._tool_requested` for every tool and in
+  - **Arguments first** (`tool_args.normalise`, in `AIModePanel._tool_requested` for every tool and in
     `run_tool`): what small models send is read in the shapes the schema gives (a close misspelling or a
     plural takes the parameter's name, `ends` → `end`; numbers, whole numbers and true/false sent as text
     become them; a choice matches whatever its case; a one-item list where one value is wanted is that value;
@@ -117,7 +117,7 @@
     would change … it is like that already"), so they are never proposed; a network edit's result lists
     what it changed (`changed`, from `describe_changes`). The system prompt tells the model to read every
     result, treat an error as nothing done, and quote the result's own numbers.
-  - **Refusals as data** (`network_tools.explain_error`, from `AIModePanel._execute`): every refused call comes
+  - **Refusals as data** (`tool_reports.explain_error`, from `AIModePanel._execute`): every refused call comes
     back as {"error", "error_type", "suggested_fix"}, and for an unknown id `did_you_mean`, the network's nearest
     ids by spelling (network_checks.md), so a model can correct the call without guessing.
   - **Read tools** run straight away:
@@ -175,7 +175,7 @@
     - `shape_daily_curve`: loads the curve editor with `points` [[hour, level]…] (sorted, scaled to
       0–1, run from 00:00 to 24:00), a `polynomial` [a0…an] of degree 2–6, or a `preset` (weekday,
       flat).
-    - `generate_demand`: fills the OD matrix by a gravity model (`network_tools.demand_plan`, handed to the
+    - `generate_demand`: fills the OD matrix by a gravity model (`demand_plans.demand_plan`, handed to the
       Demand Generator as `ODCellPanel.planner`): each origin end's trips (in proportion to its supply; with no
       end flows set anywhere, equally; `total` sets the size) and each destination's (its demand) are shared out by exp(−`distance_decay_per_km` × km) of
       the shortest route along the roads (Dijkstra, one-way roads kept; 0.5 per km by default, or fitted by
@@ -218,11 +218,11 @@
         even the smallest share jams, the tool is refused and the matrix put back. Not checked while a run
         is going (it says so).
     - `scale_demand`: scales the demand already entered (the kind shown), keeping its pattern between
-      pairs, by `factor` (0.01–100) or to `degree_of_saturation` as above (`network_tools.scale_plan`,
+      pairs, by `factor` (0.01–100) or to `degree_of_saturation` as above (`demand_plans.scale_plan`,
       the Demand Generator's `ODCellPanel.scaler`); `pairs`, `origins` or `destinations` narrow it. It
       reports the factor, totals before and after and the junctions' saturation; a degree of saturation is
       checked in a run as above.
-    - `choose_modes`: each pair's split by multinomial logit (`network_tools.mode_plan`, the Demand
+    - `choose_modes`: each pair's split by multinomial logit (`demand_plans.mode_plan`, the Demand
       Generator's `ODCellPanel.chooser`): for each of the `alternatives` (vehicle types; road pairs never take the
       MRT, which has its own OD matrix: metro.md), U = constant +
       in_vehicle_per_min × in-vehicle minutes + out_of_vehicle_per_min × (out_of_vehicle_min + half its
@@ -290,7 +290,7 @@
       (`near`: rings 10 m apart, 16 directions, diagonals first), with its kind's figures unless given and a
       catchment `radius_m` (default 10 m past its 4th nearest junction or end); returns its door and catchment.
     - `institution_mode_split` (the window, `MainWindow._institution_split`; checked first, its preview the shares):
-      each of `institutions` (all by default) split by `network_tools.institution_split`: a multinomial logit
+      each of `institutions` (all by default) split by `demand_plans.institution_split`: a multinomial logit
       between Walk and the vehicle types on the trips from each catchment place to the door, and, with MRT lines,
       MRT or Walk from each station of its door station's line inside its circle (those stations are places too,
       as the junctions are: metro.md) (route km; vehicle
@@ -359,7 +359,7 @@
   - **Local models without tools:** Ollama reports each model's capabilities (`/api/show`). A
     model that can't use tools (e.g. phi3, orca-mini) chats from the documents only, and the
     chat says so.
-  - **Vehicle types** (`network_tools.TYPE_TOOLS`, run by the window, `MainWindow._types_command`):
+  - **Vehicle types** (`tool_schemas.TYPE_TOOLS`, run by the window, `MainWindow._types_command`):
     `list_vehicle_types` (every type's parameters, the default split, the kinds it can make) and
     `create_vehicle_types` (an edit, Apply first): new types, each made as a SUMO vehicle class
     (`vehicle.VEHICLE_CLASSES`: passenger, taxi, bus, coach, delivery, truck, trailer, motorcycle,
@@ -371,7 +371,7 @@
     `update_vehicle_type` (an edit) changes one type by name through `VehicleModes.update`: new name,
     headway, and size, speeds, acceleration, braking, gap, τ, σ, speed deviation and occupancy within
     ranges (`VehicleModes.FIGURES`), and `filters` (lateral runs), all checked first; one undo step.
-  - **Network testing** (`network_tools.RUN_TOOLS`, run by the window, `MainWindow._runs_command`), the
+  - **Network testing** (`tool_schemas.RUN_TOOLS`, run by the window, `MainWindow._runs_command`), the
     assistant as the network's planner and tester, not only its signal timer:
     - `run_simulation` (an edit: it writes a workbook, so Apply first; refused when the matrix has no demand of
       the kind shown, rather than reporting a run of zeros): one headless run of the open
@@ -383,7 +383,7 @@
       `_decide` notices the turn moved on and neither says it's thinking nor answers a newer card. It saves a workbook like a live run's (plus the planning journal) and returns the
       headline figures as `R1`, `R2`…
     - `run_experiment` (an edit): `scenarios` (1–6; the first is the baseline, normally the network as
-      built), each with `changes` (edit tools from `network_tools.SCENARIO_TOOLS` applied through
+      built), each with `changes` (edit tools from `tool_schemas.SCENARIO_TOOLS` applied through
       `run_tool` to a copy: `experiments.scenario_network`), `demand_scale` (0.05–10, to stress it) and
       `extensions` (their signal overrides, `ExtensionsPanel.overrides_for`); `seeds` ("1-5", a list; at
       most 20) and 60 runs in all. Every scenario is checked before anything runs; the open network is never
@@ -413,7 +413,7 @@
       performance function and Empirical Bayes ranking, `ttc_s` 0.5–3), `forecast` (Holt's smoothing of a
       series, `what` and `road`, with hold-out accuracy against the naive forecast). And on the network or
       data: `critical_links` (each used road closed in turn, the demand shown re-routed at free flow,
-      `network_tools.critical_links_plan`), `regress` (OLS of `y` on `x` over `data` or an experiment's runs,
+      `design_checks.critical_links_plan`), `regress` (OLS of `y` on `x` over `data` or an experiment's runs,
       `log` for natural logs), `network_indices` and `cluster_conditions` (network tools: graph indices; days
       into weighted travel conditions by k-means).
     - Edits that run tests: `assign_routes` (route choice by path-size logit on the network, its link and move
@@ -463,9 +463,10 @@
       replaced by `set_fleet`, each an end or junction with a route between them (`_route_check`), every_min or
       after_min 0-120, not both; applied, it ticks the extension first, as Test DEVL does; dispatch_now also sends
       them into the live run); `start_batch` (Batch Run's
-      `start`: its seeds, duration and Test TSP/DEVL set in the panel, then Start Batch as a click would, the TSP
-      and DEVL tabs giving the models; checked first: the seeds, duration, demand, no run going, the tabs' models,
-      with Test DEVL the schedules); `replay_run` (a workbook in the results folder, by its path or name, `MainWindow.replay_run`;
+      `start`: its seeds, duration and Test TSP/DEVL/DBL set in the panel, then Start Batch as a click would, each
+      controller's tab giving the models and Batch Run's own the pace, runs at once and times each; checked first:
+      the seeds, duration, demand, no run going, the tabs' models, with Test DEVL the schedules, with Test DBL a bus
+      type); `replay_run` (a workbook in the results folder, by its path or name, `MainWindow.replay_run`;
       any other path is refused alike, whether a file is there or not). The Research Log has
       none: grading the agent is the user's.
   - The assistant's note (`assistant.TOOLS_NOTE`) sets the workflow: `note_plan`, an experiment with the
@@ -513,7 +514,7 @@
   follow a conversation; guided mode, which had local models fill in the Scenario Builder's form, was removed on
   2026-10-05 after the Research Log showed it missing the point of every build request it got: institutions, a
   2000 x 1500 m size, "busy city" read as a place, none of which the form could hold).
-  - **Tool selection** (`network_tools.tools_for`, from `AIModePanel._ask`, on the request with the user's one before
+  - **Tool selection** (`tool_offer.tools_for`, from `AIModePanel._ask`, on the request with the user's one before
     it: "dhanmondi, dhaka bangladesh", answering "which city?", has no words of its own): each is offered `CORE_TOOLS`
     (network_summary, describe, list_roads, list_junctions, show_on_map, get_selection, note_plan, find_tools),
     the tools of each `TOOL_GROUPS` group its words point to (build, place, MRT, freeway, demand, institutions,
@@ -539,7 +540,7 @@
     nothing else in their place, call no invented tool; a number past a tool's limit: say the limit first), a
     question about an idea (no tools); the honesty rules (an error means nothing happened; quote the results' own
     numbers).
-  - **Skills** (`network_tools.SKILLS`, by tool group; `skills_for`): how to do a group's task well, appended to the
+  - **Skills** (`tool_offer.SKILLS`, by tool group; `skills_for`): how to do a group's task well, appended to the
     request as a `[Skills]` block only when its words offer that group, and only if the conversation doesn't hold it
     yet (sent with every request as one list they were 4.5k characters of each): a city of W x H m, and before
     pedestrian walkways only when the user's words ask for them, never asked about nor offered (build; a call adding
@@ -606,7 +607,7 @@
     requires a call to the planned tools (`stream_chat(require=…)`: Gemini's function calling mode ANY with
     `allowedFunctionNames`, xAI's `tool_choice`; Ollama has no such option and is only reminded, up to 3 times).
     Lines of only names and arrows count as plan (`_only_a_plan`: llama3.2 3B's second plan line). A signal method the request doesn't name while it names another
-    (`network_tools.contradicts`, from `AIModePanel._ask`'s `call_tool`: qwen3.5 4B, asked for SCOOT, thought
+    (`tool_offer.contradicts`, from `AIModePanel._ask`'s `call_tool`: qwen3.5 4B, asked for SCOOT, thought
     SCOOT and sent scats) isn't run: the model is told what the user asked for (`error_type`
     "not_what_was_asked"). So is `generate_grid` for a request naming a real place and no grid (`_places_named`; llama3.2 3B, asked for
     Dhanmondi's roads, placed the map then built a 5 x 6 grid): it is told to use network_from_background. A road named from its other end ("2,2-2,3" for 2,3-2,2) is that road (`run_tool`
@@ -706,11 +707,11 @@
 - **Working alongside the user:**
   - **Editor updates.** Every message starts with an `[Editor update]` block the app writes.
     It carries the user's own changes since the assistant's last reply, from
-    `network_tools.describe_changes`, which compares the network then and now (bus stops added,
+    `tool_reports.describe_changes`, which compares the network then and now (bus stops added,
     moved or re-pointed, and deleted; an institution moved, its circle, figures, mode split or curves changed; a
     road curved or straightened, a reversal or a moved end not counted as a reshape; the background, e.g. the map
     `place_map` put under it and its work zone, included). It also carries what's selected on the map.
-    `tool_reports.state_changes` (cut from `MainWindow._state_changes`; re-exported by `network_tools`) adds the OD matrix and vehicle types to it
+    `tool_reports.state_changes` adds the OD matrix and vehicle types to it
     for Watch my edits and the Research Log.
   - The transcript notes what was shared. The assistant's own edits are not reported back to it.
   - **Conversation as state.**
@@ -761,7 +762,7 @@
     traffic questions right (distances and seconds are its weak spot); a structured state with a specific
     question did far better, which is how TSP asks it.
   - **For batch runs** (the Batch Run extension): `agent_options()` lists who can decide TSP as the last scan
-    found them: the two baselines (Never preempt, then Always preempt: no system, a `rule` False or True), System 1's (Jev, each Ollama decision model) and System 2's (every Ollama chat model; Grok and Gemini
+    found them (the batch's baseline, the default configuration, is its own): System 1's (Jev, each Ollama decision model) and System 2's (every Ollama chat model; Grok and Gemini
     whenever their keys are on this PC, each with the model last started in System 2, else the provider's usual
     one, `assistant.PREFERRED`), each with its system, provider, model and a name for the run's file; `key_for(provider)` gives
     its key; `system_one_for_agents()` gives (provider, key, model) of System 1's choice. `assistant.last_usage()` is a thread's last

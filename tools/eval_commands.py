@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from traffic_simulator import assistant, network_tools  # noqa: E402
+from traffic_simulator import assistant, network_tools, tool_args, tool_offer, tool_reports, tool_schemas  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 
 MODELS = ["qwen3.5:4b", "llama3.2:3b", "gemma4:e4b"]
@@ -78,7 +78,7 @@ CASES = [
      "expect": [{"set_signal_timing"}, {"set_junction_control"}]},
     {"name": "concept question",
      "request": "what is a level of service?",
-     "expect": [set()], "forbid": network_tools.EDIT_TOOLS},
+     "expect": [set()], "forbid": tool_schemas.EDIT_TOOLS},
     # Everyday tasks (2026-10-13): each names what must be right, not only which tool
     {"name": "widen one road",
      "request": "Make road 2,2-3,2 three lanes each way",
@@ -132,7 +132,7 @@ CASES = [
      "expect": [{"run_experiment"}, {"build_scenario"}], "forbid": {"set_junction_control"}},
     {"name": "count junctions",
      "request": "How many junctions does the network have?",
-     "expect": [{"network_summary"}, {"list_junctions"}], "forbid": network_tools.EDIT_TOOLS,
+     "expect": [{"network_summary"}, {"list_junctions"}], "forbid": tool_schemas.EDIT_TOOLS,
      "check": lambda calls: True, "reply_has": "16"},
     {"name": "delete a road",
      "request": "Delete road 4,4-4,3",
@@ -141,7 +141,7 @@ CASES = [
      "check_says": "4,4-4,3"},
     {"name": "show on map",
      "request": "Show me junction 2,3 on the map",
-     "expect": [{"show_on_map"}], "forbid": network_tools.EDIT_TOOLS,
+     "expect": [{"show_on_map"}], "forbid": tool_schemas.EDIT_TOOLS,
      "check": lambda calls: _args_any(calls, "show_on_map", lambda a: str(a.get("id")) == "2,3"), "check_says": "2,3"},
     {"name": "safety after a run",
      "request": "Run 20 minutes and check how safe the network is",
@@ -179,7 +179,7 @@ def stand_in(name: str, args: dict, state: dict) -> dict:
                 "throughput_vph": 4200, "mean_speed_kmh": 31.5, "delay_veh_h": 60.2, "mean_trip_s": 210,
                 "longest_queue": "14 veh on 2,2-3,2", "health": "fine", "file": "ACMS results R1.xlsx"}
     if name in RUN_READS and not state["runs"]:
-        return network_tools.explain_error("No run to read yet: call run_simulation first.")
+        return tool_reports.explain_error("No run to read yet: call run_simulation first.")
     if name == "diagnose_signal":
         return {"junction": args.get("junction") or "2,2", "method": "webster", "cycle_s": 90, "Y": 0.71, "Xc": 0.93,
                 "approaches": [{"link": "1,2-2,2", "v_c": 1.04, "arrival_type": 2, "delay_s": 71, "los": "E"},
@@ -218,39 +218,39 @@ def run_case(model: str, case: dict) -> dict:
     state = {"runs": 0}
     calls: list[dict] = []
     request = case["request"]
-    offered = network_tools.tools_for(request) if hasattr(network_tools, "tools_for") else network_tools.tool_specs()
+    offered = tool_offer.tools_for(request) if hasattr(network_tools, "tools_for") else tool_schemas.tool_specs()
 
     def run_tool(call: dict) -> dict:
         """As AI Mode's call_tool and _tool_requested do: what the user asked checked, other tools' arguments and
         invented ends dropped, the arguments read as the schema gives; recorded as the app would run them."""
         name, args = call["name"], call.get("arguments") or {}
-        if name == network_tools.FIND_TOOLS:
+        if name == tool_offer.FIND_TOOLS:
             calls.append({"name": name, "arguments": args})
-            return network_tools.expand_tools(args, offered)
-        against = network_tools.contradicts(name, args, request)
+            return tool_offer.expand_tools(args, offered)
+        against = tool_offer.contradicts(name, args, request)
         if against:
             calls.append({"name": name, "arguments": args, "refused": True})
             return {"error": against, "error_type": "not_what_was_asked"}
         if isinstance(args, dict):
             args = dict(args)
-            notes = [network_tools.fold_incident(name, args), network_tools.drop_strays(name, args),
-                     network_tools.repair_ends(network, name, args, request)]
+            notes = [tool_args.fold_incident(name, args), tool_args.drop_strays(name, args),
+                     tool_args.repair_ends(network, name, args, request)]
         else:
             notes = []
         try:
-            args = network_tools.normalise(name, args)
-        except network_tools.ToolError as exc:
+            args = tool_args.normalise(name, args)
+        except tool_args.ToolError as exc:
             calls.append({"name": name, "arguments": call.get("arguments") or {}, "refused": True})
             return {"error": f"{exc} Nothing was run."}
         calls.append({"name": name, "arguments": args})
-        if name not in network_tools.UI_TOOLS:
+        if name not in tool_schemas.UI_TOOLS:
             try:
                 result = network_tools.run_tool(network, name, deepcopy(args))
-            except (network_tools.ToolError, ValueError) as exc:
+            except (tool_args.ToolError, ValueError) as exc:
                 if str(exc).startswith("Nothing would change"):  # as the app: already so, an answer
-                    return network_tools.already_so(str(exc))
+                    return tool_reports.already_so(str(exc))
                 calls[-1]["refused"] = True
-                return network_tools.explain_error(str(exc), network)
+                return tool_reports.explain_error(str(exc), network)
         else:
             result = stand_in(name, args, state)
         if any(notes) and isinstance(result, dict):
@@ -258,11 +258,11 @@ def run_case(model: str, case: dict) -> dict:
         return result
 
     messages = [{"role": "system", "content": assistant.system_prompt(tools=True)},
-                {"role": "user", "content": EDITOR + request + network_tools.skills_for(request)}]
+                {"role": "user", "content": EDITOR + request + tool_offer.skills_for(request)}]
     before, started, error = len(assistant.USAGE), time.monotonic(), ""
     try:
         answer = assistant.converse("local", model, messages, "", offered, None, run_tool,
-                                    edits=network_tools.EDIT_TOOLS)
+                                    edits=tool_schemas.EDIT_TOOLS)
         reply = next((m.get("content") for m in reversed(answer) if m.get("role") == "assistant"), "") or ""
     except assistant.AssistantError as exc:
         reply, error = "", str(exc)

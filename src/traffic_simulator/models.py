@@ -1284,6 +1284,8 @@ class Network:
                                          "opposite arms may, with the same window; give the others their own.")
 
     def validate(self) -> None:
+        """Raise ValueError saying what is wrong, the first thing found; the checks, a kind of object each, run in
+        this order (an edit that is refused names the same problem it always did)."""
         problem = route_choice_problem(self.route_choice)
         if problem:
             raise ValueError(problem)
@@ -1309,6 +1311,24 @@ class Network:
             raise ValueError("Node IDs must be unique across intersections and approaches.")
         if len(combined_roads) != len(self.roads) + len(self.approach_roads):
             raise ValueError("Road IDs must be unique across internal and approach roads.")
+        self._check_nodes(combined_nodes)
+        self._check_roads(combined_nodes, combined_roads)
+        for node in self.nodes.values():
+            self._check_manual(node)
+        from .roundabouts import design_roundabout  # it imports this module
+
+        for node in self.nodes.values():
+            if node.control == "roundabout":
+                design_roundabout(self, node.id)  # refuses more entry lanes than NCHRP Report 672 designs for
+        self._check_background()
+        self._check_places(combined_roads)
+        self._check_metro()
+        self._check_walking(combined_nodes)
+        self._check_people_demand()
+        self._check_road_sides()
+
+    def _check_nodes(self, combined_nodes: dict) -> None:
+        """Every junction and end: its ID, place on the map, control and signal settings."""
         for key, node in combined_nodes.items():
             if key != node.id:
                 raise ValueError(f"Node dictionary key does not match ID {node.id!r}.")
@@ -1330,6 +1350,9 @@ class Network:
                 raise ValueError(f"Node {node.id}: cycle limits must run from at least 20 s to at most 240 s.")
             if not 0.5 <= node.target_saturation <= 1.1 or not 0 <= node.stop_weight_s <= 120:
                 raise ValueError(f"Node {node.id}: target saturation 50-110 %, stop weight 0-120 s.")
+
+    def _check_roads(self, combined_nodes: dict, combined_roads: dict) -> None:
+        """Every road: its ID, its two nodes, length, lanes, speed, curvature and direction."""
         for key, road in combined_roads.items():
             if key != road.id:
                 raise ValueError(f"Road dictionary key does not match ID {road.id!r}.")
@@ -1351,13 +1374,9 @@ class Network:
                 raise ValueError(f"Road {road.id} has an invalid direction.")
             if road.single_lane and (road.direction != "one-way" or road.lanes_per_direction != 1):
                 raise ValueError(f"Road {road.id}: only a one-way road of 1 lane per direction can be single-lane.")
-        for node in self.nodes.values():
-            self._check_manual(node)
-        from .roundabouts import design_roundabout  # it imports this module
 
-        for node in self.nodes.values():
-            if node.control == "roundabout":
-                design_roundabout(self, node.id)  # refuses more entry lanes than NCHRP Report 672 designs for
+    def _check_background(self) -> None:
+        """The background: its kind, colour, image, scale, place, lock and work zone."""
         bg = self.background
         if found := number_problem(bg):
             raise ValueError(f"The background's {found} must be finite numbers (a whole one for its page).")
@@ -1378,6 +1397,9 @@ class Network:
         if bg.zone and not (len(bg.zone) == 4 and all(finite(value) for value in bg.zone)
                             and bg.zone[2] > 0 and bg.zone[3] > 0):
             raise ValueError("The background's work zone must be [x, y, width, height] in metres, its sides positive.")
+
+    def _check_places(self, combined_roads: dict) -> None:
+        """What stands on the network: interchanges, bus stops and institutions."""
         for name, axis in self.interchanges.items():
             if not (isinstance(axis, list) and len(axis) == 4 and all(finite(value) for value in axis)
                     and abs(hypot(axis[2], axis[3]) - 1) < 1e-6):
@@ -1403,6 +1425,9 @@ class Network:
                 raise ValueError(f"Institution dictionary key does not match ID {item.id!r}.")
             if (problem := institution_problem(item)) is not None:
                 raise ValueError(problem)
+
+    def _check_metro(self) -> None:
+        """MRT stops and lines: each stop on the map and on a line, each line's stops and track."""
         for key, stop in self.metro_stops.items():
             if key != stop.id or not all(isinstance(v, (int, float)) and not isinstance(v, bool) and isfinite(v)
                                          for v in (stop.x, stop.y)):
@@ -1422,6 +1447,9 @@ class Network:
                 raise ValueError(problem)
         if set(on_lines) != set(self.metro_stops):
             raise ValueError("Each MRT stop is on a line (on two or more: an interchange).")
+
+    def _check_walking(self, combined_nodes: dict) -> None:
+        """Paths, pedestrian crossings and deploy points."""
         for key, way in self.walkways.items():
             if key != way.id or way.start == way.end or not {way.start, way.end} <= combined_nodes.keys() \
                     or not isinstance(way.bends, list) or not all(
@@ -1436,6 +1464,9 @@ class Network:
         for key, point in self.spawn_points.items():
             if key != point.id or not (finite(point.x) and finite(point.y)):
                 raise ValueError(f"Deploy point {point.id} needs its own ID and a place on the map in metres.")
+
+    def _check_people_demand(self) -> None:
+        """People between places, hourly and daily: deploy points, boundary ends, MRT stations."""
         for pair, people in self.spawn_demand.items():
             ends = pair.split("->") if isinstance(pair, str) else []
             if len(ends) != 2 or ends[0] == ends[1] or not all(end in self.spawn_points for end in ends):
@@ -1465,6 +1496,9 @@ class Network:
                 if not isinstance(day, dict) or not finite(day.get("people")) or not 0 <= day["people"] <= limit * 24:
                     raise ValueError(f"{label} daily demand {pair} must be 0 to {limit * 24:,.0f} people a day.")
                 from_record(day.get("curve"))  # ValueError: not a curve
+
+    def _check_road_sides(self) -> None:
+        """Each road's footpaths, cycle lanes and turn pockets."""
         for road in self.all_roads():
             if not isinstance(road.footpaths, list) or len(set(road.footpaths)) < len(road.footpaths) \
                     or not set(road.footpaths) <= {"left", "right"}:

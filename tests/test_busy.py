@@ -10,7 +10,7 @@ import time
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtCore import QTimer  # noqa: E402
-from PySide6.QtWidgets import QApplication, QCheckBox, QLabel, QLineEdit, QMessageBox, QPushButton  # noqa: E402
+from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QMessageBox, QPushButton  # noqa: E402
 
 from traffic_simulator.main import MainWindow  # noqa: E402
 
@@ -39,8 +39,7 @@ def test_a_test_going_on_holds_back_every_other_way_to_start_one():
             seen["nested"] = ""
         except ValueError as exc:
             seen["nested"] = str(exc)
-        next(box for box in batch.findChildren(QCheckBox) if box.toolTip() == "TSP tab's models").setChecked(True)
-        seeds.setText("1-2")  # the panel looks again
+        seeds.setText("1-2")  # the panel looks again (the default alone: something to run)
         seen["start"] = start.isEnabled()
         seen["hint"] = any("Batch run is going on" in label.text() for label in batch.findChildren(QLabel))
         release.set()
@@ -108,7 +107,7 @@ def test_stop_during_an_applied_edit_leaves_the_assistant_ready():
 
 
 def test_optimising_signals_scores_the_network_as_it_was_when_asked():
-    from traffic_simulator.simulation import PairDemand
+    from traffic_simulator.demand import PairDemand
 
     main = window()
     ends = sorted(main.network.approach_nodes)

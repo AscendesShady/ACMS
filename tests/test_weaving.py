@@ -12,7 +12,8 @@ from traffic_simulator.interchanges import build_diamond  # noqa: E402
 from traffic_simulator.mode_behavior import VehicleModes  # noqa: E402
 from traffic_simulator.models import Network  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
-from traffic_simulator.simulation import Graph, PairDemand  # noqa: E402
+from traffic_simulator.demand import PairDemand  # noqa: E402
+from traffic_simulator.lane_graph import Graph  # noqa: E402
 
 
 def weave(main_in=2, segment=4, main_out=2, ramp_in=2, ramp_out=2, length=400.0) -> Network:

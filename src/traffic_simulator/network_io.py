@@ -81,7 +81,13 @@ def _profile_problem(profile) -> str | None:
 
 
 def project_problem(project: dict) -> str | None:
-    """What is wrong with a project's parts (demand, vehicle_types, run), or None."""
+    """What is wrong with a project's parts (demand, vehicle_types, run, extensions), or None. An extension's own
+    settings are checked by the tab as they are restored (ExtensionsPanel.restore_project_state)."""
+    extensions = project.get("extensions")
+    if extensions is not None and not (isinstance(extensions, list) and all(
+            isinstance(one, dict) and isinstance(one.get("file"), str) and isinstance(one.get("settings", {}), dict)
+            for one in extensions)):
+        return "Extensions: a list of objects, each with its file and its settings."
     types = project.get("vehicle_types")
     count = None
     if types is not None:
@@ -161,21 +167,21 @@ def project_problem(project: dict) -> str | None:
 
 
 def saved_project(path: str | Path) -> dict:
-    """A project file's demand, vehicle_types and run (those it has), checked. ValueError says what's wrong."""
+    """A project file's demand, vehicle_types, run and extensions (those it has), checked. ValueError says what's wrong."""
     try:
         document = json.loads(Path(path).read_text(encoding="utf-8-sig"), parse_constant=_not_a_number)
     except (OSError, ValueError) as exc:
         raise ValueError(f"Could not read the project: {exc}") from exc
-    project = {key: document[key] for key in ("demand", "vehicle_types", "run") if key in document}
+    project = {key: document[key] for key in ("demand", "vehicle_types", "run", "extensions") if key in document}
     problem = project_problem(project)
     if problem:
         raise ValueError(problem)
     return project
 
 
-def project_record(cells: dict, shown: str, modes, default_split, seed: int, speed) -> dict:
+def project_record(cells: dict, shown: str, modes, default_split, seed: int, speed, extensions: list | None = None) -> dict:
     """The project's parts beyond the network, as plain data (cut from MainWindow._project): the OD matrix's
-    pairs with demand, the vehicle types and the run settings."""
+    pairs with demand, the vehicle types, the run settings and the extensions (ExtensionsPanel.project_state)."""
     pairs = [{"origin": origin, "destination": destination, "flow": cell.flow, "daily": cell.daily,
               "pattern": cell.pattern, "split": list(cell.split),
               **({"quarters": list(cell.quarters)} if cell.quarters else {}),
@@ -186,7 +192,8 @@ def project_record(cells: dict, shown: str, modes, default_split, seed: int, spe
     return {"demand": {"shown": shown, "pairs": pairs},
             "vehicle_types": {"types": [asdict(mode) for mode in modes],
                               "default_split": list(default_split)},
-            "run": {"seed": seed, "speed": float(speed)}}
+            "run": {"seed": seed, "speed": float(speed)},
+            **({"extensions": extensions} if extensions is not None else {})}
 
 
 def project_parts(project: dict, default_types) -> tuple[list, tuple, dict]:

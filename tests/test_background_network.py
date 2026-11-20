@@ -22,7 +22,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6.QtGui import QColor, QImage, QPainter  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from traffic_simulator import background_network, network_tools as tools  # noqa: E402
+from traffic_simulator import background_network, demand_plans, design_checks, network_tools as tools, road_tools, tool_args, tool_reports  # noqa: E402
 from traffic_simulator.map_tiles import Frame, mercator  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 
@@ -132,7 +132,7 @@ def test_the_assistant_places_the_map_with_a_work_zone_builds_that_zone_and_keep
     network = generate_network(3, 4)
     tools._PREPARED.clear()
     cx, cy = tools._centre(network)
-    assert "no map yet" in tools.network_summary(network)["background"]
+    assert "no map yet" in road_tools.network_summary(network)["background"]
     result = tools.run_tool(network, "place_map", {"lat": LONDON[0], "lon": LONDON[1]})  # as the user's Confirm
     background = network.background
     assert background.kind == "map" and background.zone == [cx - 600, cy - 600, 1200, 1200]
@@ -140,8 +140,8 @@ def test_the_assistant_places_the_map_with_a_work_zone_builds_that_zone_and_keep
     assert any("work zone" in line for line in result["changed"])
     tools.run_tool(network, "place_map", {"lat": LONDON[0], "lon": LONDON[1], "width_m": 900})  # one side: a square
     assert background.zone == [cx - 450, cy - 450, 900, 900]  # and the approval card says what the tools do:
-    assert tools.describe_call("place_map", {"place": "Paris", "height_m": 900}).endswith("work zone 900 × 900 m")
-    assert tools.describe_call("network_from_background", {"width_m": 700}).endswith(
+    assert tool_reports.describe_call("place_map", {"place": "Paris", "height_m": 900}).endswith("work zone 900 × 900 m")
+    assert tool_reports.describe_call("network_from_background", {"width_m": 700}).endswith(
         "700 × 700 m round the work zone's centre")
     tools.run_tool(network, "place_map", {"lat": LONDON[0], "lon": LONDON[1], "width_m": 800, "height_m": 500})
     assert background.zone == [cx - 400, cy - 250, 800, 500]
@@ -151,7 +151,7 @@ def test_the_assistant_places_the_map_with_a_work_zone_builds_that_zone_and_keep
     for size in ({"width_m": 50}, {"height_m": 30_000}):  # out of a work zone's range: refused, nothing changed
         try:
             tools.run_tool(network, "place_map", {"lat": 48.8566, "lon": 2.3522, **size})
-        except tools.ToolError as exc:
+        except tool_args.ToolError as exc:
             assert "100 to 20000" in str(exc)
         else:
             raise AssertionError(f"{size} must be refused")
@@ -159,7 +159,7 @@ def test_the_assistant_places_the_map_with_a_work_zone_builds_that_zone_and_keep
     tools.run_tool(network, "place_map", {"place": "", "lat": 48.8566, "lon": 2.3522, "width_m": 800, "height_m": 500})
     background = network.background
     assert background.zone == [cx - 400, cy - 250, 800, 500] and background.lat == 48.8566
-    assert "work zone 800 x 500 m" in tools.network_summary(network)["background"]
+    assert "work zone 800 x 500 m" in road_tools.network_summary(network)["background"]
 
     frame = Frame(background.lat, background.lon, cx, cy)
     asked = []
@@ -363,11 +363,11 @@ def test_only_roads_a_car_can_drive_end_to_end_are_kept_with_lanes_in_range():
     destinations = [road.to_node for road in network.approach_roads.values() if road.to_node in network.approach_nodes] + \
         [road.from_node for road in network.approach_roads.values()
          if road.from_node in network.approach_nodes and road.direction == "two-way"]
-    routes = tools.route_lengths(network, origins)
+    routes = design_checks.route_lengths(network, origins)
     assert all(d in routes[o] for o in origins for d in destinations)  # every OD pair has a route
     try:
         tools.run_tool(network, "network_from_background", {"main_lanes": [3, 2]})
-    except tools.ToolError as exc:
+    except tool_args.ToolError as exc:
         assert "[fewest, most] lanes per direction" in str(exc)
     else:
         raise AssertionError("a range upside down must be refused")
@@ -551,7 +551,7 @@ def test_the_roads_are_fetched_on_the_models_thread_however_it_spells_the_argume
         worker.join()
         try:
             tools.run_tool(deepcopy(network), name, dict(args))
-        except tools.ToolError:
+        except tool_args.ToolError:
             pass  # a failure: reported, not fetched again
         return threads
 
@@ -607,7 +607,7 @@ def test_an_images_roads_are_traced_from_its_pixels():
 def _refused(network, args) -> str:
     try:
         tools.run_tool(network, "network_from_background", args)
-    except tools.ToolError as exc:
+    except tool_args.ToolError as exc:
         return str(exc)
     raise AssertionError("should have been refused")
 
@@ -650,7 +650,7 @@ def test_generate_demand_works_the_demand_generators_controls():
         panel.command("generate_demand", {"demand": "hourly"})
     except ValueError as exc:
         assert "no network" in str(exc)  # without a planner (no network) it can't
-    panel.planner = lambda pairs, args, *matrix: tools.demand_plan(network, pairs, args, *matrix)
+    panel.planner = lambda pairs, args, *matrix: demand_plans.demand_plan(network, pairs, args, *matrix)
     matrix.cells[("2W", "1S")] = matrix.cell(("2W", "1S"))
     matrix.cells[("2W", "1S")].flow = 99  # old demand in a pair the model gives none: cleared
     before = dict(matrix.cells)
@@ -672,7 +672,7 @@ def test_generate_demand_works_the_demand_generators_controls():
         assert "arrival_pattern" in str(exc)
     else:
         raise AssertionError("a bad pattern should be refused")
-    panel.scaler = lambda values, pairs, args, shares=None: tools.scale_plan(network, values, pairs, args, shares)
+    panel.scaler = lambda values, pairs, args, shares=None: demand_plans.scale_plan(network, values, pairs, args, shares)
     steps.clear()
     info = panel.command("scale_demand", {"origins": ["1W"], "factor": 2})  # what's entered, doubled
     assert steps == [None] and info["factor"] == 2

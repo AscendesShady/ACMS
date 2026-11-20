@@ -128,12 +128,16 @@ class SignalOverrides:
     "Y" or "R", or (that, {lane index: the lane's own state}) to set lanes apart (DEVL's kerbside lane); a
     later one's lanes win. One that raises, or returns anything else, is dropped at once (the plan stands) and
     listed in `failed` for the tab to switch off and report. `agent` is the signal agent they ask, or a dict of
-    one per extension name (a batch run's: TSP's and DEVL's models differ)."""
+    one per extension name (a batch run's: TSP's and DEVL's models differ). `kerb_lane_for`: the vehicle classes
+    their modules' KERB_LANE_FOR name (DBL's buses), which keep to the kerbside lane before a signal
+    (Simulation._lane_reach)."""
 
     def __init__(self, extensions: list[Extension], agent, sink: list | None = None) -> None:
         self.extensions = list(extensions)  # every one the run uses, for their reports
         self.sink = sink  # the tab's list of failures from every run (ExtensionsPanel.report_failures)
         self.calls = [(extension, extension.module.signal_override) for extension in extensions]
+        self.kerb_lane_for = tuple({kind for extension in extensions
+                                    for kind in getattr(extension.module, "KERB_LANE_FOR", ())})
         self.agent = agent
         self.failed: list[tuple[Extension, str]] = []  # this run's, as they happened
         self.dropped: list[tuple[str, str]] = []  # every one dropped in this run, for its workbook (reports)
@@ -174,6 +178,7 @@ class ExtensionsPanel(QWidget):
         super().__init__()
         self.scene, self.clock, self.folder = scene, clock, folder
         self.extensions: list[Extension] = []
+        self._kept: list[dict] = []  # an opened project's extensions not loaded here (restore_project_state)
         self.agent = None  # the LLM agent signal overrides ask (set by the main window)
         self._app = None  # the window's services for extensions that ask (`app` in their file): run_batch
         self.latest_frame = lambda: None  # the run's latest frame, for algorithm() (set by the main window)
@@ -391,10 +396,10 @@ class ExtensionsPanel(QWidget):
                                       "then (the signal plan stood), so the figures are not its alone.")]})
         return found
 
-    def fields(self, extension: Extension) -> dict:
+    def fields(self, extension: Extension, refresh: bool = True) -> dict:
         """An extension's settings by label: its panel's labelled form rows ({"Seeds": the box, ...}), a dropdown
-        that lists afresh as it opens (TSP's Model, Models) listed now (one that raises switches the extension off,
-        its list as it was)."""
+        that lists afresh as it opens (TSP's Model, Models) listed now unless `refresh` is False (one that raises
+        switches the extension off, its list as it was)."""
         from PySide6.QtWidgets import QFormLayout  # noqa: PLC0415
 
         fields = {}
@@ -403,7 +408,7 @@ class ExtensionsPanel(QWidget):
                 label, field = form.itemAt(row, QFormLayout.ItemRole.LabelRole), form.itemAt(row, QFormLayout.ItemRole.FieldRole)
                 if label and label.widget() and field:
                     widget = field.widget() or (field.layout().itemAt(0).widget() if field.layout() else None)
-                    if callable(getattr(widget, "before_open", None)):
+                    if refresh and callable(getattr(widget, "before_open", None)):
                         try:
                             widget.before_open()
                         except (Exception, SystemExit) as exc:
@@ -411,42 +416,101 @@ class ExtensionsPanel(QWidget):
                     fields[label.widget().text().strip()] = widget
         return fields
 
-    def describe(self) -> list[dict]:
-        """Every extension for the assistant's read_extensions: its name, whether it is ticked, what it does (its
-        docstring's first paragraph) and each setting by label with its value and, for a choice, what it can be."""
+    @staticmethod
+    def _setting(widget) -> dict | None:
+        """A setting's value and, for a choice, what it can be (describe, project_state); None for a widget that isn't one."""
         from PySide6.QtWidgets import QAbstractSlider, QAbstractSpinBox, QComboBox, QLineEdit  # noqa: PLC0415
 
         from .widgets import ChoiceButtons  # noqa: PLC0415
 
+        if hasattr(widget, "set_ticked"):  # a dropdown of ticks
+            return {"ticked": widget.ticked(), "can_be": widget.labels()}
+        if isinstance(widget, QCheckBox):
+            return {"value": "yes" if widget.isChecked() else "no"}
+        if isinstance(widget, ChoiceButtons):
+            return {"value": widget.group.checkedButton().text(), "can_be": [button.text() for button in widget.group.buttons()]}
+        if isinstance(widget, QComboBox):
+            return {"value": widget.currentText(), "can_be": [widget.itemText(i) for i in range(widget.count())]}
+        if isinstance(widget, (QAbstractSpinBox, QAbstractSlider)):
+            return {"value": widget.value(), "from": widget.minimum(), "to": widget.maximum()}
+        if isinstance(widget, QLineEdit):
+            return {"value": widget.text()}
+        return None
+
+    def project_state(self) -> list[dict]:
+        """Every loaded extension for the project file: its file, whether it is ticked, its settings by label (as
+        set_settings takes them) and its own `state()` hook's value, if it has one. Lists no models afresh. An
+        opened project's records of extensions not loaded here go back as they were (restore_project_state)."""
         found = []
         for extension in self.extensions:
-            settings = {}
-            for label, widget in self.fields(extension).items():
-                if hasattr(widget, "set_ticked"):  # a dropdown of ticks
-                    settings[label] = {"ticked": widget.ticked(), "can_be": widget.labels()}
-                elif isinstance(widget, QCheckBox):
-                    settings[label] = {"value": "yes" if widget.isChecked() else "no"}
-                elif isinstance(widget, ChoiceButtons):
-                    settings[label] = {"value": widget.group.checkedButton().text(),
-                                       "can_be": [button.text() for button in widget.group.buttons()]}
-                elif isinstance(widget, QComboBox):
-                    settings[label] = {"value": widget.currentText(),
-                                       "can_be": [widget.itemText(i) for i in range(widget.count())]}
-                elif isinstance(widget, (QAbstractSpinBox, QAbstractSlider)):
-                    settings[label] = {"value": widget.value(), "from": widget.minimum(), "to": widget.maximum()}
-                elif isinstance(widget, QLineEdit):
-                    settings[label] = {"value": widget.text()}
+            if extension.module is None:
+                continue
+            settings = {label: shown.get("ticked", shown.get("value"))
+                        for label, widget in self.fields(extension, refresh=False).items()
+                        if (shown := self._setting(widget)) is not None and not (shown.get("value") == "" and "can_be" in shown)}
+            record = {"file": extension.path.name, "ticked": extension.on, "settings": settings}
+            if extension.has("state"):
+                try:
+                    record["state"] = extension.module.state()
+                except (Exception, SystemExit) as exc:  # its own state is lost, not the save
+                    self.fail(extension, describe_error(exc, extension.path))
+            found.append(record)
+        return found + self._kept  # an opened project's extensions not loaded here: kept as they were
+
+    def restore_project_state(self, saved: list) -> list[str]:
+        """A project's extensions (project_state) back in the tab, each setting in its panel's order checked just
+        before it is set (a choice first, then the rows it lists: DEVL's Decided by, then its Model), with the
+        controls usable meanwhile (a disabled choice ignores a click): one that fails (a model this machine lacks) is
+        left as it is and named, the rest restored. Then its `set_state`, checked first (check_only=True), and its tick,
+        last, so its hooks see the restored settings. An extension the file names but this app lacks is named and its
+        record kept, so the next Save writes it back. The problems, in words."""
+        problems, self._kept = [], []
+        by_file = {extension.path.name: extension for extension in self.extensions}
+        for record in saved:
+            extension = by_file.get(record.get("file"))
+            if extension is None or extension.module is None:
+                problems.append(f"{record.get('file')}: not loaded here")
+                self._kept.append(record)
+                continue
+            self.fields(extension)  # its model lists, listed once now
+            if extension.controls is not None:
+                extension.controls.setEnabled(True)
+            for key, value in (record.get("settings") or {}).items():
+                try:
+                    self.set_settings(extension, {key: value}, check_only=True, refresh=False)
+                    self.set_settings(extension, {key: value}, refresh=False)
+                except (ValueError, TypeError, OverflowError) as exc:  # a hand-edited file's odd value, 1e400
+                    problems.append(str(exc) if extension.name in str(exc) else f"{extension.name}: {key}: {exc}")
+            if "state" in record and extension.has("set_state"):
+                try:
+                    extension.module.set_state(record["state"], check_only=True)
+                    extension.module.set_state(record["state"])
+                except (Exception, SystemExit) as exc:  # its own check, or a hook that raises: its state only
+                    problems.append(f"{extension.name}: {describe_error(exc, extension.path)}")
+            extension.check.setChecked(bool(record.get("ticked")))
+            if extension.controls is not None:
+                extension.controls.setEnabled(extension.on)  # usable while ticked, as _switch leaves it
+        return problems
+
+    def describe(self) -> list[dict]:
+        """Every extension for the assistant's read_extensions: its name, whether it is ticked, what it does (its
+        docstring's first paragraph) and each setting by label with its value and, for a choice, what it can be."""
+        found = []
+        for extension in self.extensions:
+            settings = {label: shown for label, widget in self.fields(extension).items()
+                        if (shown := self._setting(widget)) is not None}
             module = extension.module
             found.append({"name": extension.name, "ticked": extension.on, "loaded": module is not None,
                           "about": (getattr(module, "DESCRIPTION", "") or (module.__doc__ or "").split("\n\n")[0]
                                     if module else extension.error), "settings": settings})
         return found
 
-    def set_settings(self, extension: Extension, settings: dict, check_only: bool = False) -> None:
-        """Fill fields of an extension's panel by their labels (text boxes, dropdowns, number boxes)."""
-        from PySide6.QtWidgets import QAbstractSlider, QAbstractSpinBox, QComboBox, QFormLayout, QLineEdit  # noqa: PLC0415
+    def set_settings(self, extension: Extension, settings: dict, check_only: bool = False, refresh: bool = True) -> None:
+        """Fill fields of an extension's panel by their labels (text boxes, dropdowns, number boxes). `refresh`:
+        list the dropdowns that list afresh first (fields)."""
+        from PySide6.QtWidgets import QAbstractSlider, QAbstractSpinBox, QComboBox, QLineEdit  # noqa: PLC0415
 
-        fields = {label.lower(): widget for label, widget in self.fields(extension).items()}
+        fields = {label.lower(): widget for label, widget in self.fields(extension, refresh).items()}
         from .widgets import ChoiceButtons  # noqa: PLC0415
 
         for key, value in (settings or {}).items():
@@ -474,7 +538,7 @@ class ExtensionsPanel(QWidget):
             if isinstance(widget, (QAbstractSpinBox, QAbstractSlider)):  # read and range-checked now, not clamped or failing later
                 try:
                     number = type(widget.value())(float(value))
-                except (TypeError, ValueError):
+                except (TypeError, ValueError, OverflowError):  # OverflowError: 1e400, read as infinity
                     raise ValueError(f"{extension.name}: {key} must be a number, not {value!r}.") from None
                 if not widget.minimum() <= number <= widget.maximum():
                     raise ValueError(f"{extension.name}: {key} must be {widget.minimum():g} to {widget.maximum():g}.")

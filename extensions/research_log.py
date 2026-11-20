@@ -391,7 +391,7 @@ def _write_document(folder: Path, every: list[dict], info: dict) -> Path:
     parts = [f"<h1>ACMS research log</h1><p>{e(folder.name)} · {len(every)} steps</p><table>{facts}</table>"]
     for step in every:
         here = folder / step["folder"]
-        understood, t, k = step.get("understood") or {}, step.get("timings_s") or {}, step.get("tokens") or {}
+        t, k = step.get("timings_s") or {}, step.get("tokens") or {}
         stamp = lambda s: time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(s)) if s else ""  # noqa: E731
         calls = [json.loads(line) for line in read(here / "calls.jsonl").splitlines() if line.strip()]
         update = read(here / "prompt.md").partition("## Sent with it (the editor update)")[2].strip()

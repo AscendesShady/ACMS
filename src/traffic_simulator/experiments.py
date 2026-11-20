@@ -20,6 +20,8 @@ compare network variants across seeds. The AI Mode tools run_simulation and run_
 
 from __future__ import annotations
 
+import os
+import pickle
 import re
 import shutil
 import statistics
@@ -34,11 +36,12 @@ from pathlib import Path
 from statistics import stdev
 
 from . import analysis, stats
-from .results import MINUTE_COLUMNS, SAMPLE_S, RunRecorder, clock
+from .results import MINUTE_COLUMNS, SAMPLE_S, RunRecorder, clock, input_sheets
 from .simulation import CRITICAL_GAP_S, DT, RING_TIMEGAP_S, Simulation
 from .xlsx import write_xlsx
 
 MAX_SCENARIOS, MAX_SEEDS, MAX_RUNS, MAX_MINUTES = 6, 20, 60, 240
+MAX_PROCESSES = 8  # an experiment's plain runs going side by side, a process each, at most (run_pool)
 UNSTABLE_RUNS = 20  # replications needed beyond this: an unstable model or gridlock (FHWA Toolbox III, p93)
 # The KPIs an experiment compares: (key in results.kpis, label, unit, higher is better?)
 MEASURES = [("throughput_vph", "Throughput", "veh/h", True), ("people_per_h", "Passenger throughput", "people/h", True),
@@ -86,7 +89,16 @@ AGENT_MEASURES = [("tsp_requests", "Bus requests", "requests", None), ("tsp_true
                   ("devl_cleared", "Lanes cleared", "times", None),
                   ("devl_lane_green_s", "Lane green, in all", "s", None),
                   ("devl_to_green_s", "Request to lane green, mean", "s", False),
-                  ("devl_latency_s", "DEVL agent latency, mean", "s", False)]
+                  ("devl_latency_s", "DEVL agent latency, mean", "s", False),
+                  # Test DBL: Dynamic Bus Lane's own figures
+                  ("dbl_requests", "DBL requests", "requests", None),
+                  ("dbl_true", "DBL bus lane cleared (TRUE)", "requests", None),
+                  ("dbl_fell_back", "DBL fell back at the deadline", "requests", False),
+                  ("dbl_cleared", "Bus lanes cleared", "times", None),
+                  ("dbl_lane_green_s", "Bus lane green, in all", "s", None),
+                  ("dbl_to_green_s", "Request to bus lane green, mean", "s", False),
+                  ("dbl_latency_s", "DBL agent latency, mean", "s", False),
+                  ("dbl_approach_s", "Bus approach time, mean (check-in to check-out)", "s", False)]
 
 
 def summary(values: list[float]) -> dict:
@@ -401,7 +413,8 @@ def scenario_from(spec: dict, index: int) -> Scenario:
 
 def scenario_network(network, scenario: Scenario, allowed: set[str]):
     """A copy of the network with the scenario's changes, each through run_tool (checked, all or none)."""
-    from .network_tools import ToolError, run_tool  # noqa: PLC0415 - network_tools imports nothing from here
+    from .network_tools import run_tool  # noqa: PLC0415 - network_tools imports nothing from here
+    from .tool_args import ToolError  # noqa: PLC0415 - network_tools imports nothing from here
 
     copy = deepcopy(network)
     for step, change in enumerate(scenario.changes, 1):
@@ -492,6 +505,152 @@ def end_recording(recorder, simulation, folder: Path, extras, why: str = ""):
     recorder.error = "; ".join(filter(None, [recorder.error, why, failed and f"Its extras failed: {failed!r}"]))
     folder.mkdir(parents=True, exist_ok=True)
     return recorder.finish(folder), failed
+
+
+def recorded_run(network, demand, modes, seed, duration_s, settings, label, folder: Path, *, override=None,
+                 extra_inputs=(), model: str = "", speed: float | None = None, dispatches=(), incidents=(),
+                 weather: str = "clear", meters=(), measure_from_s: float = 0.0, lateral: bool = False, progress=None,
+                 cancelled=lambda: False, on_frame=None, reports=None, observed=None, end=None):
+    """One headless run, start to workbook in `folder`: its recorder, its analysis and its extensions' reports
+    (`reports()`: their sheets and figures). Returns (kpis, the workbook's path, simulated seconds);
+    kpis["reported"]: the reports' figures. Nothing of the window is in it, so a plain run (no `override`, and the
+    functions left as they are) can be made in another process (run_pool); MainWindow._one_run hands it the
+    window's own `progress`, `on_frame`, `reports`, `observed` and `end` (observed_kpis and end_recording)."""
+    observed, end, made = observed or observed_kpis, end or end_recording, {}
+
+    def recorder_for(simulation):
+        made["simulation"] = simulation  # so a run that raises still ends in a workbook
+        made["recorder"] = RunRecorder(
+            network, modes, name=label, run=settings, seed=seed, model=model, measure_from_s=measure_from_s,
+            inputs=input_sheets(network, demand, modes, dict(simulation.signal_plans)) + list(extra_inputs))
+        return made["recorder"]
+
+    began = time.monotonic()
+    try:
+        simulation, recorder = run_headless(
+            network, demand, modes, seed, duration_s, override, recorder_for, progress=progress, cancelled=cancelled,
+            observe=True, speed=speed, dispatches=dispatches, incidents=incidents, weather=weather, meters=meters,
+            on_frame=on_frame, lateral=lateral)
+    except BaseException as exc:  # it raised: what it recorded is still its workbook; the error goes on up
+        if "recorder" in made:
+            end(made["recorder"], made["simulation"], folder, lambda: None, f"The run stopped: {exc!r}")
+        raise
+    stepped = time.monotonic()
+    kpis = {}
+
+    def extras() -> None:
+        kpis.update(observed(simulation, recorder))
+        recorder.add_analysis(analysis_sheets(kpis))
+        found = list(reports()) if reports is not None else []  # TSP's and DEVL's: their sheets, every decision
+        if dispatches:
+            found.append(emergency_report(simulation))
+        recorder.add_sheets(found)
+        kpis["reported"] = {key: value for report in found for key, value in report.get("measures", {}).items()}
+        kpis["decision_sheets"] = {name: rows for report in found for name, rows, *_ in report.get("sheets", [])
+                                   if "decisions" in name.lower()}  # each agent decision (read_decisions)
+
+    path, failed = end(recorder, simulation, folder, extras)
+    if failed is not None:
+        raise failed  # its workbook is written, without what failed
+    if speed:  # under the pace asked: the CPU fell behind the clock (an answer's latency then cost less)
+        kpis["reported"]["pace_achieved"] = round(simulation.time / max(stepped - began, 1e-9), 2)
+    return kpis, path, simulation.time
+
+
+_stop = None  # in a pool's process: the pool's Stop (run_pool)
+_news = None  # ...and where it tells how far its run is, with a frame of it (run_pool's watch); None: nobody watches
+WATCH_S = 0.25  # real seconds between two such tellings from a run
+
+
+def _pool_ready(stop, news) -> None:
+    global _stop, _news
+    _stop, _news = stop, news
+    if news is not None:
+        news.cancel_join_thread()  # what it hadn't sent yet never keeps this process from ending
+
+
+def _pooled(work, job: dict, frames: bool):
+    """In a pool's process: `work(**job)`, Stop heard at each step; a run with a label tells the pool how far it
+    is every WATCH_S, with a frame of it when the map shows runs."""
+    watched = {}
+    if _news is not None and job.get("label") and work is recorded_run:
+        told = [0.0]
+
+        def tell(simulation) -> None:
+            now = time.monotonic()
+            if now - told[0] >= WATCH_S:
+                told[0] = now
+                _news.put((job["label"], simulation.time, job["duration_s"], simulation.frame() if frames else None))
+
+        watched["on_frame"] = tell
+    return work(**job, **watched, cancelled=_stop.is_set)
+
+
+def run_pool(jobs: list[dict], progress, cancelled, processes: int | None = None, work=None, each=None,
+             watch=None, frames: bool = False) -> list | None:
+    """Plain headless work side by side, a process each: threads share one interpreter, so four runs on threads take
+    as long as four runs in a row. `jobs`: the arguments of `work` (recorded_run unless given; a module's function,
+    taking `cancelled` too), a dict each, plain data: it is pickled. Returns the results in the jobs' order, None
+    for one Stop kept from starting; an error is raised as it would be here. `each(index, result)`: told of each as
+    it comes (a batch's checkpoint). `watch(label, simulated s, of s, frame)`: how far each labelled run is, every
+    WATCH_S, with a frame when `frames` (the menu bar's clock and the map), and (label, None, None, None) when it
+    ends. None when this PC won't start the processes or the jobs can't be pickled: do them one by one."""
+    import multiprocessing
+    from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
+    from concurrent.futures.process import BrokenProcessPool
+    from queue import Empty
+
+    work = work or recorded_run
+    workers = min(len(jobs), MAX_PROCESSES, processes or max(1, (os.cpu_count() or 2) // 2))
+    try:
+        pickle.dumps((work, jobs))
+        context = multiprocessing.get_context("spawn")
+        stop, news = context.Event(), context.Queue() if watch is not None else None
+        pool = ProcessPoolExecutor(workers, mp_context=context, initializer=_pool_ready, initargs=(stop, news))
+    except (OSError, ValueError, TypeError, AttributeError, pickle.PicklingError):
+        return None
+    made: list = [None] * len(jobs)
+
+    def hear() -> None:
+        while news is not None:
+            try:
+                watch(*news.get_nowait())
+            except (Empty, OSError, EOFError):
+                return
+
+    with pool:
+        try:
+            futures = {pool.submit(_pooled, work, job, frames): index for index, job in enumerate(jobs)}
+            waiting = set(futures)
+            while waiting:
+                if cancelled() and not stop.is_set():
+                    stop.set()  # the runs going end at their next step, with their workbooks; the rest never start
+                    waiting = {future for future in waiting if not future.cancel()}
+                done, waiting = wait(waiting, timeout=0.1, return_when=FIRST_COMPLETED)
+                hear()
+                for future in done:
+                    if not future.cancelled():
+                        index = futures[future]
+                        made[index] = future.result()
+                        if watch is not None and jobs[index].get("label"):
+                            watch(jobs[index]["label"], None, None, None)
+                        if each is not None:
+                            each(index, made[index])
+                finished = sum(future.done() for future in futures)
+                progress(f"{finished} of {len(jobs)} runs done, {min(workers, len(jobs) - finished)} going side by side")
+        except BrokenProcessPool:
+            return None
+        finally:
+            stop.set()
+            if news is not None:
+                news.cancel_join_thread()
+    return made
+
+
+def quiet_run(network, demand, modes, seed, duration_s, label: str = "", cancelled=lambda: False, **conditions) -> dict:
+    """quick_run with no extension deciding and nobody told how far it is: a search's run, as a pool's process makes
+    it (run_pool's `work`)."""
+    return quick_run(network, demand, modes, seed, duration_s, None, lambda text: None, cancelled, label, **conditions)
 
 
 def quick_run(network, demand, modes, seed, duration_s, override, progress, cancelled, label,
@@ -674,6 +833,21 @@ def varied(modes: list, parameter: str | None, factor: float) -> tuple[list, dic
     return modes, {}
 
 
+def sensitivity_run(network, demand, modes, seed: int, duration_s: float, name: str | None, factor: float,
+                    measure_from_s: float = 0.0, cancelled=lambda: False) -> dict:
+    """One run of parameter_sensitivity: `name` at ×`factor` (None: as it is), kept to SENSITIVITY_MEASURES."""
+    run_modes, params = varied(modes, name, factor)
+    folder = Path(tempfile.mkdtemp(prefix="acms-sensitivity-"))  # kept to its KPIs: nothing left to recover
+    try:
+        _, recorder = run_headless(network, demand, run_modes, seed, duration_s, cancelled=cancelled, params=params,
+                                   recorder=RunRecorder(network, run_modes, folder=folder / "run",
+                                                        measure_from_s=measure_from_s))
+    finally:
+        shutil.rmtree(folder, ignore_errors=True)
+    kpis = recorder.kpis()
+    return {key: kpis.get(key) for key in SENSITIVITY_MEASURES}
+
+
 def parameter_sensitivity(network, demand, modes, seeds: list[int], duration_s: float,
                           parameters=tuple(SENSITIVITY_PARAMETERS), step: float = SENSITIVITY_STEP,
                           measure_from_s: float = 0.0, progress=None, cancelled=lambda: False) -> dict:
@@ -683,25 +857,23 @@ def parameter_sensitivity(network, demand, modes, seeds: list[int], duration_s: 
     interval. Large ones are what calibration must get right; near 0, what it can leave. None if stopped."""
     runs = [(None, 1.0)] + [(name, factor) for name in parameters for factor in (1 - step, 1 + step)]
     figures: dict = {}
-    for seed in seeds:
-        for index, (name, factor) in enumerate(runs):
-            if cancelled():
-                return None
-            if progress:
-                progress(f"Seed {seed}: run {index + 1} of {len(runs)}"
-                         + (f" ({name} × {factor:g})" if name else " (as it is)"))
-            run_modes, params = varied(modes, name, factor)
-            folder = Path(tempfile.mkdtemp(prefix="acms-sensitivity-"))  # kept to its KPIs: nothing left to recover
-            try:
-                _, recorder = run_headless(network, demand, run_modes, seed, duration_s, cancelled=cancelled,
-                                           params=params, recorder=RunRecorder(network, run_modes, folder=folder / "run",
-                                                                               measure_from_s=measure_from_s))
-            finally:
-                shutil.rmtree(folder, ignore_errors=True)
-            if cancelled():
-                return None
-            kpis = recorder.kpis()
-            figures[(seed, name, factor)] = {key: kpis.get(key) for key in SENSITIVITY_MEASURES}
+    jobs = [{"network": network, "demand": demand, "modes": modes, "seed": seed, "duration_s": duration_s,
+             "name": name, "factor": factor, "measure_from_s": measure_from_s} for seed in seeds for name, factor in runs]
+    # Every run is independent of the others: side by side, a process each, or (no processes here) one by one
+    made = run_pool(jobs, progress or (lambda text: None), cancelled, work=sensitivity_run) if len(jobs) > 1 else None
+    if made is not None:
+        if cancelled() or any(one is None for one in made):
+            return None
+        figures = {(job["seed"], job["name"], job["factor"]): one for job, one in zip(jobs, made)}
+    for index, job in enumerate(jobs if made is None else ()):
+        if cancelled():
+            return None
+        if progress:
+            progress(f"Seed {job['seed']}: run {index % len(runs) + 1} of {len(runs)}"
+                     + (f" ({job['name']} × {job['factor']:g})" if job["name"] else " (as it is)"))
+        figures[(job["seed"], job["name"], job["factor"])] = sensitivity_run(**job, cancelled=cancelled)
+        if cancelled():
+            return None
     found = {}
     for name in parameters:
         found[name] = {"what": SENSITIVITY_PARAMETERS[name]}
@@ -1250,7 +1422,8 @@ HEADLINE = [("people_per_h", "Passenger throughput increase", True),
             ("mean_wait_s", "Vehicle wait time reduction (per trip)", False),
             ("mean_trip_delay_s", "Vehicle delay reduction (per trip)", False),
             ("throughput_vph", "Vehicle throughput increase", True),
-            ("emergency_trip_s", "Emergency travel time reduction", False)]  # with Test DEVL
+            ("emergency_trip_s", "Emergency travel time reduction", False),  # with Test DEVL
+            ("dbl_approach_s", "Bus approach time reduction", False)]  # with Test DBL
 
 
 def averaged(runs: list[dict]) -> list[dict]:
@@ -1306,16 +1479,21 @@ def batch_workbook(path, batch: dict, inputs: list) -> Path:
                                  + ("" if len(batch["runs"]) >= batch.get("planned", 0) else
                                     " (a checkpoint, rewritten after every run, or a batch cut short)")],
                ["Agents", ", ".join(agent["label"] for agent in agents)], ["Baseline", agents[0]["label"]],
-               ["Decision deadline", f"{batch['deadline_s']:g} simulated s" if batch.get("tsp") else "none (TSP not ticked)"],
+               ["Decision deadline", "; ".join(f"{kind} {deadline:g} simulated s" for kind, deadline in
+                                               (batch.get("deadlines") or {}).items()) or "none (no controller tested)"],
                ["Pace", f"{batch['speed']:g}x real time" if batch.get("speed") else "as fast as the CPU allows"],
                ["Runs at once", f"{batch.get('at_once', 1)}, never two on one model server"],
                ["Each run's workbook", batch.get("folder", "")], ["", ""],
-               ["How it ran", "Every agent ran every seed, the times asked, headless, seed by seed (every agent on a seed before the next), so a batch cut short still compares on the seeds it finished. With TSP ticked, each run kept in step "
+               ["How it ran", "Every agent ran every seed, the times asked, headless, seed by seed (every agent on a seed before the next), so a batch cut short still compares on the seeds it finished. An agent is "
+                              "one combination of the tested controllers' deciders (TSP, DEVL, DBL). With a model "
+                              "deciding, each run kept in step "
                               "with the wall clock at the pace above and never paused: the junctions published their "
-                              "telemetry (JSON, each run's telemetry.jsonl beside its workbook), the agent answered each bus "
-                              "request in the background, the soonest-arriving bus first, and an answer counted from when it "
-                              "reached the controller; none by the deadline: the plan. The baselines: the controllers run with no "
-                              "agent, Never preempt falling back to the plan on every request, Always preempt granting every one."],
+                              "telemetry (JSON, each run's telemetry.jsonl beside its workbook), the agent answered each "
+                              "request in the background, the soonest to arrive first, and an answer counted from when it "
+                              "reached the controller; none by the deadline: the plan. Times each repeats a model's runs (its answers "
+                              "vary); the Default configuration, the baseline when ticked, is the network as configured "
+                              "with no controller acting (its signal plans: Webster's from the demand, or timings from a "
+                              "survey), once a seed, as a seed always runs the same."],
                ["How it compares", "A seed's repeats are averaged, then each agent is compared with the baseline (the first "
                                    "agent) by a paired t over the seeds (common random numbers), at 95 % widened by "
                                    "Bonferroni for several agents; 'clear' when the interval leaves out zero (one seed: open)."],

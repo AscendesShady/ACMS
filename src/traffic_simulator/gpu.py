@@ -9,7 +9,8 @@ real GPU; otherwise it draws with Qt's raster engine and says so, never with a s
 `VehicleRenderer` draws a run's vehicles in one instanced batch per appearance: each published frame's poses
 go to the GPU once (14 floats a vehicle), and the vertex shader places, turns and interpolates every
 vehicle between its last two simulated poses, so a display frame does no Python work per vehicle
-and leaves the physics thread its share of the interpreter.
+and leaves the physics thread its share of the interpreter. The 2.5D people it is handed (those clear of
+every overbridge: vehicle_layer.VehicleLayer._people) are one more batch, in the vehicles' depth buffer.
 """
 
 from __future__ import annotations
@@ -23,13 +24,14 @@ from PySide6.QtGui import (QColor, QMatrix4x4, QOffscreenSurface, QOpenGLContext
 from PySide6.QtOpenGL import QOpenGLBuffer, QOpenGLShader, QOpenGLShaderProgram, QOpenGLVertexArrayObject
 
 from . import asset_mesh, vehicle_assets
-from .theme import VEHICLE_INKS, VEHICLE_PAINTS
+from .theme import VEHICLE_INKS, VEHICLE_PAINTS, WALKER
 
 GL_FLOAT, GL_TRIANGLE_STRIP, GL_TRIANGLES, GL_RENDERER = 0x1406, 0x0005, 0x0004, 0x1F01
 SOFTWARE = ("llvmpipe", "softpipe", "swiftshader", "gdi generic", "basic render", "software", "mesa offscreen")
 FLOATS = 14  # before/current poses, half length/width, display colour and skin
 MIN_PIXELS = 2.0  # zoomed far out, a vehicle still covers this many pixels each side of its centre
 BODY_HEIGHT_RATIO = 0.7  # display skin height / actual width; not a collision dimension or a simulation input
+PEOPLE = 9  # the pedestrian mesh's place in the atlas, after the vehicles' nine appearances
 
 VERTEX = """#version 330
 layout(location=0) in vec4 corner;
@@ -124,12 +126,13 @@ def renderer() -> str:
 
 
 class VehicleRenderer:
-    """One per map: the vehicles' shader, their quad and a buffer of the latest frame's poses, made in
+    """One per map: the vehicles' shader, their mesh atlas and a buffer of the latest frame's poses, made in
     the viewport's context the first time it draws (and again if that context is replaced)."""
 
     def __init__(self) -> None:
         self._context: QOpenGLContext | None = None
         self._frame = None  # the frame whose poses are on the GPU
+        self._people: tuple = ()  # ...and the walkers sent with it (the very tuple: VehicleLayer keeps one a frame)
         self._count = 0
         self._colours: dict[str, tuple[float, float, float]] = {}
         self.failed = ""  # why the GPU can't draw them (then the QPainter path does)
@@ -137,9 +140,11 @@ class VehicleRenderer:
         self.draws = 0  # instanced draw calls made (one per appearance)
         self.frames = 0  # display frames drawn
 
-    def draw(self, painter: QPainter, frame, alpha: float, outline: QColor, height_lift: QPointF | None = None) -> bool:
-        """Draw the frame's vehicles through the painter's OpenGL context; False when it can't (not an
-        OpenGL painter, OpenGL below 3.3, a shader that won't build), so the caller draws them itself."""
+    def draw(self, painter: QPainter, frame, alpha: float, outline: QColor, height_lift: QPointF | None = None,
+             people: tuple = ()) -> bool:
+        """Draw the frame's vehicles, and `people` (some of its walkers, as 2.5D people), through the painter's
+        OpenGL context; False when it can't (not an OpenGL painter, OpenGL below 3.3, a shader that won't
+        build), so the caller draws them itself."""
         if self.failed or painter.paintEngine().type() != QPaintEngine.Type.OpenGL2:
             return False
         context = QOpenGLContext.currentContext()
@@ -149,8 +154,8 @@ class VehicleRenderer:
         try:
             if context is not self._context and not self._build(context):
                 return False
-            if frame is not self._frame:
-                self._upload(frame)
+            if frame is not self._frame or people is not self._people:
+                self._upload(frame, people)
             self._draw(painter, alpha, outline, height_lift)
             return True
         finally:
@@ -177,23 +182,32 @@ class VehicleRenderer:
         # Static atlas: one shared low-poly model per appearance, expanded to metres in the shader.
         vertices = []
         self._meshes = {}
+
+        def add(key, faces) -> None:
+            first = len(vertices)
+            for face in faces:
+                for i in range(1,len(face.vertices)-1):
+                    tri=(face.vertices[0],face.vertices[i],face.vertices[i+1])
+                    a=tuple(tri[1][j]-tri[0][j] for j in range(4))
+                    b=tuple(tri[2][j]-tri[0][j] for j in range(4))
+                    vertices.extend((*point,*a,*b,float(face.ink)) for point in tri)
+            self._meshes[key]=(first,len(vertices)-first)
+
         for skin in range(9):
             for detail in (False,True):
-                first = len(vertices)
-                for face in (asset_mesh.vehicle_mesh(skin) if detail else asset_mesh.vehicle_low_mesh(skin)):
-                    for i in range(1,len(face.vertices)-1):
-                        tri=(face.vertices[0],face.vertices[i],face.vertices[i+1])
-                        a=tuple(tri[1][j]-tri[0][j] for j in range(4))
-                        b=tuple(tri[2][j]-tri[0][j] for j in range(4))
-                        vertices.extend((*point,*a,*b,float(face.ink)) for point in tri)
-                self._meshes[skin,detail]=(first,len(vertices)-first)
+                add((skin,detail), asset_mesh.vehicle_mesh(skin) if detail else asset_mesh.vehicle_low_mesh(skin))
+        # A person is in metres, a vehicle in half lengths and widths: sent with half sizes (1, 1), which leave x and y
+        # as they are and double z, so z is halved here.
+        add((PEOPLE,True), [asset_mesh.Face(tuple((x, y, z / 2, 0.) for x, y, z, _ in face.vertices), face.ink)
+                            for face in asset_mesh.pedestrian_mesh()])
+        self._meshes[PEOPLE,False] = self._meshes[PEOPLE,True]
         mesh = array("f", (value for v in vertices for value in v)).tobytes()
         corners.allocate(mesh,len(mesh))
         for location,first,size in ((0,0,4),(6,4,4),(7,8,4),(8,12,1)):
             program.enableAttributeArray(location)
             program.setAttributeBuffer(location,GL_FLOAT,first*4,size,13*4)
         poses = QOpenGLBuffer(QOpenGLBuffer.Type.VertexBuffer)
-        poses.setUsagePattern(QOpenGLBuffer.UsagePattern.StreamDraw)  # a new frame every half simulated second
+        poses.setUsagePattern(QOpenGLBuffer.UsagePattern.StreamDraw)  # a new frame up to 60 times a second
         poses.create()
         poses.bind()
         poses.allocate(4 * FLOATS)
@@ -202,6 +216,11 @@ class VehicleRenderer:
             program.setAttributeBuffer(location, GL_FLOAT, 4 * first, size, 4 * FLOATS)
             extra.glVertexAttribDivisor(location, 1)  # one value per vehicle, not per corner
         vao.release()  # the attribute set-up stays in our array object; QPainter's own is untouched
+        for index, ink in enumerate(VEHICLE_INKS):  # fixed colours: set once, kept by the program
+            program.setUniformValue(f"asset_ink[{index}]", QVector3D(*QColor(ink).getRgbF()[:3]))
+        # Each display frame sets these seven: found once (by name, every frame, was over half of a frame's cost)
+        self._at = {name: program.uniformLocation(name) for name in (
+            "scene_to_clip", "alpha", "min_half", "height_lift", "near_axis", "outline", "depth_origin", "depth_span")}
         program.release()
         poses.release()
         self._context, self._program, self._vao, self._corners, self._poses, self._extra = \
@@ -213,7 +232,7 @@ class VehicleRenderer:
     def _lost(self) -> None:
         self._context, self._frame = None, None
 
-    def _upload(self, frame) -> None:
+    def _upload(self, frame, people: tuple = ()) -> None:
         """The frame's poses, packed once, then drawn at every alpha until the next frame."""
         data = array("f")
         groups = {}
@@ -232,11 +251,19 @@ class VehicleRenderer:
                 data.extend(rgb)
                 data.append(float(skin))
             self._groups.append((skin,first,len(vehicles),max(v.width_m for v in vehicles)))
+        if people:
+            first, rgb = len(data)//FLOATS, QColor(WALKER).getRgbF()[:3]
+            for x, y, ux, uy, before in people:
+                data.extend(before)
+                data.extend((x, y, ux, uy, 1.0, 1.0))
+                data.extend(rgb)
+                data.append(float(PEOPLE))
+            self._groups.append((PEOPLE,first,len(people),1.0))
         raw = data.tobytes()
         self._poses.bind()
         self._poses.allocate(raw, len(raw))
         self._poses.release()
-        self._frame, self._count = frame, len(frame.vehicles)
+        self._frame, self._people, self._count = frame, people, len(frame.vehicles) + len(people)
         self.uploads += 1
 
     def _draw(self, painter: QPainter, alpha: float, outline: QColor, height_lift: QPointF | None = None) -> None:
@@ -251,24 +278,22 @@ class VehicleRenderer:
                             0, 0, 0, 1)
         functions = self._context.functions()
         functions.glViewport(0, 0, round(width * ratio), round(height * ratio))
-        program = self._program
+        program, at = self._program, self._at
         program.bind()
-        program.setUniformValue("scene_to_clip", matrix)
-        program.setUniformValue1f("alpha", float(alpha))
-        program.setUniformValue1f("min_half", 0.0 if height_lift is not None else
+        program.setUniformValue(at["scene_to_clip"], matrix)
+        program.setUniformValue1f(at["alpha"], float(alpha))
+        program.setUniformValue1f(at["min_half"], 0.0 if height_lift is not None else
                                   MIN_PIXELS / max(hypot(t.m11(), t.m12()), 1e-9))
         lift = height_lift or QPointF()
-        program.setUniformValue("height_lift", QVector2D(lift.x(), lift.y()))
+        program.setUniformValue(at["height_lift"], QVector2D(lift.x(), lift.y()))
         # The camera's horizontal depth direction is opposite the ground-plane lift; normalisation is enough.
-        program.setUniformValue("near_axis", QVector2D(-lift.x(), -lift.y()))
-        for index, ink in enumerate(VEHICLE_INKS):
-            program.setUniformValue(f"asset_ink[{index}]", QVector3D(*QColor(ink).getRgbF()[:3]))
-        program.setUniformValue("outline", QVector3D(*outline.getRgbF()[:3]))
+        program.setUniformValue(at["near_axis"], QVector2D(-lift.x(), -lift.y()))
+        program.setUniformValue(at["outline"], QVector3D(*outline.getRgbF()[:3]))
         inverse,_ = t.inverted()
         bounds = inverse.mapRect(QRectF(0,0,width,height))
         centre = bounds.center()
-        program.setUniformValue("depth_origin", QVector2D(centre.x(),centre.y()))
-        program.setUniformValue1f("depth_span", max(bounds.width()+bounds.height(),100.0)+100.0)
+        program.setUniformValue(at["depth_origin"], QVector2D(centre.x(),centre.y()))
+        program.setUniformValue1f(at["depth_span"], max(bounds.width()+bounds.height(),100.0)+100.0)
         self._vao.bind()
         self._poses.bind()
         functions.glEnable(0x0B71)  # GL_DEPTH_TEST: opaque parts and vehicles occlude in camera depth

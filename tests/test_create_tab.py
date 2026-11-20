@@ -74,7 +74,8 @@ def test_idle_signal_lamps_light_the_phases_a_run_would():
     from math import cos, pi, sin
 
     from traffic_simulator.models import Network
-    from traffic_simulator.network_scene import SIGNAL_GREEN, NetworkGraphicsScene
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.scene_items import SIGNAL_GREEN
 
     network = Network()
     centre = network.add_node(0.0, 0.0)

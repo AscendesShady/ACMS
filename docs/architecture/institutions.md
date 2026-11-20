@@ -29,7 +29,7 @@ Each building is a zone of the four-step model: generation, distribution, mode s
 - **Distribution.** `door(network, item)`: its nearest junction (not a boundary end; equally near, the first by
   name), where its trips start and end. `catchment(network, item)`: the junctions and ends in its circle but the
   door: where its people come from, an equal share each (the circle of influence is the catchment).
-- **Mode split.** `shares(item)`: people % by mode, its `mode_shares` (set by `network_tools.institution_split`,
+- **Mode split.** `shares(item)`: people % by mode, its `mode_shares` (set by `demand_plans.institution_split`,
   a logit: ai_mode.md) or else `car_share` by Car and the rest on foot (`WALK`). `vehicle_split(item,
   modes, commute)`: vehicles a person (share ÷ occupancy over the untimetabled types, a commute's at most
   `COMMUTE_OCCUPANCY` 1.1, NHTS 2017; walkers, MRT riders and timetabled riders add none: riders take the network's

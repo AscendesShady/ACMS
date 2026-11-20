@@ -2,7 +2,7 @@
 
 from traffic_simulator.interchanges import build_trumpet
 from traffic_simulator.network_generator import generate_network
-from traffic_simulator.od_matrix import ODCell
+from traffic_simulator.demand import ODCell
 from traffic_simulator.summary import ai_markdown, demand_markdown, network_markdown
 
 

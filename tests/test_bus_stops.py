@@ -15,12 +15,15 @@ from PySide6.QtCore import QPoint, QPointF, Qt  # noqa: E402
 from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication, QGraphicsTextItem  # noqa: E402
 
-from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
+from traffic_simulator.mode_behavior import PALETTE  # noqa: E402
+from traffic_simulator.vehicle import VehicleMode  # noqa: E402
 from traffic_simulator.models import BAY_LENGTH_M, stop_line_inset  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.network_io import load_network, save_network  # noqa: E402
-from traffic_simulator.network_tools import describe_changes  # noqa: E402
-from traffic_simulator.simulation import Bay, PairDemand, Simulation  # noqa: E402
+from traffic_simulator.tool_reports import describe_changes  # noqa: E402
+from traffic_simulator.simulation import Simulation  # noqa: E402
+from traffic_simulator.demand import PairDemand  # noqa: E402
+from traffic_simulator.lane_graph import Bay  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 ROAD = "1,1-2,1"  # generate_network(1, 2): 1,1 to 2,1, 500 m east; two lanes each way, driving on the left

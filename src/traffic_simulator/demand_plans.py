@@ -1,6 +1,6 @@
 """Demand numbers worked out without changing anything, which the OD panel and the window apply (no Qt): gravity
 and Furness generation fitted to a target saturation, scaling, ME2 count calibration, and multinomial-logit mode
-choice for OD pairs and institutions. Moved out of network_tools.py, which re-exports these names."""
+choice for OD pairs and institutions."""
 
 from __future__ import annotations
 

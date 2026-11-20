@@ -985,7 +985,7 @@ class BackgroundPanel(QWidget):
             self.step.setText("That scale would make the image too large. Esc finishes.")
             return
         inverse, _ = transform.inverted()
-        (a, b), pixels = self._measure, [inverse.map(point) for point in self._measure]
+        (a, _), pixels = self._measure, [inverse.map(point) for point in self._measure]
         background.width_m *= factor  # a similarity about a: a stays, everything else scales by factor
         background.x_m = a.x() - factor * (a.x() - background.x_m)
         background.y_m = a.y() - factor * (a.y() - background.y_m)

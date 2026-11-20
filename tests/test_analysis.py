@@ -8,10 +8,10 @@ import tempfile
 from pathlib import Path
 
 from traffic_simulator import analysis, emissions, experiments, results, run_reports
-from traffic_simulator.mode_behavior import VehicleMode
+from traffic_simulator.vehicle import VehicleMode
 from traffic_simulator.network_generator import generate_network
 from traffic_simulator.results import MINUTE_COLUMNS
-from traffic_simulator.simulation import PairDemand
+from traffic_simulator.demand import PairDemand
 
 _RUN = {}
 

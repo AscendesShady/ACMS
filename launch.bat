@@ -18,6 +18,8 @@ echo Setting up ACMS (first run)...
 %PY% -m venv .venv || goto failed
 
 :check
+rem Newer ACMS on GitHub: update, then start again from the new launch.bat (on one line: cmd reads this file as it runs)
+".venv\Scripts\python.exe" tools\update.py & if errorlevel 3 ("%~f0" %* & exit /b 0)
 rem Installed, and here: a moved or freshly cloned folder installs again
 ".venv\Scripts\python.exe" -c "import traffic_simulator, pathlib, sys; sys.exit(not pathlib.Path(traffic_simulator.__file__).resolve().is_relative_to(pathlib.Path('src').resolve()))" >nul 2>&1 && goto run
 echo Installing ACMS (downloads PySide6 the first time)...

@@ -1,6 +1,6 @@
 # main.py: the main window (Qt)
 
-- **Mixins** (plain classes before `QMainWindow` in `MainWindow`'s bases; all state still made in `__init__`):
+- **Mixins** (each mixin but `LayoutMixin`, which builds the window, declares `NEEDS`: the window's state and the other mixins' methods it uses and doesn't define, kept exact by `test_docs.py`; `ExperimentsMixin`, `AgentsMixin` and `ScenarioMixin` import no Qt, and are built and run alone there on stand-ins for their needs. `ExperimentsMixin._runs_command` is a table: `_ANSWERS` (a tool -> its answer, whatever is running), run_reports' `_REPORTS`, `_RUN_ANALYSES` and `_JUNCTION_ANALYSES`, then the headless tests' `_TESTS` (any other name: run_experiment); plain classes before `QMainWindow` in `MainWindow`'s bases; every attribute is first set while the window is built, in `__init__` (the mixins' plain state is declared there with its type) or in `LayoutMixin`'s `_build_ui`, `_build_menu`, `_build_sim_bar` and `_connect_signals` (the widgets), and a mixin's methods only set it again: `test_docs.py`):
   `main_runs.py` (`RunsMixin`) holds the run bar's methods, moved verbatim: `_run`, `_stop_pressed`,
   `_in_background`, `busy`, `_one_run`, `_play`/`_pause`/`_stop_run`/`_stop_runner`/`_end_run`, `_frame`,
   `_export`, `_run_settings`, `_traffic` and their helpers, and `LIVE_OBSERVED`. `main_scenario.py`
@@ -10,8 +10,9 @@
   `_optimise_signals`, `_weaving_los`, `_equilibrate_demand`, `_preflight`, `_parameter_sensitivity`, `_experiment`,
   `OBJECTIVES`, `LEAD_FIGURES` and the module-level `_rounded`. `main_agents.py` (`AgentsMixin`) holds who decides
   the signals: `_ask_agent`, `_waiting_agent`, `_compliance`, `_decision_sensitivity`, `run_batch`, `replay_run`,
-  `dispatch_emergency`, `places`, `tsp_batch`/`devl_batch`, `_schedule_emergency` and their helpers, and the
-  constants `MAX_AT_ONCE` and `HEADLESS_WAIT_S`.
+  `dispatch_emergency`, `places`, `controller_plan`, `_schedule_emergency` and their helpers, and the
+  constants `MAX_AT_ONCE`, `HEADLESS_WAIT_S` and `CONTROLLERS` (the AI controllers Batch Run tests, kind ->
+  extension stem and name: TSP, DEVL, DBL).
   `main_assistant.py` (`AssistantMixin`) holds AI Mode's hooks: `_selection_info`, `_show_on_map`,
   `_show_ai_status`, `_open_system_2`, `_od_command`, `_types_command`, `_assistant_network`, `_ai_edited`.
   `main_project.py` (`ProjectMixin`) holds undo/redo and the project file: `_snapshot`, `_commit`, `undo`, `redo`,
@@ -133,10 +134,12 @@
     the scene redrawn, one undo step, a run stopped, the status bar naming the interchanges), and the side new
     roads and grids follow.
   - **Extensions:** switch drop-in features from `extensions/` on and off (see extensions.py). The window's
-    services for them (`app`): `run_batch` (`test_tsp`, `test_devl`: the emergency fleet in each run with DEVL's
-    override, TSP and DEVL each with their own signal agent, its Emergency vehicles sheet, `experiments.emergency_report`; `devl_agents` deciding its lanes, every TSP agent with every DEVL
-    agent when both are tested, paced whenever a model answers), `replay_run`, `tsp_batch` and `devl_batch` (the TSP
-    and DEVL tabs' batch settings, `_agent_plan`: the model picked, else the one on in AI Mode for its System),
+    services for them (`app`): `run_batch` (`tests`: each controller tested, TSP, DEVL or DBL, with its models and
+    deadline, each with its own signal agent in every run, every combination of their agents, paced whenever a
+    model answers; with DEVL the emergency fleet in each run and its Emergency vehicles sheet,
+    `experiments.emergency_report`; TSP and DBL with no bus type: the answer's note says they had nothing to
+    decide), `replay_run`, `controller_plan(kind)` (a controller's tab settings for Batch Run, `_agent_plan`: the
+    model picked, else the one on in AI Mode for its System, and its deadline),
     `dispatch_emergency(origin, destination, every_min, check_only, after_s)`
     (into the live run; ValueError with no run, an unknown end or junction, or no route) and `places` (boundary
     ends, then junctions).
@@ -161,7 +164,7 @@
 - **`_build_edge`:** detects crossings before adding a road and asks: **Merge into
   Roundabout** (a roundabout node at each crossing; both roads split there) or
   **Overpass** (the new road bridges over). The road itself is built by
-  `network_tools.build_edge`, which the assistant's `add_road` tool shares.
+  `road_tools.build_edge`, which the assistant's `add_road` tool shares.
 - **`build_interchange`:** the dialog chooses legs, keep/replace and freeway lanes,
   then calls the builders.
 - **Undo/redo** (`main_project.py`):

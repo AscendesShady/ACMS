@@ -3,7 +3,7 @@
 import json
 from copy import deepcopy
 
-from traffic_simulator import demand_plans, network_tools as tools
+from traffic_simulator import demand_plans, network_tools as tools, road_tools, tool_args, tool_offer, tool_reports, tool_schemas
 from traffic_simulator.network_generator import generate_network
 
 
@@ -14,41 +14,41 @@ def run(network, name, **args):
 def refused(network, name, **args) -> str:
     try:
         run(network, name, **args)
-    except tools.ToolError as exc:
+    except tool_args.ToolError as exc:
         return str(exc)
     raise AssertionError(f"{name} {args} should have been refused")
 
 
 def test_every_tool_is_described_for_the_model():
-    names = [spec["name"] for spec in tools.tool_specs()]
+    names = [spec["name"] for spec in tool_schemas.tool_specs()]
     assert len(names) == len(set(names))
-    for spec in tools.tool_specs():
+    for spec in tool_schemas.tool_specs():
         parameters = spec["parameters"]
         assert spec["description"] and parameters["type"] == "object"
         assert set(parameters["required"]) <= set(parameters["properties"]), spec["name"]
-        assert spec["name"] in tools._FUNCTIONS or spec["name"] in tools.UI_TOOLS
-        assert tools.describe_call(spec["name"], {})  # never crashes on missing arguments
+        assert spec["name"] in tools._FUNCTIONS or spec["name"] in tool_schemas.UI_TOOLS
+        assert tool_reports.describe_call(spec["name"], {})  # never crashes on missing arguments
 
 
 def test_any_argument_shape_is_described_and_read_without_raising():
     """A model's arguments in any shape get a line (chat, approval card, journal) and are read by contradicts
     without raising: a raise there left the answer waiting until Stop, or ended it as an unexpected error."""
     odd = ({}, [{}], [[]], "", "zz", -1, 1e12, True, [None], {"a": 1}, [1, 2], [{"road": "1,1-2,1", "speed_limit_kmh": 30}])
-    for spec in tools.tool_specs():
+    for spec in tool_schemas.tool_specs():
         for key in spec["parameters"]["properties"]:
             for value in odd:
-                assert isinstance(tools.describe_call(spec["name"], {key: value}), str), (spec["name"], key, value)
-                tools.contradicts(spec["name"], {key: value}, "delete road 1,1-2,1 with SCOOT")
-    assert tools.describe_call("delete_objects", {"ids": [{"id": "2,2"}]}).startswith("delete_objects(")
+                assert isinstance(tool_reports.describe_call(spec["name"], {key: value}), str), (spec["name"], key, value)
+                tool_offer.contradicts(spec["name"], {key: value}, "delete road 1,1-2,1 with SCOOT")
+    assert tool_reports.describe_call("delete_objects", {"ids": [{"id": "2,2"}]}).startswith("delete_objects(")
 
 
 def test_the_assistant_can_do_only_what_its_tools_say():
     """Its whole reach, pinned: a new tool, or a new way to change things, fails here until it is
     added on purpose. No tool writes files, so it can't change the app's code; demand it changes
     only through the Demand Generator's tools."""
-    advertised = {spec["name"] for spec in tools.tool_specs()}
-    assert set(tools._FUNCTIONS) | tools.UI_TOOLS == advertised  # nothing callable beyond the list
-    assert tools.EDIT_TOOLS == {
+    advertised = {spec["name"] for spec in tool_schemas.tool_specs()}
+    assert set(tools._FUNCTIONS) | tool_schemas.UI_TOOLS == advertised  # nothing callable beyond the list
+    assert tool_schemas.EDIT_TOOLS == {
         "set_od_demand", "shape_daily_curve", "generate_demand", "scale_demand", "calibrate_demand",  # demand: numbers, spread, gravity, scaling, counts
         "choose_modes",  # the split by mode choice (logit)
         "set_junction_control", "set_signal_timing", "update_roads", "add_junction", "add_road", "add_boundary_end",
@@ -68,11 +68,11 @@ def test_the_assistant_can_do_only_what_its_tools_say():
         "parameter_sensitivity",  # runs with each calibration parameter varied
         "assign_routes", "optimise_signals",  # route choice saved on the network; a long search
         "build_scenario"}  # a described scenario built and tested in one go
-    assert tools.TYPE_TOOLS == {"list_vehicle_types", "create_vehicle_types", "update_vehicle_type"}
-    assert tools.OD_TOOLS == {"read_od_matrix", "set_od_demand", "shape_daily_curve", "generate_demand", "scale_demand",
+    assert tool_schemas.TYPE_TOOLS == {"list_vehicle_types", "create_vehicle_types", "update_vehicle_type"}
+    assert tool_schemas.OD_TOOLS == {"read_od_matrix", "set_od_demand", "shape_daily_curve", "generate_demand", "scale_demand",
                               "equilibrate_demand",
                               "calibrate_demand", "choose_modes"}
-    assert tools.RUN_TOOLS == {"run_simulation", "run_experiment", "read_results", "compare_runs", "set_extension",
+    assert tool_schemas.RUN_TOOLS == {"run_simulation", "run_experiment", "read_results", "compare_runs", "set_extension",
                                "read_extensions", "schedule_emergency", "start_batch", "replay_run",
                                "junction_los", "weaving_los", "metro_report", "diagnose_signal", "check_run_health", "preflight_check",
                                "resilience",
@@ -83,50 +83,50 @@ def test_the_assistant_can_do_only_what_its_tools_say():
                                "analyse_run", "check_calibration", "read_detectors", "analyse_safety", "forecast",
                                "critical_links", "regress", "assign_routes", "optimise_signals", "build_scenario",
                                "institution_mode_split"}
-    assert not tools.SCENARIO_TOOLS & (tools.OD_TOOLS | tools.RUN_TOOLS | tools.TYPE_TOOLS | {"generate_grid", "place_map"})
-    assert tools.SCENARIO_TOOLS <= set(tools._FUNCTIONS)  # a scenario changes only a copy of the network
+    assert not tool_schemas.SCENARIO_TOOLS & (tool_schemas.OD_TOOLS | tool_schemas.RUN_TOOLS | tool_schemas.TYPE_TOOLS | {"generate_grid", "place_map"})
+    assert tool_schemas.SCENARIO_TOOLS <= set(tools._FUNCTIONS)  # a scenario changes only a copy of the network
     assert "There is no tool" in refused(generate_network(1, 1), "write_file", path="src/x.py", text="")
 
 
 def test_arguments_are_read_as_the_schema_gives_or_refused_saying_what_the_tool_takes():
     """What small models send: misspelt or plural names, numbers and true/false as text, one value in a list,
     choices in another case, nulls; and what can't be read refused before anything runs."""
-    assert tools.normalise("set_end_flows", {"ends": "3W", "Supply_VPH": "50", "demand_vph": None}) ==         {"end": "3W", "supply_vph": 50.0}
-    assert tools.normalise("set_end_flows", '{"end": ["3W"], "demand_vph": 7}') == {"end": "3W", "demand_vph": 7.0}
-    assert tools.normalise("set_junction_control", {"junction": ["2,2"], "control": "ROUNDABOUT"}) ==         {"junctions": ["2,2"], "control": "roundabout"}  # lists stay as sent: ids like 2,2 hold commas
-    assert tools.normalise("run_simulation", {"duration_min": "30", "seed": 4.0}) == {"duration_min": 30.0, "seed": 4}
+    assert tool_args.normalise("set_end_flows", {"ends": "3W", "Supply_VPH": "50", "demand_vph": None}) ==         {"end": "3W", "supply_vph": 50.0}
+    assert tool_args.normalise("set_end_flows", '{"end": ["3W"], "demand_vph": 7}') == {"end": "3W", "demand_vph": 7.0}
+    assert tool_args.normalise("set_junction_control", {"junction": ["2,2"], "control": "ROUNDABOUT"}) ==         {"junctions": ["2,2"], "control": "roundabout"}  # lists stay as sent: ids like 2,2 hold commas
+    assert tool_args.normalise("run_simulation", {"duration_min": "30", "seed": 4.0}) == {"duration_min": 30.0, "seed": 4}
     # llama3.2 fills every optional argument it means to leave out, real names or not (a live Dhanmondi run): left out
-    assert tools.normalise("run_simulation", {"duration_min": "20", "seed": "null", "weather": "null", "incidents": "[]",
+    assert tool_args.normalise("run_simulation", {"duration_min": "20", "seed": "null", "weather": "null", "incidents": "[]",
                                               "lateral": "false", "measure_from_min": "0"}) == \
         {"duration_min": 20.0, "incidents": [], "lateral": False, "measure_from_min": 0.0}  # a real 0 stays
-    assert tools.normalise("generate_demand", {"demand": "hourly", "arrival_pattern": "None", "pairs": " NONE ",
+    assert tool_args.normalise("generate_demand", {"demand": "hourly", "arrival_pattern": "None", "pairs": " NONE ",
                                                "factor": "None", "total": "n/a"}) == {"demand": "hourly"}
     # a level in a choice of another kind is the degree of saturation it means (llama3.2: demand "peak", then 0 when
     # refused), where the tool takes one and none in range was given; else refused saying where it goes
-    assert tools.normalise("generate_demand", {"demand": "peak", "degree_of_saturation": "0", "total": "0"}) == \
+    assert tool_args.normalise("generate_demand", {"demand": "peak", "degree_of_saturation": "0", "total": "0"}) == \
         {"degree_of_saturation": 0.85}  # and a total of 0 is none
-    assert tools.normalise("network_from_background", {"width_m": 1200, "height_m": 0.0}) == {"width_m": 1200.0}
-    assert tools.normalise("generate_demand", {"arrival_pattern": "light"}) == {"degree_of_saturation": 0.4}
-    assert tools.normalise("generate_demand", {"degree_of_saturation": 0.0, "demand": "hourly"}) == {"demand": "hourly"}
-    assert tools.normalise("generate_demand", {"degree_of_saturation": "busy"}) == {"degree_of_saturation": 0.85}
-    assert tools.normalise("generate_demand", {"demand": "heavy", "arrival_pattern": "heavy", "degree_of_saturation": 0.6}
+    assert tool_args.normalise("network_from_background", {"width_m": 1200, "height_m": 0.0}) == {"width_m": 1200.0}
+    assert tool_args.normalise("generate_demand", {"arrival_pattern": "light"}) == {"degree_of_saturation": 0.4}
+    assert tool_args.normalise("generate_demand", {"degree_of_saturation": 0.0, "demand": "hourly"}) == {"demand": "hourly"}
+    assert tool_args.normalise("generate_demand", {"degree_of_saturation": "busy"}) == {"degree_of_saturation": 0.85}
+    assert tool_args.normalise("generate_demand", {"demand": "heavy", "arrival_pattern": "heavy", "degree_of_saturation": 0.6}
                            ) == {"degree_of_saturation": 0.6}  # the level said again beside the one given: left out
     stray ={"demand": "hourly", "peak_hour_factor": 0.85, "frobnicate": 1}  # another tool's, and no tool's
-    assert "set_od_demand's" in tools.drop_strays("generate_demand", stray) and stray == {"demand": "hourly", "frobnicate": 1}
-    assert tools.drop_strays("generate_demand", {"Demand": "hourly"}) is None  # its own, misspelt: normalise reads it
+    assert "set_od_demand's" in tool_args.drop_strays("generate_demand", stray) and stray == {"demand": "hourly", "frobnicate": 1}
+    assert tool_args.drop_strays("generate_demand", {"Demand": "hourly"}) is None  # its own, misspelt: normalise reads it
     for name, args, why in (("run_simulation", {"duration_min": 20, "weather": "heavy"}, "degree_of_saturation"),
                             ("set_od_demand", {"arrival_pattern": "rush hour"}, "to generate_demand"),
                             ("network_from_background", {"place": "Dhanmondi"}, "place_map's")):  # another tool's
         try:
-            tools.normalise(name, args)
-        except tools.ToolError as exc:
+            tool_args.normalise(name, args)
+        except tool_args.ToolError as exc:
             assert why in str(exc), exc
         else:
             raise AssertionError(args)
     for args, why in (({"duration_min": "None"}, "needs duration_min"), ({"duration_min": 5, "factor": 2}, "no argument")):
         try:
-            tools.normalise("run_simulation", args)
-        except tools.ToolError as exc:
+            tool_args.normalise("run_simulation", args)
+        except tool_args.ToolError as exc:
             assert why in str(exc), exc
         else:
             raise AssertionError(args)  # a required one sent as nothing, or a real value under no name: refused
@@ -142,28 +142,28 @@ def test_arguments_are_read_as_the_schema_gives_or_refused_saying_what_the_tool_
             ("set_od_demand", {"pairs": ["1W->1E"], "value": float("inf")}, "value must be number"),
             ("no_such_tool", {}, "There is no tool")):
         try:
-            tools.normalise(name, args)
-        except tools.ToolError as exc:
+            tool_args.normalise(name, args)
+        except tool_args.ToolError as exc:
             assert message in str(exc), (message, str(exc))
         else:
             raise AssertionError(f"{name} {args} should be refused")
 
 
 def test_values_inside_a_lists_objects_are_read_too():
-    counts = tools.normalise("calibrate_demand", {"counts": [{"road": "1,1-2,1", "vph": "800"}]})["counts"]
-    types = tools.normalise("create_vehicle_types", {"types": [{"name": "Tram", "kind": "TRAM", "headway_min": "8"}]})
+    counts = tool_args.normalise("calibrate_demand", {"counts": [{"road": "1,1-2,1", "vph": "800"}]})["counts"]
+    types = tool_args.normalise("create_vehicle_types", {"types": [{"name": "Tram", "kind": "TRAM", "headway_min": "8"}]})
     assert counts == [{"road": "1,1-2,1", "vph": 800.0}]
     assert types["types"] == [{"name": "Tram", "kind": "tram", "headway_min": 8}]
-    assert "demand" not in tools.TOOLS[[t["name"] for t in tools.TOOLS].index("set_od_demand")]["parameters"]["required"]
+    assert "demand" not in tool_schemas.TOOLS[[t["name"] for t in tool_schemas.TOOLS].index("set_od_demand")]["parameters"]["required"]
 
 
 def test_calibration_that_would_clear_the_matrix_is_refused():
     network = generate_network(2, 2)
     flows = {("1W", "1E"): 100.0, ("2W", "2E"): 100.0}
-    routes = tools._routes(network, list(flows))
+    routes = demand_plans._routes(network, list(flows))
     counts = [{"road": r, "vph": 0} for r in {r for path in routes.values() for r in path}]  # nothing counted anywhere
     try:
-        tools.calibration_plan(network, flows, {"counts": counts})
+        demand_plans.calibration_plan(network, flows, {"counts": counts})
     except ValueError as exc:
         assert "rounds to 0" in str(exc) and "Nothing was changed" in str(exc)
     else:
@@ -268,18 +268,18 @@ def test_new_roads_ask_how_to_cross_and_interchanges_build():
     grid = run(network, "generate_grid", horizontal=2, vertical=2, footpaths=True)  # the user wanted walkways
     assert grid["footpaths"] == "both sides of every road" 
     assert all(road.footpaths == ["left", "right"] for road in network.all_roads())
-    assert "with pedestrian walkways" in tools.describe_call("generate_grid", {"horizontal": 2, "vertical": 2,
+    assert "with pedestrian walkways" in tool_reports.describe_call("generate_grid", {"horizontal": 2, "vertical": 2,
                                                                                 "footpaths": True})
     for skill in ("build", "place"):  # walkways only when the user's words ask: never asked about nor offered
-        assert "never ask about them or offer them" in tools.SKILLS[skill] and "Apply" not in tools.SKILLS[skill]
-    against = tools.contradicts
+        assert "never ask about them or offer them" in tool_offer.SKILLS[skill] and "Apply" not in tool_offer.SKILLS[skill]
+    against = tool_offer.contradicts
     for name, args in (("generate_grid", {"footpaths": True}), ("network_from_background", {"footpaths": "tagged"}),
                        ("update_roads", {"roads": "all", "footpaths": "both"}), ("add_crossing", {"road": "1W"})):
         assert "didn't ask for pedestrian walkways" in against(name, args, "build a 3 by 3 grid of roads"), name
         assert against(name, args, "build it with footpaths for pedestrians") is None, name
     assert against("update_roads", {"roads": "all", "footpaths": "none"}, "tidy the roads") is None  # taking them off
     assert against("network_from_background", {}, "create a map of dhanmondi") is None
-    assert tools.describe_call("update_roads", {"roads": "all", "footpaths": "both"}) == \
+    assert tool_reports.describe_call("update_roads", {"roads": "all", "footpaths": "both"}) == \
         "Change every road: pedestrian walkways → both"
 
 
@@ -306,7 +306,7 @@ def test_source_reading_stays_inside_the_project():
     assert "Can't read" in refused(generate_network(1, 1), "read_source", path="../README.md", find="a")
     long = run(generate_network(1, 1), "read_source", path="docs/architecture/sources.md")
     end = int(long["lines"].split("-")[1].split()[0])  # a page is whole lines up to READ_CHARS (sources.md's are long)
-    assert len(long["text"]) <= tools.READ_CHARS and long["next_start_line"] == end + 1 and end < tools.READ_LINES
+    assert len(long["text"]) <= road_tools.READ_CHARS and long["next_start_line"] == end + 1 and end < road_tools.READ_LINES
     on = run(generate_network(1, 1), "read_source", path="docs/architecture/sources.md", start_line=end + 1)
     assert on["text"].startswith(f"{end + 1}: ")
 
@@ -316,21 +316,21 @@ def test_changes_are_described_for_the_assistant():
 
     network = generate_network(3, 4)
     before = deepcopy(network)
-    assert tools.describe_changes(before, network) == []
+    assert tool_reports.describe_changes(before, network) == []
     run(network, "set_junction_control", junctions=["2,2"], control="roundabout")
     run(network, "update_roads", roads=["1,1-2,1"], lanes_per_direction=3, direction="reverse")
     run(network, "move_junctions", junctions=["4,3"], dx=20, dy=0)
     run(network, "add_junction", x=900, y=900)
     run(network, "delete_objects", ids=["3,1-4,1"])
     run(network, "set_end_flows", end="1E", supply_vph=600)
-    changes = tools.describe_changes(before, network)
+    changes = tool_reports.describe_changes(before, network)
     assert "2,2: signalised → roundabout" in changes
     assert "Road 1,1-2,1: lanes/direction 2 → 3, direction two-way → one-way, now runs 2,1 → 1,1" in changes
     assert "Moved 4,3 by (+20, +0) m" in changes and "Added junction N1" in changes
     assert "Deleted road 3,1-4,1" in changes and "1E: supply 0 → 600 veh/h" in changes
     assert not any("length" in line for line in changes)  # moved ends explain their roads' lengths
-    assert tools.describe_changes(before, generate_network(2, 2))[0].startswith("Generated a new network")
-    assert tools.describe_changes(before, network, limit=2)[-1] == f"...and {len(changes) - 2} more changes"
+    assert tool_reports.describe_changes(before, generate_network(2, 2))[0].startswith("Generated a new network")
+    assert tool_reports.describe_changes(before, network, limit=2)[-1] == f"...and {len(changes) - 2} more changes"
 
 
 def test_institution_map_and_curve_changes_are_described():
@@ -341,7 +341,7 @@ def test_institution_map_and_curve_changes_are_described():
     before = deepcopy(network)
     run(network, "update_institution", id="IN1", radius_m=444, people=900)
     network.institutions["IN1"].x += 30  # dragged on the map
-    lines = tools.describe_changes(before, network)
+    lines = tool_reports.describe_changes(before, network)
     line = next(line for line in lines if line.startswith("Institution IN1:"))
     assert "moved by (+30, +0) m" in line and "circle (m) " in line and "→ 444" in line and "→ 900" in line
     assert any("map" in line for line in run(deepcopy(before), "place_map", lat=23.74, lon=90.37)["changed"])
@@ -349,11 +349,11 @@ def test_institution_map_and_curve_changes_are_described():
     start, end = network.node(road.from_node), network.node(road.to_node)
     curved = deepcopy(network)
     curved.roads[road.id].shape = [((start.x + end.x) / 2, (start.y + end.y) / 2 + 40)]
-    assert any(line.startswith("Road 1,1-2,1:") and "curved" in line for line in tools.describe_changes(network, curved))
-    assert any("now straight" in line for line in tools.describe_changes(curved, network))
+    assert any(line.startswith("Road 1,1-2,1:") and "curved" in line for line in tool_reports.describe_changes(network, curved))
+    assert any("now straight" in line for line in tool_reports.describe_changes(curved, network))
     turned = deepcopy(curved)
     run(turned, "update_roads", roads=["1,1-2,1"], direction="reverse")
-    assert not any("curved" in line or "straight" in line for line in tools.describe_changes(curved, turned))
+    assert not any("curved" in line or "straight" in line for line in tool_reports.describe_changes(curved, turned))
 
 
 def test_a_bus_stop_moved_onto_a_crossing_or_another_bay_is_refused_saying_why():
@@ -383,13 +383,13 @@ def test_a_gravity_model_generates_demand_balanced_to_the_ends():
     ends = sorted(network.approach_nodes)
     pairs = [(o, d) for o in ends for d in ends if o != d]
     try:
-        tools.demand_plan(network, pairs, {"demand": "hourly"})
+        demand_plans.demand_plan(network, pairs, {"demand": "hourly"})
     except ValueError as exc:
         assert "set_end_flows" in str(exc)  # nothing to balance to: says what to give
     else:
         raise AssertionError("no totals should be refused")
     _flows(network, {"1W": 600, "2W": 300, "1N": 300}, {"1E": 400, "2E": 400, "1S": 400})
-    plan, info = tools.demand_plan(network, pairs, {"demand": "hourly"})
+    plan, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly"})
     rows, columns = {}, {}
     for (o, d), value in plan.items():
         rows[o] = rows.get(o, 0) + value
@@ -401,29 +401,29 @@ def test_a_gravity_model_generates_demand_balanced_to_the_ends():
         assert abs(columns[end] - 400) <= 3, (end, columns[end])  # ...and each destination's demand
     assert plan[("1W", "1E")] > plan[("1W", "2E")]  # 1E is straight along 1W's row, 2E a block further
     assert info["total_asked"] == 1200 and abs(info["total_made"] - 1200) <= 5 and "Furness" in info["method"]
-    flat, flat_info = tools.demand_plan(network, pairs, {"demand": "hourly", "distance_decay_per_km": 0})
+    flat, flat_info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "distance_decay_per_km": 0})
     assert abs(flat[("1W", "1E")] - flat[("1W", "2E")]) <= 1  # distance ignored: the same share
-    steep = tools.demand_plan(network, pairs, {"demand": "hourly", "distance_decay_per_km": 3})[1]["mean_trip_km"]
+    steep = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "distance_decay_per_km": 3})[1]["mean_trip_km"]
     target = (steep + flat_info["mean_trip_km"]) / 2  # Hyman: the decay fitted to a mean trip length
-    fitted, info = tools.demand_plan(network, pairs, {"demand": "hourly", "mean_trip_km": target})
+    fitted, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "mean_trip_km": target})
     assert abs(info["mean_trip_km"] - target) < 0.02 and 0 < info["distance_decay_per_km"] < 3 and "Hyman" in info["method"]
-    assert "Hyman" not in tools.demand_plan(network, pairs, {"demand": "hourly", "mean_trip_km": 0})[1]["method"]  # filler
+    assert "Hyman" not in demand_plans.demand_plan(network, pairs, {"demand": "hourly", "mean_trip_km": 0})[1]["method"]  # filler
     for args, message in (({"demand": "hourly", "mean_trip_km": 99}, "mean_trip_km must be"),
                           ({"demand": "hourly", "mean_trip_km": target, "distance_decay_per_km": 1}, "not both")):
         try:
-            tools.demand_plan(network, pairs, args)
+            demand_plans.demand_plan(network, pairs, args)
         except ValueError as exc:
             assert message in str(exc)
         else:
             raise AssertionError(args)
-    daily, info = tools.demand_plan(network, pairs, {"demand": "daily"})
+    daily, info = demand_plans.demand_plan(network, pairs, {"demand": "daily"})
     assert info["total_asked"] == 1200 * 24 and "× 24" in info["note"]
     _flows(network, dict.fromkeys(ends, 0.0), dict.fromkeys(ends, 0.0))
-    equal, info = tools.demand_plan(network, pairs, {"demand": "hourly", "total": 560, "distance_decay_per_km": 0})
+    equal, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "total": 560, "distance_decay_per_km": 0})
     assert len(equal) == 56 and set(equal.values()) == {10}  # a total shared equally: 560 over 56 pairs
     network.approach_roads["1E"].direction = "one-way"  # 1E now only leads out of the network (inner -> end)
     network.reverse_road("1E")  # ...and now only in: nothing can reach it
-    plan, info = tools.demand_plan(network, pairs, {"demand": "hourly", "total": 560})
+    plan, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "total": 560})
     assert not any(d == "1E" for _, d in plan) and "2W->1E" in info["no_route"]
     _flows(network, dict.fromkeys(ends, 0.0), dict.fromkeys(ends, 0.0))
     _flows(network, {"2W": 50}, {"2W": 50})  # flows at one end only: every trip would start and end there
@@ -431,19 +431,19 @@ def test_a_gravity_model_generates_demand_balanced_to_the_ends():
                           ({"demand": "hourly"}, "trips leave only 2W"),
                           ({"demand": "hourly", "mean_trip_km": 1}, "no trip can be made")):
         try:
-            tools.demand_plan(network, pairs, args)
+            demand_plans.demand_plan(network, pairs, args)
         except ValueError as exc:
             assert message in str(exc) and "Nothing was changed" in str(exc), str(exc)
         else:
             raise AssertionError("a plan with no demand should be refused, not applied as an empty matrix")
     _flows(network, dict.fromkeys(ends, 0.0), dict.fromkeys(ends, 0.0))
     try:
-        tools.demand_plan(network, pairs, {"demand": "hourly", "total": 10})  # under 1 a pair
+        demand_plans.demand_plan(network, pairs, {"demand": "hourly", "total": 10})  # under 1 a pair
     except ValueError as exc:
         assert "rounds to 0" in str(exc)
     else:
         raise AssertionError("a total under 1 a pair should be refused")
-    plan, info = tools.demand_plan(network, pairs, {"demand": "hourly", "total": 30})
+    plan, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "total": 30})
     assert plan and info["pairs_rounded_to_0"] > 0  # the pairs a small total leaves at 0 are said, not hidden
 
 
@@ -465,21 +465,21 @@ def test_demand_is_sized_to_a_degree_of_saturation():
     network = generate_network(3, 3)  # signalised junctions
     ends = sorted(network.approach_nodes)
     pairs = [(o, d) for o in ends for d in ends if o != d]
-    busy, info = tools.demand_plan(network, pairs, {"demand": "hourly", "degree_of_saturation": 0.8})
+    busy, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "degree_of_saturation": 0.8})
     assert abs(max(info["degree_of_saturation"].values()) - 0.8) <= 0.02 and info["degree_of_saturation_target"] == 0.8
-    near, info = tools.demand_plan(network, pairs, {"demand": "hourly", "degree_of_saturation": 0.95})
+    near, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "degree_of_saturation": 0.95})
     assert sum(near.values()) > sum(busy.values())  # more saturated: more demand
-    _, info = tools.demand_plan(network, pairs, {"demand": "hourly", "total": 500})
+    _, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "total": 500})
     assert max(info["degree_of_saturation"].values()) < 0.8  # a total reports what it does to the signals too
     peak = [0.02] * 7 + [0.12, 0.1] + [0.64 / 15] * 15  # 07:00 the busiest hour
-    daily, info = tools.demand_plan(network, pairs, {"demand": "daily", "degree_of_saturation": 0.8},
+    daily, info = demand_plans.demand_plan(network, pairs, {"demand": "daily", "degree_of_saturation": 0.8},
                                     shares=dict.fromkeys(pairs, peak))
     assert info["design_hour"] == "07:00-08:00" and abs(max(info["degree_of_saturation"].values()) - 0.8) <= 0.02
     assert abs(sum(daily.values()) * 0.12 - sum(busy.values())) <= 0.02 * sum(busy.values())  # its peak hour = the hourly
     for args, message in (({"demand": "hourly", "degree_of_saturation": 0.8, "total": 100}, "not both"),
                           ({"demand": "hourly", "degree_of_saturation": 3}, "0.1 to 1.2")):
         try:
-            tools.demand_plan(network, pairs, args)
+            demand_plans.demand_plan(network, pairs, args)
         except ValueError as exc:
             assert message in str(exc), (message, str(exc))
         else:
@@ -487,7 +487,7 @@ def test_demand_is_sized_to_a_degree_of_saturation():
     for control in ("roundabout", "uncontrolled"):  # no signals: their entries' capacity sizes it
         for node in network.nodes.values():
             node.control = control
-        _, info = tools.demand_plan(network, pairs, {"demand": "hourly", "degree_of_saturation": 0.8})
+        _, info = demand_plans.demand_plan(network, pairs, {"demand": "hourly", "degree_of_saturation": 0.8})
         assert abs(max(info["degree_of_saturation"].values()) - 0.8) <= 0.02
         assert set(info["junction_controls"].values()) == {control}
 
@@ -497,21 +497,21 @@ def test_demand_already_entered_is_scaled():
     network = generate_network(3, 3)
     values = {("1W", "3E"): 400, ("1N", "1S"): 300, ("2W", "2E"): 200}
     pairs = [("1W", "3E"), ("1N", "1S")]
-    plan, info = tools.scale_plan(network, values, pairs, {"demand": "hourly", "factor": 1.5})
+    plan, info = demand_plans.scale_plan(network, values, pairs, {"demand": "hourly", "factor": 1.5})
     assert plan == {("1W", "3E"): 600, ("1N", "1S"): 450} and info["total_before"] == 700 and info["total_after"] == 1050
-    plan, info = tools.scale_plan(network, values, pairs, {"demand": "hourly", "degree_of_saturation": 0.8})
+    plan, info = demand_plans.scale_plan(network, values, pairs, {"demand": "hourly", "degree_of_saturation": 0.8})
     assert abs(plan[("1W", "3E")] / plan[("1N", "1S")] - 4 / 3) < 0.01 and abs(max(info["degree_of_saturation"].values()) - 0.8) <= 0.02
     assert ("2W", "2E") not in plan  # out of scope: kept, though it still loads the junctions
     for args, message in (({"demand": "hourly"}, "one of them"), ({"demand": "hourly", "factor": 2, "degree_of_saturation": 0.8}, "one of them"),
                           ({"demand": "hourly", "factor": 0}, "0.01 to 100")):
         try:
-            tools.scale_plan(network, values, pairs, args)
+            demand_plans.scale_plan(network, values, pairs, args)
         except ValueError as exc:
             assert message in str(exc), (message, str(exc))
         else:
             raise AssertionError(f"{args} should have been refused")
     try:
-        tools.scale_plan(network, values, [("3E", "1W")], {"demand": "hourly", "factor": 2})
+        demand_plans.scale_plan(network, values, [("3E", "1W")], {"demand": "hourly", "factor": 2})
     except ValueError as exc:
         assert "no hourly demand" in str(exc)
     else:
@@ -545,19 +545,19 @@ def test_institutions_are_deployed_at_random_on_clear_ground():
     before = dict(small.institutions)
     assert "found clear ground" in refused(small, "deploy_institutions", count=50, kinds=["Hospital"], seed=3)
     assert small.institutions == before  # all or nothing
-    lines = tools.describe_changes(generate_network(3, 4), network)
+    lines = tool_reports.describe_changes(generate_network(3, 4), network)
     assert any(line.startswith("Placed institution IN1") for line in lines)
     run(network, "delete_objects", ids=["IN1"])
     assert "IN1" not in network.institutions and run(network, "network_summary")["institutions"] == 5
     args = {"count": 2}
     tools.prepare(network, "deploy_institutions", args)
     assert isinstance(args["seed"], int)  # fixed before the check, so the change approved is the one made
-    assert "at random" in tools.describe_call("deploy_institutions", {"count": 2})
+    assert "at random" in tool_reports.describe_call("deploy_institutions", {"count": 2})
 
 
 def test_each_request_is_offered_the_tools_its_words_point_to():
     def offered(request, used=()):
-        return {spec["name"] for spec in tools.tools_for(request, used)}
+        return {spec["name"] for spec in tool_offer.tools_for(request, used)}
 
     # the requests guided mode got wrong (Research Log, 2026-10-04)
     city = offered("create a nice city replacing the existing grid. Keep some roads, demand should be made with the "
@@ -570,15 +570,15 @@ def test_each_request_is_offered_the_tools_its_words_point_to():
     assert {"diagnose_signal", "junction_los", "run_simulation"} <= offered("why is junction 2,2 so slow?")
     assert "run_experiment" in offered("does a third lane on 2,2-3,2 cut delay?")
     chat = offered("hi")
-    assert chat == set(tools.CORE_TOOLS) and len(chat) < len(tools.TOOLS) // 5
+    assert chat == set(tool_offer.CORE_TOOLS) and len(chat) < len(tool_schemas.TOOLS) // 5
     assert "schedule_emergency" in offered("hi", used={"schedule_emergency"})  # a follow-up keeps them
     assert "optimise_signals" in offered("run optimise_signals")  # a tool named outright
-    have = tools.tools_for("hi")
-    found = tools.expand_tools({"need": "bus stops"}, have)
+    have = tool_offer.tools_for("hi")
+    found = tool_offer.expand_tools({"need": "bus stops"}, have)
     assert {row["name"] for row in found["added"]} >= {"add_bus_stop", "update_bus_stop"}
     assert {"add_bus_stop", "update_bus_stop"} <= {spec["name"] for spec in have}  # now the model can call them
-    assert "Nothing new" in tools.expand_tools({"need": "bus stops"}, have)["note"]
-    assert "error" in tools.expand_tools({}, have)
+    assert "Nothing new" in tool_offer.expand_tools({"need": "bus stops"}, have)["note"]
+    assert "error" in tool_offer.expand_tools({}, have)
     # fewer, smaller specs (the 2026-10-05 stress test): the whole-study tool only for a request with several parts,
     # the demand models only when their words are used, the signal tools not for a junction alone
     assert "build_scenario" in offered("make a 6 by 5 grid, signals everywhere, then run it with busy traffic")
@@ -597,13 +597,13 @@ def test_each_request_is_offered_the_tools_its_words_point_to():
 
 def test_a_request_gets_the_skills_of_its_tools_once():
     from traffic_simulator import assistant
-    skills = tools.skills_for("map out Dhanmondi, Dhaka and add peak traffic")
+    skills = tool_offer.skills_for("map out Dhanmondi, Dhaka and add peak traffic")
     assert skills.startswith("\n\n[Skills]") and "network_from_background" in skills and "degree_of_saturation" in skills
-    assert "run_experiment" not in skills and tools.skills_for("hi") == ""  # only its own groups'
-    assert tools.skills_for("map out Gulshan", seen=skills) == ""  # sent once: it stays in the conversation
+    assert "run_experiment" not in skills and tool_offer.skills_for("hi") == ""  # only its own groups'
+    assert tool_offer.skills_for("map out Gulshan", seen=skills) == ""  # sent once: it stays in the conversation
     assert "network_from_background" not in assistant.TOOLS_NOTE  # not in every request's instructions
-    found = tools.expand_tools({"need": "metro lines"}, tools.tools_for("hi"))
-    assert found["skills"] == [tools.SKILLS["metro"]]  # tools found mid-answer come with how to use them
+    found = tool_offer.expand_tools({"need": "metro lines"}, tool_offer.tools_for("hi"))
+    assert found["skills"] == [tool_offer.SKILLS["metro"]]  # tools found mid-answer come with how to use them
 
 
 def test_a_grid_of_impossible_blocks_is_refused():
@@ -617,14 +617,14 @@ def test_a_grid_of_impossible_blocks_is_refused():
 
 def test_an_invented_tool_is_refused_with_the_nearest_real_ones():
     try:
-        tools.normalise("teleport_vehicles", {})
-    except tools.ToolError as exc:
+        tool_args.normalise("teleport_vehicles", {})
+    except tool_args.ToolError as exc:
         assert "can't do that" in str(exc) and "find_tools" in str(exc)
     else:
         raise AssertionError("an invented tool must be refused")
     try:
-        tools.normalise("list_junction", {})
-    except tools.ToolError as exc:
+        tool_args.normalise("list_junction", {})
+    except tool_args.ToolError as exc:
         assert "Named alike: list_junctions" in str(exc) and "can't do that" in str(exc)  # alike isn't the same
     else:
         raise AssertionError("a misspelt tool must be refused")
@@ -649,47 +649,47 @@ def test_manual_windows_are_set_by_arm_name():
 
 def test_a_signal_method_other_than_the_one_asked_for_is_caught():
     # qwen3.5 4B, asked for SCOOT, thought "SCOOT" and sent scats
-    said = tools.contradicts("set_signal_timing", {"junctions": ["2,2"], "method": "scats"}, "switch every signal to SCOOT")
+    said = tool_offer.contradicts("set_signal_timing", {"junctions": ["2,2"], "method": "scats"}, "switch every signal to SCOOT")
     assert said and "scoot" in said and "'scats'" in said
-    assert tools.contradicts("set_signal_timing", {"method": "scoot"}, "switch every signal to SCOOT") is None
-    assert tools.contradicts("set_signal_timing", {"method": "webster"}, "make the signals better") is None  # none named
-    assert tools.contradicts("set_signal_timing", {"method": "webster"}, "from scoot back to webster") is None
-    assert tools.contradicts("set_signal_timing", {"method": "max_pressure"}, "use max pressure control") is None
-    assert tools.contradicts("generate_grid", {"horizontal": 2, "vertical": 2, "signal_method": "fixed"},
+    assert tool_offer.contradicts("set_signal_timing", {"method": "scoot"}, "switch every signal to SCOOT") is None
+    assert tool_offer.contradicts("set_signal_timing", {"method": "webster"}, "make the signals better") is None  # none named
+    assert tool_offer.contradicts("set_signal_timing", {"method": "webster"}, "from scoot back to webster") is None
+    assert tool_offer.contradicts("set_signal_timing", {"method": "max_pressure"}, "use max pressure control") is None
+    assert tool_offer.contradicts("generate_grid", {"horizontal": 2, "vertical": 2, "signal_method": "fixed"},
                              "a grid with actuated signals")
-    assert tools.contradicts("add_bus_stop", {"road": "1,1-2,1", "direction": "forward"}, "on both sides") is None
+    assert tool_offer.contradicts("add_bus_stop", {"road": "1,1-2,1", "direction": "forward"}, "on both sides") is None
 
 
 def test_an_invented_grid_for_a_named_place_is_caught():
     grid = {"horizontal": 6, "vertical": 5}  # llama3.2 3B, asked for Dhanmondi's roads, placed the map then built this
     asked = "Build the road network of Dhanmondi, Dhaka, Bangladesh by selecting it from the map."
-    assert "network_from_background" in tools.contradicts("generate_grid", grid, asked)
+    assert "network_from_background" in tool_offer.contradicts("generate_grid", grid, asked)
     for fine in ("Build me a 3x2 grid, run it 5 minutes", "Make a grid like the streets of Dhanmondi, Dhaka",
                  "Create a new network with 4 columns and 3 rows"):  # a grid asked for, or no place named
-        assert tools.contradicts("generate_grid", grid, fine) is None, fine
-    assert tools.contradicts("network_from_background", {}, asked) is None
+        assert tool_offer.contradicts("generate_grid", grid, fine) is None, fine
+    assert tool_offer.contradicts("network_from_background", {}, asked) is None
     # a place typed in lower case (qwen3.5 4B built an 8 x 6 grid for "Create a dhanmondi network")
-    assert "network_from_background" in tools.contradicts("generate_grid", grid, "Create a dhanmondi network")
-    assert {"place_map", "network_from_background"} <= {s["name"] for s in tools.tools_for("Create a dhanmondi network")}
+    assert "network_from_background" in tool_offer.contradicts("generate_grid", grid, "Create a dhanmondi network")
+    assert {"place_map", "network_from_background"} <= {s["name"] for s in tool_offer.tools_for("Create a dhanmondi network")}
     for fine in ("make a dense city network", "create a nice network", "widen the main roads", "update all roads"):
-        assert tools.contradicts("generate_grid", grid, fine) is None, fine
+        assert tool_offer.contradicts("generate_grid", grid, fine) is None, fine
     # lanes the user gave go in the build (qwen3.5 4B set them with update_roads after it, in 2 of 3 stress prompts)
     lanes = "Map out Krakow's old town: main roads 2 to 3 lanes each way, side streets single lane."
-    assert "main_lanes [fewest, most]" in tools.contradicts("network_from_background", {}, lanes)
-    assert tools.contradicts("network_from_background", {"main_lanes": [2, 3], "local_lanes": [1, 1]}, lanes) is None
+    assert "main_lanes [fewest, most]" in tool_offer.contradicts("network_from_background", {}, lanes)
+    assert tool_offer.contradicts("network_from_background", {"main_lanes": [2, 3], "local_lanes": [1, 1]}, lanes) is None
     for fine in ("map out Shibuya in Tokyo", "build Gangnam and add a bus lane", "map out X, no lane changing"):
-        assert tools.contradicts("network_from_background", {}, fine) is None, fine
+        assert tool_offer.contradicts("network_from_background", {}, fine) is None, fine
 
 
 def test_an_incident_given_beside_a_runs_arguments_is_that_incident():
     from traffic_simulator import experiments
 
-    assert tools.INCIDENT_FIELDS == experiments.INCIDENT_KEYS  # the same fields, kept in two modules
+    assert tool_args.INCIDENT_FIELDS == experiments.INCIDENT_KEYS  # the same fields, kept in two modules
     args = {"duration_min": 30, "road": "2,2-3,2", "lanes": 1, "at_min": 5, "for_min": 10}  # llama3.2 3B
-    assert "one incident" in tools.fold_incident("run_simulation", args)
+    assert "one incident" in tool_args.fold_incident("run_simulation", args)
     assert args == {"duration_min": 30, "incidents": [{"road": "2,2-3,2", "lanes": 1, "at_min": 5, "for_min": 10}]}
     given = {"duration_min": 30, "incidents": [{"road": "1,1-2,1"}], "lanes": 1}
-    assert tools.fold_incident("run_simulation", given) is None and "lanes" in given  # incidents given: left alone
+    assert tool_args.fold_incident("run_simulation", given) is None and "lanes" in given  # incidents given: left alone
 
 
 def test_ids_are_read_however_a_small_model_lists_them():
@@ -713,15 +713,15 @@ def test_ids_are_read_however_a_small_model_lists_them():
                             ("update_institution", {"id": "IN9"}, "Unknown id 'IN9'")):
         try:
             tools.run_tool(network, name, args)
-        except tools.ToolError as exc:
+        except tool_args.ToolError as exc:
             assert why in str(exc), (name, exc)
         else:
             raise AssertionError((name, args))
     widened = tools.run_tool(network, "update_roads", {"roads": ["1,2", "2,2"], "lanes_per_direction": 3})
     assert widened["read_as"] == {"1,2, 2,2": "1,2-2,2"} and network.road("1,2-2,2").lanes_per_direction == 3
     asked = "Delete road 1,3-2,3"  # llama3.2 3B deleted its two junctions (and every road at them) instead
-    assert "Call again with ids [\"1,3-2,3\"]" in tools.contradicts("delete_objects", {"ids": ["1,3", "2,3"]}, asked)
-    assert tools.contradicts("delete_objects", {"ids": ["1,3", "2,3"]}, "Delete junctions 1,3 and 2,3") is None
+    assert "Call again with ids [\"1,3-2,3\"]" in tool_offer.contradicts("delete_objects", {"ids": ["1,3", "2,3"]}, asked)
+    assert tool_offer.contradicts("delete_objects", {"ids": ["1,3", "2,3"]}, "Delete junctions 1,3 and 2,3") is None
     greens = tools.run_tool(network, "set_signal_timing", {"junctions": ["1,1"], "green_times_s": [25, 35]})
     assert greens["timed"]["1,1"]["method"] == "fixed"  # greens given alone mean a fixed plan
     assert tools.run_tool(network, "generate_grid", {"horizontal": 5, "vertical": 6})["generated"].startswith(
@@ -732,14 +732,14 @@ def test_ends_copied_from_an_example_mean_every_end():
     network = generate_network(2, 2)  # ends 1W, 1E, 1N...; 99W is none of them
     asked = "Set the traffic demand for the peak hour."  # llama3.2 3B sent origins ["1W"] on a network without one
     args = {"origins": ["99W"], "degree_of_saturation": 0.85}
-    note = tools.repair_ends(network, "generate_demand", args, asked)
+    note = tool_args.repair_ends(network, "generate_demand", args, asked)
     assert "every end" in note and args == {"degree_of_saturation": 0.85}
-    assert tools.repair_ends(network, "generate_demand", {"origins": "None", "pairs": "[]"}, asked) is None  # left out, no end
+    assert tool_args.repair_ends(network, "generate_demand", {"origins": "None", "pairs": "[]"}, asked) is None  # left out, no end
     for name, kept, request in (("generate_demand", {"origins": ["99W"]}, "demand from 99W please"),  # the user named it
                                 ("set_od_demand", {"pairs": ["1W->99W"]}, asked),  # one real end: the tool checks it
                                 ("run_simulation", {"origins": ["99W"]}, asked)):  # a tool without ends
         before = dict(kept)
-        assert tools.repair_ends(network, name, kept, request) is None and kept == before, name
+        assert tool_args.repair_ends(network, name, kept, request) is None and kept == before, name
 
 
 def test_a_road_named_from_its_other_end_is_that_road():
@@ -747,26 +747,26 @@ def test_a_road_named_from_its_other_end_is_that_road():
     assert "2,3-2,2" in network.roads and "2,2-2,3" not in network.roads
     done = tools.run_tool(network, "update_roads", {"roads": ["2,2-2,3"], "lanes_per_direction": 3})
     assert done["read_as"] == {"2,2-2,3": "2,3-2,2"} and network.roads["2,3-2,2"].lanes_per_direction == 3
-    assert tools.explain_error("Unknown id '2,2-2,3'.", network)["did_you_mean"][0] == "2,3-2,2"
+    assert tool_reports.explain_error("Unknown id '2,2-2,3'.", network)["did_you_mean"][0] == "2,3-2,2"
     # "add a lane" as people say it (qwen3.5 4B set lanes_per_direction 2, the count the road already had)
     tools.run_tool(network, "update_roads", {"roads": ["2,3-2,2", "1,1-2,1"], "add_lanes": 1})
     assert network.roads["2,3-2,2"].lanes_per_direction == 4 and network.roads["1,1-2,1"].lanes_per_direction == 3
     for bad in ({"add_lanes": -9}, {"add_lanes": 1, "lanes_per_direction": 2}):
         try:
             tools.run_tool(network, "update_roads", {"roads": ["1,1-2,1"], **bad})
-        except tools.ToolError:
+        except tool_args.ToolError:
             assert network.roads["1,1-2,1"].lanes_per_direction == 3
         else:
             raise AssertionError(bad)
     try:  # per-road objects where ids go (qwen3.5 4B did), said plainly; nothing changed
         tools.run_tool(network, "update_roads", {"roads": [{"road": "2,1-3,1", "speed_limit_kmh": 30}]})
-    except tools.ToolError as exc:
+    except tool_args.ToolError as exc:
         assert "not objects" in str(exc) and network.roads["2,1-3,1"].speed_limit_kmh == 50
     else:
         raise AssertionError("objects aren't ids")
     try:
         tools.run_tool(network, "describe", {"id": "9,9-9,8"})
-    except tools.ToolError as exc:
+    except tool_args.ToolError as exc:
         assert "Unknown id" in str(exc)
     else:
         raise AssertionError("no such road either way")
@@ -775,22 +775,22 @@ def test_a_road_named_from_its_other_end_is_that_road():
 def test_lists_sent_as_broken_json_text_are_repaired_or_refused_precisely():
     # qwen3.5 4B sent run_experiment's scenarios as text one } short, then retried blind 7 times on a vague error
     short = '[{"changes":[],"name":"as built"},{"changes":[{"tool":"set_junction_control","args":{"junctions":["2,2"]}}]'
-    found = tools.normalise("run_experiment", {"scenarios": short, "seeds": [1], "duration_min": 5})
+    found = tool_args.normalise("run_experiment", {"scenarios": short, "seeds": [1], "duration_min": 5})
     assert found["scenarios"][1]["changes"][0]["tool"] == "set_junction_control"
-    assert tools.normalise("run_experiment", {"scenarios": '[{"name": "a"},]', "seeds": [1],
+    assert tool_args.normalise("run_experiment", {"scenarios": '[{"name": "a"},]', "seeds": [1],
                                               "duration_min": 5})["scenarios"] == [{"name": "a"}]
     try:
-        tools.normalise("run_experiment", {"scenarios": '[{"name" "a"}]', "seeds": [1], "duration_min": 5})
-    except tools.ToolError as exc:
+        tool_args.normalise("run_experiment", {"scenarios": '[{"name" "a"}]', "seeds": [1], "duration_min": 5})
+    except tool_args.ToolError as exc:
         assert "isn't valid JSON" in str(exc) and "character 9" in str(exc) and "not a string" in str(exc)
     else:
         raise AssertionError("unreadable JSON is refused, saying where")
-    assert tools.normalise("describe", {"id": "2,2"}) == {"id": "2,2"}  # plain text stays text
+    assert tool_args.normalise("describe", {"id": "2,2"}) == {"id": "2,2"}  # plain text stays text
     # a choice misspelt one clear way is that choice (qwen3.5 4B wrote "scot"); an unclear one is refused
-    assert tools.normalise("set_signal_timing", {"junctions": ["2,2"], "method": "scot"})["method"] == "scoot"
+    assert tool_args.normalise("set_signal_timing", {"junctions": ["2,2"], "method": "scot"})["method"] == "scoot"
     try:
-        tools.normalise("set_signal_timing", {"junctions": ["2,2"], "method": "s"})
-    except tools.ToolError as exc:
+        tool_args.normalise("set_signal_timing", {"junctions": ["2,2"], "method": "s"})
+    except tool_args.ToolError as exc:
         assert "must be one of" in str(exc)
     else:
         raise AssertionError("an unclear choice is refused")
@@ -802,7 +802,7 @@ def test_update_roads_sets_and_removes_a_turn_pocket():
                  pocket_length_m=60)
     assert result["updated"][0]["turn_pockets"] == {"2,2": {"lanes": 1, "length_m": 60.0, "side": "offside"}}
     assert any("turn pockets" in line for line in result["changed"])
-    assert "turn pocket at → 2,2" in tools.describe_call("update_roads", {"roads": ["1,2-2,2"], "pocket_junction": "2,2"})
+    assert "turn pocket at → 2,2" in tool_reports.describe_call("update_roads", {"roads": ["1,2-2,2"], "pocket_junction": "2,2"})
     before = network.roads["1,2-2,2"].pockets
     assert "15 to 150 m" in refused(network, "update_roads", roads=["1,2-2,2"], pocket_junction="2,2", pocket_length_m=500)
     assert "not at 1W" in refused(network, "update_roads", roads=["1W"], pocket_junction="1W")
@@ -823,7 +823,7 @@ def test_the_assistant_sets_footpaths_crossings_paths_and_people_walking():
                  {"road": "1,2-1,1", "at_m": 3, "kind": "zebra"}):
         try:
             tools.run_tool(network, "add_crossing", args)
-        except tools.ToolError as exc:
+        except tool_args.ToolError as exc:
             assert "footpaths on both sides" in str(exc) or "at least 20 m" in str(exc), str(exc)
         else:
             raise AssertionError(args)
@@ -840,7 +840,7 @@ def test_the_assistant_sets_footpaths_crossings_paths_and_people_walking():
     assert network.walk_demand == {"2W->1E": 300.0, "1N->1S": 300.0} and len(walking["changed"]) == 2
     try:
         tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["2W->9X"], "people_per_hour": 10})
-    except tools.ToolError as exc:
+    except tool_args.ToolError as exc:
         assert "boundary ends" in str(exc)
     else:
         raise AssertionError("an unknown end")
@@ -850,9 +850,9 @@ def test_the_assistant_sets_footpaths_crossings_paths_and_people_walking():
     assert "pedestrian_crossings" in json.dumps(tools.run_tool(network, "describe", {"id": "1,2-1,1"}))  # its info
     tools.run_tool(network, "delete_objects", {"ids": ["X1", "P1"]})
     assert not network.pedestrian_crossings and not network.walkways
-    offered = {spec["name"] for spec in tools.tools_for("add a zebra crossing for the school's walkers")}
+    offered = {spec["name"] for spec in tool_offer.tools_for("add a zebra crossing for the school's walkers")}
     assert {"add_crossing", "pedestrian_summary", "set_pedestrian_demand"} <= offered
-    assert "add_crossing" not in {spec["name"] for spec in tools.tools_for("hi")}
+    assert "add_crossing" not in {spec["name"] for spec in tool_offer.tools_for("hi")}
 
 
 def test_the_assistant_places_spawn_points_and_walking_between_them():
@@ -864,7 +864,7 @@ def test_the_assistant_places_spawn_points_and_walking_between_them():
     assert network.spawn_demand == {"S1->S2": 200.0} and network.walk_demand == {"1W->3E": 200.0}
     try:
         tools.run_tool(network, "set_pedestrian_demand", {"pairs": ["S1->1W"], "people_per_hour": 10})  # mixed
-    except tools.ToolError as exc:
+    except tool_args.ToolError as exc:
         assert "deploy points" in str(exc)
     else:
         raise AssertionError("a spawn point and a boundary end mixed")
@@ -872,7 +872,7 @@ def test_the_assistant_places_spawn_points_and_walking_between_them():
     assert summary["spawn_points"] == {"S1": [140, 1060], "S2": [850, 180]} and not summary["pairs_nobody_can_walk"]
     tools.run_tool(network, "delete_objects", {"ids": ["S1"]})
     assert list(network.spawn_points) == ["S2"] and not network.spawn_demand
-    assert "add_spawn_points" in {spec["name"] for spec in tools.tools_for("put pedestrian spawn points near the park")}
+    assert "add_spawn_points" in {spec["name"] for spec in tool_offer.tools_for("put pedestrian spawn points near the park")}
 
 
 def test_the_assistant_builds_a_metro_line_sets_its_service_and_demand_and_deletes_it():
@@ -900,9 +900,9 @@ def test_the_assistant_builds_a_metro_line_sets_its_service_and_demand_and_delet
     run(network, "delete_objects", ids=["ML2"])
     assert list(network.metro_lines) == ["ML1"] and network.metro_lines["ML1"].stops == ["M1", "M2", "M3"]
     assert network.metro_demand == {"M1->M3": 2000.0}  # M4's demand went with it
-    offered = {spec["name"] for spec in tools.tools_for("build a metro line from the station to the hospital")}
+    offered = {spec["name"] for spec in tool_offer.tools_for("build a metro line from the station to the hospital")}
     assert {"add_metro_line", "set_metro_demand", "metro_report"} <= offered
-    assert {"add_metro_line", "update_metro_line", "set_metro_demand"} <= tools.SCENARIO_TOOLS
+    assert {"add_metro_line", "update_metro_line", "set_metro_demand"} <= tool_schemas.SCENARIO_TOOLS
 
 
 def test_a_cycle_lane_runs_one_way_and_cycling_requests_are_offered_vehicle_types():
@@ -914,7 +914,7 @@ def test_a_cycle_lane_runs_one_way_and_cycling_requests_are_offered_vehicle_type
     assert road.cycle_lanes == [road.from_node]
     run(network, "update_roads", roads=[road.id], direction="one-way", cycle_lanes="none")
     assert "only run forward" in refused(network, "update_roads", roads=[road.id], cycle_lanes="backward")
-    offered = {spec["name"] for spec in tools.tools_for("add a cycle lane for cyclists on the main road")}
+    offered = {spec["name"] for spec in tool_offer.tools_for("add a cycle lane for cyclists on the main road")}
     assert {"update_roads", "create_vehicle_types"} <= offered
 
 

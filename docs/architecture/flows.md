@@ -1,6 +1,10 @@
 # 5. Main flows
 
 1. **Start:** `launch.bat` (or `python -m traffic_simulator.main`) → `main()`.
+   - `launch.bat` first runs `tools/update.py` (nothing when `ACMS_NO_UPDATE` is set, or offline): a clone pulls
+     fast-forward only; a downloaded folder takes the newest commit's zip (`install_zip`: each file replaced whole,
+     `.acms-version` keeping the commit and the files it shipped, so a file shipped before and gone now is deleted
+     and a file ACMS never shipped is left). Exit code 3: updated and reinstalled, and `launch.bat` starts again.
    - It generates the default grid (`main_layout.py`'s `DEFAULT_*`: 3 × 4 corridors, left-hand, 50 km/h, 2 lanes), builds the
      window and applies the theme.
    - The first undo snapshot is taken.

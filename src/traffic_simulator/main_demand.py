@@ -11,19 +11,27 @@ from itertools import accumulate
 
 from PySide6.QtCore import Qt
 
-from traffic_simulator import network_tools
+from traffic_simulator import demand_plans, metro, tool_args
 from traffic_simulator.demand import od_ends, pair_demand
 from traffic_simulator.institutions import place, run_demand
 from traffic_simulator.lane_graph import Graph
 from traffic_simulator.metro import METRO
 from traffic_simulator.models import institution_problem
-from traffic_simulator.od_matrix import ModeSplitDialog
-from traffic_simulator.simulation import PairDemand
+from traffic_simulator.institution_panel import ModeSplitDialog
+from traffic_simulator.demand import PairDemand
 from traffic_simulator.walking import footpath_join
 
 
 class DemandMixin:
     """The Demand Generator's side of the window."""
+
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_commit', '_demand_kind', '_end_modes_except', '_institution_notes', '_mode_split_dialog',
+             '_network_summary', '_show_hint', '_show_metro_summary', '_show_saved', 'background_panel',
+             'demand_tab', 'grid_toggles', 'institution_panel', 'metro_matrix', 'network', 'od_matrix', 'od_panel',
+             'runner', 'scene', 'select', 'spawn_matrix', 'statusBar', 'tabs', 'vehicle_modes', 'view',
+             'walk_matrix', 'workspace')
 
     def _pair_demand(self) -> list[PairDemand]:
         """Every OD pair with demand of the kind the Demand Generator shows, for a run, and the institutions'
@@ -167,13 +175,13 @@ class DemandMixin:
     def _institution_split(self, args: dict, check_only: bool, who: str = "the assistant") -> dict:
         """institution_mode_split (and the Mode split window's Apply): each institution's logit split
         (network_tools.institution_split), all checked before any is set; one undo step."""
-        wanted = network_tools._ids(args.get("institutions") or []) or list(self.network.institutions)
+        wanted = tool_args._ids(args.get("institutions") or []) or list(self.network.institutions)
         unknown = [name for name in wanted if name not in self.network.institutions]
         if unknown or not wanted:
             raise ValueError(f"No institution called {', '.join(unknown)}." if unknown else
                              "There are no institutions: place one first (place_institution).")
         modes = self.vehicle_modes.modes
-        found = {name: network_tools.institution_split(self.network, self.network.institutions[name], modes, args)
+        found = {name: demand_plans.institution_split(self.network, self.network.institutions[name], modes, args)
                  for name in wanted}
         if check_only:
             return {"ok": True, "preview": "\n".join(
@@ -195,11 +203,11 @@ class DemandMixin:
         if item is None:
             return
         modes = self.vehicle_modes.modes
-        alternatives = [{"mode": "Walk"}, *(network_tools.default_alternative(mode) for mode in modes),
+        alternatives = [{"mode": "Walk"}, *(demand_plans.default_alternative(mode) for mode in modes),
                         *([{"mode": METRO}] if self.network.metro_lines else [])]  # its cost: added to the line's fare
         dialog = ModeSplitDialog(self, f"{item.id} {item.kind}",
-                                 lambda args: network_tools.institution_split(self.network, item, modes, args),
-                                 alternatives, network_tools.LOGIT_DEFAULTS, network_tools.WALK_KMH)
+                                 lambda args: demand_plans.institution_split(self.network, item, modes, args),
+                                 alternatives, demand_plans.LOGIT_DEFAULTS, metro.WALK_KMH)
 
         def apply(args: dict) -> None:
             try:

@@ -6,7 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "acms"
 version = "0.1.0"
 requires-python = ">=3.10"
-dependencies = ["PySide6"]
+# Tested with 6.11; the next major is refused until it is tried. ACMS runs from its folder (pip install -e .): the
+# docs the assistant reads and extensions/ are found beside src/, so a wheel alone is not a working install.
+dependencies = ["PySide6>=6.11,<7"]
 
 [project.scripts]
 acms = "traffic_simulator.main:main"

@@ -16,7 +16,8 @@ from .scene_items import ISOMETRIC_YAW_DEG, VEHICLE_Z, _FaceDrawing, projection_
 from .theme import VEHICLE_INKS, VEHICLE_OUTLINE, VEHICLE_PAINTS, WALKER
 
 
-HEADING_STEP_DEG = 2.0  # raster 2.5D vehicles: drawn at the nearest such heading (within 1°), so their faces are reused
+HEADING_STEP_DEG = 2.0  # 2.5D faces (raster vehicles, people): drawn at the nearest such heading (within 1°), so reused
+WALKER_MIN_PX = 3  # a 2.5D person under this many pixels tall is drawn as the top-down marker
 
 
 @lru_cache(maxsize=2048)
@@ -48,7 +49,7 @@ def _vehicle_faces(skin, colour, length, width, ux, uy, isometric, detail):
 
 @lru_cache(maxsize=256)
 def _pedestrian_faces(ux, uy):
-    """Same metre-scaled person at an exact heading; reuse normals and projection between frames."""
+    """Same metre-scaled person at a heading; reuse normals and projection between frames."""
     lift = projection_lift()
     camera = (-lift.x(), -lift.y(), 1.)
     faces = []
@@ -66,8 +67,9 @@ def _pedestrian_faces(ux, uy):
 
 class VehicleLayer(QGraphicsItem):
     """Every vehicle of a run's latest frame in one item. On the map's OpenGL viewport the scene's
-    gpu.VehicleRenderer draws one instanced batch per appearance, each frame's poses sent to the GPU once;
-    elsewhere (the raster viewport, tests) QPainter draws them grouped by colour. Either way each
+    gpu.VehicleRenderer draws one instanced batch per appearance, each frame's poses sent to the GPU once, and the
+    2.5D people clear of every overbridge with them (`_people`); elsewhere (the raster viewport, tests) QPainter
+    draws them grouped by colour. Either way each
     vehicle is drawn part way (frame_alpha) between its last two simulated poses, so motion stays
     smooth at any frame rate, and zoomed far out they stay visible (dots, or a few pixels)."""
 
@@ -76,11 +78,27 @@ class VehicleLayer(QGraphicsItem):
     def __init__(self, scene: NetworkGraphicsScene) -> None:  # noqa: F821 (network_scene's, named only as a string)
         super().__init__()
         self._scene = scene
+        self._split = (None, 0, (), ())  # _people's last answer: (frame, overbridges, for the GPU, for QPainter)
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemUsesExtendedStyleOption)
         self.setZValue(VEHICLE_Z)
 
     def boundingRect(self) -> QRectF:  # type intentionally inherited from Qt
         return self._scene.sceneRect()
+
+    def _people(self, frame) -> tuple[tuple, tuple]:
+        """A frame's walkers, (for the GPU, for QPainter), worked out once a frame. QPainter keeps those within reach
+        of an overbridge: it draws them raised on the deck, after the bridge (OverbridgeItem.paint), and a GPU
+        instance has no height. With no overbridge every walker is the GPU's, and no display frame loops over them."""
+        bridges = self._scene._overbridges
+        if self._split[0] is not frame or self._split[1] != len(bridges):
+            near, far = [], []
+            for walker in frame.walkers if bridges else ():
+                (x0, y0, *_), on = walker[4], False
+                for item in bridges:
+                    on = on or item.bounds.contains(walker[0], walker[1]) or item.bounds.contains(x0, y0)
+                (near if on else far).append(walker)
+            self._split = (frame, len(bridges), tuple(far) if bridges else frame.walkers, tuple(near))
+        return self._split[2], self._split[3]
 
     def paint(self, painter: QPainter, option, widget=None) -> None:  # type intentionally inherited from Qt
         frame = self._scene.frame
@@ -92,11 +110,17 @@ class VehicleLayer(QGraphicsItem):
         isometric = self._scene.isometric and abs(transform.m12()) + abs(transform.m21()) > 1e-9
         lift = projection_lift() if isometric else None
         exposed = option.exposedRect if option is not None and not option.exposedRect.isEmpty() else None
-        if not frame.vehicles or self._scene.gpu.draw(painter, frame, alpha, self.OUTLINE, lift):
+        pixels_per_metre = QStyleOptionGraphicsItem.levelOfDetailFromTransform(transform)
+        # People big enough to be people (2.5D): the GPU's, but for those near an overbridge
+        people, others = self._people(frame) if isometric and frame.walkers and (
+            pixels_per_metre * asset_mesh.PEDESTRIAN_HEIGHT_M >= WALKER_MIN_PX) else ((), frame.walkers)
+        if (frame.vehicles or people) and self._scene.gpu.draw(painter, frame, alpha, self.OUTLINE, lift, people):
+            self._paint_walkers(painter, frame, alpha, lift, exposed=exposed, walkers=others)
+            return
+        if not frame.vehicles:
             self._paint_walkers(painter, frame, alpha, lift, exposed=exposed)
             return
         groups: dict[str, list] = defaultdict(list)
-        pixels_per_metre = QStyleOptionGraphicsItem.levelOfDetailFromTransform(transform)
         marker_margin = 3 / max(pixels_per_metre, 1e-9) if not isometric else 0.
         for vehicle in frame.vehicles:
             (x0, y0, ux0, uy0), (x1, y1, ux1, uy1) = vehicle.prev, (vehicle.x, vehicle.y, vehicle.ux, vehicle.uy)
@@ -158,17 +182,26 @@ class VehicleLayer(QGraphicsItem):
         self._paint_walkers(painter, frame, alpha, lift, exposed=exposed)
 
     # Also called by scene_items.OverbridgeItem.paint (walkers on a footbridge deck): keep the name and arguments.
-    def _paint_walkers(self, painter: QPainter, frame, alpha: float, lift=None, bridge=None, exposed=None) -> None:
-        """Interpolate the same world poses: 2D markers, metre-scaled people in 2.5D."""
-        if not frame.walkers:
+    def _paint_walkers(self, painter: QPainter, frame, alpha: float, lift=None, bridge=None, exposed=None,
+                       walkers=None) -> None:
+        """Interpolate the same world poses: 2D markers, metre-scaled people in 2.5D. `walkers`: only these of the
+        frame's (the rest are on the GPU); a bridge's are those within its reach."""
+        if walkers is None:
+            walkers = self._people(frame)[1] if bridge is not None and lift is not None else frame.walkers
+        if not walkers:
             return
+        pixels = QStyleOptionGraphicsItem.levelOfDetailFromTransform(painter.worldTransform())
         if exposed is not None:
-            pixels = QStyleOptionGraphicsItem.levelOfDetailFromTransform(painter.worldTransform())
             margin = max(asset_mesh.FOOTBRIDGE_DECK_M + asset_mesh.PEDESTRIAN_HEIGHT_M + 1., 3 / max(pixels, 1e-9))
             exposed = exposed.adjusted(-margin, -margin, margin, margin)
+        if lift is not None and pixels * asset_mesh.PEDESTRIAN_HEIGHT_M < WALKER_MIN_PX:
+            if bridge is not None:
+                return  # too small to be people: the layer's own call marks every walker, a bridge's too
+            lift = None
         if lift is not None:
+            step = radians(HEADING_STEP_DEG)
             poses = []
-            for x1, y1, ux1, uy1, (x0, y0, ux0, uy0) in frame.walkers:
+            for x1, y1, ux1, uy1, (x0, y0, ux0, uy0) in walkers:
                 x, y = x0 + (x1 - x0) * alpha, y0 + (y1 - y0) * alpha
                 if exposed is not None and not exposed.contains(x, y):
                     continue
@@ -176,9 +209,10 @@ class VehicleLayer(QGraphicsItem):
                     (item.height_at(x, y) for item in self._scene._overbridges), default=0.)
                 if (height > 0) != (bridge is not None):
                     continue
-                ux, uy = ux0 + (ux1 - ux0) * alpha, uy0 + (uy1 - uy0) * alpha
-                size = hypot(ux, uy) or 1.
-                poses.append((x, y, ux / size, uy / size, height))
+                # The nearest HEADING_STEP_DEG, as _paint_mesh: roads running every way had more headings than the
+                # faces kept, so every walker's were built again on every display frame
+                heading = round(atan2(uy0 + (uy1 - uy0) * alpha, ux0 + (ux1 - ux0) * alpha) / step) * step
+                poses.append((x, y, round(cos(heading), 9), round(sin(heading), 9), height))
             for x, y, ux, uy, height in sorted(poses, key=lambda p: p[0] + p[1] + p[4]):
                 anchor = QPointF(x, y) + lift * height
                 painter.setPen(Qt.PenStyle.NoPen)
@@ -187,10 +221,9 @@ class VehicleLayer(QGraphicsItem):
                     painter.drawPolygon(polygon.translated(anchor))
             return
         points = [QPointF(x0 + (x1 - x0) * alpha, y0 + (y1 - y0) * alpha)
-                  for x1, y1, _ux, _uy, (x0, y0, _px, _py) in frame.walkers]
+                  for x1, y1, _ux, _uy, (x0, y0, _px, _py) in walkers]
         if exposed is not None:
             points = [point for point in points if exposed.contains(point)]
-        pixels = QStyleOptionGraphicsItem.levelOfDetailFromTransform(painter.worldTransform())
         pen = QPen(QColor(WALKER), 3 if pixels * 0.6 < 3 else 0.6, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap)
         pen.setCosmetic(pixels * 0.6 < 3)
         painter.setPen(pen)

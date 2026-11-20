@@ -16,7 +16,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 from traffic_simulator.background import BackgroundPainter
 from traffic_simulator.activity import ActivityLog
 from traffic_simulator.clock import SimulationClock
-from traffic_simulator import network_tools, results
+from traffic_simulator import network_tools, results, tool_reports
 from traffic_simulator.main_agents import AgentsMixin
 from traffic_simulator.main_assistant import AssistantMixin
 from traffic_simulator.main_create import CreateMixin
@@ -30,11 +30,12 @@ from traffic_simulator.main_metro import MetroMixin
 from traffic_simulator.main_project import TITLE, ProjectMixin
 from traffic_simulator.main_runs import RunsMixin
 from traffic_simulator.main_scenario import ScenarioMixin
-from traffic_simulator.simulation import Runner
+from traffic_simulator.runner import Runner
 from traffic_simulator.history import History
 from traffic_simulator.models import Network
 from traffic_simulator.network_generator import generate_network
-from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
+from traffic_simulator.network_scene import NetworkGraphicsScene
+from traffic_simulator.network_view import NetworkView
 from traffic_simulator.properties_panel import PropertiesPanel
 from traffic_simulator.theme import apply_theme
 
@@ -57,7 +58,9 @@ class MainWindow(RunsMixin, ScenarioMixin, ExperimentsMixin, AgentsMixin, Assist
         )
         self.scene = NetworkGraphicsScene(self.network)
         self.clock = SimulationClock()  # Run / Pause / Play / Stop; the traffic and extensions follow it
-        self.runner: Runner | None = None  # the current run: its physics on its own thread
+        # The current run: its physics in a process of its own (physics_process.ProcessRunner, when no extension
+        # decides in it) or on a thread here (runner.Runner); _runner_for
+        self.runner: Runner | None = None
         self.recorder: results.RunRecorder | None = None  # its results, kept in a temporary folder as it goes
         self._replaced: list = []  # the run's earlier signal overrides (ticking swaps them): their reports are its too
         self.network_path: str | None = None  # the network's file, once saved or loaded (for a run's record)
@@ -84,6 +87,9 @@ class MainWindow(RunsMixin, ScenarioMixin, ExperimentsMixin, AgentsMixin, Assist
         self.results_folder = Path(tempfile.gettempdir()) / "ACMS test results" if offscreen else \
             Path(QStandardPaths.writableLocation(QStandardPaths.StandardLocation.DocumentsLocation)) / "ACMS results"
         self._drawn_at = 0.0  # when the map last drew a frame of the run
+        # A live run's physics in its own process, so a busy run and a busy map don't take turns at one interpreter.
+        # Offscreen (tests) it stays on a thread, where they reach into the run, unless a test turns this on
+        self.physics_process = not offscreen
         self.view = NetworkView(self.scene)
         # The map's background (a colour, an image or OpenStreetMap), drawn behind the scene.
         self.background_painter = BackgroundPainter()
@@ -96,6 +102,15 @@ class MainWindow(RunsMixin, ScenarioMixin, ExperimentsMixin, AgentsMixin, Assist
         self.edge_start: str | None = None
         self.multi_nodes: list[str] = []  # junctions picked with Ctrl+click, in click order
         self.group: list[tuple[str, str]] = []  # a selection box's objects, (kind, id)
+        # The mixins' own plain state, here with the rest: every attribute of the window is first set while it is
+        # built (this method and LayoutMixin's _build_*, _connect_signals), never later by a method that happens to
+        # run first (tests/test_docs.py)
+        self.metro_line: str | None = None  # the line a deployment is extending (MetroMixin)
+        self.node_chain: list[str] = []  # Add Node's nodes placed since it started: not an undo step until it ends
+        self.grid_toggles: list = []  # the map corner's checkable buttons (LayoutMixin._build_ui fills it)
+        self._demand_kind = ""  # the Demand tab last chosen (Institutions shows the buildings when it opens)
+        self._types_key: tuple | None = None  # while the assistant adds types: one undo step for them all
+        self._mode_split_dialog = None  # an institution's Mode split dialog, kept while open (DemandMixin)
         self._build_ui()
         self._build_menu()
         self._build_sim_bar()
@@ -140,7 +155,7 @@ class MainWindow(RunsMixin, ScenarioMixin, ExperimentsMixin, AgentsMixin, Assist
         """While watching: each undo step's changes, a line each (network_tools.state_changes)."""
         if self.activity.on:
             now = self._snapshot()
-            for line in network_tools.state_changes(self._activity_seen, now):
+            for line in tool_reports.state_changes(self._activity_seen, now):
                 self.activity.log("edit", line)
             self._activity_seen = now
 
@@ -170,8 +185,8 @@ class MainWindow(RunsMixin, ScenarioMixin, ExperimentsMixin, AgentsMixin, Assist
         if not self.extensions.wants("log"):
             return
         now = self._snapshot()
-        event["changes"] = network_tools.state_changes(before, now) if before is not None else []
-        if before is not None and network_tools.describe_changes(before[0], now[0], limit=1):
+        event["changes"] = tool_reports.state_changes(before, now) if before is not None else []
+        if before is not None and tool_reports.describe_changes(before[0], now[0], limit=1):
             event["map_png"] = self._map_png()
         if before is not None and before[1] != now[1]:
             event["demand_png"] = self._demand_png()

@@ -18,8 +18,11 @@ from traffic_simulator.mode_behavior import ModeBehaviorPanel, VehicleModes
 from traffic_simulator.models import BUILDING_HEIGHTS_M, Institution, institution_problem
 from traffic_simulator.network_generator import generate_network
 from traffic_simulator.network_io import load_network, project_problem, save_network, saved_project
-from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView, projection_lift, projection_transform
-from traffic_simulator.simulation import Frame, PairDemand, Simulation, VehicleState
+from traffic_simulator.network_scene import NetworkGraphicsScene
+from traffic_simulator.network_view import NetworkView
+from traffic_simulator.scene_items import projection_lift, projection_transform
+from traffic_simulator.simulation import Frame, Simulation, VehicleState
+from traffic_simulator.demand import PairDemand
 from traffic_simulator.theme import VEHICLE_INKS, VEHICLE_PAINTS
 
 APP = QApplication.instance() or QApplication([])
@@ -233,7 +236,7 @@ def compare_samples(hardware=False, capture=None):
                 sample("van", "delivery", 18, 14, length=6.5, width=2.16),
                 sample("sedan", "passenger", 36, 14))
     scene = NetworkGraphicsScene()
-    from traffic_simulator.network_scene import VehicleLayer
+    from traffic_simulator.vehicle_layer import VehicleLayer
     scene.vehicle_layer = VehicleLayer(scene)
     scene.setSceneRect(-100, -100, 300, 300)
     scene.frame = Frame(10, vehicles, {}, 6, 0)
@@ -278,7 +281,7 @@ def test_raster_assets_show_windows_cross_and_bike_details_in_both_views():
 
 
 def compare_random_paint(hardware=False):
-    from traffic_simulator.network_scene import VehicleLayer
+    from traffic_simulator.vehicle_layer import VehicleLayer
     vehicles = tuple(sample(str(i), x=i % 3 * 12, y=i // 3 * 10)._replace(random_colour=True) for i in range(9))
     scene = NetworkGraphicsScene()
     scene.setSceneRect(-100, -100, 300, 300)
@@ -313,7 +316,7 @@ def test_raster_random_paint_reaches_each_vehicle_body_in_both_views():
 
 
 def render_vehicle(vehicle, iso=False, scale=100., hardware=False):
-    from traffic_simulator.network_scene import VehicleLayer
+    from traffic_simulator.vehicle_layer import VehicleLayer
     scene=NetworkGraphicsScene()
     scene.setSceneRect(-100,-100,300,300)
     scene.isometric=iso
@@ -420,13 +423,13 @@ def test_building_heights_are_real_metres_and_roofs_fit_the_requested_total():
     ground=t.map(QPointF(100,100))
     roof=t.map(QPointF(100,100)+projection_lift()*18.)
     from math import cos,radians
-    from traffic_simulator.network_scene import ISOMETRIC_ELEVATION_DEG
+    from traffic_simulator.scene_items import ISOMETRIC_ELEVATION_DEG
     assert abs(ground.x()-roof.x())<1e-9
     assert abs(ground.y()-roof.y()-18*cos(radians(ISOMETRIC_ELEVATION_DEG))*4)<1e-9
 
 
 def test_building_height_changes_only_the_isometric_image_and_keeps_2d_hit_footprint():
-    from traffic_simulator.network_scene import BuildingItem
+    from traffic_simulator.scene_items import BuildingItem
     scene=NetworkGraphicsScene()
     images={}
     for iso in (False,True):
@@ -449,7 +452,7 @@ def test_building_height_changes_only_the_isometric_image_and_keeps_2d_hit_footp
 
 
 def test_placement_height_defaults_are_labelled_assumptions_until_explicitly_set():
-    from traffic_simulator.od_matrix import InstitutionPanel
+    from traffic_simulator.institution_panel import InstitutionPanel
     panel=InstitutionPanel()
     panel.kind_buttons["Hospital"].click()
     assert panel.height.value()==18. and panel.figures()["height_m"] is None
@@ -497,7 +500,7 @@ def test_height_validation_save_and_old_project_defaults_leave_demand_unchanged(
 def test_height_controls_save_undo_and_keep_the_running_clock_camera_and_footprint():
     from traffic_simulator.main import MainWindow
     from traffic_simulator.institutions import place
-    from traffic_simulator.network_scene import BuildingItem
+    from traffic_simulator.scene_items import BuildingItem
     window=MainWindow()
     window._ask_to_save=False
     with TemporaryDirectory() as directory:
@@ -543,7 +546,7 @@ def verify_hardware_geometry(hardware):
 
 
 def verify_hardware_depth(hardware):
-    from traffic_simulator.network_scene import VehicleLayer
+    from traffic_simulator.vehicle_layer import VehicleLayer
     # Two same-style, differently sized meshes exercise the instance order inside one draw call.
     names=[str(i) for i in range(100) if vehicle_assets.style(sample(str(i)))==1][:2]
     a=sample(names[0])._replace(colour=VEHICLE_PAINTS[0])

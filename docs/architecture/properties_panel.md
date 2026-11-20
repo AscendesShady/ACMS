@@ -51,5 +51,5 @@
 
 Every node or road can also use **Drag to Adjust** and **Delete**.
 
-The panel builds on the shared widgets (widgets.md); it still re-exports them for drop-in extensions that import
+The panel builds on the shared widgets (widgets.md); it still re-exports them (the one module that does: `test_docs.py`) for drop-in extensions that import
 them from here.

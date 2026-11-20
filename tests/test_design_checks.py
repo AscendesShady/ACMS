@@ -7,8 +7,8 @@ import subprocess
 import sys
 from math import exp
 
-from traffic_simulator import accessibility, design_checks, network_tools
-from traffic_simulator.mode_behavior import VehicleMode
+from traffic_simulator import accessibility, design_checks, network_tools, road_tools, tool_reports
+from traffic_simulator.vehicle import VehicleMode
 from traffic_simulator.models import Institution
 from traffic_simulator.network_generator import generate_network
 
@@ -52,7 +52,7 @@ def test_the_audit_finds_each_kind_of_problem():
     assert spaced["counts"]["junction_spacing"] > 0 and spaced["findings"]["junction_spacing"][0]["needs_m"] == 250
     # a skewed leg: move a junction so two legs meet at a sharp angle
     skewed = generate_network(2, 2)
-    network_tools.move_junctions(skewed, ["1,2"], 380, 0)
+    road_tools.move_junctions(skewed, ["1,2"], 380, 0)
     assert design_checks.audit(skewed, CARS)["counts"]["skew"] > 0
 
 
@@ -88,24 +88,24 @@ def test_accessibility_counts_what_people_can_reach():
 
 def test_single_points_of_failure_and_area_closures():
     network = generate_network(3, 3)
-    assert network_tools.cut_elements(network)["cut_junctions"] == []  # a grid has none but its edge junctions' own ends
-    first = network_tools.add_junction(network, -300, 900)["added"]
-    network_tools.add_road(network, "1,1", first)
-    second = network_tools.add_junction(network, -600, 900)["added"]
-    network_tools.add_road(network, first, second)
-    found = network_tools.cut_elements(network)
+    assert design_checks.cut_elements(network)["cut_junctions"] == []  # a grid has none but its edge junctions' own ends
+    first = road_tools.add_junction(network, -300, 900)["added"]
+    road_tools.add_road(network, "1,1", first)
+    second = road_tools.add_junction(network, -600, 900)["added"]
+    road_tools.add_road(network, first, second)
+    found = design_checks.cut_elements(network)
     bridges = {row["road"]: row["cuts_off"] for row in found["bridge_roads"]}
     assert bridges == {f"{first}-{second}": [second], f"1,1-{first}": [first, second]}
     joints = {row["junction"]: row["cuts_off"] for row in found["cut_junctions"]}
     assert set(joints) == {"1,1", first} and {first, second} <= set(joints["1,1"])
     flows = {(o, d): 100 for o in network.approach_nodes for d in network.approach_nodes if o != d}
     centre = network.node("2,2")
-    closed = network_tools.critical_links_plan(network, flows, 5, {"x": centre.x, "y": centre.y, "radius_m": 50})
+    closed = design_checks.critical_links_plan(network, flows, 5, {"x": centre.x, "y": centre.y, "radius_m": 50})
     assert set(closed["roads_closed"]) == {"1,2-2,2", "2,2-2,1", "2,2-3,2", "2,3-2,2"} and closed["extra_veh_h_per_h"] > 0
     for bad, reason in (({"x": 0}, "area is"), ({"x": 0, "y": 0, "radius_m": 5}, "10 to 5000"),
                         ({"x": 1e6, "y": 1e6, "radius_m": 100}, "No road touches")):
         try:
-            network_tools.critical_links_plan(network, flows, 5, bad)
+            design_checks.critical_links_plan(network, flows, 5, bad)
         except ValueError as exc:
             assert reason in str(exc), (bad, exc)
         else:
@@ -114,12 +114,12 @@ def test_single_points_of_failure_and_area_closures():
 
 def test_refusals_come_back_as_data_with_a_fix():
     network = generate_network(3, 3)
-    unknown = network_tools.explain_error("No road called '1,1-2,2'.", network)
+    unknown = tool_reports.explain_error("No road called '1,1-2,2'.", network)
     assert unknown["error_type"] == "unknown_id" and "1,2-2,2" in unknown["did_you_mean"]
-    assert network_tools.explain_error("No route from 1W to 1E.")["error_type"] == "unroutable"
-    assert network_tools.explain_error("A run is going on: stop it first.")["error_type"] == "busy"
-    assert network_tools.explain_error("duration_min must be 1 to 240.")["error_type"] == "bad_argument"
-    other = network_tools.explain_error("Something odd.")
+    assert tool_reports.explain_error("No route from 1W to 1E.")["error_type"] == "unroutable"
+    assert tool_reports.explain_error("A run is going on: stop it first.")["error_type"] == "busy"
+    assert tool_reports.explain_error("duration_min must be 1 to 240.")["error_type"] == "bad_argument"
+    other = tool_reports.explain_error("Something odd.")
     assert other == {"error": "Something odd.", "error_type": "refused", "suggested_fix": other["suggested_fix"]}
 
 

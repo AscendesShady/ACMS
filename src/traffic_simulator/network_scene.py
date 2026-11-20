@@ -40,13 +40,11 @@ from .theme import (ACCENT_EDGE, CYCLE_LANE, DANGER, DETECTOR, ENTRY_MARKER, FOO
                     MARKER_EDGE, MINI_ISLAND, PARAPET, PAVING_SELECTED, ROAD_PAINT, ROAD_SURFACE,
                     STOP_LINE, WALKER, METRO_LINE, STATUS, TEXT,
                     YELLOW_PAINT, ZEBRA_STRIPE)
-# The standalone map items and the projection now live in scene_items; some names are only re-exported here.
-from .scene_items import (  # noqa: F401
-    CLOCK_OFFSET_M, ISOMETRIC_ELEVATION_DEG, ISOMETRIC_YAW_DEG, METRO_STOP_RADIUS_M, SELECTED_COLOR, SIGNAL_AMBER,
-    SIGNAL_BODY, SIGNAL_GREEN, SIGNAL_RED, SIGNAL_RIM, VEHICLE_Z, BuildingItem, MetroItem, OverbridgeItem, PavingItem,
-    Points, SignalClock, _FaceDrawing, _path, _screen_pen, projection_lift, projection_transform)
-from .vehicle_layer import VehicleLayer, _vehicle_faces  # noqa: F401 (_vehicle_faces re-exported: the same cache)
-from .network_view import NetworkView  # noqa: F401 (re-exported)
+# The standalone map items and the projection live in scene_items: import them from there.
+from .scene_items import (CLOCK_OFFSET_M, METRO_STOP_RADIUS_M, SELECTED_COLOR, SIGNAL_AMBER, SIGNAL_BODY,
+                          SIGNAL_GREEN, SIGNAL_RED, SIGNAL_RIM, VEHICLE_Z, BuildingItem, MetroItem, OverbridgeItem,
+                          PavingItem, Points, SignalClock, _path, _screen_pen, projection_lift)
+from .vehicle_layer import VehicleLayer
 
 
 # Everything physical is drawn to scale in metres. Only labels and selection

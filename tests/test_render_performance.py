@@ -9,8 +9,10 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QGraphicsRectItem, QStyleOptionGraphicsItem
 from traffic_simulator import asset_mesh, vehicle_assets
 from traffic_simulator.models import Institution
-from traffic_simulator.network_scene import (BuildingItem, NetworkGraphicsScene, NetworkView, VehicleLayer,
-                                             _FaceDrawing, _vehicle_faces, projection_lift, projection_transform)
+from traffic_simulator.network_scene import NetworkGraphicsScene
+from traffic_simulator.network_view import NetworkView
+from traffic_simulator.scene_items import BuildingItem, _FaceDrawing, projection_lift, projection_transform
+from traffic_simulator.vehicle_layer import VehicleLayer, _vehicle_faces
 from traffic_simulator.network_generator import generate_network
 from traffic_simulator.simulation import Frame, VehicleState
 
@@ -24,7 +26,7 @@ def test_pan_reuses_building_and_vehicle_faces_at_new_positions_and_zoom():
     image = QImage(400, 400, QImage.Format.Format_RGB32)
     painter = QPainter(image)
     try:
-        painter.setWorldTransform(projection_transform(True, 2.))
+        painter.setWorldTransform(projection_transform(True, 4.))  # people are people from 3 pixels tall
         building.paint(painter, None)
         VehicleLayer._paint_mesh(painter, 6, "#aa3322", 10., 10., 1., 0., 1.6, .65,
                                  projection_lift())
@@ -36,7 +38,7 @@ def test_pan_reuses_building_and_vehicle_faces_at_new_positions_and_zoom():
             raise AssertionError("Panning/zooming rebuilt unchanged mesh normals")
         asset_mesh.normal = repeated_work
         try:
-            painter.setWorldTransform(projection_transform(True, 3.))
+            painter.setWorldTransform(projection_transform(True, 6.))
             building.paint(painter, None)
             VehicleLayer._paint_mesh(painter, 6, "#aa3322", 15., 20., 1., 0., 1.6, .65,
                                      projection_lift())
@@ -143,6 +145,83 @@ def test_a_frame_at_any_headings_reuses_the_faces_in_2d_and_25d():
     covered = [{(x, y) for x in range(0, 400) for y in range(0, 400) if image.pixelColor(x, y) != QColor("#123456")}
                for image in (turned, exact)]
     assert covered[1] and len(covered[0] ^ covered[1]) < 0.03 * len(covered[1])
+
+
+def test_people_at_any_headings_reuse_their_faces_and_are_markers_when_too_small():
+    # Without a GPU: 2.5D people were kept by exact heading (256 of them), so on roads running every way every
+    # walker's faces were built again on every display frame (0.37 ms a walker, against 0.17).
+    from math import cos, radians, sin
+
+    from traffic_simulator.vehicle_layer import WALKER_MIN_PX, _pedestrian_faces
+
+    def walker(i):
+        ux, uy = cos(radians(i * 0.9)), sin(radians(i * 0.9))  # 400 headings, none the same
+        return (i % 20 * 3., i // 20 * 3., ux, uy, (i % 20 * 3. - ux, i // 20 * 3. - uy, ux, uy))
+
+    def painted(scale):
+        image = QImage(600, 400, QImage.Format.Format_RGB32)
+        image.fill(QColor("#123456"))
+        painter = QPainter(image)
+        painter.setWorldTransform(projection_transform(True, scale))
+        painter.translate(40., 60.)
+        VehicleLayer(scene).paint(painter, None)
+        painter.end()
+        return image
+
+    scene = NetworkGraphicsScene()
+    scene.setSceneRect(-50, -50, 200, 200)
+    scene.isometric, scene.frame_alpha = True, .5
+    scene.frame = Frame(1., (), {}, 0, 0, walkers=tuple(walker(i) for i in range(400)))
+    _pedestrian_faces.cache_clear()
+    people = painted(6.)
+    built = _pedestrian_faces.cache_info().misses
+    assert 0 < built <= 181, built  # a heading every 2 degrees, not one a walker
+    painted(6.)
+    assert _pedestrian_faces.cache_info().misses == built  # the next frame builds none
+    calls = _pedestrian_faces.cache_info()
+    tiny = painted((WALKER_MIN_PX - 1) / asset_mesh.PEDESTRIAN_HEIGHT_M)  # under WALKER_MIN_PX tall: markers
+    assert _pedestrian_faces.cache_info() == calls  # no person drawn
+    blank = QColor("#123456")
+    for image in (people, tiny):  # ...yet every walker still shows
+        assert any(image.pixelColor(x, y) != blank for x in range(0, 600, 2) for y in range(0, 400, 2))
+
+
+def test_signal_clocks_replay_one_kept_drawing_a_reading_and_vanish_when_too_small_to_read():
+    # Each clock was drawn rectangle by rectangle from Python on every display frame: 400 of them (a 10 x 10 grid)
+    # took 27 ms a frame. A reading's drawing is compiled once and replayed, with the same pixels.
+    from traffic_simulator.scene_items import CLOCK_DIGIT_H, CLOCK_MIN_PX, SignalClock, _clock_face, _draw_clock
+
+    class Owner:
+        isometric = False
+
+    def image_of(draw, scale):
+        image = QImage(160, 120, QImage.Format.Format_ARGB32_Premultiplied)
+        image.fill(0)
+        painter = QPainter(image)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.translate(80, 60)
+        painter.scale(scale, scale)
+        draw(painter)
+        painter.end()
+        return image
+
+    def gap(a, b):  # the widest channel difference, of 255 (a replayed picture rounds a blended colour by 1-3)
+        return max(abs(i - j) for x in range(a.width()) for y in range(a.height())
+                   for i, j in zip(a.pixelColor(x, y).getRgb(), b.pixelColor(x, y).getRgb()))
+
+    clock = SignalClock(Owner(), 0., 0.)
+    assert image_of(lambda p: clock.paint(p, None), 40) == image_of(lambda p: None, 40)  # blank while nothing runs
+    for reading in ((7, "G"), (42, "R"), (1234, "Y")):
+        clock.set_reading(reading)
+        digits = str(min(reading[0], 999))
+        shown = image_of(lambda p: clock.paint(p, None), 40)
+        assert gap(shown, image_of(lambda p: _draw_clock(p, digits, reading[1]), 40)) <= 4  # as command by command
+        assert shown != image_of(lambda p: None, 40)
+        assert _clock_face(digits, reading[1]) is _clock_face(digits, reading[1])  # kept
+        assert _clock_face(digits, reading[1]).picture is not None
+    small = (CLOCK_MIN_PX - 0.5) / CLOCK_DIGIT_H  # pixels a metre at which the digits fall under CLOCK_MIN_PX
+    assert image_of(lambda p: clock.paint(p, None), small) == image_of(lambda p: None, small)
+    assert image_of(lambda p: clock.paint(p, None), 2 * small) != image_of(lambda p: None, 2 * small)
 
 
 def test_topdown_culling_keeps_small_markers_that_extend_into_the_view():

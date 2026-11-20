@@ -2,8 +2,9 @@
 (src/traffic_simulator/transit_signal_priority.py), gated by one TRUE/FALSE per bus request from
 the agent (src/traffic_simulator/agent_transit_signal_priority.py). Nothing agent-side lives here:
 its panel says who decides (agent_choice.py): System 1 or System 2 and which of its models, or Multiple, for
-Batch Run: the models it tests, each against the baselines (Never, Always preempt), and how (Decide within, Pace,
-Runs at once, Times each: batch_settings(), which Batch Run reads). A live run asks the System chosen last.
+Batch Run: the models it tests, each against the default configuration, and each answer's deadline (Decide
+within: batch_settings(), which Batch Run reads; pace, runs at once and times each are Batch Run's own). A live run
+asks the System chosen last.
 
 Ticked, signal_override() runs inside every signal, for each arm of each signalised junction,
 every simulation step (0.5 s), whatever the junction's timing method (but manual windows: such a junction shows its
@@ -295,10 +296,10 @@ def panel():
 
 
 def batch_settings() -> dict:
-    """What Batch Run tests TSP with (AgentChoice.batch_settings): the deadline, pace, runs at once, times each and
-    the models, or the System whose model the window finds."""
+    """What Batch Run tests TSP with (AgentChoice.batch_settings): the deadline and the models, or the System whose
+    model the window finds."""
     if _choice is None:
-        return {"system": tsp_agent.system, "deadline_s": 30, "speed": 1, "at_once": 4, "times": 1}
+        return {"system": tsp_agent.system, "deadline_s": 30}
     return _choice.batch_settings()
 
 
@@ -439,7 +440,7 @@ def report(agent) -> dict:
     holds = sum(found.count("HOLD") for found in events.values())
     truncations = sum(found.count("TRUNCATE") for found in events.values())
     answered = [row for row in rows if row["answer"] is not None and not row["fell_back"] and not row["late"]
-                and not (row.get("no_agent") and not row["answer"])]  # Never preempt's rows aren't decisions
+                and not (row.get("no_agent") and not row["answer"])]  # nobody to ask, the plan: no decisions
     activated = sum(row["answer"] is True for row in answered)
     latency = _stats([row["latency_s"] for row in rows])
     delay = _stats([row["answered_s"] - row["asked_s"] for row in answered])
@@ -577,7 +578,7 @@ OUTCOMES = {"served": "TRUE, and the controller held the bus's green or brought 
             "blocked": "TRUE, but the bus's exit lane had no room: refused, nothing could get it through",
             "not feasible": "TRUE, but no extension or early green could serve it in time",
             "refused": "FALSE: the plan",
-            "no LLM": "nobody to ask (Never preempt, the baseline): the plan",
+            "no LLM": "nobody to ask: the plan",
             "rejected": "the answer wasn't a decision (the guard): the plan",
             "fell back": "no answer within the deadline, or an error: the plan",
             "too late": "the answer reached the controller after the bus had gone",
@@ -589,7 +590,7 @@ def outcome(row: dict, log: list) -> str:
     """What came of a request (OUTCOMES), from the agent's answer and what its junction's controller logged for
     its phase between the request and its release."""
     if row.get("no_agent") and not row["answer"]:
-        return "no LLM"  # Never preempt: the plan; Always preempt goes on to what the controllers did
+        return "no LLM"  # nobody to ask, the plan; a TRUE rule goes on to what the controllers did
     if row["withdrawn"]:
         return "withdrawn"
     if str(row.get("guard") or "").startswith("rejected"):

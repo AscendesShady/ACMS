@@ -7,7 +7,7 @@ object's items (`addItem`), so `_redraw(keys)` can draw some again alone, each i
 order (`stackBefore`), the rest untouched. A rebuild also ends a selection box being dragged (its band went with the
 items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLOW_PAINT`, `MAP_SELECTED`, ...).
 `scene_items.py` holds the standalone items (`PavingItem`, `MetroItem`, `SignalClock`, `OverbridgeItem`,
-`BuildingItem`, `_FaceDrawing`) and `projection_transform`/`projection_lift`; `network_scene` re-exports them.
+`BuildingItem`, `_FaceDrawing`) and `projection_transform`/`projection_lift` (imported from `scene_items`, not through `network_scene`).
 `vehicle_layer.py` holds `VehicleLayer`, `_vehicle_faces`, `_pedestrian_faces` and `HEADING_STEP_DEG`.
 `network_view.py` holds `NetworkView` (pan, zoom, keys, OpenGL viewport), `RIGHT_CLICK_PX` and the bus stop nudges.
 - **Roads:** a path the carriageway's width wide.
@@ -31,7 +31,11 @@ items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLO
     ("crossing", id), outlined yellow when selected. `OverbridgeItem` keeps the flat 2D footprint; 2.5D adds a
     6 m deck (assumed), parapets, supports and stairs. Picking and Fit bounds include its projected extrusion.
     Walkers (`VehicleLayer._paint_walkers`, `Frame.walkers`): yellow (`theme.WALKER`) discs 0.6 m across, at least
-    3 pixels in 2D; in 2.5D they are metre-scaled 1.75 m people. Both interpolate the same two published poses,
+    3 pixels in 2D; in 2.5D they are metre-scaled 1.75 m people and, under `WALKER_MIN_PX` (3 pixels) tall, the
+    2D marker. On the OpenGL viewport the people clear of every overbridge are one instanced batch on the GPU
+    (`VehicleLayer._people`, `gpu.md`); the rest, and all of them on the raster viewport, are QPainter's
+    (`_pedestrian_faces`, the heading taken to the nearest `HEADING_STEP_DEG` as the raster vehicles' is, so roads
+    running every way reuse 180 drawings). Both interpolate the same two published poses,
     after vehicles on either render path. Poses within an overbridge corridor are drawn at its deck height,
     ramping at its ends, after the bridge. This is display inference from XY: frames do not carry route identity
     or a stair trajectory, so coincident ground paths remain ambiguous. Road/walking motion and timings are untouched.
@@ -55,10 +59,13 @@ items). Colours are `theme` tokens (`GRASS`, `ROAD_SURFACE`, `LANE_LINE`, `YELLO
     red. Just upstream of each, its phase letter (screen-sized, `lane_graph.phase_letters`: A goes first; two
     phases AA BB by the junction's own roads, four A B C D round it, manual arms sharing a window one letter), the
     names the timing editor uses. Editing a junction's phases, method or windows draws it again
-    (`main._signal_edited`).
+    (`main_edit._signal_edited`).
     Beside each, off the kerb, a `SignalClock` (`signal_clocks`, `show_clocks`): a seven-segment countdown of the
     whole seconds to its next change (`Frame.countdowns`) in the signal's colour, blank while nothing runs. It is
     painted upright on screen at map scale (it grows with zoom), above the traffic; in 2.5D on a 2.5 m pole.
+    A reading's housing and digits are compiled once (`_clock_face`, a `_FaceDrawing` of `_draw_clock`'s
+    commands, 512 readings kept) and replayed in Qt, and a clock whose digits would be under `CLOCK_MIN_PX`
+    (3 pixels) tall is not drawn: 400 clocks drawn from Python took 27 ms of every display frame.
   - An adaptive signal's loop detectors are outlined on each arriving lane where the simulation reads
     them (`_draw_detectors`): SCATS's over the last 4.5 m before the stop line, SCOOT's 2 m long, 15 m
     after the road's upstream end (a third of the lane on short roads).

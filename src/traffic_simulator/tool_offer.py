@@ -1,7 +1,7 @@
 """Which assistant tools and skills a request is offered (no Qt).
 
 The keyword groups, the SKILLS texts, place-name detection, tools_for, find_tools (expand_tools) and the contradicts
-check; moved out of network_tools.py, which re-exports them, so tuning what is offered can't touch the tools.
+check, apart from the tools themselves, so tuning what is offered can't touch them.
 """
 
 from __future__ import annotations
@@ -75,7 +75,7 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
     "transit": (r"\bbus(?:es)?\b|bus stop|\bstops?\b|transit|passenger|vehicle type|truck|lorry|bike|bicycle|taxi|van\b|fleet|headway|tram",
                 ("add_bus_stop", "update_bus_stop", "list_vehicle_types", "create_vehicle_types",
                  "update_vehicle_type")),
-    "extensions": (r"extension|\btsp\b|priority|devl|emergenc|ambulance|fire|police|batch|replay|agent|decision|"
+    "extensions": (r"extension|\btsp\b|priority|devl|dbl|bus lane|emergenc|ambulance|fire|police|batch|replay|agent|decision|"
                    r"dispatch|research log|complian|sensitiv",
                    ("read_extensions", "set_extension", "schedule_emergency", "start_batch", "replay_run",
                     "test_agent_compliance", "read_decisions", "decision_sensitivity")),

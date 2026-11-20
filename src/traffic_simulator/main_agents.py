@@ -1,6 +1,6 @@
 """MainWindow's agents: who decides the signals. Asking the chosen model (_ask_agent), testing agents (compliance,
 decision sensitivity) and the window side of the agent extensions (Batch Run, replay, Dispatch Emergency Vehicle,
-TSP/DEVL settings). Cut out of main.py's MainWindow as a plain mixin: a file to work in, not a decoupled module. Its
+the controllers' settings: TSP, DEVL, DBL). Cut out of main.py's MainWindow as a plain mixin: a file to work in, not a decoupled module. Its
 state is made in MainWindow.__init__, and it calls the rest of the window through self (_pair_demand, _snapshot,
 _research_step, _one_run, _quick_run, _in_background ...)."""
 
@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import itertools
 import threading
 import time
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait as wait_for
@@ -16,7 +17,7 @@ from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 
-from traffic_simulator import analysis, assistant, experiments, network_tools, results, run_reports
+from traffic_simulator import analysis, assistant, experiments, results, run_reports, tool_args
 from traffic_simulator.lane_graph import Graph
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
 from traffic_simulator.xlsx import read_xlsx
@@ -24,20 +25,37 @@ from traffic_simulator.xlsx import read_xlsx
 
 MAX_AT_ONCE = 8  # a batch's runs going at once, at most (TSP keeps the state of twice as many)
 HEADLESS_WAIT_S = 30.0  # a headless test's deadline for each agent answer (Batch Run sets its own): missed, the plan
+# The AI controllers Batch Run tests, in its order: kind -> (extension file stem, full name)
+CONTROLLERS = {"TSP": ("transit_signal_priority", "Transit Signal Priority"),
+               "DBL": ("dynamic_bus_lane", "Dynamic Bus Lane"),
+               "DEVL": ("dynamic_emergency_lane", "Dynamic Emergency Vehicle Lane")}
+# The batch's one baseline: the network as configured, no controller acting (its signal plans: Webster's from the
+# demand, or timings entered from a survey, set where the network is made)
+DEFAULT = {"label": "Default configuration", "system": "", "provider": "", "model": "", "name": "default",
+           "parts": {}, "servers": set()}
 
 
 class AgentsMixin:
     """Who decides the signals: the model asked, agent tests, and the agent extensions' window side."""
 
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_headless_seconds', '_in_background', '_one_run', '_pair_demand', '_pooled', '_quick_run',
+             '_refresh_summary', '_research_step', '_run_settings', '_snapshot', '_testing', 'ai_mode', 'extensions',
+             'network', 'od_matrix', 'results_folder', 'runner', 'tests', 'vehicle_modes')
+
     def _compliance(self, args: dict, check_only: bool) -> dict:
-        """test_agent_compliance: the extension (TSP or DEVL), decided as its tab says (its model), run headless on a
+        """test_agent_compliance: the extension (TSP, DEVL or DBL), decided as its tab says (its model), run headless on a
         fixed battery of conditions (the network as it is, 30 % more demand, heavy rain, a lane closed on the busiest
         road) and seeds, each run checked against the invariants (analysis.invariants); with DEVL, emergency vehicles
-        sent across the network every 4 minutes. The pass rate, and each failure with its evidence."""
+        sent across the network every 4 minutes; DBL needs buses in the demand. The pass rate, and each failure with
+        its evidence."""
         name = str(args.get("extension") or "")
         extension = self.extensions.find(name)  # ValueError: names the extensions
-        if extension.path.stem not in ("transit_signal_priority", "dynamic_emergency_lane"):
-            raise ValueError("extension is TSP or DEVL (the ones whose agent decides the signals).")
+        if extension.path.stem not in [stem for stem, _name in CONTROLLERS.values()]:
+            raise ValueError("extension is TSP, DEVL or DBL (the ones whose agent decides the signals).")
+        if extension.path.stem == "dynamic_bus_lane" and not self._has_buses():
+            raise ValueError("DBL clears a lane for buses, and no vehicle type is a bus: add one to the demand first.")
         seeds = experiments.seeds_from(args.get("seeds") or [1, 2])
         duration = float(args.get("duration_min") or 10)
         if not 1 <= len(seeds) <= 5 or not 3 <= duration <= 60:
@@ -81,7 +99,8 @@ class AgentsMixin:
                                            dispatches=dispatches, incidents=incidents, weather=weather)
                     reported = {k: v for r in self.extensions.reports(override) for k, v in r.get("measures", {}).items()}
                     found.append({"condition": label, "seed": seed, "broken": analysis.invariants(kpis, reported),
-                                  "decisions": reported.get("tsp_requests") or reported.get("devl_requests")})
+                                  "decisions": reported.get("tsp_requests") or reported.get("devl_requests")
+                                                 or reported.get("dbl_requests")})
             return found
 
         runs = self._in_background(work, f"Testing {extension.name}")
@@ -96,7 +115,7 @@ class AgentsMixin:
                 "note": "A fixed battery, the same for every model: compare pass rates before a long batch. With nobody "
                         "deciding (a baseline's rule) the extension's own rule runs."}
 
-    SENSITIVITY = ("no_passengers", "exit_full", "no_cross_queues", "arrives_on_green", "no_estimate")
+    SENSITIVITY = ("no_passengers", "exit_full", "no_cross_queues", "arrives_on_green", "no_estimate", "route_blocked")
 
     def _decision_sensitivity(self, args: dict, check_only: bool) -> dict:
         """decision_sensitivity: TSP decisions of a run re-asked with one fact of their telemetry changed at a time
@@ -109,7 +128,7 @@ class AgentsMixin:
                 and isinstance(row.get("Telemetry read"), str) and row.get("System")]
         if not rows:
             raise ValueError("That run has no TSP decisions with their telemetry: tick TSP, run_simulation, then try.")
-        changes = network_tools._ids(args.get("perturbations") or list(self.SENSITIVITY))
+        changes = tool_args._ids(args.get("perturbations") or list(self.SENSITIVITY))
         unknown = [change for change in changes if change not in self.SENSITIVITY]
         if unknown:
             raise ValueError(f"perturbations are some of {', '.join(self.SENSITIVITY)}.")
@@ -273,19 +292,19 @@ class AgentsMixin:
         if not check_only:
             self.runner.simulation.dispatch(origin, destination, float(every_min) * 60, float(after_s))
 
-    def tsp_batch(self) -> dict:
-        """The TSP tab's settings for Batch Run (_agent_plan)."""
-        return self._agent_plan(self._tsp(), "TSP", "Transit Signal Priority")
+    def controller_plan(self, kind: str) -> dict:
+        """A controller's tab settings for Batch Run (_agent_plan): `kind` one of CONTROLLERS (TSP, DEVL, DBL)."""
+        stem, name = CONTROLLERS[kind]
+        return self._agent_plan(self._extension(stem), kind, name)
 
-    def devl_batch(self) -> dict:
-        """The DEVL tab's settings for Batch Run (_agent_plan)."""
-        return self._agent_plan(self._extension("dynamic_emergency_lane"), "DEVL", "Dynamic Emergency Vehicle Lane")
+    def _has_buses(self) -> bool:
+        """Whether any vehicle type is a bus (what TSP and DBL act for)."""
+        return any(getattr(mode, "vehicle_class", mode.name.lower()) == "bus" for mode in self.vehicle_modes.modes)
 
     def _agent_plan(self, extension, short: str, name: str) -> dict:
         """An extension's who-decides settings for Batch Run (its batch_settings(), agent_choice.py): the models
         picked (Multiple's, or System 1's or 2's), else the model on in AI Mode for its System, as agents (labels of
-        agent_options) with their servers; its deadline, pace, runs at once and times each. None of them: no agents,
-        and the batch runs the two baselines alone (Never and Always preempt)."""
+        agent_options) with their servers, and its deadline. None of them: no agents (run_batch refuses to test it)."""
         if extension is None:
             raise ValueError(f"The {name} extension didn't load: see the Extensions tab.")
         settings = dict(extension.module.batch_settings())
@@ -317,28 +336,35 @@ class AgentsMixin:
             "no-llm", "TSP asks System 2, but no model is started in AI Mode's System 2: every bus request falls back "
                       "to the plan.")
 
-    def run_batch(self, seeds: list[int], minutes: float, times: int = 1, agents: list[str] | None = None,
-                  deadline_s: float = 30.0, speed: float = 1.0, at_once: int = 4, test_tsp: bool | None = None,
-                  test_devl: bool = False, devl_agents: list[str] | None = None, devl_deadline_s: float = 30.0) -> dict:
+    def run_batch(self, seeds: list[int], minutes: float, times: int = 1, tests: dict | None = None,
+                  speed: float = 1.0, at_once: int = 4, default: bool = True) -> dict:
         """Batch Run's Start: every seed x agent x time, headless (Stop ends it), each run saving its workbook (named
         by its seed and model) and its telemetry feed in a folder of the batch's, then the batch's workbook
-        comparing each agent with the first (experiments.batch_workbook). `test_tsp` (Batch Run's Test TSP; None:
-        whether TSP is ticked) runs TSP, ticked or not: `agents` are labels of AIModePanel.agent_options(), the
-        models to test, and the two baselines (Never preempt, the plan, general traffic; Always preempt) always run too, first, so each model is
-        compared with it seed by seed. Each run keeps in step with the wall clock at
-        `speed`, never pausing: its own agent answers in the background, and a request not answered within
-        `deadline_s` simulated seconds falls back to the plan. Up to `at_once` runs go side by side, but never two
-        on one model server (a provider: Ollama, Jev...), so no run's answers wait behind another's; each
-        records the pace it achieved. Without TSP the runs are plain, one at a time as fast as the CPU allows.
-        `test_devl` (Batch Run's Test DEVL): each run dispatches the Dispatch Emergency Vehicle tab's fleet at its
-        start and its workbook gets an Emergency vehicles sheet (each trip, and how long each Dynamic Emergency
-        Vehicle Lane signal was on); `devl_agents` decide its lane signals (each against the baselines, Never and Always
-        preempt), each answer within `devl_deadline_s`. With both, every TSP agent runs with every DEVL agent. The runs
-        are paced only where a model answers (a baseline never: as fast as the CPU allows). Everything is checked first: ValueError says what can't run."""
+        comparing each agent with the first (experiments.batch_workbook). `tests` maps each AI controller tested (a
+        kind of CONTROLLERS: TSP, DBL, DEVL), run whether ticked in the Extensions tab or not, to its plan:
+        {"agents": labels of AIModePanel.agent_options(), the models to test (at least one), "deadline_s": each
+        answer's deadline}. The universal logic: every combination of the controllers' models is an agent, each run
+        `times` times on every seed (a model's answers vary from run to run; the repeats show by how much). `default`
+        (Compare with default): the one baseline, DEFAULT, runs first on each seed, once (no model in it: a seed
+        always runs the same), and every agent is compared with it seed by seed; without it, with the first agent.
+        Each run has one signal agent per controller; it keeps in step with the wall clock at `speed`,
+        never pausing: its agents answer in the background, and a request not answered within its deadline (in
+        simulated seconds) falls back to the plan. Up to `at_once` runs go side by side, but never two on one model
+        server (a provider: Ollama, Jev...), so no run's answers wait behind another's; each records the pace it
+        achieved. The runs are paced only where a model answers (the default never: as fast as the CPU allows).
+        With DEVL each run, the default's too, dispatches DEVL's Dispatch Emergency Vehicle fleet and a random emergency vehicle of
+        its seed's, and its workbook gets an Emergency vehicles sheet. TSP and DBL act for buses: none in the
+        demand, the answer says so. No tests: the default alone, plain runs as fast as the CPU allows. Everything
+        is checked first: ValueError says what can't run."""
+        tests = {kind: tests[kind] for kind in CONTROLLERS if kind in (tests or {})}  # in CONTROLLERS' order
         if self.runner is not None or self._testing:
             raise ValueError("A run or test is going on: stop it first (the menu bar's Stop), then start the batch.")
-        if not seeds or not 1 <= int(times) <= 100 or not 0 < float(minutes) <= 24 * 60 or not 1 <= deadline_s <= 280 \
-                or not 1 <= devl_deadline_s <= 280 \
+        unknown = [str(kind) for kind in tests if kind not in CONTROLLERS]
+        if unknown:
+            raise ValueError(f"No controller called {', '.join(unknown)}: tests are some of {', '.join(CONTROLLERS)}.")
+        deadlines = {kind: float((tests[kind] or {}).get("deadline_s", 30)) for kind in CONTROLLERS if kind in tests}
+        if not seeds or not 1 <= int(times) <= 100 or not 0 < float(minutes) <= 24 * 60 \
+                or not all(1 <= deadline <= 280 for deadline in deadlines.values()) \
                 or not 1 <= speed <= 60 or not 1 <= int(at_once) <= MAX_AT_ONCE:
             raise ValueError(f"A batch needs seeds, 1 to 100 times each, up to 24 h a run, a deadline of 1 to 280 s, "
                              f"a pace of 1x to 60x and 1 to {MAX_AT_ONCE} runs at once.")
@@ -346,53 +372,52 @@ class AgentsMixin:
         if not demand:
             raise ValueError(f"There's no demand to run: the OD matrix has no {self.od_matrix.mode} demand (a run uses "
                              "the kind it shows). Enter or generate some first.")
-        tsp = self._tsp()
-        if test_tsp is None:
-            test_tsp = tsp is not None and tsp.on
-        if test_tsp and tsp is None:
-            raise ValueError("The Transit Signal Priority extension didn't load: see the Extensions tab.")
+        extensions = {}  # kind -> its extension, in CONTROLLERS' order (the override chain keeps its own)
+        for kind in deadlines:
+            stem, name = CONTROLLERS[kind]
+            extensions[kind] = self._extension(stem)
+            if extensions[kind] is None:
+                raise ValueError(f"The {name} extension didn't load: see the Extensions tab.")
         options = {option["label"]: option for option in self.ai_mode.agent_options()}
-        # Never preempt (general traffic: the one every agent is compared with) and Always preempt: both always run, first
-        baselines = [option for option in options.values() if not option["system"]]
 
-        def resolve(labels, what: str) -> list[dict]:
-            """The baselines and the models `labels` name, checked (none: the baselines alone)."""
-            labels = labels or []  # none picked: the baselines alone
+        def resolve(kind: str, labels) -> list[dict]:
+            """The models `labels` name, checked: at least one."""
+            labels = labels or []
+            if not labels:
+                raise ValueError(f"Test {kind} has no model to test: pick one in the {CONTROLLERS[kind][1]} tab "
+                                 "(Multiple's Models, or System 1 or 2 with its model on in AI Mode).")
             unknown = [label for label in labels if label not in options]
             if unknown:
                 raise ValueError(f"Not found on this PC now: {', '.join(unknown)}. Rescan in AI Mode, then pick again.")
-            found = [option for label, option in options.items() if option in baselines or label in labels]
+            found = [option for label, option in options.items() if label in labels]
             missing = [option["label"] for option in found
                        if option["provider"] in ("jev", "grok", "gemini") and not self.ai_mode.key_for(option["provider"])]
             if missing:
                 raise ValueError(f"No key on this PC for {', '.join(missing)}: save it (see README), then Rescan PC.")
             return found
 
-        tsp_options = resolve(agents, "TSP") if test_tsp else [None]
-        devl_options = (resolve(devl_agents, "DEVL") if devl_agents else baselines) if test_devl else [None]
-        if not test_tsp:
-            tsp = None
+        deciders = {kind: resolve(kind, (tests[kind] or {}).get("agents")) for kind in deadlines}
+        if not deciders and not default:
+            raise ValueError("Nothing to run: tick Compare with default, or a test with a model to test.")
 
-        def merged(tsp_option, devl_option) -> dict:
-            """One agent of the batch: who decides TSP and who decides DEVL, as one label."""
-            parts = [part for part in (tsp_option, devl_option) if part]
-            if not parts:
-                return {"label": "No TSP", "system": "", "provider": "", "model": "", "name": "no-ai", "tsp": None,
-                        "devl": None, "servers": set()}
-            asking = [part for part in parts if part["system"]]
-            return {"label": " · ".join(f"{kind} {part['label']}" for kind, part in (("TSP", tsp_option), ("DEVL", devl_option)))
-                    if tsp_option and devl_option else parts[0]["label"],
+        def merged(parts: dict) -> dict:
+            """One agent of the batch: who decides each controller (kind -> option), as one label."""
+            asking = [part for part in parts.values() if part["system"]]
+            return {"label": " · ".join(f"{kind} {part['label']}" for kind, part in parts.items())
+                    if len(parts) > 1 else next(iter(parts.values()))["label"],
                     "system": asking[0]["system"] if asking else "",
                     "provider": "+".join(dict.fromkeys(part["provider"] for part in asking)),
                     "model": " + ".join(dict.fromkeys(part["model"] for part in asking if part["model"])),
-                    "name": "-".join(dict.fromkeys(part["name"] for part in parts)),
-                    "tsp": tsp_option, "devl": devl_option, "servers": {part["provider"] for part in asking}}
+                    "name": "-".join(dict.fromkeys(part["name"] for part in parts.values())),
+                    "parts": parts, "servers": {part["provider"] for part in asking}}
 
-        chosen = [merged(tsp_option, devl_option) for tsp_option in tsp_options for devl_option in devl_options]
+        chosen = ([DEFAULT] if default else []) + ([merged(dict(zip(deciders, combo)))
+                                                    for combo in itertools.product(*deciders.values())] if deciders else [])
         # Only a run a model answers in keeps in step with the wall clock (its latency then costs what it would on the
-        # street); the baselines and their emergency fleets depend on nothing but the seed: as fast as the CPU
+        # street); the default and its emergency fleet depend on nothing but the seed: as fast as the CPU
         paced = any(option["servers"] for option in chosen)
-        fleet, devl, random_emergency = self._emergency_fleet() if test_devl else ([], None, None)
+        fleet, _devl, random_emergency = self._emergency_fleet() if "DEVL" in deadlines else ([], None, None)
+        no_buses = [kind for kind in ("TSP", "DBL") if kind in deadlines and not self._has_buses()]
         times, duration = int(times), float(minutes) * 60
         # Test DEVL: each seed's own random emergency vehicle, the same for every agent on that seed (within the run)
         randoms = {seed: random_emergency(seed, duration) for seed in seeds} if random_emergency else {}
@@ -403,13 +428,12 @@ class AgentsMixin:
         # finished, so they still compare, pair by pair
         for seed in seeds:
             for option in chosen:
-                for time_ in range(1, times + 1):
+                for time_ in range(1, (times if option["servers"] else 1) + 1):  # the default: one run is all
                     planned.append((option, seed, time_, self._run_settings(None, seed=seed, extra=[
                         ("Kind", "batch run (the Batch Run extension)"), ("Agent", option["label"]),
-                        ("AI model deciding TSP", (option["tsp"] or {}).get("model") or "none"),
-                        ("Decision deadline (simulated s)", deadline_s if tsp else "none"),
-                        ("AI model deciding DEVL", (option["devl"] or {}).get("model") or "none"),
-                        ("DEVL decision deadline (simulated s)", devl_deadline_s if devl_agents and test_devl else "none"),
+                        *(row for kind in CONTROLLERS for row in (
+                            (f"AI model deciding {kind}", (option["parts"].get(kind) or {}).get("model") or "none"),
+                            (f"{kind} decision deadline (simulated s)", deadlines.get(kind, "none")))),
                         ("Pace (simulated s a real s)", speed if option["servers"] else "as fast as the CPU allows"),
                         ("Repeat", f"{time_} of {times}"),
                         ("Emergency vehicles", "; ".join(f"{a} to {b}" + (f" every {every:g} s" if every else "")
@@ -426,7 +450,7 @@ class AgentsMixin:
 
         def summary(runs: list) -> dict:
             return {"started": started.isoformat(timespec="seconds"), "seeds": list(seeds), "times": times,
-                    "duration_s": duration, "deadline_s": deadline_s, "tsp": tsp is not None, "agents": chosen,
+                    "duration_s": duration, "deadlines": deadlines, "agents": chosen,
                     "speed": speed if paced else None, "at_once": at_once, "planned": len(planned),
                     "runs": runs, "folder": str(folder),
                     "comparison": experiments.compare(experiments.averaged(runs), names) if runs else []}
@@ -437,19 +461,32 @@ class AgentsMixin:
             saving = path.with_name(f"{path.stem} (saving).xlsx")
             experiments.batch_workbook(saving, summary(runs), inputs)
             os.replace(saving, path)
-            return path  # plain runs are CPU-bound: side by side they'd only share the CPU
+            return path
         done: list = []  # the runs finished, for the progress line
+
+        def label_of(option, seed, time_) -> str:
+            return f"{option['label']}, seed {seed}" + (f", time {time_}" if times > 1 else "")
+
+        def entry_of(count, option, seed, time_, kpis, book) -> dict:
+            return {"id": f"B{count}", "scenario": option["label"], "seed": seed, "repeat": time_,
+                    "measures": experiments.measures_of(kpis), "file": str(book or "")}  # with the pace it achieved
+
+        def keep(entry) -> None:
+            done.append(entry)
+            try:  # a checkpoint after every run: a crash or power cut keeps what finished
+                save(sorted(done, key=lambda entry: int(entry["id"][1:])))
+            except OSError:
+                pass  # open in Excel, say: the next run's checkpoint tries again
 
         def one(count, option, seed, time_, settings, progress, cancelled):
             """One run of the batch, on a worker thread: its entry for the comparison, or None if cut short."""
             agents = {}  # each extension's own agent and state: it never waits, and never meets another run's vehicles
-            for extension, deciding, deadline in ((tsp, option["tsp"], deadline_s), (devl, option["devl"], devl_deadline_s)):
-                if extension is not None:
-                    agents[extension.name] = SignalAgent((lambda question, deciding=deciding: self._ask_agent(question, deciding))
-                                                         if deciding["system"] else None, deadline_s=deadline,
-                                                         rule=deciding.get("rule"))
+            for kind, deciding in option["parts"].items():
+                agents[extensions[kind].name] = SignalAgent(
+                    (lambda question, deciding=deciding: self._ask_agent(question, deciding)) if deciding["system"] else None,
+                    deadline_s=deadlines[kind], rule=deciding.get("rule"))
             override = self.extensions.overrides_for(list(agents), agent=agents) if agents else None
-            label = f"{option['label']}, seed {seed}" + (f", time {time_}" if times > 1 else "")
+            label = label_of(option, seed, time_)
             try:
                 kpis, path, simulated = self._one_run(network, demand, modes, seed, duration, override, settings, [],
                                                       label, progress, cancelled, folder, model=option["name"],
@@ -458,14 +495,24 @@ class AgentsMixin:
             finally:
                 for asked in agents.values():
                     asked.close()
-            if simulated < duration - 1:
-                return None
-            measures = experiments.measures_of(kpis)  # with the pace it achieved (_one_run)
-            return {"id": f"B{count}", "scenario": option["label"], "seed": seed, "repeat": time_, "measures": measures,
-                    "file": str(path or "")}
+            return None if simulated < duration - 1 else entry_of(count, option, seed, time_, kpis, path)
 
         def work(progress, cancelled):
-            models = {part["label"]: part for option in chosen for part in (option["tsp"], option["devl"]) if part}
+            if not extensions and len(planned) > 1:  # plain runs: side by side, a process each
+                jobs = [{"network": network, "demand": demand, "modes": modes, "seed": seed, "duration_s": duration,
+                         "settings": settings, "label": label_of(option, seed, time_), "folder": folder,
+                         "model": option["name"], "dispatches": fleet + ([randoms[seed]] if seed in randoms else [])}
+                        for option, seed, time_, settings in planned]
+
+                def each(index, made) -> None:
+                    if made is not None and made[2] >= duration - 1:
+                        option, seed, time_, _settings = planned[index]
+                        keep(entry_of(index + 1, option, seed, time_, made[0], made[1]))
+
+                if self._pooled(jobs, progress, cancelled, each=each) is not None:
+                    return sorted(done, key=lambda entry: int(entry["id"][1:]))
+                done.clear()  # no processes here: one after another, below
+            models = {part["label"]: part for option in chosen for part in option["parts"].values()}
             for part in models.values():  # loaded before the clock runs: a deployed model would be
                 if part["system"] and not cancelled():
                     progress(f"warming up {part['label']}")
@@ -509,18 +556,14 @@ class AgentsMixin:
                             failed.set()  # the others stop at their next step; this run's error is the batch's
                             raise
                         if entry is not None:
-                            done.append(entry)
-                            try:  # a checkpoint after every run: a crash or power cut keeps what finished
-                                save(sorted(done, key=lambda entry: int(entry["id"][1:])))
-                            except OSError:
-                                pass  # open in Excel, say: the next run's checkpoint tries again
+                            keep(entry)
             return sorted(done, key=lambda entry: int(entry["id"][1:]))
 
         before, began = (self._snapshot() if self.extensions.wants("log") else None), time.time()
-        asked = {"seeds": list(seeds), "minutes": float(minutes), "times": times, "test_tsp": bool(tsp),
-                 "test_devl": bool(test_devl), "agents": [option["label"] for option in chosen],
-                 "deadline_s": deadline_s if tsp else None, "devl_deadline_s": devl_deadline_s if test_devl else None,
-                 "speed": speed if paced else None, "at_once": at_once}
+        asked = {"seeds": list(seeds), "minutes": float(minutes), "times": times,
+                 "tests": {kind: {"agents": [option["label"] for option in deciders[kind]], "deadline_s": deadline}
+                           for kind, deadline in deadlines.items()},
+                 "agents": [option["label"] for option in chosen], "speed": speed if paced else None, "at_once": at_once, "default": bool(default)}
         what = (f"Batch run: {len(planned)} runs, {minutes:g} min each, seeds {', '.join(map(str, seeds))}; "
                 + "; ".join(option["label"] for option in chosen))
         try:
@@ -532,9 +575,12 @@ class AgentsMixin:
         self._refresh_summary()
         answer = {"file": str(path), "runs": len(runs), "of": len(planned), "folder": str(folder)}
         behind = [run["id"] for run in runs if run["measures"].get("pace_achieved", speed) < 0.9 * speed]
-        if behind:
-            answer["note"] = (f"{len(behind)} run(s) fell behind the clock (under 90 % of {speed:g}x): fewer at once "
-                              "or a slower pace keeps answers' latency honest.")
+        notes = [f"{len(behind)} run(s) fell behind the clock (under 90 % of {speed:g}x): fewer at once or a slower "
+                 "pace keeps answers' latency honest."] if behind else []
+        if no_buses:
+            notes.append(f"No buses in the demand: {'/'.join(no_buses)} had nothing to decide.")
+        if notes:
+            answer["note"] = " ".join(notes)
         workbooks = sorted(str(book) for book in folder.glob("*.xlsx")) if folder.is_dir() else []
         self._log_step("batch", what, "run_batch", asked, {**answer, "files": workbooks}, began, before)
         return answer
@@ -568,19 +614,20 @@ class AgentsMixin:
         return can_go
 
     def _schedule_emergency(self, args: dict, check_only: bool = False) -> dict:
-        """The assistant's schedule_emergency: the Dispatch Emergency Vehicle tab's schedules replaced (set_fleet),
+        """The assistant's schedule_emergency: DEVL's Dispatch Emergency Vehicle schedules replaced (set_fleet),
         each checked first (an end or junction each, a route between them, every or after 0-120 min, not both),
-        the extension ticked (its tab is used only while ticked, as Test DEVL ticks it); with dispatch_now also sent
+        DEVL ticked (its section is used only while ticked, as Test DEVL ticks it); with dispatch_now also sent
         into the live run (dispatch_emergency). ValueError: why not, nothing changed."""
-        dispatch = self._extension("dispatch_emergency")
-        if dispatch is None:
-            raise ValueError("The Dispatch Emergency Vehicle extension didn't load: see the Extensions tab.")
+        devl = self._extension("dynamic_emergency_lane")
+        if devl is None:
+            raise ValueError("The Dynamic Emergency Vehicle Lane extension didn't load: see the Extensions tab.")
+        dispatch = devl.module.dispatch  # its Dispatch Emergency Vehicle section
         rows = args.get("schedules")
         if isinstance(rows, str):
-            rows = network_tools._parsed_json(rows)
+            rows = tool_args._parsed_json(rows)
         if not isinstance(rows, list) or not all(isinstance(row, dict) for row in rows):
             raise ValueError("schedules is a list of {from, to, every_min or after_min}.")
-        places, can_go, most = self.places(), self._route_check(), dispatch.module.MAX_EVERY_MIN
+        places, can_go, most = self.places(), self._route_check(), dispatch.MAX_EVERY_MIN
         fleet = []
         for row in rows:
             origin, destination = (str(row.get(key) or "").strip() for key in ("from", "to"))
@@ -597,27 +644,27 @@ class AgentsMixin:
             if every and after:
                 raise ValueError(f"{origin} → {destination}: a schedule repeats (every_min) or waits (after_min), not both.")
             fleet.append((origin, destination, every, after))
-        now = network_tools._bool(args.get("dispatch_now"))
+        now = tool_args._bool(args.get("dispatch_now"))
         for origin, destination, every, _ in fleet if now else []:
             self.dispatch_emergency(origin, destination, every, check_only=True)  # no run: refused here
         if check_only:
             return {"ok": True}
-        self._tick_extension("dispatch_emergency")
-        dispatch.module.set_fleet(fleet)
+        self._tick_extension("dynamic_emergency_lane")
+        dispatch.set_fleet(fleet)
         for origin, destination, every, after in fleet if now else []:
             self.dispatch_emergency(origin, destination, every, after_s=after * 60)
         return {"schedules": [{"from": origin, "to": destination, "every_min": every, "after_min": after}
                               for origin, destination, every, after in fleet], "dispatched_now": now}
 
     def _emergency_fleet(self) -> tuple[list, object, object]:
-        """Test DEVL: the Dispatch Emergency Vehicle tab's schedules as (from, to, every s, s in), each checked; the
+        """Test DEVL: DEVL's Dispatch Emergency Vehicle schedules as (from, to, every s, s in), each checked; the
         DEVL extension (its signal override clears their lanes); and `random_for(seed, duration_s)`, a seed's own
         random emergency vehicle as (from, to, 0, seconds in), within the run. ValueError says what's missing."""
-        dispatch, devl = self._extension("dispatch_emergency"), self._extension("dynamic_emergency_lane")
-        if dispatch is None or devl is None:
-            raise ValueError("Test DEVL needs the Dispatch Emergency Vehicle and Dynamic Emergency Vehicle Lane extensions: "
-                             "see the Extensions tab.")
-        fleet, places, can_go = dispatch.module.fleet(), self.places(), self._route_check("Dispatch Emergency Vehicle: no")
+        devl = self._extension("dynamic_emergency_lane")
+        if devl is None:
+            raise ValueError("Test DEVL needs the Dynamic Emergency Vehicle Lane extension: see the Extensions tab.")
+        dispatch = devl.module.dispatch  # its Dispatch Emergency Vehicle section
+        fleet, places, can_go = dispatch.fleet(), self.places(), self._route_check("Dispatch Emergency Vehicle: no")
 
         for origin, destination, *_ in fleet:
             if origin not in places or destination not in places:
@@ -626,8 +673,8 @@ class AgentsMixin:
             can_go(origin, destination)
 
         def random_for(seed: int, duration_s: float) -> tuple:
-            start, end, delay = dispatch.module.random_emergency(seed, places, can_go,
-                                                                 min(dispatch.module.MAX_DELAY_MIN * 60, int(duration_s)))
+            start, end, delay = dispatch.random_emergency(seed, places, can_go,
+                                                          min(dispatch.MAX_DELAY_MIN * 60, int(duration_s)))
             return start, end, 0.0, float(delay)
 
         return [(origin, destination, every * 60.0, after * 60.0) for origin, destination, every, after in fleet], devl,             random_for

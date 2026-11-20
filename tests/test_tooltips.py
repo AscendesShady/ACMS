@@ -68,8 +68,8 @@ def test_tooltips_set_while_a_test_runs_are_five_words_at_most():
 
     app = QApplication.instance() or QApplication([])
     window = MainWindow()
-    window._testing, window._busy_what = True, "Never preempt (baseline) batch run of every seed"
-    window._headless.update({"Never preempt (baseline), seed 1": (754.0, 1800.0), "Testing the network": (60.0, 1800.0)})
+    window._testing, window._busy_what = True, "Default configuration batch run of every seed"
+    window._headless.update({"Default configuration, seed 1": (754.0, 1800.0), "Testing the network": (60.0, 1800.0)})
     window._show_busy()  # Run and Play name what holds them back
     window._show_headless()  # the menu bar's clock shows the runs going
     problems = _long_tooltips(window)

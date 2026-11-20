@@ -11,9 +11,10 @@ os.environ.setdefault("QT_QPA_FONTDIR", os.path.join(os.environ.get("WINDIR", r"
 
 from PySide6.QtWidgets import QApplication, QMessageBox  # noqa: E402
 
-from traffic_simulator.mode_behavior import (MAX_MODES, ModeBehaviorPanel, VehicleModes, fixed_split,  # noqa: E402
-                                             redistribute)
-from traffic_simulator.od_matrix import ODCell, ODCellPanel, ODMatrix  # noqa: E402
+from traffic_simulator.mode_behavior import MAX_MODES, ModeBehaviorPanel, VehicleModes
+from traffic_simulator.demand import fixed_split, redistribute
+from traffic_simulator.od_matrix import ODCellPanel, ODMatrix  # noqa: E402
+from traffic_simulator.demand import ODCell  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 
@@ -217,7 +218,7 @@ def test_a_types_vehicle_class_outlives_its_name():
     made as, changed only when asked, saved and checked; a type saved before it, named Bus, is a bus."""
     from dataclasses import asdict
 
-    from traffic_simulator.mode_behavior import VehicleMode
+    from traffic_simulator.vehicle import VehicleMode
     from traffic_simulator.network_io import project_problem
 
     modes = VehicleModes()
@@ -320,7 +321,7 @@ def test_emergency_braking_is_sumos_by_class_and_no_softer_than_comfortable():
     # refused, by update and in a saved project; a type saved before it gets its class's, or its decel if harder.
     from dataclasses import asdict
 
-    from traffic_simulator.mode_behavior import VehicleMode
+    from traffic_simulator.vehicle import VehicleMode
     from traffic_simulator.network_io import project_problem
 
     modes = VehicleModes()
@@ -348,7 +349,7 @@ def test_two_wheelers_filter_by_their_class_and_it_is_kept():
     # bus never; the assistant may change it; a project keeps it, and one saved before it gets it by the type's class.
     from dataclasses import asdict
 
-    from traffic_simulator.mode_behavior import VehicleMode
+    from traffic_simulator.vehicle import VehicleMode
     from traffic_simulator.network_io import project_problem
     from traffic_simulator.vehicle import create_vehicle
 

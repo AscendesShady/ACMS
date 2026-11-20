@@ -15,7 +15,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from traffic_simulator import network_tools as tools, scenario  # noqa: E402
+from traffic_simulator import scenario, tool_offer, tool_schemas  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 EMPTY = {"has_network": False, "has_demand": False, "bus_type": "Bus"}
@@ -47,7 +47,7 @@ def test_the_plan_follows_a_study_and_each_step_is_a_real_tool():
     assert order == ["place_map", "network_from_background", "set_junction_control", "update_vehicle_type",
                      "generate_demand", "shape_daily_curve", "choose_modes", "assign_routes", "run_simulation",
                      "analyse_run", "analyse_safety", "optimise_signals", "run_experiment"]
-    assert set(order) <= {spec["name"] for spec in tools.TOOLS}  # nothing but the assistant's own tools
+    assert set(order) <= {spec["name"] for spec in tool_schemas.TOOLS}  # nothing but the assistant's own tools
     demand = steps[order.index("generate_demand")]["args"]
     assert demand == {"demand": "daily", "degree_of_saturation": scenario.LEVELS["heavy"]}
     text = scenario.describe(spec, steps, ["x"])
@@ -186,7 +186,7 @@ def test_a_request_is_offered_the_tools_it_needs_and_planned_by_the_model():
         panel.send()
         settle(lambda: not panel.proposal.isHidden())
         first = _Ollama.offered[0]
-        assert "generate_grid" in first and tools.FIND_TOOLS in first and len(first) < len(tools.TOOLS) // 2
+        assert "generate_grid" in first and tool_offer.FIND_TOOLS in first and len(first) < len(tool_schemas.TOOLS) // 2
         assert "schedule_emergency" not in first  # nothing in the request points to it
         panel.apply_button.click()
         settle(lambda: panel.prompt.isEnabled() and not panel._running)

@@ -15,7 +15,7 @@ from PySide6.QtWidgets import QApplication, QMessageBox  # noqa: E402
 from traffic_simulator.geometry import polyline_meets_box  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.network_io import load_network  # noqa: E402
-from traffic_simulator.network_tools import delete_objects  # noqa: E402
+from traffic_simulator.road_tools import delete_objects  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 # generate_network(3, 4): junctions 500 m apart; "2,2" (column 2, row 2 from the bottom) sits at (500, 500).
@@ -227,7 +227,7 @@ def test_the_edge_type_choice_sits_clear_of_the_buttons_above_it():
 
 def test_a_box_selects_a_metro_line_by_its_track_and_deletes_it():
     from traffic_simulator.main import MainWindow
-    from traffic_simulator.network_scene import MetroItem
+    from traffic_simulator.scene_items import MetroItem
 
     network = generate_network(3, 4)
     network.add_metro_line((250, 250), (750, 250))  # ML1, M1 to M2, between the junction rows

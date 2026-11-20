@@ -1,7 +1,7 @@
 """The assistant's tools that read and change roads, junctions and signals (no Qt).
 
 List and describe them, add, move and delete them, update lanes and speeds, build interchanges and slip roads, set
-signal timing, and read the project's source; moved out of network_tools.py, which re-exports them.
+signal timing, and read the project's source. network_tools.run_tool dispatches to them.
 """
 
 from __future__ import annotations

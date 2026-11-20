@@ -18,9 +18,11 @@ Prove the change: a test that fails without it, and nothing else broken.
 3. Run the touched tests, keeping the result:
    `.venv\Scripts\python.exe tools\run_test.py tests\test_<area>.py <words> > stages\code\03_test\output\results.txt`
 4. At the end, each affected file whole (`.venv\Scripts\python.exe tests\test_<area>.py` prints `ok`); after a big
-   change, `.venv\Scripts\python.exe tools\run_test.py --all -j 4` (all files in ~4–5 min).
-   Slow files, to run in the background: `test_experiments` ~4.5 min, `test_simulation` ~1.5, `test_scenario` ~1,
-   `test_ai_mode` ~1; every other file under 35 s.
+   change, `.venv\Scripts\python.exe tools\run_test.py --all -j 4` (all files in ~9 min: as long as
+   `test_experiments`, 8 min alone). Slow files, to run in the background (their times in a full run):
+   `test_scenario` and `test_selection` ~3 min, `test_create_tab` and `test_simulation` ~2, `test_ai_mode` 1.5,
+   `test_background`, `test_project`, `test_prompt_campaign`, `test_research_log` and `test_extensions` ~1; every
+   other file under 40 s. `run_test.py`'s `SLOWEST_FIRST` starts the first six first.
 
 ## Outputs
 

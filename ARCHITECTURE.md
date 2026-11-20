@@ -3,13 +3,13 @@
 ACMS (Agentic Context-Aware Mobility System): a road-network editor (true-scale roads, signals, roundabouts,
 interchanges, bus stops, OD demand) with a SUMO-style microscopic simulation. Vehicles follow the car ahead
 (Krauss), change lanes (LC2013), obey signals (Webster, TRANSYT, Synchro, SCATS, SCOOT, actuated), accept gaps;
-buses dwell at stops. Physics runs in real time on its own thread; each run's KPIs become an Excel workbook.
+buses dwell at stops. Physics runs in real time in its own process (on a thread when an extension decides); each run's KPIs become an Excel workbook.
 This index is the in-app assistant's (System 2) context, sent with every request, and coding agents' map of the code
 (Layer 3; they start at `AGENTS.md`). Detail is one file away: **`docs/architecture/<module>.md`**.
 
 ## 0. For the assistant: a small context and a short wait
 
-The docs are large (sources.md, tests.md, ai_mode.md, simulation.md: 40–66k characters each): never load one whole.
+The docs are large (sources.md, tests.md, ai_mode.md, simulation.md: 54–110k characters each): never load one whole.
 **Route: this index → the one file below → `read_source` with `find` (line numbers) → ~30 lines by
 `start_line`/`end_line`.** Network facts come from tools (`network_summary`, `describe`…), never from docs; ask a
 narrow tool (one junction) before a list. Tests cost time: `run_simulation` 10–30 min, one seed, unless asked; an
@@ -42,7 +42,7 @@ experiment takes scenarios × seeds × minutes. Answer in a few lines.
 | Simulation | Krauss, LC2013, gap acceptance, junction delay in route costs once, route choice (logit), random streams per pair, closures, work zones, weather, emergency braking bound, optional ballistic update and shorter step (headless), optional lateral position: two-wheelers filter (headless), collisions counted (same lane, crossing) [pedestrian crowding, walk signals] | [simulation.md](docs/architecture/simulation.md) |
 | Clock | Run, Play/Pause, Stop, speed 1–60×, Seed, Export; every stopped or failed run exports | [clock.md](docs/architecture/clock.md) |
 | Results | KPIs every 5 s (delay vs road limit and own free speed, person delay, entry wait); exact trip and system travel times, completion rate, buffer index, warm-up (assistant); workbook, GeoJSON, crash recovery [signal/junction KPIs] | [results.md](docs/architecture/results.md) |
-| Testing | Headless runs; experiments over seeds (paired, ANOVA, factorials, equilibrium); LOS, diagnosis, health, resilience, emissions, accessibility, design audit, benefit-cost, safety, calibration [parallel runs] | [experiments.md](docs/architecture/experiments.md) |
+| Testing | Headless runs; experiments over seeds (paired, ANOVA, factorials, equilibrium); LOS, diagnosis, health, resilience, emissions, accessibility, design audit, benefit-cost, safety, calibration; plain runs (experiments, batches, signal search, sensitivity) a process each [a run with an extension deciding in parallel] | [experiments.md](docs/architecture/experiments.md) |
 | AI Mode | System 2 chat (Grok, Gemini, Ollama) with tools and their skills, offered by the request's words; each request trimmed to its context window (`ACMS_NUM_CTX`), docs searched with `read_source` find, a stalled reply ended at 90 s; System 1 (Jev, Laya) answers yes/no signal questions [System 1 elsewhere] | [ai_mode.md](docs/architecture/ai_mode.md) |
 | Extensions | TSP, Dynamic Emergency Vehicle Lane, Batch Run, Dispatch Emergency, Research Log (each AI step; a picture only of what changed: map or OD matrix) [traffic yielding to emergency vehicles] | [extensions.md](docs/architecture/extensions.md) |
 | Projects, Summary | One validated JSON project; View Summary pages | [network_io.md](docs/architecture/network_io.md), [summary.md](docs/architecture/summary.md) |
@@ -58,7 +58,9 @@ launch.bat                 Sets up .venv the first time, then opens the editor
 src/traffic_simulator/     The modules (map below)        tests/       Plain assert tests
 extensions/                Drop-in features               docs/        Module docs, sources, tests
 references/                UI rulebook, SUMO notes, books, theory
-tools/                     Prompt campaign; run_test.py (quick, timed tests); run_monitor.py (test window)
+tools/                     run_test.py (quick, timed tests), run_monitor.py (test window: run_monitor.md),
+                           prompt_campaign.py and eval_commands.py (the assistant's: prompt_campaign.md, ai_mode.md),
+                           preview_ui.py and preview_vehicle_assets.py (screenshots), update.py (launch.bat's: flows.md)
 reports/, references/       On this PC only (git keeps the UI rulebook); research/: book mining
 ```
 
@@ -86,7 +88,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | institutions.py | Buildings' doors, catchments, trips and modes | no |
 | walking.py | Footpaths, paths and crossings as a walking network, cheapest walks, a run's walkers (→ walking.md) | no |
 | daily_profile.py | Daily demand curves, hourly shares | no |
-| background_network.py | A network from OSM or an image (→ map_tiles.md) | no |
+| background_network.py | A network from OSM or an image | no |
 | background.py | The map's background and its Create section (→ map_tiles.md) | Qt |
 | map_tiles.py | WGS84 ↔ scene metres, OSM tiles, place search | no |
 | mode_behavior.py | Vehicle types tab | Qt |
@@ -98,11 +100,15 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | lane_graph.py | Lane graph: links, lanes, turns, bays, signals, routes, capacities | no |
 | simulation.py | Signals, junctions, lane changes, demand, over the lane graph | no |
 | runner.py | Runner: the physics thread, paced to the wall clock, publishing frames (→ simulation.md) | no |
+| physics_process.py | ProcessRunner: a live run's physics in a process of its own, the Runner there (→ simulation.md) | no |
 | signal_agent.py | TRUE/FALSE answers for signal overrides (→ simulation.md) | no |
 | signal_timing.py | Webster, TRANSYT, Synchro, SCATS, SCOOT, clearance | no |
 | transit_signal_priority.py | TSP controller at one junction (→ extensions.md) | no |
 | agent_transit_signal_priority.py | TSP agent asking System 1 or 2 (→ extensions.md) | no |
 | agent_choice.py | Who decides an extension's TRUE/FALSE (→ extensions.md) | Qt |
+| dynamic_lane.py | DEVL's and DBL's kerbside lane controller (→ extensions.md) | no |
+| road_words.py | TSP's and DBL's telemetry in words for both systems (→ extensions.md) | no |
+| emergency_dispatch.py | DEVL's Dispatch Emergency Vehicle section (→ extensions.md) | Qt |
 | gpu.py | OpenGL map renderer, instanced vehicles | Qt |
 | results.py | A run's KPIs and workbook | no |
 | files.py | Write a file whole or not at all (→ results.md) | no |
@@ -124,9 +130,9 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | theme.py | Desktop workspace theme, native control states, floating glass bars and contrast pairs | Qt |
 | main.py | Main window: tabs, tools, dialogs, file menu | Qt |
 | main_runs.py | MainWindow's runs mixin: Run, Stop, headless thread, frames, export; a file split, state in main.py (→ main.md) | Qt |
-| main_scenario.py | MainWindow's Scenario Builder mixin: runs a scenario.py plan as one undo step (→ main.md) | Qt |
-| main_experiments.py | MainWindow's experiments mixin: the assistant's run tools, dispatch and the window side of tests (→ main.md) | Qt |
-| main_agents.py | MainWindow's agents mixin: asking the model, agent tests, Batch Run, replay, emergency dispatch (→ main.md) | Qt |
+| main_scenario.py | MainWindow's Scenario Builder mixin: runs a scenario.py plan as one undo step (→ main.md) | no |
+| main_experiments.py | MainWindow's experiments mixin: the assistant's run tools, dispatch and the window side of tests (→ main.md) | no |
+| main_agents.py | MainWindow's agents mixin: asking the model, agent tests, Batch Run, replay, emergency dispatch (→ main.md) | no |
 | main_assistant.py | MainWindow's AI Mode mixin: what the assistant sees and does in the window (→ main.md) | Qt |
 | main_project.py | MainWindow's project mixin: undo/redo, the commit that makes a step, Open/Save (→ main.md) | Qt |
 | main_create.py | MainWindow's Create Network mixin: generate, road defaults, install a network, background glue (→ main.md) | Qt |

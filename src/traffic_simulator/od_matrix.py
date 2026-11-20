@@ -1,6 +1,6 @@
 """Origin-destination matrix: a compact grid plus a side-panel editor for one pair. The Demand Generator's
 Institutions panel is institution_panel.py's, its MRT and pedestrian grids metro_matrix.py's and the pair editor's
-painted controls demand_controls.py's (all re-exported here where other modules import them).
+painted controls demand_controls.py's (import each from its own module).
 
 Two kinds of demand: hourly (veh/h per pair) or daily (trips per day per pair, spread over
 the 24 hours by a curve the user shapes; see daily_profile.py).
@@ -52,8 +52,8 @@ from .demand import (MAX_DROP_PAIRS, UNITS, ODCell, drops_after, drops_from, dro
 from .mode_behavior import VehicleModes
 from .widgets import ChoiceButtons, hint_label, icon_button, styled_button
 from .demand_controls import SELECTED_EDGE, SELECTED_FILL, TEXT, DayCurve, DropSlider, ModeSplitSlider, _mode_text
-from .metro_matrix import MetroMatrix, PedestrianMatrix, SpawnMatrix, _paint_blocked  # noqa: F401 (re-exported)
-from .institution_panel import InstitutionPanel, ModeSplitDialog  # noqa: F401 (ModeSplitDialog re-exported)
+from .metro_matrix import _paint_blocked
+from .institution_panel import InstitutionPanel
 
 CELL_PX = (56, 40)  # a grid cell's width and height at 100 %
 ZOOM_RANGE, FIT_MAX = (0.25, 4.0), 2.0  # Fit Grid stops at 200 % so a small grid doesn't balloon

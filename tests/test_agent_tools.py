@@ -13,11 +13,12 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from traffic_simulator import experiments, network_tools as tools, results  # noqa: E402
+from traffic_simulator import design_checks, experiments, network_tools as tools, results, tool_args  # noqa: E402
 from traffic_simulator.mode_behavior import VehicleModes  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.network_io import load_network, save_network  # noqa: E402
-from traffic_simulator.simulation import Graph, PairDemand  # noqa: E402
+from traffic_simulator.demand import PairDemand  # noqa: E402
+from traffic_simulator.lane_graph import Graph  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 DEMAND = [PairDemand(o, d, q, None, [], "Poisson", (0, 100, 0)) for o, d, q in
@@ -37,7 +38,7 @@ def observed_run(network, minutes=15, seed=3, modes=None):
 def refused(call, reason):
     try:
         call()
-    except (ValueError, tools.ToolError) as exc:
+    except (ValueError, tool_args.ToolError) as exc:
         assert reason in str(exc), (reason, exc)
         return
     raise AssertionError(f"should have been refused: {reason}")
@@ -119,10 +120,37 @@ def test_network_indices_travel_conditions_and_critical_links():
     assert clusters["k"] == 3 and sorted(c["size"] for c in clusters["clusters"]) == [8, 8, 8]
     assert abs(sum(c["weight"] for c in clusters["clusters"]) - 1) < 0.01  # rounded to 3 places
     refused(lambda: tools.run_tool(network, "cluster_conditions", {"days": days[:2]}), "4 or more")
-    critical = tools.critical_links_plan(network, {("1W", "1E"): 600, ("2W", "1E"): 300})
+    critical = design_checks.critical_links_plan(network, {("1W", "1E"): 600, ("2W", "1E"): 300})
     assert not {row["road"] for row in critical["critical"]} & set(network.approach_roads)  # an end's road: trivial
     inner = next(row for row in critical["critical"] if row["road"] == "1,1-2,1")
     assert inner["cut_off_vph"] == 0 and inner["extra_veh_h_per_h"] > 0  # a way round costs time
+
+
+def test_the_signal_search_scores_a_generation_side_by_side_with_the_same_answer():
+    # Its candidates' runs went one after another on one core. Each generation's are made side by side now, a
+    # process each (MainWindow._pooled): the same scores, so the same plan, as one by one.
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window.results_folder = Path(tempfile.mkdtemp())
+    window._ask_to_save = False
+    window.install_network(generate_network(2, 2))
+    window._commit()
+    window._od_command("set_od_demand", {"pairs": ["1W->1E", "1N->1S"], "demand": "hourly", "value": 500})
+    asked = {"junctions": ["1,1"], "duration_min": 2, "seeds": [1, 2], "population": 4, "generations": 2}
+    pools, pool = [], experiments.run_pool
+    experiments.run_pool = lambda jobs, *args, **kwargs: pools.append((len(jobs), kwargs.get("work"))) or \
+        pool(jobs, *args, **kwargs)
+    try:
+        together = window._runs_command("optimise_signals", asked)
+    finally:
+        experiments.run_pool = pool
+    assert pools and all(work is experiments.quiet_run for _, work in pools) and pools[0][0] >= 4, pools
+    window._quick_run = lambda *args, **kwargs: experiments.quick_run(*args, **kwargs)  # not the module's: one by one
+    alone = window._runs_command("optimise_signals", asked)
+    assert together["apply_with"] == alone["apply_with"] and together["history"] == alone["history"]
+    assert together["candidates_scored"] == alone["candidates_scored"]
+    window.close()
 
 
 def test_the_window_assigns_routes_and_optimises_signals():

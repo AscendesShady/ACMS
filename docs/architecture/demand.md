@@ -21,7 +21,7 @@
   rounded together by `whole_percent`, so 12.5 / 82.5 / 5 and thirds are kept), `profile_from` (shape_daily_curve's points,
   polynomial or preset), `demand_now`, and `read_od` (read_od_matrix: totals, each pair's values, what most pairs
   share once as "usual" and only what differs). `lead_with_what_was_kept` puts what a run's check kept first.
-- `pair_demand(cells, origins, destinations, mode, per_hour)`: a run's PairDemand list (the record lives here; also simulation.PairDemand), each pair with
+- `pair_demand(cells, origins, destinations, mode, per_hour)`: a run's PairDemand list (the record lives here; also demand.PairDemand), each pair with
   demand of the kind shown between ends still on the network (`MainWindow._pair_demand` adds the institutions').
 
 od_matrix.py's `ODCellPanel.command` still carries out each demand tool by working its own controls (the user

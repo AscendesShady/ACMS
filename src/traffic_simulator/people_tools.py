@@ -1,7 +1,7 @@
 """The assistant's tools for people and transit (no Qt).
 
 Institutions (list, place, deploy, update), pedestrian crossings, paths, demand and spawn points, metro lines and
-their demand, and bus stops; moved out of network_tools.py, which re-exports them.
+their demand, and bus stops. network_tools.run_tool dispatches to them.
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 """What every assistant tool takes and says, as the model sees it (no Qt).
 
-The TOOLS JSON-schema list, the name sets built from it and tool_specs; moved out of network_tools.py, which
-re-exports them, so the one list the model sees can be edited without touching the tools themselves.
+The TOOLS JSON-schema list, the name sets built from it and tool_specs, apart from the tools themselves, so the
+one list the model sees can be edited without touching them.
 """
 
 from __future__ import annotations
@@ -468,7 +468,7 @@ TOOLS = [
                             "scenario": {"type": "string"}, "difference": {"type": "number"}, "sd": {"type": "number"},
                             "power": {"type": "number"}, "seeds": {"type": "integer"}})},
     {"name": "test_agent_compliance", "edits": True,
-     "description": "Test an agent-decided extension (TSP or DEVL, as its tab chooses the model) on a fixed battery: "
+     "description": "Test an agent-decided extension (TSP, DEVL or DBL, as its tab chooses the model) on a fixed battery: "
                     "the network as it is, 30 % more demand, heavy rain and a lane closed on the longest road (when it "
                     "has 2+ lanes; the result lists the conditions run), each on `seeds` (default "
                     "1, 2) for duration_min (default 10); with DEVL, emergency vehicles every 4 minutes. Every run is "
@@ -477,7 +477,7 @@ TOOLS = [
      "parameters": _object({"extension": {"type": "string"}, "seeds": {"type": "array", "items": {"type": "integer"}},
                             "duration_min": {"type": "number"}}, ("extension",))},
     {"name": "read_decisions", "edits": False,
-     "description": "The agent's decisions in a run (id; the latest if left out), TSP's and DEVL's: when asked, the "
+     "description": "The agent's decisions in a run (id; the latest if left out), TSP's, DEVL's and DBL's: when asked, the "
                     "junction, who decided, the answer, latency, the outcome (served, not needed, blocked: a hindsight "
                     "check), the telemetry it read and the person-delay estimate. Filter by junction, from_min, to_min; "
                     "limit rows (default 20).",
@@ -486,7 +486,7 @@ TOOLS = [
     {"name": "decision_sensitivity", "edits": True,
      "description": "What the TSP agent relies on: a sample (default 8) of a run's TSP decisions re-asked to the model "
                     "deciding now, each with one fact changed: no_passengers, exit_full, no_cross_queues, "
-                    "arrives_on_green, no_estimate; how often each flips the answer, and how often the same question "
+                    "arrives_on_green, no_estimate, route_blocked; how often each flips the answer, and how often the same question "
                     "asked again keeps it. It asks the model several times a decision.",
      "parameters": _object({"id": {"type": "string"}, "sample": {"type": "integer"},
                             "perturbations": {"type": "array", "items": {"type": "string"}}})},
@@ -578,15 +578,21 @@ TOOLS = [
                                                "after_min": {"type": "integer", "description": "0-120"}}}},
                             "dispatch_now": {"type": "boolean"}}, ("schedules",))},
     {"name": "start_batch", "edits": True,
-     "description": "Start Batch Run: every seed (a list, like [1, 2, 3, 4]) runs duration_min simulated "
-                    "minutes, headless, against the baselines (never, always preempt). test_devl: the emergency vehicle schedules "
-                    "dispatched in each run, the DEVL tab's models deciding the lanes; test_tsp: the TSP tab's "
-                    "models deciding bus priority. Pick those models, the pace, runs at once and times each with "
+     "description": "Start Batch Run, which tests the AI controllers: every seed (a list, like [1, 2, 3, 4]) runs "
+                    "duration_min simulated minutes, headless, every combination of the tested controllers' models, "
+                    "each compared with the default configuration (the network's own signal plans, no controller "
+                    "acting; compare_default false leaves it out). test_tsp: the TSP tab's models deciding bus "
+                    "priority; test_dbl: the DBL tab's models deciding the bus lanes; test_devl: DEVL's emergency "
+                    "vehicle schedules dispatched in each run, the DEVL tab's models deciding the lanes. A tested "
+                    "controller needs a model picked in its tab. Pick the models "
+                    "in each controller's tab, and the pace, runs at once and times each in Batch Run's own tab, with "
                     "set_extension first (read_extensions shows them). Saves each run's workbook and a batch "
                     "workbook comparing the models; it takes as long as the Batch Run tab says.",
      "parameters": _object({"seeds": {"type": "array", "items": {"type": "integer"}, "description": "e.g. [1, 2, 3, 4]"},
                             "duration_min": {"type": "integer"},
-                            "test_tsp": {"type": "boolean"}, "test_devl": {"type": "boolean"}},
+                            "test_tsp": {"type": "boolean"}, "test_dbl": {"type": "boolean"},
+                            "test_devl": {"type": "boolean"},
+                            "compare_default": {"type": "boolean", "description": "default true"}},
                            ("seeds", "duration_min"))},
     {"name": "replay_run", "edits": True,
      "description": "Run a batch run's workbook (path) again from its telemetry feed, each decision as recorded, "

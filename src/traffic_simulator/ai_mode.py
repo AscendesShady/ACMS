@@ -33,7 +33,7 @@ from PySide6.QtGui import QTextDocument
 from PySide6.QtWidgets import (QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
                                QPlainTextEdit, QProgressBar, QSizePolicy, QTextBrowser, QVBoxLayout, QWidget)
 
-from traffic_simulator import assistant, network_tools, theme
+from traffic_simulator import assistant, network_tools, road_tools, theme, tool_args, tool_offer, tool_reports, tool_schemas
 from traffic_simulator.assistant import AssistantError, Cancelled, ToolsUnsupported, ollama_models  # noqa: F401
 from traffic_simulator.files import write_whole
 from traffic_simulator.widgets import OpenPageTabs, hint_label, icon_button, set_glyph, styled_button
@@ -154,7 +154,7 @@ def _plain(html_text: str) -> str:
 def project_context(network, od: dict, selection: dict) -> str:
     """The open project in short lines, for System 1's Context (Grab context): the network, each signal's plan,
     the boundary ends' flows, the OD demand (its five busiest pairs) and the map selection."""
-    summary = network_tools.network_summary(network)
+    summary = road_tools.network_summary(network)
     defaults = summary["defaults"]
     lines = [f"Network: {summary['grid']}; {summary['roads']} roads, {summary['one_way_roads']} one-way; driving on "
              f"the {summary['driving_side']}; {defaults['speed_limit_kmh']:g} km/h and "
@@ -482,8 +482,8 @@ class AIModePanel(QWidget):
         editor update told are told again, and the edits it applied, which stand, are told as its own (not the
         user's) in the next editor update."""
         if self._asked is not None and self._kept is not None and self._seen is not None:
-            self._untold += network_tools.describe_changes(self._kept, self._asked)
-            self._stood += network_tools.describe_changes(self._asked, self._seen)
+            self._untold += tool_reports.describe_changes(self._kept, self._asked)
+            self._stood += tool_reports.describe_changes(self._asked, self._seen)
             self._kept = self._seen
         self._seen, self._asked = self._kept, None
 
@@ -728,7 +728,7 @@ class AIModePanel(QWidget):
         if provider != "local":
             self._last_api[provider] = wanted
         self._refresh_start()  # now Restart
-        tools = network_tools.tool_specs() if self._host else None
+        tools = tool_schemas.tool_specs() if self._host else None
         history = list(self.history)
         self._gate(False, "Warming up…")
         self._indicate("warming")
@@ -760,7 +760,7 @@ class AIModePanel(QWidget):
         if self._host is None:
             return "", []
         network = self._host.network()
-        changes = self._untold + (network_tools.describe_changes(self._seen, network) if self._seen is not None else [])
+        changes = self._untold + (tool_reports.describe_changes(self._seen, network) if self._seen is not None else [])
         selection = self._host.selection()
         selected = f"{selection['selected']} {', '.join(selection['ids'])}" if selection["ids"] else "nothing"
         lines = ["[Editor update]"]
@@ -791,7 +791,7 @@ class AIModePanel(QWidget):
         self._indicate("answering")
         self._stopping(True)
         # How to do this kind of task well (network_tools.SKILLS), only the ones not already in the conversation
-        skills = network_tools.skills_for(prompt, "".join(m.get("content") or "" for m in self.history
+        skills = tool_offer.skills_for(prompt, "".join(m.get("content") or "" for m in self.history
                                                           if m["role"] == "user")) if tools else ""
         messages = [{"role": "system", "content": self._system}, *self.history,
                     {"role": "user", "content": context + prompt + skills}]
@@ -802,7 +802,7 @@ class AIModePanel(QWidget):
         asked = [i for i, message in enumerate(self.history) if message["role"] == "user"]
         recent = self.history[asked[-2]:] if len(asked) >= 2 else self.history
         used = {call.get("name") for message in recent for call in message.get("tool_calls") or []}
-        offered = network_tools.tools_for(f"{before}. {prompt}" if before else prompt, used) if tools else None
+        offered = tool_offer.tools_for(f"{before}. {prompt}" if before else prompt, used) if tools else None
         self._step = {"kind": "prompt", "prompt": shown, "editor_update": context,
                       "provider": provider, "model": model, "started": time.time(), "calls": [],
                       "tools_offered": [spec["name"] for spec in offered or []],
@@ -818,22 +818,22 @@ class AIModePanel(QWidget):
                 self._on_ui_thread(lambda: self._step is step and self._record_call(call, **fields), cancelled)
 
             def call_tool(call: dict):
-                if call.get("name") == network_tools.FIND_TOOLS:  # answered here, kept in the step's record
-                    found = network_tools.expand_tools(call.get("arguments"), offered)
+                if call.get("name") == tool_offer.FIND_TOOLS:  # answered here, kept in the step's record
+                    found = tool_offer.expand_tools(call.get("arguments"), offered)
                     record(call, what="find more tools", decision="read", result=found)
                     return found
-                against = network_tools.contradicts(call.get("name", ""), call.get("arguments"), prompt) if shown else None
+                against = tool_offer.contradicts(call.get("name", ""), call.get("arguments"), prompt) if shown else None
                 if against:  # not run, nor shown to the user: the model is told what they asked for
                     refused = {"error": against, "error_type": "not_what_was_asked"}
-                    record(call, what=network_tools.describe_call(call["name"], call.get("arguments") or {}),
+                    record(call, what=tool_reports.describe_call(call["name"], call.get("arguments") or {}),
                            decision="refused: not what was asked", result=refused)
                     return refused
                 if offered is not None and call.get("name") not in {spec["name"] for spec in offered}:
-                    offered.extend(spec for spec in network_tools.tool_specs() if spec["name"] == call.get("name"))
+                    offered.extend(spec for spec in tool_schemas.tool_specs() if spec["name"] == call.get("name"))
                 repaired = "; ".join(filter(None, (
-                    network_tools.fold_incident(call.get("name", ""), call.get("arguments")),
-                    network_tools.drop_strays(call.get("name", ""), call.get("arguments")),
-                    self._on_ui_thread(lambda: network_tools.repair_ends(  # reads the open network: on its thread
+                    tool_args.fold_incident(call.get("name", ""), call.get("arguments")),
+                    tool_args.drop_strays(call.get("name", ""), call.get("arguments")),
+                    self._on_ui_thread(lambda: tool_args.repair_ends(  # reads the open network: on its thread
                         self._host.network(), call.get("name", ""), call.get("arguments"), prompt), cancelled)
                 ))) if shown and self._host else None
                 result = run_tool(call)
@@ -843,7 +843,7 @@ class AIModePanel(QWidget):
 
             try:
                 return assistant.converse(provider, model, messages, key, offered, speak, call_tool, cancelled,
-                                          network_tools.EDIT_TOOLS), tools
+                                          tool_schemas.EDIT_TOOLS), tools
             except ToolsUnsupported:  # Ollama didn't say, then refused: carry on without tools
                 return assistant.converse(provider, model, messages, key, None, speak, run_tool, cancelled), None
 
@@ -878,7 +878,7 @@ class AIModePanel(QWidget):
             names = ", ".join(tool.get("parameters", {}).get("properties", {}))
             return f"- **{tool['name']}**({names}): {tool['description']}"
 
-        tools = network_tools.TOOLS
+        tools = tool_schemas.TOOLS
         reads = [line(tool) for tool in tools if not tool["edits"]]
         changes = [line(tool) for tool in tools if tool["edits"]]
         parts = [f"{len(tools)} tools. Reads, run at once:", *reads, "Changes, each waiting for your Apply:", *changes]
@@ -954,7 +954,7 @@ class AIModePanel(QWidget):
             self._answer_tool(session, turn, request)
         except Exception as exc:  # noqa: BLE001 - see above
             name = request.call.get("name")
-            result = network_tools.explain_error(f"Couldn't run {name}: {type(exc).__name__}: {exc}.")
+            result = tool_reports.explain_error(f"Couldn't run {name}: {type(exc).__name__}: {exc}.")
             if self._pending is request:
                 self._settle_pending(result)
             elif not request.done.is_set():
@@ -973,20 +973,20 @@ class AIModePanel(QWidget):
             request.done.set()
             return
         try:  # every tool's arguments in the shapes its schema gives, or refused saying what it takes
-            call["arguments"] = network_tools.normalise(call["name"], call["arguments"])
-        except network_tools.ToolError as exc:
+            call["arguments"] = tool_args.normalise(call["name"], call["arguments"])
+        except tool_args.ToolError as exc:
             self.log(call["name"], call["arguments"], f"refused: {exc}")
             request.result = {"error": f"{exc} Nothing was run."}
             self._record_call(call, decision="refused: arguments", result=request.result)
             self._say(None, f"Not run: {call['name']}. {exc}")
             request.done.set()
             return
-        line = network_tools.describe_call(call["name"], call["arguments"])
+        line = tool_reports.describe_call(call["name"], call["arguments"])
         checked = time.time()  # the check runs the edit on a copy: an OpenStreetMap download is timed here
-        problem = self._check(call["name"], call["arguments"]) if call["name"] in network_tools.EDIT_TOOLS else None
+        problem = self._check(call["name"], call["arguments"]) if call["name"] in tool_schemas.EDIT_TOOLS else None
         check_s = round(time.time() - checked, 3)
         if problem and problem.startswith("Nothing would change"):  # already as asked: an answer, not a refusal
-            request.result = network_tools.already_so(problem)  # (qwen3.5 read it as failing and gave up)
+            request.result = tool_reports.already_so(problem)  # (qwen3.5 read it as failing and gave up)
             self._record_call(call, what=line, decision="already so", result=request.result, check_s=check_s)
             self._say(None, f"Already so: {line}.")
             request.done.set()
@@ -998,13 +998,13 @@ class AIModePanel(QWidget):
             self._say(None, f"Not proposed: {line}. {problem}")
             request.done.set()
             return
-        if call["name"] in network_tools.EDIT_TOOLS:
+        if call["name"] in tool_schemas.EDIT_TOOLS:
             self._pending = request
             card = html.escape(line)  # rich text: the model's words (a place, a name) shown as text, never markup
             if self._preview:  # the Scenario Builder's plan, step by step, with what it assumed
                 card += "<br>" + html.escape(_plain(self._preview)).replace("\n", "<br>")
             self.proposal_text.setText(f"<b>Proposed change</b><br>{card}")
-            request.record = self._record_call(call, what=network_tools.describe_call(call["name"], call["arguments"]),
+            request.record = self._record_call(call, what=tool_reports.describe_call(call["name"], call["arguments"]),
                                                plan=_plain(self._preview) if self._preview else None,
                                                decision="waiting", proposed_at=time.time(), check_s=check_s)
             self.proposal.show()
@@ -1030,19 +1030,19 @@ class AIModePanel(QWidget):
             return "No network is open."
         self._preview = None
         try:
-            if name in network_tools.OD_TOOLS:
+            if name in tool_schemas.OD_TOOLS:
                 self._host.od(name, args, check_only=True)
-            elif name in network_tools.TYPE_TOOLS:
+            elif name in tool_schemas.TYPE_TOOLS:
                 self._host.types(name, args, check_only=True)
-            elif name in network_tools.RUN_TOOLS:
+            elif name in tool_schemas.RUN_TOOLS:
                 checked = self._host.runs(name, args, check_only=True)
                 self._preview = checked.get("preview") if isinstance(checked, dict) else None
             else:
                 network_tools.run_tool(deepcopy(self._host.network()), name, args)
-        except (network_tools.ToolError, ValueError) as exc:
+        except (tool_args.ToolError, ValueError) as exc:
             return str(exc)
         except Exception as exc:  # noqa: BLE001 - a window callback that can't read these arguments: refused too
-            return f"Bad arguments for {name}: {type(exc).__name__}: {exc}. {network_tools.signature(name)}."
+            return f"Bad arguments for {name}: {type(exc).__name__}: {exc}. {tool_args.signature(name)}."
         return None
 
     def _decide(self, apply: bool) -> None:
@@ -1050,7 +1050,7 @@ class AIModePanel(QWidget):
         if request is None:
             return
         call = request.call
-        line = network_tools.describe_call(call["name"], call["arguments"])
+        line = tool_reports.describe_call(call["name"], call["arguments"])
         decided, turn = time.time(), self._turn
         if apply:
             self.proposal.hide()  # no second Apply while it runs (a test can take a while)
@@ -1099,11 +1099,11 @@ class AIModePanel(QWidget):
                 return self._host.show(str(args.get("id", "")))
             if name == "read_traffic":
                 return self._host.traffic(args)
-            if name in network_tools.OD_TOOLS:
+            if name in tool_schemas.OD_TOOLS:
                 return self._host.od(name, args)  # works the Demand Generator's controls
-            if name in network_tools.TYPE_TOOLS:
+            if name in tool_schemas.TYPE_TOOLS:
                 return self._host.types(name, args)  # Mode Behavior's vehicle types
-            if name in network_tools.RUN_TOOLS:
+            if name in tool_schemas.RUN_TOOLS:
                 result = self._host.runs(name, args)  # runs and experiments, headless
                 if name in ("build_scenario", "assign_routes", "institution_mode_split"):
                     self._seen = self._snapshot()  # the assistant knows its own change
@@ -1111,10 +1111,10 @@ class AIModePanel(QWidget):
             if name == "note_plan":
                 return self._note_plan(args)
             result = network_tools.run_tool(self._host.network(), name, args)
-        except (network_tools.ToolError, ValueError) as exc:
-            return network_tools.explain_error(str(exc), self._host.network())
-        if name in network_tools.EDIT_TOOLS and name not in network_tools.OD_TOOLS | network_tools.TYPE_TOOLS \
-                | network_tools.RUN_TOOLS:  # network edits
+        except (tool_args.ToolError, ValueError) as exc:
+            return tool_reports.explain_error(str(exc), self._host.network())
+        if name in tool_schemas.EDIT_TOOLS and name not in tool_schemas.OD_TOOLS | tool_schemas.TYPE_TOOLS \
+                | tool_schemas.RUN_TOOLS:  # network edits
             self._host.edited(name)
             # ponytail: an edit the user makes on the map while the assistant is mid-answer is
             # folded in here too; track per-object authorship if that ever matters.
@@ -1147,7 +1147,7 @@ class AIModePanel(QWidget):
 
     def log(self, tool: str, args, outcome: str, kind: str = "tool call") -> None:
         """One line of the planning journal."""
-        what = network_tools.describe_call(tool, args if isinstance(args, dict) else {})
+        what = tool_reports.describe_call(tool, args if isinstance(args, dict) else {})
         self.journal.append({"time": time.strftime("%Y-%m-%d %H:%M:%S"), "kind": kind, "tool": tool,
                              "what": what, "arguments": json.dumps(args, default=str)[:2000], "outcome": outcome})
         del self.journal[:-KEEP]
@@ -1174,7 +1174,6 @@ class AIModePanel(QWidget):
         self._busy(None)
         self._stopping(False)
         self._settle_pending({"error": "The answer ended."})
-        provider = self._provider()
         if job == "answer":
             self._end_step(result, error)
             if result is STOPPED or error:  # left out of the conversation, and so is what the model learnt in it
@@ -1425,15 +1424,11 @@ class AIModePanel(QWidget):
         self.decide_result.setText("<br>".join(lines))
 
     def agent_options(self) -> list[dict]:
-        """Who a batch run can put in charge of TSP or DEVL, as found by the last scan: the two baselines (Never
-        preempt, general traffic, first; Always preempt: each with a `rule` and no system), System 1's
+        """Who a batch run can put in charge of TSP, DBL or DEVL, as found by the last scan: System 1's
         (Jev, Ollama's decision models) and System 2's (every Ollama model; Grok and Gemini whenever their keys are on this PC, each
         with the model last started in System 2, else the provider's usual one). Each: label, system, provider,
-        model and name (for the run's file name)."""
-        options = [{"label": "Never preempt (baseline)", "system": "", "provider": "", "model": "", "name": "never",
-                    "rule": False},
-                   {"label": "Always preempt (baseline)", "system": "", "provider": "", "model": "", "name": "always",
-                    "rule": True}]
+        model and name (for the run's file name). The batch's baseline, the default configuration, is its own."""
+        options = []
         for index in range(1, self.system_1.count()):
             provider, model = _system_one(self.system_1.itemData(index))
             options.append({"label": f"System 1: {'Jev' if provider == 'jev' else model}", "system": "1",

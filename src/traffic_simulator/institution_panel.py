@@ -1,5 +1,5 @@
 """Editing institutions in the Demand Generator: the Institutions panel and the selected building's Mode split
-dialog. Moved out of od_matrix.py, whose pair editor (ODCellPanel) builds the panel; od_matrix re-exports both.
+dialog. od_matrix.py's pair editor (ODCellPanel) builds the panel.
 """
 
 from __future__ import annotations

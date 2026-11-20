@@ -17,7 +17,7 @@ from traffic_simulator.daily_profile import DailyProfile, from_record  # noqa: E
 from traffic_simulator.institutions import metro_report  # noqa: E402
 from traffic_simulator.models import METRO_MIN_SPACING_M, MetroLine  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
-from traffic_simulator.network_io import load_network, save_network, saved_project  # noqa: E402
+from traffic_simulator.network_io import load_network, save_network  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 
@@ -213,7 +213,7 @@ def test_a_lines_service_is_checked_and_rides_go_station_to_station_on_one_line(
 
 
 def test_only_institutions_draw_on_the_metro_from_the_stations_in_their_circle():
-    from traffic_simulator import network_tools as tools
+    from traffic_simulator import demand_plans
     from traffic_simulator.institutions import place, vehicle_split
     from traffic_simulator.mode_behavior import VehicleModes
 
@@ -222,17 +222,17 @@ def test_only_institutions_draw_on_the_metro_from_the_stations_in_their_circle()
     network.add_metro_stop(line.id, 1400.0, 1100.0)
     pairs = [("1W", "1E")]
     try:  # road pairs never take the metro: it has its own OD matrix
-        tools.mode_plan(network, pairs, {"alternatives": [{"mode": "Car"}, {"mode": "Metro"}]}, modes, {pairs[0]: 600})
+        demand_plans.mode_plan(network, pairs, {"alternatives": [{"mode": "Car"}, {"mode": "Metro"}]}, modes, {pairs[0]: 600})
     except ValueError as exc:
         assert "metro" in str(exc).lower()
     else:
         raise AssertionError("a road pair took the metro")
     near = place(network, "Office", 650.0, 1180.0, 2000, 1000, people=200, employees=300)  # by M2; M1, M3 in its circle
-    percent, info = tools.institution_split(network, near, modes, {})
+    percent, info = demand_plans.institution_split(network, near, modes, {})
     assert info["metro"]["door"] == "M2" and sorted(info["metro"]["stations"]) == ["M1", "M3"]
     assert 0 < percent["MRT"] < 100 and info["metro"]["places"] == info["origins"] + 2  # its junctions, and M1, M3
     narrow = place(network, "Shop", 750.0, 1700.0, 1000, 700)  # M2 within the walk (618 m), no other station in its circle
-    percent, info = tools.institution_split(network, narrow, modes, {})
+    percent, info = demand_plans.institution_split(network, narrow, modes, {})
     assert percent["MRT"] == 0 and info["metro"]["stations"] == []
     near.mode_shares = {"Walk": 20.0, "Car": 50.0, "MRT": 30.0}
     per_person, _, unknown = vehicle_split(near, modes)
@@ -490,7 +490,9 @@ def test_overhead_projection_preserves_saved_geometry_frames_and_flat_markers_du
     from PySide6.QtCore import QPointF
     from PySide6.QtWidgets import QGraphicsItem
     from traffic_simulator import metro_assets
-    from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView, STILL, VEHICLE_Z, projection_lift
+    from traffic_simulator.network_scene import NetworkGraphicsScene, STILL
+    from traffic_simulator.network_view import NetworkView
+    from traffic_simulator.scene_items import VEHICLE_Z, projection_lift
     from traffic_simulator.simulation import Frame
     network = generate_network(2, 2)
     network.add_metro_line((0., 100.), (400., 100.))
@@ -542,7 +544,8 @@ def test_overhead_mesh_rotates_with_world_tracks_and_fit_reserves_all_extrusions
     from math import hypot
     from PySide6.QtCore import QPointF
     from traffic_simulator import metro_assets
-    from traffic_simulator.network_scene import NetworkGraphicsScene, projection_lift
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.scene_items import projection_lift
     horizontal = metro_assets.line_mesh([(0., 0.), (400., 0.)], 5)
     vertical = metro_assets.line_mesh([(100., 200.), (100., 600.)], 5)
     for a, b in zip(horizontal, vertical):
@@ -559,7 +562,8 @@ def test_overhead_mesh_rotates_with_world_tracks_and_fit_reserves_all_extrusions
 
 
 def test_overhead_scenery_renders_identically_when_the_run_background_is_cached():
-    from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.network_view import NetworkView
     from traffic_simulator.simulation import Frame
     network = generate_network(2, 2)
     network.add_metro_line((0., 180.), (700., 180.))
@@ -595,7 +599,9 @@ def test_overhead_scenery_renders_identically_when_the_run_background_is_cached(
 def test_long_viaduct_faces_do_not_hide_train_windows_at_the_far_station():
     from PySide6.QtCore import QPointF
     from traffic_simulator import metro_assets
-    from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView, projection_lift, projection_transform
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.network_view import NetworkView
+    from traffic_simulator.scene_items import projection_lift, projection_transform
     network = generate_network(2, 2)
     network.add_metro_line((0., 180.), (700., 180.))
     scene = NetworkGraphicsScene(network)
@@ -654,8 +660,8 @@ def test_curved_viaduct_joins_are_watertight_and_supports_follow_distance_not_ve
 
 def test_curved_shared_interchange_view_keeps_authoritative_tracks_and_passenger_state():
     from copy import deepcopy
-    from PySide6.QtCore import QPointF
-    from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.network_view import NetworkView
     network = generate_network(2, 2)
     line = network.add_metro_line((0., 500.), (2000., 500.))
     network.add_metro_line((1000., 0.), (1000., 1000.), merge=True)
@@ -685,7 +691,9 @@ def test_curved_deployment_ghost_lifts_only_the_render():
     from copy import deepcopy
     from PySide6.QtCore import QPointF
     from traffic_simulator import metro_assets
-    from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView, projection_lift
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.network_view import NetworkView
+    from traffic_simulator.scene_items import projection_lift
     scene = NetworkGraphicsScene(generate_network(2, 2))
     scene.rebuild()
     points = [(0., 0.), (20., 1.), (40., 4.)]
@@ -736,7 +744,8 @@ def verify_overhead_hardware():
     from PySide6.QtCore import QPointF
     from PySide6.QtGui import QImage, QPainter, QTransform
     from traffic_simulator import metro_assets
-    from traffic_simulator.network_scene import MetroItem, NetworkGraphicsScene, projection_lift, projection_transform
+    from traffic_simulator.network_scene import NetworkGraphicsScene
+    from traffic_simulator.scene_items import MetroItem, projection_lift, projection_transform
     from test_gpu import _gl_painter
     context, surface, fbo, device = _gl_painter(900, 700)
     scene = NetworkGraphicsScene()

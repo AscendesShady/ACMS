@@ -1,7 +1,7 @@
 """Reading a model's arguments for the assistant's tools (no Qt).
 
 Coercing types, filling in defaults, turning "all" into ids and repairing a call before it runs, plus ToolError and
-the small argument readers every tool module uses; moved out of network_tools.py, which re-exports them.
+the small argument readers every tool module uses.
 """
 
 from __future__ import annotations

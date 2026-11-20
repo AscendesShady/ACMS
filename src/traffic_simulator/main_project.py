@@ -5,6 +5,7 @@ through self (_stop_run, _log_edits, install_network, select, _refresh_grid, _sh
 
 from __future__ import annotations
 
+import json
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
@@ -21,6 +22,16 @@ TITLE = "ACMS — Agentic Context-Aware Mobility System"
 
 class ProjectMixin:
     """Undo/redo and the project file on the window."""
+
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_ask_to_save', '_building', '_end_modes_except', '_hand_demand_to_run', '_log_edits',
+             '_network_summary', '_refresh_grid', '_refresh_mode', '_refresh_summary', '_saved', '_select_nodes',
+             '_show_background', '_show_metro_summary', '_stop_run', 'add_node_button', 'ai_mode',
+             'background_painter', 'background_panel', 'extensions', 'history', 'install_network', 'metro_button', 'metro_line',
+             'multi_nodes', 'network', 'network_path', 'node_chain', 'od_matrix', 'od_panel', 'redo_action',
+             'runner', 'scene', 'seed_box', 'select', 'setWindowModified', 'setWindowTitle', 'speed_combo',
+             'statusBar', 'undo_action', 'vehicle_modes')
 
     # --- Undo / redo: snapshots of the network and the OD matrix entries -------------
 
@@ -131,16 +142,19 @@ class ProjectMixin:
     # --- Projects: the network, demand, vehicle types and run settings in one file (network_io) -------
 
     def _project(self) -> dict:
-        """The project's parts beyond the network, as plain data for network_io (network_io.project_record)."""
+        """The project's parts beyond the network, as plain data for network_io (network_io.project_record): with
+        the extensions' ticks, settings and own state (ExtensionsPanel.project_state)."""
         return project_record(self.od_matrix.cells, self.od_matrix.mode, self.vehicle_modes.modes,
-                              self.vehicle_modes.default_split, self.seed_box.value(), self.speed_combo.currentData())
+                              self.vehicle_modes.default_split, self.seed_box.value(), self.speed_combo.currentData(),
+                              self.extensions.project_state())
 
     def _save_marker(self) -> tuple:
-        return self.history.current, self.seed_box.value(), self.speed_combo.currentIndex(), self.od_matrix.mode
+        return (self.history.current, self.seed_box.value(), self.speed_combo.currentIndex(), self.od_matrix.mode,
+                json.dumps(self.extensions.project_state(), sort_keys=True, default=str))
 
     def unsaved(self) -> bool:
-        """Changed since last saved or opened: another undo state (edits, demand, types), seed, speed or the
-        Hourly/Daily switch (a Run uses the demand it shows)."""
+        """Changed since last saved or opened: another undo state (edits, demand, types), seed, speed, the
+        Hourly/Daily switch (a Run uses the demand it shows) or the extensions (ticks, settings, emergency schedules)."""
         now = self._save_marker()
         return now[0] is not self._saved[0] or now[1:] != self._saved[1:]
 
@@ -220,6 +234,8 @@ class ProjectMixin:
         if index >= 0:
             self.speed_combo.setCurrentIndex(index)
         self.ai_mode.restore_conversation(conversation)
+        # After the network: an extension's own state may name its places. A file without them leaves the tab as it is
+        not_restored = self.extensions.restore_project_state(project["extensions"]) if "extensions" in project else []
         self._commit()
         # Its own history: Undo can't bring the last project back under this one's name (Save would overwrite it)
         self.history = History(self.history.current)
@@ -227,5 +243,7 @@ class ProjectMixin:
         self._saved = self._save_marker()
         self._show_saved()
         self.statusBar().showMessage(f"Opened {path}: {len(network.nodes)} junctions, {len(cells)} OD pairs with "
-                                     f"demand, {len(modes)} vehicle types, seed {self.seed_box.value()}", 8000)
+                                     f"demand, {len(modes)} vehicle types, seed {self.seed_box.value()}" +
+                                     (f". Not restored: {'; '.join(not_restored)}" if not_restored else ""),
+                                     20000 if not_restored else 8000)
         return True

@@ -69,20 +69,18 @@ from dataclasses import dataclass, field
 from collections.abc import Mapping
 from types import MappingProxyType, SimpleNamespace
 from typing import NamedTuple
-from itertools import accumulate, count
+from functools import partial
+from itertools import accumulate
 from math import atan2, ceil, floor, hypot, inf, pi, sqrt
 
 from .geometry import point_along, polyline_length
 # The lane graph; its other names are imported from here too, as before it had a module of its own
-from .lane_graph import (BAY_OFFSET_M, BAY_SPEED, GIVE_WAY_KMH, JUNCTION_TURN_FRICTION,  # noqa: F401
-                         JUNCTION_TURN_MIN_KMH, PRIORITY_CAPACITY_VPH, RAMP_UTURN_MAX_KMH, ROAD_PRIORITY,
-                         ROUNDABOUT_ENTRY_VPH, ROUTE_PENALTY, STORAGE_M_PER_VEHICLE, TURN_SATURATION_VPH, Bay, Graph,
-                         Lane, Link, Signal, Turn, measured_capacity, path_size_logit)
+from .lane_graph import Bay, Graph, Lane, Link, Signal, Turn
 # A run's pair demand lives in demand.py; imported from here too, as before
 from .demand import PairDemand  # noqa: F401
 # The physics thread lives in runner.py; imported from here too, as before (simulation.Runner)
-from .runner import Runner  # noqa: F401
 from .models import BAY_ENTRY_M, LANE_WIDTH_M, Network
+from .road_words import QUEUED_KMH
 from .signal_timing import (ACTUATED, ADAPTIVE, COORDINATED, DETECTOR_GAP_S, MIN_GREEN_S,
                             OPTIMISE_TRIALS, ActuatedJunction, MaxPressureJunction,
                             STOP_LINE_LOOP_M, UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M,
@@ -119,6 +117,12 @@ IMPATIENCE_S = 8.0  # waiting this long in the wrong lane, it turns from where i
 # EMERGENCY_LANE_M before each signalised junction on its route: the Dynamic Emergency Vehicle Lane, which that
 # junction's DEVL controller may clear for it (a strategic lane choice, as a bus's for its bay; it turns from there).
 EMERGENCY_LANE_M = 150.0
+# So too a vehicle whose class the signal override's kerb_lane_for names (the Dynamic Bus Lane's buses), over the last
+# BUS_LANE_M before each signalised junction it may turn on from the kerbside lane: the intermittent bus lane its
+# controller may clear for it (Viegas and Lu 2004; Eichler and Daganzo 2006). It obeys that lane's own signal.
+BUS_LANE_M = 150.0
+ROUTE_AHEAD_JUNCTIONS = 2  # how many signalised junctions past this one route_ahead tells a priority agent about
+HOLD_FRESH_S = 2.0  # a lane hold renewed within this is a lane being cleared (dynamic_lane.STALE_S)
 # Adverse weather (HCM 2000 Ch 22, p22-9 to 22-11, from freeway studies near 100 km/h): (the share of each speed
 # limit drivers keep, the factor on their reaction time τ). Free-flow speed 10 km/h lower in light rain or snow, 20
 # in heavy rain, 50 in heavy snow, taken as a share of 100 km/h; τ set so the queue discharge rate (saturation flow,
@@ -349,6 +353,14 @@ class Loop:
         return occupied, passed
 
 
+def _count_and_seconds() -> list:  # observed traversals' default (a function, not a lambda: it must pickle)
+    return [0, 0.0]
+
+
+def _two_counts() -> list:  # observed arrivals' default
+    return [0, 0]
+
+
 def _nested(by_move: dict) -> dict:
     """{(link, next link): value} as {link: {next link: value}} (plain JSON-able data)."""
     nested: dict = {}
@@ -471,6 +483,9 @@ class Simulation:
         # Called for every signalised arm each step when set (the TSP extension): (junction, arriving
         # road, planned state, context) -> the state to show. None: the plans run untouched.
         self.signal_override = None
+        # What signal overrides share about a junction between steps, in its view as "holds" (dynamic_lane.py: the
+        # lane controller clearing it, and one that waits for it); a fork starts with none
+        self.lane_holds: dict = {}
         self.observed: dict | None = None  # observe() turns on per-step recording (headless tests)
         # Incidents and work zones (close()): all of them, those on now, and per lane / link what they hold
         self.closures: list[Closure] = []
@@ -629,13 +644,46 @@ class Simulation:
             self._adapt(method, nodes, model, low, high, ratios)
         return plans
 
+    # What the adaptive controllers and their detectors call back: methods (bound, or with their first arguments
+    # given by functools.partial), not closures, so a Simulation can be pickled (a live run's goes to its own
+    # process and comes back: physics_process.py).
+
+    def _report_cycle(self, signal: Signal, node: str, plan: dict) -> None:
+        self.signal_plans[node] = {**self.signal_plans.get(node, {}), **plan,
+                                   "cycle_s": round(sum(g + signal.span for g in plan["greens_s"]), 1)}
+
+    def _report_plan(self, node: str, plan: dict) -> None:  # each plan replaced whole, so published frames keep theirs
+        self.signal_plans[node] = {**self.signal_plans.get(node, {}), **plan}
+
+    def _call_phase(self, controller, signal: Signal, phase: int, occupied, passed):
+        return (occupied or passed) and controller.detect(phase, self.time, signal)
+
+    def _measure_lane(self, controller, lane, link, occupied, passed):
+        return controller.measure(lane, self._states.get(link.id) == "G", occupied, passed, self.dt)
+
+    def _count_link(self, region, node: str, link, occupied, passed):
+        return region.junctions[node].count(link.id, self.time, passed)
+
+    def _pressure(self, group) -> float:
+        def on(link) -> int:  # Varaiya's x upstream: the vehicles near the line, moving or not (PRESSURE_ZONE_M:
+            # the whole 500 m link counted one still half a minute away, and held a side road's lone car 52 s)
+            return sum(1 for lane in link.all_lanes() for vehicle in lane.vehicles
+                       if lane.length - vehicle.s <= PRESSURE_ZONE_M)
+
+        def held(link) -> int:  # downstream, only what can block the junction: vehicles standing in a queue
+            return sum(1 for lane in link.all_lanes() for vehicle in lane.vehicles if vehicle.speed < HELD_MPS)
+
+        total = 0.0
+        for link_id in group:
+            link = self.graph.links[link_id]
+            after = {turn.lane_out.link for turn in link.turns.values()}
+            total += on(link) - (sum(held(out) for out in after) / len(after) if after else 0.0)
+        return total
+
     def _actuate(self, method: str, node: str, signal: Signal) -> None:
         """Hand a signal to actuated control (detectors DETECTOR_GAP_S of travel before each stop line placing calls)
         or to max-pressure (each phase's queued vehicles less those on the links it feeds)."""
-        def report(node: str, plan: dict) -> None:
-            self.signal_plans[node] = {**self.signal_plans.get(node, {}), **plan,
-                                       "cycle_s": round(sum(g + signal.span for g in plan["greens_s"]), 1)}
-
+        report = partial(self._report_cycle, signal)
         graph = self.graph
         if method == "actuated":
             controller = ActuatedJunction(node, len(signal.phases), report)
@@ -644,26 +692,9 @@ class Simulation:
                 for lane in link.all_lanes():  # a cycle lane's bikes call their green too
                     at = max(lane.length - DETECTOR_GAP_S * link.speed, 0.0)
                     self._loops.append((Loop(lane, at, at + 2.0, self._out[lane]),
-                                        lambda occupied, passed, phase=phase: (occupied or passed) and
-                                        controller.detect(phase, self.time, signal)))
+                                        partial(self._call_phase, controller, signal, phase)))
         else:
-            def on(link) -> int:  # Varaiya's x upstream: the vehicles near the line, moving or not (PRESSURE_ZONE_M:
-                # the whole 500 m link counted one still half a minute away, and held a side road's lone car 52 s)
-                return sum(1 for lane in link.all_lanes() for vehicle in lane.vehicles
-                           if lane.length - vehicle.s <= PRESSURE_ZONE_M)
-
-            def held(link) -> int:  # downstream, only what can block the junction: vehicles standing in a queue
-                return sum(1 for lane in link.all_lanes() for vehicle in lane.vehicles if vehicle.speed < HELD_MPS)
-
-            def pressure(group) -> float:
-                total = 0.0
-                for link_id in group:
-                    link = graph.links[link_id]
-                    after = {turn.lane_out.link for turn in link.turns.values()}
-                    total += on(link) - (sum(held(out) for out in after) / len(after) if after else 0.0)
-                return total
-
-            controller = MaxPressureJunction(node, [group for group, _ in signal.phases], pressure, report)
+            controller = MaxPressureJunction(node, [group for group, _ in signal.phases], self._pressure, report)
         signal.adapt(controller)
 
     def _approaches(self, nodes: list[str], flows: dict, moves: dict, weights: dict) -> list[Approach]:
@@ -692,11 +723,7 @@ class Simulation:
     def _adapt(self, method: str, nodes: list[str], model: TimingModel, low: float, high: float, ratios: dict) -> None:
         """Hand the group to SCATS or SCOOT, with their detectors: SCATS a loop at every lane's stop
         line, SCOOT one near the upstream end of every lane."""
-        graph, network, group = self.graph, self.graph.network, set(nodes)
-
-        def report(node: str, plan: dict) -> None:  # each plan replaced whole, so published frames keep theirs
-            self.signal_plans[node] = {**self.signal_plans.get(node, {}), **plan}
-
+        graph, network, group, report = self.graph, self.graph.network, set(nodes), self._report_plan
         region = (ScatsRegion if method == "scats" else ScootRegion)(model.cycle, low, high)
         for node in nodes:
             signal, junction = graph.signals[node], network.node(node)
@@ -711,8 +738,7 @@ class Simulation:
                     for lane in link.all_lanes():
                         controller.add_lane(lane, signal.phase_of[link.id])
                         self._loops.append((Loop(lane, lane.length - STOP_LINE_LOOP_M, lane.length, self._out[lane]),
-                                            lambda occupied, passed, lane=lane, link=link, controller=controller:
-                                            controller.measure(lane, self._states.get(link.id) == "G", occupied, passed, self.dt)))
+                                            partial(self._measure_lane, controller, lane, link)))
             else:
                 links = []
                 for link in graph.arriving[node]:
@@ -722,8 +748,7 @@ class Simulation:
                                            junction.stop_weight_s))
                     for lane in link.all_lanes():
                         self._loops.append((Loop(lane, at, at + UPSTREAM_LOOP_M, self._out[lane]),
-                                            lambda occupied, passed, link=link, node=node:
-                                            region.junctions[node].count(link.id, self.time, passed)))
+                                            partial(self._count_link, region, node, link)))
                 controller = ScootJunction(node, region, ratios[node], model.offsets[node],
                                            junction.target_saturation, links, report, signal.span)
             signal.adapt(controller)
@@ -943,9 +968,9 @@ class Simulation:
 
     def fork(self) -> "Simulation":
         """A copy of the run as it is now, to run on by itself (rollout): the same vehicles, signals, random numbers and
-        demand to come. Its signal override, observations and detectors aren't copied, and adaptive or actuated
+        demand to come. Its signal override, observations, detectors and lane holds aren't copied, and adaptive or actuated
         signals in it keep their current greens. Copying takes a few tens of milliseconds for a few hundred vehicles."""
-        memo = {id(self.signal_override): None, id(self.observed): None, id(self._loops): []}
+        memo = {id(self.signal_override): None, id(self.observed): None, id(self._loops): [], id(self.lane_holds): {}}
         box: dict = {}
 
         def copy_it() -> None:
@@ -1160,7 +1185,8 @@ class Simulation:
         return reach
 
     def _lane_reach(self, vehicle: Vehicle) -> list[float]:
-        key = (vehicle.leg, len(vehicle.stops), self._closure_key)
+        bus_lane = self._classes.get(vehicle.mode) in getattr(self.signal_override, "kerb_lane_for", ())
+        key = (vehicle.leg, len(vehicle.stops), self._closure_key, bus_lane)
         if vehicle.reach_key != key:
             stops: dict[int, float] = {}
             for leg, bay in vehicle.stops:
@@ -1169,6 +1195,13 @@ class Simulation:
                 for leg, link in enumerate(vehicle.route):
                     if link.end in self.graph.signals:
                         stops[leg] = max(0.0, link.lanes[0].length - EMERGENCY_LANE_M)
+            elif bus_lane:  # the kerbside lane over the last BUS_LANE_M before each signal it may turn on from
+                for leg, link in enumerate(vehicle.route[:-1]):
+                    kerb = link.pockets[0]
+                    turn = link.turns.get((kerb, vehicle.route[leg + 1].id))
+                    if link.end in self.graph.signals and turn is not None and turn.permitted:
+                        start = max(0.0, link.lanes[kerb].length - BUS_LANE_M)
+                        stops[leg] = min(stops.get(leg, start), start)  # or from its bay, the earlier
             vehicle.reach = self.reach(vehicle.route, vehicle.leg, stops, any_lane=vehicle.emergency,
                                        closed=self._closed_ahead(vehicle) if self._closed else None)
             vehicle.reach_key = key
@@ -1236,10 +1269,12 @@ class Simulation:
         phases (the arms each serves, its green), amber, all-red and minimum green; each arm's
         vehicles, nearest the stop line first (type, its vehicle class, distance to it, speed, lane, people on
         board: a bus's simulated load, else its type's occupancy; the exit lane it will take), speed
-        limit, length and kerbside lane (`kerb_lane`: the lane past a kerb pocket's, 0 without one); each of those exit lanes' room (`exit_room_m`: its length less what its vehicles and those turning into it take
+        limit, length, kerbside lane (`kerb_lane`: the lane past a kerb pocket's, 0 without one) and longest queue
+        (`queue_share`, _queue_share); `route_ahead(vehicle id)`, a vehicle's next signalised junctions; each of those exit lanes' room (`exit_room_m`: its length less what its vehicles and those turning into it take
         up, gaps included, as _may_enter reckons it); the vehicles crossing the junction; and the
         distance across it, stop line to far stop line; and the cycle (its length, when it began, the
-        offset). The arm's own vehicles are also `approaching` in each arm's context."""
+        offset); and the run's lane holds (`holds`: lane_holds, kept between steps). The arm's own vehicles are also
+        `approaching` in each arm's context."""
         cycle_start = signal.cycle_start(self.time)  # first: an adaptive plan moves on to now
         arriving = self.graph.arriving[node]
         if node not in self._box_m:
@@ -1266,7 +1301,8 @@ class Simulation:
                       "emergency": vehicle.emergency}
                      for lane in link.lanes for vehicle in lane.vehicles), key=lambda vehicle: vehicle["distance_m"]),
                 "speed_limit_mps": link.speed, "length_m": min(lane.length for lane in link.lanes),
-                "lanes": len(link.lanes), "kerb_lane": link.pockets[0]}  # past a kerb pocket's lanes
+                "lanes": len(link.lanes), "kerb_lane": link.pockets[0],  # past a kerb pocket's lanes
+                "queue_share": round(self._queue_share(link), 2)}
                 for link in arriving}
         road_of = {link.id: link.road for link in arriving}
         return {"time_s": self.time, "plan": self.signal_plans.get(node, {}), "arms": arms, "exit_room_m": rooms,
@@ -1275,7 +1311,44 @@ class Simulation:
                            for group, green in signal.phases],
                 "amber_s": signal.amber, "all_red_s": signal.all_red, "min_green_s": MIN_GREEN_S, "box_m": self._box_m[node],
                 "cycle_s": signal.cycle, "cycle_start_s": cycle_start, "offset_s": signal.offset,
-                "rollout": self.rollout}  # what-ifs from this moment (an agent's look-ahead)
+                "rollout": self.rollout,  # what-ifs from this moment (an agent's look-ahead)
+                "route_ahead": self.route_ahead,  # a vehicle's next signalised junctions (TSP's and DBL's words)
+                "holds": self.lane_holds}  # what overrides share between steps (Simulation.lane_holds)
+
+    def _queue_share(self, link: Link, lanes=None) -> float:
+        """The longest queue on the link's lanes (`lanes`: those indices, else all) as a share of its lane's length, its
+        queued vehicles (slower than road_words.QUEUED_KMH) and their gaps: the HCM's queue storage ratio (1: it
+        reaches back to the junction behind)."""
+        return max((sum(v.length_m + v.min_gap for v in lane.vehicles if v.speed * 3.6 < QUEUED_KMH)
+                    / max(lane.length - lane.start, 1.0)  # a turn pocket stores only past where it opens
+                    for lane in link.lanes if lanes is None or lane.index in lanes), default=0.0)
+
+    def route_ahead(self, vehicle_id: str, junctions: int = ROUTE_AHEAD_JUNCTIONS) -> list[dict]:
+        """The next `junctions` signalised junctions on a vehicle's route past the one it is coming to, nearest first:
+        each one's id, how far on from that junction, the longest queue on the road the vehicle takes to it (the
+        lanes it may go on from; the most of the links on the way, `queue_share`), the signal that road shows now
+        ("G", "Y", "R") and whether a lane controller is clearing another arm there (`priority`: its key, "devl" or
+        "dbl", from a fresh lane hold whose arm isn't this road; else None). [] for a vehicle not running or at its last link."""
+        vehicle = next((v for v in self.vehicles if v.id == vehicle_id), None)  # ponytail: a scan; few ask per step
+        found, distance, share = [], 0.0, 0.0
+        if vehicle is None:
+            return found
+        route = vehicle.route
+        for index in range(vehicle.leg + 1, len(route)):
+            link, onward = route[index], route[index + 1] if index + 1 < len(route) else None
+            lanes = None if onward is None else {i for (i, out), turn in link.turns.items()
+                                                  if out == onward.id and turn.permitted} or None
+            distance += min(lane.length for lane in link.lanes)
+            share = max(share, self._queue_share(link, lanes))
+            if link.end in self.graph.signals:
+                hold = self.lane_holds.get(link.end)  # one clearing this very road lets the vehicle on, not holds it
+                held = hold and self.time - hold[2] <= HOLD_FRESH_S and (len(hold) < 4 or hold[3] != link.road)
+                found.append({"junction": link.end, "distance_m": round(distance), "queue_share": round(share, 2),
+                              "signal": self._states.get(link.id, "R"), "priority": hold[0] if held else None})
+                share = 0.0
+                if len(found) == junctions:
+                    break
+        return found
 
     def _may_enter(self, vehicle: Vehicle, turn: Turn) -> bool:
         lane = vehicle.segment
@@ -2276,11 +2349,11 @@ class Simulation:
             return deque(maxlen=keep) if keep else []
 
         self._observed_base = (Counter(self.collision_kinds), self.teleports, self.emergency_braking, self.time)
-        self.observed = {"passages": events(), "traversals": defaultdict(lambda: [0, 0.0]),
-                         "turn_traversals": defaultdict(lambda: [0, 0.0]), "conflicts": events(),
+        self.observed = {"passages": events(), "traversals": defaultdict(_count_and_seconds),
+                         "turn_traversals": defaultdict(_count_and_seconds), "conflicts": events(),
                          "stops": events(), "stop_lines": events(), "traversal_log": events(), "boardings": events(),
                          "fuel_ml": defaultdict(float), "fuel_road_ml": defaultdict(float), "fuel_km": defaultdict(float),
-                         "arrivals": defaultdict(lambda: [0, 0]), "green_starts": defaultdict(list),
+                         "arrivals": defaultdict(_two_counts), "green_starts": defaultdict(list),
                          "emergency_standstill": defaultdict(float), "collisions": events(), "teleports": events(),
                          "emergency_braking": events()}
 

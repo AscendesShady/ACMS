@@ -64,7 +64,6 @@ WAIT_MPS = 0.1  # at or below this, outside a bus stop: waiting (SUMO's tripinfo
 GAP_M = 2.5  # between queued vehicles
 RUNS = Path(tempfile.gettempdir()) / "ACMS runs"  # each run's working folder while it goes
 _numbers = itertools.count(1)  # this process's runs, so runs started in the same second get folders of their own
-_naming = threading.Lock()  # runs finishing at once (a batch's) take their workbook names one at a time
 MINUTE_COLUMNS = ["Time (s)", "Clock", "Vehicles on the road", "Spawned (total)", "Arrived (total)",
                   "Arrived this minute", "Throughput (veh/h)", "People carried this minute", "People (per hour)",
                   "Mean speed (km/h)", "Queued now (veh)", "Most queued this minute (veh)", "Delay (veh·h)",
@@ -119,14 +118,15 @@ def clock(seconds: float) -> str:
 def unused_path(results: Path, name: str) -> Path:
     """`name` in `results`, numbered "(2)", "(3)"… when taken (runs started in the same second, an experiment's or two
     crashed ones), and taken at once (touched) so a run finishing alongside numbers its own."""
-    with _naming:
-        path = Path(results) / name
-        count = 1
-        while path.exists():
+    path = Path(results) / name
+    count = 1
+    while True:
+        try:
+            path.touch(exist_ok=False)  # made only if it isn't there: another process (a pool's run) can't take it too
+            return path
+        except FileExistsError:
             count += 1
             path = path.with_name(f"{name[:-5]} ({count}).xlsx")
-        path.touch()
-        return path
 
 
 class RunRecorder:

@@ -23,7 +23,8 @@ from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from traffic_simulator.gpu import software  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
-from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView  # noqa: E402
+from traffic_simulator.network_scene import NetworkGraphicsScene  # noqa: E402
+from traffic_simulator.network_view import NetworkView  # noqa: E402
 from traffic_simulator.simulation import Frame, VehicleState  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
@@ -171,6 +172,10 @@ def test_the_gpu_draws_the_vehicles_where_they_are():
     _child("vehicles")
 
 
+def test_the_gpu_draws_the_people_clear_of_overbridges():
+    _child("people")
+
+
 def test_a_display_frame_costs_no_work_per_vehicle():
     _child("speed")
 
@@ -231,6 +236,52 @@ def child_vehicles():
     image = fbo.toImage()
     assert near(image, 31, 12, "#00ff00") and near(image, 32, 13, "#00ff00")
     assert scene.gpu.uploads == 1  # the same frame: not sent again
+
+
+def child_people():
+    """2.5D people, none near an overbridge: one more instanced batch where they stand, and none drawn by QPainter
+    (18 polygons a person a display frame: 1,000 of them took 174 ms)."""
+    from PySide6.QtGui import QTransform
+
+    from traffic_simulator import vehicle_layer
+    from traffic_simulator.scene_items import projection_lift, projection_transform
+
+    context, surface, fbo, device = _gl_painter(400, 400)
+    scene = NetworkGraphicsScene(generate_network(2, 2))
+    scene.rebuild()
+    scene.isometric = True
+    walkers = ((10.0, 0.0, 1.0, 0.0, (0.0, 0.0, 1.0, 0.0)), (0.0, 8.0, 0.0, 1.0, (0.0, 8.0, 0.0, 1.0)))
+    scene.frame, scene.frame_alpha = Frame(0.0, (), {}, 0, 0, walkers=walkers), 0.5
+    t = projection_transform(True, 20.0)
+    t = QTransform(t.m11(), t.m12(), t.m21(), t.m22(), 200.0, 300.0)
+    vehicle_layer._pedestrian_faces.cache_clear()
+    for alpha in (0.5, 0.5, 1.0):
+        scene.frame_alpha = alpha
+        fbo.bind()
+        painter = QPainter(device)
+        painter.fillRect(0, 0, 400, 400, QColor("#075322"))
+        painter.setWorldTransform(t)
+        scene.vehicle_layer.paint(painter, None)
+        painter.end()
+    image = fbo.toImage()
+    assert scene.gpu.failed == "", scene.gpu.failed
+    assert scene.gpu.uploads == 1 and scene.gpu.draws == 3  # sent once, one batch a display frame
+    assert vehicle_layer._pedestrian_faces.cache_info().misses == 0  # QPainter drew nobody
+
+    def at(x, y, up):
+        return image.pixelColor(t.map(QPointF(x, y) + projection_lift() * up).toPoint())
+
+    for x, y in ((10.0, 0.0), (0.0, 8.0)):  # where they stand at alpha 1: a yellow torso, shaded; a pale head
+        torso, head = at(x, y, 1.1), at(x, y, 1.55)
+        assert torso.red() > 150 and torso.green() > 130 and torso.blue() < 130, torso.name()
+        assert head.red() > 150 and head.blue() > 150, head.name()
+    assert at(5.0, 0.0, 1.1).name() == "#075322" and at(-6.0, -6.0, 1.1).name() == "#075322"  # nobody elsewhere
+    scene.isometric = False  # top-down they are QPainter's markers: nothing more for the GPU
+    fbo.bind()
+    painter = QPainter(device)
+    scene.vehicle_layer.paint(painter, None)
+    painter.end()
+    assert scene.gpu.draws == 3
 
 
 def child_speed():
@@ -312,6 +363,7 @@ def child_window():
     print(f"{len(frame.vehicles)} vehicles; {draws} display frames drawn on the GPU, {uploads} physics frames sent; "
           f"physics at {runner.speed_now:.1f}x of 10x")
     assert frame.vehicles and not scene.gpu.failed, scene.gpu.failed
+    assert type(runner).__name__ == "ProcessRunner" and not runner.error  # on a real display: its physics in a process
     assert draws > 150, draws  # the vehicles went through the GPU every display frame (about 60 a second)...
     assert 0 < uploads <= draws  # ...and each physics frame was sent to it once, however often it was drawn
     assert runner.speed_now > 8, runner.speed_now  # drawing leaves the physics its pace

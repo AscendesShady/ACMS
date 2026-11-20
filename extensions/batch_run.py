@@ -1,28 +1,32 @@
 """Batch run, an extension with its own controls (panel(), see src/traffic_simulator/extensions.py).
 
-Runs the simulation headless once per seed (and model, and time), for a chosen duration, so a batch can be
-repeated exactly (an LLM's answers aside) and its agents compared. Seeds are typed like pages to print:
-"45, 34, 1-45" (each seed once, in the order written). Two ticks say what the runs test:
-- Test TSP runs Transit Signal Priority (ticked in the Extensions tab or not) with the TSP tab's choice: System 1
-  or System 2 (the model on in AI Mode), or Multiple, its ticked models, read from the tab (`app.tsp_batch`,
-  MainWindow.tsp_batch, from the extension's batch_settings()) with its Decide within (each answer's deadline,
-  in simulated seconds; missed: the plan), Pace (how fast the runs go against the wall clock, for they never
-  pause for an answer), Runs at once (never two on one model server) and Times each. The baselines, Never
-  preempt (general traffic: the plan) and Always preempt, always run beside them, each agent compared with Never.
-- Test DEVL dispatches the Dispatch Emergency Vehicle tab's fleet at the start of each run (each line on its own
-  frequency) with the DEVL tab's choice deciding its lane signals (`app.devl_batch`; the two baselines beside
-  them), and records each emergency vehicle's trip, how long each lane signal was on and every decision. Both
-  ticked: every TSP agent runs with every DEVL agent (the tabs must agree on pace, runs at once and times each).
-The line under the seeds counts the runs and their time as a sum: minutes × seeds × agents × times, then, with
-models answering, divided by the runs at once and the pace (each model server's runs one after another).
+Tests the AI controllers, each a signal override whose agent answers TRUE or FALSE, with different models over
+different seeds and times, and exports the results. Its rows, in order:
+- Seeds, typed like pages to print: "45, 34, 1-45" (each seed once, in the order written); Duration; Pace (how fast
+  a model's runs go against the wall clock, for they never pause for an answer); Runs at once (never two on one
+  model server); Times each (each model's runs repeated on every seed: a model's answers vary from run to run, and
+  the repeats show by how much). One setting each for every controller.
+- Compare with default (on at first): the one baseline, the default configuration: the network as configured, no
+  controller acting, its signal plans as made with the network (Webster's from the demand, or timings entered from a
+  survey). It runs once a seed (a seed always runs the same), and every agent is compared with it.
+- Test TSP (Transit Signal Priority: priority for buses), Test DBL (Dynamic Bus Lane: a lane cleared for a bus) and
+  Test DEVL (Dynamic Emergency Vehicle Lane: a lane cleared for an emergency vehicle), in that order, each run ticked
+  in the Extensions tab or not, with its tab's choice (`app.controller_plan(kind)`, MainWindow.controller_plan, from
+  the extension's batch_settings()): System 1 or System 2 (the model on in AI Mode), or Multiple, its ticked models,
+  with its Decide within (each answer's deadline, in simulated seconds; missed: the plan). A ticked test needs a model.
+  Every combination of the ticked controllers' models is an agent, run on every seed, Times each times; each run saves
+  its workbook and telemetry feed, and the batch workbook compares every agent with the default.
+- Test DEVL also dispatches DEVL's Dispatch Emergency Vehicle fleet at the start of each run, the default's too (each
+  line on its own frequency), and records each emergency vehicle's trip; ticking it ticks DEVL, so its dispatch
+  section is there to set (`app.tick_extension`). Test TSP and Test DBL need buses in the demand.
+The line above Start counts the runs and their time as a sum, then, with models answering, divided by the runs at
+once and the pace (each model server's runs one after another).
 Show runs on map (the pin beside Start, on at first) draws the batch's run on the map as it goes, the one the menu
-bar's clock shows (`app.show_runs`); off, the map shows the network alone. Ticking Test DEVL ticks the Dispatch
-Emergency Vehicle extension (`app.tick_extension`), whose fleet each run
-dispatches. While a batch runs, the menu bar's clock shows its runs' simulated time (its tooltip names each run going,
-Never preempt the baseline) and the status bar how many are done and about how long is left.
-Start Batch hands it all to the window (`app.run_batch`, MainWindow.run_batch): each run saves its own workbook
-and telemetry feed, and the batch one compares the agents with the first. Replay a Run (the icon beside it) runs
-one of those workbooks again from its telemetry feed, each decision as recorded (`app.replay_run`).
+bar's clock shows (`app.show_runs`); off, the map shows the network alone. While a batch runs, the menu bar's clock
+shows its runs' simulated time (its tooltip names each run going) and the status bar how many are done and about
+how long is left.
+Start Batch hands it all to the window (`app.run_batch`, MainWindow.run_batch). Replay a Run (the icon beside it)
+runs one of those workbooks again from its telemetry feed, each decision as recorded (`app.replay_run`).
 """
 
 import re
@@ -30,26 +34,46 @@ import re
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QCheckBox, QComboBox, QFileDialog, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QSpinBox, QWidget
 
-from traffic_simulator.widgets import hint_label, icon_button, styled_button
+from traffic_simulator.agent_choice import PACES
+from traffic_simulator.widgets import ChoiceButtons, hint_label, icon_button, styled_button
 from traffic_simulator.theme import SECONDARY_TEXT, STATUS
 
 NAME = "Batch Run"
 ORDER = 1
-DESCRIPTION = "Run the simulation once per seed for a set time, testing TSP's models or emergency vehicles."
+DESCRIPTION = "Test the AI controllers (TSP, DBL, DEVL) with their models over seeds and times, and export the results."
 
 MAX_SEED = 2_147_483_647
 MAX_RUNS = 10_000
+TESTS = (("TSP", "Transit Signal Priority"), ("DBL", "Dynamic Bus Lane"), ("DEVL", "Dynamic Emergency Vehicle Lane"))
+AT_ONCE = (1, 8, 4)  # Runs at once: least, most, at first
+MAX_TIMES = 100
 DURATIONS = [("5 min", 5), ("10 min", 10), ("15 min", 15), ("30 min", 30), ("1 hour", 60), ("Other…", None)]
-app = None  # the window's services (run_batch, tsp_batch, replay_run), set by the Extensions tab
-_ui: dict = {}  # the panel's start(), while it exists
+app = None  # the window's services (run_batch, controller_plan, replay_run), set by the Extensions tab
+_ui: dict = {}  # the panel's start() and its Other… minutes box, while it exists
 
 
-def start(seeds: str, minutes: int, test_tsp: bool, test_devl: bool, check_only: bool = False) -> dict:
-    """The assistant's start_batch: these settings into the panel, then Start Batch (MainWindow.run_batch), the TSP
-    and DEVL tabs giving the models. `check_only`: checked, nothing changed. ValueError says what can't run."""
+def state() -> dict:
+    """What the project file keeps beyond the labelled settings: Duration's Other… minutes (the box beside it)."""
+    return {"other_min": _ui["custom"].value()} if "custom" in _ui else {}
+
+
+def set_state(saved: dict, check_only: bool = False) -> None:
+    """A project's Other… minutes back in its box (ValueError says why not)."""
+    minutes = saved.get("other_min") if isinstance(saved, dict) else None
+    if minutes is not None and not (type(minutes) is int and 1 <= minutes <= 24 * 60):
+        raise ValueError(f"Batch Run: Other… minutes must be 1 to {24 * 60}.")
+    if minutes is not None and not check_only and "custom" in _ui:
+        _ui["custom"].setValue(minutes)
+
+
+def start(seeds: str, minutes: int, tests: list[str], check_only: bool = False, pace: int | None = None,
+          at_once: int | None = None, times: int | None = None, default: bool | None = None) -> dict:
+    """The assistant's start_batch: these settings into the panel, then Start Batch (MainWindow.run_batch), `tests`
+    the controllers' kinds (TSP, DBL, DEVL), their tabs giving the models; pace, at_once, times and default (Compare
+    with default) left out: the panel's. `check_only`: checked, nothing changed. ValueError says what can't run."""
     if "start" not in _ui:
         raise ValueError("Batch Run's panel isn't open: see the Extensions tab.")
-    return _ui["start"](seeds, minutes, test_tsp, test_devl, check_only)
+    return _ui["start"](seeds, minutes, tests, check_only, pace, at_once, times, default)
 
 
 def span(minutes: float) -> str:
@@ -98,13 +122,26 @@ def panel():
     custom.setSuffix(" min")
     custom.setToolTip("Duration in minutes")
     custom.hide()
+    _ui["custom"] = custom
     length = QHBoxLayout()
     length.addWidget(duration, 1)
     length.addWidget(custom, 1)
-    test_tsp = QCheckBox()
-    test_tsp.setToolTip("TSP tab's models")
-    test_devl = QCheckBox()
-    test_devl.setToolTip("DEVL tab's models")
+    ticks = {}  # kind -> its Test tick
+    for kind, _name in TESTS:
+        ticks[kind] = QCheckBox()
+        ticks[kind].setToolTip(f"{kind} tab's models")
+    pace = ChoiceButtons([(f"{factor}×", factor) for factor in PACES])
+    pace.setToolTip("Simulated seconds per second")
+    at_once = QSpinBox()
+    at_once.setRange(*AT_ONCE[:2])
+    at_once.setValue(AT_ONCE[2])
+    at_once.setToolTip("Runs going side by side")
+    times = QSpinBox()
+    times.setRange(1, MAX_TIMES)
+    times.setToolTip("Runs per seed and model")
+    default = QCheckBox()
+    default.setChecked(True)
+    default.setToolTip("Network's own signal plans")
     start = styled_button("Start Batch", "primary", "Run every seed and agent")
     replay = icon_button(0xE81C, "Replay a run")  # History
     show = icon_button(0xE707, "Show runs on map")  # a map pin: the batch's run drawn as it goes, or not
@@ -116,23 +153,19 @@ def panel():
     def minutes() -> int:
         return duration.currentData() or custom.value()
 
-    def plans(tsp_on: bool | None = None, devl_on: bool | None = None) -> dict:
-        """The TSP and DEVL tabs' batch settings for the ticked tests ({"TSP": plan, "DEVL": plan}), or those
-        asked for (a test with no model picked runs its baselines alone); ValueError says what's wrong (both
-        ticked: the same pace, runs at once and times each)."""
+    def plans(kinds: list[str] | None = None) -> dict:
+        """The ticked controllers' tab settings ({kind: plan}, TESTS' order), or those of `kinds`. ValueError says
+        what's wrong (a controller with no model picked: there's nothing of it to test)."""
         found = {}
-        for kind, on, service in (("TSP", test_tsp.isChecked() if tsp_on is None else tsp_on, "tsp_batch"),
-                                  ("DEVL", test_devl.isChecked() if devl_on is None else devl_on, "devl_batch")):
-            if not on:
+        for kind, _name in TESTS:
+            if not (ticks[kind].isChecked() if kinds is None else kind in kinds):
                 continue
-            if app is None or not hasattr(app, service):
+            if app is None or not hasattr(app, "controller_plan"):
                 raise ValueError(f"Test {kind} reads the {kind} tab's models in the ACMS window.")
-            found[kind] = getattr(app, service)()
-        if len([plan for plan in found.values() if plan.get("agents")]) == 2:
-            differ = [name for key, name in (("speed", "Pace"), ("at_once", "Runs at once"), ("times", "Times each"))
-                      if found["TSP"][key] != found["DEVL"][key]]
-            if differ:
-                raise ValueError(f"The TSP and DEVL tabs set different {', '.join(differ)}: make them the same.")
+            found[kind] = app.controller_plan(kind)
+            if not found[kind].get("agents"):
+                raise ValueError(f"Test {kind}: pick a model to test in its tab (Multiple's Models, or System 1 or 2 "
+                                 "with its model on in AI Mode).")
         return found
 
     def check() -> None:
@@ -141,30 +174,30 @@ def panel():
         custom.setVisible(duration.currentData() is None)
         try:
             found = plans()
-            plan = next(iter(found.values()), {})
-            per_test = [["", ""] + [plan["servers"].get(label, label) for label in plan["agents"]] for plan in found.values()]
-            combos = [set()]  # each agent's model servers: every TSP agent with every DEVL agent, both baselines first
-            for servers in per_test:
-                combos = [done | ({server} if server else set()) for done in combos for server in servers]
-            seed_count, times = len(parse_seeds(seeds.text())), plan.get("times", 1)
-            runs = seed_count * len(combos) * times
-            text = (f"{runs} run{'s' if runs > 1 else ''}: {minutes()} min × {seed_count} seed{'s' if seed_count > 1 else ''}"
-                    + (f" × {len(combos)} agents (with both baselines)" if len(combos) > 1 else "")
-                    + (f" × {times} times" if times > 1 else "") + f" = {span(runs * minutes())}")
-            alone = [kind for kind, test in found.items() if not test.get("agents")]
-            if alone:  # no model picked: its baselines alone, as a batch always runs them
-                text += "; " + " and ".join(alone) + " decided by the baselines only (never and always preempt): pick a model in its tab to test one"
-            if any(test.get("agents") for test in found.values()):  # paced: wall-clock time, one run a server at a time
+            combos = [set()] if found else []  # each agent's model servers: every ticked controller's models crossed
+            for plan in found.values():
+                combos = [done | {plan["servers"].get(label, label)} for done in combos for label in plan["agents"]]
+            seed_count, repeats, speed, side = len(parse_seeds(seeds.text())), times.value(), pace.value(), at_once.value()
+            baseline = seed_count if default.isChecked() else 0  # the default: once a seed
+            answered = seed_count * len(combos) * repeats
+            runs = baseline + answered
+            if not runs:
+                raise ValueError("Nothing to run: tick Compare with default, or a test.")
+            text = (f"{runs} run{'s' if runs > 1 else ''} of {minutes()} min = {span(runs * minutes())}: "
+                    + "; ".join(part for part in (
+                        f"the default once on each of {seed_count} seed{'s' if seed_count > 1 else ''}" if baseline else "",
+                        f"{len(combos)} agent{'s' if len(combos) > 1 else ''} × {seed_count} seed{'s' if seed_count > 1 else ''}"
+                        + (f" × {repeats} times" if repeats > 1 else "") if answered else "") if part))
+            if answered:  # paced: wall-clock time, one run a server at a time
                 by_server: dict = {}
                 for servers in combos:
                     for server in servers:
-                        by_server[server] = by_server.get(server, 0) + seed_count * times
-                answered = seed_count * times * sum(1 for servers in combos if servers)  # the baselines aren't paced
-                side_by_side = -(-answered // plan["at_once"])
+                        by_server[server] = by_server.get(server, 0) + seed_count * repeats
+                side_by_side = -(-answered // side)
                 rounds = max([side_by_side] + list(by_server.values()))
-                text += (f"; {plan['at_once']} at once at {plan['speed']}×: about {span(rounds * minutes() / plan['speed'])}"
+                text += (f"; {side} at once at {speed}×: about {span(rounds * minutes() / speed)}"
                          + (" (one run a model server at a time)" if rounds > side_by_side else "")
-                         + "; the baselines as fast as the CPU allows")
+                         + ("; the default as fast as the CPU allows" if baseline else ""))
             else:
                 text += "; plain runs go one at a time as fast as the CPU allows, so under that"
             colour = SECONDARY_TEXT
@@ -178,7 +211,7 @@ def panel():
         start.setEnabled(bool(runs) and not busy)
         replay.setEnabled(not busy)
 
-    # ponytail: the TSP and DEVL tabs' choices and whether a run or test is going on are read once a second while
+    # ponytail: the controllers' tabs' choices and whether a run or test is going on are read once a second while
     # the panel shows; signals from those tabs and the window if Start ever needs to follow them at once.
     follow = QTimer(widget)
     follow.setInterval(1000)
@@ -193,13 +226,10 @@ def panel():
         try:
             if app is None:
                 raise ValueError("Batch Run starts runs from the ACMS window.")
-            found = plans()
-            tsp, devl = found.get("TSP", {}), found.get("DEVL", {})
-            plan = tsp or devl
-            done = app.run_batch(parse_seeds(seeds.text()), minutes(), plan.get("times", 1), agents=tsp.get("agents"),
-                                 deadline_s=tsp.get("deadline_s", 30), speed=plan.get("speed", 1),
-                                 at_once=plan.get("at_once", 4), test_tsp=bool(tsp), test_devl=bool(devl),
-                                 devl_agents=devl.get("agents"), devl_deadline_s=devl.get("deadline_s", 30))
+            tests = {kind: {"agents": plan.get("agents") or [], "deadline_s": plan.get("deadline_s", 30)}
+                     for kind, plan in plans().items()}
+            done = app.run_batch(parse_seeds(seeds.text()), minutes(), times.value(), tests=tests, speed=pace.value(),
+                                 at_once=at_once.value(), default=default.isChecked())
         except ValueError as exc:
             status.setStyleSheet(f"color: {STATUS['failed']};")
             status.setText(str(exc))
@@ -218,20 +248,39 @@ def panel():
         except ValueError:
             pass  # run() says why in the status line
 
-    def start_with(seed_text: str, length_min: int, tsp_on: bool, devl_on: bool, check_only: bool) -> dict:
+    def start_with(seed_text: str, length_min: int, kinds: list[str], check_only: bool, speed=None, side=None,
+                   repeats=None, compare=None) -> dict:
         """start(): checked first, then into the panel and run."""
         parse_seeds(str(seed_text))
         if not 1 <= int(length_min) <= custom.maximum():
             raise ValueError(f"A run lasts 1 to {custom.maximum()} minutes.")
-        plans(tsp_on, devl_on)
+        unknown = [str(kind) for kind in kinds if kind not in ticks]
+        if unknown:
+            raise ValueError(f"No controller called {', '.join(unknown)}: tests are some of {', '.join(ticks)}.")
+        if speed is not None and int(speed) not in PACES:
+            raise ValueError(f"Pace is one of {', '.join(f'{factor}×' for factor in PACES)}.")
+        for value, box, name in ((side, at_once, "Runs at once"), (repeats, times, "Times each")):
+            if value is not None and not box.minimum() <= int(value) <= box.maximum():
+                raise ValueError(f"{name} is {box.minimum()} to {box.maximum()}.")
+        plans(kinds)
+        if not kinds and compare is False:
+            raise ValueError("Nothing to run: compare with the default, or test a controller.")
         if check_only:
             return {"ok": True}
         seeds.setText(str(seed_text))
         listed = duration.findData(int(length_min))
         duration.setCurrentIndex(listed if listed >= 0 else duration.count() - 1)  # else Other…, in minutes
         custom.setValue(int(length_min))
-        test_tsp.setChecked(tsp_on)
-        test_devl.setChecked(devl_on)
+        for kind, tick in ticks.items():
+            tick.setChecked(kind in kinds)
+        if speed is not None:
+            pace.set_value(int(speed))
+        if side is not None:
+            at_once.setValue(int(side))
+        if repeats is not None:
+            times.setValue(int(repeats))
+        if compare is not None:
+            default.setChecked(bool(compare))
         check()
         return run()
 
@@ -258,18 +307,28 @@ def panel():
     seeds.textChanged.connect(check)
     duration.currentIndexChanged.connect(check)
     custom.valueChanged.connect(check)
-    test_tsp.toggled.connect(check)
-    test_devl.toggled.connect(check)
-    # Test DEVL dispatches the Dispatch Emergency Vehicle tab's fleet: ticking it ticks that extension, so its
-    # schedules are there to set (unticking leaves it as it is)
-    test_devl.toggled.connect(lambda on: on and app is not None and hasattr(app, "tick_extension")
-                              and app.tick_extension("dispatch_emergency"))
+    for tick in ticks.values():
+        tick.toggled.connect(check)
+    pace.changed.connect(check)
+    at_once.valueChanged.connect(check)
+    times.valueChanged.connect(check)
+    default.toggled.connect(check)
+    # Test DEVL dispatches DEVL's Dispatch Emergency Vehicle fleet: ticking it ticks DEVL, so its dispatch section
+    # is there to set (unticking leaves it as it is)
+    ticks["DEVL"].toggled.connect(lambda on: on and app is not None and hasattr(app, "tick_extension")
+                                  and app.tick_extension("dynamic_emergency_lane"))
     start.clicked.connect(started)
     form.addRow("Seeds", seeds)
-    form.addRow(count)  # full width: a wrapped label beside an empty title gets a stray blank line
     form.addRow("Duration", length)
-    form.addRow("Test TSP", test_tsp)
-    form.addRow("Test DEVL", test_devl)
+    form.addRow("Pace", pace)
+    form.addRow("Runs at once", at_once)
+    form.addRow("Times each", times)
+    form.addRow("Compare with default", default)
+    form.addRow(hint_label("The default: the network's own signal plans (Webster's from the demand, or timings "
+                           "entered from a survey), set where the network is made."))
+    for kind, _name in TESTS:
+        form.addRow(f"Test {kind}", ticks[kind])
+    form.addRow(count)  # full width: a wrapped label beside an empty title gets a stray blank line
     buttons = QHBoxLayout()
     buttons.addWidget(start, 1)
     buttons.addWidget(show)

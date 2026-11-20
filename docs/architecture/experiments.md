@@ -1,5 +1,24 @@
 # experiments.py: network testing (no Qt)
 
+- `recorded_run(network, demand, modes, seed, duration_s, settings, label, folder, …)`: one headless run, start to
+  workbook (its recorder, `run_headless`, its analysis and extensions' reports, `end_recording`); returns (kpis,
+  path, simulated s). Nothing of the window is in it: `MainWindow._one_run` hands it the window's progress, map
+  frames and reports. `run_pool(jobs, progress, cancelled, processes)` makes plain runs (no extension deciding)
+  side by side, a process each (`multiprocessing`, spawn; half the logical cores, `MAX_PROCESSES` 8 at most):
+  threads share one interpreter, so four runs on threads take as long as four in a row. It returns their
+  results in the jobs' order (None for a run Stop kept from starting; the runs going end at their next step with
+  their workbooks), raises a run's error, and returns None when the processes can't be started or the jobs can't
+  be pickled (the caller then makes them one by one). `work` is any module function taking the jobs' arguments
+  and `cancelled` (`recorded_run` unless given; `quiet_run`, a search's run kept to its KPIs; `sensitivity_run`);
+  `each(index, result)` hears each as it comes (a batch's checkpoint); `watch(label, simulated s, of s, frame)`
+  hears how far each labelled run is every `WATCH_S` (0.25 s), with a frame when `frames`, and (label, None…) as
+  it ends. `MainWindow._pooled` wires that to the menu bar's clock and, while Show runs on map is on, the map, so
+  pooled runs show as a thread's do. Pooled: run_experiment's plain scenarios' runs (two or more; a scenario with
+  an extension or `assign_routes` runs on the worker thread), a batch with nobody deciding (each run's
+  checkpoint as it finishes), optimise_signals' candidates a generation at a time (every seed of each; with an
+  extension deciding, one by one) and parameter_sensitivity's runs. assign_routes stays one run after another:
+  each iteration needs the last one's link times. Eight 10-minute runs: 42 s one after another, 9 s pooled (8 cores).
+
 - `run_headless(network, demand, modes, seed, duration_s, override, recorder, progress, cancelled, observe,
   speed, dispatches, …, step_s, step_method, lateral)` (`step_s`: `DT`, or 0.25 or 0.1 s, to check the results don't depend on
   the step; `step_method`: "euler" or the opt-in "ballistic", simulation.md; `lateral`: lateral position and
@@ -127,11 +146,18 @@
   run's extensions reported (`kpis["reported"]`: TSP's `AGENT_MEASURES`: bus requests, TRUE, green held,
   greens cut, agent latency, errors, fell back, too late). `comparison_sheet(rows)` is the Comparison sheet
   both workbooks use.
-- **Batch runs** (the Batch Run extension, `MainWindow.run_batch(seeds, minutes, times, agents, deadline_s, speed,
-  at_once, test_tsp)`): `test_tsp` (Batch Run's Test TSP; None: whether TSP is ticked) runs TSP, ticked in the tab
-  or not, `agents` being the models to test; the two baselines, Never preempt (general traffic) and Always preempt, always run too, first. Everything is checked
-  first (no run going, demand, at least one model, each found and with its key,
-  1 to `main_agents.MAX_AT_ONCE` 8 at once), then every agent × seed × time headless (`_in_background`, Stop ends it),
+- **Batch runs** (the Batch Run extension, `MainWindow.run_batch(seeds, minutes, times, tests, speed, at_once,
+  default)`): the universal test of the AI controllers. `tests` maps each controller tested (a kind of
+  `main_agents.CONTROLLERS`: TSP, DBL, DEVL) to its plan, `{"agents": the models to test, at least one,
+  "deadline_s"}`; each runs whether ticked in the tab or not. An agent of the batch is one combination of the
+  controllers' models: with one controller its model's label, with several "TSP <label> · DBL <label> · DEVL
+  <label>". `default` (Compare with default) adds the one baseline, `main_agents.DEFAULT`, the **Default
+  configuration**: the network as configured, no controller acting (its signal plans: Webster's from the demand, or
+  timings from a survey), first, once a seed (a seed always runs the same; Times each repeats only the models,
+  whose answers vary); every agent is compared with it, else with the first agent. Everything is checked
+  first (no run going, demand, each controller loaded, each tested one with a model, each model found and with its
+  key, each deadline 1–280 s, 1 to `main_agents.MAX_AT_ONCE` 8 at once, something to run), then every agent × seed ×
+  time headless (`_in_background`, Stop ends it),
   seed by seed: every agent on a seed (and its times) before the next seed, so a batch cut short has every agent
   on the seeds it finished and still compares, pair by pair. The batch's workbook is a checkpoint: rewritten after
   every finished run (written beside it as "… (saving).xlsx" and swapped in whole, so a crash mid-write keeps the
@@ -141,25 +167,29 @@
   provider: Ollama (its chat and decision models alike), Jev, Grok, Gemini; a baseline is none), so no run's questions wait behind another's;
   a run that raises stops the others and is the batch's error. Each records the pace it achieved
   (`pace_achieved`, simulated over wall seconds while it stepped; under 90 % of the pace asked, the batch says
-  so: fewer at once or a slower pace). Plain batches go one at a time, as fast as the CPU allows (side by side
-  they'd only share one process's CPU). Each agent's model warmed up with one throwaway request, `_warm_up`, so its loading isn't
+  so: fewer at once or a slower pace). A batch with nobody deciding goes side by side, a process each
+  (`run_pool`, `MainWindow._pooled`), as fast as the CPU allows. Each agent's model warmed up with one throwaway request, `_warm_up`, so its loading isn't
   charged to its first run), each through `_one_run` paced at the batch's `speed` (1–60, the panel's 1×, 2×, 5×, 10×) when a model answers in
   it (a baseline and its emergency fleet depend on the seed alone: as fast as the CPU allows, about 25 s a
   simulated hour for ~400 vehicles)
-  with its own signal agent that never waits (`deadline_s` the batch's Decide within, in simulated s; a
-  baseline: nobody asked, `SignalAgent(rule=)` answering, False never, True always), answering in its agent's own system (the question carries both), each saving its
-  workbook named by seed and model, and its telemetry feed beside it, in `ACMS batch <date time> runs`.
-  Without Test TSP the runs are plain (one agent, "No TSP"). **`MainWindow.replay_run(workbook)`** (Batch Run's
+  with a signal agent per controller that never waits (its `deadline_s`, the controller's Decide within, in
+  simulated s; a baseline: nobody asked, `SignalAgent(rule=)` answering, False never, True always), answering in its
+  agent's own system (the question carries both), each saving its workbook named by seed and model (its Run sheet
+  has "AI model deciding <kind>" and "<kind> decision deadline (simulated s)" for each controller), and its
+  telemetry feeds beside it, in `ACMS batch <date time> runs`. TSP and DBL act for buses: with no bus type among
+  the vehicle types the answer's note says they had nothing to decide.
+  With no controller tested the runs are plain (the default alone). **`MainWindow.replay_run(workbook)`** (Batch Run's
   Replay a run) runs one of them again: the seed (Run sheet) and simulated time (Summary) from its workbook,
   headless and unpaced, TSP's agent a `Replay` of the telemetry feed beside it (each decision at its recorded
   simulated time, no model asked), saving `… <model>-replay.xlsx` and comparing its Summary with the original's
   (`same`, or the figures that differ: the network or demand open isn't the run's). Then `averaged(runs)` makes each (agent,
-  seed)'s repeats one (every figure's mean), `compare` sets each agent against the first (Never preempt when
-  ticked; Always preempt is an agent beside it, the other end of the bracket) paired over the seeds, and `batch_workbook` writes `ACMS batch <date time>.xlsx` (`batch_name`):
-  **Read me** (seeds, times, duration, agents, baseline, deadline, how it ran and compared), **Headline**
+  seed)'s repeats one (every figure's mean), `compare` sets each agent against the first (the default configuration when
+  compared with) paired over the seeds, and `batch_workbook` writes `ACMS batch <date time>.xlsx` (`batch_name`):
+  **Read me** (seeds, times, duration, agents, baseline, each controller's deadline, how it ran and compared), **Headline**
   (`headline_sheet`: per agent, `HEADLINE`'s passenger throughput increase, passenger delay and delay per
   passenger reduction, queue reductions (mean and most queued), vehicle wait time and delay reductions,
-  vehicle throughput increase, emergency travel time reduction (Test DEVL), and each type's delay and wait
+  vehicle throughput increase, emergency travel time reduction (Test DEVL), bus approach time reduction (Test
+  DBL: `dbl_approach_s`, a bus's check-in to check-out, among DBL's `dbl_*` `AGENT_MEASURES`), and each type's delay and wait
   reduction: baseline and agent means, the
   increase or reduction in % (positive: better), difference, interval, p, clear, better), **Comparison**,
   **Agents** (system, provider, model, runs, and the means of `AGENT_MEASURES`), **Runs** (every run, its
@@ -188,8 +218,8 @@
   `excess_wait_min`; `bus_passengers(observed)` (each stop's buses, boarded, alighted, most left behind, dwell
   mean and longest, heaviest load) is in `analyse_run` and a Bus passengers sheet.
 - **stats.py** (no Qt; the tests behind these tools): Student's t, χ², the normal tail (`normal_sf`); rank
-  tests with tie corrections (`friedman` with seeds as blocks, `kruskal_wallis`, `mann_whitney`); `all_pairs`
-  (every pair by the paired t, or Mann–Whitney unpaired, Bonferroni over the pairs, with compact letters: designs
+  tests with tie corrections (`friedman` with seeds as blocks, `kruskal_wallis`); `all_pairs`
+  (every pair by the paired t with Wilcoxon's signed-rank p beside it, Bonferroni over the pairs, with compact letters: designs
   sharing a letter aren't told apart); `paired_power`, `seeds_for_power`, `detectable` (power of the paired test,
   exact by the noncentral t, seeds needed for 80 %, the smallest difference found); `holm` (Holm's adjusted p:
   `compare` gives each scenario's p across its figures as `vs_baseline_p_holm`, the workbook's last Comparison

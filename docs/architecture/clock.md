@@ -26,9 +26,12 @@
   its result and its workbooks are written whole.
 - `MainWindow._frame` (each display frame) draws the runner's latest published frame: vehicles part
   way between their last two steps, signals lit. The physics never waits for it; frames published
-  in between are simply skipped, and if the physics is behind (a speed the CPU can't manage) the map
-  draws at most 10 frames a second so drawing takes less time from it, and the clock turns amber
-  with the speed really achieved in its tooltip. The clock shows the physics' time.
+  in between are simply skipped, and if the physics is behind (`Runner.behind()`: a speed the CPU can't manage) the
+  clock turns amber; on a thread here (`Runner.shares_interpreter`) the map then draws at most 10 frames a second
+  so drawing takes less time from it, while a run in its own process (physics_process.py) is drawn at full rate,
+  drawing taking nothing from it. The clock turns amber
+  with the speed really achieved in its tooltip (tooltip and colour set only when they change, not on every
+  display frame). The clock shows the physics' time.
 - Measured on the real Windows platform (OpenGL view), default grid: at 60× with 800 and with 1,100
   vehicles the physics ran at 60.0× and the map at 60 frames a second (worst frame 34 ms). Offscreen, an
   8 × 8 grid at 500 veh/h an end (992 OD pairs) kept pace at 1× to 10× (626 vehicles at 10×); at 60× with
@@ -47,7 +50,7 @@
   the eye's own on and off once each, as "watch" lines),
   drop-down choice, slider position, entry (a text or number field's final value as it loses focus or Enter is
   pressed; a password "(hidden)"), tab opened, map click (metres) and selection (`select`), and each undo step's
-  changes (`_log_edits`, `network_tools.state_changes`, from `_commit` and undo/redo), each with its time, seconds since it
+  changes (`_log_edits`, `tool_reports.state_changes`, from `_commit` and undo/redo), each with its time, seconds since it
   began, where (the open tab or a dialog's title), what (the control's text, form label, placeholder or tooltip)
   and value, to `activity.csv` in a dated folder, `ACMS activity <date time>`, in the results folder (as the Research Log's
   and a batch's are), flushed line by line. One gesture seen two

@@ -13,12 +13,13 @@ from copy import deepcopy
 from dataclasses import replace
 from datetime import datetime
 
-from traffic_simulator import (accessibility, analysis, design_checks, experiments, network_tools, results,
-                               run_reports, scenario, searches, stats, weaving)
+from traffic_simulator import (accessibility, analysis, design_checks, experiments, results, run_reports, searches,
+                               stats, tool_args, tool_schemas, weaving)
 from traffic_simulator.lane_graph import Graph
 from traffic_simulator.models import route_choice_problem
 from traffic_simulator.network_io import MAX_SEED
-from traffic_simulator.simulation import PairDemand, Simulation
+from traffic_simulator.simulation import Simulation
+from traffic_simulator.demand import PairDemand
 
 
 def _rounded(value, digits: int = 3):
@@ -34,6 +35,15 @@ def _rounded(value, digits: int = 3):
 
 class ExperimentsMixin:
     """The assistant's run tools (_runs_command) and the window side of headless tests and experiments."""
+
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_ai_edited', '_build_scenario', '_compliance', '_deciding', '_decision_sensitivity',
+             '_emergency_fleet', '_extension', '_has_buses', '_in_background', '_institution_split', '_journal_sheet',
+             '_metro_report', '_one_run', '_pair_demand', '_pooled', '_quick_run', '_refresh_summary', '_results',
+             '_run_settings', '_schedule_emergency', '_snapshot', '_testing', '_waiting_agent', 'ai_mode',
+             'extensions', 'last_kpis', 'last_results', 'network', 'od_matrix', 'replay_run', 'results_folder',
+             'runner', 'seed_box', 'tests', 'vehicle_modes')
 
     def _check_demand(self, pairs: list) -> tuple[float | None, dict]:
         """The Demand Generator's demand, just sized to a degree of saturation, run headless (its busiest hour,
@@ -78,102 +88,46 @@ class ExperimentsMixin:
                 "share that held. The capacity model's saturation figures are for the size before this check.")
         return share, {**report, "checked": True, "kept": f"{share:.0%}", "note": note}
 
+    # run_reports' answers on this session's runs and experiments: each (tests, args), named as its tool
+    _REPORTS = ("resilience", "power_analysis", "rank_scenarios", "read_decisions", "benefit_cost", "regress")
+    _RUN_ANALYSES = ("analyse_run", "read_detectors", "analyse_safety", "forecast", "check_calibration")
+    _JUNCTION_ANALYSES = ("junction_los", "diagnose_signal", "check_run_health", "emissions_report")
+    # The tools answered at once, a run going on or not: tool -> (window, args, check_only) -> its answer
+    _ANSWERS = {
+        "institution_mode_split": lambda self, args, check_only: self._institution_split(args, check_only),
+        "read_results": lambda self, args, check_only: run_reports.read_results(
+            self.tests, str(args.get("id") or ""), self._results),
+        "compare_runs": lambda self, args, check_only: run_reports.compare_runs(
+            self.tests, tool_args._ids(args.get("runs") or [])),
+        "preflight_check": lambda self, args, check_only: self._preflight(args, check_only),
+        "test_agent_compliance": lambda self, args, check_only: self._compliance(args, check_only),
+        "decision_sensitivity": lambda self, args, check_only: self._decision_sensitivity(args, check_only),
+        "critical_links": lambda self, args, check_only: self._critical_links(args),
+        "design_audit": lambda self, args, check_only: design_checks.audit(self.network, self.vehicle_modes.modes),
+        "weaving_los": lambda self, args, check_only: self._weaving_los(args),
+        "metro_report": lambda self, args, check_only: self._metro_tool(),
+        "accessibility_report": lambda self, args, check_only: self._accessibility(args),
+        "set_extension": lambda self, args, check_only: self._set_extension(args, check_only),
+        "read_extensions": lambda self, args, check_only: self._read_extensions(),
+        "schedule_emergency": lambda self, args, check_only: self._schedule_emergency(args, check_only),
+        "replay_run": lambda self, args, check_only: self._replay(args, check_only),
+        "start_batch": lambda self, args, check_only: self._start_batch(args, check_only),
+    }
+    # The headless tests, once nothing else runs and the duration holds: tool -> its method (args, demand, modes,
+    # duration in minutes, check_only); any other name is run_experiment's
+    _TESTS = {"assign_routes": "_assign_routes", "optimise_signals": "_optimise_signals",
+              "parameter_sensitivity": "_parameter_sensitivity", "run_simulation": "_run_simulation"}
+
     def _runs_command(self, tool: str, args: dict, check_only: bool = False) -> dict:
         """AI Mode's network-testing tools: headless runs and experiments, their results, the extensions."""
-        if tool == "institution_mode_split":
-            return self._institution_split(args, check_only)
-        if tool == "read_results":
-            return run_reports.read_results(self.tests, str(args.get("id") or ""), self._results)
-        if tool == "compare_runs":
-            return run_reports.compare_runs(self.tests, network_tools._ids(args.get("runs") or []))
-        if tool in ("analyse_run", "read_detectors", "analyse_safety", "forecast", "check_calibration"):
+        if tool in self._ANSWERS:
+            return self._ANSWERS[tool](self, args, check_only)
+        if tool in self._REPORTS:
+            return getattr(run_reports, tool)(self.tests, args)
+        if tool in self._RUN_ANALYSES:
             return run_reports.analyse_run(self.tests, tool, args)
-        if tool in ("junction_los", "diagnose_signal", "check_run_health", "emissions_report"):
+        if tool in self._JUNCTION_ANALYSES:
             return run_reports.junction_analysis(self.tests, tool, args)
-        if tool == "resilience":
-            return run_reports.resilience(self.tests, args)
-        if tool == "power_analysis":
-            return run_reports.power_analysis(self.tests, args)
-        if tool == "rank_scenarios":
-            return run_reports.rank_scenarios(self.tests, args)
-        if tool == "preflight_check":
-            return self._preflight(args, check_only)
-        if tool == "test_agent_compliance":
-            return self._compliance(args, check_only)
-        if tool == "read_decisions":
-            return run_reports.read_decisions(self.tests, args)
-        if tool == "decision_sensitivity":
-            return self._decision_sensitivity(args, check_only)
-        if tool == "critical_links":
-            demand = experiments.at_busiest_hour(self._pair_demand())
-            flows = {(pair.origin, pair.destination): pair.hourly for pair in demand}
-            area = network_tools._parsed_json(args["area"]) if isinstance(args.get("area"), str) else args.get("area")
-            return network_tools.critical_links_plan(self.network, flows, args.get("limit") or 10, area)
-        if tool == "benefit_cost":
-            return run_reports.benefit_cost(self.tests, args)
-        if tool == "design_audit":
-            return design_checks.audit(self.network, self.vehicle_modes.modes)
-        if tool == "weaving_los":
-            return self._weaving_los(args)
-        if tool == "metro_report":
-            if not self.network.metro_lines:
-                raise ValueError("No MRT lines: deploy one first (Edit Network > MRT).")
-            return self._metro_report()
-        if tool == "accessibility_report":
-            measured = None
-            if args.get("id"):
-                observed = run_reports.run_test(self.tests, str(args["id"]))["kpis"]["observed"]
-                measured = {link: mean for link, (count, mean) in observed.get("traversals", {}).items() if count >= 3}
-            budgets = tuple(float(b) for b in (args.get("budgets_min") or (15, 30)))
-            return accessibility.report(self.network, measured, budgets, float(args.get("beta_per_min") or 0.1),
-                                        str(args["close_road"]) if args.get("close_road") else None)
-        if tool == "regress":
-            return run_reports.regress(self.tests, args)
-        if tool == "set_extension":
-            extension = self.extensions.find(str(args.get("name", "")))
-            settings = args.get("settings") or {}
-            if isinstance(settings, str):
-                settings = network_tools._parsed_json(settings)
-            self.extensions.set_settings(extension, settings if isinstance(settings, dict) else {}, check_only=True)
-            if check_only:
-                return {"ok": True}
-            extension.check.setChecked(network_tools._bool(args.get("on")))
-            self.extensions.set_settings(extension, settings if isinstance(settings, dict) else {})
-            return {"extension": extension.name, "ticked": extension.on, "settings": dict(self.extensions.settings())[extension.name],
-                    "description": getattr(extension.module, "DESCRIPTION", "") or (extension.module.__doc__ or "").split("\n\n")[0]}
-        if tool == "read_extensions":
-            dispatch = self._extension("dispatch_emergency")
-            return {"extensions": self.extensions.describe(),
-                    "emergency_schedules": [{"from": origin, "to": destination, "every_min": every, "after_min": after}
-                                            for origin, destination, every, after in (dispatch.module.fleet() if dispatch else [])]}
-        if tool == "schedule_emergency":
-            return self._schedule_emergency(args, check_only)
-        if tool == "replay_run":  # a workbook in the results folder (a name alone: there); whether a file is
-            given, folder = str(args.get("path") or ""), self.results_folder.resolve()  # anywhere else isn't told
-            path = (folder / given).resolve()
-            if not path.is_relative_to(folder) or not path.is_file():
-                raise ValueError(f"No workbook at {given} in the results folder ({folder}): give the path of a batch "
-                                 "run's workbook (.xlsx).")
-            return {"ok": True} if check_only else self.replay_run(path)
-        if tool == "start_batch":
-            batch = self._extension("batch_run")
-            if batch is None:
-                raise ValueError("The Batch Run extension didn't load: see the Extensions tab.")
-            test_tsp, test_devl = (network_tools._bool(args.get(key)) for key in ("test_tsp", "test_devl"))
-            if check_only:  # what run_batch checks, before the approval card
-                if self.runner is not None or self._testing:
-                    raise ValueError("A run or test is going on: stop it first (the menu bar's Stop), then start the batch.")
-                if not self._pair_demand():
-                    raise ValueError("There's no demand to run: generate or enter some first.")
-                if test_devl:
-                    self._emergency_fleet()
-            try:
-                minutes = int(float(args.get("duration_min") or 0))
-            except (TypeError, ValueError):
-                raise ValueError("duration_min is a whole number of minutes.") from None
-            seeds = args.get("seeds") or ""  # a list as the schema asks, or text like "1-4" as the panel takes
-            seeds = ", ".join(map(str, experiments.seeds_from(seeds))) if isinstance(seeds, list) else str(seeds)
-            return batch.module.start(seeds, minutes, test_tsp, test_devl, check_only)
         if self.runner is not None or self._testing:
             raise ValueError("A run is going on: stop it first (the menu bar's Stop), then test.")
         duration = float(args.get("duration_min") or (30 if tool in ("assign_routes", "build_scenario") else
@@ -182,77 +136,143 @@ class ExperimentsMixin:
             raise ValueError(f"duration_min must be 1 to {experiments.MAX_MINUTES} simulated minutes.")
         if not 0 <= float(args.get("measure_from_min") or 0) < duration:
             raise ValueError("measure_from_min must be 0 or more and less than duration_min.")
+        if tool == "build_scenario":
+            return self._build_scenario(args, check_only)
         modes = deepcopy(self.vehicle_modes.modes)
         # A test (at most MAX_MINUTES) of daily demand runs its busiest hour, as the demand check sizes it: from
         # midnight it would see the night's few trips and report no congestion
-        raw = self._pair_demand()
-        peak_hour, demand = experiments.busiest_hour(raw), experiments.at_busiest_hour(raw)
-        if tool == "assign_routes":
-            return self._assign_routes(args, demand, modes, duration, check_only)
-        if tool == "build_scenario":
-            return self._build_scenario(args, check_only)
-        if tool == "optimise_signals":
-            return self._optimise_signals(args, demand, modes, duration, check_only)
-        if tool == "parameter_sensitivity":
-            return self._parameter_sensitivity(args, demand, modes, duration, check_only)
-        if tool == "run_simulation":
-            if not demand:
-                raise ValueError(f"There's no demand to test with: the OD matrix has no {self.od_matrix.mode} demand "
-                                 "(a Run uses the kind it shows). Enter or generate some first.")
-            seed = int(args["seed"]) if args.get("seed") is not None else self.seed_box.value()
-            if not 0 <= seed <= MAX_SEED:
-                raise ValueError(f"seed must be 0 to {MAX_SEED:,}.")
-            incidents = experiments.incidents_from(network_tools._parsed_json(args["incidents"])
-                                                   if isinstance(args.get("incidents"), str) else args.get("incidents"))
-            weather = str(args.get("weather") or "clear").lower()
-            meters = experiments.meters_from(network_tools._parsed_json(args["meters"])
-                                             if isinstance(args.get("meters"), str) else args.get("meters"))
-            lateral = args.get("lateral") or False
-            if not isinstance(lateral, bool):
-                raise ValueError("lateral must be true or false.")
-            experiments.apply_conditions(Simulation(self.network, [], modes), incidents, weather, meters)  # checked
-            if check_only:
-                return {"ok": True}
-            network, override = deepcopy(self.network), self.extensions.signal_override(agent=self._waiting_agent())
-            model = self._deciding()[0]
-            settings = self._run_settings(None, seed=seed, extra=[("Kind", "headless test (run_simulation, by the assistant)"),
-                                                                    ("Duration (simulated)", results.clock(duration * 60)),
-                                                                    ("AI model deciding TSP", model),
-                                                                    ("Weather", weather),
-                                                                    ("Lateral position (sublane)", "on" if lateral else "off"),
-                                                                    ("Incidents", json.dumps(incidents) if incidents else "none"),
-                                                                    ("Ramp meters", json.dumps(meters) if meters else "none")])
-            kpis, path, simulated = self._in_background(
-                lambda progress, cancelled: self._one_run(network, demand, modes, seed, duration * 60, override, settings,
-                                                          self._journal_sheet(), "Testing the network", progress, cancelled,
-                                                          model=model, incidents=incidents, weather=weather,
-                                                          meters=meters, lateral=lateral,
-                                                          measure_from_s=float(args.get("measure_from_min") or 0) * 60),
-                "Testing the network")
-            run_id = f"R{sum(key.startswith('R') for key in self.tests) + 1}"
-            self.tests[run_id] = {"id": run_id, "kind": "run", "what": "the network as built", "seed": seed,
-                                  "simulated": results.clock(simulated), "kpis": kpis, "file": str(path or "")}
-            if path:
-                self.last_results, self.last_kpis = path, kpis
-            self._refresh_summary()
-            answer = {"run": run_id, "seed": seed, "simulated": results.clock(simulated), "file": str(path or ""),
-                      **experiments.headline(kpis), **({"agent_timing": experiments.AGENT_TIMING} if override is not None else {})}
-            health = analysis.run_health(kpis)  # a broken run said at once, with what to do (ChatSUMO's recovery loop)
-            answer["health"] = "fine" if health["healthy"] else health["problems"]
-            if peak_hour is not None:
-                answer["demand_simulated"] = (f"daily demand at its busiest hour, {peak_hour:02d}:00-{peak_hour + 1:02d}:00, "
-                                              "held for the whole run")
-            if simulated < duration * 60 - 1:
-                answer["note"] = "Stopped by the user before the end: the figures are of the part simulated."
-            return answer
-        return self._experiment(args, demand, modes, duration, check_only)
+        demand = experiments.at_busiest_hour(self._pair_demand())
+        return getattr(self, self._TESTS.get(tool, "_experiment"))(args, demand, modes, duration, check_only)
+
+    def _critical_links(self, args: dict) -> dict:
+        demand = experiments.at_busiest_hour(self._pair_demand())
+        flows = {(pair.origin, pair.destination): pair.hourly for pair in demand}
+        area = tool_args._parsed_json(args["area"]) if isinstance(args.get("area"), str) else args.get("area")
+        return design_checks.critical_links_plan(self.network, flows, args.get("limit") or 10, area)
+
+    def _metro_tool(self) -> dict:
+        if not self.network.metro_lines:
+            raise ValueError("No MRT lines: deploy one first (Edit Network > MRT).")
+        return self._metro_report()
+
+    def _accessibility(self, args: dict) -> dict:
+        measured = None
+        if args.get("id"):
+            observed = run_reports.run_test(self.tests, str(args["id"]))["kpis"]["observed"]
+            measured = {link: mean for link, (count, mean) in observed.get("traversals", {}).items() if count >= 3}
+        budgets = tuple(float(b) for b in (args.get("budgets_min") or (15, 30)))
+        return accessibility.report(self.network, measured, budgets, float(args.get("beta_per_min") or 0.1),
+                                    str(args["close_road"]) if args.get("close_road") else None)
+
+    def _set_extension(self, args: dict, check_only: bool) -> dict:
+        extension = self.extensions.find(str(args.get("name", "")))
+        settings = args.get("settings") or {}
+        if isinstance(settings, str):
+            settings = tool_args._parsed_json(settings)
+        self.extensions.set_settings(extension, settings if isinstance(settings, dict) else {}, check_only=True)
+        if check_only:
+            return {"ok": True}
+        extension.check.setChecked(tool_args._bool(args.get("on")))
+        self.extensions.set_settings(extension, settings if isinstance(settings, dict) else {})
+        return {"extension": extension.name, "ticked": extension.on, "settings": dict(self.extensions.settings())[extension.name],
+                "description": getattr(extension.module, "DESCRIPTION", "") or (extension.module.__doc__ or "").split("\n\n")[0]}
+
+    def _read_extensions(self) -> dict:
+        devl = self._extension("dynamic_emergency_lane")  # its Dispatch Emergency Vehicle section's schedules
+        return {"extensions": self.extensions.describe(),
+                "emergency_schedules": [{"from": origin, "to": destination, "every_min": every, "after_min": after}
+                                        for origin, destination, every, after in (devl.module.dispatch.fleet() if devl else [])]}
+
+    def _replay(self, args: dict, check_only: bool) -> dict:
+        # A workbook in the results folder (a name alone: there); whether a file is anywhere else isn't told
+        given, folder = str(args.get("path") or ""), self.results_folder.resolve()
+        path = (folder / given).resolve()
+        if not path.is_relative_to(folder) or not path.is_file():
+            raise ValueError(f"No workbook at {given} in the results folder ({folder}): give the path of a batch "
+                             "run's workbook (.xlsx).")
+        return {"ok": True} if check_only else self.replay_run(path)
+
+    def _start_batch(self, args: dict, check_only: bool) -> dict:
+        batch = self._extension("batch_run")
+        if batch is None:
+            raise ValueError("The Batch Run extension didn't load: see the Extensions tab.")
+        tests = [kind for kind in ("TSP", "DBL", "DEVL") if tool_args._bool(args.get(f"test_{kind.lower()}"))]
+        compare = tool_args._bool(args["compare_default"]) if args.get("compare_default") is not None else None
+        if check_only:  # what run_batch checks, before the approval card
+            if self.runner is not None or self._testing:
+                raise ValueError("A run or test is going on: stop it first (the menu bar's Stop), then start the batch.")
+            if not self._pair_demand():
+                raise ValueError("There's no demand to run: generate or enter some first.")
+            if "DEVL" in tests:
+                self._emergency_fleet()
+            if "DBL" in tests and not self._has_buses():
+                raise ValueError("Test DBL clears a lane for buses, and no vehicle type is a bus: add one first.")
+        try:
+            minutes = int(float(args.get("duration_min") or 0))
+        except (TypeError, ValueError):
+            raise ValueError("duration_min is a whole number of minutes.") from None
+        seeds = args.get("seeds") or ""  # a list as the schema asks, or text like "1-4" as the panel takes
+        seeds = ", ".join(map(str, experiments.seeds_from(seeds))) if isinstance(seeds, list) else str(seeds)
+        return batch.module.start(seeds, minutes, tests, check_only, default=compare)
+
+    def _run_simulation(self, args: dict, demand, modes, duration: float, check_only: bool) -> dict:
+        peak_hour = experiments.busiest_hour(self._pair_demand())
+        if not demand:
+            raise ValueError(f"There's no demand to test with: the OD matrix has no {self.od_matrix.mode} demand "
+                             "(a Run uses the kind it shows). Enter or generate some first.")
+        seed = int(args["seed"]) if args.get("seed") is not None else self.seed_box.value()
+        if not 0 <= seed <= MAX_SEED:
+            raise ValueError(f"seed must be 0 to {MAX_SEED:,}.")
+        incidents = experiments.incidents_from(tool_args._parsed_json(args["incidents"])
+                                               if isinstance(args.get("incidents"), str) else args.get("incidents"))
+        weather = str(args.get("weather") or "clear").lower()
+        meters = experiments.meters_from(tool_args._parsed_json(args["meters"])
+                                         if isinstance(args.get("meters"), str) else args.get("meters"))
+        lateral = args.get("lateral") or False
+        if not isinstance(lateral, bool):
+            raise ValueError("lateral must be true or false.")
+        experiments.apply_conditions(Simulation(self.network, [], modes), incidents, weather, meters)  # checked
+        if check_only:
+            return {"ok": True}
+        network, override = deepcopy(self.network), self.extensions.signal_override(agent=self._waiting_agent())
+        model = self._deciding()[0]
+        settings = self._run_settings(None, seed=seed, extra=[("Kind", "headless test (run_simulation, by the assistant)"),
+                                                                ("Duration (simulated)", results.clock(duration * 60)),
+                                                                ("AI model deciding TSP", model),
+                                                                ("Weather", weather),
+                                                                ("Lateral position (sublane)", "on" if lateral else "off"),
+                                                                ("Incidents", json.dumps(incidents) if incidents else "none"),
+                                                                ("Ramp meters", json.dumps(meters) if meters else "none")])
+        kpis, path, simulated = self._in_background(
+            lambda progress, cancelled: self._one_run(network, demand, modes, seed, duration * 60, override, settings,
+                                                      self._journal_sheet(), "Testing the network", progress, cancelled,
+                                                      model=model, incidents=incidents, weather=weather,
+                                                      meters=meters, lateral=lateral,
+                                                      measure_from_s=float(args.get("measure_from_min") or 0) * 60),
+            "Testing the network")
+        run_id = f"R{sum(key.startswith('R') for key in self.tests) + 1}"
+        self.tests[run_id] = {"id": run_id, "kind": "run", "what": "the network as built", "seed": seed,
+                              "simulated": results.clock(simulated), "kpis": kpis, "file": str(path or "")}
+        if path:
+            self.last_results, self.last_kpis = path, kpis
+        self._refresh_summary()
+        answer = {"run": run_id, "seed": seed, "simulated": results.clock(simulated), "file": str(path or ""),
+                  **experiments.headline(kpis), **({"agent_timing": experiments.AGENT_TIMING} if override is not None else {})}
+        health = analysis.run_health(kpis)  # a broken run said at once, with what to do (ChatSUMO's recovery loop)
+        answer["health"] = "fine" if health["healthy"] else health["problems"]
+        if peak_hour is not None:
+            answer["demand_simulated"] = (f"daily demand at its busiest hour, {peak_hour:02d}:00-{peak_hour + 1:02d}:00, "
+                                          "held for the whole run")
+        if simulated < duration * 60 - 1:
+            answer["note"] = "Stopped by the user before the end: the figures are of the part simulated."
+        return answer
 
     def _assign_routes(self, args, demand, modes, duration, check_only) -> dict:
         """assign_routes: route choice on the network, its link times by the method of successive averages over
         headless runs (Handbook of Transportation Science p391–392): each iteration runs with the times so far,
         measures each link's traversal time (and each move's: Graph.move_time), and moves the times 1/n of the way
         to it."""
-        if network_tools._bool(args.get("off", False)):
+        if tool_args._bool(args.get("off", False)):
             if check_only:
                 if not self.network.route_choice:
                     raise ValueError("Nothing would change: route choice is off already.")
@@ -313,7 +333,7 @@ class ExperimentsMixin:
         import random  # noqa: PLC0415
         from traffic_simulator.signal_timing import ALL_RED_S, AMBER_S, MIN_GREEN_S  # noqa: PLC0415
 
-        junctions = network_tools._ids(args.get("junctions") or [])
+        junctions = tool_args._ids(args.get("junctions") or [])
         for node_id in junctions:
             node = self.network.nodes.get(node_id)
             if node is None or node.control != "signalised":
@@ -366,21 +386,46 @@ class ExperimentsMixin:
 
         cache, values_of = {}, {}
 
+        def token_of(genome) -> str:
+            return repr([[round(g, 1) for g in gene] for gene in genome])
+
+        def network_of(genome):
+            return experiments.scenario_network(base, experiments.Scenario("candidate", changes(genome)),
+                                                tool_schemas.SCENARIO_TOOLS) if genome else deepcopy(base)
+
+        def keep(token, per_seed) -> None:
+            values = [v for v in per_seed.values() if v is not None]
+            mean = statistics.fmean(values) if values else None
+            cache[token] = None if mean is None else (-mean if higher else mean)
+            values_of[token] = per_seed
+
+        def together(genomes, progress, cancelled, label) -> None:
+            """The candidates not scored yet, every seed of each, side by side, a process each (plain runs:
+            _pooled); score() then finds them. With an extension deciding, or no processes: nothing, and score()
+            runs them one by one."""
+            fresh = {token_of(genome): genome for genome in genomes}
+            fresh = {token: genome for token, genome in fresh.items() if token not in cache}
+            jobs = [{"network": network, "demand": demand, "modes": modes, "seed": seed, "duration_s": duration * 60,
+                     "label": f"{label}, seed {seed}"}
+                    for network in map(network_of, fresh.values()) for seed in seeds]
+            if override is not None or len(jobs) < 2:
+                return
+            made = self._pooled(jobs, progress, cancelled, work=experiments.quiet_run)
+            if made is None or cancelled() or any(one is None for one in made):
+                return
+            for index, token in enumerate(fresh):
+                keep(token, {seed: made[index * len(seeds) + at].get(key) for at, seed in enumerate(seeds)})
+
         def score(genome, progress, cancelled, label):
-            token = repr([[round(g, 1) for g in gene] for gene in genome])
+            token = token_of(genome)
             if token not in cache:
-                network = experiments.scenario_network(base, experiments.Scenario("candidate", changes(genome)),
-                                                       network_tools.SCENARIO_TOOLS) if genome else deepcopy(base)
-                per_seed = {}
+                network, per_seed = network_of(genome), {}
                 for seed in seeds:
                     if cancelled():
                         return None
                     per_seed[seed] = self._quick_run(network, demand, modes, seed, duration * 60, override, progress,
                                                      cancelled, f"{label}, seed {seed}").get(key)
-                values = [v for v in per_seed.values() if v is not None]
-                mean = statistics.fmean(values) if values else None
-                cache[token] = None if mean is None else (-mean if higher else mean)
-                values_of[token] = per_seed
+                keep(token, per_seed)
             return cache[token]
 
         def mutate(genome):
@@ -399,6 +444,7 @@ class ExperimentsMixin:
             history = []
             for generation in range(1, generations + 1):
                 scored = []
+                together(people, progress, cancelled, f"Generation {generation}")
                 for index, genome in enumerate(people, 1):
                     value = score(genome, progress, cancelled, f"Generation {generation}, candidate {index}")
                     if value is None:
@@ -570,7 +616,7 @@ class ExperimentsMixin:
         if not demand:
             raise ValueError(f"There's no demand to test with: the OD matrix has no {self.od_matrix.mode} demand. "
                              "Enter or generate some first.")
-        names = network_tools._ids(args.get("parameters") or list(experiments.SENSITIVITY_PARAMETERS))
+        names = tool_args._ids(args.get("parameters") or list(experiments.SENSITIVITY_PARAMETERS))
         unknown = [name for name in names if name not in experiments.SENSITIVITY_PARAMETERS]
         if unknown:
             raise ValueError(f"parameters are some of {', '.join(experiments.SENSITIVITY_PARAMETERS)}.")
@@ -595,7 +641,7 @@ class ExperimentsMixin:
                         "0 it hardly matters here. An interval wider than its value means more seeds are needed."}
 
     def _experiment(self, args, demand, modes, duration, check_only):
-        parsed = {key: network_tools._parsed_json(args[key]) if isinstance(args.get(key), str) else args.get(key)
+        parsed = {key: tool_args._parsed_json(args[key]) if isinstance(args.get(key), str) else args.get(key)
                   for key in ("scenarios", "factors", "conditions")}
         specs, factor_names = parsed["scenarios"], []
         if parsed["factors"]:
@@ -620,7 +666,7 @@ class ExperimentsMixin:
         total = len(scenarios) * len(seeds)
         if total > experiments.MAX_RUNS:
             raise ValueError(f"That is {total} runs; at most {experiments.MAX_RUNS}: fewer scenarios or seeds.")
-        networks = [experiments.scenario_network(self.network, s, network_tools.SCENARIO_TOOLS) for s in scenarios]
+        networks = [experiments.scenario_network(self.network, s, tool_schemas.SCENARIO_TOOLS) for s in scenarios]
         overrides = [self.extensions.overrides_for(s.extensions, agent=self._waiting_agent())  # unknown names refused here
                      for s in scenarios]
         incidents = {}  # (scenario, seed) -> its incidents: given, and those drawn for the seed
@@ -653,9 +699,31 @@ class ExperimentsMixin:
                     ("Incidents", json.dumps(incidents[(scenario.name, seed)]) if incidents[(scenario.name, seed)] else "none"),
                     ("Duration (simulated)", results.clock(duration * 60))])))
 
+        def conditions_of(scenario, seed) -> dict:
+            return {"incidents": incidents[(scenario.name, seed)], "weather": scenario.weather, "meters": scenario.meters,
+                    "measure_from_s": float(args.get("measure_from_min") or 0) * 60, "lateral": scenario.lateral}
+
         def work(progress, cancelled):
-            runs, assigned = [], {}
+            runs, assigned, made = [], {}, {}
+            # The plain runs (no extension deciding, no route search first) side by side, a process each; the window's
+            # own functions as they are (a test replaces them to see a run fail)
+            plain = [count for count, (scenario, _network, override, _seed, _settings) in enumerate(planned, 1)
+                     if override is None and not scenario.assign_routes]
+            if len(plain) > 1:
+                jobs = [{"network": network, "demand": experiments.scaled(demand, scenario.demand_scale),
+                         "modes": modes, "seed": seed, "duration_s": duration * 60, "settings": settings,
+                         "label": f"{scenario.name}, seed {seed} ({count}/{total})", "folder": runs_folder,
+                         **conditions_of(scenario, seed)}
+                        for count, (scenario, network, _override, seed, settings) in enumerate(planned, 1)
+                        if count in plain]
+                made = dict(zip(plain, self._pooled(jobs, progress, cancelled) or []))
             for count, (scenario, network, override, seed, settings) in enumerate(planned, 1):
+                if count in made:
+                    if made[count] is not None and made[count][2] >= duration * 60 - 1:
+                        kpis, path, _simulated = made[count]
+                        runs.append({"id": f"{experiment_id}.{count}", "scenario": scenario.name, "seed": seed,
+                                     "measures": experiments.measures_of(kpis), "file": str(path or "")})
+                    continue
                 if cancelled():
                     break
                 if scenario.assign_routes:  # its route choice found first (once a scenario), then every seed uses it
@@ -673,8 +741,7 @@ class ExperimentsMixin:
                     settings, [], f"{scenario.name}, seed {seed} ({count}/{total})", progress, cancelled, runs_folder,
                     model=self._deciding(on=override is not None and any(
                         extension.path.stem == "transit_signal_priority" for extension in override.extensions))[0],
-                    incidents=incidents[(scenario.name, seed)], weather=scenario.weather, meters=scenario.meters,
-                    measure_from_s=float(args.get("measure_from_min") or 0) * 60, lateral=scenario.lateral)
+                    **conditions_of(scenario, seed))
                 if simulated >= duration * 60 - 1:
                     runs.append({"id": f"{experiment_id}.{count}", "scenario": scenario.name, "seed": seed,
                                  "measures": experiments.measures_of(kpis), "file": str(path or "")})

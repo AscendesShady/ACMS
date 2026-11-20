@@ -82,7 +82,7 @@ pair editor builds (`ModeSplitSlider`, `DayCurve` and its `CurveEditor`, `DropSl
     grid so they fit the sidebar) to the row, the
     column or every empty cell.
   - Clear removes the demand of the kind shown from the selected pairs.
-- institution_panel.py holds `InstitutionPanel` and `ModeSplitDialog` (below); od_matrix.py re-exports them.
+- institution_panel.py holds `InstitutionPanel` and `ModeSplitDialog` (below).
 - `InstitutionPanel` (Demand → Institutions): one icon button per building type (`institutions.KINDS`);
   a **Height** box accompanies both placement and selected-building details (total including roof, metres).
   Untouched type defaults remain labelled assumptions and save as None; editing saves an explicit height.
@@ -102,18 +102,18 @@ pair editor builds (`ModeSplitSlider`, `DayCurve` and its `CurveEditor`, `DropSl
 - `ModeSplitDialog` (the selected building's Mode split, opened by `MainWindow._open_mode_split`): a row per
   mode (Walk, each vehicle type, and MRT when the network has lines: use it, out-of-vehicle minutes, cost ¢ (Metro: on
   top of the line's fare), cost ¢/km, observed %), the three
-  coefficients and the walking speed, prefilled with `network_tools.default_alternative`, `LOGIT_DEFAULTS` and
+  coefficients and the walking speed, prefilled with `demand_plans.default_alternative`, `LOGIT_DEFAULTS` and
   `WALK_KMH`; the shares, people and vehicles a day, mean trip and constants update as they change (`compute`:
-  `network_tools.institution_split`); **Apply** (`applied`, the arguments) goes through
+  `demand_plans.institution_split`); **Apply** (`applied`, the arguments) goes through
   `MainWindow._institution_split`, as AI Mode's institution_mode_split does: one undo step.
-- `ODCellPanel.planner` (set by the window: `network_tools.demand_plan` on its network) gives
+- `ODCellPanel.planner` (set by the window: `demand_plans.demand_plan` on its network) gives
   `generate_demand` its numbers; `_generate` types them in, one undo step (see AI Mode).
-  `ODCellPanel.calibrator` (`network_tools.calibration_plan`) does the same for `calibrate_demand`
+  `ODCellPanel.calibrator` (`demand_plans.calibration_plan`) does the same for `calibrate_demand`
   (`_calibrate`: the hourly flows fitted to counts on the routes the simulation drives, `Graph.route_shares`,
   typed in, one undo step; on shortest-distance routes a fit of GEH 0 had loaded GEH 17-24), `chooser`
-  (`network_tools.mode_plan`) for `choose_modes` (`_choose`: each pair's people, its vehicles times their mean
+  (`demand_plans.mode_plan`) for `choose_modes` (`_choose`: each pair's people, its vehicles times their mean
   occupancy now, ride the new split, so its vehicles change with it, typed in with the split), and
-  `ODCellPanel.scaler` (`network_tools.scale_plan`) for `scale_demand` (`_scale`), and
+  `ODCellPanel.scaler` (`demand_plans.scale_plan`) for `scale_demand` (`_scale`), and
   `ODCellPanel.equilibrator` (`MainWindow._equilibrate_demand`) for `equilibrate_demand` (`_equilibrate`: hourly
   flows moved to their elastic equilibrium, q₀·(t/t_ref)^ε with t from headless runs and t_ref from a reference
   run before the change, by successive averages until every pair is within 2 % of its target (the residual, not the
@@ -136,7 +136,7 @@ pair editor builds (`ModeSplitSlider`, `DayCurve` and its `CurveEditor`, `DropSl
   read_od_matrix give each hourly pair's `peak_hour_factor` and `quarters`. Saved with the project (network_io) and in the undo
   history.
 - metro_matrix.py holds the three people grids below (`MetroMatrix` and its `SpawnMatrix`, `PedestrianMatrix`) with
-  `_BlockedDelegate` and `_paint_blocked`; od_matrix.py re-exports them.
+  `_BlockedDelegate` and `_paint_blocked`.
 - `SpawnMatrix` (Demand → **Spawn**, `spawn_box`): `MetroMatrix`'s grid over the deploy points
   (S1, S2... in number order), any two different, each cell `Network.spawn_demand`'s people an hour (daily:
   `spawn_daily`); the panel's **Place Deploy Points** (`place_spawn_button`, checkable) places more on the map

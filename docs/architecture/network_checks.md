@@ -2,7 +2,7 @@
 
 Both are core modules (no Qt). They read the network (and, for accessibility, optionally a run's measured link
 times); the assistant reaches them through `design_audit` and `accessibility_report` (`MainWindow._runs_command`).
-Vulnerability lives in design_checks.py too (moved from network_tools.py, which re-exports it): `cut_elements`,
+Vulnerability lives in design_checks.py too: `cut_elements`,
 `critical_links_plan` and its area closure `_area_closure`.
 
 ## design_checks.py (tool `design_audit`)
@@ -84,7 +84,7 @@ measured link traversal times (3 or more traversals) when the tool is given a ru
 - `area` {"x", "y", "radius_m"}: every road touching that circle closed at once (`_area_closure`; Taylor Ch 6,
   area-wide disruption): the extra vehicle-hours and the demand cut off, static.
 
-## Structured errors (network_tools.explain_error)
+## Structured errors (tool_reports.explain_error)
 
 Every refused tool call reaches the model as {"error", "error_type", "suggested_fix"} (ChatSUMO's structured errors,
 so a model can recover): unknown_id (with `did_you_mean`, the network's ids nearest by spelling), unroutable, busy,

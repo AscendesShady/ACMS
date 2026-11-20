@@ -405,7 +405,7 @@ def test_demand_rules_need_no_qt():
 def test_pedestrians_an_hour_are_typed_between_boundary_ends():
     from traffic_simulator.models import MAX_WALK_DEMAND
     from traffic_simulator.network_generator import generate_network
-    from traffic_simulator.od_matrix import PedestrianMatrix
+    from traffic_simulator.metro_matrix import PedestrianMatrix
 
     network, grid = generate_network(2, 2), PedestrianMatrix()
     grid.show_network(network)
@@ -424,7 +424,7 @@ def test_pedestrians_an_hour_are_typed_between_boundary_ends():
 
 def test_pedestrians_an_hour_are_typed_between_spawn_points():
     from traffic_simulator.network_generator import generate_network
-    from traffic_simulator.od_matrix import SpawnMatrix
+    from traffic_simulator.metro_matrix import SpawnMatrix
 
     network, grid = generate_network(2, 2), SpawnMatrix()
     assert not grid.day.isVisibleTo(grid.side) and not grid.day_hint.isVisibleTo(grid.side)  # no curve before a pair
@@ -446,7 +446,7 @@ def test_every_grids_diagonal_is_drawn_shut():
 
     from traffic_simulator import theme
     from traffic_simulator.network_generator import generate_network
-    from traffic_simulator.od_matrix import PedestrianMatrix, SpawnMatrix
+    from traffic_simulator.metro_matrix import PedestrianMatrix, SpawnMatrix
 
     shut = {QColor(theme.BLOCKED_CELL).name(), QColor(theme.BLOCKED_HATCH).name()}
 
@@ -479,7 +479,7 @@ def test_a_stations_tooltip_names_its_lines_in_five_words_at_most():
     from types import SimpleNamespace
 
     from traffic_simulator.network_generator import generate_network
-    from traffic_simulator.od_matrix import MetroMatrix, PedestrianMatrix
+    from traffic_simulator.metro_matrix import MetroMatrix, PedestrianMatrix
 
     network = generate_network(2, 2)
     grid = MetroMatrix()

@@ -10,13 +10,16 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
+from traffic_simulator.mode_behavior import PALETTE  # noqa: E402
+from traffic_simulator.vehicle import VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.signal_timing import (  # noqa: E402
     MAX_CYCLE_S, MIN_GREEN_S, SPAN_S, STANDARD_SPACE_S, Approach, ScatsJunction, ScatsRegion, ScootJunction, ScootLink, ScootRegion, TimingModel, cyclic_queue,
     degree_of_saturation, disperse, fit_greens, hcm_delay, hill_climb, incremental_delay, percentile_greens,
     clearance, effective, realigned_length, synchro_cycle, webster)
-from traffic_simulator.simulation import Loop, PairDemand, Simulation, Turn  # noqa: E402
+from traffic_simulator.simulation import Loop, Simulation  # noqa: E402
+from traffic_simulator.demand import PairDemand  # noqa: E402
+from traffic_simulator.lane_graph import Turn  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
 CAR = [VehicleMode("Car", PALETTE[1])]

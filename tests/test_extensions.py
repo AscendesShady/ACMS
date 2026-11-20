@@ -12,16 +12,19 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtCore import Qt  # noqa: E402
 from PySide6.QtTest import QTest  # noqa: E402
-from PySide6.QtWidgets import QApplication, QCheckBox, QComboBox, QLabel, QLineEdit, QPushButton, QSlider, QSpinBox  # noqa: E402
+from PySide6.QtWidgets import QApplication, QCheckBox, QComboBox, QFormLayout, QLabel, QLineEdit, QPushButton, QSlider, QSpinBox  # noqa: E402
 
 from traffic_simulator.clock import SimulationClock  # noqa: E402
 from traffic_simulator.results import clock as clock_text  # noqa: E402
 from traffic_simulator.extensions import EXTENSIONS_DIR, ExtensionsPanel  # noqa: E402
-from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
+from traffic_simulator.mode_behavior import PALETTE  # noqa: E402
+from traffic_simulator.vehicle import VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.network_scene import NetworkGraphicsScene  # noqa: E402
 from traffic_simulator.widgets import ChoiceButtons  # noqa: E402
-from traffic_simulator.simulation import PairDemand, Simulation, Turn  # noqa: E402
+from traffic_simulator.simulation import Simulation  # noqa: E402
+from traffic_simulator.demand import PairDemand  # noqa: E402
+from traffic_simulator.lane_graph import Turn  # noqa: E402
 from traffic_simulator.mode_behavior import VehicleModes  # noqa: E402
 
 MODES = VehicleModes().modes
@@ -158,70 +161,98 @@ def test_batch_run_takes_seeds_like_pages_and_a_duration():
     duration, custom, start = controls.findChild(QComboBox), controls.findChild(QSpinBox), controls.findChild(QPushButton)
     labels = lambda: " | ".join(label.text() for label in controls.findChildren(QLabel))  # noqa: E731
     seeds.setText("45, 34, 1-3")
-    assert "5 runs: 30 min × 5 seeds = 2.5 h; plain runs go one at a time" in labels() and start.isEnabled()
-    assert custom.isHidden()
+    assert "5 runs of 30 min = 2.5 h: the default once on each of 5 seeds; plain runs go one at a time" in labels()
+    assert start.isEnabled() and custom.isHidden()
     seeds.setText("5-2")  # a bad list says why, and can't start
     assert "low to high" in labels() and not start.isEnabled()
     seeds.setText("7-9")
     duration.setCurrentIndex(duration.findData(None))  # Other…: a minutes box appears
     custom.setValue(90)
-    assert not custom.isHidden() and "3 runs: 90 min × 3 seeds = 4.5 h" in labels()
+    assert not custom.isHidden() and "3 runs of 90 min = 4.5 h" in labels()
     start.click()  # outside the window there is nothing to run with: it says so
     assert "from the ACMS window" in labels()
-    # Only time, seeds and two ticks: TSP's models and how are the TSP tab's
-    test_tsp, test_devl = controls.findChildren(QCheckBox)
+    # Seeds, Duration, then how the batch runs (Pace, Runs at once, Times each: one for all), Compare with default,
+    # then a tick per controller in order (TSP, DBL, DEVL); each controller's models and deadline are its own tab's
+    rows = [controls.layout().itemAt(row, QFormLayout.ItemRole.LabelRole) for row in range(controls.layout().rowCount())]
+    assert [item.widget().text() for item in rows if item is not None] == [
+        "Seeds", "Duration", "Pace", "Runs at once", "Times each", "Compare with default", "Test TSP", "Test DBL",
+        "Test DEVL"]
+    tick = {box.toolTip(): box for box in controls.findChildren(QCheckBox)}
+    test_tsp, test_dbl, test_devl = (tick[f"{kind} tab's models"] for kind in ("TSP", "DBL", "DEVL"))
+    default = tick["Network's own signal plans"]
+    assert default.isChecked() and "Webster" in labels()  # the one baseline, on at first, said what it is
     show = next(button for button in controls.findChildren(QPushButton) if button.toolTip() == "Show runs on map")
     assert show.isCheckable() and show.isChecked()  # the batch's run drawn on the map, at first
-    assert not controls.findChildren(QSlider) and not controls.findChildren(ChoiceButtons)
-    assert [box.isChecked() for box in (test_tsp, test_devl)] == [False, False]
+    pace = controls.findChild(ChoiceButtons)
+    assert not controls.findChildren(QSlider) and [b.text() for b in pace.group.buttons()] == ["1×", "2×", "5×", "10×"]
+    assert [box.isChecked() for box in (test_tsp, test_dbl, test_devl)] == [False, False, False]
+    panel.set_settings(batch, {"Times each": 2})  # as the assistant's set_extension does
 
-    # In the window: Test TSP reads the TSP tab (Multiple: its models, Decide within, Pace, Runs at once, Times each)
-    asked, plan = [], {"agents": ["System 1: Laya", "System 2: grok-4"], "deadline_s": 45, "speed": 1, "at_once": 4,
-                       "times": 2, "servers": {"System 1: Laya": "laya", "System 2: grok-4": "grok"}}
-    devl_plan = {"agents": ["System 2: llama3"], "deadline_s": 20, "speed": 1, "at_once": 4, "times": 2,
-                 "servers": {"System 2: llama3": "local"}}
+    # In the window: each Test reads its controller's tab (Multiple: its models and Decide within)
+    asked, plan = [], {"agents": ["System 1: Laya", "System 2: grok-4"], "deadline_s": 45,
+                       "servers": {"System 1: Laya": "laya", "System 2: grok-4": "grok"}}
+    plans = {"TSP": plan, "DEVL": {"agents": ["System 2: llama3", "System 1: Jev"], "deadline_s": 20,
+                                   "servers": {"System 2: llama3": "local", "System 1: Jev": "jev"}},
+             "DBL": {"agents": ["System 1: Jev"], "deadline_s": 10, "servers": {"System 1: Jev": "jev"}}}
     ticked, shown = [], []
-    panel.app = SimpleNamespace(tsp_batch=lambda: plan, devl_batch=lambda: devl_plan, tick_extension=ticked.append,
-                                show_runs=shown.append,
+    panel.app = SimpleNamespace(controller_plan=plans.get, tick_extension=ticked.append, show_runs=shown.append,
                                 run_batch=lambda *args, **kwargs: asked.append(
                                     (args, kwargs)) or {"file": "batch.xlsx", "runs": 18, "of": 18, "folder": "runs"})
     test_tsp.setChecked(True)
-    # 90 min × 3 seeds × (2 models + 2 baselines) × 2 times = 36 h; 4 at once, but Laya's 6 and Grok's 6 one after another
-    assert "24 runs: 90 min × 3 seeds × 4 agents (with both baselines) × 2 times = 36.0 h; 4 at once at 1×: about 9.0 h " \
-           "(one run a model server at a time)" in labels()
-    plan.update(speed=5, servers={"System 1: Laya": "laya", "System 2: grok-4": "laya"}, at_once=2)
-    test_tsp.setChecked(False)  # changed in the TSP tab: the count follows
-    test_tsp.setChecked(True)
+    # the default once on each of 3 seeds, and 2 models × 3 seeds × 2 times: 15 runs of 90 min; the models paced, 4 at
+    # once, but Laya's 6 and Grok's 6 one after another: 6 × 90 min
+    assert "15 runs of 90 min = 22.5 h: the default once on each of 3 seeds; 2 agents × 3 seeds × 2 times; 4 at once "            "at 1×: about 9.0 h (one run a model server at a time); the default as fast as the CPU allows" in labels()
+    plan.update(servers={"System 1: Laya": "laya", "System 2: grok-4": "laya"})
+    panel.set_settings(batch, {"Pace": "5×", "Runs at once": 2})  # Batch Run's own: the count follows at once
     assert "2 at once at 5×: about 3.6 h (one run a model server" in labels()  # 12 on Laya: 12 × 90 min / 5
-    plan.update(servers={"System 1: Laya": "laya", "System 2: grok-4": "grok"}, at_once=4, speed=1)
-    test_devl.setChecked(True)  # both: every TSP agent with every DEVL agent, 4 × 3
-    assert ticked == ["dispatch_emergency"]  # Test DEVL ticks Dispatch Emergency Vehicle: its fleet is what each run sends
+    plan.update(servers={"System 1: Laya": "laya", "System 2: grok-4": "grok"})
+    panel.set_settings(batch, {"Pace": "1×", "Runs at once": 4})
+    test_devl.setChecked(True)  # both: every TSP model with every DEVL model, 2 × 2
+    assert ticked == ["dynamic_emergency_lane"]  # Test DEVL ticks DEVL: its dispatch section's fleet each run sends
     show.setChecked(False)
     show.setChecked(True)
     assert shown == [False, True]  # the window draws the batch's run on the map, or not
-    assert "Different" not in labels() and "72 runs: 90 min × 3 seeds × 12 agents (with both baselines) × 2 times = 108.0 h" in labels()
-    devl_plan["speed"] = 2
-    test_devl.setChecked(False)
-    test_devl.setChecked(True)
-    assert "set different Pace: make them the same" in labels() and not start.isEnabled()
-    devl_plan["speed"] = 1
-    test_devl.setChecked(False)
-    test_devl.setChecked(True)
+    assert "27 runs of 90 min = 40.5 h: the default once on each of 3 seeds; 4 agents × 3 seeds × 2 times" in labels()
+    test_dbl.setChecked(True)  # all three: 2 × 1 × 2 combinations; DBL ticks nothing
+    assert ticked == ["dynamic_emergency_lane"] and start.isEnabled() and "4 agents" in labels()
+    default.setChecked(False)  # the models alone, compared with each other
+    assert "24 runs of 90 min = 36.0 h: 4 agents × 3 seeds × 2 times" in labels()
+    default.setChecked(True)
     settings = dict(panel.settings())["Batch Run"]
-    assert "Test TSP: yes" in settings and "Test DEVL: yes" in settings
+    assert all(f"Test {kind}: yes" in settings for kind in ("TSP", "DEVL", "DBL")) and "Times each: 2" in settings
     start.click()
-    assert asked == [(([7, 8, 9], 90, 2), {"agents": ["System 1: Laya", "System 2: grok-4"], "deadline_s": 45,
-                                           "speed": 1, "at_once": 4, "test_tsp": True, "test_devl": True,
-                                           "devl_agents": ["System 2: llama3"], "devl_deadline_s": 20})]
+    assert asked == [(([7, 8, 9], 90, 2), {
+        "tests": {"TSP": {"agents": ["System 1: Laya", "System 2: grok-4"], "deadline_s": 45},
+                  "DBL": {"agents": ["System 1: Jev"], "deadline_s": 10},
+                  "DEVL": {"agents": ["System 2: llama3", "System 1: Jev"], "deadline_s": 20}},
+        "speed": 1, "at_once": 4, "default": True})]
     assert "Saved batch.xlsx" in labels()
-    plan["agents"] = []  # nothing picked: its baselines alone, said plainly, and it can start
+    plan["agents"] = []  # nothing picked: nothing of TSP to test, said plainly, and it can't start
     test_tsp.setChecked(False)
     test_tsp.setChecked(True)
-    assert "TSP decided by the baselines only (never and always preempt)" in labels() and start.isEnabled()
-    panel.set_settings(batch, {"Test TSP": "no", "Test DEVL": "no"})  # as the assistant's set_extension does
-    assert start.isEnabled()  # plain runs again
+    assert "Test TSP: pick a model to test in its tab" in labels() and not start.isEnabled()
+    panel.set_settings(batch, {"Test TSP": "no", "Test DEVL": "no", "Test DBL": "no"})
+    assert start.isEnabled() and "the default once on each of 3 seeds" in labels()  # the default alone
     start.click()
-    assert asked[-1][1]["test_tsp"] is False and asked[-1][1]["agents"] is None and asked[-1][1]["devl_agents"] is None
+    assert asked[-1][1]["tests"] == {} and asked[-1][1]["default"] is True
+    default.setChecked(False)
+    assert "Nothing to run" in labels() and not start.isEnabled()
+    default.setChecked(True)
+    # The assistant's start_batch: the controllers by kind, the batch's own settings optional, checked first
+    for args, kwargs, words in (((["XYZ"],), {}, "tests are some of TSP, DBL, DEVL"),
+                                ((["DBL"], False, 3), {}, "Pace is one of"),
+                                (([],), {"default": False}, "Nothing to run")):
+        try:
+            batch.module.start("1-2", 5, *args, **kwargs)
+        except ValueError as exc:
+            assert words in str(exc), exc
+        else:
+            raise AssertionError(args)
+    assert batch.module.start("1-2", 5, ["DBL"], check_only=True) == {"ok": True} and not test_dbl.isChecked()
+    batch.module.start("1-2", 5, ["DBL"], pace=2, times=3, default=False)
+    assert asked[-1] == (([1, 2], 5, 3), {"tests": {"DBL": {"agents": ["System 1: Jev"], "deadline_s": 10}},
+                                          "speed": 2, "at_once": 4, "default": False})
+    assert [box.isChecked() for box in (test_tsp, test_dbl, test_devl)] == [False, True, False] and not default.isChecked()
     batch.check.setChecked(False)
     assert not controls.isEnabled()
 
@@ -272,23 +303,21 @@ def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
     network = generate_network(3, 4)
     panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
     assert [extension.name for extension in panel.extensions] == [
-        "Batch Run", "Transit Signal Priority (TSP)", "Dynamic Emergency Vehicle Lane (DEVL)", "Dispatch Emergency Vehicle",
-        "Research Log"]
-    batch, tsp, devl, dispatch, research = panel.extensions
-    assert batch.arrow and tsp.arrow and devl.arrow and dispatch.arrow and research.arrow  # each has settings
+        "Batch Run", "Transit Signal Priority (TSP)", "Dynamic Bus Lane (DBL)", "Dynamic Emergency Vehicle Lane (DEVL)",
+        "Research Log"]  # Dispatch Emergency Vehicle is DEVL's own section
+    batch, tsp, dbl, devl, research = panel.extensions
+    assert batch.arrow and tsp.arrow and dbl.arrow and devl.arrow and research.arrow  # each has settings
     assert research.has("log") and not panel.wants("log")  # the log hook, asked for only while ticked
     assert panel.signal_override() is None  # TSP unticked: runs pass no override at all
     tsp.check.setChecked(True)
     overrides = panel.signal_override()
     assert overrides is not None and [extension for extension, _ in overrides.calls] == [tsp]
-    options = [{"label": "Never preempt (baseline)", "provider": "", "system": "", "model": "", "name": "never", "rule": False},
-               {"label": "Always preempt (baseline)", "provider": "", "system": "", "model": "", "name": "always", "rule": True},
-               {"label": "System 1: Jev", "provider": "jev", "system": "1", "model": "jev", "name": "jev"},
+    options = [{"label": "System 1: Jev", "provider": "jev", "system": "1", "model": "jev", "name": "jev"},
                {"label": "System 1: Laya", "provider": "laya", "system": "1", "model": "laya", "name": "laya"},
                {"label": "System 2: llama3", "provider": "local", "system": "2", "model": "llama3", "name": "llama3"},
                {"label": "System 2: grok-4", "provider": "grok", "system": "2", "model": "grok-4", "name": "grok-4"}]
     panel.app = SimpleNamespace(agent_options=lambda: options)
-    for extension in (tsp, devl):  # the same choices in both
+    for extension in (tsp, dbl, devl):  # the same choices in each
         extension.check.setChecked(True)  # its settings are usable while ticked
         choice = extension.controls.findChild(ChoiceButtons)
         assert [button.text() for button in choice.group.buttons()] == ["System 1", "System 2", "Multiple"]
@@ -299,20 +328,25 @@ def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
         model.hidePopup()
         assert [model.itemText(i) for i in range(model.count())] == ["Jev", "Laya"]
         model.setCurrentIndex(1)
-        assert extension.module.batch_settings() == {"deadline_s": 30, "speed": 1, "at_once": 4, "times": 1,
-                                                     "agents": ["System 1: Laya"], "servers": {"System 1: Laya": "laya"}}
+        assert extension.module.batch_settings() == {"deadline_s": 30, "agents": ["System 1: Laya"],
+                                                     "servers": {"System 1: Laya": "laya"}}
         choice.group.button(1).click()  # System 2: its own models
         assert [model.itemText(i) for i in range(model.count())] == ["llama3", "grok-4"]
         panel.set_settings(extension, {"Model": "grok-4"})  # as the assistant's set_extension does
         assert extension.module.batch_settings()["agents"] == ["System 2: grok-4"]
         panel.set_settings(extension, {"Decided by": "Multiple"})
-        slider, pace = extension.controls.findChild(QSlider), extension.controls.findChildren(ChoiceButtons)[1]
-        assert not agents.isHidden() and model.isHidden() and agents.labels() == [o["label"] for o in options[2:]]  # the models: not the baselines
-        assert (slider.minimum(), slider.maximum()) == (1, 280) and [b.text() for b in pace.group.buttons()] == ["1×", "2×", "5×", "10×"]
-        panel.set_settings(extension, {"Models": "system 1: laya, System 2: grok-4", "Decide within": 45, "Pace": "5×",
-                                       "Times each": 2})
-        assert extension.module.batch_settings() == {"deadline_s": 45, "speed": 5, "at_once": 4, "times": 2,
-                                                     "agents": ["System 1: Laya", "System 2: grok-4"],
+        slider = extension.controls.findChild(QSlider)
+        assert not agents.isHidden() and model.isHidden() and agents.labels() == [o["label"] for o in options]  # every model found
+        assert (slider.minimum(), slider.maximum()) == (1, 280) and len(extension.controls.findChildren(ChoiceButtons)) == 1
+        panel.set_settings(extension, {"Models": "system 1: laya, System 2: grok-4", "Decide within": 45})
+        for batch_wide in ("Pace", "Times each"):  # how a batch runs is Batch Run's, one setting for every controller
+            try:
+                panel.set_settings(extension, {batch_wide: 2})
+            except ValueError as exc:
+                assert "has no setting" in str(exc)
+            else:
+                raise AssertionError(batch_wide)
+        assert extension.module.batch_settings() == {"deadline_s": 45, "agents": ["System 1: Laya", "System 2: grok-4"],
                                                      "servers": {"System 1: Laya": "laya", "System 2: grok-4": "grok"}}
         try:
             agents.set_ticked(["System 9"])
@@ -327,8 +361,8 @@ def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
     assert "Models: System 1: Laya, System 2: grok-4" in dict(panel.settings())[tsp.name]
     panel.set_settings(tsp, {"Decided by": "System 1"})
     assert agent.system == "1" and agent.model["label"] == "System 1: Jev"  # its first model
-    tsp.check.setChecked(False)
-    devl.check.setChecked(False)
+    for extension in (tsp, dbl, devl):
+        extension.check.setChecked(False)
     assert panel.signal_override() is None
     devl.check.setChecked(True)  # a signal override too: ticked, the run hands it the arms
     assert [extension for extension, _ in panel.signal_override().calls] == [devl]
@@ -513,7 +547,8 @@ def test_tsp_looks_ahead_on_copies_of_the_run_when_asked_to():
         assert ahead["horizon_s"] == 20.0 and ahead["favours"] in ("priority", "plan")
         assert {"person_delay_s", "vehicle_delay_s", "watched"} <= set(ahead["with_priority"]) == set(ahead["with_plan"])
         assert ahead["person_s_saved_by_priority"] == ahead["with_plan"]["person_delay_s"] - ahead["with_priority"]["person_delay_s"]
-        assert "lookahead" in questions[0]["messages"][1]["content"]  # System 2's prompt carries it
+        said = questions[0]["state"]["lookahead"]  # both systems read it, in words
+        assert said.startswith("Played 20 s ahead both ways") and said in questions[0]["messages"][1]["content"]
     finally:
         chosen.lookahead_s = 0.0
     controls = tsp.controls
@@ -560,18 +595,24 @@ def test_tsp_asks_the_chosen_system_once_per_bus_request_and_reports_it():
         assert request["arrives_on"] == ("red" if request["eta_s"] > spat["bus_green_ends_in_s"] else "green") \
             if "bus_green_ends_in_s" in spat else request["arrives_on"] == (
             "red" if request["eta_s"] < spat["bus_green_starts_in_s"] else "green")  # as the signals stand
-        if system == "1":  # the facts in words as the state, each read with one typed yes/no
-            assert questions[0]["state"] == {"exit_lane": "clear",
-                                             "more_people_on": questions[0]["state"]["more_people_on"]}
-            assert set(questions[0]["questions"]) == {"exit_clear", "more_on_bus"}
+        said = questions[0]["state"]  # both read the facts in words, never the numbers
+        assert said == chosen.facts(message) and {"bus", "exit_lane", "more_people_on", "route_clear", "route_free"} <= set(said)
+        assert said["exit_lane"].startswith("The bus's exit lane is clear") and said["route_free"].endswith("free of lane clearances.")
+        assert message["route_ahead"] and {"junction", "distance_m", "queue_share", "signal", "priority"} == set(message["route_ahead"][0])
+        if system == "1":  # four of them, each read with one typed yes/no
+            assert set(questions[0]["questions"]) == {"exit_clear", "more_on_bus", "route_clear", "route_free"}
             assert {question["type"] for question in questions[0]["questions"].values()} == {"noul"}
             full = json.loads(json.dumps(message))
             full["request"].update(passengers=40, exit_has_room=False)
-            assert chosen.facts(full)["exit_lane"] == "full" and chosen.facts(full)["more_people_on"] == "bus"
-        else:  # zero-shot, role-based, the telemetry as JSON, and a boolean tool to answer with
+            assert "is full" in chosen.facts(full)["exit_lane"] and chosen.facts(full)["more_people_on"].startswith("More")
+            blocked = chosen.facts(chosen.perturbed(message, "route_blocked"))["route_clear"]
+            assert "not clear" in blocked and "not clearing" in blocked
+        else:  # zero-shot, role-based, the same sentences, and a boolean tool to answer with
             role, observed = questions[0]["messages"]
             assert role["role"] == "system" and "traffic signal engineer" in role["content"] and "decide_tsp" in role["content"]
-            assert json.loads(observed["content"].split("Telemetry now:\n")[1].split("\n\nDecide")[0]) == message
+            assert "passenger throughput" in role["content"] and "{" not in observed["content"]  # no JSON
+            assert observed["content"].split("The situation now:\n")[1].split("\n\nDecide")[0] == \
+                "\n".join(f"- {sentence}" for sentence in said.values())
             tool = questions[0]["tools"][0]
             assert tool["name"] == "decide_tsp" and tool["parameters"]["properties"]["activate"]["type"] == "boolean"
             assert questions[0]["answer_from"] == ["decide_tsp", "activate"] and "Example" not in role["content"]
@@ -588,6 +629,38 @@ def test_tsp_asks_the_chosen_system_once_per_bus_request_and_reports_it():
         assert sum(line["type"] == "tsp_decision" for line in lines) == len(requests)
         agent.close()
     chosen.system = "1"
+
+
+def test_route_ahead_tells_a_priority_agent_the_next_junctions_in_words():
+    from traffic_simulator import road_words
+
+    network = generate_network(3, 4)
+    simulation = Simulation(network, [PairDemand("1W", "1E", 1500, None, [], "Poisson", (100,))], [BUS], seed=3)
+    while simulation.time < 240:
+        simulation.step()
+    vehicle = min(simulation.vehicles, key=lambda v: v.leg)  # the furthest back: junctions ahead of it
+    ahead = simulation.route_ahead(vehicle.id)
+    signals = [link.end for link in vehicle.route[vehicle.leg + 1:] if link.end in simulation.graph.signals]
+    assert [entry["junction"] for entry in ahead] == signals[:2] and ahead[0]["distance_m"] < ahead[1]["distance_m"]
+    assert all(0 <= entry["queue_share"] and entry["signal"] in ("G", "Y", "R") and entry["priority"] is None
+               for entry in ahead)
+    assert simulation.route_ahead("nobody") == [] and simulation.route_ahead(vehicle.id, junctions=1) == ahead[:1]
+    simulation.lane_holds[ahead[0]["junction"]] = ("devl", 2, simulation.time)  # a lane being cleared there now
+    assert simulation.route_ahead(vehicle.id)[0]["priority"] == "devl"
+    into = next(link for link in vehicle.route[vehicle.leg + 1:] if link.end == ahead[0]["junction"])
+    simulation.lane_holds[ahead[0]["junction"]] = ("dbl", 1, simulation.time, into.road)  # clearing its own road:
+    assert simulation.route_ahead(vehicle.id)[0]["priority"] is None  # that lets it on, it doesn't hold it
+    from types import SimpleNamespace  # a turn pocket's queue over the pocket's storage, not the whole link's
+    car = SimpleNamespace(length_m=5.0, min_gap=2.5, speed=0.0)
+    pocket = SimpleNamespace(index=0, length=250.0, start=210.0, vehicles=[car] * 5)
+    assert Simulation._queue_share(None, SimpleNamespace(lanes=[pocket])) == 37.5 / 40
+    view = simulation._junction_view(signals[0], simulation.graph.signals[signals[0]])
+    assert view["route_ahead"] == simulation.route_ahead and all(0 <= arm["queue_share"] for arm in view["arms"].values())
+    # the bands of the queue storage ratio, and a queue reaching back blocks the way only while its signal isn't green
+    assert [road_words.queue(share) for share in (0, 0.1, 0.5, 0.9)] == [
+        "no queue", "a short queue", "a long queue", "a queue reaching back to the junction behind"]
+    assert road_words.blocked({"queue_share": 0.9, "signal": "R"}) and not road_words.blocked({"queue_share": 0.9, "signal": "G"})
+    assert road_words.people(0) == "nobody" and road_words.people(1) == "about 1 person"
 
 
 def test_tsp_rings_its_junctions_shows_live_figures_and_reports_each_minute():
@@ -773,7 +846,7 @@ def test_an_answer_counts_when_it_reaches_the_controller_and_the_deadline_falls_
     assert message["spat"] == {"current_phase": "P2", "interval": "green", "bus_phase": "P1", "bus_phase_state": "red",
                                "bus_green_starts_in_s": 30}
     assert message["request"]["eta_s"] == 15 and message["approaches"]["1,2-1,1"] == {
-        "queued_vehicles": 1, "approaching_vehicles": 1, "people_queued": 1, "bus_approach": False}
+        "queued_vehicles": 1, "approaching_vehicles": 1, "people_queued": 1, "queue_share": 0.0, "bus_approach": False}
     assert message["request"]["passengers"] == 0 and message["request"]["exit_has_room"] is True  # its bus not seen here
     assert chosen.priority("1,1", at(101.0), request(100.0), controller, slow) is True and slow.asked == 1
 
@@ -890,6 +963,102 @@ def test_devl_clears_the_kerbside_lane_for_an_emergency_vehicle_and_flashes_its_
     assert not devl.items  # unticked: gone
 
 
+def test_dbl_clears_the_kerbside_lane_for_a_bus_and_flashes_its_signal():
+    from traffic_simulator.extensions import Extension, SignalOverrides
+
+    network = generate_network(3, 3)
+    panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
+    dbl = next(extension for extension in panel.extensions if extension.path.name == "dynamic_bus_lane.py")
+    module = dbl.module
+    simulation = Simulation(network, [PairDemand("1W", "1E", 600, None, [], "Poisson", (30, 70, 0)),
+                                      PairDemand("1S", "1N", 600, None, [], "Poisson", (0, 100, 0))], MODES, seed=3)
+    simulation.signal_override = SignalOverrides([Extension(Path("dbl.py"), module)], None)
+    assert simulation.signal_override.kerb_lane_for == ("bus",)  # buses keep to the lane it clears
+    log = []
+    for _ in range(1200):
+        simulation.step()
+        if simulation._lane_states:
+            junctions = {simulation.graph.links[link].end for link, _ in simulation._lane_states}
+            log.append((simulation._lane_states.copy(),
+                        {k: v for k, v in simulation.signal_states().items() if k[0] in junctions}))
+    run = module._runs[module.NOBODY]  # nobody to ask: the rule, every request TRUE
+    assert run.requests and all(key.startswith("dbl/") for key in run.requests)
+    assert all(row["answer"] is True and row["no_agent"] for row in run.requests.values())
+    # only the kerbside lane of the bus's arm: every other lane and arm of that junction red while it is green or amber
+    for lanes, arms in log:
+        by_junction = [simulation.graph.links[link].end for link, _ in lanes]
+        assert set(arms.values()) == {"R"} and len(by_junction) == len(set(by_junction))  # one lane a junction
+        assert all(index == 0 for _, index in lanes)
+    report = module.report(None)
+    assert [sheet[0] for sheet in report["sheets"]] == ["DBL", "DBL decisions"]
+    assert report["measures"]["dbl_cleared"] > 0 and report["measures"]["dbl_approach_s"] > 0
+    feed = [json.loads(line) for line in report["files"][0][1].splitlines()]
+    assert report["files"][0][0] == "dbl telemetry.jsonl" and feed[0]["schema"] == "acms-dbl-telemetry/1"
+    assert feed[0]["bus"]["people"] is not None  # what System 2 weighs against the stop for the others
+    message = feed[0]  # both systems read it in words: the people held at red and the road ahead on its route too
+    assert isinstance(message["people_held"], int) and isinstance(message["route_ahead"], list)
+    asked = module.lane.question_for(module.KIND, "2", None, message)
+    assert asked["state"] == module.words(message) and set(asked["questions"]) == {"in_the_lane", "more_on_bus",
+                                                                                     "route_clear", "route_free"}
+    assert "passenger throughput" in asked["messages"][0]["content"] and "{" not in asked["messages"][1]["content"]
+    ahead = {"junction": "2,1", "distance_m": 200, "queue_share": 1.0, "signal": "R", "priority": None}
+    assert "not clear" in module.words({**message, "route_ahead": [ahead]})["route_clear"]  # spillback at a red
+    assert "is clear" in module.words({**message, "route_ahead": [{**ahead, "signal": "G"}]})["route_clear"]  # clearing
+    held = module.words({**message, "route_ahead": [{**ahead, "queue_share": 0.0, "priority": "devl"}]})
+    assert "emergency vehicle" in held["route_free"] and "not free" in held["route_free"]
+    bus = {"id": "Bus9", "type": "Bus", "distance_m": 300.0, "speed_kmh": 40.0, "lane": 1, "people": 40.0}
+    alone = module.lane.telemetry(module.KIND, "1,1", "1W", bus, {"time_s": 0.0, "arms": {
+        "1W": {"approaching": [bus], "kerb_lane": 0}}}, "R")  # out of the kerb lane, nothing else about
+    assert alone["people_held"] == 0 and module.words(alone)["more_people_on"].startswith("More")  # not itself
+
+    dbl.check.setChecked(True)  # its lane signal: a head and lamp per arriving arm, flashing while it clears
+    junction = next(here for here in run.junctions.values() if here.cleared)
+    for here in run.junctions.values():
+        here.mode = "plan"  # the run ended with some still clearing: only the one set below shows
+    junction.mode, junction.serving, run.last_t = "clear", next(key for key, row in run.requests.items()
+                                                                if row["junction"] == junction.junction), 0.0
+    lamps = lambda t: [lamp.brush().color().name() for lamp in module.draw(network, t)[1::2]]  # noqa: E731
+    assert lamps(0.2).count(module.GREEN.name()) == 1 and set(lamps(0.7)) == {module.UNLIT.name()}
+    devl = next(extension for extension in panel.extensions if extension.path.name == "dynamic_emergency_lane.py")
+    behind = [item.rect().center() for item in module.draw(network, 0.2)[::2]]
+    beside = [item.rect().center() for item in devl.module.draw(network, 0.2)[::2]]
+    assert not set(map(tuple, ((p.x(), p.y()) for p in behind))) & set(map(tuple, ((p.x(), p.y()) for p in beside)))
+    dbl.check.setChecked(False)
+
+
+def test_devl_and_dbl_take_turns_at_a_junction_and_an_emergency_cuts_a_bus_clearance_short():
+    from traffic_simulator import dynamic_lane as lane
+
+    panel = ExtensionsPanel(NetworkGraphicsScene(generate_network(2, 2)), SimulationClock(), EXTENSIONS_DIR)
+    stems = {extension.path.stem: extension.module for extension in panel.extensions}
+    dbl, devl = stems["dynamic_bus_lane"], stems["dynamic_emergency_lane"]
+    runs = {dbl: lane.Run(None), devl: lane.Run(None)}  # nobody to ask: every request TRUE
+    holds, greens = {}, []
+    bus = {"id": "bus", "type": "Bus", "class": "bus", "distance_m": 60.0, "speed_kmh": 0.0, "lane": 0, "people": 40}
+    ambulance = {"id": "amb", "type": "Car", "emergency": True, "distance_m": 60.0, "speed_kmh": 0.0, "lane": 0}
+    for step in range(120):
+        t = step * 0.5
+        approaching = {"A": [bus], "B": [ambulance] if 20 <= t < 40 else []}  # the bus first, the ambulance 20-40 s
+        arms = {arm: {"approaching": on, "speed_limit_mps": 13.9, "kerb_lane": 0} for arm, on in approaching.items()}
+        context = {"time_s": t, "arms": arms, "amber_s": 3.0, "all_red_s": 2.0, "min_green_s": 7.0, "holds": holds}
+        lanes = {}
+        for arm, given in (("A", "G"), ("B", "R")):  # the chain: DBL, then DEVL
+            for module in (dbl, devl):
+                given = lane.step(module.KIND, runs[module], "J", arm, given, {**context, "approaching": arms[arm]["approaching"]},
+                                  None, None)
+                if isinstance(given, tuple):
+                    given, own = given
+                    lanes.update({(arm, index): state for index, state in own.items()})
+        greens.append((t, sorted(arm for (arm, _), state in lanes.items() if state == "G")))
+    assert all(len(arms) <= 1 for _, arms in greens)  # never two lanes green at one junction
+    bus_green = [t for t, arms in greens if arms == ["A"]]
+    ambulance_green = [t for t, arms in greens if arms == ["B"]]
+    assert bus_green and ambulance_green and max(bus_green) < min(ambulance_green)
+    (_, _, start, end), = runs[dbl].junctions["J"].cleared
+    assert end - start < lane.CLEAR_MAX_S and end <= 21  # cut short for the ambulance, the bus still there
+    assert runs[devl].junctions["J"].cleared[0][0] == "B"
+
+
 def test_devl_clears_the_kerbside_lane_past_a_kerb_turn_pocket():
     # With a kerb pocket on the approach, lane 0 is the pocket: DEVL cleared it while the emergency vehicle kept to the
     # lane past it (every vehicle's kerbside lane there), stood behind that lane's queue till the clearance ran out
@@ -947,9 +1116,14 @@ def test_devl_asks_the_agent_once_per_junction_and_clears_only_on_true():
 def test_emergency_vehicles_are_dispatched_once_or_on_a_loop():
     network = generate_network(2, 2)
     panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
-    dispatch = next(extension for extension in panel.extensions if extension.path.name == "dispatch_emergency.py")
-    dispatch.check.setChecked(True)
-    controls = dispatch.controls
+    devl = next(extension for extension in panel.extensions if extension.path.name == "dynamic_emergency_lane.py")
+    devl.check.setChecked(True)  # its Dispatch Emergency Vehicle section, usable while it is ticked
+    dispatch = SimpleNamespace(module=devl.module.dispatch)
+    from traffic_simulator.widgets import Collapsible
+
+    section = devl.controls.findChild(Collapsible)
+    assert section.header.text().endswith("Dispatch Emergency Vehicle") and not section.body.isHidden()  # open at first
+    controls = section.body
     sent, places = [], ["1E", "1W", "1,1", "2,1"]
 
     def dispatch_emergency(origin, destination, every_min, check_only=False, after_s=0):
@@ -1173,16 +1347,16 @@ def test_closing_the_window_stops_its_clock():
     assert window.runner is None and not window.clock.running  # no frames, draw() or algorithm() after it
 
 
-def test_scheduling_an_emergency_vehicle_ticks_dispatch_emergency_vehicle():
+def test_scheduling_an_emergency_vehicle_ticks_devl_for_its_dispatch_section():
     from traffic_simulator.main import MainWindow
 
     window = MainWindow()
-    dispatch = window._extension("dispatch_emergency")
+    devl = window._extension("dynamic_emergency_lane")
     schedule = {"schedules": [{"from": "1W", "to": "1E", "every_min": 5}]}
-    assert window._schedule_emergency(schedule, check_only=True) == {"ok": True} and not dispatch.on  # checked: as it was
+    assert window._schedule_emergency(schedule, check_only=True) == {"ok": True} and not devl.on  # checked: as it was
     window._schedule_emergency(schedule)
-    assert dispatch.on and dispatch.controls.isEnabled()  # its tab is used only while ticked, as Test DEVL does
-    assert dispatch.module.fleet() == [("1W", "1E", 5, 0)]
+    assert devl.on and devl.controls.isEnabled()  # its section is used only while ticked, as Test DEVL does
+    assert devl.module.dispatch.fleet() == [("1W", "1E", 5, 0)]
     window.close()
 
 

@@ -15,7 +15,7 @@ from pathlib import Path
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 os.environ.setdefault("QT_QPA_FONTDIR", str(Path(os.environ.get("WINDIR", "C:/Windows")) / "Fonts"))
 
-from PySide6.QtCore import QPointF, Qt  # noqa: E402
+from PySide6.QtCore import QPointF  # noqa: E402
 from PySide6.QtGui import QColor, QFont, QImage, QPainter, QTransform  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
@@ -23,7 +23,9 @@ from traffic_simulator import theme, vehicle_assets  # noqa: E402
 from traffic_simulator.main import MainWindow  # noqa: E402
 from traffic_simulator.institutions import footprint_problem  # noqa: E402
 from traffic_simulator.models import Institution  # noqa: E402
-from traffic_simulator.network_scene import BuildingItem, NetworkGraphicsScene, VehicleLayer, projection_transform  # noqa: E402
+from traffic_simulator.network_scene import NetworkGraphicsScene  # noqa: E402
+from traffic_simulator.scene_items import BuildingItem, projection_transform  # noqa: E402
+from traffic_simulator.vehicle_layer import VehicleLayer  # noqa: E402
 from traffic_simulator.simulation import Frame, VehicleState  # noqa: E402
 
 

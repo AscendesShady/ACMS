@@ -27,7 +27,7 @@ junctions inside it.
   ride, with its `legs`. None when no line or single change joins them.
 - **A building's stations** (`door`, `places`): its door station is the nearest within `METRO_WALK_M` (800 m, an
   assumption: about ten minutes' walk at `WALK_KMH` 5 km/h, straight-line); its MRT catchment, the other stations of
-  its lines inside its circle (`radius_m`). In `network_tools.institution_split` each of those stations is a place its
+  its lines inside its circle (`radius_m`). In `demand_plans.institution_split` each of those stations is a place its
   people come from, as each junction and end of its circle is (an equal share each): there they choose MRT (`METRO`, the mode's name; "metro" is read as it too) (the
   ride to the door station, the wait, the walk on; its cost the fare plus an alternative's own `cost` and
   `cost_per_km`, `metro_cost`) or Walk (straight-line). At its junctions the MRT isn't offered. MRT riders add no

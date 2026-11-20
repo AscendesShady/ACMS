@@ -39,18 +39,18 @@ for how to use each feature, the [README](../README.md).
 
 | Section | What it does | Code |
 |---|---|---|
-| **Generate Network** | Speed limit, lanes, lane changing and signal timing new roads get; Horizontal/Vertical roads and **Generate Network** replace the network with a grid. | `main.generate`, `network_generator.py` |
+| **Generate Network** | Speed limit, lanes, lane changing and signal timing new roads get; Horizontal/Vertical roads and **Generate Network** replace the network with a grid. | `main_create.generate`, `network_generator.py` |
 | **Own Network** | The background to draw over: a colour, an image or PDF set to scale, or the map. **Map**: Country, Place, Locate Work Zone, Confirm; the view then stays on the zone. | `background.py` (`BackgroundPanel`), `map_tiles.py` |
-| **Universal Attributes** | Left- or right-hand driving for the whole network: lanes, turns, signals and interchanges mirror at once. | `main.set_driving_side`, `models.Network.set_driving_side` |
+| **Universal Attributes** | Left- or right-hand driving for the whole network: lanes, turns, signals and interchanges mirror at once. | `main_create.set_driving_side`, `models.Network.set_driving_side` |
 
 ### Edit Network
 
 | Page | What it does | Code |
 |---|---|---|
-| **Roads** | **Add Node**: click to place nodes one after another (each exactly where you click; a dashed line gives the distance to the next; right-click keeps them). **Add Edge**: a road between two junctions (Connection) or out to a boundary end (End); crossings become a roundabout or an overpass. Click anything to edit it below. | `main.canvas_clicked`, `main._build_edge`, `network_tools.build_edge`, `properties_panel.py` |
+| **Roads** | **Add Node**: click to place nodes one after another (each exactly where you click; a dashed line gives the distance to the next; right-click keeps them). **Add Edge**: a road between two junctions (Connection) or out to a boundary end (End); crossings become a roundabout or an overpass. Click anything to edit it below. | `main_edit.canvas_clicked`, `main_edit._build_edge`, `road_tools.build_edge`, `properties_panel.py` |
 | **Selection editor** | A road: lanes, speed, direction, turn pockets, cycle lanes, footpaths. A junction: control (signalised, roundabout, uncontrolled) and signal timing; each phase named by the letter its heads show on the map (Phase A, B…). An end: its flows. Ctrl+click roads or junctions for slip roads and interchanges. | `properties_panel.py`, `interchanges.py`, `roundabouts.py`, `lane_graph.phase_letters` |
 | **MRT** | Start deployment, click stop after stop (curves of 300 m or more), right-click to finish and set its service. | `main_metro.toggle_metro`, `metro.py`, `models.py` |
-| **Pedestrian** | Add Zebra, Add Overbridge on a road with footpaths both sides. | `main._place_crossing`, `walking.py` |
+| **Pedestrian** | Add Zebra, Add Overbridge on a road with footpaths both sides. | `main_edit._place_crossing`, `walking.py` |
 
 ### Mode Behavior
 
@@ -115,7 +115,7 @@ What the map draws, all to scale:
 
    **Code:** `simulation.py` (`Simulation`), `runner.py` (`Runner`), `vehicle.py`, `walking.py`.
 4. Every 5 simulated seconds a frame is sampled: flows, speeds, queues, delay and trips.
-   **Code:** `results.Recorder`.
+   **Code:** `results.RunRecorder`.
 5. The map draws each frame without ever holding the physics up. **Code:** `network_scene.py`, `gpu.py`.
 6. When the run ends (Stop, a new Run, an edit, closing, a failure), its workbook is written. **Export** writes
    one at any time while it goes on. **Code:** `results.py`, `xlsx.py`.

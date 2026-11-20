@@ -442,7 +442,7 @@ def test_a_move_that_brings_a_curves_ends_together_is_refused_unchanged():
     # collapsed to a point that the undo skipped.
     from copy import deepcopy
 
-    from traffic_simulator import network_tools
+    from traffic_simulator import network_tools, tool_args
 
     for curvature in ([0.002, 0.002], []):
         network = generate_network(3, 4)
@@ -452,7 +452,7 @@ def test_a_move_that_brings_a_curves_ends_together_is_refused_unchanged():
         before = deepcopy(network)
         try:
             network_tools.run_tool(network, "move_junctions", {"junctions": ["2,2"], "dx": -500, "dy": 0})
-        except network_tools.ToolError:
+        except tool_args.ToolError:
             pass
         else:
             raise AssertionError("a curve's ends met")
@@ -520,7 +520,7 @@ def test_a_west_or_north_road_keeps_its_stops_and_crossings_from_the_junction():
 def test_junctions_off_the_map_are_refused():
     from copy import deepcopy
 
-    from traffic_simulator import network_tools
+    from traffic_simulator import network_tools, tool_args
 
     network = generate_network(2, 2)
     before = deepcopy(network)
@@ -528,7 +528,7 @@ def test_junctions_off_the_map_are_refused():
                        ("move_junctions", {"junctions": ["1,1"], "dx": 1e15, "dy": 0})):
         try:
             network_tools.run_tool(network, name, args)
-        except network_tools.ToolError as exc:
+        except tool_args.ToolError as exc:
             assert "off the map" in str(exc) or "number" in str(exc), exc  # inf: not a number, refused before it runs
         else:
             raise AssertionError(args)

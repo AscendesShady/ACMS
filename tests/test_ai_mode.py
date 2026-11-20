@@ -7,7 +7,7 @@ import threading
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from traffic_simulator import assistant, network_tools
+from traffic_simulator import assistant, network_tools, tool_args, tool_schemas
 from traffic_simulator.ai_mode import model_label, ollama_models, scan_keys
 
 
@@ -206,7 +206,7 @@ def _serve_providers():
 def test_gemini_gets_only_the_schema_keywords_it_accepts():
     """Gemini refuses JSON Schema it doesn't know (400 "Unknown name additionalProperties"): every tool's
     parameters go to it with only GEMINI_SCHEMA_KEYS, at every level; the other providers get them as written."""
-    request = assistant._gemini_request([{"role": "user", "content": "hi"}], network_tools.tool_specs())
+    request = assistant._gemini_request([{"role": "user", "content": "hi"}], tool_schemas.tool_specs())
     unknown = set()
 
     def walk(schema):
@@ -222,11 +222,11 @@ def test_gemini_gets_only_the_schema_keywords_it_accepts():
     declarations = request["tools"][0]["functionDeclarations"]
     for declaration in declarations:
         walk(declaration.get("parameters", {}))
-    assert not unknown and len(declarations) == len(network_tools.TOOLS)
+    assert not unknown and len(declarations) == len(tool_schemas.TOOLS)
     built = next(d for d in declarations if d["name"] == "build_scenario")["parameters"]
     assert built["properties"]["what_if"]["items"]["required"] == ["change"]  # the structure is kept
     assert "required" not in built  # an empty one is left out
-    assert network_tools.TOOLS[[t["name"] for t in network_tools.TOOLS].index("build_scenario")][
+    assert tool_schemas.TOOLS[[t["name"] for t in tool_schemas.TOOLS].index("build_scenario")][
         "parameters"]["additionalProperties"] is False  # Ollama and xAI still get the strict form
 
 
@@ -659,7 +659,7 @@ def test_the_trim_and_ollamas_window_use_one_rate():
     saved = dict(assistant._CHARS_PER_TOKEN_SEEN)
     try:
         assistant._CHARS_PER_TOKEN_SEEN["dense"] = 2.4
-        tools = network_tools.tool_specs()[:10]  # the tools offered: a few, as find_tools leaves them
+        tools = tool_schemas.tool_specs()[:10]  # the tools offered: a few, as find_tools leaves them
         messages = [{"role": "system", "content": "s" * 3000}] + [m for n in range(30) for m in (
             {"role": "user", "content": f"ask {n}"}, {"role": "assistant", "content": "a" * 8000})] + [
             {"role": "user", "content": "latest"}]
@@ -948,7 +948,7 @@ def test_system_1_decides_a_question_of_your_own():
         restore()
 
 
-def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
+def test_a_batch_compares_system_1_and_system_2_deciding_tsp_with_the_default():
     """The window's batch with TSP ticked, paced at 60x and never pausing: every seed × agent, each run's workbook
     named by seed and model with its TSP sheets and its telemetry feed beside it, and the batch's comparing each
     agent with No LLM (fake Jev says TRUE to buses; fake Ollama calls decide_tsp(activate=true))."""
@@ -977,7 +977,7 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
                 else:
                     os.environ[name] = saved_key
         labels = [option["label"] for option in window.ai_mode.agent_options()]
-        assert labels[:2] == ["Never preempt (baseline)", "Always preempt (baseline)"] and "System 1: Jev" in labels and "System 1: laya:421m-english-bf16" in labels and "System 2: llama3:latest" in labels
+        assert not any("preempt" in label for label in labels) and "System 1: Jev" in labels  # models only and "System 1: laya:421m-english-bf16" in labels and "System 2: llama3:latest" in labels
         assert "System 2: grok-4" in labels  # the provider's usual model, none started
         window._od_command("set_od_demand", {"pairs": ["1W->1E", "1E->1W"], "demand": "hourly", "value": 300,
                                              "mode_split": [{"mode": "Bus", "percent": 40}, {"mode": "Car", "percent": 60}]})
@@ -985,52 +985,51 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
         assert not tsp.on  # Test TSP runs it, ticked in the Extensions tab or not
         for agents, words in ((["System 9"], "Not found on this PC"),):
             try:
-                window.run_batch([1], 3, agents=agents, test_tsp=True)
+                window.run_batch([1], 3, tests={"TSP": {"agents": agents}})
             except ValueError as exc:
                 assert words in str(exc)
             else:
                 raise AssertionError("a batch with no model, or one not found, must be refused before it runs")
-        chosen = ["Never preempt (baseline)", "Always preempt (baseline)", "System 1: Jev", "System 2: llama3:latest"]
-        started = time.monotonic()  # the models only: the baseline always runs, first
+        chosen = ["System 1: Jev", "System 2: llama3:latest"]
+        started = time.monotonic()  # the models, and the default configuration first (Compare with default)
         # a 15 s deadline (250 ms real at 60x): a scripted answer takes about 80 ms alone and twice that under a full suite
-        done = window.run_batch([1, 2], 3, 1, agents=chosen[2:], deadline_s=15, speed=60, at_once=4, test_tsp=True)
+        done = window.run_batch([1, 2], 3, 1, tests={"TSP": {"agents": chosen, "deadline_s": 15}}, speed=60, at_once=4)
         took = time.monotonic() - started
         # 3 s a run at 60x, side by side; Jev's two and llama's two one after another: about 6 s, not 18
         assert 2 * 3 * 0.9 <= took < 6 * 3 * 0.8, took
-        assert done["runs"] == done["of"] == 8 and tsp.module.tsp_agent.system == "1"  # its choice untouched
+        assert done["runs"] == done["of"] == 6 and tsp.module.tsp_agent.system == "1"  # its choice untouched
 
         def runs_of(book):
             rows = read_xlsx(book)["Runs"]
             return {(row[1], row[2]): dict(zip(rows[0], row)) for row in rows[1:]}
 
         together = runs_of(done["file"])
-        paces = [run["pace_achieved"] for (agent, _), run in together.items() if "baseline" not in agent]
-        assert len(paces) == 4  # 4 at 60x can outrun one process's CPU; the baseline isn't paced at all:
-        assert all(run.get("pace_achieved") is None for (agent, _), run in together.items() if "baseline" in agent)
+        paces = [run["pace_achieved"] for (agent, _), run in together.items() if agent != "Default configuration"]
+        assert len(paces) == 4  # 4 at 60x can outrun one process's CPU; the default isn't paced at all:
+        assert all(run.get("pace_achieved") is None for (agent, _), run in together.items() if agent == "Default configuration")
         assert all(0 < pace <= 61 for pace in paces)  # recorded, never above the pace asked
         assert ("note" in done) == any(pace < 0.9 * 60 for pace in paces)  # and falling behind is said
-        alone = runs_of(window.run_batch([1, 2], 3, 1, agents=["System 1: Jev"], deadline_s=5, speed=60,
-                                         at_once=1, test_tsp=True)["file"])
+        alone = runs_of(window.run_batch([1, 2], 3, 1, tests={"TSP": {"agents": ["System 1: Jev"], "deadline_s": 5}},
+                                         speed=60, at_once=1)["file"])
         for seed in (1.0, 2.0):  # each run its own state: side by side as alone, to the vehicle
-            side, own = together[("Never preempt (baseline)", seed)], alone[("Never preempt (baseline)", seed)]
-            assert all(side[key] == own[key] for key in ("people_per_h", "mean_trip_delay_s", "queued_mean",
-                                                         "tsp_requests", "tsp_greens_cut")), seed
+            side, own = together[("Default configuration", seed)], alone[("Default configuration", seed)]
+            assert all(side[key] == own[key] for key in ("people_per_h", "mean_trip_delay_s", "queued_mean")), seed
         sheets = read_xlsx(done["file"])
         assert list(sheets)[:5] == ["Read me", "Headline", "Comparison", "Agents", "Runs"]
         headline = [row for row in sheets["Headline"][1:] if row[0] == "System 1: Jev"]
         assert {"Passenger throughput increase", "Passenger delay reduction",
                 "Vehicle wait time reduction (per trip)"} <= {row[1] for row in headline}
         agents = {row[0]: row for row in sheets["Agents"][1:]}
-        assert set(agents) == set(chosen) and agents["System 1: Jev"][1:4] == ["System 1", "jev", "jev-latest"]
+        assert set(agents) == {"Default configuration", *chosen} and agents["System 1: Jev"][1:4] == ["System 1", "jev", "jev-latest"]
         names = sorted(path.name for path in Path(done["folder"]).glob("*.xlsx"))
-        assert len(names) == 8 and any(" seed 1 jev" in name for name in names)
-        assert any(" seed 2 llama3-latest" in name for name in names) and any(" seed 2 never" in name for name in names)
+        assert len(names) == 6 and any(" seed 1 jev" in name for name in names)
+        assert any(" seed 2 llama3-latest" in name for name in names) and any(" seed 2 default" in name for name in names)
         # Seed 2's runs: seed 1's go first, while each model is cold, and at 60x most of their answers miss the deadline
         jev = read_xlsx(next(Path(done["folder"]).glob("* seed 2 jev.xlsx")))
         figures = {row[0]: row[1] for row in jev["TSP"][1:] if len(row) > 1 and row[0]}
         assert figures["Bus requests"] > 0 and figures["Priority given (TRUE)"] > 0 and figures["Model"] == "jev-1.13.0"
         run = {row[0]: row[1] for row in jev["Run"][1:]}
-        assert run["Decision deadline (simulated s)"] == 15 and run["Pace (simulated s a real s)"] == 60
+        assert run["TSP decision deadline (simulated s)"] == 15 and run["Pace (simulated s a real s)"] == 60
         decided = [row for row in jev["Agent decisions"][1:] if str(row[7]).startswith("TRUE")]
         read = jev["Agent decisions"][0].index("Telemetry read")
         assert decided and json.loads(decided[0][read])["schema"] == "acms-tsp-telemetry/1"  # what Jev read
@@ -1048,12 +1047,10 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
         assert 0 < figures["Answered by the tool"] <= figures["Bus requests"] - figures["Bus gone before it was asked"]
         assert figures["Priority given (TRUE)"] > 0  # decide_tsp(activate=true), read as data
         assert any(len(row) > 12 and row[11] == "tool" and row[12] == "bus at red" for row in llama["Agent decisions"][1:])
-        plain = read_xlsx(next(Path(done["folder"]).glob("* seed 1 never.xlsx")))
+        plain = read_xlsx(next(Path(done["folder"]).glob("* seed 1 default.xlsx")))
         assert {row[0]: row[1] for row in plain["Run"][1:]}["Pace (simulated s a real s)"] == "as fast as the CPU allows"
-        assert {row[0]: row[1] for row in plain["TSP"][1:] if len(row) > 1 and row[0]}["Priority given (TRUE)"] == 0  # Never preempt
-        always = read_xlsx(next(Path(done["folder"]).glob("* seed 1 always.xlsx")))
-        assert {row[0]: row[1] for row in always["TSP"][1:] if len(row) > 1 and row[0]}["Priority given (TRUE)"] > 0
-        for name in ("jev", "llama3-latest", "never", "always"):  # replayed from its feed, no model asked: the run again, exactly
+        assert "TSP" not in plain  # the default: no controller acting, its signal plans alone
+        for name in ("jev", "llama3-latest"):  # replayed from its feed, no model asked: the run again, exactly
             book = next(Path(done["folder"]).glob(f"* seed 1 {name}.xlsx"))
             replayed = window.replay_run(book)
             assert replayed["same"] and f"{name}-replay.xlsx" in replayed["file"], replayed
@@ -1063,7 +1060,7 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
             was, now = ([[row[c] for c in columns if c < len(row)] for row in sheet["Agent decisions"]]
                         for sheet in (first, again))
             assert was == now, (name, [(a, b) for a, b in zip(was, now) if a != b][:4], len(was), len(now))
-        last = window.run_batch([3], 1, test_tsp=False)
+        last = window.run_batch([3], 1)
         assert last["of"] == 1  # without Test TSP: plain runs
         try:
             window.replay_run(next(Path(last["folder"]).glob("*.xlsx")))
@@ -1110,15 +1107,17 @@ def test_the_guard_takes_only_a_decision():
         for p_yes, answer, guard in ((0.8, True, "accepted"), (0.2, False, "accepted"), (1.7, False, "rejected"),
                                      ("yes", False, "rejected"), (None, False, "rejected")):
             assistant.system_one = lambda *args, p_yes=p_yes, **kwargs: {"answers": {
-                "exit_clear": {"noul": p_yes}, "more_on_bus": {"noul": 0.7}}, "usage": {}}
+                "exit_clear": {"noul": p_yes}, "more_on_bus": {"noul": 0.7}, "route_clear": {"noul": 0.9},
+                "route_free": {"noul": 0.9}}, "usage": {}}
             found = window._ask_agent(question, {"system": "1", "provider": "local", "model": "laya:421m-english-bf16"})
             assert found["answer"] is answer and found["guard"].startswith(guard), (p_yes, found)
         assert found["guard"] == "rejected: P(yes) for exit_clear was None"
         assistant.system_one = lambda *args, **kwargs: {"answers": {"exit_clear": {"noul": 0.8},
-                                                          "more_on_bus": {"noul": 0.3}}, "usage": {}}
+                                                          "more_on_bus": {"noul": 0.9}, "route_clear": {"noul": 0.3},
+                                                          "route_free": {"noul": 0.9}}, "usage": {}}
         found = window._ask_agent(question, {"system": "1", "provider": "local", "model": "laya:421m-english-bf16"})
-        assert found["answer"] is False and found["p_yes"] == 0.3  # the lowest decides
-        assert found["reason"] == "exit_clear 0.80, more_on_bus 0.30"
+        assert found["answer"] is False and found["p_yes"] == 0.3  # the lowest decides: the road ahead not clear
+        assert found["reason"] == "exit_clear 0.80, more_on_bus 0.90, route_clear 0.30, route_free 0.90"
     finally:
         assistant.stream_chat, assistant.system_one = saved
         window.close()
@@ -1151,7 +1150,7 @@ def test_available_tools_lists_every_tool_before_start():
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     from PySide6.QtWidgets import QApplication
 
-    from traffic_simulator import network_tools
+    from traffic_simulator import tool_schemas
     from traffic_simulator.ai_mode import TOOLS_NOTE
     from traffic_simulator.main import MainWindow
 
@@ -1164,8 +1163,8 @@ def test_available_tools_lists_every_tool_before_start():
     app.processEvents()
     who, listed = panel._shown[-1]
     reads, changes = listed.split("Changes, each waiting for your Apply:")
-    assert who == TOOLS_NOTE and listed.startswith(f"{len(network_tools.TOOLS)} tools.")
-    for tool in network_tools.TOOLS:
+    assert who == TOOLS_NOTE and listed.startswith(f"{len(tool_schemas.TOOLS)} tools.")
+    for tool in tool_schemas.TOOLS:
         assert f"**{tool['name']}**(" in (changes if tool["edits"] else reads) and tool["description"] in listed
     assert "**set_junction_control**(" in changes and "**network_summary**()" in reads  # with its parameters
     assert "set_junction_control" in panel.transcript.toPlainText()
@@ -1327,10 +1326,10 @@ def test_the_worker_reads_the_network_and_writes_the_record_on_the_ui_thread():
         return [_calls("find_tools", {"need": "demand"}), _calls("network_summary", {}), _said("ok")][min(results, 2)]
 
     app, panel, network, undo = _grok_panel(script)
-    threads, real_repair, real_record, real_snapshot = [], network_tools.repair_ends, panel._record_call, panel._snapshot
+    threads, real_repair, real_record, real_snapshot = [], tool_args.repair_ends, panel._record_call, panel._snapshot
     reads = set(network_tools.PREPARE_READS)
     network_tools.PREPARE_READS.add("network_summary")  # its prepare takes a copy of the network, as the map's does
-    network_tools.repair_ends = lambda *args: threads.append(("repair", threading.current_thread())) or real_repair(*args)
+    tool_args.repair_ends = lambda *args: threads.append(("repair", threading.current_thread())) or real_repair(*args)
     panel._record_call = lambda *args, **kwargs: threads.append(("record", threading.current_thread())) or \
         real_record(*args, **kwargs)
     panel._snapshot = lambda: threads.append(("copy", threading.current_thread())) or real_snapshot()
@@ -1342,7 +1341,7 @@ def test_the_worker_reads_the_network_and_writes_the_record_on_the_ui_thread():
         assert {"repair", "record", "copy"} <= kinds, threads
         assert all(thread is threading.main_thread() for _, thread in threads), threads
     finally:
-        network_tools.repair_ends = real_repair
+        tool_args.repair_ends = real_repair
         network_tools.PREPARE_READS.clear()
         network_tools.PREPARE_READS.update(reads)
         undo()

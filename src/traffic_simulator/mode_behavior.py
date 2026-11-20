@@ -19,7 +19,7 @@ from PySide6.QtCore import QEvent, QObject, QTimer, Signal
 from PySide6.QtWidgets import (QComboBox, QDoubleSpinBox, QFormLayout, QGridLayout, QGroupBox, QLabel, QLineEdit, QMessageBox,
                                QSpinBox, QVBoxLayout, QWidget)
 
-from .demand import fixed_split, redistribute, whole_percent  # noqa: F401 - offered here too, as before
+from .demand import redistribute
 from .widgets import hint_label, styled_button
 from .simulation import DT
 from .theme import VEHICLE_PAINTS

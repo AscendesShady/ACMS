@@ -10,13 +10,19 @@ from dataclasses import asdict
 
 from PySide6.QtCore import QRectF, QThread
 
-from traffic_simulator import network_tools
+from traffic_simulator import tool_args
 from traffic_simulator.geometry import point_along
 from traffic_simulator.models import Network
 
 
 class AssistantMixin:
     """AI Mode's view of the window and its hooks into it."""
+
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_background_changed', '_commit', '_network_summary', '_od_ends', '_types_key', 'ai_mode', 'ai_status',
+             'background_panel', 'group', 'install_network', 'model_updated', 'multi_nodes', 'network', 'od_matrix',
+             'od_panel', 'runner', 'scene', 'select', 'statusBar', 'tabs', 'thread', 'vehicle_modes', 'view')
 
     # --- AI Mode's view of the window (see AIModePanel.attach) -------------------------
 
@@ -84,7 +90,7 @@ class AssistantMixin:
                     **({"note": stopped} if stopped else {})}
         specs = args.get("types")
         if isinstance(specs, str):
-            specs = network_tools._parsed_json(specs)
+            specs = tool_args._parsed_json(specs)
         modes.create(specs, check_only=True)  # ValueError, before anything changes
         if check_only:
             return {"ok": True}

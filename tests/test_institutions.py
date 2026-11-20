@@ -18,7 +18,7 @@ from PySide6.QtGui import QWheelEvent  # noqa: E402
 from PySide6.QtTest import QTest  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from traffic_simulator import network_tools as tools  # noqa: E402
+from traffic_simulator import demand_plans, network_tools as tools, tool_args, tool_reports  # noqa: E402
 from traffic_simulator.institutions import (GROW, Placement, _through, catchment, door, footprint_problem,  # noqa: E402
                                             hourly_people, hourly_trips, links, place, run_demand, vehicle_split,
                                             COMMUTE_OCCUPANCY, KINDS)
@@ -124,21 +124,21 @@ def _school(network):
 def test_the_mode_split_is_a_logit_calibrated_to_what_is_observed():
     network, modes = generate_network(3, 4), VehicleModes().modes
     school = _school(network)
-    percent, info = tools.institution_split(network, school, modes, {})
+    percent, info = demand_plans.institution_split(network, school, modes, {})
     assert set(percent) == {"Walk", "Bus", "Car", "Bike"} and abs(sum(percent.values()) - 100) < 0.05
     assert info["door"] == "1,1" and info["origins"] >= 3 and "assumed" in info and info["mean_trip_km"] > 0
-    calibrated, info = tools.institution_split(network, school, modes, {"observed_percent": {"Car": 30}})
+    calibrated, info = demand_plans.institution_split(network, school, modes, {"observed_percent": {"Car": 30}})
     assert abs(calibrated["Car"] - 30) < 0.01 and "Train 2009" in info["calibration"]  # c += ln(observed/predicted)
     rest = {m: percent[m] / (100 - percent["Car"]) for m in percent if m != "Car"}
     assert all(abs(calibrated[m] / 70 - rest[m]) < 0.002 for m in rest)  # the others keep their relative odds
     every = {"Walk": 40, "Bus": 10, "Car": 30, "Bike": 20}
-    assert all(abs(v - every[m]) < 0.01 for m, v in tools.institution_split(network, school, modes,
+    assert all(abs(v - every[m]) < 0.01 for m, v in demand_plans.institution_split(network, school, modes,
                                                                             {"observed_percent": every})[0].items())
-    no_bus, _ = tools.institution_split(network, school, modes, {"observed_percent": {"Bus": 0}})
+    no_bus, _ = demand_plans.institution_split(network, school, modes, {"observed_percent": {"Bus": 0}})
     assert "Bus" not in no_bus  # an observed 0 leaves the mode out
-    far = tools.institution_split(network, school, modes, {"walk_kmh": 2})[0]
+    far = demand_plans.institution_split(network, school, modes, {"walk_kmh": 2})[0]
     assert far["Walk"] < percent["Walk"]  # slower walking, fewer walk
-    dear = tools.institution_split(network, school, modes, {"alternatives": [
+    dear = demand_plans.institution_split(network, school, modes, {"alternatives": [
         {"mode": "Walk"}, {"mode": "Car", "out_of_vehicle_min": 3, "cost_per_km": 300}]})[0]
     assert set(dear) == {"Walk", "Car"} and dear["Walk"] > 50
     for args, message in (({"observed_percent": {"Car": 80, "Walk": 30}}, "add up to"),
@@ -147,14 +147,14 @@ def test_the_mode_split_is_a_logit_calibrated_to_what_is_observed():
                           ({"alternatives": [{"mode": "Walk"}, {"mode": "Rocket"}]}, "different mode"),
                           ({"coefficients": {"cost": 0.1}}, "0 or below"), ({"walk_kmh": 30}, "walk_kmh")):
         try:
-            tools.institution_split(network, school, modes, args)
+            demand_plans.institution_split(network, school, modes, args)
         except ValueError as exc:
             assert message in str(exc), (message, str(exc))
         else:
             raise AssertionError(args)
     school.radius_m = 80
     try:
-        tools.institution_split(network, school, modes, {})
+        demand_plans.institution_split(network, school, modes, {})
     except ValueError as exc:
         assert "make its circle bigger" in str(exc)
     else:
@@ -206,11 +206,11 @@ def test_a_tool_places_one_near_a_junction_with_its_catchment():
                                                                              "can't stand")):
         try:
             tools.run_tool(network, "place_institution", args)
-        except (ValueError, tools.ToolError) as exc:
+        except (ValueError, tool_args.ToolError) as exc:
             assert message in str(exc), (message, str(exc))
         else:
             raise AssertionError(args)
-    assert len(network.institutions) == 2 and "near 2,2" in tools.describe_call("place_institution", {"kind": "Shop",
+    assert len(network.institutions) == 2 and "near 2,2" in tool_reports.describe_call("place_institution", {"kind": "Shop",
                                                                                                     "near": "2,2"})
     tools.run_tool(network, "update_institution", {"id": item.id, "car_share": 50})
     assert item.mode_shares == {}  # a typed car share replaces a mode split
@@ -376,16 +376,16 @@ def test_cycling_is_a_bikes_choice_and_cycle_lanes_draw_people_to_it():
 
     network, modes = generate_network(3, 4), VehicleModes().modes
     bike = next(mode for mode in modes if mode.vehicle_class == "bicycle")
-    assert tools.default_alternative(bike) == {"mode": bike.name, "out_of_vehicle_min": 1.0, "cost_per_km": 0.0}
+    assert demand_plans.default_alternative(bike) == {"mode": bike.name, "out_of_vehicle_min": 1.0, "cost_per_km": 0.0}
     car = next(mode for mode in modes if mode.name == "Car")
-    assert tools.default_alternative(car)["cost_per_km"] == 15.0  # a car's as before
+    assert demand_plans.default_alternative(car)["cost_per_km"] == 15.0  # a car's as before
     school = _school(network)
-    before, info = tools.institution_split(network, school, modes, {})
-    again, _ = tools.institution_split(network, school, modes, {})
+    before, info = demand_plans.institution_split(network, school, modes, {})
+    again, _ = demand_plans.institution_split(network, school, modes, {})
     assert before == again  # no cycle lanes: nothing to change
     for road in network.all_roads():
         road.cycle_lanes = list(road.arrival_ends())
-    laned, _ = tools.institution_split(network, school, modes, {})
+    laned, _ = demand_plans.institution_split(network, school, modes, {})
     assert laned["Bike"] > before["Bike"] and laned["Car"] < before["Car"]  # cycle lanes everywhere: more cycle
     assert 0 < CYCLE_LANE_TIME_FACTOR < 1
 

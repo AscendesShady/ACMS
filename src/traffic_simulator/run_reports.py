@@ -9,7 +9,7 @@ import math
 import statistics
 from collections import defaultdict
 
-from . import analysis, experiments, network_tools, stats
+from . import analysis, experiments, stats, tool_args
 
 
 def run_test(tests: dict, identifier: str) -> dict:
@@ -97,7 +97,7 @@ def analyse_run(tests: dict, tool: str, args: dict) -> dict:
         values = experiments.series(kpis, str(args.get("what")), args.get("road") or None, interval)
         return {**head, "what": args.get("what"), "road": args.get("road"), "interval_min": interval,
                 "recent": [round(v, 1) for v in values[-12:]], **stats.holt(values, horizon)}
-    counts, profiles = (network_tools._parsed_json(v) if isinstance(v, str) else v
+    counts, profiles = (tool_args._parsed_json(v) if isinstance(v, str) else v
                         for v in (args.get("counts"), args.get("profiles")))
     return {**head, **experiments.check_calibration(kpis, counts, profiles)}
 
@@ -132,7 +132,7 @@ def resilience(tests: dict, args: dict) -> dict:
 
 def regress(tests: dict, args: dict) -> dict:
     """regress: OLS of y on x over rows given, or over an experiment's runs (their figures and demand_scale)."""
-    rows = network_tools._parsed_json(args["data"]) if isinstance(args.get("data"), str) else args.get("data")
+    rows = tool_args._parsed_json(args["data"]) if isinstance(args.get("data"), str) else args.get("data")
     if args.get("experiment"):
         test = tests.get(str(args["experiment"]).upper())
         if test is None or test["kind"] != "experiment":
@@ -150,8 +150,8 @@ def regress(tests: dict, args: dict) -> dict:
                 return name
         return name
 
-    y, xs = keyed(str(args.get("y"))), [keyed(str(x)) for x in network_tools._ids(args.get("x") or [])]
-    logs = {keyed(name) for name in network_tools._ids(args.get("log") or [])}
+    y, xs = keyed(str(args.get("y"))), [keyed(str(x)) for x in tool_args._ids(args.get("x") or [])]
+    logs = {keyed(name) for name in tool_args._ids(args.get("log") or [])}
     names = [y, *xs]
     missing = [name for name in names if not any(name in row for row in rows)]
     if missing:
@@ -364,13 +364,14 @@ def seconds(value) -> float | None:
 
 
 def decision_rows(test: dict) -> list[dict]:
-    """A run's agent decisions (TSP's and DEVL's sheets) as dicts, each with its extension and when it was asked."""
+    """A run's agent decisions (TSP's, DEVL's and DBL's sheets) as dicts, each with its extension (TSP, DEVL or DBL)
+    and when it was asked."""
     found = []
     for name, rows in (test["kpis"].get("decision_sheets") or {}).items():
         for row in rows[1:]:
             item = dict(zip(rows[0], row))
             asked = item.get("Asked at", item.get("Asked"))
-            found.append({"extension": "DEVL" if name.startswith("DEVL") else "TSP",
+            found.append({"extension": next((kind for kind in ("DEVL", "DBL") if name.startswith(kind)), "TSP"),
                           "asked_s": seconds(asked), **item})
     return found
 
@@ -380,7 +381,7 @@ def read_decisions(tests: dict, args: dict) -> dict:
     test = run_test(tests, str(args.get("id") or ""))
     rows = decision_rows(test)
     if not rows:
-        return {"run": test["id"], "decisions": [], "note": "No agent decisions in that run: tick TSP or DEVL "
+        return {"run": test["id"], "decisions": [], "note": "No agent decisions in that run: tick TSP, DEVL or DBL "
                                                              "(set_extension) before run_simulation."}
     junction = str(args.get("junction") or "")
     start = float(args["from_min"]) * 60 if args.get("from_min") is not None else None

@@ -19,6 +19,11 @@ from traffic_simulator.widgets import hint_label
 class MetroMixin:
     """Deploying MRT lines on the map."""
 
+    # What it uses of the window and doesn't define: MainWindow's state and the other mixins' methods
+    # (tests/test_docs.py keeps this exact, so a new dependency shows in the diff)
+    NEEDS = ('_commit', '_end_modes_except', '_network_summary', '_refresh_mode', '_show_hint', 'metro_button',
+             'metro_line', 'metro_summary', 'network', 'od_matrix', 'scene', 'statusBar')
+
     def toggle_metro(self, checked: bool) -> None:
         """Start deployment: every map click a metro stop, the second making a new line and each one after it
         extending it; unchecked (a right-click, Esc, another tool or tab) the deployment ends and the line is

@@ -38,6 +38,24 @@ def test_text_is_readable_on_every_background():
     assert not weak, weak
 
 
+def test_a_dropdown_opens_under_its_box_whatever_is_chosen():
+    from PySide6.QtWidgets import QComboBox
+
+    apply_theme(APP)
+    combo = QComboBox()
+    combo.addItems([f"{speed} km/h" for speed in (20, 30, 40, 50, 60, 70, 80)])
+    combo.setCurrentIndex(4)  # Fusion's menu-style popup put this item over the box, the list above it
+    combo.move(300, 400)
+    combo.show()
+    combo.showPopup()
+    APP.processEvents()
+    try:
+        assert combo.view().window().geometry().top() >= combo.mapToGlobal(combo.rect().bottomLeft()).y()
+    finally:
+        combo.hidePopup()
+        combo.close()
+
+
 def test_a_click_lights_the_button_for_a_moment():
     apply_theme(APP)
     apply_theme(APP)  # a second window: still one flash filter

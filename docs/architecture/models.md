@@ -185,7 +185,10 @@ Dataclasses:
   a junction or end by its point, a road by every point of its line, a stop by its bay's stretch of road, an MRT
   line by every point of its track (`metro_track`).
   A crossing box takes whatever it touches (`polyline_meets_box`).
-- `validate()`: every invariant, including finite numbers in every number field of the network, its junctions
+- `validate()`: every invariant, the first one broken raised; the network's own settings and unique IDs, then a
+  check per kind of object in a fixed order (`_check_nodes`, `_check_roads`, manual signal windows and roundabout
+  designs, `_check_background`, `_check_places`, `_check_metro`, `_check_walking`, `_check_people_demand`,
+  `_check_road_sides`), including finite numbers in every number field of the network, its junctions
   (each within `MAP_LIMIT_M`, 1,000 km, of the origin: x = 1e300 is finite but off any map),
   roads (shape points and curvature too), bus stops and background (`number_problem`: no NaN, ±infinity, text or
   bool, which every sign check would let through; an int field such as `lanes_per_direction`, `signal_phases`
