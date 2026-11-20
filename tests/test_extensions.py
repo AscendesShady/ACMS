@@ -299,6 +299,23 @@ class FakeAgent:
         return self.answer
 
 
+def test_a_saved_model_of_the_other_system_is_restored_after_its_choice():
+    panel = ExtensionsPanel(NetworkGraphicsScene(generate_network(3, 3)), SimulationClock(), EXTENSIONS_DIR)
+    options = [{"label": "System 1: Laya", "provider": "laya", "system": "1", "model": "laya", "name": "laya"},
+               {"label": "System 2: llama3", "provider": "local", "system": "2", "model": "llama3", "name": "llama3"},
+               {"label": "System 2: grok-4", "provider": "grok", "system": "2", "model": "grok-4", "name": "grok-4"}]
+    panel.app = SimpleNamespace(agent_options=lambda: options)
+    devl = panel.find("DEVL")
+    devl.check.setChecked(True)
+    panel.set_settings(devl, {"Decided by": "System 2"})
+    panel.set_settings(devl, {"Model": "grok-4"})
+    saved = json.loads(json.dumps(panel.project_state()))  # as the project file holds it
+    panel.set_settings(devl, {"Decided by": "System 1"})  # a fresh tab: System 1, its models listed
+    devl.check.setChecked(False)
+    assert panel.restore_project_state(saved) == []  # grok-4 isn't a System 1 model: checked after Decided by
+    assert devl.on and devl.module.batch_settings()["agents"] == ["System 2: grok-4"]
+
+
 def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
     network = generate_network(3, 4)
     panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)

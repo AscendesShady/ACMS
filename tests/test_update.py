@@ -49,6 +49,31 @@ def test_a_first_update_deletes_retired_files_and_writes_no_longer_paths_than_it
     assert not list(root.rglob("*.acms-part")) and sorted(p.name for p in root.iterdir()) == [".acms-version", "README.md", "extensions", "src"]
 
 
+def test_launch_bat_changes_only_after_every_other_file():
+    root = Path(tempfile.mkdtemp())
+    (root / "launch.bat").write_text("old")
+    (root / "src").mkdir()
+    (root / "src" / "z.py").write_text("old")
+    real = update.os.replace
+
+    def locked(src, dest):  # a file open in Word: its replace fails part-way through the update
+        if Path(dest).name == "z.py":
+            raise PermissionError("in use")
+        real(src, dest)
+
+    update.os.replace = locked
+    try:
+        update.install_zip(root, "d4", archive("d4", {"launch.bat": "new", "src/z.py": "new"}))
+        raise AssertionError("the locked file should have stopped the update")
+    except PermissionError:
+        pass
+    finally:
+        update.os.replace = real
+    assert (root / "launch.bat").read_text() == "old" and not (root / ".acms-version").exists()  # retried next launch
+    update.install_zip(root, "d4", archive("d4", {"launch.bat": "new", "src/z.py": "new"}))
+    assert (root / "launch.bat").read_text() == "new" and (root / "src" / "z.py").read_text() == "new"
+
+
 def test_a_failed_reinstall_is_tried_again_next_launch_without_a_restart_loop():
     root = Path(tempfile.mkdtemp())
     kept = update.git_update, update.zip_update, update.subprocess.run, update.REINSTALL, update.ROOT

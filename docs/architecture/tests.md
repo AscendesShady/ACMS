@@ -426,6 +426,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `t
   the OD Pair editor only while a cell is picked (hidden at first, shown on a click, put away by Esc, the
   diagonal and leaving the tab).
 - `test_transit_signal_priority.py`: the controller's 17 tests (taking over where a plan is, setting the green running, a change interval (amber + all-red) too short for a bus to clear refused while a short all-red alone is not, among them).
+- `test_extensions.py` also: a project's DEVL with System 2 and its model grok-4 restored into a tab on System 1
+  (the model checked only after Decided by is set, so it isn't refused as no System 1 model).
 - `test_extensions.py`: files found and named, load errors with their line, nothing runs until ticked,
   items redrawn after a map redraw and reload, the real network untouched, a raising extension switched
   off while the others carry on, a failing `panel()`, a `report()` and a settings dropdown's `before_open` that
@@ -1003,7 +1005,9 @@ The campaign Qt regression injects `KeyError("all")` into an approved scenario e
 - `test_update.py`: `tools/update.py`'s `install_zip` from two local zips into a temporary folder (files replaced,
   one the first shipped and the second dropped deleted, the user's own extension left, `.acms-version` the commit
   and its files; a first update with no list deleting nothing but `RETIRED` files, each file written beside its place
-  so no path is longer than its own, no `.acms-part` left), a failed reinstall marked (`.acms-reinstall`), restarting
+  so no path is longer than its own, no `.acms-part` left; launch.bat replaced only after every other file, so a
+  file open elsewhere stops the update with launch.bat untouched and no version written, the next update finishing
+  it), a failed reinstall marked (`.acms-reinstall`), restarting
   launch.bat once after an update but never on a retry that fails, and installed at a later launch; and
   `ACMS_NO_UPDATE` making `main` do nothing.
 - `test_experiments.py`: plain runs side by side in processes (`run_pool`) giving each seed the figures of the same

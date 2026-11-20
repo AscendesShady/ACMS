@@ -63,7 +63,8 @@ def install_zip(root: Path, sha: str, data: bytes) -> None:
     with zipfile.ZipFile(io.BytesIO(data)) as archive:
         members = [(info, info.filename.split("/", 1)[1]) for info in archive.infolist() if not info.is_dir()]
         shipped = sorted(name for _, name in members)  # GitHub zips hold one folder, ACMS-<sha>: dropped
-        for info, name in members:
+
+        def put(info, name: str) -> None:
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
             part = dest.with_name(dest.name + ".acms-part")
@@ -72,12 +73,25 @@ def install_zip(root: Path, sha: str, data: bytes) -> None:
                 os.replace(part, dest)  # a file open in Word fails here: no version written, the next launch retries
             finally:
                 part.unlink(missing_ok=True)
-    for name in before - set(shipped):
-        gone = (root / name).resolve()
-        if gone.is_relative_to(root.resolve()):  # the list is ours, but a path is never followed out of the folder
-            gone.unlink(missing_ok=True)
+
+        # launch.bat last: cmd reads it as it runs, so it changes only once everything else has (a failure before
+        # it leaves the running launch.bat whole, and launch.bat restarts only after a whole update)
+        for info, name in members:
+            if name != "launch.bat":
+                put(info, name)
+        left = []  # files to delete that are open somewhere: listed again, so the next update deletes them
+        for name in sorted(before - set(shipped)):
+            gone = (root / name).resolve()
+            if gone.is_relative_to(root.resolve()):  # the list is ours, but a path is never followed out of the folder
+                try:
+                    gone.unlink(missing_ok=True)
+                except OSError:
+                    left.append(name)
+        for info, name in members:
+            if name == "launch.bat":
+                put(info, name)
     tmp_version = version.with_suffix(".new")
-    tmp_version.write_text("\n".join([sha, *shipped]))
+    tmp_version.write_text("\n".join([sha, *shipped, *left]))
     os.replace(tmp_version, version)
 
 
